@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<style>
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --dark: #0A1628;
+  --green: #10B981;
+  --white: #FFFFFF;
+  --gray: #F5F7FA;
+  --text: #1A2340;
+  --muted: #6B7280;
+  --border: rgba(0,82,204,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.lrc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; color: var(--text); }
+
+.lrc-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 90px 20px 70px; text-align: center; }
+.lrc-hero-badge { display: inline-block; padding: 8px 20px; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.35); border-radius: 30px; font-size: 14px; font-weight: 600; color: #00D4FF; margin-bottom: 24px; }
+.lrc-hero h1 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -1px; }
+.lrc-hero p { font-size: 17px; color: rgba(255,255,255,0.65); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+
+.lrc-body { max-width: 1100px; margin: 0 auto; padding: 72px 20px 100px; }
+
+/* CANAUX DE CONTACT */
+.lrc-channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
+.lrc-channel { background: #fff; border-radius: 20px; padding: 36px 28px; border: 1px solid var(--border); text-align: center; transition: all 0.25s; }
+.lrc-channel:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,82,204,0.1); border-color: rgba(0,82,204,0.2); }
+.lrc-channel-icon { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 20px; }
+.lrc-channel-icon-blue { background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1)); }
+.lrc-channel-icon-green { background: rgba(16,185,129,0.1); }
+.lrc-channel-icon-gold { background: rgba(245,158,11,0.1); }
+.lrc-channel h3 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.lrc-channel p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+.lrc-channel-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
+.lrc-badge-green { background: rgba(16,185,129,0.1); color: var(--green); }
+.lrc-badge-blue { background: rgba(0,82,204,0.08); color: var(--blue); }
+.lrc-badge-gold { background: rgba(245,158,11,0.1); color: #D97706; }
+.lrc-channel a { display: inline-block; padding: 11px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.lrc-channel-cta-primary { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+.lrc-channel-cta-secondary { background: var(--gray); color: var(--text); border: 1px solid var(--border); }
+
+/* FAQ */
+.lrc-faq-title { font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.5px; }
+.lrc-faq-sub { font-size: 16px; color: var(--muted); margin-bottom: 36px; }
+.lrc-faq { display: flex; flex-direction: column; gap: 12px; margin-bottom: 64px; }
+.lrc-faq-item { background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+.lrc-faq-q { width: 100%; padding: 20px 24px; background: none; border: none; text-align: left; font-size: 15px; font-weight: 700; color: var(--text); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: inherit; transition: background 0.15s; }
+.lrc-faq-q:hover { background: var(--gray); }
+.lrc-faq-q .lrc-faq-arrow { font-size: 18px; color: var(--blue); transition: transform 0.25s; flex-shrink: 0; }
+.lrc-faq-q.open .lrc-faq-arrow { transform: rotate(45deg); }
+.lrc-faq-a { font-size: 14px; color: var(--muted); line-height: 1.75; padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+.lrc-faq-a.open { max-height: 300px; padding: 0 24px 20px; }
+.lrc-faq-a a { color: var(--blue); }
+
+/* STATUT */
+.lrc-status { background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(0,212,255,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 20px; padding: 36px; display: flex; align-items: center; gap: 24px; margin-bottom: 64px; flex-wrap: wrap; }
+.lrc-status-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(16,185,129,0.2); flex-shrink: 0; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(16,185,129,0.2); } 50% { box-shadow: 0 0 0 8px rgba(16,185,129,0.1); } }
+.lrc-status-text h3 { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.lrc-status-text p { font-size: 14px; color: var(--muted); margin: 0; }
+.lrc-status-link { margin-left: auto; }
+.lrc-status-link a { font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; padding: 8px 16px; background: rgba(16,185,129,0.1); border-radius: 8px; }
+
+@media (max-width: 860px) {
+  .lrc-channels { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 640px) {
+  .lrc-body { padding: 48px 16px 80px; }
+  .lrc-status { flex-direction: column; text-align: center; }
+  .lrc-status-link { margin-left: 0; }
+}
+</style>
+
+<div class="lrc">
+
+  <section class="lrc-hero">
+    <div class="lrc-hero-badge">✦ On est là pour vous</div>
+    <h1>Contact & Support</h1>
+    <p>Une question, un problème ou une suggestion ? On vous répond rapidement.</p>
+  </section>
+
+  <div class="lrc-body">
+
+    <!-- STATUT SERVICE -->
+    <div class="lrc-status">
+      <div class="lrc-status-dot"></div>
+      <div class="lrc-status-text">
+        <h3>Tous les systèmes sont opérationnels</h3>
+        <p>API LocalReply · Assistant IA · Google Calendar · Emails — Tout fonctionne normalement.</p>
+      </div>
+      <div class="lrc-status-link">
+        <a href="/cdn-cgi/l/email-protection#a8c4c7cbc9c4dacdd8c4d186c9c186dbc9c9dbe8cfc5c9c1c486cbc7c5">Signaler un problème →</a>
+      </div>
+    </div>
+
+    <!-- CANAUX -->
+    <div class="lrc-channels">
+
+      <div class="lrc-channel">
+        <div class="lrc-channel-icon lrc-channel-icon-blue">📧</div>
+        <h3>Email</h3>
+        <p>Pour toute question sur votre compte, votre abonnement ou l'utilisation de la plateforme.</p>
+        <a href="/cdn-cgi/l/email-protection#4925262a28253b2c392530672820673a28283a092e24282025672a2624" class="lrc-channel-cta-primary">Envoyer un email</a>
+      </div>
+
+      <div class="lrc-channel">
+        <div class="lrc-channel-icon lrc-channel-icon-green">⚡</div>
+        <h3>Support</h3>
+        <p>Pour toute question urgente ou problème technique nécessitant une réponse rapide.</p>
+        <a href="/cdn-cgi/l/email-protection#bed2d1dddfd2ccdbced2c790dfd790cddfdfcdfed9d3dfd7d290ddd1d381cdcbdcd4dbddca83edcbceced1ccca9b8c8eeeccd19b8c8e939b8c8e" class="lrc-channel-cta-primary">Contacter en priorité</a>
+      </div>
+
+      <div class="lrc-channel">
+        <div class="lrc-channel-icon lrc-channel-icon-gold">💡</div>
+        <h3>Feedback & idées</h3>
+        <p>Une idée pour améliorer LocalReply ? On lit tous les retours et on les intègre dans la roadmap.</p>
+        <a href="/cdn-cgi/l/email-protection#6d01020e0c011f081d0114430c04431e0c0c1e2d0a000c0401430e0200521e180f07080e19503e180a0a081e19040203485f5d40485f5d" class="lrc-channel-cta-secondary">Partager une idée</a>
+      </div>
+
+    </div>
+
+    <!-- FAQ -->
+    <h2 class="lrc-faq-title">Questions fréquentes</h2>
+    <p class="lrc-faq-sub">Les réponses aux questions les plus courantes.</p>
+
+    <div class="lrc-faq">
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Comment annuler mon abonnement ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Vous pouvez annuler à tout moment depuis votre espace client → Abonnement → Annuler. La résiliation prend effet à la fin de la période de facturation en cours. Aucun remboursement n'est effectué pour la période déjà facturée. Si vous annulez durant la période d'essai (14 jours), aucun prélèvement n'est effectué.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Comment connecter mon Google Calendar ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Depuis votre dashboard → Rendez-vous → Connecter Google Calendar. Vous serez redirigé vers Google pour autoriser l'accès. Une fois connecté, l'IA vérifiera automatiquement vos disponibilités lors des demandes de RDV.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          L'IA peut-elle se tromper dans ses réponses ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Oui, comme tout assistant IA, LocalReply peut parfois donner des réponses imprécises, notamment sur des sujets non renseignés dans votre configuration. C'est pourquoi nous vous recommandons de compléter votre FAQ et vos informations de service aussi précisément que possible. Pour les questions sans réponse, l'IA vous alerte plutôt que d'inventer.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Puis-je changer de plan à tout moment ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Oui. Vous pouvez passer de Standard à Pro (ou inversement) à tout moment depuis votre espace client. En cas d'upgrade, la différence est calculée au prorata. En cas de downgrade, le crédit est appliqué sur la prochaine facture.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Mes données sont-elles sécurisées ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Oui. Toutes les communications sont chiffrées via HTTPS/TLS. Les tokens sensibles (Google Calendar) sont chiffrés en base de données. Nous ne vendons ni ne partageons vos données avec des tiers à des fins commerciales. Pour plus de détails, consultez notre <a href="/privacy">Politique de confidentialité</a>.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Combien de langues sont supportées ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          LocalReply supporte 6 langues nativement : Français, Allemand, Italien, Espagnol, Anglais et Portugais. La détection est automatique dès le premier message du client — aucune configuration nécessaire.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Que se passe-t-il à la fin de l'essai gratuit ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          À la fin des 14 jours d'essai, votre abonnement au plan choisi (Standard ou Pro) est activé automatiquement et votre carte bancaire est prélevée. Vous recevrez un email de rappel 3 jours avant la fin de l'essai. Si vous annulez avant la fin de l'essai, aucun prélèvement n'est effectué.
+        </div>
+      </div>
+
+      <div class="lrc-faq-item">
+        <button class="lrc-faq-q" onclick="toggleFaq(this)">
+          Comment exporter mes données ?
+          <span class="lrc-faq-arrow">+</span>
+        </button>
+        <div class="lrc-faq-a">
+          Les abonnés Pro peuvent exporter leurs analytics en CSV depuis le dashboard → Analytics → Exporter. Pour une exportation complète de toutes vos données personnelles (droit à la portabilité RGPD), contactez-nous à <a href="/cdn-cgi/l/email-protection#d6bab9b5b7baa4b3a6baaff8b7bff8a5b7b7a596b1bbb7bfbaf8b5b9bb"><span class="__cf_email__" data-cfemail="e4888b878588968194889dca858dca97858597a48389858d88ca878b89">[email&#160;protected]</span></a>.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ENCORE UNE QUESTION -->
+    <div style="background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 48px; text-align: center;">
+      <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;">Vous n'avez pas trouvé votre réponse ?</h3>
+      <p style="font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto;">On vous répond personnellement. Pas un chatbot — une vraie personne.</p>
+      <a href="/cdn-cgi/l/email-protection#65090a060409170015091c4b040c4b16040416250208040c094b060a08" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,212,255,0.2)); border: 1.5px solid rgba(0,212,255,0.4); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;">Écrire au support →</a>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 16px;"><a hre
+</body>
+</html>

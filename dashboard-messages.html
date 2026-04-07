@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+
+  <!-- Fond ambiance -->
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+    <div style="position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 65%);border-radius:50%;"></div>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">🏢</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span>
+      </a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span>
+      </a>
+      <a href="/dashboard-conversations" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;position:relative;">
+        <span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:600;">Messages</span>
+        <span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;"></span>
+      </a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);position:relative;">
+        <span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span>
+        <span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;"></span>
+      </a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span>
+        <span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
+      </a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV MOBILE -->
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);position:relative;">
+        <span style="font-size:20px;">💬</span><span style="font-size:10px;font-weight:700;">Messages</span>
+        <span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;"></span>
+      </a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;">
+        <span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span>
+        <span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;"></span>
+      </a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <div id="mainContent" style="flex:1;min-width:0;padding:32px 36px 60px;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+      <div>
+        <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💬 Messages</h1>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Questions transmises par l'IA — répondez pour enrichir sa base de connaissances</p>
+      </div>
+      <button onclick="loadQuestions()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(0,212,255,0.3)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)'">
+        🔄 Actualiser
+      </button>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+      <div class="mstat" style="border-color:rgba(239,68,68,0.25);background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(220,38,38,0.04));">
+        <div class="mstat-val" style="color:#EF4444;" id="statPending">—</div>
+        <div class="mstat-lbl">En attente</div>
+        <div class="mstat-sub">À traiter en priorité</div>
+      </div>
+      <div class="mstat" style="border-color:rgba(16,185,129,0.25);background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(5,150,105,0.04));">
+        <div class="mstat-val" style="color:#10B981;" id="statAnswered">—</div>
+        <div class="mstat-lbl">Répondues</div>
+        <div class="mstat-sub">Client notifié par email</div>
+      </div>
+      <div class="mstat" style="border-color:rgba(0,212,255,0.2);background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,82,204,0.04));">
+        <div class="mstat-val" style="color:#00D4FF;" id="statFaqAdded">—</div>
+        <div class="mstat-lbl">Ajoutées à la FAQ</div>
+        <div class="mstat-sub">L'IA sait maintenant répondre</div>
+      </div>
+    </div>
+
+    <!-- INFO BANNER -->
+    <div style="padding:12px 16px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:18px;flex-shrink:0;">💡</span>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin:0;line-height:1.5;">Quand un client pose une question que votre IA ne connaît pas, elle vous la transmet ici. Répondez pour que l'IA apprenne et réponde automatiquement la prochaine fois. Cochez <strong style="color:#fff;">"Ajouter à la FAQ"</strong> pour que la réponse soit permanente.</p>
+    </div>
+
+    <!-- ONGLETS -->
+    <div style="display:flex;gap:6px;margin-bottom:20px;background:rgba(255,255,255,0.04);padding:5px;border-radius:12px;width:fit-content;border:1px solid rgba(255,255,255,0.07);">
+      <button id="tabPending" onclick="switchTab('pending')" class="tab-btn active-tab" style="padding:9px 20px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;">
+        En attente <span id="tabCountPending" style="background:rgba(255,255,255,0.25);padding:1px 6px;border-radius:10px;font-size:11px;margin-left:4px;"></span>
+      </button>
+      <button id="tabAnswered" onclick="switchTab('answered')" class="tab-btn" style="padding:9px 20px;background:transparent;color:rgba(255,255,255,0.55);border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;">
+        Traitées <span id="tabCountAnswered" style="background:rgba(255,255,255,0.1);padding:1px 6px;border-radius:10px;font-size:11px;margin-left:4px;"></span>
+      </button>
+      <button id="tabIgnored" onclick="switchTab('ignored')" class="tab-btn" style="padding:9px 20px;background:transparent;color:rgba(255,255,255,0.55);border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:inherit;">
+        Ignorées
+      </button>
+    </div>
+
+    <!-- LISTE -->
+    <div id="questionsList">
+      <div style="text-align:center;padding:60px 20px;">
+        <div class="spin" style="width:32px;height:32px;border:3px solid rgba(0,212,255,0.2);border-top-color:#00D4FF;border-radius:50%;margin:0 auto 16px;"></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Chargement...</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL RÉPONSE -->
+<div id="replyOverlay" onclick="closeReplyModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000;opacity:0;transition:opacity 0.25s;backdrop-filter:blur(6px);"></div>
+<div id="replyModal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.95);z-index:10001;background:rgba(8,16,35,0.99);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.12);border-radius:22px;padding:32px;width:min(560px,95vw);max-height:90vh;overflow-y:auto;opacity:0;transition:all 0.25s;">
+  <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:20px;">
+    <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0;">💬 Répondre au client</h2>
+    <button onclick="closeReplyModal()" style="background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.5);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-family:inherit;">✕</button>
+  </div>
+
+  <!-- Question -->
+  <div style="margin-bottom:18px;">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Question du client</div>
+    <p id="modalQuestion" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;margin:0;padding:14px 16px;background:rgba(0,212,255,0.06);border-radius:10px;border-left:3px solid #00D4FF;line-height:1.6;"></p>
+  </div>
+
+  <!-- Info email -->
+  <div id="modalClientInfo" style="display:none;font-size:12px;color:rgba(255,255,255,0.5);padding:8px 14px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);border-radius:8px;margin-bottom:14px;">
+    📧 <span id="modalClientEmail"></span>
+  </div>
+  <div id="modalNoEmail" style="display:none;font-size:12px;color:rgba(245,158,11,0.85);padding:8px 14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:8px;margin-bottom:14px;">
+    ⚠️ Pas d'email client — vous pouvez répondre mais le client ne sera pas notifié.
+  </div>
+
+  <!-- Réponse -->
+  <div style="margin-bottom:18px;">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Votre réponse</div>
+    <textarea id="modalAnswer" rows="4" placeholder="Rédigez votre réponse ici..." style="width:100%;padding:14px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border 0.2s;line-height:1.6;" onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
+  </div>
+
+  <!-- Options -->
+  <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:12px;padding:16px;margin-bottom:20px;">
+    <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">Options</div>
+    <label style="display:flex;align-items:start;gap:10px;cursor:pointer;margin-bottom:10px;">
+      <input type="checkbox" id="optAddFaq" checked style="width:16px;height:16px;accent-color:#0052CC;margin-top:2px;flex-shrink:0;">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.88);font-weight:600;">📚 Ajouter à la FAQ</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">L'IA répondra automatiquement à cette question pour tous les clients suivants</div>
+      </div>
+    </label>
+    <label style="display:flex;align-items:start;gap:10px;cursor:pointer;">
+      <input type="checkbox" id="optNotifyClient" checked style="width:16px;height:16px;accent-color:#0052CC;margin-top:2px;flex-shrink:0;">
+      <div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.88);font-weight:600;">📧 Notifier le client</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Envoyer votre réponse par email au client (si adresse disponible)</div>
+      </div>
+    </label>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button onclick="submitReply()" style="flex:1;min-width:140px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,82,204,0.3);font-family:inherit;">✅ Envoyer la réponse</button>
+    <button onclick="ignoreQuestion()" style="padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Ignorer</button>
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}body{margin:0;padding:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:calc(200px + 100%) 0;}}
+
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+
+/* Stats messages */
+.mstat{border:1px solid;border-radius:14px;padding:18px 20px;transition:transform 0.2s;}
+.mstat:hover{transform:translateY(-2px);}
+.mstat-val{font-size:34px;font-weight:800;line-height:1;margin-bottom:4px;}
+.mstat-lbl{font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);margin-bottom:2px;}
+.mstat-sub{font-size:11px;color:rgba(255,255,255,0.35);}
+
+/* Cartes questions */
+.q-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-bottom:12px;transition:all 0.2s;animation:slideUp 0.3s ease both;}
+.q-card:hover{border-color:rgba(0,212,255,0.2);background:rgba(255,255,255,0.06);}
+.q-card.pending{border-left:3px solid rgba(239,68,68,0.5);}
+.q-card.answered{border-left:3px solid rgba(16,185,129,0.4);}
+.q-card.ignored{border-left:3px solid rgba(255,255,255,0.1);opacity:0.7;}
+
+/* Tabs */
+.tab-btn{transition:all 0.2s;}
+.tab-btn:hover{color:#fff!important;}
+
+/* Skeleton */
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.04) 100%);background-size:400px 100%;animation:shimmer 1.5s infinite linear;border-radius:8px;}
+
+/* Spin */
+.spin{animation:spin 0.8s linear infinite;}
+
+/* Responsive */
+@media(max-width:900px){
+  #sidebar{display:none!important;}
+  #bottomNav{display:block!important;}
+  #mainContent{padding:18px 14px 80px!important;}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
+  h1{font-size:22px!important;}
+}
+</style>
+
+<script>
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+
+const API = 'https://localreply-api.onrender.com';
+let currentTab = 'pending';
+let currentQuestionId = null;
+let allQuestions = { pending:[], answered:[], ignored:[] };
+
+function getUserId() { try { return JSON.parse(atob(token.split('.')[1])).sub; } catch { return null; } }
+const userId = getUserId();
+
+async function apiRequest(endpoint, method='GET', data=null) {
+  const opts = { method, headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`} };
+  if (data && method!=='GET') opts.body = JSON.stringify(data);
+  const r = await fetch(`${API}${endpoint}`, opts);
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+function showToast(msg, type='success') {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = `position:fixed;bottom:80px;right:20px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#fff;padding:12px 18px;border-radius:11px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:99999;animation:slideUp 0.3s ease;`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+function setBadge(count, ...ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (count > 0) { el.textContent = count > 9 ? '9+' : count; el.style.display = 'flex'; }
+    else el.style.display = 'none';
+  });
+}
+
+function urgencyBadge(level) {
+  const map = {
+    high:   { c:'#EF4444', bg:'rgba(239,68,68,0.12)',   b:'rgba(239,68,68,0.25)',   l:'🔴 Urgent' },
+    medium: { c:'#F59E0B', bg:'rgba(245,158,11,0.12)',  b:'rgba(245,158,11,0.25)',  l:'🟡 Moyen' },
+    normal: { c:'#10B981', bg:'rgba(16,185,129,0.12)',  b:'rgba(16,185,129,0.25)',  l:'🟢 Normal' },
+  };
+  const u = map[level] || map.normal;
+  return `<span style="font-size:11px;font-weight:700;color:${u.c};background:${u.bg};border:1px solid ${u.b};padding:3px 10px;border-radius:100px;">${u.l}</span>`;
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return '';
+  const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
+  if (diff < 60) return 'À l\'instant';
+  if (diff < 3600) return `Il y a ${Math.floor(diff/60)}min`;
+  if (diff < 86400) return `Il y a ${Math.floor(diff/3600)}h`;
+  return `Il y a ${Math.floor(diff/86400)}j`;
+}
+
+function renderQuestion(q, tab) {
+  window._questions = window._questions || {};
+  window._questions[q.id] = q;
+
+  const clientInfo = [q.client_name, q.client_email, q.client_phone].filter(Boolean).join(' · ');
+  const statusBadge = tab==='answered'
+    ? `<span style="font-size:11px;font-weight:700;color:#10B981;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:100px;">✅ Répondue</span>`
+    : tab==='ignored'
+    ? `<span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:100px;">— Ignorée</span>`
+    : urgencyBadge(q.urgency_level || 'normal');
+
+  return `<div class="q-card ${tab}" id="qcard-${q.id}">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
+      <div style="flex:1;min-width:0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+          ${statusBadge}
+          <span style="font-size:11px;color:rgba(255,255,255,0.35);">${timeAgo(q.created_at)}</span>
+          ${q.added_to_faq ? `<span style="font-size:11px;color:#00D4FF;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:3px 9px;border-radius:100px;">📚 Dans la FAQ</span>` : ''}
+        </div>
+        <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.5;">"${q.question}"</div>
+        ${clientInfo ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">👤 ${clientInfo}</div>` : '<div style="font-size:12px;color:rgba(255,255,255,0.25);">👤 Client anonyme</div>'}
+      </div>
+    </div>
+
+    ${q.business_answer ? `
+    <div style="padding:12px 14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;margin-bottom:12px;">
+      <div style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;">${q.business_answer}</div>
+    </div>` : ''}
+
+    ${q.context ? `
+    <details style="margin-bottom:12px;">
+      <summary style="font-size:12px;color:rgba(255,255,255,0.35);cursor:pointer;user-select:none;padding:5px 0;list-style:none;display:flex;align-items:center;gap:6px;">
+        <span style="font-size:14px;">📜</span> Contexte de la conversation (${Array.isArray(q.context)?q.context.length:1} messages)
+      </summary>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px;max-height:180px;overflow-y:auto;padding-right:4px;">
+        ${Array.isArray(q.context) ? q.context.map(msg => `
+          <div style="padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.5;${msg.role==='user'?'background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.65);':'background:rgba(0,212,255,0.06);border-left:2px solid rgba(0,212,255,0.25);color:rgba(255,255,255,0.55);'}">
+            <span style="font-size:10px;font-weight:700;color:${msg.role==='user'?'rgba(255,255,255,0.3)':'rgba(0,212,255,0.5)'};text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">${msg.role==='user'?'👤 Client':'🤖 IA'}</span>
+            ${msg.content||msg.text||''}
+          </div>`).join('') : `<div style="padding:8px;background:rgba(255,255,255,0.03);border-radius:7px;font-size:12px;color:rgba(255,255,255,0.4);">${typeof q.context==='string'?q.context:JSON.stringify(q.context)}</div>`}
+      </div>
+    </details>` : ''}
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      ${tab==='pending' ? `
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,82,204,0.25);font-family:inherit;">💬 Répondre</button>
+        <button onclick="quickIgnore(${q.id})" style="padding:9px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.45);font-size:12px;cursor:pointer;font-family:inherit;">Ignorer</button>
+      ` : tab==='answered' ? `
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">✏️ Modifier la réponse</button>
+      ` : `
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">💬 Répondre quand même</button>
+      `}
+    </div>
+  </div>`;
+}
+
+function renderEmpty(tab) {
+  const msgs = {
+    pending: { icon:'✅', title:'Aucune question en attente', sub:'Votre IA répond à toutes les questions — ou aucun client ne s\'est manifesté récemment.' },
+    answered: { icon:'💬', title:'Aucune question traitée', sub:'Les questions auxquelles vous répondez apparaissent ici.' },
+    ignored:  { icon:'🗑️', title:'Aucune question ignorée', sub:'' },
+  };
+  const m = msgs[tab] || msgs.pending;
+  return `<div style="text-align:center;padding:60px 20px;">
+    <div style="font-size:48px;margin-bottom:14px;opacity:0.4;">${m.icon}</div>
+    <div style="font-size:16px;font-weight:600;color:rgba(255,255,255,0.6);margin-bottom:6px;">${m.title}</div>
+    ${m.sub ? `<div style="font-size:13px;color:rgba(255,255,255,0.3);">${m.sub}</div>` : ''}
+  </div>`;
+}
+
+async function loadQuestions() {
+  document.getElementById('questionsList').innerHTML = `
+    <div class="skeleton" style="height:120px;margin-bottom:12px;"></div>
+    <div class="skeleton" style="height:100px;margin-bottom:12px;"></div>
+    <div class="skeleton" style="height:90px;"></div>`;
+
+  try {
+    const [pending, answered, ignored] = await Promise.all([
+      apiRequest(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]})),
+      apiRequest(`/api/business/${businessId}/unknown-questions?status=answered`).catch(()=>({questions:[]})),
+      apiRequest(`/api/business/${businessId}/unknown-questions?status=ignored`).catch(()=>({questions:[]})),
+    ]);
+
+    allQuestions.pending  = pending?.questions  || pending  || [];
+    allQuestions.answered = answered?.questions || answered || [];
+    allQuestions.ignored  = ignored?.questions  || ignored  || [];
+
+    // Stats
+    document.getElementById('statPending').textContent  = allQuestions.pending.length;
+    document.getElementById('statAnswered').textContent = allQuestions.answered.length;
+    document.getElementById('statFaqAdded').textContent = [...allQuestions.answered,...allQuestions.pending].filter(q=>q.added_to_faq).length;
+
+    // Compteurs onglets
+    document.getElementById('tabCountPending').textContent  = allQuestions.pending.length;
+    document.getElementById('tabCountAnswered').textContent = allQuestions.answered.length;
+
+    // Badge nav
+    setBadge(allQuestions.pending.length, 'sbBadgeMsg', 'bnBadgeMsg');
+
+    // RDV badge
+    const apts = await apiRequest(`/api/appointments/?business_id=${businessId}`).catch(()=>[]);
+    const pending_rdv = Array.isArray(apts) ? apts.filter(a=>a.status==='pending').length : 0;
+    setBadge(pending_rdv, 'sbBadgeRdv', 'bnBadgeRdv');
+
+    renderTab(currentTab);
+  } catch(e) {
+    console.error(e);
+    document.getElementById('questionsList').innerHTML = `<div style="text-align:center;padding:60px;color:rgba(255,255,255,0.4);">❌ Impossible de charger les messages</div>`;
+  }
+}
+
+function renderTab(tab) {
+  const list = allQuestions[tab] || [];
+  const el = document.getElementById('questionsList');
+  el.innerHTML = list.length ? list.map(q => renderQuestion(q, tab)).join('') : renderEmpty(tab);
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  ['pending','answered','ignored'].forEach(t => {
+    const btn = document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
+    if (!btn) return;
+    if (t === tab) {
+      btn.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+      btn.style.color = '#fff';
+    } else {
+      btn.style.background = 'transparent';
+      btn.style.color = 'rgba(255,255,255,0.55)';
+    }
+  });
+  renderTab(tab);
+}
+
+function openReplyModalById(id) {
+  const q = window._questions && window._questions[id];
+  if (!q) return;
+  openReplyModal(id, q.question || '', q.client_email || '');
+}
+
+function openReplyModal(id, question, clientEmail) {
+  currentQuestionId = id;
+  document.getElementById('modalQuestion').textContent = question;
+  document.getElementById('modalAnswer').value = '';
+  document.getElementById('optAddFaq').checked = true;
+  document.getElementById('optNotifyClient').checked = !!clientEmail;
+
+  const infoEl = document.getElementById('modalClientInfo');
+  const noEmailEl = document.getElementById('modalNoEmail');
+  const emailEl = document.getElementById('modalClientEmail');
+  const notifyCb = document.getElementById('optNotifyClient');
+
+  if (clientEmail) {
+    infoEl.style.display = 'block'; noEmailEl.style.display = 'none';
+    emailEl.textContent = 'La réponse sera envoyée à ' + clientEmail;
+    notifyCb.disabled = false;
+  } else {
+    infoEl.style.display = 'none'; noEmailEl.style.display = 'block';
+    notifyCb.checked = false; notifyCb.disabled = true;
+  }
+
+  const overlay = document.getElementById('replyOverlay');
+  const modal = document.getElementById('replyModal');
+  overlay.style.display = 'block';
+  modal.style.display = 'block';
+  setTimeout(() => { overlay.style.opacity='1'; modal.style.opacity='1'; modal.style.transform='translate(-50%,-50%) scale(1)'; }, 10);
+  setTimeout(() => document.getElementById('modalAnswer').focus(), 200);
+}
+
+function closeReplyModal() {
+  const overlay = document.getElementById('replyOverlay');
+  const modal = document.getElementById('replyModal');
+  overlay.style.opacity='0'; modal.style.opacity='0'; modal.style.transform='translate(-50%,-50%) scale(0.95)';
+  setTimeout(() => { overlay.style.display='none'; modal.style.display='none'; }, 250);
+  currentQuestionId = null;
+}
+
+async function submitReply() {
+  const answer = document.getElementById('modalAnswer').value.trim();
+  if (!answer) { showToast('Rédigez une réponse avant d\'envoyer', 'error'); return; }
+  const btn = document.querySelector('#replyModal button[onclick="submitReply()"]');
+  btn.disabled = true; btn.textContent = '⏳ Envoi...';
+  try {
+    await apiRequest(`/api/business/${businessId}/unknown-questions/${currentQuestionId}/respond`, 'POST', {
+      answer,
+      add_to_faq: document.getElementById('optAddFaq').checked,
+      notify_client: document.getElementById('optNotifyClient').checked,
+    });
+    closeReplyModal();
+    const faq = document.getElementById('optAddFaq').checked;
+    showToast(faq ? '✅ Répondu et ajouté à la FAQ !' : '✅ Réponse envoyée !');
+    await loadQuestions();
+  } catch(e) {
+    showToast('Erreur lors de l\'envoi', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = '✅ Envoyer la réponse';
+  }
+}
+
+async function quickIgnore(id) {
+  if (!confirm('Ignorer cette question ?')) return;
+  try {
+    await apiRequest(`/api/business/${businessId}/unknown-questions/${id}/ignore`, 'POST', {});
+    showToast('Question ignorée');
+    await loadQuestions();
+  } catch { showToast('Erreur', 'error'); }
+}
+
+async function ignoreQuestion() {
+  if (!currentQuestionId) return;
+  closeReplyModal();
+  await quickIgnore(currentQuestionId);
+}
+
+async function loadSidebarInfo() {
+  try {
+    const [config, sub] = await Promise.all([
+      apiRequest(`/api/business/${businessId}/config`),
+      apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null)
+    ]);
+    const biz = config.business || {};
+    const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
+    const sp = document.getElementById('sidebarPlan'); if (sp) sp.textContent = sub?.plan==='pro'?'⭐ Plan Pro':sub?.plan==='trial'?'🎁 Essai gratuit':'Plan Standard';
+    const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
+    const sl = document.getElementById('sidebarLogo'); if (sl) sl.textContent = icons[biz.business_type]||'🏢';
+  } catch {}
+}
+
+function toggleMobileMenu() {
+  const ov=document.getElementById('mobileMenuOverlay'), pp=document.getElementById('mobileMenuPopup');
+  const open=pp.style.display==='block';
+  if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
+  else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
+}
+
+function logout() {
+  if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadSidebarInfo();
+  loadQuestions();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<style>
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --blue-light: #e8f0fb;
+  --surface: #ffffff;
+  --surface-2: #f7f9fc;
+  --surface-3: #eef2f8;
+  --border: #e4e9f2;
+  --text: #1a2340;
+  --text-2: #4b5675;
+  --text-3: #8b95b0;
+  --shadow-sm: 0 1px 3px rgba(0,82,204,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,82,204,0.1), 0 2px 6px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 40px rgba(0,82,204,0.12), 0 4px 16px rgba(0,0,0,0.06);
+  --radius: 20px;
+  --radius-msg: 18px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.lrc-page {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #f0f4fb 0%, #e8f0fb 50%, #f5f7fa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow: hidden;
+}
+.lrc-page::before {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,82,204,0.06) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  border-radius: 50%; pointer-events: none;
+}
+.lrc-page::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,255,0.05) 0%, transparent 70%);
+  bottom: -100px; left: -50px;
+  border-radius: 50%; pointer-events: none;
+}
+
+/* ── CARD ── */
+.lrc-card {
+  width: 100%;
+  max-width: 480px;
+  height: min(720px, calc(100dvh - 64px));
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,82,204,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  animation: lrcReveal 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes lrcReveal {
+  from { opacity:0; transform: translateY(24px) scale(0.97); }
+  to   { opacity:1; transform: none; }
+}
+
+/* ── HEADER ── */
+.lrc-header {
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #0A1628 0%, #0052CC 60%, #00D4FF 100%);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.lrc-header::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.lrc-header-avatar {
+  width: 44px; height: 44px;
+  border-radius: 13px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+  overflow: hidden;
+}
+.lrc-header-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 11px;
+}
+.lrc-header-info { flex: 1; position: relative; z-index: 1; min-width: 0; }
+.lrc-header-name {
+  font-size: 15px; font-weight: 700;
+  color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lrc-header-status {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+}
+.lrc-header-lang {
+  font-size: 11px; color: rgba(255,255,255,0.6);
+  margin-top: 2px;
+}
+.lrc-status-dot {
+  width: 6px; height: 6px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #4ade80;
+  flex-shrink: 0;
+  animation: lrcPulse 2.5s ease-in-out infinite;
+}
+@keyframes lrcPulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);} }
+.lrc-header-lang-flag {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  padding: 3px 8px;
+  font-size: 12px;
+  position: relative; z-index: 1;
+  flex-shrink: 0;
+}
+
+/* ── MESSAGES ── */
+.lrc-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface-2);
+  scroll-behavior: smooth;
+}
+.lrc-messages::-webkit-scrollbar { width: 3px; }
+.lrc-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.lrc-date-sep {
+  text-align: center;
+  font-size: 11px; color: var(--text-3);
+  margin: 8px 0;
+  display: flex; align-items: center; gap: 10px;
+}
+.lrc-date-sep::before, .lrc-date-sep::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+
+.lrc-msg-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  animation: lrcMsgIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+  margin-bottom: 8px;
+}
+@keyframes lrcMsgIn {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: none; }
+}
+.lrc-msg-row.user { flex-direction: row-reverse; }
+
+.lrc-msg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.lrc-msg-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.lrc-msg-content { max-width: 78%; display: flex; flex-direction: column; gap: 3px; }
+.lrc-msg-row.user .lrc-msg-content { align-items: flex-end; }
+
+.lrc-bubble {
+  padding: 11px 15px;
+  line-height: 1.55;
+  font-size: 14.5px;
+  word-break: break-word;
+}
+.lrc-bubble.ai {
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-msg) var(--radius-msg) var(--radius-msg) 4px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.lrc-bubble.user {
+  background: linear-gradient(135deg, var(--blue) 0%, #0070e8 100%);
+  color: #fff;
+  border-radius: var(--radius-msg) var(--radius-msg) 4px var(--radius-msg);
+  box-shadow: 0 4px 14px rgba(0,82,204,0.25);
+}
+.lrc-msg-time { font-size: 10.5px; color: var(--text-3); padding: 0 4px; }
+
+/* Typing */
+.lrc-typing-row {
+  display: flex; gap: 8px; align-items: flex-end;
+  animation: lrcMsgIn 0.3s ease both;
+  margin-bottom: 8px;
+}
+.lrc-typing-bubble {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-msg) var(--radius-msg) var(--radius-msg) 4px;
+  padding: 13px 16px;
+  display: flex; gap: 4px; align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+.lrc-typing-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  opacity: 0.4;
+  animation: lrcBounce 1.2s ease-in-out infinite;
+}
+.lrc-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+.lrc-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+@keyframes lrcBounce {
+  0%,60%,100% { transform: translateY(0); opacity:0.4; }
+  30% { transform: translateY(-7px); opacity:1; }
+}
+
+/* ── SUGGESTIONS ── */
+.lrc-suggestions {
+  padding: 10px 16px;
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  min-height: 50px;
+  align-items: center;
+}
+.lrc-sug {
+  padding: 7px 13px;
+  background: var(--blue-light);
+  border: 1.5px solid rgba(0,82,204,0.15);
+  border-radius: 100px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--blue);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  animation: lrcSugIn 0.25s ease both;
+  font-family: inherit;
+}
+@keyframes lrcSugIn { from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:none;} }
+.lrc-sug:hover {
+  background: rgba(0,82,204,0.12);
+  border-color: rgba(0,82,204,0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,82,204,0.12);
+}
+.lrc-sug.primary {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0,82,204,0.25);
+}
+.lrc-sug.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(0,82,204,0.35);
+}
+
+/* ── INPUT ── */
+.lrc-input-area {
+  padding: 12px 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-shrink: 0;
+}
+.lrc-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  padding: 0 16px;
+  transition: all 0.2s;
+}
+.lrc-input-wrap:focus-within {
+  border-color: var(--blue);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0,82,204,0.08);
+}
+.lrc-input {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 12px 0;
+  font-size: 14.5px;
+  font-family: inherit;
+  color: var(--text);
+  outline: none;
+}
+.lrc-input::placeholder { color: var(--text-3); }
+.lrc-send-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0,82,204,0.3);
+  color: #fff;
+}
+.lrc-send-btn:hover { transform: scale(1.07); box-shadow: 0 6px 18px rgba(0,82,204,0.4); }
+.lrc-send-btn:active { transform: scale(0.95); }
+.lrc-send-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* ── FOOTER ── */
+.lrc-footer {
+  text-align: center;
+  padding: 7px;
+  font-size: 11px;
+  color: var(--text-3);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.lrc-footer span { color: var(--blue); font-weight: 600; }
+
+/* ── LOADING / ERROR ── */
+.lrc-loading {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+  background: var(--surface-2);
+}
+.lrc-spinner {
+  width: 32px; height: 32px;
+  border: 2.5px solid var(--border);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: lrcSpin 0.7s linear infinite;
+}
+@keyframes lrcSpin { to { transform: rotate(360deg); } }
+.lrc-loading-text { font-size: 14px; color: var(--text-3); }
+
+.lrc-error {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px;
+  padding: 32px;
+  background: var(--surface-2);
+  text-align: center;
+}
+.lrc-error-icon { font-size: 40px; }
+.lrc-error-title { font-size: 16px; font-weight: 700; color: var(--text); }
+.lrc-error-desc { font-size: 13.5px; color: var(--text-3); line-height: 1.6; }
+
+@media (max-width: 520px) {
+  .lrc-page { padding: 0; align-items: stretch; }
+  .lrc-card { max-width: 100%; height: 100dvh; border-radius: 0; }
+}
+
+/* ── FORMULAIRE RDV ── */
+.lrc-rdv-form {
+  padding: 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  animation: lrcMsgIn 0.3s ease both;
+}
+.lrc-rdv-title {
+  font-size: 14px; font-weight: 700; color: var(--text);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.lrc-rdv-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;
+}
+.lrc-rdv-field {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.lrc-rdv-field label {
+  font-size: 11px; font-weight: 600; color: var(--text-3);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.lrc-rdv-field input, .lrc-rdv-field select {
+  padding: 10px 12px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px; color: var(--text);
+  outline: none; font-family: inherit;
+  transition: border-color 0.2s;
+}
+.lrc-rdv-field input:focus, .lrc-rdv-field select:focus {
+  border-color: var(--blue);
+  background: #fff;
+}
+.lrc-rdv-field.full { grid-column: 1 / -1; }
+.lrc-rdv-btns { display: flex; gap: 8px; }
+.lrc-rdv-submit {
+  flex: 1; padding: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border: none; border-radius: 10px; color: #fff;
+  font-size: 14px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; font-family: inherit;
+  box-shadow: 0 4px 12px rgba(0,82,204,0.25);
+}
+.lrc-rdv-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,82,204,0.35); }
+.lrc-rdv-cancel {
+  padding: 12px 16px;
+  background: var(--surface-2); border: 1.5px solid var(--border);
+  border-radius: 10px; color: var(--text-3);
+  font-size: 13px; cursor: pointer; font-family: inherit;
+  transition: all 0.2s;
+}
+.lrc-rdv-cancel:hover { background: var(--surface-3); }
+@media (max-width: 400px) {
+  .lrc-rdv-grid { grid-template-columns: 1fr; }
+  .lrc-rdv-field.full { grid-column: 1; }
+}
+</style>
+
+<div class="lrc-page">
+  <div class="lrc-card" id="lrcCard">
+
+    <!-- HEADER -->
+    <div class="lrc-header">
+      <div class="lrc-header-avatar" id="lrcAvatar">💬</div>
+      <div class="lrc-header-info">
+        <div class="lrc-header-name" id="lrcName">Chargement...</div>
+        <div class="lrc-header-status">
+          <span class="lrc-status-dot"></span>
+          <span id="lrcStatusText">Assistant IA · En ligne 24/7</span>
+        </div>
+      </div>
+      <div class="lrc-header-lang-flag" id="lrcLangFlag">🌍</div>
+    </div>
+
+    <!-- LOADING -->
+    <div class="lrc-loading" id="lrcLoading">
+      <div class="lrc-spinner"></div>
+      <div class="lrc-loading-text">Connexion à l'assistant...</div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="lrc-messages" id="lrcMessages" style="display:none;">
+      <div class="lrc-date-sep">Aujourd'hui</div>
+    </div>
+
+    <!-- SUGGESTIONS -->
+    <div class="lrc-suggestions" id="lrcSuggestions" style="display:none;"></div>
+
+    <!-- FORMULAIRE RDV -->
+    <div class="lrc-rdv-form" id="lrcRdvForm" style="display:none;"></div>
+    <div class="lrc-rdv-form" id="lrcEmailForm" style="display:none;">
+      <div class="lrc-rdv-title">📧 Recevoir la réponse par email</div>
+      <p style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <input id="lrcEmailInput" type="email" placeholder="votre@email.com" style="flex:1;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" onkeydown="if(event.key==='Enter')submitEmailCapture()">
+        <button class="lrc-rdv-submit" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
+      </div>
+      <button class="lrc-rdv-cancel" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
+    </div>
+
+    <!-- INPUT -->
+    <div class="lrc-input-area" id="lrcInputArea" style="display:none;">
+      <div class="lrc-input-wrap">
+        <input class="lrc-input" id="lrcInput" type="text"
+          placeholder="Posez votre question..."
+          onkeypress="if(event.key==='Enter') lrcSend()">
+      </div>
+      <button class="lrc-send-btn" id="lrcSendBtn" onclick="lrcSend()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="lrc-footer" id="lrcFooter" style="display:none;">
+      Propulsé par <span>LocalReply AI</span>
+    </div>
+
+    <!-- ERROR -->
+    <div class="lrc-error" id="lrcError" style="display:none;">
+      <div class="lrc-error-icon">😕</div>
+      <div class="lrc-error-title">Commerce introuvable</div>
+      <div class="lrc-error-desc">Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const API = 'https://localreply-api.onrender.com';
+
+// Langue nav → flag
+const LANG_FLAGS = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
+const BIZ_ICONS  = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'💬' };
+
+const PLACEHOLDERS = {
+  fr:'Posez votre question...',en:'Ask your question...',
+  de:'Ihre Frage...', it:'La tua domanda...',
+  es:'Su pregunta...',pt:'A sua pergunta...'
+};
+
+const GREETINGS = {
+  fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá'
+};
+
+const SUGGESTIONS = {
+  rdv:     [{ l:'📅 Créneaux disponibles', t:'Quels créneaux sont disponibles ?', p:true },{ l:'⏱️ Durée', t:'Combien de temps dure le RDV ?' }],
+  services:[{ l:'💰 Tarifs', t:'Quels sont vos tarifs ?' },{ l:'📅 Réserver', t:'Je voudrais prendre un RDV', p:true }],
+  horaires:[{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true },{ l:'📍 Adresse', t:'Où êtes-vous situé ?' }],
+  default: [{ l:'💼 Services', t:'Quels sont vos services ?' },{ l:'⏰ Horaires', t:'Quels sont vos horaires ?' },{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true }]
+};
+
+let isSending = false;
+let currentEscalationQuestionId = null;
+let detectedLang = 'fr';
+let sessionUserId = Math.floor(Math.random() * 2000000000);
+let businessId = null;
+let bizAvatar = '💬';
+
+// Récupérer le slug depuis l'URL
+function getSlug() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('slug') || params.get('s') || '';
+}
+
+// Détecter langue navigateur
+function detectBrowserLang() {
+  const l = (navigator.language || 'fr').split('-')[0].toLowerCase();
+  return LANG_FLAGS[l] ? l : 'fr';
+}
+
+function now() {
+  return new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+}
+function esc(t) {
+  return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+// ── Source UTM depuis l'URL ──
+function getSource() {
+  const p = new URLSearchParams(window.location.search);
+  return p.get('source') || p.get('utm_source') || 'direct';
+}
+
+// ── Suggestions dynamiques retournées par le backend ──
+function renderSuggestionsFromBackend(suggestions) {
+  const wrap = document.getElementById('lrcSuggestions');
+  if (!suggestions || !suggestions.length) { renderSuggestionsFallback('default'); return; }
+  wrap.innerHTML = '';
+  suggestions.forEach((s, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'lrc-sug' + (/rdv|réserv|book|termin/i.test(s) ? ' primary' : '');
+    btn.style.animationDelay = (i * 0.07) + 's';
+    btn.textContent = s;
+    btn.onclick = () => lrcSendText(s.replace(/^[^\w\s]+\s*/, '').trim());
+    wrap.appendChild(btn);
+  });
+}
+
+// ── Fallback suggestions statiques ──
+function detectIntent(text) {
+  if (/rdv|rendez.vous|réserv|créneau|disponible/i.test(text)) return 'rdv';
+  if (/service|coupe|soin|presta|tarif|prix/i.test(text)) return 'services';
+  if (/heure|horaire|ouvert|fermé/i.test(text)) return 'horaires';
+  return 'default';
+}
+
+function addMsg(text, isUser=false) {
+  const c = document.getElementById('lrcMessages');
+  const row = document.createElement('div');
+  row.className = 'lrc-msg-row' + (isUser ? ' user' : '');
+  if (isUser) {
+    row.innerHTML = `<div class="lrc-msg-content"><div class="lrc-bubble user">${esc(text)}</div><div class="lrc-msg-time">${now()}</div></div>`;
+  } else {
+    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${text}</div><div class="lrc-msg-time">${now()}</div></div>`;
+  }
+  c.appendChild(row);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyping() {
+  const c = document.getElementById('lrcMessages');
+  const row = document.createElement('div');
+  row.id = 'lrcTyping'; row.className = 'lrc-typing-row';
+  row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-typing-bubble"><span class="lrc-typing-dot"></span><span class="lrc-typing-dot"></span><span class="lrc-typing-dot"></span></div>`;
+  c.appendChild(row);
+  c.scrollTop = c.scrollHeight;
+}
+function removeTyping() { document.getElementById('lrcTyping')?.remove(); }
+
+function renderSuggestionsFallback(intent) {
+  const wrap = document.getElementById('lrcSuggestions');
+  const items = SUGGESTIONS[intent] || SUGGESTIONS.default;
+  wrap.innerHTML = '';
+  items.forEach((s,i) => {
+    const btn = document.createElement('button');
+    const isRdv = s.p || /rdv|réserv/i.test(s.l);
+    btn.className = 'lrc-sug' + (s.p ? ' primary' : '');
+    btn.style.animationDelay = (i*0.07)+'s';
+    btn.textContent = s.l;
+    btn.onclick = isRdv ? () => openRdvForm() : () => lrcSendText(s.t);
+    wrap.appendChild(btn);
+  });
+}
+
+async function lrcSend() {
+  if (isSending) return;
+  const input = document.getElementById('lrcInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  lrcSendText(text);
+}
+
+async function lrcSendText(text) {
+  if (isSending) return;
+
+  // Si c'est une demande de RDV et que c'est pas déjà un message de formulaire complet
+  const isFormSubmit = /Je souhaite réserver|je souhaite reserver/i.test(text);
+  if (needsRdvForm(text) && !isFormSubmit) {
+    addMsg(text, true);
+    // Réponse IA simulée pour guider vers le formulaire
+    setTimeout(() => {
+      addMsg('Bien sûr ! 📅 Remplissez le formulaire ci-dessous pour votre demande de rendez-vous.');
+      openRdvForm();
+    }, 400);
+    return;
+  }
+
+  isSending = true;
+  document.getElementById('lrcSendBtn').disabled = true;
+  document.getElementById('lrcSuggestions').innerHTML = '';
+
+  addMsg(text, true);
+  showTyping();
+
+  try {
+    const res = await fetch(`${API}/api/chat/stream`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ message:text, business_id:businessId, user_id:sessionUserId, source:getSource() })
+    });
+
+    removeTyping();
+    if (!res.ok) throw new Error('stream');
+
+    const c = document.getElementById('lrcMessages');
+    const row = document.createElement('div');
+    row.className = 'lrc-msg-row';
+    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream"></div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>`;
+    c.appendChild(row);
+
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let full = '';
+    const bubble = document.getElementById('lrcStream');
+
+    while (true) {
+      const {done,value} = await reader.read();
+      if (done) break;
+      for (const line of dec.decode(value,{stream:true}).split('\n')) {
+        if (line.startsWith('data: ')) {
+          const d = line.slice(6).trim();
+          if (d==='[DONE]') break;
+          try {
+            const tok = JSON.parse(d).text||'';
+            full += tok;
+            // Nettoyer [SUGGESTIONS:...] en temps réel avant affichage
+            const displayText = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g, '').trim();
+            bubble.innerHTML = esc(displayText).replace(/\n/g,'<br>');
+            bubble.id = '';
+            c.scrollTop = c.scrollHeight;
+          } catch{}
+        }
+      }
+    }
+
+    const timeEl = document.getElementById('lrcStreamTime');
+    if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
+
+    // Extraire suggestions depuis le texte complet
+    let backendSuggestions = [];
+    try {
+      const sugMatch = full.match(/\[SUGGESTIONS:([^\]]+)\]/);
+      if (sugMatch) {
+        backendSuggestions = sugMatch[1].split(',').map(s => s.trim().replace(/^["']|["']$/g, ''));
+      }
+      // Texte propre sans le tag suggestions
+      full = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g, '').trim();
+
+      // Détecter [EMAIL_CAPTURE:question_id=X]
+      const emailMatch = full.match(/\[EMAIL_CAPTURE:question_id=(\d+)\]/);
+      if (emailMatch) {
+        currentEscalationQuestionId = emailMatch[1];
+        full = full.replace(/\[EMAIL_CAPTURE:[^\]]*\]/g, '').trim();
+        setTimeout(() => openEmailCapture(), 400);
+      }
+
+      // Mettre à jour la bulle avec le texte final propre
+      bubble.innerHTML = esc(full).replace(/\n/g, '<br>');
+    } catch {}
+
+    // Mettre à jour flag langue depuis backend ou heuristique
+    const langMatch = full.match(/\b(bonjour|hallo|hello|ciao|hola|olá)\b/i);
+    if (langMatch) {
+      const flagMap = { bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸','olá':'🇵🇹' };
+      const flag = flagMap[langMatch[1].toLowerCase()];
+      if (flag) document.getElementById('lrcLangFlag').textContent = flag;
+    }
+
+    // Suggestions : backend > fallback
+    if (backendSuggestions.length > 0) {
+      renderSuggestionsFromBackend(backendSuggestions);
+    } else {
+      renderSuggestionsFallback(detectIntent(full + ' ' + text));
+    }
+
+  } catch(streamErr) {
+    removeTyping();
+    console.warn('Stream failed, trying /api/chat fallback:', streamErr);
+    try {
+      const r2 = await fetch(`${API}/api/chat`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({message:text, business_id:businessId, user_id:sessionUserId, source:getSource()})
+      });
+      if (!r2.ok) {
+        const errText = await r2.text();
+        console.error('Fallback error', r2.status, errText);
+        throw new Error(`HTTP ${r2.status}: ${errText.slice(0,200)}`);
+      }
+      const data = await r2.json();
+      const msg = data.message || data.response || data.text || '';
+      if (msg) {
+        addMsg(msg);
+        if (data.suggestions && data.suggestions.length) {
+          renderSuggestionsFromBackend(data.suggestions);
+        } else {
+          renderSuggestionsFallback(detectIntent(msg));
+        }
+      } else {
+        console.error('Empty response from /api/chat:', data);
+        addMsg("Je n'ai pas pu traiter votre demande. Pouvez-vous reformuler ?");
+        renderSuggestionsFallback('default');
+      }
+    } catch(fallbackErr) {
+      console.error('Both stream and fallback failed:', fallbackErr.message);
+      addMsg("Le service est momentanement indisponible. Veuillez reessayer dans quelques instants.");
+      renderSuggestionsFallback('default');
+    }
+  }
+
+  isSending = false;
+  document.getElementById('lrcSendBtn').disabled = false;
+  document.getElementById('lrcInput').focus();
+}
+
+function showUI(bizName, icon, greeting, customGreeting=null) {
+  document.getElementById('lrcLoading').style.display = 'none';
+  document.getElementById('lrcMessages').style.display = 'flex';
+  document.getElementById('lrcSuggestions').style.display = 'flex';
+  document.getElementById('lrcInputArea').style.display = 'flex';
+  document.getElementById('lrcFooter').style.display = 'block';
+  const welcomeMsg = customGreeting
+    ? customGreeting.replace('{business_name}', bizName)
+    : `${greeting} ! 👋<br>Je suis l'assistant de <strong>${bizName}</strong>.<br>Comment puis-je vous aider ?`;
+  addMsg(welcomeMsg);
+  renderSuggestionsFallback('default');
+  setTimeout(() => document.getElementById('lrcInput').focus(), 300);
+}
+
+
+// ── TOGGLE SERVICE PERSONNALISÉ ──
+function toggleCustomService(sel) {
+  const custom = document.getElementById('rdvServiceCustom');
+  if (!custom) return;
+  if (sel.value === '__custom__') {
+    custom.style.display = 'block';
+    custom.focus();
+  } else {
+    custom.style.display = 'none';
+    custom.value = '';
+  }
+}
+
+// ── DÉTECTION INTENT RDV ──
+function needsRdvForm(text) {
+  return /rdv|rendez.vous|réserv|prendre un rendez|book|appointment|créneau|mardi|mercredi|jeudi|vendredi|samedi|lundi|dimanche|demain|après-midi|matin|soir|10h|11h|12h|14h|15h|16h|17h|18h|19h/i.test(text);
+}
+
+// ── OUVRIR FORMULAIRE RDV ──
+async function openRdvForm(prefill={}) {
+  // Si services pas encore chargés, attendre
+  if (!window._bizServices && businessId) {
+    await loadBizServices(businessId);
+  }
+
+  const wrap = document.getElementById('lrcRdvForm');
+  const input = document.getElementById('lrcInputArea');
+  const sugg  = document.getElementById('lrcSuggestions');
+
+  // Construire liste services — toujours un select, avec option "Autre" pour saisie libre
+  const services = window._bizServices || [];
+  const serviceOptions = services
+    .map(s => {
+      const price = s.price ? ` — ${s.price}${s.currency||'CHF'} (${s.duration_minutes||'?'}min)` : '';
+      const sel = (prefill.service === s.name) ? ' selected' : '';
+      return `<option value="${s.name}"${sel}>${s.name}${price}</option>`;
+    })
+    .join('');
+  const serviceSelect = `
+    <select id="rdvService" onchange="toggleCustomService(this)" style="width:100%;">
+      <option value="">-- Choisir un service --</option>
+      ${serviceOptions}
+      <option value="__custom__">✏️ Autre (saisie libre)</option>
+    </select>
+    <input id="rdvServiceCustom" type="text" placeholder="Décrivez votre demande..." 
+      style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
+
+  // Calculer date min (aujourd'hui) et max (30 jours)
+  const today = new Date();
+  const maxDate = new Date(); maxDate.setDate(today.getDate()+30);
+  const toISO = d => d.toISOString().split('T')[0];
+
+  wrap.innerHTML = `
+    <div class="lrc-rdv-title">📅 Demande de rendez-vous</div>
+    <div class="lrc-rdv-grid">
+      <div class="lrc-rdv-field full">
+        <label>Service souhaité</label>
+        ${serviceSelect}
+      </div>
+      <div class="lrc-rdv-field">
+        <label>Date</label>
+        <input id="rdvDate" type="date" min="${toISO(today)}" max="${toISO(maxDate)}" value="${prefill.date||''}">
+      </div>
+      <div class="lrc-rdv-field">
+        <label>Heure souhaitée</label>
+        <input id="rdvTime" type="time" value="${prefill.time||''}">
+      </div>
+      <div class="lrc-rdv-field">
+        <label>Prénom & Nom</label>
+        <input id="rdvName" type="text" placeholder="Thomas Dupont" value="${prefill.name||''}">
+      </div>
+      <div class="lrc-rdv-field">
+        <label>Téléphone</label>
+        <input id="rdvPhone" type="tel" placeholder="+41 79 123 45 67" value="${prefill.phone||''}">
+      </div>
+      <div class="lrc-rdv-field full">
+        <label>Email <span style="font-weight:400;opacity:0.6;">(optionnel — pour la confirmation)</span></label>
+        <input id="rdvEmail" type="email" placeholder="thomas@email.com" value="${prefill.email||''}">
+      </div>
+    </div>
+    <div class="lrc-rdv-btns">
+      <button class="lrc-rdv-submit" onclick="submitRdvForm()">✅ Confirmer la demande</button>
+      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">Annuler</button>
+    </div>`;
+
+  wrap.style.display = 'block';
+  sugg.style.display = 'none';
+  input.style.display = 'none';
+}
+
+function openEmailCapture() {
+  document.getElementById('lrcEmailForm').style.display = 'block';
+  document.getElementById('lrcEmailForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setTimeout(() => document.getElementById('lrcEmailInput')?.focus(), 300);
+}
+
+function closeEmailCapture() {
+  document.getElementById('lrcEmailForm').style.display = 'none';
+  document.getElementById('lrcEmailInput').value = '';
+  currentEscalationQuestionId = null;
+}
+
+async function submitEmailCapture() {
+  const email = document.getElementById('lrcEmailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('lrcEmailInput').style.borderColor = '#EF4444';
+    setTimeout(() => document.getElementById('lrcEmailInput').style.borderColor = 'var(--border)', 2000);
+    return;
+  }
+  try {
+    if (currentEscalationQuestionId) {
+      await fetch(`${API}/api/business/${businessId}/unknown-questions/${currentEscalationQuestionId}/set-client-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client_email: email })
+      });
+    }
+    closeEmailCapture();
+    addMsg('Parfait ! Vous serez notifié à ' + email + ' dès que l\'équipe aura répondu. 👍', false);
+  } catch(e) {
+    closeEmailCapture();
+    addMsg('Votre email a bien été enregistré. Nous vous répondrons dès que possible. 👍', false);
+  }
+}
+
+function closeRdvForm() {
+  document.getElementById('lrcRdvForm').style.display = 'none';
+  document.getElementById('lrcInputArea').style.display = 'flex';
+  document.getElementById('lrcSuggestions').style.display = 'flex';
+}
+
+async function submitRdvForm() {
+  const serviceEl = document.getElementById('rdvService');
+  const customEl  = document.getElementById('rdvServiceCustom');
+  const service   = (serviceEl.value === '__custom__' && customEl?.value)
+                    ? customEl.value.trim()
+                    : serviceEl.value;
+  const date    = document.getElementById('rdvDate').value;
+  const time    = document.getElementById('rdvTime').value;
+  const name    = document.getElementById('rdvName').value;
+  const phone   = document.getElementById('rdvPhone').value;
+
+  if (!service || !date || !time || !name || !phone) {
+    ['rdvService','rdvDate','rdvTime','rdvName','rdvPhone'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { if (!el.value) el.style.borderColor = '#EF4444'; else el.style.borderColor = ''; }
+    });
+    return;
+  }
+
+  const email = document.getElementById('rdvEmail')?.value || '';
+  const dateLabel = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  const emailPart = email ? `, Email : ${email}` : '';
+  const msg = `Je souhaite réserver une ${service} le ${dateLabel} à ${time}. Nom : ${name}, Tél : ${phone}${emailPart}.`;
+
+  closeRdvForm();
+  lrcSendText(msg);
+}
+
+// Charger les services du business pour pré-remplir le formulaire
+async function loadBizServices(bizId) {
+  try {
+    // Essai /config/full d'abord, puis /config
+    let services = [];
+    try {
+      const d = await fetch(`${API}/api/business/${bizId}/config/full`).then(r=>r.json());
+      services = d.services || [];
+    } catch {
+      const d = await fetch(`${API}/api/business/${bizId}/config`).then(r=>r.json());
+      services = d.services || [];
+    }
+    // Dédupliquer par nom (au cas où le backend retourne des doublons)
+    const seen = new Set();
+    window._bizServices = services.filter(s => {
+      if (!s.name || seen.has(s.name)) return false;
+      seen.add(s.name);
+      return true;
+    });
+    console.log('Services chargés:', window._bizServices.length, window._bizServices.map(s=>s.name));
+  } catch(e) {
+    console.warn('Impossible de charger les services:', e);
+    window._bizServices = [];
+  }
+}
+
+async function lrcInit() {
+  const slug = getSlug();
+  detectedLang = detectBrowserLang();
+  const flag = LANG_FLAGS[detectedLang] || '🌍';
+  const greeting = GREETINGS[detectedLang] || 'Bonjour';
+  const placeholder = PLACEHOLDERS[detectedLang] || 'Posez votre question...';
+
+  document.getElementById('lrcLangFlag').textContent = flag;
+  document.getElementById('lrcInput').placeholder = placeholder;
+
+  if (!slug) {
+    document.getElementById('lrcLoading').style.display = 'none';
+    document.getElementById('lrcError').style.display = 'flex';
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API}/api/business/slug/${slug}`);
+    if (!res.ok) throw new Error('not found');
+    const biz = await res.json();
+
+    businessId = biz.id;
+    const icon = BIZ_ICONS[biz.business_type] || '💬';
+    bizAvatar = icon;
+
+    document.getElementById('lrcAvatar').textContent = icon;
+    document.getElementById('lrcName').textContent = biz.name || 'Assistant IA';
+    document.getElementById('lrcStatusText').textContent = 'Assistant IA · En ligne 24/7';
+
+    // Appliquer couleur brand Pro si définie
+    if (biz.brand_color && /^#[0-9A-Fa-f]{6}$/.test(biz.brand_color)) {
+      document.documentElement.style.setProperty('--blue', biz.brand_color);
+      document.documentElement.style.setProperty('--blue-light', biz.brand_color + '18');
+    }
+
+    // Message d'accueil personnalisé ou auto
+    const customGreeting = biz.custom_greeting || null;
+    await loadBizServices(biz.id);
+    showUI(biz.name || 'ce commerce', icon, greeting, customGreeting);
+
+  } catch {
+    document.getElementById('lrcLoading').style.display = 'none';
+    document.getElementById('lrcError').style.display = 'flex';
+  }
+}
+
+lrcInit();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abonnement — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+    <div style="position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 65%);border-radius:50%;"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">🏢</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:600;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.3),rgba(0,212,255,0.15));color:#fff;font-size:14px;"><span>💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span>🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainContent" style="flex:1;min-width:0;padding:32px 36px 60px;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER -->
+    <div style="margin-bottom:24px;">
+      <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💳 Abonnement</h1>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez votre plan et votre facturation</p>
+    </div>
+
+    <!-- ALERTES URL -->
+    <div id="alertBanner" style="display:none;margin-bottom:20px;"></div>
+
+    <!-- PLAN ACTUEL -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;margin-bottom:20px;">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">Votre plan actuel</div>
+      <div id="currentPlanContent">
+        <div style="display:flex;align-items:center;justify-content:center;padding:30px;">
+          <div class="spin" style="width:28px;height:28px;border:3px solid rgba(0,212,255,0.2);border-top-color:#00D4FF;border-radius:50%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOGGLE MENSUEL / ANNUEL -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:16px;">
+      <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0;">Choisissez votre plan</h2>
+      <div style="display:inline-flex;align-items:center;padding:4px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:100px;">
+        <div id="abTogM" onclick="abSetBilling('monthly')" style="padding:7px 16px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;">Mensuel</div>
+        <div id="abTogY" onclick="abSetBilling('yearly')" style="padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:6px;">
+          Annuel <span style="font-size:10px;background:rgba(16,185,129,0.15);color:#4ade80;border:1px solid rgba(16,185,129,0.25);padding:1px 6px;border-radius:100px;font-weight:600;">-20%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTES PLANS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+
+      <!-- STANDARD -->
+      <div id="cardStandard" class="plan-card">
+        <div style="margin-bottom:20px;">
+          <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:10px;">📦 Standard</div>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
+            <span id="abPriceStd" style="font-size:44px;font-weight:800;color:#fff;line-height:1;">39€</span>
+            <span id="abPeriodStd" style="font-size:14px;color:rgba(255,255,255,0.45);">/mois</span>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);">Idéal pour démarrer</div>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feat-check" style="color:#10B981;">✓</span> IA 6 langues européennes</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Conversations illimitées</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Prise de RDV + Google Calendar</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Confirmations par email</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Lien public + QR Code</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Résumés IA hebdomadaires</li>
+          <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Notifications SMS</span></li>
+          <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Analytics avancés</span></li>
+        </ul>
+        <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std">Choisir Standard</button>
+      </div>
+
+      <!-- PRO -->
+      <div id="cardPro" class="plan-card plan-card-pro">
+        <div style="position:absolute;top:-13px;right:20px;background:linear-gradient(135deg,#F59E0B,#D97706);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(245,158,11,0.35);">⭐ Recommandé</div>
+        <div style="margin-bottom:20px;">
+          <div style="font-size:14px;font-weight:700;color:#00D4FF;margin-bottom:10px;">🌟 Pro</div>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
+            <span id="abPricePro" style="font-size:44px;font-weight:800;color:#fff;line-height:1;">49€</span>
+            <span id="abPeriodPro" style="font-size:14px;color:rgba(255,255,255,0.45);">/mois</span>
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);">Pour maximiser vos résultats</div>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Tout le plan Standard</strong></li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Notifications SMS clients</strong></li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Analytics avancés (90 jours)</strong></li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Résumés IA quotidiens</strong></li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> Personnalité IA ajustable</li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> Alertes urgences temps réel</li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span> Nouvelles features en avant-première</li>
+        </ul>
+        <button id="btnPro" onclick="subscribe('pro')" class="plan-btn plan-btn-pro">Choisir Pro</button>
+      </div>
+
+    </div>
+
+    <!-- GARANTIES -->
+    <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🔒 Paiements sécurisés Stripe</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🛡️ Certifié PCI DSS</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">❌ Sans engagement</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🇪🇺 Données en Europe</div>
+    </div>
+
+    <!-- FAQ -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+      <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0 0 16px;">❓ Questions fréquentes</h2>
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="faq-btn">
+          <span>Puis-je annuler à tout moment ?</span><span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui, sans engagement. Annulez depuis le portail de facturation. Vous gardez l'accès jusqu'à la fin de la période en cours.</div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="faq-btn">
+          <span>Comment changer de plan ?</span><span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Cliquez sur le plan souhaité ci-dessus. Le changement est immédiat avec proratisation automatique via Stripe.</div>
+      </div>
+      <div class="faq-item">
+        <button onclick="toggleFaq(this)" class="faq-btn">
+          <span>Mes données de paiement sont-elles sécurisées ?</span><span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Oui. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte.</div>
+      </div>
+      <div class="faq-item" style="border-bottom:none;">
+        <button onclick="toggleFaq(this)" class="faq-btn" style="border-bottom:none;">
+          <span>Que se passe-t-il après le trial ?</span><span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Vous choisissez un plan payant ou votre compte passe en mode limité. Aucun prélèvement automatique sans votre accord.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}body{margin:0;padding:0;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+.spin{animation:spin 0.8s linear infinite;}
+
+/* Plans */
+.plan-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px;position:relative;transition:transform 0.2s,box-shadow 0.2s;animation:fadeUp 0.3s ease both;}
+.plan-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,0.25);}
+.plan-card-pro{background:linear-gradient(145deg,rgba(0,82,204,0.2),rgba(0,212,255,0.08));border-color:rgba(0,212,255,0.3);box-shadow:0 4px 24px rgba(0,212,255,0.1);}
+.plan-features{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:8px;}
+.plan-features li{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.82);}
+.feat-check{font-size:14px;flex-shrink:0;}
+.plan-btn{width:100%;padding:14px;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit;}
+.plan-btn-std{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;}
+.plan-btn-std:hover{background:rgba(255,255,255,0.14);}
+.plan-btn-pro{background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;box-shadow:0 4px 14px rgba(0,82,204,0.3);}
+.plan-btn-pro:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,82,204,0.4);}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.07);}
+.faq-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 0;background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;color:#fff;font-size:14px;font-weight:600;}
+.faq-icon{color:#00D4FF;font-size:18px;flex-shrink:0;transition:transform 0.2s;}
+.faq-answer{display:none;padding:0 0 14px;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.65;}
+
+@media(max-width:900px){
+  #sidebar{display:none!important;}#bottomNav{display:block!important;}
+  #mainContent{padding:18px 14px 80px!important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+  h1{font-size:22px!important;}
+}
+</style>
+
+<script>
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+const API = 'https://localreply-api.onrender.com';
+
+function getUserIdFromToken() { try { const p=JSON.parse(atob(token.split('.')[1])); return p.sub||p.user_id||p.id; } catch { return null; } }
+const userId = getUserIdFromToken();
+
+async function apiRequest(endpoint, method='GET', data=null) {
+  const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}};
+  if(data&&method!=='GET') opts.body=JSON.stringify(data);
+  const res=await fetch(API+endpoint,opts);
+  if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(JSON.stringify(err.detail||err));}
+  return res.json();
+}
+
+function showToast(msg,type='success'){
+  const el=document.createElement('div');el.textContent=msg;
+  el.style.cssText=`position:fixed;bottom:80px;right:20px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#fff;padding:12px 18px;border-radius:11px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:10000;animation:fadeUp 0.3s ease;`;
+  document.body.appendChild(el);setTimeout(()=>el.remove(),4000);
+}
+
+async function loadSidebarInfo() {
+  try {
+    const [config,sub]=await Promise.all([
+      apiRequest(`/api/business/${businessId}/config`),
+      apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null)
+    ]);
+    const biz=config.business||{};
+    const sn=document.getElementById('sidebarBusinessName');if(sn&&biz.name)sn.textContent=biz.name;
+    const sp=document.getElementById('sidebarPlan');
+    if(sp){const plan=sub?.plan||'standard';sp.textContent=plan==='pro'?'⭐ Plan Pro':plan==='trial'?'🎁 Essai gratuit':'Plan Standard';}
+    const icons={salon:'💇',spa:'💅',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'🎨'};
+    const sl=document.getElementById('sidebarLogo');if(sl)sl.textContent=icons[biz.business_type]||'🏢';
+  } catch(e){console.error('Sidebar:',e);}
+}
+
+function checkURLAlerts(){
+  const params=new URLSearchParams(window.location.search);
+  const banner=document.getElementById('alertBanner');
+  const isNewSignup=params.get('new')==='true';
+
+  // Nouveau compte → afficher un message d'accueil et forcer le choix
+  if(isNewSignup && params.get('success')!=='true'){
+    banner.innerHTML=`<div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.25);border-left:4px solid #00D4FF;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
+      <span style="font-size:28px;">👋</span>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:3px;">Bienvenue sur LocalReply !</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);">Choisissez votre plan pour démarrer votre essai gratuit de 14 jours. Aucun prélèvement pendant l'essai.</div>
+      </div>
+    </div>`;
+    banner.style.display='block';
+  }
+
+  if(params.get('success')==='true'){
+    const plan=params.get('plan')||'';
+    const isNewAccount=params.get('new')==='true';
+    banner.innerHTML=`<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-left:4px solid #10B981;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">🎉</span><div><div style="font-size:15px;font-weight:700;color:#10B981;margin-bottom:3px;">Abonnement activé !</div><div style="font-size:13px;color:rgba(255,255,255,0.75);">Bienvenue sur le plan ${plan==='pro'?'⭐ Pro':'📦 Standard'}. Toutes vos fonctionnalités sont actives.</div></div></div>`;
+    banner.style.display='block';
+    // Nouveau compte → rediriger vers onboarding après 2s
+    if(isNewAccount){
+      setTimeout(()=>{ window.location.href='/onboarding'; }, 2000);
+    } else {
+      window.history.replaceState({},'','/abonnement');
+    }
+  } else if(params.get('cancelled')==='true'){
+    banner.innerHTML=`<div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.25);border-left:4px solid #6B7280;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">↩️</span><div><div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:3px;">Paiement annulé</div><div style="font-size:13px;color:rgba(255,255,255,0.6);">Aucun prélèvement effectué. Vous pouvez réessayer quand vous voulez.</div></div></div>`;
+    banner.style.display='block';window.history.replaceState({},'','/abonnement');
+  }
+}
+
+async function loadCurrentPlan(){
+  const container=document.getElementById('currentPlanContent');
+  try {
+    const sub=await apiRequest(`/api/billing/subscription/${userId}`);
+    const plan=sub.plan||'trial';
+    const status=sub.status||'active';
+    const pc={trial:{label:'Essai gratuit',color:'#F59E0B',icon:'🎁',bg:'rgba(245,158,11,0.1)',border:'rgba(245,158,11,0.25)'},standard:{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'},pro:{label:'Pro',color:'#10B981',icon:'⭐',bg:'rgba(16,185,129,0.1)',border:'rgba(16,185,129,0.25)'}}[plan]||{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'};
+    const sl={active:{l:'Actif',c:'#10B981'},cancelled:{l:'Annulé',c:'#EF4444'},past_due:{l:'Paiement en retard',c:'#F59E0B'}}[status]||{l:'Actif',c:'#10B981'};
+    const renewDate=sub.current_period_end?new Date(sub.current_period_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
+    const trialEnd=sub.trial_end?new Date(sub.trial_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
+    container.innerHTML=`<div style="background:${pc.bg};border:1px solid ${pc.border};border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="display:flex;align-items:center;gap:14px;"><div style="width:48px;height:48px;background:${pc.bg};border:2px solid ${pc.border};border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;">${pc.icon}</div><div><div style="font-size:20px;font-weight:800;color:${pc.color};margin-bottom:3px;">Plan ${pc.label}</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:12px;color:${sl.c};font-weight:600;">● ${sl.l}</span>${renewDate&&plan!=='trial'?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Renouvellement le ${renewDate}</span>`:''}${trialEnd?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Essai jusqu'au ${trialEnd}</span>`:''}${plan==='trial'&&!trialEnd?'<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Fonctionnalités Pro incluses</span>':''}</div></div></div>${sub.stripe_subscription_id?`<button onclick="openPortal()" style="padding:10px 18px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;">⚙️ Gérer / Annuler</button>`:''}</div>${status==='past_due'?`<div style="margin-top:14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-left:4px solid #EF4444;border-radius:10px;padding:14px;display:flex;align-items:center;gap:10px;"><span>⚠️</span><div><div style="font-size:14px;font-weight:700;color:#EF4444;margin-bottom:2px;">Paiement en retard</div><div style="font-size:12px;color:rgba(255,255,255,0.65);">Mettez à jour votre moyen de paiement.</div></div><button onclick="openPortal()" style="margin-left:auto;padding:9px 16px;background:#EF4444;border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">Mettre à jour</button></div>`:''}`;
+    updatePlanButtons(plan);
+  } catch(e) {
+    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">Impossible de charger les informations d'abonnement.</div>`;
+  }
+}
+
+function updatePlanButtons(plan){
+  const bs=document.getElementById('btnStandard'),bp=document.getElementById('btnPro');
+  if(plan==='standard'){bs.textContent='✅ Plan actuel';bs.disabled=true;bs.style.opacity='0.6';bs.style.cursor='not-allowed';bp.textContent='⬆️ Passer au Pro';}
+  else if(plan==='pro'){bp.textContent='✅ Plan actuel';bp.disabled=true;bp.style.opacity='0.6';bp.style.cursor='not-allowed';bs.textContent='⬇️ Passer au Standard';}
+  else{bs.textContent='🚀 Choisir Standard';bp.textContent='⭐ Choisir Pro';}
+}
+
+let abCurrentBilling='monthly';
+function abSetBilling(type){
+  abCurrentBilling=type;
+  const on='padding:7px 16px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;';
+  const off='padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:6px;';
+  document.getElementById('abTogM').style.cssText=type==='monthly'?on:off;
+  document.getElementById('abTogY').style.cssText=type==='yearly'?on:off;
+  if(type==='monthly'){
+    document.getElementById('abPriceStd').textContent='39€';document.getElementById('abPricePro').textContent='49€';
+    document.getElementById('abPeriodStd').textContent='/mois';document.getElementById('abPeriodPro').textContent='/mois';
+  } else {
+    document.getElementById('abPriceStd').textContent='31€';document.getElementById('abPricePro').textContent='39€';
+    document.getElementById('abPeriodStd').textContent='/mois · 372€/an';document.getElementById('abPeriodPro').textContent='/mois · 468€/an';
+  }
+}
+
+async function subscribe(plan){
+  const btn=document.getElementById(plan==='standard'?'btnStandard':'btnPro');
+  const orig=btn.textContent;btn.disabled=true;btn.textContent='⏳ Redirection...';
+  try {
+    const data=await apiRequest('/api/billing/create-checkout-session','POST',{user_id:parseInt(userId),plan,billing:abCurrentBilling,is_new_account:isNewSignup});
+    if(data.checkout_url){const a=document.createElement('a');a.href=data.checkout_url;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+    else throw new Error('Pas de checkout_url');
+  } catch(e){showToast('❌ Erreur lors de la redirection','error');btn.disabled=false;btn.textContent=orig;}
+}
+
+async function openPortal(){
+  const btn=event.target;const orig=btn.textContent;btn.textContent='⏳ Ouverture...';btn.disabled=true;
+  try {
+    const data=await apiRequest('/api/billing/create-portal-session','POST',{user_id:parseInt(userId)});
+    if(data.portal_url){const a=document.createElement('a');a.href=data.portal_url;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+    else throw new Error('Pas de portal_url');
+  } catch(e){showToast("❌ Impossible d'ouvrir le portail",'error');btn.textContent=orig;btn.disabled=false;}
+}
+
+function toggleFaq(btn){
+  const answer=btn.nextElementSibling;const icon=btn.querySelector('.faq-icon');
+  const open=answer.style.display==='block';
+  answer.style.display=open?'none':'block';
+  icon.textContent=open?'+':'−';
+}
+
+function toggleMobileMenu(){
+  const ov=document.getElementById('mobileMenuOverlay'),pp=document.getElementById('mobileMenuPopup');
+  const open=pp.style.display==='block';
+  if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
+  else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
+}
+
+function logout(){if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  checkURLAlerts();
+  loadSidebarInfo();
+  loadCurrentPlan();
+
+  // Badges
+  try {
+    const [_q,_a]=await Promise.all([
+      fetch(API+`/api/business/${businessId}/unknown-questions?status=pending`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>({questions:[]})),
+      fetch(API+`/api/appointments/?business_id=${businessId}`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>[])
+    ]);
+    const _mc=_q?.questions?.length||0,_rc=Array.isArray(_a)?_a.filter(a=>a.status==='pending').length:0;
+    const _sb=(c,...ids)=>ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(c>0){el.textContent=c>9?'9+':c;el.style.display='flex';}else el.style.display='none';});
+    _sb(_mc,'sbBadgeMsg','bnBadgeMsg');_sb(_rc,'sbBadgeRdv','bnBadgeRdv');
+  } catch {}
+});
+</script>
+
+</body>
+</html>

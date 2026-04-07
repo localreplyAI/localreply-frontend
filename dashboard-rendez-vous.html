@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rendez-vous — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="dashboardWrapper" style="display: flex; min-height: 100vh; background:#0A1628; position: relative; overflow-x: hidden;">
+  
+  
+  <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 20s infinite ease-in-out; pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 82, 204, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 25s infinite ease-in-out reverse; pointer-events: none;"></div>
+  
+  
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">💇</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:600;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+  
+  
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;font-weight:700;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent" style="flex:1;min-width:0;padding:32px 36px 60px;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:24px;">
+      <div>
+        <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">📅 Rendez-vous</h1>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez vos demandes de RDV et confirmez vos créneaux</p>
+      </div>
+      <button onclick="loadAppointments()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">🔄 Actualiser</button>
+    </div>
+
+    <!-- STATS -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+      <div style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#F59E0B;line-height:1;margin-bottom:4px;" id="statPending">—</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">En attente</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">À confirmer</div>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#10B981;line-height:1;margin-bottom:4px;" id="statConfirmed">—</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">Confirmés</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">30 derniers jours</div>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,82,204,0.06));border:1px solid rgba(0,212,255,0.18);border-radius:14px;padding:18px 20px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#00D4FF;line-height:1;margin-bottom:4px;" id="statTotal">—</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">Total</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">30 derniers jours</div>
+      </div>
+    </div>
+
+    <!-- MODE RDV -->
+    <div id="rdvModeSection" style="margin-bottom:20px;"></div>
+
+    <!-- RECHERCHE ET FILTRES (masqué si mode none) -->
+    <div id="appointmentsSection">
+    <div style="display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; align-items: center;">
+      <div style="flex: 1; min-width: 200px; position: relative;">
+        <input id="searchInput" type="text" placeholder="🔍 Rechercher un client, service..." 
+          oninput="filterAppointments()"
+          style="width: 100%; padding: 14px 20px; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 14px; color: #FFFFFF; outline: none; font-family: inherit; transition: border 0.2s;"
+          onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+      </div>
+      <div style="display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
+        <button id="filterAll" onclick="setFilter('all')" style="padding: 8px 16px; background: linear-gradient(135deg,#0052CC,#00D4FF); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Tous</button>
+        <button id="filterPending" onclick="setFilter('pending')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">En attente</button>
+        <button id="filterConfirmed" onclick="setFilter('confirmed')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Confirmés</button>
+        <button id="filterAll2" onclick="setFilter('past')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Passés</button>
+      </div>
+      <button onclick="loadAppointments()" style="padding: 12px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: rgba(255,255,255,0.7); font-size:13px; cursor:pointer; transition:all 0.2s;" title="Actualiser">🔄</button>
+    </div>
+
+    <!-- LISTE UNIFIÉE (remplace pending + confirmed séparés) -->
+    <div id="allAppointmentsList"></div>
+
+    <div id="pendingSection" style="display: none; margin-bottom: 35px;">
+      <h2 style="font-size: 28px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px;">
+        ⏳ RDV en attente de validation
+        <span id="pendingBadge" style="display: inline-block; padding: 4px 12px; background: rgba(251, 191, 36, 0.8); border-radius: 12px; font-size: 16px; color: #FFF; box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);">0</span>
+      </h2>
+      
+      <div id="pendingList"></div>
+    </div>
+    
+    
+    <div id="confirmedSection">
+      <h2 style="font-size: 28px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">📋 Prochains rendez-vous confirmés</h2>
+      <div id="confirmedList"></div>
+    </div>
+    </div><!-- fin appointmentsSection -->
+    
+  </div>
+  
+</div>
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+button:hover { transform: translateY(-2px); }
+
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+.nav-item.active {
+  background: linear-gradient(135deg, #0052CC, #00D4FF) !important;
+  color: #FFFFFF !important;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+  #sidebar {
+    display: none !important;
+  }
+  
+  #bottomNav {
+    display: block !important;
+  }
+  
+  #mainContent {
+    padding: 20px 15px 100px !important;
+  }
+  
+  #mainContent h1 {
+    font-size: 32px !important;
+  }
+  
+  #mainContent h2 {
+    font-size: 22px !important;
+  }
+  
+  #mainContent p {
+    font-size: 14px !important;
+  }
+}
+</style>
+
+<script>
+// ============================================
+// PROTECTION : Vérifier si connecté
+// ============================================
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+function getUserIdFromToken() { try { return JSON.parse(atob(token.split('.')[1])).sub; } catch { return null; } }
+const userId = getUserIdFromToken();
+
+if (!token || !businessId) {
+  window.location.href = '/auth';
+}
+
+// ============================================
+// CONFIGURATION API
+// ============================================
+const API_BASE_URL = 'https://localreply-api.onrender.com';
+let allAppointments = [];
+let currentFilter = 'all';
+let searchQuery = '';
+
+function setFilter(filter) {
+  currentFilter = filter;
+  const btns = {
+    'all': 'filterAll',
+    'pending': 'filterPending', 
+    'confirmed': 'filterConfirmed',
+    'past': 'filterAll2'
+  };
+  Object.entries(btns).forEach(([f, id]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.style.background = f === filter ? 'linear-gradient(135deg,#0052CC,#00D4FF)' : 'transparent';
+    btn.style.color = f === filter ? '#fff' : 'rgba(255,255,255,0.6)';
+  });
+  renderFilteredAppointments();
+}
+
+function filterAppointments() {
+  searchQuery = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+  renderFilteredAppointments();
+}
+
+function renderFilteredAppointments() {
+  const now = new Date();
+  let filtered = allAppointments.filter(apt => {
+    const aptDate = new Date(apt.start_time);
+    const matchSearch = !searchQuery || 
+      (apt.client_name || '').toLowerCase().includes(searchQuery) ||
+      (apt.client_email || '').toLowerCase().includes(searchQuery) ||
+      (apt.client_phone || '').toLowerCase().includes(searchQuery) ||
+      (apt.service_name || '').toLowerCase().includes(searchQuery);
+    
+    if (!matchSearch) return false;
+    
+    if (currentFilter === 'pending') return apt.status === 'pending';
+    if (currentFilter === 'confirmed') return apt.status === 'confirmed' && aptDate >= now;
+    if (currentFilter === 'past') return aptDate < now || apt.status === 'cancelled';
+    return apt.status !== 'cancelled'; // 'all' = tout sauf annulé
+  });
+
+  const unified = document.getElementById('allAppointmentsList');
+  const pendingSection = document.getElementById('pendingSection');
+  const confirmedSection = document.getElementById('confirmedSection');
+
+  if (unified) {
+    // Vue unifiée avec filtre actif
+    if (currentFilter !== 'all') {
+      unified.style.display = 'block';
+      if (pendingSection) pendingSection.style.display = 'none';
+      if (confirmedSection) confirmedSection.style.display = 'none';
+      
+      if (!filtered.length) {
+        unified.innerHTML = emptyState('Aucun rendez-vous trouvé', 'Essayez une autre recherche ou un autre filtre.');
+        return;
+      }
+      unified.innerHTML = '<h2 style="font-size:24px;font-weight:700;color:#FFFFFF;margin:0 0 20px 0;">' +
+        (currentFilter==='pending'?'⏳ En attente':currentFilter==='confirmed'?'✅ Confirmés':'📋 RDV passés') +
+        ` <span style="font-size:16px;opacity:0.5;">(${filtered.length})</span></h2>`;
+      filtered.sort((a,b) => new Date(a.start_time) - new Date(b.start_time))
+        .forEach(apt => {
+          const card = apt.status === 'pending' ? createPendingCard(apt, false) : createConfirmedCard(apt);
+          unified.appendChild(card);
+        });
+    } else {
+      unified.style.display = 'none';
+      if (pendingSection) pendingSection.style.display = filtered.filter(a=>a.status==='pending').length ? 'block' : 'none';
+      if (confirmedSection) confirmedSection.style.display = 'block';
+      // Re-render les listes normales
+      displayPendingAppointments(filtered.filter(a => a.status === 'pending'));
+      const upcoming = filtered.filter(a => a.status === 'confirmed' && new Date(a.start_time) >= new Date())
+        .sort((a,b) => new Date(a.start_time) - new Date(b.start_time));
+      displayConfirmedAppointments(upcoming);
+    }
+  }
+}
+
+function emptyState(title, sub) {
+  return `<div style="text-align:center;padding:60px 20px;background:rgba(255,255,255,0.03);border-radius:16px;">
+    <div style="font-size:56px;margin-bottom:15px;opacity:0.3;">🔍</div>
+    <h3 style="font-size:20px;font-weight:700;color:#FFFFFF;margin:0 0 8px 0;">${title}</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.6);margin:0;">${sub}</p>
+  </div>`;
+}
+
+
+
+// Helper pour les requêtes API
+async function apiRequest(endpoint, method = 'GET', data = null) {
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  };
+  
+  if (data && method !== 'GET') {
+    options.body = JSON.stringify(data);
+  }
+  
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+    const contentType = response.headers.get('content-type') || '';
+    const isJson = contentType.includes('application/json');
+    
+    if (!response.ok) {
+      let errorMsg = `Erreur ${response.status}`;
+      try {
+        if (isJson) {
+          const error = await response.json();
+          console.error('ERREUR API:', JSON.stringify(error, null, 2));
+          if (error.detail && Array.isArray(error.detail)) {
+            errorMsg = error.detail.map(e => `${e.loc?.join('.')}: ${e.msg}`).join('\n');
+          } else {
+            errorMsg = JSON.stringify(error.detail || error);
+          }
+        } else {
+          const text = await response.text();
+          console.error('ERREUR API non-JSON:', response.status, text.slice(0, 200));
+          errorMsg = `Erreur serveur ${response.status}`;
+        }
+      } catch(e) {
+        errorMsg = `Erreur ${response.status}`;
+      }
+      throw new Error(errorMsg);
+    }
+    
+    if (!isJson) return {};
+    return response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
+// Charger infos sidebar (business name + plan + logo)
+// Charger infos sidebar — NOM + PLAN + ICÔNE
+async function loadSidebarInfo() {
+  try {
+    const config = await apiRequest(`/api/business/${businessId}/config`);
+    const biz = config.business || {};
+    const sidebarName = document.getElementById('sidebarBusinessName');
+    if (sidebarName && biz.name) sidebarName.textContent = biz.name;
+    let planLabel = 'Plan Standard';
+    try {
+      const sub = await apiRequest(`/api/billing/subscription/${userId}`);
+      if (sub?.plan === 'pro') planLabel = '⭐ Plan Pro';
+      else if (sub?.plan === 'trial') planLabel = '🎁 Essai gratuit';
+    } catch {}
+    const sidebarPlan = document.getElementById('sidebarPlan');
+    if (sidebarPlan) sidebarPlan.textContent = planLabel;
+    const icons = {
+      'salon':'💇','spa':'💅','massage':'💆','dentist':'🦷','opticien':'👓',
+      'restaurant':'🍽️','cafe':'☕','pizzeria':'🍕',
+      'bakery':'🍞','butcher':'🥩','fishmonger':'🐟','florist':'🌿',
+      'law':'⚖️','architect':'📐','accountant':'📊','realtor':'🏡','training':'🎓',
+      'gym':'🏋️','cinema':'🎬','escapegame':'🎮','pool':'🏊',
+      'garage':'🔧','plumber':'🔨','cleaning':'🧹','gardener':'🌳',
+      'medical':'🏥','vet':'🐾','grooming':'✂️',
+      'retail':'🛍️','hotel':'🏨',
+      'photographer':'📸','laundry':'👗','other':'🎨'
+    };
+    const sidebarLogo = document.getElementById('sidebarLogo');
+    if (sidebarLogo) sidebarLogo.textContent = icons[biz.business_type] || '🏢';
+  } catch (e) {
+    console.error('Erreur sidebar:', e);
+  }
+}
+
+// Notification toast
+function showNotification(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  
+  const bgColor = type === 'error' ? 
+    'rgba(239, 68, 68, 0.95)' : 
+    'rgba(16, 185, 129, 0.95)';
+  
+  toast.style.cssText = `
+    position: fixed; 
+    bottom: 100px; 
+    right: 30px; 
+    background: ${bgColor}; 
+    color: #FFFFFF; 
+    padding: 16px 24px; 
+    border-radius: 12px; 
+    font-size: 15px; 
+    font-weight: 600; 
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); 
+    z-index: 10000; 
+    animation: slideIn 0.3s ease;
+  `;
+  
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ============================================
+// GOOGLE CALENDAR
+// ============================================
+
+// Vérifier le statut de connexion Google Calendar
+// ─── MODE RDV ───
+let currentRdvMode = 'google';
+
+async function checkCalendarStatus() {
+  const section = document.getElementById('rdvModeSection');
+  const aptsSection = document.getElementById('appointmentsSection');
+  if (!section) return;
+
+  section.innerHTML = '<div style="text-align:center;padding:16px;color:rgba(255,255,255,0.35);font-size:13px;">Chargement...</div>';
+
+  try {
+    const config = await apiRequest(`/api/business/${businessId}/config`).catch(() => null);
+    const biz = config?.business || {};
+    currentRdvMode = biz.rdv_mode || 'google';
+    const externalUrl = biz.external_rdv_url || '';
+
+    // Adapter la page selon le mode
+    applyRdvMode(section, aptsSection, currentRdvMode, externalUrl);
+
+  } catch (e) {
+    section.innerHTML = '<div style="padding:12px 16px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:12px;font-size:13px;color:rgba(239,68,68,0.7);">⚠️ Impossible de charger la configuration</div>';
+  }
+}
+
+async function applyRdvMode(section, aptsSection, mode, externalUrl) {
+  // ── Sélecteur de mode ──
+  const modes = [
+    { id:'google', icon:'📅', label:'Google Calendar',        color:'#10B981' },
+    { id:'link',   icon:'🔗', label:'Lien de réservation',    color:'#00D4FF' },
+    { id:'manual', icon:'📞', label:'Gestion manuelle',        color:'#F59E0B' },
+    { id:'none',   icon:'💬', label:'Pas de prise de RDV',    color:'#8B5CF6' },
+  ];
+
+  section.innerHTML = `
+    <!-- Sélecteur mode -->
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:20px 22px;margin-bottom:16px;">
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">Mode de prise de rendez-vous</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0;" id="rdvModePills">
+        ${modes.map(m => `
+          <button onclick="switchRdvMode('${m.id}')" id="pill_${m.id}" style="padding:10px 8px;border-radius:11px;border:1.5px solid ${mode===m.id ? m.color : 'rgba(255,255,255,0.08)'};background:${mode===m.id ? m.color+'18' : 'rgba(255,255,255,0.03)'};color:${mode===m.id ? m.color : 'rgba(255,255,255,0.5)'};font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:5px;">
+            <span style="font-size:18px;">${m.icon}</span>${m.label}
+          </button>`).join('')}
+      </div>
+    </div>
+    <!-- Zone de contenu selon le mode -->
+    <div id="rdvModeContent"></div>`;
+
+  // Remplir le contenu selon le mode
+  await renderModeContent(mode, externalUrl);
+
+  // Afficher/masquer la section appointments
+  if (aptsSection) {
+    aptsSection.style.display = mode === 'none' ? 'none' : 'block';
+  }
+}
+
+async function renderModeContent(mode, externalUrl) {
+  const zone = document.getElementById('rdvModeContent');
+  if (!zone) return;
+
+  if (mode === 'google') {
+    // Vérifier connexion Calendar
+    zone.innerHTML = '<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">Vérification Google Calendar...</div>';
+    try {
+      const status = await apiRequest(`/api/calendar/status?business_id=${businessId}`).catch(() => ({connected:false}));
+      if (status.connected) {
+        const date = status.connected_at ? new Date(status.connected_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}) : '';
+        zone.innerHTML = `
+          <div style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:18px 20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:36px;height:36px;background:rgba(16,185,129,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📅</div>
+                <div>
+                  <div style="font-size:13px;font-weight:700;color:#10B981;">✅ Google Calendar connecté</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.55);">${status.email || ''}${date ? ' · depuis le '+date : ''}</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;">
+                <a href="https://calendar.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">📅 Ouvrir</a>
+                <button onclick="disconnectCalendar()" style="padding:8px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:9px;color:#EF4444;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Déconnecter</button>
+              </div>
+            </div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Prochains événements — 7 jours</div>
+            <div id="eventsList" style="display:flex;flex-direction:column;gap:6px;"><div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">Chargement...</div></div>
+            <div style="margin-top:12px;padding:10px 12px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.5);">
+              💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes
+            </div>
+          </div>`;
+        setTimeout(() => loadCalendarEvents(), 100);
+      } else {
+        zone.innerHTML = `
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:28px;text-align:center;">
+            <div style="font-size:40px;margin-bottom:12px;opacity:0.4;">📅</div>
+            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">Connectez Google Calendar</div>
+            <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 auto 18px;max-width:400px;line-height:1.65;">Synchronisez vos disponibilités pour éviter les doubles réservations et créer les RDV automatiquement.</p>
+            <button onclick="connectCalendar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,82,204,0.3);">
+              🔗 Connecter Google Calendar
+            </button>
+            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);">Redirection sécurisée vers Google</div>
+          </div>`;
+      }
+    } catch {
+      zone.innerHTML = '<div style="padding:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.7);">⚠️ Erreur de connexion au calendrier</div>';
+    }
+
+  } else if (mode === 'link') {
+    zone.innerHTML = `
+      <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.18);border-radius:14px;padding:20px 22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;background:rgba(0,212,255,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">🔗</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#00D4FF;">Lien de réservation externe</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA envoie vos clients directement sur ce lien</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <input type="url" id="rdvExternalUrl" value="${externalUrl}" placeholder="https://www.planity.com/votre-salon ou https://www.doctolib.fr/..." 
+            style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;font-size:13px;color:#fff;outline:none;font-family:inherit;"
+            onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
+          <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">💾 Enregistrer</button>
+        </div>
+        ${externalUrl ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">Lien actuel : <a href="${externalUrl}" target="_blank" style="color:#00D4FF;">${externalUrl}</a></div>` : '<div style="font-size:12px;color:rgba(245,158,11,0.8);">⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus</div>'}
+        <div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">
+          💡 Compatible avec : Planity, Doctolib, TheFork, Booking.com, Calendly, et tout autre système de réservation en ligne.
+        </div>
+      </div>`;
+
+  } else if (mode === 'manual') {
+    zone.innerHTML = `
+      <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);border-radius:14px;padding:20px 22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:36px;height:36px;background:rgba(245,158,11,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📞</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#F59E0B;">Gestion manuelle des RDV</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA demande aux clients de vous contacter directement</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;padding:12px 14px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          L'IA dira à vos clients :<br>
+          <em style="color:rgba(255,255,255,0.85);">"Pour prendre rendez-vous, appelez-nous au <strong>[votre téléphone]</strong> ou envoyez-nous un message."</em>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4);">
+          ℹ️ Votre numéro de téléphone est configuré dans <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;">Configuration → Commerce</a>
+        </div>
+      </div>`;
+
+  } else if (mode === 'none') {
+    zone.innerHTML = `
+      <div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.18);border-radius:14px;padding:20px 22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:36px;height:36px;background:rgba(139,92,246,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">💬</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#8B5CF6;">Pas de prise de rendez-vous</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA répond aux questions sans proposer de RDV</div>
+          </div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.65;padding:12px 14px;background:rgba(255,255,255,0.04);border-radius:10px;">
+          L'IA se concentre sur les informations, les prix, les horaires et la FAQ. Elle ne propose jamais de réservation.
+        </div>
+        <div style="margin-top:12px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.15);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.55);">
+          ℹ️ L'onglet Rendez-vous reste disponible pour consulter l'historique si vous changez de mode plus tard.
+        </div>
+      </div>`;
+  }
+}
+
+async function switchRdvMode(mode) {
+  currentRdvMode = mode;
+
+  // Mettre à jour les pills visuellement
+  const colors = {google:'#10B981', link:'#00D4FF', manual:'#F59E0B', none:'#8B5CF6'};
+  ['google','link','manual','none'].forEach(m => {
+    const pill = document.getElementById('pill_'+m);
+    if (!pill) return;
+    const sel = m === mode;
+    const c = colors[m];
+    pill.style.borderColor = sel ? c : 'rgba(255,255,255,0.08)';
+    pill.style.background = sel ? c+'18' : 'rgba(255,255,255,0.03)';
+    pill.style.color = sel ? c : 'rgba(255,255,255,0.5)';
+  });
+
+  // Sauvegarder en DB
+  try {
+    await apiRequest(`/api/business/${businessId}/config`, 'POST', { rdv_mode: mode });
+  } catch(e) { console.error('Erreur save rdv_mode:', e); }
+
+  // Recharger le contenu
+  const config = await apiRequest(`/api/business/${businessId}/config`).catch(()=>null);
+  const externalUrl = config?.business?.external_rdv_url || '';
+  await renderModeContent(mode, externalUrl);
+
+  // Afficher/masquer appointments
+  const aptsSection = document.getElementById('appointmentsSection');
+  if (aptsSection) aptsSection.style.display = mode === 'none' ? 'none' : 'block';
+}
+
+async function saveRdvLink() {
+  const url = document.getElementById('rdvExternalUrl')?.value || '';
+  if (!url) { showNotification('❌ Entrez un lien de réservation', 'error'); return; }
+  try {
+    await apiRequest(`/api/business/${businessId}/config`, 'POST', {
+      rdv_mode: 'link',
+      external_rdv_url: url
+    });
+    showNotification('✅ Lien de réservation enregistré');
+    // Rafraîchir
+    await renderModeContent('link', url);
+  } catch(e) {
+    showNotification('❌ Erreur : ' + e.message, 'error');
+  }
+}
+
+
+async function connectCalendar() {
+  try {
+    const response = await apiRequest(`/api/calendar/connect?business_id=${businessId}`);
+    if (response.auth_url) window.location.href = response.auth_url;
+  } catch (error) {
+    showNotification('❌ Erreur : ' + error.message, 'error');
+  }
+}
+
+async function disconnectCalendar() {
+  if (!confirm('Déconnecter Google Calendar ? Les RDV existants ne seront pas supprimés.')) return;
+  try {
+    await apiRequest(`/api/calendar/disconnect?business_id=${businessId}`, 'DELETE');
+    showNotification('✅ Google Calendar déconnecté');
+    checkCalendarStatus();
+  } catch (error) {
+    showNotification('❌ Erreur : ' + error.message, 'error');
+  }
+}
+
+// Charger les événements du calendrier
+async function loadCalendarEvents() {
+  try {
+    const today = new Date();
+    const in7Days = new Date();
+    in7Days.setDate(in7Days.getDate() + 7);
+    
+    const response = await apiRequest(
+      `/api/calendar/events?business_id=${businessId}&time_min=${today.toISOString()}&time_max=${in7Days.toISOString()}&max_results=10`
+    );
+    
+    const eventsList = document.getElementById('eventsList');
+    if (!eventsList) return;
+    
+    if (!response.events || response.events.length === 0) {
+      eventsList.innerHTML = `
+        <div style="text-align: center; padding: 20px; color: rgba(255, 255, 255, 0.5); font-size: 13px;">
+          Aucun événement dans les 7 prochains jours
+        </div>
+      `;
+      return;
+    }
+    
+    eventsList.innerHTML = '';
+    
+    response.events.slice(0, 5).forEach(event => {
+      const eventDate = new Date(event.start);
+      const dateStr = formatEventDate(eventDate);
+      const timeStr = formatTime(eventDate);
+      
+      const isLocalReply = event.created_by === 'localreply' || event.summary?.includes('RDV');
+      const icon = isLocalReply ? '✅' : '📌';
+      const color = isLocalReply ? '#10B981' : '#00D4FF';
+      
+      const eventDiv = document.createElement('div');
+      eventDiv.style.cssText = `
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border-left: 3px solid ${color};
+        border-radius: 8px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        align-items: start;
+        gap: 10px;
+      `;
+      
+      eventDiv.innerHTML = `
+        <span style="font-size: 16px; flex-shrink: 0;">${icon}</span>
+        <div style="flex: 1;">
+          <div style="font-weight: 600; margin-bottom: 3px;">${event.summary || 'Sans titre'}</div>
+          <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">${dateStr} à ${timeStr}</div>
+        </div>
+      `;
+      
+      eventsList.appendChild(eventDiv);
+    });
+    
+    if (response.events.length > 5) {
+      const moreDiv = document.createElement('div');
+      moreDiv.style.cssText = 'text-align: center; padding: 10px; color: rgba(255, 255, 255, 0.5); font-size: 12px;';
+      moreDiv.textContent = `+ ${response.events.length - 5} autres événements`;
+      eventsList.appendChild(moreDiv);
+    }
+    
+  } catch (error) {
+    console.error('Erreur chargement événements calendrier:', error);
+    const eventsList = document.getElementById('eventsList');
+    if (eventsList) {
+      eventsList.innerHTML = `
+        <div style="text-align: center; padding: 20px; color: rgba(239, 68, 68, 0.7); font-size: 13px;">
+          Erreur de chargement
+        </div>
+      `;
+    }
+  }
+}
+
+// ============================================
+// CHARGEMENT DES DONNÉES
+// ============================================
+
+// Charger tous les RDV
+async function loadAppointments() {
+  try {
+    const appointments = await apiRequest(`/api/appointments/?business_id=${businessId}`);
+    allAppointments = appointments || [];
+    
+    if (!appointments || appointments.length === 0) {
+      displayEmptyState();
+      return;
+    }
+    
+    // Filtrer par statut
+    const pending = appointments.filter(apt => apt.status === 'pending');
+    const confirmed = appointments.filter(apt => apt.status === 'confirmed');
+    
+    // Stats 30 derniers jours glissants
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30); thirtyDaysAgo.setHours(0,0,0,0);
+    
+    const thisWeekAppointments = appointments.filter(apt => {
+      const aptDate = new Date(apt.start_time || apt.requested_datetime || apt.created_at);
+      return aptDate >= thirtyDaysAgo && apt.status !== 'cancelled';
+    });
+    
+    const confirmedThisWeek = thisWeekAppointments.filter(apt => apt.status === 'confirmed');
+    
+    // Mettre à jour les stats
+    document.getElementById('statTotal').textContent = thisWeekAppointments.length;
+    document.getElementById('statConfirmed').textContent = confirmedThisWeek.length;
+    document.getElementById('statPending').textContent = pending.length;
+    
+    // Afficher les RDV en attente
+    if (pending.length > 0) {
+      displayPendingAppointments(pending);
+    }
+    
+    // Afficher les RDV confirmés à venir
+    const upcomingConfirmed = confirmed
+      .filter(apt => new Date(apt.start_time) > new Date())
+      .sort((a, b) => new Date(a.start_time) - new Date(b.start_time));
+    
+    displayConfirmedAppointments(upcomingConfirmed);
+    
+    // Stat aujourd'hui
+    const todayStr = new Date().toDateString();
+    const todayCount = appointments.filter(a => new Date(a.start_time).toDateString() === todayStr && a.status !== 'cancelled').length;
+    const statToday = document.getElementById('statToday');
+    if (statToday) statToday.textContent = todayCount;
+
+    // Mettre à jour les badges
+    updateBadges(pending.length);
+    
+    // Re-appliquer les filtres actifs
+    renderFilteredAppointments();
+    
+  } catch (error) {
+    console.error('Erreur chargement RDV:', error);
+    showNotification('❌ Erreur chargement des rendez-vous', 'error');
+  }
+}
+
+// Afficher état vide
+function displayEmptyState() {
+  document.getElementById('statTotal').textContent = '0';
+  document.getElementById('statConfirmed').textContent = '0';
+  document.getElementById('statPending').textContent = '0';
+  
+  document.getElementById('confirmedList').innerHTML = `
+    <div style="text-align: center; padding: 80px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 16px;">
+      <div style="font-size: 72px; margin-bottom: 20px; opacity: 0.3;">📅</div>
+      <h3 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 10px 0;">Aucun rendez-vous</h3>
+      <p style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin: 0;">Les rendez-vous créés par l'IA apparaîtront ici</p>
+    </div>
+  `;
+}
+
+// Afficher RDV en attente
+function displayPendingAppointments(appointments) {
+  const section = document.getElementById('pendingSection');
+  const list = document.getElementById('pendingList');
+  const badge = document.getElementById('pendingBadge');
+  
+  section.style.display = 'block';
+  badge.textContent = appointments.length;
+  list.innerHTML = '';
+  
+  appointments.forEach((apt, index) => {
+    const card = createPendingCard(apt, index === 0);
+    list.appendChild(card);
+  });
+}
+
+// Créer carte RDV en attente
+function createPendingCard(apt, isUrgent) {
+  const card = document.createElement('div');
+  
+  const urgentStyle = isUrgent ? 
+    'background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.4);' :
+    'background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);';
+  
+  card.style.cssText = `${urgentStyle} backdrop-filter: blur(20px); border-radius: 16px; padding: 28px; margin-bottom: 20px; position: relative;`;
+  card.id = `apt-${apt.id}`;
+  
+  const aptDate = new Date(apt.start_time);
+  const dateStr = formatDate(aptDate);
+  const timeStr = formatTime(aptDate);
+  const timeAgo = getTimeAgo(apt.created_at);
+  
+  const urgentBadge = isUrgent ? `
+    <div style="position: absolute; top: -12px; left: 20px; background: linear-gradient(135deg, #F59E0B, #D97706); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(251, 191, 36, 0.5);">
+      🔴 URGENT - ${timeAgo}
+    </div>
+  ` : '';
+  
+  card.innerHTML = `
+    ${urgentBadge}
+    
+    <div style="margin-top: ${isUrgent ? '15px' : '0'};">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
+          <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">
+            📧 ${apt.client_email || 'Non renseigné'} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+          </div>
+        </div>
+        <div style="padding: 8px 14px; background: rgba(251, 191, 36, 0.2); border: 1px solid rgba(251, 191, 36, 0.5); border-radius: 12px; font-size: 13px; font-weight: 600; color: #F59E0B;">
+          ⏳ En attente
+        </div>
+      </div>
+      
+      <div style="background: rgba(0, 0, 0, 0.3); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+        <div style="display: grid; gap: 12px;">
+          <div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">📅 DATE & HEURE</div>
+            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${dateStr} à ${timeStr}</div>
+          </div>
+          <div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">💇 SERVICE</div>
+            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
+          </div>
+          ${apt.description ? `
+          <div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">📝 NOTES</div>
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8);">${apt.description}</div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+      
+      <div style="background: rgba(251, 191, 36, 0.1); border-radius: 10px; padding: 12px 16px; margin-bottom: 20px; border-left: 3px solid #F59E0B;">
+        <div style="font-size: 13px; color: #F59E0B; font-weight: 600;">
+          ⏳ Ce créneau est temporairement bloqué en attendant votre validation
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <button onclick="acceptAppointment(${apt.id})" style="padding: 14px 28px; background: linear-gradient(135deg, #10B981, #059669); color: #FFFFFF; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); display: flex; align-items: center; gap: 8px;">
+          <span>✅</span> Accepter
+        </button>
+        <button onclick="refuseAppointment(${apt.id})" style="padding: 14px 28px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 12px; color: #EF4444; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
+          <span>❌</span> Refuser
+        </button>
+      </div>
+    </div>
+  `;
+  
+  return card;
+}
+
+// Afficher RDV confirmés
+function displayConfirmedAppointments(appointments) {
+  const list = document.getElementById('confirmedList');
+  list.innerHTML = '';
+  
+  if (appointments.length === 0) {
+    list.innerHTML = `
+      <div style="text-align: center; padding: 60px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 16px;">
+        <div style="font-size: 56px; margin-bottom: 15px; opacity: 0.3;">✅</div>
+        <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">Aucun rendez-vous confirmé</h3>
+        <p style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin: 0;">Les rendez-vous confirmés apparaîtront ici</p>
+      </div>
+    `;
+    return;
+  }
+  
+  appointments.forEach(apt => {
+    const card = createConfirmedCard(apt);
+    list.appendChild(card);
+  });
+}
+
+// Créer carte RDV confirmé
+function createConfirmedCard(apt) {
+  const card = document.createElement('div');
+  card.style.cssText = 'background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 25px; margin-bottom: 20px; transition: all 0.3s;';
+  card.id = `apt-${apt.id}`;
+  
+  const aptDate = new Date(apt.start_time);
+  const dateStr = formatDate(aptDate);
+  const timeStr = formatTime(aptDate);
+  const isToday = isDateToday(aptDate);
+  const isTomorrow = isDateTomorrow(aptDate);
+  
+  let dateLabel = dateStr;
+  if (isToday) dateLabel = "Aujourd'hui";
+  else if (isTomorrow) dateLabel = "Demain";
+  
+  card.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+      <div>
+        <h3 style="font-size: 18px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
+        <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">
+          📧 ${apt.client_email || 'Non renseigné'} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+        </div>
+      </div>
+      <div style="padding: 6px 12px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 10px; font-size: 12px; font-weight: 600; color: #10B981;">
+        ✅ Confirmé
+      </div>
+    </div>
+    
+    <div style="background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 16px; margin-bottom: 15px;">
+      <div style="display: grid; gap: 10px;">
+        <div>
+          <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">📅 DATE & HEURE</div>
+          <div style="font-size: 15px; color: #FFFFFF; font-weight: 600;">${dateLabel} à ${timeStr}</div>
+        </div>
+        <div>
+          <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">💇 SERVICE</div>
+          <div style="font-size: 15px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
+        </div>
+        ${apt.description ? `
+        <div>
+          <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">📝 NOTES</div>
+          <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8);">${apt.description}</div>
+        </div>
+        ` : ''}
+      </div>
+    </div>
+    
+    <button onclick="cancelAppointment(${apt.id})" style="padding: 12px 24px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; color: #EF4444; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
+      <span>❌</span> Annuler le RDV
+    </button>
+  `;
+  
+  return card;
+}
+
+// ============================================
+// ACTIONS
+// ============================================
+
+// Accepter un RDV
+async function acceptAppointment(appointmentId) {
+  if (!confirm('Confirmer ce rendez-vous ?')) {
+    return;
+  }
+  
+  try {
+    const apt = allAppointments.find(a => a.id === appointmentId);
+    const tokenParam = apt?.action_token ? `?token=${apt.action_token}` : '';
+    await apiRequest(`/api/appointments/${appointmentId}/accept${tokenParam}`);
+    
+    const card = document.getElementById(`apt-${appointmentId}`);
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(100px)';
+    
+    setTimeout(() => {
+      loadAppointments();
+    }, 300);
+    
+    showNotification('✅ Rendez-vous confirmé ! Email envoyé au client.');
+    
+  } catch (error) {
+    showNotification('❌ Erreur : ' + error.message, 'error');
+  }
+}
+
+// Refuser un RDV
+async function refuseAppointment(appointmentId) {
+  if (!confirm('Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.')) {
+    return;
+  }
+  
+  try {
+    await apiRequest(`/api/appointments/${appointmentId}/refuse`);
+    
+    const card = document.getElementById(`apt-${appointmentId}`);
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-100px)';
+    
+    setTimeout(() => {
+      loadAppointments();
+    }, 300);
+    
+    showNotification('❌ Rendez-vous refusé. Créneau libéré et email envoyé au client.');
+    
+  } catch (error) {
+    showNotification('❌ Erreur : ' + error.message, 'error');
+  }
+}
+
+// Annuler un RDV confirmé
+async function cancelAppointment(appointmentId) {
+  if (!confirm('Annuler ce rendez-vous ? Un email sera envoyé au client.')) {
+    return;
+  }
+  
+  try {
+    await apiRequest(`/api/appointments/${appointmentId}/cancel`);
+    
+    const card = document.getElementById(`apt-${appointmentId}`);
+    card.style.opacity = '0';
+    card.style.transform = 'translateX(-100px)';
+    
+    setTimeout(() => {
+      loadAppointments();
+    }, 300);
+    
+    showNotification('❌ Rendez-vous annulé. Email envoyé au client.');
+    
+  } catch (error) {
+    showNotification('❌ Erreur : ' + error.message, 'error');
+  }
+}
+
+// Mettre à jour les badges
+function updateBadges(count) {
+  if (count === 0) {
+    // badges gérés par le système global
+  } else {
+    // badges gérés par le système global
+  }
+}
+
+// ============================================
+// UTILITAIRES
+// ============================================
+
+// Formater date
+function formatDate(date) {
+  const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+  const months = ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'];
+  
+  return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
+}
+
+// Formater heure
+function formatTime(date) {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+// Check si aujourd'hui
+function isDateToday(date) {
+  const today = new Date();
+  return date.toDateString() === today.toDateString();
+}
+
+// Check si demain
+function isDateTomorrow(date) {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return date.toDateString() === tomorrow.toDateString();
+}
+
+// Temps écoulé
+function getTimeAgo(timestamp) {
+  const now = new Date();
+  const past = new Date(timestamp);
+  const diffMs = now - past;
+  const diffMins = Math.floor(diffMs / 60000);
+  
+  if (diffMins < 1) return "À l'instant";
+  if (diffMins < 60) return `Il y a ${diffMins} min`;
+  
+  const diffHours = Math.floor(diffMins / 60);
+  if (diffHours < 24) return `Il y a ${diffHours}h`;
+  
+  const diffDays = Math.floor(diffHours / 24);
+  return `Il y a ${diffDays}j`;
+}
+
+// Formater date événement
+function formatEventDate(date) {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  if (date.toDateString() === today.toDateString()) {
+    return "Aujourd'hui";
+  }
+  if (date.toDateString() === tomorrow.toDateString()) {
+    return "Demain";
+  }
+  
+  const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+  return `${days[date.getDay()]} ${date.getDate()}/${date.getMonth() + 1}`;
+}
+
+// Toggle mobile menu
+function toggleMobileMenu() {
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const popup = document.getElementById('mobileMenuPopup');
+  const isOpen = popup.style.display === 'block';
+  
+  if (isOpen) {
+    popup.style.opacity = '0';
+    popup.style.transform = 'translateY(20px)';
+    overlay.style.opacity = '0';
+    setTimeout(() => {
+      popup.style.display = 'none';
+      overlay.style.display = 'none';
+    }, 300);
+  } else {
+    overlay.style.display = 'block';
+    popup.style.display = 'block';
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      popup.style.opacity = '1';
+      popup.style.transform = 'translateY(0)';
+    }, 10);
+  }
+}
+
+function logout() {
+  if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('business_id');
+    window.location.href = '/auth';
+  }
+}
+
+// ============================================
+// CHARGEMENT INITIAL
+// ============================================
+document.addEventListener('DOMContentLoaded', async function() {
+  if (!token || !businessId) {
+    alert('Session expirée. Veuillez vous reconnecter.');
+    window.location.href = '/login';
+    return;
+  }
+  loadSidebarInfo(); 
+  
+  // Vérifier si on revient de l'OAuth Google ou d'une confirmation email
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('calendar_connected') === 'true') {
+    showNotification('✅ Google Calendar connecté avec succès !');
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  if (urlParams.get('confirmed')) {
+    showNotification('✅ Rendez-vous confirmé ! Le client a été notifié et le RDV ajouté au Calendar.');
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  if (urlParams.get('refused')) {
+    showNotification('❌ Rendez-vous refusé. Le client a été informé.', 'error');
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  
+  await checkCalendarStatus();
+  await loadAppointments();
+
+  // Badges navigation
+  try {
+    const [_q, _a] = await Promise.all([
+      fetch(API_BASE_URL+`/api/business/${businessId}/unknown-questions?status=pending`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>({questions:[]})),
+      fetch(API_BASE_URL+`/api/appointments/?business_id=${businessId}`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>[])
+    ]);
+    const _mc=_q?.questions?.length||0, _rc=Array.isArray(_a)?_a.filter(a=>a.status==='pending').length:0;
+    const _sb=(c,...ids)=>ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(c>0){el.textContent=c>9?'9+':c;el.style.display='flex';}else el.style.display='none';});
+    _sb(_mc,'sbBadgeMsg','bnBadgeMsg');_sb(_rc,'sbBadgeRdv','bnBadgeRdv');
+  } catch {}
+});
+
+// Animations
+const animStyle = document.createElement('style');
+animStyle.textContent = `
+  @keyframes slideIn {
+    from { transform: translateX(400px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(400px); opacity: 0; }
+  }
+  div[style*="opacity: 0"] { transition: all 0.3s ease; }
+`;
+document.head.appendChild(animStyle);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+
+  <div style="position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,255,0.15) 0%,transparent 70%);border-radius:50%;animation:float 20s infinite ease-in-out;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 70%);border-radius:50%;animation:float 25s infinite ease-in-out reverse;pointer-events:none;"></div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">💇</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:600;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV MOBILE -->
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;font-weight:700;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainContent" style="flex:1;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER -->
+    <div style="padding:40px 40px 0;margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:6px;">
+        <div style="width:12px;height:12px;background:#10B981;border-radius:50%;box-shadow:0 0 12px #10B981;animation:pulse 2s infinite;flex-shrink:0;"></div>
+        <h1 style="font-size:38px;font-weight:800;background:linear-gradient(135deg,#FFFFFF 0%,#00D4FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0;letter-spacing:-1px;">Configuration</h1>
+      </div>
+      <p style="font-size:15px;color:rgba(255,255,255,0.55);margin:0 0 28px 40px;">Personnalisez votre assistant IA</p>
+    </div>
+
+    <!-- ONGLETS STICKY -->
+    <div id="tabBar" style="position:sticky;top:0;z-index:100;background:rgba(5,12,28,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:0 40px;">
+      <!-- Indicateur scroll mobile -->
+      <div id="tabScrollHint" style="display:none;position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to left,rgba(5,12,28,0.95),transparent);pointer-events:none;align-items:center;justify-content:flex-end;padding-right:8px;z-index:2;">
+        <span style="color:rgba(255,255,255,0.4);font-size:16px;">›</span>
+      </div>
+      <div id="tabScrollContainer" style="display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" onscroll="checkTabScroll()">
+        <button class="cfg-tab active" onclick="switchTab('commerce')" id="tab-commerce" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid #00D4FF;color:#00D4FF;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">🏪 Commerce</button>
+        <button class="cfg-tab" onclick="switchTab('horaires')" id="tab-horaires" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">⏰ Horaires</button>
+        <button class="cfg-tab" onclick="switchTab('services')" id="tab-services" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">💼 Services <span id="badge-services" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
+        <button class="cfg-tab" onclick="switchTab('faq')" id="tab-faq" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">❓ FAQ <span id="badge-faq" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
+        <button class="cfg-tab" onclick="switchTab('avance')" id="tab-avance" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">✨ Avancé</button>
+      </div>
+    </div>
+
+    <!-- CONTENU ONGLETS -->
+    <div style="padding:32px 40px 60px;">
+
+      <!-- ═══ ONGLET COMMERCE ═══ -->
+      <div id="panel-commerce" class="cfg-panel">
+        <div class="cfg-card">
+          <div class="cfg-card-header">
+            <div id="businessIcon" class="cfg-card-icon">💇</div>
+            <div>
+              <h2 class="cfg-card-title">Informations du commerce</h2>
+              <p class="cfg-card-sub">Ces informations sont utilisées par l'IA pour répondre à vos clients</p>
+            </div>
+          </div>
+          <div class="cfg-grid-2">
+            <div class="cfg-field">
+              <label class="cfg-label">Type de commerce</label>
+              <select id="businessType" onchange="updateBusinessIcon()" class="cfg-select">
+                <optgroup label="💇 Beauté &amp; Soins">
+                  <option value="salon">💇 Salon de coiffure</option>
+                  <option value="spa">💅 Institut de beauté / Spa</option>
+                  <option value="massage">💆 Massage / Kiné</option>
+                  <option value="dentist">🦷 Dentiste</option>
+                  <option value="opticien">👓 Opticien</option>
+                </optgroup>
+                <optgroup label="🍽️ Restauration">
+                  <option value="restaurant">🍽️ Restaurant</option>
+                  <option value="cafe">☕ Café / Bar</option>
+                  <option value="pizzeria">🍕 Pizzeria / Fast-food</option>
+                </optgroup>
+                <optgroup label="🍞 Alimentation">
+                  <option value="bakery">🍞 Boulangerie</option>
+                  <option value="butcher">🥩 Boucherie</option>
+                  <option value="fishmonger">🐟 Poissonnerie</option>
+                  <option value="florist">🌿 Fleuriste</option>
+                </optgroup>
+                <optgroup label="⚖️ Services professionnels">
+                  <option value="law">⚖️ Avocat</option>
+                  <option value="architect">📐 Architecte</option>
+                  <option value="accountant">📊 Expert-comptable</option>
+                  <option value="realtor">🏡 Agence immobilière</option>
+                  <option value="training">🎓 Centre de formation</option>
+                </optgroup>
+                <optgroup label="🏋️ Sport &amp; Loisirs">
+                  <option value="gym">🏋️ Salle de sport</option>
+                  <option value="cinema">🎬 Cinéma / Théâtre</option>
+                  <option value="escapegame">🎮 Escape Game</option>
+                  <option value="pool">🏊 Piscine</option>
+                </optgroup>
+                <optgroup label="🔧 Services techniques">
+                  <option value="garage">🔧 Garage / Atelier</option>
+                  <option value="plumber">🔨 Plombier / Électricien</option>
+                  <option value="cleaning">🧹 Ménage / Nettoyage</option>
+                  <option value="gardener">🌳 Jardinier</option>
+                </optgroup>
+                <optgroup label="🏥 Santé &amp; Animaux">
+                  <option value="medical">🏥 Cabinet médical</option>
+                  <option value="vet">🐾 Vétérinaire</option>
+                  <option value="grooming">✂️ Toilettage animaux</option>
+                </optgroup>
+                <optgroup label="🏨 Commerce &amp; Hébergement">
+                  <option value="retail">🛍️ Commerce de détail</option>
+                  <option value="hotel">🏨 Hôtel</option>
+                </optgroup>
+                <optgroup label="📸 Autres services">
+                  <option value="photographer">📸 Photographe</option>
+                  <option value="laundry">👗 Pressing</option>
+                  <option value="other">🎨 Autre</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Nom du commerce</label>
+              <input id="businessName" type="text" class="cfg-input" placeholder="Votre commerce">
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Email</label>
+              <input id="businessEmail" type="email" class="cfg-input" placeholder="email@exemple.com">
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Téléphone</label>
+              <input id="businessPhone" type="tel" class="cfg-input" placeholder="+41...">
+            </div>
+          </div>
+          <div class="cfg-field" style="margin-top:16px;">
+            <label class="cfg-label">Adresse complète</label>
+            <input id="businessAddress" type="text" class="cfg-input" placeholder="14 Rue de Rive, 1204 Genève">
+          </div>
+          <div class="cfg-field" style="margin-top:16px;">
+            <label class="cfg-label">Description <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(vue par l'IA pour comprendre votre commerce)</span></label>
+            <textarea id="businessDescription" rows="3" class="cfg-input" style="resize:vertical;" placeholder="Ex: Salon de coiffure homme moderne, ambiance détendue, café offert..."></textarea>
+          </div>
+          <div class="cfg-grid-2" style="margin-top:16px;">
+            <div class="cfg-field">
+              <label class="cfg-label">Slug URL <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(lien public)</span></label>
+              <div style="display:flex;align-items:center;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;overflow:hidden;transition:all 0.2s;" id="slugWrap">
+                <span style="padding:0 8px 0 14px;font-size:12px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">localreply.ai/</span>
+                <input id="businessSlug" type="text" style="flex:1;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:#FFFFFF;outline:none;" placeholder="mon-commerce" oninput="sanitizeSlug(this)">
+              </div>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Fuseau horaire</label>
+              <select id="businessTimezone" class="cfg-select">
+                <option value="Europe/Paris">🇫🇷 Europe/Paris</option>
+                <option value="Europe/Zurich">🇨🇭 Europe/Zurich</option>
+                <option value="Europe/Brussels">🇧🇪 Europe/Brussels</option>
+                <option value="Europe/London">🇬🇧 Europe/London</option>
+                <option value="Europe/Madrid">🇪🇸 Europe/Madrid</option>
+                <option value="Europe/Rome">🇮🇹 Europe/Rome</option>
+                <option value="Europe/Berlin">🇩🇪 Europe/Berlin</option>
+                <option value="Europe/Lisbon">🇵🇹 Europe/Lisbon</option>
+                <option value="America/Montreal">🇨🇦 America/Montreal</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Langue de l'interface <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(emails, dashboard)</span></label>
+              <select id="interfaceLanguage" class="cfg-select">
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="en">🇬🇧 English</option>
+                <option value="pt">🇵🇹 Português</option>
+              </select>
+            </div>
+          </div>
+          <button onclick="saveBusinessInfo()" class="cfg-btn-save" style="margin-top:24px;">💾 Enregistrer les informations</button>
+        </div>
+      </div>
+
+      <!-- ═══ ONGLET HORAIRES ═══ -->
+      <div id="panel-horaires" class="cfg-panel" style="display:none;">
+        <div class="cfg-card">
+          <div class="cfg-card-header">
+            <div class="cfg-card-icon">⏰</div>
+            <div>
+              <h2 class="cfg-card-title">Horaires d'ouverture</h2>
+              <p class="cfg-card-sub">L'IA utilisera ces horaires pour répondre aux clients</p>
+            </div>
+          </div>
+          <!-- Labels colonnes -->
+          <div style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;padding:0 4px 10px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">Jour</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">Ouverture</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">Fermeture</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">Statut</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Lundi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="18:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Mardi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="18:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Mercredi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="18:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Jeudi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="18:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Vendredi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="18:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Samedi</div>
+              <input type="time" value="09:00" class="time-input cfg-time">
+              <input type="time" value="17:00" class="time-input cfg-time">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+            <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Dimanche</div>
+              <input type="time" disabled class="time-input cfg-time" style="opacity:0.35;">
+              <input type="time" disabled class="time-input cfg-time" style="opacity:0.35;">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" checked class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
+            </div>
+          </div>
+          <button onclick="saveHours()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer les horaires</button>
+        </div>
+
+        <!-- Fermetures exceptionnelles -->
+        <div class="cfg-card" style="margin-top:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div class="cfg-card-icon">🚫</div>
+              <div>
+                <h2 class="cfg-card-title">Fermetures exceptionnelles</h2>
+                <p class="cfg-card-sub">Jours fériés, congés, fermetures ponctuelles</p>
+              </div>
+            </div>
+            <button onclick="addClosure()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;">+ Ajouter</button>
+          </div>
+          <div id="closuresList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;"></div>
+          <button onclick="saveClosures()" class="cfg-btn-save">💾 Enregistrer les fermetures</button>
+        </div>
+      </div>
+
+      <!-- ═══ ONGLET SERVICES ═══ -->
+      <div id="panel-services" class="cfg-panel" style="display:none;">
+        <div class="cfg-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div id="serviceIcon" class="cfg-card-icon">💼</div>
+              <div>
+                <h2 id="serviceTitle" class="cfg-card-title">Services &amp; Tarifs</h2>
+                <p class="cfg-card-sub">L'IA connaîtra vos prestations et pourra les recommander</p>
+              </div>
+            </div>
+            <button onclick="addService()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+          </div>
+
+          <!-- Recherche services -->
+          <div style="position:relative;margin-bottom:16px;">
+            <input id="serviceSearch" type="text" placeholder="🔍 Rechercher un service..." oninput="filterServices()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#FFFFFF;font-size:14px;outline:none;font-family:inherit;transition:border 0.2s;" onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          </div>
+
+          <div class="service-headers-container"></div>
+          <div id="servicesList" style="display:flex;flex-direction:column;gap:10px;"></div>
+          <div id="servicesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
+            <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">💼</div>
+            <div style="font-size:14px;">Aucun service trouvé — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+          </div>
+          <button onclick="saveServices()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer les services</button>
+        </div>
+      </div>
+
+      <!-- ═══ ONGLET FAQ ═══ -->
+      <div id="panel-faq" class="cfg-panel" style="display:none;">
+        <div class="cfg-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div class="cfg-card-icon">❓</div>
+              <div>
+                <h2 class="cfg-card-title">FAQ — Questions fréquentes</h2>
+                <p class="cfg-card-sub">L'IA répondra automatiquement à ces questions</p>
+              </div>
+            </div>
+            <button onclick="addFAQ()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+          </div>
+
+          <!-- Recherche FAQ -->
+          <div style="position:relative;margin-bottom:16px;">
+            <input id="faqSearch" type="text" placeholder="🔍 Rechercher dans la FAQ..." oninput="filterFAQ()" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;color:#FFFFFF;font-size:14px;outline:none;font-family:inherit;transition:border 0.2s;" onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+          </div>
+
+          <div id="faqList" style="display:flex;flex-direction:column;gap:12px;"></div>
+          <div id="faqEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
+            <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">❓</div>
+            <div style="font-size:14px;">Aucune question trouvée — <button onclick="document.getElementById('faqSearch').value='';filterFAQ();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+          </div>
+          <button onclick="saveFAQ()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer la FAQ</button>
+        </div>
+      </div>
+
+      <!-- ═══ ONGLET AVANCÉ ═══ -->
+            <div id="panel-avance" class="cfg-panel" style="display:none;">
+
+        <!-- Complémentarités -->
+        <div class="cfg-card" style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div class="cfg-card-icon">🔗</div>
+              <div>
+                <h2 class="cfg-card-title">Services complémentaires</h2>
+                <p class="cfg-card-sub">Ce que l'IA peut suggérer après chaque service</p>
+              </div>
+            </div>
+            <button onclick="addComplementaryRule()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;">+ Règle</button>
+          </div>
+          <div style="padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.12);border-radius:8px;font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:16px;line-height:1.6;">
+            💡 Exemple : Si le client choisit <strong style="color:#fff;">"Coupe homme"</strong> → l'IA suggère <strong style="color:#fff;">"Taille de barbe"</strong>
+          </div>
+          <div id="complementaryList" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
+          <button onclick="saveComplementary()" class="cfg-btn-save">💾 Enregistrer les complémentarités</button>
+        </div>
+
+        <!-- Personnalité IA -->
+        <div id="personalitySection" class="cfg-card" style="position:relative;overflow:visible;">
+          <div style="position:absolute;top:-14px;right:16px;background:linear-gradient(135deg,#F59E0B,#D97706);padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;color:#FFFFFF;box-shadow:0 4px 14px rgba(245,158,11,0.4);z-index:10;">⭐ PRO</div>
+          <div class="cfg-card-header" style="margin-top:8px;">
+            <div class="cfg-card-icon">🤖</div>
+            <div>
+              <h2 class="cfg-card-title">Personnalité de l'IA</h2>
+              <p class="cfg-card-sub">Créez une expérience unique pour vos clients</p>
+            </div>
+          </div>
+
+          <h3 style="color:#00D4FF;font-size:15px;font-weight:700;margin:20px 0 14px;display:flex;align-items:center;gap:8px;">✨ Ton &amp; Style</h3>
+          <div class="cfg-grid-3">
+            <div class="cfg-field">
+              <label class="cfg-label">Ton de l'IA</label>
+              <select id="aiTone" class="cfg-select">
+                <option value="professional">👔 Professionnel</option>
+                <option value="friendly" selected>😊 Amical</option>
+                <option value="casual">😎 Décontracté</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Tutoiement</label>
+              <select id="aiFormality" class="cfg-select">
+                <option value="tu" selected>Tu (informel)</option>
+                <option value="vous">Vous (formel)</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Emojis</label>
+              <select id="aiEmojis" class="cfg-select">
+                <option value="yes" selected>✅ Activés</option>
+                <option value="no">❌ Désactivés</option>
+              </select>
+            </div>
+          </div>
+          <div class="cfg-grid-2" style="margin-top:14px;">
+            <div class="cfg-field">
+              <label class="cfg-label">Longueur des réponses</label>
+              <select id="aiLength" class="cfg-select">
+                <option value="concise">📝 Concise (1-2 phrases)</option>
+                <option value="normal" selected>💬 Normale</option>
+                <option value="detailed">📖 Détaillée</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Nom de l'assistant</label>
+              <input id="aiName" type="text" class="cfg-input" placeholder="Ex: Marie">
+            </div>
+          </div>
+          <div class="cfg-field" style="margin-top:14px;">
+            <label class="cfg-label">Phrase d'accueil personnalisée</label>
+            <input id="aiGreeting" type="text" class="cfg-input" placeholder="Bonjour ! Comment puis-je vous aider ?">
+          </div>
+
+          <h3 style="color:#00D4FF;font-size:15px;font-weight:700;margin:24px 0 14px;display:flex;align-items:center;gap:8px;">💼 Comportement commercial</h3>
+          <div class="cfg-grid-3">
+            <div class="cfg-field">
+              <label class="cfg-label">Proactivité</label>
+              <select id="aiProactivity" class="cfg-select">
+                <option value="reactive">🙋 Réactive</option>
+                <option value="proactive" selected>💡 Proactive</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Suggestions de services</label>
+              <select id="aiSuggestions" class="cfg-select">
+                <option value="off">🚫 Désactivées</option>
+                <option value="subtle" selected>💬 Subtiles</option>
+                <option value="active">🎯 Actives</option>
+              </select>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-label">Collecte d'email</label>
+              <select id="aiEmailCollection" class="cfg-select">
+                <option value="off">❌ Désactivée</option>
+                <option value="end" selected>📧 En fin de conversation</option>
+                <option value="after">✅ Après RDV confirmé</option>
+              </select>
+            </div>
+          </div>
+          <button onclick="saveAICustomization()" class="cfg-btn-save" style="margin-top:24px;">💾 Enregistrer la personnalité</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}body{margin:0;padding:0;}
+@keyframes float{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-30px) scale(1.05);}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(0.9);}}
+@keyframes slideIn{from{transform:translateX(400px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes slideOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(400px);opacity:0;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* CARTE */
+.cfg-card{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px;animation:fadeIn 0.25s ease both;}
+.cfg-card-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
+.cfg-card-icon{width:48px;height:48px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;box-shadow:0 6px 16px rgba(0,212,255,0.3);}
+.cfg-card-title{font-size:20px;font-weight:700;color:#FFFFFF;margin:0 0 3px;}
+.cfg-card-sub{font-size:13px;color:rgba(255,255,255,0.45);margin:0;}
+
+/* CHAMPS */
+.cfg-field{display:flex;flex-direction:column;gap:6px;}
+.cfg-label{font-size:12px;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.6px;}
+.cfg-input{padding:13px 16px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;font-size:14px;color:#FFFFFF;outline:none;transition:all 0.2s;font-family:inherit;width:100%;}
+.cfg-input:focus{border-color:#00D4FF;box-shadow:0 0 0 3px rgba(0,212,255,0.15);}
+.cfg-input::placeholder{color:rgba(255,255,255,0.3);}
+.cfg-select{padding:13px 36px 13px 16px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;font-size:14px;color:#FFFFFF;outline:none;cursor:pointer;transition:all 0.2s;width:100%;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FFFFFF' d='M6 9L1 4h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.cfg-select:focus{border-color:#00D4FF;}
+.cfg-time{padding:10px 12px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;font-size:14px;color:#FFFFFF;outline:none;color-scheme:dark;width:100%;transition:all 0.2s;}
+.cfg-time:focus{border-color:#00D4FF;}
+
+/* GRILLES */
+.cfg-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.cfg-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+/* BOUTON SAVE */
+.cfg-btn-save{width:100%;padding:16px;background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 6px 18px rgba(16,185,129,0.35);letter-spacing:0.3px;}
+.cfg-btn-save:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,185,129,0.45);}
+
+/* ONGLETS */
+.cfg-tab:hover{color:rgba(255,255,255,0.85) !important;}
+
+.cfg-tab.active{color:#00D4FF !important;border-bottom-color:#00D4FF !important;}
+#tabBar div::-webkit-scrollbar{display:none;}
+#tabScrollContainer::-webkit-scrollbar{display:none;}
+@media(max-width:900px){
+  #tabBar{padding:0 12px!important;}
+  #tabScrollHint{display:flex!important;}
+}
+
+/* HOURS */
+.hours-row:hover{background:rgba(255,255,255,0.04);}
+
+/* SERVICE CARD */
+.service-card-grid{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;align-items:center;padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;transition:all 0.2s;}
+.service-card-grid:hover{background:rgba(255,255,255,0.08);border-color:rgba(0,212,255,0.2);}
+
+/* FAQ CARD */
+.faq-card-wrapper{padding:18px;background:rgba(255,255,255,0.05);border-radius:14px;border-left:3px solid rgba(0,212,255,0.4);transition:all 0.2s;}
+.faq-card-wrapper:hover{background:rgba(255,255,255,0.08);}
+.faq-card-wrapper.hidden{display:none;}
+
+/* NAV */
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+.nav-item:hover{background:rgba(255,255,255,0.1)!important;color:#FFFFFF!important;}
+.nav-item.active{background:linear-gradient(135deg,#0052CC,#00D4FF)!important;color:#FFFFFF!important;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  #sidebar{display:none!important;}
+  #bottomNav{display:block!important;}
+  #mainContent{padding-bottom:80px;}
+  #mainContent div[style*="padding:40px 40px"]{padding:24px 16px 0!important;}
+  #tabBar{padding:0 16px;}
+  .cfg-card{padding:20px;}
+  .cfg-grid-2,.cfg-grid-3{grid-template-columns:1fr!important;}
+  .service-card-grid{grid-template-columns:1fr!important;}
+  .hours-row{grid-template-columns:1fr 1fr!important;}
+  .hours-row .day-label{grid-column:1/-1;}
+  div[style*="padding:32px 40px"]{padding:20px 16px 60px!important;}
+}
+@media(max-width:1100px){
+  .cfg-grid-3{grid-template-columns:1fr 1fr!important;}
+}
+</style>
+
+<script>
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+
+const API_BASE_URL = 'https://localreply-api.onrender.com';
+
+async function apiRequest(endpoint, method='GET', data=null) {
+  const options = { method, headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${token}` } };
+  if (data && method !== 'GET') options.body = JSON.stringify(data);
+  try {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('❌ ERREUR:', JSON.stringify(error, null, 2));
+      if (error.detail && Array.isArray(error.detail)) throw new Error(error.detail.map(e => `${e.loc?.join('.')}: ${e.msg}`).join('\n'));
+      throw new Error(JSON.stringify(error.detail || error));
+    }
+    return response.json();
+  } catch(error) { console.error('API Error:', error); throw error; }
+}
+
+// ── ONGLETS ──
+function checkTabScroll() {
+  const c = document.getElementById('tabScrollContainer');
+  const hint = document.getElementById('tabScrollHint');
+  if (!c || !hint) return;
+  const atEnd = c.scrollLeft + c.clientWidth >= c.scrollWidth - 10;
+  hint.style.display = atEnd ? 'none' : 'flex';
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.cfg-tab').forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.color = 'rgba(255,255,255,0.55)';
+    btn.style.borderBottom = '2px solid transparent';
+  });
+  document.querySelectorAll('.cfg-panel').forEach(p => p.style.display = 'none');
+  const activeBtn = document.getElementById('tab-' + tab);
+  if (activeBtn) { activeBtn.classList.add('active'); activeBtn.style.color = '#00D4FF'; activeBtn.style.borderBottom = '2px solid #00D4FF'; }
+  const panel = document.getElementById('panel-' + tab);
+  if (panel) panel.style.display = 'block';
+  // Scroll vers le haut du contenu
+  document.getElementById('mainContent').scrollTop = 0;
+}
+
+// ── BADGES compteurs ──
+function updateBadges() {
+  const sCount = document.querySelectorAll('.service-card-grid').length;
+  const fCount = document.querySelectorAll('.faq-card-wrapper').length;
+  const bs = document.getElementById('badge-services');
+  const bf = document.getElementById('badge-faq');
+  if (bs) { bs.textContent = sCount; bs.style.display = sCount > 0 ? 'inline-block' : 'none'; }
+  if (bf) { bf.textContent = fCount; bf.style.display = fCount > 0 ? 'inline-block' : 'none'; }
+}
+
+// ── RECHERCHE SERVICES ──
+function filterServices() {
+  const q = document.getElementById('serviceSearch').value.toLowerCase();
+  const cards = document.querySelectorAll('.service-card-grid');
+  let visible = 0;
+  cards.forEach(card => {
+    const text = card.querySelector('input')?.value?.toLowerCase() || '';
+    const show = !q || text.includes(q);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('servicesEmpty').style.display = visible === 0 && q ? 'block' : 'none';
+}
+
+// ── RECHERCHE FAQ ──
+function filterFAQ() {
+  const q = document.getElementById('faqSearch').value.toLowerCase();
+  const cards = document.querySelectorAll('.faq-card-wrapper');
+  let visible = 0;
+  cards.forEach(card => {
+    const question = card.querySelector('input[type="text"]')?.value?.toLowerCase() || '';
+    const answer = card.querySelector('textarea')?.value?.toLowerCase() || '';
+    const show = !q || question.includes(q) || answer.includes(q);
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.getElementById('faqEmpty').style.display = visible === 0 && q ? 'block' : 'none';
+}
+
+// ── CONFIGS BUSINESS ──
+const businessConfigs = {
+  'salon':{'type':'service','icon':'💇'},'spa':{'type':'service','icon':'💅'},'massage':{'type':'service','icon':'💆'},
+  'dentist':{'type':'service','icon':'🦷'},'opticien':{'type':'product','icon':'👓'},'restaurant':{'type':'reservation','icon':'🍽️'},
+  'cafe':{'type':'reservation','icon':'☕'},'pizzeria':{'type':'reservation','icon':'🍕'},'bakery':{'type':'product','icon':'🍞'},
+  'butcher':{'type':'product','icon':'🥩'},'fishmonger':{'type':'product','icon':'🐟'},'florist':{'type':'product','icon':'🌿'},
+  'law':{'type':'service','icon':'⚖️'},'architect':{'type':'service','icon':'📐'},'accountant':{'type':'service','icon':'📊'},
+  'realtor':{'type':'service','icon':'🏡'},'training':{'type':'service','icon':'🎓'},'gym':{'type':'service','icon':'🏋️'},
+  'cinema':{'type':'reservation','icon':'🎬'},'escapegame':{'type':'reservation','icon':'🎮'},'pool':{'type':'reservation','icon':'🏊'},
+  'garage':{'type':'service','icon':'🔧'},'plumber':{'type':'service','icon':'🔨'},'cleaning':{'type':'service','icon':'🧹'},
+  'gardener':{'type':'service','icon':'🌳'},'medical':{'type':'service','icon':'🏥'},'vet':{'type':'service','icon':'🐾'},
+  'grooming':{'type':'service','icon':'✂️'},'retail':{'type':'product','icon':'🛍️'},'hotel':{'type':'reservation','icon':'🏨'},
+  'photographer':{'type':'service','icon':'📸'},'laundry':{'type':'service','icon':'👗'},'other':{'type':'service','icon':'🎨'}
+};
+
+
+function showNotification(message, type='success') {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `position:fixed;bottom:100px;right:30px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#FFFFFF;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:10000;animation:slideIn 0.3s ease;`;
+  document.body.appendChild(toast);
+  setTimeout(() => { toast.style.animation = 'slideOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+function toggleMobileMenu() {
+  const ov = document.getElementById('mobileMenuOverlay'), pp = document.getElementById('mobileMenuPopup');
+  const open = pp.style.display === 'block';
+  if (open) { pp.style.opacity='0'; pp.style.transform='translateY(20px)'; ov.style.opacity='0'; setTimeout(() => { pp.style.display='none'; ov.style.display='none'; }, 300); }
+  else { ov.style.display='block'; pp.style.display='block'; setTimeout(() => { ov.style.opacity='1'; pp.style.opacity='1'; pp.style.transform='translateY(0)'; }, 10); }
+}
+
+function toggleHours(checkbox) {
+  const row = checkbox.closest('.hours-row');
+  row.querySelectorAll('.time-input').forEach(input => {
+    input.disabled = checkbox.checked;
+    input.style.opacity = checkbox.checked ? '0.35' : '1';
+  });
+}
+
+function sanitizeSlug(input) {
+  input.value = input.value.toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-');
+}
+
+function updateBusinessIcon() {
+  const val = document.getElementById('businessType').value;
+  const cfg = businessConfigs[val];
+  if (cfg) {
+    document.getElementById('businessIcon').textContent = cfg.icon;
+    updateServicesSection(cfg.type);
+  }
+}
+
+// Configs détaillées par type de commerce
+const TYPE_CONFIGS = {
+  // type service avec durée
+  salon:       { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Coupe homme',      ph2:'25',  ph3:'30',  showDuration:true  },
+  spa:         { col1:'Soin',          col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Massage relaxant',  ph2:'60',  ph3:'60',  showDuration:true  },
+  massage:     { col1:'Séance',        col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Massage sportif',   ph2:'65',  ph3:'60',  showDuration:true  },
+  dentist:     { col1:'Acte',          col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Détartrage',        ph2:'80',  ph3:'45',  showDuration:true  },
+  opticien:    { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Examen de vue',     ph2:'40',  ph3:'30',  showDuration:true  },
+  law:         { col1:'Consultation',  col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Conseil juridique', ph2:'150', ph3:'60',  showDuration:true  },
+  architect:   { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Étude projet',      ph2:'200', ph3:'90',  showDuration:true  },
+  accountant:  { col1:'Mission',       col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Bilan annuel',      ph2:'500', ph3:'60',  showDuration:true  },
+  realtor:     { col1:'Service',       col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Estimation bien',   ph2:'0',   ph3:'60',  showDuration:true  },
+  training:    { col1:'Formation',     col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Cours individuel',  ph2:'80',  ph3:'60',  showDuration:true  },
+  gym:         { col1:'Cours',         col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Cours collectif',   ph2:'12',  ph3:'60',  showDuration:true  },
+  garage:      { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Vidange',           ph2:'60',  ph3:'60',  showDuration:true  },
+  plumber:     { col1:'Intervention',  col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Dépannage urgent',  ph2:'80',  ph3:'60',  showDuration:true  },
+  cleaning:    { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Ménage domicile',   ph2:'25',  ph3:'120', showDuration:true  },
+  gardener:    { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Tonte pelouse',     ph2:'40',  ph3:'60',  showDuration:true  },
+  medical:     { col1:'Consultation',  col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Consultation',      ph2:'50',  ph3:'30',  showDuration:true  },
+  vet:         { col1:'Acte',          col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Consultation',      ph2:'55',  ph3:'30',  showDuration:true  },
+  grooming:    { col1:'Prestation',    col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Toilettage chien',  ph2:'40',  ph3:'60',  showDuration:true  },
+  photographer:{ col1:'Séance',        col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Portrait studio',   ph2:'120', ph3:'60',  showDuration:true  },
+  laundry:     { col1:'Article',       col2:'Prix (€)', col3:'',            ph1:'Ex: Costume',           ph2:'15',  ph3:'',    showDuration:false },
+  // type reservation — pas de durée
+  restaurant:  { col1:'Table',         col2:'Capacité', col3:'Zone',        ph1:'Ex: Table 4 pers.',     ph2:'4',   ph3:'Terrasse', showDuration:false },
+  cafe:        { col1:'Espace',        col2:'Capacité', col3:'Zone',        ph1:'Ex: Espace salon',      ph2:'6',   ph3:'Intérieur', showDuration:false },
+  pizzeria:    { col1:'Table',         col2:'Capacité', col3:'Zone',        ph1:'Ex: Table 2 pers.',     ph2:'2',   ph3:'Salle',    showDuration:false },
+  hotel:       { col1:'Chambre',       col2:'Prix/nuit (€)', col3:'Type',   ph1:'Ex: Chambre double',    ph2:'119', ph3:'Standard', showDuration:false },
+  cinema:      { col1:'Séance',        col2:'Prix (€)', col3:'Salle',       ph1:'Ex: Séance 3D',         ph2:'15',  ph3:'Salle 1',  showDuration:false },
+  escapegame:  { col1:'Salle',         col2:'Prix/pers (€)', col3:'Joueurs',ph1:'Ex: Salle mystère',     ph2:'22',  ph3:'2-5',      showDuration:false },
+  pool:        { col1:'Entrée',        col2:'Prix (€)', col3:'',            ph1:'Ex: Adulte',            ph2:'5',   ph3:'',         showDuration:false },
+  // type product — pas de durée
+  bakery:      { col1:'Produit',       col2:'Prix (€)', col3:'Unité',       ph1:'Ex: Pain tradition',    ph2:'1.5', ph3:'pièce',    showDuration:false },
+  butcher:     { col1:'Viande',        col2:'Prix (€)', col3:'Unité',       ph1:'Ex: Entrecôte',         ph2:'28',  ph3:'/ kg',     showDuration:false },
+  fishmonger:  { col1:'Produit',       col2:'Prix (€)', col3:'Unité',       ph1:'Ex: Saumon frais',      ph2:'25',  ph3:'/ kg',     showDuration:false },
+  florist:     { col1:'Composition',   col2:'Prix (€)', col3:'',            ph1:'Ex: Bouquet de saison', ph2:'25',  ph3:'',         showDuration:false },
+  retail:      { col1:'Produit',       col2:'Prix (€)', col3:'Stock',       ph1:'Ex: Nom du produit',    ph2:'0',   ph3:'',         showDuration:false },
+  other:       { col1:'Service',       col2:'Prix (€)', col3:'Durée (min)', ph1:'Nom du service',        ph2:'0',   ph3:'30',       showDuration:true  },
+};
+
+function getTypeConfig(businessType) {
+  return TYPE_CONFIGS[businessType] || TYPE_CONFIGS['other'];
+}
+
+function updateServicesSection(type) {
+  const servicesList = document.getElementById('servicesList');
+  const serviceTitle = document.getElementById('serviceTitle');
+  const serviceIcon = document.getElementById('serviceIcon');
+  const businessType = document.getElementById('businessType').value;
+  if (!servicesList) return;
+  servicesList.innerHTML = '';
+  const container = document.querySelector('.service-headers-container');
+  if (!container) return;
+
+  const tc = getTypeConfig(businessType);
+
+  // Titre et icône
+  if (type === 'service')      { serviceTitle.textContent = 'Services & Tarifs'; serviceIcon.textContent = '💼'; }
+  else if (type === 'reservation') {
+    serviceTitle.textContent = businessType==='hotel' ? 'Chambres & Tarifs' : businessType==='cinema' ? 'Séances & Tarifs' : businessType==='escapegame' ? 'Salles & Tarifs' : 'Tables & Capacité';
+    serviceIcon.textContent = businessConfigs[businessType]?.icon || '📋';
+  }
+  else { serviceTitle.textContent = 'Produits & Prix'; serviceIcon.textContent = '🛍️'; }
+
+  // Headers colonnes
+  const col3html = tc.col3 ? `<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col3}</div>` : `<div></div>`;
+  container.innerHTML = `<div style="display:grid;grid-template-columns:${tc.showDuration || tc.col3 ? '2fr 1fr 1fr auto' : '2fr 1fr auto'};gap:12px;padding:0 16px 10px;margin-bottom:4px;">
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col1}</div>
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col2}</div>
+    ${col3html}
+    <div style="width:44px;"></div>
+  </div>`;
+  updateBadges();
+}
+
+function addServiceCard(v1, v2, v3, type) {
+  const servicesList = document.getElementById('servicesList');
+  const businessType = document.getElementById('businessType').value;
+  const tc = getTypeConfig(businessType);
+  const hasThird = tc.showDuration || tc.col3;
+
+  const card = document.createElement('div');
+  card.className = 'service-card-grid';
+  card.style.gridTemplateColumns = hasThird ? '2fr 1fr 1fr auto' : '2fr 1fr auto';
+  card.innerHTML = `
+    <input type="text" value="${v1||''}" placeholder="${tc.ph1}" class="cfg-input" style="padding:11px 14px;">
+    <input type="number" value="${v2||''}" placeholder="${tc.ph2}" class="cfg-input" style="padding:11px 14px;">
+    ${hasThird ? `<input type="${tc.showDuration ? 'number' : 'text'}" value="${v3||''}" placeholder="${tc.ph3}" class="cfg-input" style="padding:11px 14px;">` : ''}
+    <button onclick="this.parentElement.remove();updateBadges();" style="padding:10px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:16px;transition:all 0.2s;flex-shrink:0;">🗑️</button>`;
+  servicesList.appendChild(card);
+  updateBadges();
+}
+
+function addService() {
+  const val = document.getElementById('businessType').value;
+  const cfg = businessConfigs[val] || { type: 'service' };
+  addServiceCard('', '', '', cfg.type);
+  // Aller dans l'onglet services si pas déjà là
+  // Ne pas switcher automatiquement
+}
+
+function addFAQ(question='', answer='') {
+  const faqList = document.getElementById('faqList');
+  const card = document.createElement('div');
+  card.className = 'faq-card-wrapper';
+  card.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;">
+      <div style="flex:1;">
+        <label class="cfg-label" style="margin-bottom:6px;display:block;">Question</label>
+        <input type="text" value="${question.replace(/"/g,'&quot;')}" placeholder="Votre question..." class="cfg-input" style="padding:11px 14px;font-weight:600;">
+      </div>
+      <button onclick="this.closest('.faq-card-wrapper').remove();updateBadges();" style="padding:9px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:15px;margin-top:22px;flex-shrink:0;">🗑️</button>
+    </div>
+    <div>
+      <label class="cfg-label" style="margin-bottom:6px;display:block;">Réponse</label>
+      <textarea placeholder="Votre réponse..." class="cfg-input" style="resize:vertical;min-height:72px;padding:11px 14px;">${answer}</textarea>
+    </div>`;
+  faqList.appendChild(card);
+  updateBadges();
+  // Ne pas switcher automatiquement
+}
+
+function logout() {
+  if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); window.location.href = '/auth'; }
+}
+
+// ── SAUVEGARDES ──
+async function saveBusinessInfo() {
+  try {
+    await apiRequest(`/api/business/${businessId}/config`, 'POST', {
+      name: document.getElementById('businessName').value,
+      business_type: document.getElementById('businessType').value,
+      email: document.getElementById('businessEmail').value,
+      phone: document.getElementById('businessPhone').value,
+      address: document.getElementById('businessAddress').value,
+      description: document.getElementById('businessDescription').value,
+      slug: document.getElementById('businessSlug').value,
+      timezone: document.getElementById('businessTimezone').value,
+      interface_language: document.getElementById('interfaceLanguage').value,
+    });
+    const sn = document.getElementById('sidebarBusinessName');
+    if (sn) sn.textContent = document.getElementById('businessName').value;
+    showNotification('✅ Informations enregistrées !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+async function saveHours() {
+  try {
+    const dayNames = ['mon','tue','wed','thu','fri','sat','sun'];
+    const hours = [...document.querySelectorAll('.hours-row')].map((row, i) => {
+      const t = row.querySelectorAll('.time-input');
+      const cb = row.querySelector('.closed-checkbox');
+      return { day: dayNames[i], open_time: t[0].value||'09:00', close_time: t[1].value||'18:00', is_closed: cb.checked };
+    });
+    await apiRequest(`/api/business/${businessId}/hours`, 'POST', hours);
+    showNotification('✅ Horaires enregistrés !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+async function saveServices() {
+  try {
+    const services = [...document.querySelectorAll('.service-card-grid')].map(card => {
+      const inputs = card.querySelectorAll('input');
+      const name = inputs[0].value, price = inputs[1].value, third = inputs[2].value;
+      if (!name || !price) return null;
+      const cfg = businessConfigs[document.getElementById('businessType').value] || { type: 'service' };
+      return { name, price: parseFloat(price), duration_minutes: cfg.type==='service' ? (parseInt(third)||60) : 60, is_active: true };
+    }).filter(Boolean);
+    if (!services.length) { showNotification('Ajoutez au moins un service', 'error'); return; }
+    await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
+    showNotification('✅ Services enregistrés !');
+    loadComplementaryOptions();
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+async function saveFAQ() {
+  try {
+    const faqs = [...document.querySelectorAll('.faq-card-wrapper')].map(card => {
+      const q = card.querySelector('input[type="text"]').value;
+      const a = card.querySelector('textarea').value;
+      return (q && a) ? { question: q, answer: a, is_active: true } : null;
+    }).filter(Boolean);
+    await apiRequest(`/api/business/${businessId}/faq`, 'POST', faqs);
+    showNotification('✅ FAQ enregistrée !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+async function saveAICustomization() {
+  if (!window._isPro) { showNotification('Plan Pro requis pour la personnalité IA', 'error'); return; }
+  try {
+    await apiRequest(`/api/business/${businessId}/ai-personality`, 'POST', {
+      tone: document.getElementById('aiTone').value,
+      formality: document.getElementById('aiFormality').value,
+      use_emojis: document.getElementById('aiEmojis').value === 'yes',
+      response_length: document.getElementById('aiLength').value,
+      assistant_name: document.getElementById('aiName').value,
+      greeting_message: document.getElementById('aiGreeting').value,
+      proactivity: document.getElementById('aiProactivity').value,
+      service_suggestions: document.getElementById('aiSuggestions').value,
+      email_collection: document.getElementById('aiEmailCollection').value
+    });
+    showNotification('✅ Personnalité IA enregistrée !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+// ── FERMETURES ──
+function addClosure(date='', reason='') {
+  const wrap = document.getElementById('closuresList');
+  const div = document.createElement('div');
+  div.className = 'closure-item';
+  div.style.cssText = 'display:grid;grid-template-columns:160px 1fr auto;gap:10px;align-items:center;';
+  div.innerHTML = `
+    <input type="date" value="${date}" class="closure-date cfg-input" style="padding:10px 12px;color-scheme:dark;">
+    <input type="text" value="${reason}" placeholder="Motif (ex: Noël, Congés...)" class="closure-reason cfg-input" style="padding:10px 14px;">
+    <button onclick="this.parentElement.remove()" style="padding:9px 12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;">🗑️</button>`;
+  wrap.appendChild(div);
+}
+
+async function saveClosures() {
+  try {
+    const closures = [...document.querySelectorAll('.closure-item')].map(item => {
+      const date = item.querySelector('.closure-date').value;
+      const reason = item.querySelector('.closure-reason').value;
+      return date ? { date, reason: reason||'Fermé' } : null;
+    }).filter(Boolean);
+    await apiRequest(`/api/business/${businessId}/special-closures`, 'POST', { closures });
+    showNotification('✅ Fermetures enregistrées !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+function loadClosures(list) {
+  const wrap = document.getElementById('closuresList');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  (list||[]).forEach(c => addClosure(c.date, c.reason));
+}
+
+// ── COMPLÉMENTARITÉS ──
+let availableServices = [];
+
+function loadComplementaryOptions() {
+  availableServices = [...document.querySelectorAll('.service-card-grid')].map(c => c.querySelector('input')?.value).filter(Boolean);
+  document.querySelectorAll('.comp-service-select').forEach(sel => {
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">-- Service --</option>' + availableServices.map(s => `<option value="${s}"${s===cur?' selected':''}>${s}</option>`).join('');
+  });
+}
+
+function makeServiceSelect(value='', cls='comp-service-select') {
+  const sel = document.createElement('select');
+  sel.className = cls + ' cfg-select';
+  sel.style.cssText = 'min-width:0;width:100%;padding:9px 32px 9px 12px;font-size:13px;';
+  sel.innerHTML = '<option value="">-- Service --</option>' + availableServices.map(s => `<option value="${s}"${s===value?' selected':''}>${s}</option>`).join('');
+  return sel;
+}
+
+function addComplementaryRule(mainService='', suggestions=[]) {
+  loadComplementaryOptions();
+  const wrap = document.getElementById('complementaryList');
+  const div = document.createElement('div');
+  div.className = 'comp-rule';
+  div.style.cssText = 'padding:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;';
+  div.innerHTML = `<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+    <span style="font-size:13px;color:rgba(255,255,255,0.5);white-space:nowrap;">Si client choisit</span>
+    <div class="comp-main-wrap" style="flex:1;min-width:140px;"></div>
+    <span style="font-size:13px;color:rgba(255,255,255,0.5);">→ suggérer</span>
+    <button onclick="addSuggestionToRule(this)" style="padding:5px 10px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.25);border-radius:6px;color:#00D4FF;font-size:12px;cursor:pointer;">+ Service</button>
+    <button onclick="this.closest('.comp-rule').remove()" style="padding:5px 10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:6px;color:#EF4444;font-size:12px;cursor:pointer;">🗑️</button>
+  </div>
+  <div class="comp-suggestions-wrap" style="display:flex;flex-wrap:wrap;gap:8px;"></div>`;
+  div.querySelector('.comp-main-wrap').appendChild(makeServiceSelect(mainService, 'comp-service-select comp-main-select'));
+  const sugWrap = div.querySelector('.comp-suggestions-wrap');
+  suggestions.forEach(s => addSuggestionChip(sugWrap, s));
+  wrap.appendChild(div);
+}
+
+function addSuggestionToRule(btn) { const wrap = btn.closest('.comp-rule').querySelector('.comp-suggestions-wrap'); addSuggestionChip(wrap, ''); }
+
+function addSuggestionChip(wrap, value='') {
+  const chip = document.createElement('div');
+  chip.style.cssText = 'display:flex;align-items:center;gap:6px;';
+  const sel = makeServiceSelect(value, 'comp-service-select comp-sug-select');
+  sel.style.minWidth = '140px';
+  const rm = document.createElement('button');
+  rm.textContent = '✕';
+  rm.style.cssText = 'padding:5px 8px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:rgba(255,255,255,0.45);cursor:pointer;font-size:12px;';
+  rm.onclick = () => chip.remove();
+  chip.appendChild(sel); chip.appendChild(rm); wrap.appendChild(chip);
+}
+
+async function saveComplementary() {
+  try {
+    const rules = [...document.querySelectorAll('.comp-rule')].map(rule => {
+      const main = rule.querySelector('.comp-main-select')?.value;
+      if (!main) return null;
+      const sugs = [...rule.querySelectorAll('.comp-sug-select')].map(s => s.value).filter(Boolean);
+      return sugs.length ? { service: main, suggestions: sugs } : null;
+    }).filter(Boolean);
+    await apiRequest(`/api/business/${businessId}/complementary-services`, 'POST', { rules });
+    showNotification('✅ Complémentarités enregistrées !');
+  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+}
+
+async function loadComplementaryRules() {
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/complementary-services`);
+    const wrap = document.getElementById('complementaryList');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    (data.rules||[]).forEach(r => addComplementaryRule(r.service, r.suggestions||[]));
+  } catch(e) { console.warn('Complémentarités non chargées:', e); }
+}
+
+// ── SIDEBAR ──
+async function loadSidebarInfo() {
+  try {
+    const config = await apiRequest(`/api/business/${businessId}/config`);
+    const biz = config.business || {};
+    const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
+    const sl = document.getElementById('sidebarLogo'); if (sl && biz.business_type) sl.textContent = (businessConfigs[biz.business_type]||{icon:'🏢'}).icon;
+  } catch(e) { console.error('Sidebar:', e); }
+}
+
+// ── CHARGEMENT CONFIG ──
+async function loadBusinessConfig() {
+  try {
+    let config = null;
+    try { config = await apiRequest(`/api/business/${businessId}/config/full`); }
+    catch(e1) {
+      const basic = await apiRequest(`/api/business/${businessId}/config`);
+      config = { business: basic.business||basic, services: basic.services||[], faq: basic.faq||[], hours: basic.hours||[], ai_personality: basic.ai_personality||null, special_closures: [] };
+    }
+    if (!config) return;
+    const bc = config.business || {};
+
+    // Business
+    const set = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
+    set('businessType', bc.business_type||'salon'); updateBusinessIcon();
+    set('businessName', bc.name); set('businessEmail', bc.email); set('businessPhone', bc.phone);
+    set('businessAddress', bc.address); set('businessDescription', bc.description);
+    set('businessSlug', bc.slug); set('businessTimezone', bc.timezone||'Europe/Paris'); set('interfaceLanguage', bc.interface_language||'fr');
+
+    // Services
+    const services = config.services || [];
+    if (services.length) {
+      document.getElementById('servicesList').innerHTML = '';
+      const cfgType = (businessConfigs[bc.business_type||'salon']||{type:'service'}).type;
+      services.forEach(s => addServiceCard(s.name, s.price, s.duration_minutes||'', cfgType));
+
+    }
+
+    // FAQ
+    const faq = config.faq || [];
+    if (faq.length) {
+      document.getElementById('faqList').innerHTML = '';
+      faq.forEach(item => addFAQ(item.question||'', item.answer||''));
+    }
+
+    // Horaires
+    const hours = config.hours || [];
+    if (hours.length) {
+      hours.forEach((h, i) => {
+        const row = document.querySelectorAll('.hours-row')[i]; if (!row) return;
+        const t = row.querySelectorAll('.time-input');
+        const cb = row.querySelector('.closed-checkbox');
+        if (t[0]) t[0].value = h.open_time||'09:00';
+        if (t[1]) t[1].value = h.close_time||'18:00';
+        if (cb) { cb.checked = !!(h.is_closed||h.closed); toggleHours(cb); }
+      });
+    }
+
+    // Fermetures
+    loadClosures(config.special_closures || []);
+
+    // IA
+    const p = config.ai_personality;
+    if (p) { set('aiTone', p.tone); set('aiGreeting', p.greeting_message); }
+
+    // Sidebar
+    const sn = document.getElementById('sidebarBusinessName'); if (sn && bc.name) sn.textContent = bc.name;
+    const sp = document.getElementById('sidebarPlan'); if (sp) sp.textContent = 'Plan Standard';
+
+    updateBadges();
+  } catch(e) { console.error('Config:', e); showNotification('❌ Erreur de chargement', 'error'); }
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', async () => {
+  setTimeout(checkTabScroll, 300);
+  loadSidebarInfo();
+  await checkPlanAndInit();
+});
+
+async function checkPlanAndInit() {
+  let isPro = false;
+  try {
+    const userId = JSON.parse(atob(token.split('.')[1])).sub;
+    const sub = await apiRequest(`/api/billing/subscription/${userId}`).catch(() => null);
+    isPro = sub?.plan === 'pro' || sub?.plan === 'trial';
+  } catch {}
+  window._isPro = isPro;
+
+  const sp = document.getElementById('sidebarPlan');
+  if (sp) sp.textContent = isPro ? '⭐ Plan Pro' : 'Plan Standard';
+
+  const aiSection = document.getElementById('personalitySection');
+  if (aiSection && !isPro) {
+    aiSection.style.opacity = '0.45';
+    aiSection.style.pointerEvents = 'none';
+    aiSection.style.filter = 'blur(1px)';
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:all;border-radius:20px;';
+    overlay.innerHTML = `<a href="/abonnement" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,0.4);">Passer au plan Pro pour personnaliser l'IA</a>`;
+    aiSection.appendChild(overlay);
+  }
+
+  await loadBusinessConfig();
+  loadComplementaryOptions();
+  await loadComplementaryRules();
+
+  // Badges navigation
+  try {
+    const [questions, apts] = await Promise.all([
+      apiRequest(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]})),
+      apiRequest(`/api/appointments/?business_id=${businessId}`).catch(()=>[])
+    ]);
+    const msgCount = questions?.questions?.length || 0;
+    const rdvCount = Array.isArray(apts) ? apts.filter(a=>a.status==='pending').length : 0;
+    function setBadge(count, ...ids) { ids.forEach(id=>{ const el=document.getElementById(id); if(!el)return; if(count>0){el.textContent=count>9?'9+':count;el.style.display='flex';}else el.style.display='none'; }); }
+    setBadge(msgCount, 'sbBadgeMsg', 'bnBadgeMsg');
+    setBadge(rdvCount, 'sbBadgeRdv', 'bnBadgeRdv');
+  } catch {}
+}
+</script>
+
+</body>
+</html>

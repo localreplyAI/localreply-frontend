@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div style="display: flex; min-height: 100vh; align-items: center; justify-content: center; background: linear-gradient(135deg, #0A1628 0%, #0052CC 50%, #00D4FF 100%); padding: 20px; position: relative; overflow: hidden;">
+  
+  <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 20s infinite ease-in-out; pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 82, 204, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 25s infinite ease-in-out reverse; pointer-events: none;"></div>
+  
+  <div style="background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 50px 40px; max-width: 480px; width: 100%; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; z-index: 1;">
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+      <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width: 60px; height: 60px; border-radius: 16px; background: #FFFFFF; padding: 8px; margin-bottom: 15px;" loading="lazy">
+      <h1 style="font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #FFFFFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 8px 0;">LocalReply</h1>
+      <p style="font-size: 15px; color: rgba(255, 255, 255, 0.6); margin: 0;">Votre assistant IA pour gérer vos clients</p>
+    </div>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 35px; background: rgba(255, 255, 255, 0.05); padding: 6px; border-radius: 12px;">
+      <button id="tabLogin" class="tab active" onclick="switchTab('login')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: #FFFFFF; border: none; background: linear-gradient(135deg, #0052CC, #00D4FF); box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);">Connexion</button>
+      <button id="tabSignup" class="tab" onclick="switchTab('signup')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: rgba(255, 255, 255, 0.6); border: none; background: transparent;">Inscription</button>
+    </div>
+    
+    <div id="errorMessage" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; padding: 12px 16px; color: #EF4444; font-size: 14px; margin-bottom: 20px; display: none;"></div>
+    <div id="successMessage" style="background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 10px; padding: 12px 16px; color: #10B981; font-size: 14px; margin-bottom: 20px; display: none;"></div>
+    
+    <!-- FORMULAIRE LOGIN -->
+    <form id="loginForm">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
+        <input type="email" id="loginEmail" placeholder="votre@email.com" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; transition: all 0.3s; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; transition: all 0.3s; box-sizing: border-box;">
+      </div>
+      <div style="text-align: right; margin-bottom: 20px;">
+        <a href="/forgot-password" style="font-size: 13px; color: #00D4FF; text-decoration: none; font-weight: 600;">Mot de passe oublié ?</a>
+      </div>
+      <button type="submit" id="loginBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);">
+        Se connecter
+      </button>
+    </form>
+    
+    <!-- FORMULAIRE INSCRIPTION -->
+    <form id="signupForm" style="display: none;">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Nom du business</label>
+        <input type="text" id="signupBusinessName" placeholder="Salon Marie" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
+        <input type="email" id="signupEmail" placeholder="votre@email.com" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
+        <input type="password" id="signupPassword" placeholder="••••••••" required minlength="8" style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Confirmer le mot de passe</label>
+        <input type="password" id="signupPasswordConfirm" placeholder="••••••••" required minlength="8" style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
+      </div>
+      <button type="submit" id="signupBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); margin-top: 10px;">
+        Créer mon compte
+      </button>
+      <div style="margin-top: 15px; font-size: 12px; color: rgba(255, 255, 255, 0.5); text-align: center;">
+        En créant un compte, vous acceptez nos <a href="/terms" style="color: #00D4FF;">conditions d'utilisation</a>
+      </div>
+    </form>
+    
+    <!-- SÉPARATEUR -->
+    <div style="text-align: center; margin: 30px 0; position: relative;">
+      <div style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: rgba(255, 255, 255, 0.1);"></div>
+      <span style="position: relative; background: rgba(10, 22, 40, 0.95); padding: 0 15px; font-size: 13px; color: rgba(255, 255, 255, 0.5);">ou</span>
+    </div>
+    
+    <button onclick="loginWithGoogle()" style="width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path></svg>
+      Continuer avec Google
+    </button>
+  </div>
+</div>
+
+<style>
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+input:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important; }
+.tab { transition: all 0.3s; }
+.tab.active { background: linear-gradient(135deg, #0052CC, #00D4FF) !important; color: #FFFFFF !important; box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4) !important; }
+</style>
+
+<script>
+const API_BASE_URL = 'https://localreply-api.onrender.com';
+
+// ─── Helper redirect ───
+function redirectAfterAuth(data, isNewAccount = false) {
+  const token = data.access_token || data.token;
+  localStorage.setItem('auth_token', token);
+
+  // Extraire business_id depuis la réponse OU depuis le JWT
+  let businessId = data.business_id;
+  if (!businessId || businessId === 'null') {
+    // Fallback : lire depuis le JWT
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      businessId = payload.business_id || payload.sub || null;
+    } catch {}
+  }
+  localStorage.setItem('business_id', businessId ? String(businessId) : 'null');
+
+  // Si business_id est toujours null → dashboard quand même
+  // Le backend doit corriger ça, pas bloquer l'utilisateur
+  if (!businessId || businessId === 'null') {
+    window.location.href = '/dashboard';
+    return;
+  }
+
+  if (isNewAccount) {
+    // Nouveau compte avec business_id valide → onboarding
+    window.location.href = '/onboarding';
+  } else {
+    // Connexion → dashboard toujours (onboarding géré côté onboarding.html)
+    // Ne pas se fier à onboarding_completed du backend qui peut être incorrect
+    window.location.href = '/dashboard';
+  }
+}
+
+// ─── Écran vérification email ───
+function showVerifyEmailScreen(email) {
+  const card = document.querySelector('[style*="background: rgba(10, 22, 40"]');
+  if (!card) { showSuccess('✅ Un email de vérification a été envoyé à ' + email); return; }
+  card.innerHTML = `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:56px;margin-bottom:20px;">📬</div>
+      <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">Vérifiez votre email</h2>
+      <p style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.7;margin:0 0 8px;">
+        Un lien de confirmation a été envoyé à
+      </p>
+      <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:24px;">${email}</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0 auto 28px;max-width:340px;">
+        Cliquez sur le lien dans l'email pour activer votre compte et accéder à votre dashboard.
+      </p>
+      <div style="padding:14px 20px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">
+        💡 Vérifiez aussi vos spams si vous ne voyez pas l'email.
+      </div>
+      <button onclick="resendVerification('${email}')" id="resendBtn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.5);padding:11px 20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(0,212,255,0.4)';this.style.color='#00D4FF'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">
+        🔄 Renvoyer l'email
+      </button>
+    </div>`;
+}
+
+async function resendVerification(email) {
+  const btn = document.getElementById('resendBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi...'; }
+  try {
+    await fetch(`${API_BASE_URL}/api/auth/resend-verification`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (btn) { btn.textContent = '✅ Email renvoyé !'; }
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '🔄 Renvoyer l\'email'; } }, 5000);
+  } catch {
+    if (btn) { btn.disabled = false; btn.textContent = '❌ Erreur, réessayez'; }
+  }
+}
+
+// ─── Init URL params (doit être en premier) ───
+const urlParams = new URLSearchParams(window.location.search);
+
+// ─── Vérification email depuis lien (/auth?token=xxx&mode=verify) ───
+const verifyToken = urlParams.get('verify_token') || urlParams.get('token');
+const verifyMode = urlParams.get('mode');
+
+if (verifyToken && verifyMode === 'verify') {
+  (async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/auth/verify-email?token=${verifyToken}`);
+      const data = await res.json();
+      if (res.ok && (data.access_token || data.token)) {
+        // Sauvegarder le token
+        const tok = data.access_token || data.token;
+        localStorage.setItem('auth_token', tok);
+        let bid = data.business_id;
+        if (!bid || bid === 'null') {
+          try { bid = JSON.parse(atob(tok.split('.')[1])).business_id; } catch {}
+        }
+        if (bid) localStorage.setItem('business_id', String(bid));
+        // Nouveau compte → choisir un abonnement d'abord
+        window.location.href = '/abonnement?new=true';
+      } else {
+        showError('❌ ' + (data.detail || 'Lien de vérification invalide ou expiré.'));
+      }
+    } catch {
+      showError('❌ Erreur lors de la vérification. Réessayez.');
+    }
+  })();
+}
+
+// ─── Redirect Google OAuth (/auth?token=xxx&business_id=yyy) ───
+const googleToken = urlParams.get('token');
+const googleBusinessId = urlParams.get('business_id');
+const googleNew = urlParams.get('new_account') === 'true';
+
+if (googleToken && googleBusinessId && verifyMode !== 'verify') {
+  localStorage.setItem('auth_token', googleToken);
+  localStorage.setItem('business_id', String(googleBusinessId));
+  if (googleNew) {
+    // Nouveau compte Google → choisir abonnement d'abord
+    window.location.href = '/abonnement?new=true';
+  } else {
+    // Compte existant → vérifier onboarding complété
+    try {
+      const payload = JSON.parse(atob(googleToken.split('.')[1]));
+      const completed = payload.onboarding_completed ?? true;
+      window.location.href = completed ? '/dashboard' : '/onboarding';
+    } catch {
+      window.location.href = '/dashboard';
+    }
+  }
+}
+
+// ─── Déjà connecté → dashboard ───
+const existingToken = localStorage.getItem('auth_token');
+if (existingToken) window.location.href = '/dashboard';
+
+// ─── Switch tabs ───
+function switchTab(tab) {
+  const tabLogin = document.getElementById('tabLogin');
+  const tabSignup = document.getElementById('tabSignup');
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+
+  if (tab === 'login') {
+    tabLogin.classList.add('active');
+    tabLogin.style.cssText += 'background:linear-gradient(135deg,#0052CC,#00D4FF);color:#FFF;box-shadow:0 4px 12px rgba(0,212,255,0.4);';
+    tabSignup.classList.remove('active');
+    tabSignup.style.cssText += 'background:transparent;color:rgba(255,255,255,0.6);box-shadow:none;';
+    loginForm.style.display = 'block';
+    signupForm.style.display = 'none';
+  } else {
+    tabSignup.classList.add('active');
+    tabSignup.style.cssText += 'background:linear-gradient(135deg,#0052CC,#00D4FF);color:#FFF;box-shadow:0 4px 12px rgba(0,212,255,0.4);';
+    tabLogin.classList.remove('active');
+    tabLogin.style.cssText += 'background:transparent;color:rgba(255,255,255,0.6);box-shadow:none;';
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'block';
+  }
+  hideMessages();
+}
+
+function showError(msg) {
+  const el = document.getElementById('errorMessage');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('successMessage').style.display = 'none';
+}
+function showSuccess(msg) {
+  const el = document.getElementById('successMessage');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('errorMessage').style.display = 'none';
+}
+function hideMessages() {
+  document.getElementById('errorMessage').style.display = 'none';
+  document.getElementById('successMessage').style.display = 'none';
+}
+
+// ─── LOGIN ───
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMessages();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Connexion...';
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      // Cas spécial : email non vérifié
+      if (res.status === 403 && data.detail?.includes('vérif')) {
+        const emailVal = document.getElementById('loginEmail').value;
+        showVerifyEmailScreen(emailVal);
+        btn.disabled = false; btn.textContent = 'Se connecter';
+        return;
+      }
+      throw new Error(data.detail || 'Erreur de connexion');
+    }
+
+    showSuccess('✅ Connexion réussie ! Redirection...');
+    setTimeout(() => redirectAfterAuth(data, false), 1000);
+  } catch (err) {
+    showError('❌ ' + err.message);
+    btn.disabled = false; btn.textContent = 'Se connecter';
+  }
+});
+
+// ─── INSCRIPTION ───
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideMessages();
+  const businessName = document.getElementById('signupBusinessName').value;
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+  const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+  const btn = document.getElementById('signupBtn');
+
+  if (password !== passwordConfirm) { showError('❌ Les mots de passe ne correspondent pas'); return; }
+  if (password.length < 8) { showError('❌ Le mot de passe doit contenir au moins 8 caractères'); return; }
+
+  btn.disabled = true; btn.textContent = 'Création du compte...';
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, business_name: businessName })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Erreur lors de la création du compte');
+
+    // Si le backend retourne un token → inscription directe (Google ou sans vérif)
+    if (data.access_token || data.token) {
+      showSuccess('✅ Compte créé ! Configuration de votre assistant...');
+      setTimeout(() => redirectAfterAuth(data, true), 1500);
+    } else {
+      // Email de vérification envoyé → afficher l'écran d'attente
+      showVerifyEmailScreen(data.email || email);
+    }
+  } catch (err) {
+    showError('❌ ' + err.message);
+    btn.disabled = false; btn.textContent = 'Créer mon compte';
+  }
+});
+
+// ─── GOOGLE OAUTH ───
+function loginWithGoogle() {
+  window.location.href = `${API_BASE_URL}/api/auth/google/login`;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,763 @@
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+
+  <!-- Fond ambiance -->
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+    <div style="position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(0,82,204,0.18) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.1) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(0,52,128,0.12) 0%,transparent 60%);border-radius:50%;"></div>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <!-- Logo -->
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.3px;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <!-- Business card -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">🏢</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <!-- Nav -->
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;position:relative;">
+        <span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:600;">Accueil</span>
+      </a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span>
+      </a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);position:relative;">
+        <span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span>
+        <span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span>
+      </a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span>
+        <span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span>
+      </a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);">
+        <span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span>
+        <span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
+      </a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;transition:all 0.2s;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV MOBILE -->
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 14px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);">
+        <span style="font-size:20px;">🏠</span><span style="font-size:10px;font-weight:700;">Accueil</span>
+      </a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;">
+        <span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span>
+      </a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
+        <span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span>
+        <span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
+      </a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
+        <span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span>
+        <span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
+      </a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;cursor:pointer;font-family:inherit;">
+        <span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- ═══ MAIN ═══ -->
+  <div id="mainContent" style="flex:1;min-width:0;padding:32px 36px 60px;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER -->
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:28px;">
+      <div>
+        <h1 style="font-size:clamp(26px,3vw,38px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;"><span id="greeting">Bonjour</span> <span id="businessName" style="background:linear-gradient(135deg,#00D4FF,#0052CC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">—</span> 👋</h1>
+        <p style="font-size:14px;color:rgba(255,255,255,0.45);margin:0;"><span id="currentDate"></span></p>
+      </div>
+      <a id="testIABtn" href="#" target="_blank" style="display:flex;align-items:center;gap:8px;padding:11px 18px;background:linear-gradient(135deg,rgba(0,82,204,0.35),rgba(0,212,255,0.15));border:1px solid rgba(0,212,255,0.3);border-radius:11px;color:#00D4FF;text-decoration:none;font-size:13px;font-weight:700;transition:all 0.2s;white-space:nowrap;">
+        <span style="font-size:16px;">🤖</span> Tester mon IA →
+      </a>
+    </div>
+
+    <!-- ALERTES URGENTES -->
+    <div id="alertsSection" style="display:none;margin-bottom:20px;"></div>
+
+    <!-- STATS 3 COMPTEURS -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;">
+      <!-- Conversations -->
+      <div class="scard" style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,82,204,0.06));border:1px solid rgba(0,212,255,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
+        <div class="scard-bg">💬</div>
+        <div class="scard-label">Conversations</div>
+        <div class="scard-val" id="statConversations" style="color:#00D4FF;">—</div>
+        <div class="scard-sub">7 derniers jours</div>
+      </div>
+      <!-- RDV confirmés -->
+      <div class="scard" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
+        <div class="scard-bg">📅</div>
+        <div class="scard-label">RDV confirmés</div>
+        <div class="scard-val" id="statAppointments" style="color:#10B981;">—</div>
+        <div class="scard-sub">7 derniers jours</div>
+      </div>
+      <!-- En attente -->
+      <div class="scard" style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
+        <div class="scard-bg">🔔</div>
+        <div class="scard-label">À traiter</div>
+        <div class="scard-val" id="statPending" style="color:#F59E0B;">—</div>
+        <div class="scard-sub">RDV + questions en attente</div>
+      </div>
+    </div>
+
+    <!-- SCORE SANTÉ IA + NARRATIVE -->
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:14px;margin-bottom:20px;" id="healthGrid">
+      <!-- Narrative IA -->
+      <div style="background:linear-gradient(135deg,rgba(0,82,204,0.14),rgba(0,212,255,0.06));border:1px solid rgba(0,212,255,0.18);border-radius:16px;padding:22px 24px;display:flex;align-items:start;gap:16px;">
+        <div style="width:44px;height:44px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 14px rgba(0,212,255,0.25);">🤖</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;">Résumé — 7 derniers jours</div>
+          <div id="aiNarrative" style="font-size:15px;color:rgba(255,255,255,0.85);line-height:1.65;"><span style="color:rgba(255,255,255,0.3);font-style:italic;font-size:13px;">Chargement...</span></div>
+        </div>
+      </div>
+      <!-- Score santé IA -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px;">Score IA</div>
+        <div style="position:relative;width:100px;height:100px;margin-bottom:12px;">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+            <circle id="healthRing" cx="50" cy="50" r="42" fill="none" stroke="url(#hGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="264" stroke-dashoffset="264" transform="rotate(-90 50 50)" style="transition:stroke-dashoffset 1.2s ease;"/>
+            <defs><linearGradient id="hGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#0052CC"/><stop offset="100%" style="stop-color:#00D4FF"/></linearGradient></defs>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+            <div id="healthScore" style="font-size:26px;font-weight:800;color:#fff;line-height:1;">—</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.35);">/100</div>
+          </div>
+        </div>
+        <div id="healthLabel" style="font-size:13px;font-weight:600;color:#00D4FF;">Calcul...</div>
+        <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px;width:100%;text-align:left;" id="healthItems"></div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS PREVIEW -->
+    <div style="position:relative;margin-bottom:20px;">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;">📊</span>
+            <span style="font-size:17px;font-weight:700;color:#fff;">Analytics</span>
+            <span style="padding:2px 8px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:6px;font-size:10px;font-weight:700;color:#fff;">PRO</span>
+          </div>
+          <a href="/dashboard-analytics" style="font-size:13px;color:#00D4FF;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:4px;">Voir tout <span style="font-size:16px;">→</span></a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
+          <div class="kpi-card" style="border-color:rgba(0,212,255,0.2);">
+            <div class="kpi-val" id="kpiConversations" style="color:#00D4FF;">—</div>
+            <div class="kpi-lbl">Conversations</div>
+            <div class="kpi-sub">7 derniers jours</div>
+          </div>
+          <div class="kpi-card" style="border-color:rgba(16,185,129,0.2);">
+            <div class="kpi-val" id="kpiAppointments" style="color:#10B981;">—</div>
+            <div class="kpi-lbl">RDV créés</div>
+            <div class="kpi-sub">7 derniers jours</div>
+          </div>
+          <div class="kpi-card" style="border-color:rgba(245,158,11,0.2);">
+            <div class="kpi-val" id="kpiConversion" style="color:#F59E0B;">—</div>
+            <div class="kpi-lbl">Taux conversion</div>
+            <div class="kpi-sub">Conv → RDV</div>
+          </div>
+          <div class="kpi-card" style="border-color:rgba(139,92,246,0.2);">
+            <div class="kpi-val" id="kpiResolution" style="color:#8B5CF6;">—</div>
+            <div class="kpi-lbl">Résolution IA</div>
+            <div class="kpi-sub">Questions résolues</div>
+          </div>
+        </div>
+        <div style="position:relative;">
+          <canvas id="miniChart" style="max-height:120px;"></canvas>
+          <div id="chartLock" style="display:none;position:absolute;inset:0;background:rgba(10,18,40,0.85);backdrop-filter:blur(6px);border-radius:10px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">🔒</div>
+            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Réservé au Plan Pro</div>
+            <a href="/abonnement" style="font-size:12px;color:#F59E0B;font-weight:600;text-decoration:none;">Passer au Pro →</a>
+          </div>
+        </div>
+      </div>
+      <!-- Overlay Pro -->
+      <div id="analyticsOverlay" style="display:none;position:absolute;inset:0;background:rgba(10,18,40,0.65);backdrop-filter:blur(10px);border-radius:16px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:30px;">
+        <div style="background:rgba(10,20,45,0.98);border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:32px 28px;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+          <div style="font-size:40px;margin-bottom:12px;">📊</div>
+          <h3 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 10px;">Analytics avancés</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px;">Taux de conversion, résolution IA, graphiques, 90j d'historique, résumés quotidiens.</p>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;text-align:left;">
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Graphiques conversations & RDV</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Questions les plus posées</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Résumés IA quotidiens par email</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>90 jours d'historique</div>
+          </div>
+          <a href="/abonnement" style="display:block;padding:14px 24px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,0.35);">⭐ Passer au Plan Pro — 49€/mois</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIEN & QR CODE -->
+    <div id="linkSection" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+        <div style="width:40px;height:40px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
+        <div>
+          <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0;">Votre lien & QR Code</h2>
+          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:3px 0 0;">Partagez avec vos clients pour accéder à votre assistant 24/7</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+            <div style="flex:1;padding:12px 16px;background:rgba(0,212,255,0.08);border:1.5px solid rgba(0,212,255,0.3);border-radius:11px;font-size:14px;color:#00D4FF;font-weight:600;word-break:break-all;min-width:0;">localreply.ai/<span id="slugDisplay">...</span></div>
+            <button onclick="copyLink()" style="padding:12px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:16px;cursor:pointer;flex-shrink:0;transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">📋</button>
+          </div>
+          <a id="testIABtn2" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;background:linear-gradient(135deg,#0052CC 0%,#0080FF 50%,#00D4FF 100%);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,120,255,0.25);">
+            <span style="font-size:18px;">🤖</span><span>Tester mon assistant IA</span><span style="font-size:10px;background:rgba(255,255,255,0.18);padding:2px 7px;border-radius:20px;">Vue client →</span>
+          </a>
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Liens de tracking par source</div>
+          <div style="display:grid;gap:7px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">📸 Instagram</span><div id="linkInstagram" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <button onclick="copySourceLink('instagram')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">🔍 Google</span><div id="linkWebsite" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <button onclick="copySourceLink('google')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">📱 QR Vitrine</span><div id="linkQR" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <button onclick="copySourceLink('qr')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
+            </div>
+          </div>
+        </div>
+        <!-- QR Code -->
+        <div style="text-align:center;flex-shrink:0;">
+          <div style="display:inline-block;background:#fff;padding:12px;border-radius:14px;box-shadow:0 8px 28px rgba(0,212,255,0.2);margin-bottom:8px;"><div id="qrcode"></div></div>
+          <p style="font-size:11px;color:rgba(255,255,255,0.35);margin:0 0 8px;">localreply.ai/<span id="qrSlug">...</span></p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+            <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">⬇️ PNG</button>
+            <button onclick="printQR()" style="padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">🖨️ Print</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRILLE BAS : Activité + Statut + Onboarding -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+      <!-- Activité récente -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+        <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 16px;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 7 derniers jours</span></h2>
+        <div id="recentActivity"><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;"></div></div>
+      </div>
+      <!-- Statut système -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
+        <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 16px;display:flex;align-items:center;gap:8px;">✅ Statut du système</h2>
+        <div id="systemStatus"><div class="skeleton" style="height:44px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:44px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:44px;border-radius:8px;"></div></div>
+        <div style="margin-top:16px;padding:13px 15px;background:rgba(0,212,255,0.06);border-radius:11px;border-left:3px solid rgba(0,212,255,0.4);">
+          <div style="font-size:11px;color:#00D4FF;font-weight:700;margin-bottom:5px;">💡 Astuce du jour</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.6;" id="tipText">Chargement...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST ONBOARDING -->
+    <div id="onboardingSection" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 3px;">🚀 Mise en route</h2>
+          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;">Complétez ces étapes pour tirer le meilleur de LocalReply</p>
+        </div>
+        <div id="onboardingProgress" style="font-size:12px;font-weight:700;color:#00D4FF;background:rgba(0,212,255,0.1);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,212,255,0.2);">0/4</div>
+      </div>
+      <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:14px;">
+        <div id="onboardingBar" style="height:100%;background:linear-gradient(90deg,#0052CC,#00D4FF);border-radius:10px;width:0%;transition:width 0.6s ease;"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;" id="onboardingSteps">
+        <div class="ob-step" id="step-services" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:11px;">
+          <div class="step-icon" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">⚙️</div>
+          <div style="flex:1;"><div class="step-label" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.88);">Configurer vos services & tarifs</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;">L'IA connaîtra vos prestations</div></div>
+          <a href="/dashboard-configuration" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;">Configurer →</a>
+        </div>
+        <div class="ob-step" id="step-hours" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:11px;">
+          <div class="step-icon" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">🕐</div>
+          <div style="flex:1;"><div class="step-label" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.88);">Définir vos horaires d'ouverture</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;">Pour répondre correctement aux clients</div></div>
+          <a href="/dashboard-configuration" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;">Configurer →</a>
+        </div>
+        <div class="ob-step" id="step-faq" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:11px;">
+          <div class="step-icon" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">❓</div>
+          <div style="flex:1;"><div class="step-label" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.88);">Ajouter une FAQ de base</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;">Réponses auto aux questions fréquentes</div></div>
+          <a href="/dashboard-configuration" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;">Configurer →</a>
+        </div>
+        <div class="ob-step" id="step-calendar" style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:11px;">
+          <div class="step-icon" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">📅</div>
+          <div style="flex:1;"><div class="step-label" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.88);">Connecter Google Calendar</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:1px;">Pour la prise de RDV automatique</div></div>
+          <a href="/dashboard-rendez-vous" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;">Connecter →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUIDE D'UTILISATION -->
+    <div style="margin-bottom:20px;">
+      <button onclick="toggleGuide()" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:18px 22px;background:linear-gradient(135deg,rgba(0,82,204,0.12),rgba(0,212,255,0.06));border:1px solid rgba(0,212,255,0.15);border-radius:16px;color:#fff;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📖</div>
+          <div style="text-align:left;">
+            <div style="font-size:15px;font-weight:700;color:#fff;">Guide — Tirer le maximum de LocalReply</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">8 actions concrètes pour attirer plus de clients</div>
+          </div>
+        </div>
+        <span id="guideArrow" style="font-size:16px;color:#00D4FF;transition:transform 0.3s;">▼</span>
+      </button>
+      <div id="guideContent" style="display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-top:none;border-radius:0 0 16px 16px;padding:22px 24px;">
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px;line-height:1.7;">Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px;">
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">📱</div><div><div class="guide-title">QR Code en vitrine</div><div class="guide-time">Impact immédiat · 2 min</div></div></div><p class="guide-text">Imprimez votre QR code et affichez-le à l'entrée, sur le comptoir ou les tables. Un client qui attend peut déjà prendre RDV.</p><div class="guide-tip">💡 Plastifiez-le et collez-le sur la caisse ou la porte d'entrée.</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#E1306C,#F77737);">📸</div><div><div class="guide-title">Bio Instagram</div><div class="guide-time">Trafic permanent · 1 min</div></div></div><p class="guide-text">Ajoutez votre lien LocalReply dans votre bio Instagram — le seul lien cliquable. Vos abonnés peuvent poser leurs questions ou prendre RDV.</p><div class="guide-tip">💡 "Réservez ou posez vos questions 24h/24 👇"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#4285F4,#34A853);">🔍</div><div><div class="guide-title">Google My Business</div><div class="guide-time">Visibilité locale · 3 min</div></div></div><p class="guide-text">Ajoutez votre lien dans "Site web" ou "Réserver" sur votre fiche Google. Les clients qui vous trouvent sur Google interagissent directement.</p><div class="guide-tip">💡 Utilisez ?src=google pour tracker ce trafic.</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#10B981,#059669);">🗣️</div><div><div class="guide-title">En caisse, à voix haute</div><div class="guide-time">Bouche à oreille · 0 min</div></div></div><p class="guide-text">Mentionnez que vos clients peuvent prendre RDV en ligne 24h/24 — même à 23h. Simple et naturel à dire.</p><div class="guide-tip">💡 "Vous pouvez réserver directement en scannant ce code !"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">✉️</div><div><div class="guide-title">Signature email</div><div class="guide-time">Visibilité passive · 2 min</div></div></div><p class="guide-text">Ajoutez votre lien dans votre signature email. Chaque email envoyé devient une opportunité de faire connaître votre assistant.</p><div class="guide-tip">💡 "📅 Réservez 24h/24 → localreply.ai/votre-commerce"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">💬</div><div><div class="guide-title">SMS clients habituels</div><div class="guide-time">Réactivation · 5 min</div></div></div><p class="guide-text">Envoyez un SMS à vos clients réguliers pour annoncer la nouveauté. Taux d'ouverture SMS : 98%.</p><div class="guide-tip">💡 "Bonjour ! Réservez maintenant 24h/24 → [votre lien]"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626);">🌐</div><div><div class="guide-title">Votre site web</div><div class="guide-time">Conversion max · 5 min</div></div></div><p class="guide-text">Ajoutez un bouton "Prendre RDV" pointant vers LocalReply. Vos visiteurs web deviennent des clients potentiels.</p><div class="guide-tip">💡 Utilisez ?src=website pour tracker ce trafic.</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#00D4FF,#0052CC);">⚙️</div><div><div class="guide-title">Enrichissez votre FAQ</div><div class="guide-time">Qualité des réponses · continu</div></div></div><p class="guide-text">Plus votre FAQ est complète, plus l'IA répond précisément. Répondez aux questions sans réponse — elles s'ajoutent à la FAQ.</p><div class="guide-tip">💡 Objectif : 20+ FAQ sur prix, horaires, services, paiement.</div></div>
+        </div>
+        <!-- Checklist -->
+        <div style="padding:18px 20px;background:linear-gradient(135deg,rgba(0,82,204,0.1),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.15);border-radius:12px;">
+          <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;">✅ À faire une seule fois</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="qr" style="accent-color:#00D4FF;width:14px;height:14px;"> QR code imprimé & affiché</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="ig" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien ajouté à la bio Instagram</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="gmb" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien sur Google My Business</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="email" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien dans la signature email</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="web" style="accent-color:#00D4FF;width:14px;height:14px;"> Bouton sur le site web</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="sms" style="accent-color:#00D4FF;width:14px;height:14px;"> SMS envoyé aux clients habituels</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="faq" style="accent-color:#00D4FF;width:14px;height:14px;"> 20+ FAQ configurées</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}body{margin:0;padding:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+@keyframes shimmer{0%{background-position:-200px 0;}100%{background-position:calc(200px + 100%) 0;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+
+/* Sidebar nav */
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+
+/* Stat cards */
+.scard{transition:transform 0.2s,box-shadow 0.2s;}
+.scard:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.25);}
+.scard-bg{position:absolute;top:-8px;right:-8px;font-size:72px;opacity:0.07;pointer-events:none;}
+.scard-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.scard-val{font-size:38px;font-weight:800;line-height:1;margin-bottom:4px;}
+.scard-sub{font-size:11px;color:rgba(255,255,255,0.35);}
+
+/* KPI cards */
+.kpi-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 16px;text-align:center;}
+.kpi-val{font-size:24px;font-weight:800;line-height:1;margin-bottom:4px;}
+.kpi-lbl{font-size:12px;color:rgba(255,255,255,0.75);font-weight:600;}
+.kpi-sub{font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;}
+
+/* Guide cards */
+.guide-card{background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.1);border-radius:12px;padding:16px;transition:all 0.2s;}
+.guide-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(0,212,255,0.2);}
+.guide-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.guide-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.guide-title{font-size:14px;font-weight:700;color:#fff;}
+.guide-time{font-size:10px;color:rgba(255,255,255,0.35);margin-top:1px;}
+.guide-text{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin:0 0 10px;}
+.guide-tip{font-size:11px;color:rgba(255,255,255,0.35);background:rgba(0,212,255,0.05);border-radius:7px;padding:7px 10px;}
+
+/* Skeleton loader */
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,0.04) 0%,rgba(255,255,255,0.09) 50%,rgba(255,255,255,0.04) 100%);background-size:400px 100%;animation:shimmer 1.5s infinite linear;}
+
+/* Animations */
+.scard,.kpi-card{animation:fadeUp 0.35s ease both;}
+.scard:nth-child(1){animation-delay:0.05s;}
+.scard:nth-child(2){animation-delay:0.1s;}
+.scard:nth-child(3){animation-delay:0.15s;}
+
+/* Responsive */
+@media(max-width:900px){
+  #sidebar{display:none!important;}
+  #bottomNav{display:block!important;}
+  #mainContent{padding:18px 14px 80px!important;}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
+  [style*="grid-template-columns:repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important;}
+  [style*="grid-template-columns:1fr 280px"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:1fr auto"]{grid-template-columns:1fr!important;}
+  #linkSection [style*="grid-template-columns:1fr auto"]{grid-template-columns:1fr!important;}
+  h1{font-size:24px!important;}
+}
+@media(max-width:480px){
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
+  .scard-val{font-size:30px!important;}
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script>
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+const API = 'https://localreply-api.onrender.com';
+let currentSlug = '', miniChartInstance = null;
+
+function userId() {
+  try { const p = JSON.parse(atob(token.split('.')[1])); return p.sub||p.user_id||p.id; } catch { return null; }
+}
+const uid = userId();
+
+async function api(ep) {
+  const r = await fetch(API + ep, { headers:{ 'Authorization':'Bearer '+token, 'Content-Type':'application/json' } });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+// ─ Header ─
+function initHeader() {
+  const h = new Date().getHours();
+  document.getElementById('greeting').textContent = h<6?'Bonne nuit':h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
+  const d = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('currentDate').textContent = d.charAt(0).toUpperCase()+d.slice(1);
+}
+
+// ─ Badges ─
+function setBadge(count, ...ids) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (count > 0) {
+      el.textContent = count > 9 ? '9+' : count;
+      el.style.cssText = el.style.cssText.replace('display:none', 'display:flex');
+      el.style.display = 'flex';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+// ─ Score santé IA ─
+function computeHealthScore(config, calConnected) {
+  const checks = [
+    { key:'services', done:(config?.services?.length||0)>=3, label:'Services (3+)', points:25 },
+    { key:'hours',    done:(config?.hours?.length||0)>0,     label:'Horaires',      points:20 },
+    { key:'faq',      done:(config?.faq?.length||0)>=5,      label:'FAQ (5+)',       points:30 },
+    { key:'calendar', done:calConnected,                      label:'Calendar',       points:25 },
+  ];
+  const score = checks.filter(c=>c.done).reduce((s,c)=>s+c.points, 0);
+  const ring = document.getElementById('healthRing');
+  const scoreEl = document.getElementById('healthScore');
+  const labelEl = document.getElementById('healthLabel');
+  const itemsEl = document.getElementById('healthItems');
+  if (ring) { const dash = 264; ring.style.strokeDashoffset = dash - (dash * score / 100); }
+  if (scoreEl) scoreEl.textContent = score;
+  if (labelEl) {
+    labelEl.textContent = score >= 80 ? '🟢 Excellent' : score >= 50 ? '🟡 À améliorer' : '🔴 À compléter';
+    labelEl.style.color = score >= 80 ? '#10B981' : score >= 50 ? '#F59E0B' : '#EF4444';
+  }
+  if (itemsEl) itemsEl.innerHTML = checks.map(c=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:rgba(255,255,255,0.5);">${c.done?'✅':'⬜'} ${c.label}</span>
+      <span style="font-size:11px;font-weight:700;color:${c.done?'#10B981':'rgba(255,255,255,0.25)'};">+${c.points}</span>
+    </div>`).join('');
+}
+
+// ─ QR & liens ─
+function setupLinks(slug) {
+  currentSlug = slug;
+  ['slugDisplay','qrSlug'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=slug; });
+  document.getElementById('linkInstagram').textContent = 'localreply.ai/'+slug+'?src=instagram';
+  document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=google';
+  document.getElementById('linkQR').textContent        = 'localreply.ai/'+slug+'?src=qr';
+  ['testIABtn','testIABtn2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://localreplyai.odoo.com/chat?slug='+slug; });
+  const qrEl = document.getElementById('qrcode');
+  if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
+}
+function copyLink() { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug).then(()=>toast('✅ Lien copié !')); }
+function copySourceLink(s) { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug+'?src='+s).then(()=>toast('✅ Lien copié !')); }
+function downloadQRPng() {
+  setTimeout(()=>{ const c=document.querySelector('#qrcode canvas'); if(!c){toast('❌ QR non disponible');return;} const a=document.createElement('a');a.download='qr-'+currentSlug+'.png';a.href=c.toDataURL();a.click();toast('✅ QR téléchargé !'); },100);
+}
+function printQR() {
+  const c=document.querySelector('#qrcode canvas');if(!c)return;
+  const w=window.open('','_blank');
+  w.document.write('<html><body style="text-align:center;padding:40px;font-family:Arial;"><h2 style="color:#0052CC;">Scannez pour nous contacter</h2><img src="'+c.toDataURL()+'" style="width:260px;"><p style="color:#666;">localreply.ai/'+currentSlug+'</p></body></html>');
+  w.document.close();w.print();
+}
+
+// ─ Alertes ─
+function renderAlerts(pendingApts, pendingReqs) {
+  const s = document.getElementById('alertsSection');
+  const pa = pendingApts.length, pr = Array.isArray(pendingReqs)?pendingReqs.length:0;
+  if (!pa && !pr) { s.style.display='none'; return; }
+  s.style.display = 'block';
+  let html = '';
+  const urgent = pendingApts.filter(a=>a.urgency==='high');
+  if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} RDV urgent${urgent.length>1?'s':''} en attente</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||'Client'}</strong>`).join(' · ')} — Cliquez pour traiter</div></div></a>`;
+  const normal = pendingApts.filter(a=>a.urgency!=='high');
+  if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} RDV en attente de confirmation</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Cliquez pour confirmer ou refuser</div></div></a>`;
+  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} question${pr>1?'s':''} sans réponse</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
+  s.innerHTML = html;
+}
+
+// ─ Narrative ─
+function buildNarrative(convs, apts) {
+  const total = convs.length;
+  const confirmed = apts.filter(a=>a.status==='confirmed').length;
+  const pending = apts.filter(a=>a.status==='pending').length;
+  if (!total) return `Votre assistant IA est <strong style="color:#10B981;">actif et prêt</strong> à accueillir vos premiers clients. Partagez votre lien pour commencer ! 🚀`;
+  let msg = `Votre IA a géré <strong style="color:#00D4FF;">${total} conversation${total>1?'s':''}</strong>`;
+  if (confirmed) msg += `, dont <strong style="color:#10B981;">${confirmed} RDV confirmé${confirmed>1?'s':''}</strong>`;
+  if (pending) msg += `. <span style="color:#F59E0B;">${pending} RDV en attente</span> de votre validation`;
+  msg += '.';
+  const conv = total>0 ? Math.round((confirmed/total)*100) : 0;
+  if (conv >= 20) msg += ` Taux de conversion : <strong style="color:#10B981;">${conv}%</strong> 🎯`;
+  return msg;
+}
+
+// ─ Analytics preview ─
+async function loadAnalyticsPreview(isPro) {
+  try {
+    const data = await api(`/api/business/${businessId}/analytics/overview`);
+    const p = data.last_7_days || {};
+    document.getElementById('kpiConversations').textContent = p.total_conversations ?? '—';
+    document.getElementById('kpiAppointments').textContent  = p.total_appointments  ?? '—';
+    document.getElementById('kpiConversion').textContent    = p.conversion_rate != null ? p.conversion_rate.toFixed(1)+'%' : '—';
+    document.getElementById('kpiResolution').textContent    = p.ai_resolution_rate != null ? p.ai_resolution_rate.toFixed(0)+'%' : '—';
+  } catch {}
+  if (!isPro) {
+    document.getElementById('analyticsOverlay').style.display = 'flex';
+    document.getElementById('chartLock').style.display = 'flex';
+    drawPlaceholderChart();
+  } else {
+    await drawRealChart();
+  }
+}
+
+function drawPlaceholderChart() {
+  const ctx = document.getElementById('miniChart').getContext('2d');
+  if (miniChartInstance) miniChartInstance.destroy();
+  miniChartInstance = new Chart(ctx, { type:'line', data:{ labels:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], datasets:[{ data:[3,7,5,12,8,15,10], borderColor:'rgba(0,212,255,0.2)', backgroundColor:'rgba(0,212,255,0.04)', borderWidth:2, fill:true, tension:0.4, pointRadius:0 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{display:false}, tooltip:{enabled:false} }, scales:{ x:{display:false}, y:{display:false} } } });
+}
+
+async function drawRealChart() {
+  try {
+    const data = await api(`/api/business/${businessId}/analytics/timeline?days=7`);
+    if (!data.timeline?.length) { drawPlaceholderChart(); return; }
+    const labels = data.timeline.map(i=>new Date(i.date).toLocaleDateString('fr-FR',{weekday:'short'}));
+    const ctx = document.getElementById('miniChart').getContext('2d');
+    if (miniChartInstance) miniChartInstance.destroy();
+    miniChartInstance = new Chart(ctx, { type:'line', data:{ labels, datasets:[ { label:'Conversations', data:data.timeline.map(i=>i.conversations||0), borderColor:'#00D4FF', backgroundColor:'rgba(0,212,255,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#00D4FF' }, { label:'RDV', data:data.timeline.map(i=>i.appointments||0), borderColor:'#10B981', backgroundColor:'rgba(16,185,129,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#10B981' } ] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:true, position:'top', labels:{ color:'rgba(255,255,255,0.55)', font:{size:11}, padding:10, usePointStyle:true } }, tooltip:{ backgroundColor:'rgba(5,12,28,0.95)', titleColor:'#fff', bodyColor:'rgba(255,255,255,0.8)', borderColor:'rgba(255,255,255,0.1)', borderWidth:1 } }, scales:{ x:{ ticks:{ color:'rgba(255,255,255,0.4)', font:{size:11} }, grid:{ color:'rgba(255,255,255,0.04)' } }, y:{ beginAtZero:true, ticks:{ color:'rgba(255,255,255,0.4)', font:{size:11}, stepSize:1 }, grid:{ color:'rgba(255,255,255,0.06)' } } } } });
+  } catch { drawPlaceholderChart(); }
+}
+
+// ─ Activité ─
+function renderActivity(convs, apts) {
+  const el = document.getElementById('recentActivity');
+  const items = [];
+  convs.slice(0,4).forEach(c=>items.push({icon:'💬',text:`Conversation${c.client_name?' avec '+c.client_name:''}`,time:c.created_at,color:'#00D4FF'}));
+  apts.slice(0,4).forEach(a=>items.push({icon:'📅',text:`RDV ${a.status==='confirmed'?'confirmé':'en attente'}${a.client_name?' — '+a.client_name:''}`,time:a.created_at,color:a.status==='confirmed'?'#10B981':'#F59E0B'}));
+  items.sort((a,b)=>new Date(b.time)-new Date(a.time));
+  if (!items.length) { el.innerHTML=`<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.25);"><div style="font-size:36px;opacity:0.3;margin-bottom:10px;">🕐</div><div style="font-size:13px;">Aucune activité récente</div></div>`; return; }
+  el.innerHTML = items.slice(0,5).map(a=>`<div style="padding:11px 13px;background:rgba(255,255,255,0.03);border-left:2px solid ${a.color};border-radius:9px;margin-bottom:8px;display:flex;align-items:start;gap:10px;"><div style="font-size:18px;">${a.icon}</div><div><div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;">${a.text}</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">${timeAgo(a.time)}</div></div></div>`).join('');
+}
+
+// ─ Statut système ─
+async function loadSystemStatus(config, calConnected, isPro) {
+  const el = document.getElementById('systemStatus');
+  const hasConfig = (config?.services?.length||0)>0 && (config?.hours?.length||0)>0 && (config?.faq?.length||0)>0;
+  el.innerHTML = [
+    sRow(hasConfig,'Configuration IA', hasConfig?'Complète':'À compléter', hasConfig?'#10B981':'#F59E0B'),
+    sRow(calConnected,'Google Calendar', calConnected?'Connecté':'Non connecté', calConnected?'#10B981':'rgba(255,255,255,0.3)'),
+    sRow(true,'Assistant IA','Actif 24/7','#10B981'),
+    sRow(true,'Abonnement', isPro?'Pro ⭐':'Standard', isPro?'#F59E0B':'#00D4FF'),
+  ].join('');
+  const tips = [
+    'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
+    'Partagez votre QR code sur vos réseaux sociaux pour augmenter votre visibilité.',
+    'Répondez aux questions sans réponse dans Messages — elles enrichissent votre FAQ automatiquement.',
+    'Connectez Google Calendar pour activer la prise de RDV automatique.',
+    'Ajoutez votre lien LocalReply dans votre bio Instagram pour générer du trafic en continu.',
+  ];
+  document.getElementById('tipText').textContent = tips[new Date().getDay() % tips.length];
+}
+function sRow(ok, lbl, val, color) {
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:14px;">${ok?'✅':'⚠️'}</span><span style="font-size:13px;color:rgba(255,255,255,0.8);">${lbl}</span></div><div style="font-size:12px;font-weight:700;color:${color};">${val}</div></div>`;
+}
+
+// ─ Onboarding ─
+function renderOnboarding(config, calConnected) {
+  const steps = [
+    {id:'step-services',done:(config?.services?.length||0)>0},
+    {id:'step-hours',   done:(config?.hours?.length||0)>0},
+    {id:'step-faq',     done:(config?.faq?.length||0)>0},
+    {id:'step-calendar',done:calConnected},
+  ];
+  const done = steps.filter(s=>s.done).length;
+  if (done===4) { document.getElementById('onboardingSection').style.display='none'; return; }
+  document.getElementById('onboardingSection').style.display = 'block';
+  document.getElementById('onboardingProgress').textContent = `${done}/4`;
+  document.getElementById('onboardingBar').style.width = (done/4*100)+'%';
+  steps.forEach(s => {
+    const el=document.getElementById(s.id); if(!el) return;
+    if (s.done) {
+      el.style.background='rgba(16,185,129,0.06)'; el.style.borderColor='rgba(16,185,129,0.2)';
+      el.querySelector('.step-icon').textContent='✅'; el.querySelector('.step-icon').style.background='rgba(16,185,129,0.15)';
+      el.querySelector('.step-label').style.cssText='text-decoration:line-through;opacity:0.4;font-size:13px;font-weight:600;color:rgba(255,255,255,0.88);';
+      const lnk=el.querySelector('a'); if(lnk) lnk.style.display='none';
+    }
+  });
+}
+
+// ─ Utils ─
+function timeAgo(ts) {
+  const diff = Math.floor((new Date()-new Date(ts))/60000);
+  if(diff<1) return "À l'instant"; if(diff<60) return `Il y a ${diff}min`;
+  const h=Math.floor(diff/60); if(h<24) return `Il y a ${h}h`;
+  const d=Math.floor(h/24); return d===1?'Hier':d<7?`Il y a ${d}j`:new Date(ts).toLocaleDateString('fr-FR');
+}
+function toast(msg, type='success') {
+  const el=document.createElement('div'); el.textContent=msg;
+  el.style.cssText=`position:fixed;bottom:80px;right:20px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#fff;padding:12px 18px;border-radius:11px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:10000;animation:fadeUp 0.3s ease;`;
+  document.body.appendChild(el); setTimeout(()=>el.remove(),3000);
+}
+function toggleGuide() {
+  const c=document.getElementById('guideContent'), a=document.getElementById('guideArrow');
+  const open=c.style.display!=='none';
+  c.style.display=open?'none':'block';
+  if(a) a.style.transform=open?'':'rotate(180deg)';
+}
+function saveGuideCheck(el) { localStorage.setItem('guide_'+el.dataset.key, el.checked?'1':'0'); }
+function loadGuideChecks() { document.querySelectorAll('[data-key]').forEach(el=>{ if(localStorage.getItem('guide_'+el.dataset.key)==='1') el.checked=true; }); }
+function toggleMobileMenu() {
+  const ov=document.getElementById('mobileMenuOverlay'), pp=document.getElementById('mobileMenuPopup');
+  const open=pp.style.display==='block';
+  if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
+  else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
+}
+function logout(){if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+
+// ─ INIT ─
+document.addEventListener('DOMContentLoaded', async () => {
+  initHeader();
+  loadGuideChecks();
+
+  // Tout en parallèle dès le départ
+  const [configData, subData, calData] = await Promise.all([
+    api(`/api/business/${businessId}/config/full`).catch(()=>null),
+    api(`/api/billing/subscription/${uid}`).catch(()=>null),
+    api(`/api/calendar/status?business_id=${businessId}`).catch(()=>({connected:false}))
+  ]);
+
+  // ── Guard abonnement ──
+  if (subData) {
+    const validPlans = ['trial','standard','pro'];
+    const validStatus = ['active','trialing','past_due']; // past_due = on laisse encore accès brièvement
+    const plan = subData.plan || '';
+    const status = subData.status || '';
+    if (!validPlans.includes(plan) || status === 'cancelled') {
+      // Afficher un écran bloquant au lieu de rediriger brutalement
+      document.getElementById('mainContent').innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:40px;">
+          <div style="font-size:56px;margin-bottom:20px;">🔒</div>
+          <h2 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">Abonnement inactif</h2>
+          <p style="font-size:15px;color:rgba(255,255,255,0.55);max-width:420px;line-height:1.7;margin:0 auto 28px;">
+            Votre abonnement a expiré ou été annulé. Choisissez un plan pour continuer à utiliser LocalReply.
+          </p>
+          <a href="/abonnement" style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(0,82,204,0.35);">
+            ⭐ Choisir un abonnement
+          </a>
+          <button onclick="logout()" style="margin-top:16px;background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;">Se déconnecter</button>
+        </div>`;
+      return;
+    }
+    // past_due → banner d'avertissement mais accès maintenu
+    if (status === 'past_due') {
+      const mc = document.getElementById('mainContent');
+      if (mc) {
+        const warning = document.createElement('div');
+        warning.style.cssText = 'margin-bottom:20px;padding:14px 18px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:12px;display:flex;align-items:center;gap:12px;';
+        warning.innerHTML = '<span style="font-size:20px;">⚠️</span><div style="flex:1;font-size:13px;color:rgba(255,255,255,0.8);">Paiement en retard — Mettez à jour votre moyen de paiement pour éviter la suspension.</div><a href="/abonnement" style="padding:8px 14px;background:#EF4444;border-radius:8px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">Régulariser →</a>';
+        mc.insertBefore(warning, mc.firstChild);
+      }
+    }
+  }
+
+  const isPro = subData?.plan==='pro' || subData?.plan==='trial';
+  const calConnected = calData?.connected || false;
+  const slug = configData?.business?.slug || '';
+
+  // Sidebar & header
+  const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
+  const sn=document.getElementById('sidebarBusinessName'); if(sn&&configData?.business?.name) sn.textContent=configData.business.name;
+  const bn=document.getElementById('businessName'); if(bn&&configData?.business?.name) bn.textContent=configData.business.name;
+  const sp=document.getElementById('sidebarPlan'); if(sp) sp.textContent=subData?.plan==='pro'?'⭐ Plan Pro':subData?.plan==='trial'?'🎁 Essai gratuit':'Plan Standard';
+  const sl=document.getElementById('sidebarLogo'); if(sl) sl.textContent=icons[configData?.business?.business_type]||'🏢';
+  if(slug) setupLinks(slug);
+
+  // Score santé IA (instantané, pas d'appel API)
+  computeHealthScore(configData, calConnected);
+  renderOnboarding(configData, calConnected);
+  loadSystemStatus(configData, calConnected, isPro);
+
+  // Métriques + analytics en parallèle
+  const [convData, aptData, reqData] = await Promise.all([
+    api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
+    api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
+    api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
+  ]);
+
+  const convs = convData.conversations || [];
+  const apts = Array.isArray(aptData) ? aptData : [];
+  const reqs = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
+
+  // Filtre 7 jours
+  const now = new Date(), ws = new Date(now); ws.setDate(ws.getDate()-7); ws.setHours(0,0,0,0);
+  const wC = convs.filter(c=>new Date(c.created_at)>=ws);
+  const wA = apts.filter(a=>{ const d=new Date(a.start_time||a.requested_datetime||a.created_at); return d>=ws&&a.status==='confirmed'; });
+  const pA = apts.filter(a=>a.status==='pending');
+
+  document.getElementById('statConversations').textContent = wC.length;
+  document.getElementById('statAppointments').textContent  = wA.length;
+  document.getElementById('statPending').textContent       = pA.length + reqs.length;
+
+  // Badges navigation
+  setBadge(reqs.length, 'sbBadgeMsg', 'bnBadgeMsg');
+  setBadge(pA.length,   'sbBadgeRdv', 'bnBadgeRdv');
+
+  renderAlerts(pA, reqs);
+  document.getElementById('aiNarrative').innerHTML = buildNarrative(wC, apts);
+  renderActivity(wC, apts);
+
+  // Analytics (après le reste)
+  await loadAnalyticsPreview(isPro);
+});
+</script>

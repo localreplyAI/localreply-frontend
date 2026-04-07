@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configuration — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="onboardingWrapper" style="min-height:100vh;background:#0A1628;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif;">
+
+  <!-- Ambiance background -->
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+    <div style="position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 65%);border-radius:50%;"></div>
+  </div>
+
+  <!-- Card principale -->
+  <div id="wizardCard" style="width:100%;max-width:640px;background:rgba(255,255,255,0.04);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.1);border-radius:24px;overflow:hidden;position:relative;z-index:1;animation:fadeUp 0.4s ease both;">
+
+    <!-- Header fixe -->
+    <div style="padding:24px 28px 0;">
+      <!-- Logo -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:36px;height:36px;border-radius:9px;background:#fff;padding:4px;">
+        <span style="font-size:16px;font-weight:700;color:#fff;">LocalReply</span>
+      </div>
+
+      <!-- Progress bar -->
+      <div style="margin-bottom:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;" id="stepLabel">Étape 1 sur 5</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);" id="stepPercent">20%</div>
+        </div>
+        <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;">
+          <div id="progressBar" style="height:100%;background:linear-gradient(90deg,#0052CC,#00D4FF);border-radius:10px;width:20%;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);"></div>
+        </div>
+        <!-- Dots -->
+        <div style="display:flex;justify-content:space-between;margin-top:10px;padding:0 2px;">
+          <div class="step-dot active" id="dot1" onclick="goToStep(1)" style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0052CC,#00D4FF);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;cursor:pointer;transition:all 0.3s;">1</div>
+          <div class="step-dot" id="dot2" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);transition:all 0.3s;">2</div>
+          <div class="step-dot" id="dot3" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);transition:all 0.3s;">3</div>
+          <div class="step-dot" id="dot4" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);transition:all 0.3s;">4</div>
+          <div class="step-dot" id="dot5" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);transition:all 0.3s;">5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenu des étapes -->
+    <div id="stepContent" style="padding:4px 28px 28px;min-height:400px;">
+
+      <!-- ═══ ÉTAPE 1 : Votre commerce ═══ -->
+      <div id="step1" class="step-panel">
+        <div style="margin-bottom:24px;">
+          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">Bienvenue ! 👋</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Commençons par configurer votre commerce. Ces informations permettent à l'IA de se présenter correctement à vos clients.</p>
+        </div>
+
+        <!-- Type de commerce EN PREMIER -->
+        <div class="ob-field">
+          <label class="ob-label">Type de commerce <span style="color:#EF4444;">*</span></label>
+          <select id="businessTypeSelect" class="ob-input" onchange="selectBizType(this.value)" style="margin-top:6px;">
+            <option value="" disabled selected>— Choisir votre type de commerce —</option>
+          </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
+          <div class="ob-field">
+            <label class="ob-label">Nom du commerce <span style="color:#EF4444;">*</span></label>
+            <input id="bizName" type="text" class="ob-input" placeholder="Ex: Salon Marco">
+          </div>
+          <div class="ob-field">
+            <label class="ob-label">Fuseau horaire</label>
+            <select id="bizTimezone" class="ob-input" style="appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%23FFFFFF%22 d=%22M6 9L1 4h10z%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;">
+              <option value="Europe/Paris">🇫🇷 Europe/Paris</option>
+              <option value="Europe/Zurich" selected>🇨🇭 Europe/Zurich</option>
+              <option value="Europe/Brussels">🇧🇪 Europe/Brussels</option>
+              <option value="Europe/Berlin">🇩🇪 Europe/Berlin</option>
+              <option value="Europe/Rome">🇮🇹 Europe/Rome</option>
+              <option value="Europe/Madrid">🇪🇸 Europe/Madrid</option>
+              <option value="Europe/London">🇬🇧 Europe/London</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ob-field" style="margin-top:14px;">
+          <label class="ob-label">Votre lien public LocalReply <span style="color:#EF4444;">*</span></label>
+          <div style="display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;transition:border 0.2s;" id="slugWrap">
+            <span style="padding:0 8px 0 14px;font-size:13px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">localreply.ai/</span>
+            <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)">
+          </div>
+          <div id="slugPreview" style="font-size:11px;color:rgba(0,212,255,0.7);margin-top:4px;"></div>
+        </div>
+      </div>
+
+      <!-- ═══ ÉTAPE 2 : Horaires & Services ═══ -->
+      <div id="step2" class="step-panel" style="display:none;">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;" id="step2Title">⏰ Horaires & Services</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">L'IA utilisera ces informations pour répondre à vos clients.</p>
+        </div>
+
+        <!-- Template rapide -->
+        <div id="templateSection" style="margin-bottom:16px;padding:12px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;">
+          <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:8px;">⚡ Template rapide</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:10px;">Chargez un template pré-rempli pour votre type de commerce :</div>
+          <button onclick="loadTemplate()" style="padding:8px 16px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:8px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;" id="templateBtn">📋 Charger le template</button>
+        </div>
+
+        <!-- Horaires simplifiés -->
+        <div class="ob-field" style="margin-bottom:14px;">
+          <label class="ob-label">Horaires d'ouverture</label>
+          <div style="display:flex;flex-direction:column;gap:6px;" id="hoursSimple">
+            <!-- Généré par JS -->
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="ob-field">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <label class="ob-label" style="margin:0;" id="servicesLabel">Services principaux</label>
+            <button onclick="addServiceRow()" style="padding:5px 12px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:7px;color:#10B981;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">+ Ajouter</button>
+          </div>
+          <div id="servicesList" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+      </div>
+
+      <!-- ═══ ÉTAPE 3 : Prise de RDV ═══ -->
+      <div id="step3" class="step-panel" style="display:none;">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">📅 Prise de rendez-vous</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Comment voulez-vous gérer les RDV de vos clients ?</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px;" id="rdvOptions">
+
+          <!-- Option 1 : Google Calendar -->
+          <label class="rdv-option" id="rdvOptGoogle" onclick="selectRdvOption('google')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
+            <div style="width:40px;height:40px;background:rgba(16,185,129,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📅</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Google Calendar</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA vérifie vos disponibilités en temps réel et crée les RDV automatiquement dans votre calendrier.</div>
+              <div id="calendarConnectBtn" style="display:none;margin-top:12px;">
+                <button onclick="connectCalendar(event)" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;">
+                  <span>🔗</span> Connecter Google Calendar
+                </button>
+                <div id="calendarStatus" style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4);">Non connecté</div>
+              </div>
+            </div>
+            <div class="rdv-radio" id="radio_google" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
+          </label>
+
+          <!-- Option 2 : Lien externe -->
+          <label class="rdv-option" id="rdvOptLink" onclick="selectRdvOption('link')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
+            <div style="width:40px;height:40px;background:rgba(0,212,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Système de RDV existant</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">Vous avez déjà Planity, Doctolib, Calendly ou autre ? L'IA enverra vos clients directement sur votre lien.</div>
+              <div id="rdvLinkInput" style="display:none;margin-top:12px;">
+                <input type="url" id="externalRdvUrl" class="ob-input" placeholder="https://www.planity.com/votre-salon" style="font-size:13px;">
+                <div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:4px;">L'IA dira : "Réservez directement sur notre site →"</div>
+              </div>
+            </div>
+            <div class="rdv-radio" id="radio_link" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
+          </label>
+
+          <!-- Option 3 : Manuel -->
+          <label class="rdv-option" id="rdvOptManual" onclick="selectRdvOption('manual')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
+            <div style="width:40px;height:40px;background:rgba(245,158,11,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📞</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Gestion manuelle</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA demandera aux clients de vous appeler ou d'envoyer un message pour convenir d'un RDV.</div>
+            </div>
+            <div class="rdv-radio" id="radio_manual" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
+          </label>
+
+          <!-- Option 4 : Pas de RDV -->
+          <label class="rdv-option" id="rdvOptNone" onclick="selectRdvOption('none')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
+            <div style="width:40px;height:40px;background:rgba(139,92,246,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💬</div>
+            <div style="flex:1;">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Pas de RDV</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA se concentre sur les questions, infos et FAQ. Idéal pour les boutiques, restaurants, etc.</div>
+            </div>
+            <div class="rdv-radio" id="radio_none" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
+          </label>
+        </div>
+
+        <!-- Note skip -->
+        <div style="margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.35);text-align:center;">
+          💡 Cette étape est optionnelle — vous pouvez la configurer plus tard dans le dashboard
+        </div>
+      </div>
+
+      <!-- ═══ ÉTAPE 4 : Notifications ═══ -->
+      <div id="step4" class="step-panel" style="display:none;">
+        <div style="margin-bottom:20px;">
+          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">🔔 Notifications</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Choisissez comment être alerté quand quelque chose se passe.</p>
+        </div>
+
+        <!-- Info SMS -->
+        <div style="padding:12px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;margin-bottom:16px;display:flex;gap:12px;align-items:start;">
+          <span style="font-size:18px;flex-shrink:0;">💡</span>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">
+            <strong style="color:#00D4FF;">Les SMS vous sont envoyés à vous</strong> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.
+          </div>
+        </div>
+
+        <!-- Email destination -->
+        <div class="ob-field" style="margin-bottom:16px;">
+          <label class="ob-label">📧 Envoyer les notifications email à</label>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
+            <label style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(0,212,255,0.3);border-radius:10px;cursor:pointer;">
+              <input type="radio" name="ob_emailTarget" value="account" checked style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Email du compte <span style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:1px 7px;border-radius:5px;margin-left:6px;">Recommandé</span></div>
+                <div id="ob_accountEmail" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">—</div>
+              </div>
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;">
+              <input type="radio" name="ob_emailTarget" value="both" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Les deux</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Email du compte + email du commerce</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Tableau notifications -->
+        <div class="ob-field">
+          <label class="ob-label">Canal par type d'événement</label>
+
+          <!-- Header -->
+          <div style="display:grid;grid-template-columns:1fr 64px 64px;padding:8px 12px;gap:8px;margin-top:6px;">
+            <div></div>
+            <div style="text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);">📧</div>
+            <div style="text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);" id="ob_smsHeader">
+              📱 <span id="ob_smsBadge" style="font-size:9px;font-weight:700;padding:1px 5px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;border-radius:4px;margin-left:2px;">PRO</span>
+            </div>
+          </div>
+
+          <!-- Ligne 1 -->
+          <div style="display:grid;grid-template-columns:1fr 64px 64px;align-items:center;padding:11px 12px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#fff;">📅 Nouvelle demande RDV</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">Quand un client soumet une demande</div>
+            </div>
+            <div style="display:flex;justify-content:center;"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_new_email" checked onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_new_email" style="position:absolute;inset:0;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_new_email" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;right:3px;transition:0.25s;"></span></span></label></div>
+            <div style="display:flex;justify-content:center;" class="ob-sms-col"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_new_sms" checked onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_new_sms" style="position:absolute;inset:0;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_new_sms" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;right:3px;transition:0.25s;"></span></span></label></div>
+          </div>
+
+          <!-- Ligne 2 -->
+          <div style="display:grid;grid-template-columns:1fr 64px 64px;align-items:center;padding:11px 12px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#fff;">🔴 Demande urgente</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">Urgence détectée par l'IA</div>
+            </div>
+            <div style="display:flex;justify-content:center;"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_urgent_email" checked onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_urgent_email" style="position:absolute;inset:0;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_urgent_email" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;right:3px;transition:0.25s;"></span></span></label></div>
+            <div style="display:flex;justify-content:center;" class="ob-sms-col"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_urgent_sms" checked onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_urgent_sms" style="position:absolute;inset:0;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_urgent_sms" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;right:3px;transition:0.25s;"></span></span></label></div>
+          </div>
+
+          <!-- Ligne 3 -->
+          <div style="display:grid;grid-template-columns:1fr 64px 64px;align-items:center;padding:11px 12px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+            <div>
+              <div style="font-size:13px;font-weight:600;color:#fff;">❓ Question sans réponse</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">L'IA ne sait pas répondre à un client</div>
+            </div>
+            <div style="display:flex;justify-content:center;"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_unknown_email" checked onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_unknown_email" style="position:absolute;inset:0;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_unknown_email" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;right:3px;transition:0.25s;"></span></span></label></div>
+            <div style="display:flex;justify-content:center;" class="ob-sms-col"><label style="position:relative;display:inline-block;width:38px;height:21px;cursor:pointer;"><input type="checkbox" id="ob_notif_unknown_sms" onchange="obSyncToggle(this)" style="opacity:0;width:0;height:0;position:absolute;"><span class="ob-tgl" id="ob_tgl_unknown_sms" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;"><span class="ob-dot" id="ob_dot_unknown_sms" style="position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span></span></label></div>
+          </div>
+
+          <!-- Note Standard -->
+          <div id="ob_smsNote" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.5);">
+            🔒 Les SMS sont réservés au plan Pro. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">Voir les plans →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ÉTAPE 5 : C'est prêt ! ═══ -->
+      <div id="step5" class="step-panel" style="display:none;">
+        <div style="text-align:center;padding:10px 0 20px;">
+          <div style="font-size:56px;margin-bottom:14px;animation:bounce 0.6s ease;">🎉</div>
+          <h2 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.5px;">Votre assistant est prêt !</h2>
+          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0 auto;max-width:400px;line-height:1.6;">Partagez votre lien avec vos clients et l'IA s'occupe du reste 24h/24.</p>
+        </div>
+
+        <!-- Lien public -->
+        <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:14px;padding:16px;margin-bottom:14px;">
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">🔗 Votre lien public</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div id="finalLink" style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.06);border-radius:10px;font-size:14px;font-weight:600;color:#00D4FF;word-break:break-all;">localreply.ai/...</div>
+            <button onclick="copyFinalLink()" style="padding:11px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;">📋</button>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <a id="testIABtn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px rgba(0,82,204,0.3);">
+            <span style="font-size:18px;">🤖</span> Tester mon assistant IA →
+          </a>
+          <button onclick="goToDashboard()" style="padding:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.1)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
+            Aller au dashboard →
+          </button>
+        </div>
+
+        <!-- Prochaines étapes -->
+        <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,0.03);border-radius:12px;">
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">💡 Prochaines étapes recommandées</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
+              <span style="color:#10B981;font-weight:700;">→</span> Affichez votre QR code en vitrine
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
+              <span style="color:#10B981;font-weight:700;">→</span> Ajoutez le lien dans votre bio Instagram
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
+              <span style="color:#10B981;font-weight:700;">→</span> Complétez votre FAQ dans Configuration
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer boutons -->
+    <div id="wizardFooter" style="padding:16px 28px 24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <button id="btnBack" onclick="prevStep()" style="padding:12px 20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;color:rgba(255,255,255,0.6);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.1)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">← Retour</button>
+      <div style="flex:1;"></div>
+      <div id="step3Skip" style="display:none;">
+        <button onclick="skipStep3()" style="padding:12px 18px;background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;">Passer cette étape →</button>
+      </div>
+      <button id="btnNext" onclick="nextStep()" style="padding:12px 28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,82,204,0.3);transition:all 0.2s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'">
+        Continuer →
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}
+body{margin:0;padding:0;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes bounce{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:none;}}
+
+.ob-field{display:flex;flex-direction:column;}
+.ob-label{font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;}
+.ob-input{padding:13px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;font-size:14px;color:#fff;outline:none;transition:all 0.2s;font-family:inherit;width:100%;}
+.ob-input:focus{border-color:#00D4FF;box-shadow:0 0 0 3px rgba(0,212,255,0.12);}
+.ob-input::placeholder{color:rgba(255,255,255,0.25);}
+
+/* Type commerce grid */
+/* biz-type-btn replaced by select */
+
+/* Hours grid */
+.hour-row{display:grid;grid-template-columns:90px 1fr 1fr 70px;gap:8px;align-items:center;padding:7px 0;}
+.hour-day{font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);}
+.hour-input{padding:9px 10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;font-size:13px;color:#fff;outline:none;color-scheme:dark;width:100%;font-family:inherit;}
+.hour-closed{display:flex;align-items:center;gap:5px;font-size:12px;color:rgba(255,255,255,0.5);cursor:pointer;}
+
+/* Service row */
+.service-row{display:grid;grid-template-columns:2fr 80px 80px auto;gap:8px;align-items:center;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;}
+
+/* RDV options */
+.rdv-option.selected{border-color:#00D4FF !important;background:rgba(0,212,255,0.06) !important;}
+.rdv-radio.selected{background:linear-gradient(135deg,#0052CC,#00D4FF);border-color:transparent;}
+
+/* Toggles */
+.ob-tgl{position:absolute;inset:0;border-radius:20px;transition:0.25s;cursor:pointer;}
+.ob-dot{position:absolute;width:15px;height:15px;background:#fff;border-radius:50%;top:3px;transition:0.25s;}
+
+/* Notif radio */
+.notif-radio{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;transition:all 0.2s;}
+.notif-radio:has(input:checked){border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06);}
+
+@media(max-width:520px){
+  #onboardingWrapper{padding:12px;}
+  .wizardCard{border-radius:16px;}
+
+  .hour-row{grid-template-columns:70px 1fr 1fr 60px;}
+  .service-row{grid-template-columns:1fr 70px auto;}
+}
+</style>
+
+<script>
+const API_BASE = 'https://localreply-api.onrender.com';
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+
+// ── Bloquer les flèches navigateur pendant l'onboarding ──
+// Pousser un état dans l'historique pour intercepter le retour arrière
+history.pushState(null, '', window.location.href);
+window.addEventListener('popstate', () => {
+  // Chaque fois que l'utilisateur appuie sur "retour", on repousse l'état
+  history.pushState(null, '', window.location.href);
+  // Afficher un message discret
+  showBackWarning();
+});
+
+function showBackWarning() {
+  const existing = document.getElementById('backWarning');
+  if (existing) return;
+  const el = document.createElement('div');
+  el.id = 'backWarning';
+  el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(10,22,40,0.97);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 20px;font-size:13px;color:rgba(255,255,255,0.75);z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.4);display:flex;align-items:center;gap:10px;white-space:nowrap;';
+  el.innerHTML = '⚠️ Finalisez la configuration pour accéder au dashboard <button onclick="goToDashboard()" style="margin-left:8px;padding:5px 12px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);border-radius:7px;color:#00D4FF;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;">Ignorer →</button>';
+  document.body.appendChild(el);
+  setTimeout(() => el?.remove(), 4000);
+}
+
+// État global
+let currentStep = 1;
+let selectedBizType = '';
+let selectedRdvOption = '';
+let isPro = false;
+
+const STEPS = 5;
+
+// Mode RDV par défaut selon le type de commerce
+const RDV_MODE_DEFAULT = {
+  restaurant: 'link', cafe: 'link', pizzeria: 'link',
+  hotel: 'link', cinema: 'link', escapegame: 'link',
+  realtor: 'link', training: 'link',
+  pool: 'none', retail: 'none', bakery: 'none',
+  butcher: 'none', fishmonger: 'none', florist: 'none',
+  laundry: 'none', photographer: 'none',
+};
+
+// Types où la durée n'est pas pertinente
+const HIDE_DURATION = new Set([
+  'restaurant','cafe','pizzeria','hotel','bakery',
+  'butcher','fishmonger','florist','retail','laundry',
+  'pool','cinema','escapegame',
+]);
+
+// Types de commerce
+const BIZ_TYPE_GROUPS = [
+  { label: '💇 Beauté & Soins', options: [
+    {id:'salon',icon:'💇',label:'Salon de coiffure'},{id:'spa',icon:'💅',label:'Institut de beauté / Spa'},
+    {id:'massage',icon:'💆',label:'Massage / Kiné'},{id:'dentist',icon:'🦷',label:'Dentiste'},{id:'opticien',icon:'👓',label:'Opticien'},
+  ]},
+  { label: '🍽️ Restauration', options: [
+    {id:'restaurant',icon:'🍽️',label:'Restaurant'},{id:'cafe',icon:'☕',label:'Café / Bar'},{id:'pizzeria',icon:'🍕',label:'Pizzeria / Fast-food'},
+  ]},
+  { label: '🍞 Alimentation', options: [
+    {id:'bakery',icon:'🍞',label:'Boulangerie'},{id:'butcher',icon:'🥩',label:'Boucherie'},{id:'fishmonger',icon:'🐟',label:'Poissonnerie'},{id:'florist',icon:'🌿',label:'Fleuriste'},
+  ]},
+  { label: '⚖️ Services professionnels', options: [
+    {id:'law',icon:'⚖️',label:'Avocat'},{id:'architect',icon:'📐',label:'Architecte'},{id:'accountant',icon:'📊',label:'Expert-comptable'},
+    {id:'realtor',icon:'🏡',label:'Agence immobilière'},{id:'training',icon:'🎓',label:'Centre de formation'},
+  ]},
+  { label: '🏋️ Sport & Loisirs', options: [
+    {id:'gym',icon:'🏋️',label:'Salle de sport'},{id:'cinema',icon:'🎬',label:'Cinéma / Théâtre'},{id:'escapegame',icon:'🎮',label:'Escape Game'},{id:'pool',icon:'🏊',label:'Piscine'},
+  ]},
+  { label: '🔧 Services techniques', options: [
+    {id:'garage',icon:'🔧',label:'Garage / Atelier'},{id:'plumber',icon:'🔨',label:'Plombier / Électricien'},{id:'cleaning',icon:'🧹',label:'Ménage / Nettoyage'},{id:'gardener',icon:'🌳',label:'Jardinier'},
+  ]},
+  { label: '🏥 Santé & Animaux', options: [
+    {id:'medical',icon:'🏥',label:'Cabinet médical'},{id:'vet',icon:'🐾',label:'Vétérinaire'},{id:'grooming',icon:'✂️',label:'Toilettage animaux'},
+  ]},
+  { label: '🏨 Commerce & Hébergement', options: [
+    {id:'retail',icon:'🛍️',label:'Commerce de détail'},{id:'hotel',icon:'🏨',label:'Hôtel'},
+  ]},
+  { label: '📸 Autres services', options: [
+    {id:'photographer',icon:'📸',label:'Photographe'},{id:'laundry',icon:'👗',label:'Pressing'},{id:'other',icon:'🎨',label:'Autre'},
+  ]},
+];
+
+// Templates par type
+const TEMPLATES = {
+  // ── Beauté & Soins ──
+  salon: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,20],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Coupe homme',price:25,duration:30},{name:'Coupe femme',price:35,duration:45},{name:'Coloration',price:65,duration:90},{name:'Mèches',price:85,duration:120}]
+  },
+  spa: {
+    hours: {lun:null,mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,20],sam:[9,19],dim:[10,17]},
+    services: [{name:'Soin visage',price:55,duration:60},{name:'Massage relaxant',price:65,duration:60},{name:'Épilation jambes',price:35,duration:45},{name:'Manucure',price:30,duration:45}]
+  },
+  massage: {
+    hours: {lun:[9,19],mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,19],sam:[9,17],dim:null},
+    services: [{name:'Massage relaxant',price:60,duration:60},{name:'Massage sportif',price:70,duration:60},{name:'Séance kiné',price:50,duration:30},{name:'Réflexologie',price:55,duration:45}]
+  },
+  dentist: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,13],jeu:[8,18],ven:[8,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Détartrage',price:80,duration:45},{name:'Extraction',price:120,duration:45},{name:'Blanchiment',price:250,duration:90}]
+  },
+  opticien: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Examen de vue',price:40,duration:30},{name:'Adaptation lentilles',price:60,duration:45},{name:'Montage lunettes',price:0,duration:30}]
+  },
+  // ── Restauration ──
+  restaurant: {
+    hours: {lun:null,mar:[12,22],mer:[12,22],jeu:[12,22],ven:[12,23],sam:[11,23],dim:[11,21]},
+    services: [{name:'Déjeuner',price:18,duration:60},{name:'Dîner',price:28,duration:90},{name:'Brunch weekend',price:22,duration:90}]
+  },
+  cafe: {
+    hours: {lun:[7,19],mar:[7,19],mer:[7,19],jeu:[7,19],ven:[7,20],sam:[8,20],dim:[9,18]},
+    services: [{name:'Café & boissons',price:3,duration:15},{name:'Formule petit-déjeuner',price:9,duration:30},{name:'Formule déjeuner',price:14,duration:45}]
+  },
+  pizzeria: {
+    hours: {lun:null,mar:[11,22],mer:[11,22],jeu:[11,22],ven:[11,23],sam:[11,23],dim:[11,22]},
+    services: [{name:'Pizza classique',price:13,duration:20},{name:'Pizza spéciale',price:16,duration:20},{name:'Formule midi',price:11,duration:30},{name:'Livraison',price:2,duration:30}]
+  },
+  // ── Alimentation ──
+  bakery: {
+    hours: {lun:null,mar:[6,19],mer:[6,19],jeu:[6,19],ven:[6,19],sam:[6,18],dim:[6,13]},
+    services: [{name:'Pain tradition',price:1.3,duration:5},{name:'Viennoiseries',price:1.5,duration:5},{name:'Commande gâteau',price:35,duration:0},{name:'Commande spéciale',price:0,duration:0}]
+  },
+  butcher: {
+    hours: {lun:null,mar:[7,13],mer:[7,19],jeu:[7,13],ven:[7,19],sam:[7,18],dim:[7,12]},
+    services: [{name:'Bœuf',price:0,duration:10},{name:'Veau',price:0,duration:10},{name:'Agneau',price:0,duration:10},{name:'Commande traiteur',price:0,duration:0}]
+  },
+  fishmonger: {
+    hours: {lun:null,mar:[7,13],mer:[7,13],jeu:[7,13],ven:[7,19],sam:[7,18],dim:[7,12]},
+    services: [{name:'Poissons frais',price:0,duration:10},{name:'Fruits de mer',price:0,duration:10},{name:'Plateau fruits de mer',price:45,duration:0}]
+  },
+  florist: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,19],sam:[9,18],dim:[9,13]},
+    services: [{name:'Bouquet sur mesure',price:25,duration:20},{name:'Composition florale',price:45,duration:30},{name:'Bouquet mariage',price:120,duration:60},{name:'Livraison',price:8,duration:30}]
+  },
+  // ── Services professionnels ──
+  law: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation juridique',price:150,duration:60},{name:'Rédaction contrat',price:300,duration:120},{name:'Consultation téléphonique',price:80,duration:30}]
+  },
+  architect: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation projet',price:150,duration:60},{name:'Étude de faisabilité',price:500,duration:0},{name:'Suivi de chantier',price:0,duration:0}]
+  },
+  accountant: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:120,duration:60},{name:'Déclaration fiscale',price:200,duration:0},{name:'Bilan annuel',price:800,duration:0}]
+  },
+  realtor: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Estimation bien',price:0,duration:60},{name:'Visite appartement',price:0,duration:60},{name:'Visite maison',price:0,duration:90}]
+  },
+  training: {
+    hours: {lun:[8,20],mar:[8,20],mer:[8,20],jeu:[8,20],ven:[8,18],sam:[9,17],dim:null},
+    services: [{name:'Formation individuelle',price:80,duration:60},{name:'Formation groupe',price:40,duration:120},{name:'Cours en ligne',price:30,duration:60}]
+  },
+  // ── Sport & Loisirs ──
+  gym: {
+    hours: {lun:[6,22],mar:[6,22],mer:[6,22],jeu:[6,22],ven:[6,21],sam:[8,18],dim:[9,17]},
+    services: [{name:'Cours collectif',price:12,duration:60},{name:'Coaching personnel',price:60,duration:60},{name:'Abonnement mensuel',price:39,duration:0}]
+  },
+  cinema: {
+    hours: {lun:[13,23],mar:[13,23],mer:[10,23],jeu:[13,23],ven:[13,0],sam:[10,0],dim:[10,22]},
+    services: [{name:'Séance standard',price:12,duration:120},{name:'Séance 3D',price:15,duration:120},{name:'Tarif réduit',price:9,duration:120}]
+  },
+  escapegame: {
+    hours: {lun:null,mar:[14,22],mer:[14,22],jeu:[14,22],ven:[14,23],sam:[10,23],dim:[10,20]},
+    services: [{name:'Salle 2-3 joueurs',price:25,duration:60},{name:'Salle 4-5 joueurs',price:22,duration:60},{name:'Salle 6 joueurs',price:20,duration:60}]
+  },
+  pool: {
+    hours: {lun:[7,21],mar:[7,21],mer:[7,21],jeu:[7,21],ven:[7,21],sam:[8,19],dim:[8,18]},
+    services: [{name:'Entrée adulte',price:5,duration:90},{name:'Entrée enfant',price:3,duration:90},{name:'Cours natation adulte',price:35,duration:45},{name:'Cours natation enfant',price:30,duration:30}]
+  },
+  // ── Services techniques ──
+  garage: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[8,12],dim:null},
+    services: [{name:'Vidange',price:60,duration:60},{name:'Révision complète',price:180,duration:180},{name:'Contrôle technique',price:80,duration:60},{name:'Remplacement pneus',price:40,duration:60}]
+  },
+  plumber: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[9,13],dim:null},
+    services: [{name:'Dépannage urgent',price:80,duration:60},{name:'Installation robinet',price:120,duration:90},{name:'Débouchage',price:90,duration:60},{name:'Devis gratuit',price:0,duration:30}]
+  },
+  cleaning: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[9,14],dim:null},
+    services: [{name:'Ménage domicile',price:25,duration:120},{name:'Nettoyage fin de bail',price:200,duration:240},{name:'Vitres',price:60,duration:90},{name:'Devis gratuit',price:0,duration:30}]
+  },
+  gardener: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[8,13],dim:null},
+    services: [{name:'Tonte pelouse',price:40,duration:60},{name:'Taille haies',price:55,duration:90},{name:'Entretien jardin',price:35,duration:60},{name:'Dévis gratuit',price:0,duration:30}]
+  },
+  // ── Santé & Animaux ──
+  medical: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,13],jeu:[8,18],ven:[8,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Consultation spécialisée',price:80,duration:45},{name:'Renouvellement ordonnance',price:30,duration:15}]
+  },
+  vet: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,13],jeu:[8,19],ven:[8,18],sam:[9,13],dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Vaccination',price:60,duration:20},{name:'Bilan de santé',price:80,duration:45},{name:'Urgence',price:90,duration:30}]
+  },
+  grooming: {
+    hours: {lun:null,mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Toilettage petit chien',price:35,duration:60},{name:'Toilettage grand chien',price:55,duration:90},{name:'Bain + séchage',price:25,duration:45},{name:'Coupe ongles',price:10,duration:15}]
+  },
+  // ── Commerce & Hébergement ──
+  retail: {
+    hours: {lun:[10,19],mar:[10,19],mer:[10,19],jeu:[10,19],ven:[10,19],sam:[10,18],dim:null},
+    services: [{name:'Conseil personnalisé',price:0,duration:30},{name:'Commande sur mesure',price:0,duration:0},{name:'Click & Collect',price:0,duration:15}]
+  },
+  hotel: {
+    hours: {lun:[0,24],mar:[0,24],mer:[0,24],jeu:[0,24],ven:[0,24],sam:[0,24],dim:[0,24]},
+    services: [{name:'Chambre simple',price:89,duration:1440},{name:'Chambre double',price:119,duration:1440},{name:'Suite',price:189,duration:1440},{name:'Petit-déjeuner',price:15,duration:60}]
+  },
+  // ── Autres services ──
+  photographer: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,18],dim:null},
+    services: [{name:'Portrait studio',price:120,duration:60},{name:'Reportage événement',price:400,duration:240},{name:'Séance famille',price:180,duration:90},{name:'Photos produits',price:200,duration:120}]
+  },
+  laundry: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[9,18],dim:null},
+    services: [{name:'Nettoyage costume',price:15,duration:0},{name:'Nettoyage robe',price:20,duration:0},{name:'Repassage chemise',price:5,duration:0},{name:'Pressing express',price:25,duration:0}]
+  },
+  default: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:null,dim:null},
+    services: [{name:'Service principal',price:0,duration:60}]
+  }
+};
+
+const DAYS = ['lun','mar','mer','jeu','ven','sam','dim'];
+const DAY_LABELS = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', async () => {
+  // Vérifier abonnement actif avant tout
+  try {
+    const uid = JSON.parse(atob(token.split('.')[1])).sub;
+    const sub = await fetch(`${API_BASE}/api/billing/subscription/${uid}`,
+      {headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>null);
+    const validPlans = ['trial','standard','pro'];
+    if (sub && !validPlans.includes(sub.plan)) {
+      // Pas d'abonnement → choisir un plan
+      window.location.href = '/abonnement?new=true';
+      return;
+    }
+    if (sub?.status === 'cancelled') {
+      window.location.href = '/abonnement';
+      return;
+    }
+  } catch {}
+
+  // Vérification onboarding déjà complété
+  try {
+    const status = await fetch(`${API_BASE}/api/business/${businessId}/onboarding-status`,
+      {headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>null);
+    if (status?.completed) { window.location.href = '/dashboard'; return; }
+  } catch {}
+
+  // Init
+  buildBizTypeSelect();
+  buildHoursGrid();
+  addServiceRow();
+  loadEmailPreview();
+  checkPlan();
+});
+
+async function checkPlan() {
+  try {
+    const uid = JSON.parse(atob(token.split('.')[1])).sub;
+    const sub = await fetch(`${API_BASE}/api/billing/subscription/${uid}`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>null);
+    isPro = sub?.plan==='pro'||sub?.plan==='trial';
+  } catch {}
+  applySmsCols();
+}
+
+function applySmsCols() {
+  document.querySelectorAll('.ob-sms-col').forEach(col => {
+    col.style.opacity = isPro ? '1' : '0.3';
+    col.style.pointerEvents = isPro ? 'auto' : 'none';
+  });
+  const note = document.getElementById('ob_smsNote');
+  if (note) note.style.display = isPro ? 'none' : 'block';
+  // Désactiver SMS si Standard
+  if (!isPro) {
+    ['new','urgent','unknown'].forEach(ev => {
+      const cb = document.getElementById(`ob_notif_${ev}_sms`);
+      if (cb) { cb.checked=false; obSyncToggle(cb); }
+    });
+  }
+}
+
+function loadEmailPreview() {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const email = payload.email || payload.sub || '';
+    const el = document.getElementById('ob_accountEmail');
+    if (el && email) el.textContent = email;
+  } catch {}
+}
+
+// ─── TYPE DE COMMERCE ───
+function buildBizTypeSelect() {
+  const sel = document.getElementById('businessTypeSelect');
+  if (!sel) return;
+  BIZ_TYPE_GROUPS.forEach(group => {
+    const og = document.createElement('optgroup');
+    og.label = group.label;
+    group.options.forEach(opt => {
+      const o = document.createElement('option');
+      o.value = opt.id;
+      o.textContent = opt.icon + ' ' + opt.label;
+      og.appendChild(o);
+    });
+    sel.appendChild(og);
+  });
+}
+
+function selectBizType(id) {
+  if (!id) return;
+  selectedBizType = id;
+
+  // Auto-remplir le slug si nom déjà saisi
+  const name = document.getElementById('bizName').value;
+  if (name) autoSlug(name);
+
+  // Adapter step2 (titre, label services, template)
+  adaptStep2ToType(id);
+
+  // Masquer/afficher colonne durée selon le type
+  applyDurationVisibility(id);
+
+  // Pré-sélectionner le mode RDV à l'étape 3
+  const rdvMode = RDV_MODE_DEFAULT[id] || 'google';
+  selectRdvOption(rdvMode);
+}
+
+function applyDurationVisibility(type) {
+  const hide = HIDE_DURATION.has(type);
+  // Masquer header durée et inputs durée dans les rows existants
+  document.querySelectorAll('.service-row').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const durationInput = inputs[2]; // 3ème input = durée
+    if (durationInput) {
+      durationInput.parentElement
+        ? durationInput.closest('input') // pas de wrapper
+        : null;
+      durationInput.style.display = hide ? 'none' : '';
+    }
+  });
+  // Stocker pour les futures rows
+  window._hideDuration = hide;
+}
+
+function adaptStep2ToType(type) {
+  const t = document.getElementById('step2Title');
+  const sl = document.getElementById('servicesLabel');
+  const tb = document.getElementById('templateBtn');
+  if (!t) return;
+  const cfg = {
+    // Beauté
+    salon:       {title:'⏰ Horaires & Prestations',    services:'Prestations',            tpl:'template Coiffure'},
+    spa:         {title:'⏰ Horaires & Soins',           services:'Soins & Prestations',    tpl:'template Spa'},
+    massage:     {title:'⏰ Horaires & Séances',         services:'Types de massage',       tpl:'template Massage'},
+    dentist:     {title:'⏰ Horaires & Soins dentaires', services:'Actes dentaires',        tpl:'template Dentiste'},
+    opticien:    {title:'⏰ Horaires & Services',        services:'Prestations optique',    tpl:'template Opticien'},
+    // Restauration
+    restaurant:  {title:'⏰ Horaires & Menu',            services:'Formules & Menus',       tpl:'template Restaurant'},
+    cafe:        {title:'⏰ Horaires & Carte',           services:'Boissons & Formules',    tpl:'template Café'},
+    pizzeria:    {title:'⏰ Horaires & Menu',            services:'Pizzas & Formules',      tpl:'template Pizzeria'},
+    // Alimentation
+    bakery:      {title:'⏰ Horaires & Produits',        services:'Produits & Commandes',   tpl:'template Boulangerie'},
+    butcher:     {title:'⏰ Horaires & Produits',        services:'Viandes & Commandes',    tpl:'template Boucherie'},
+    fishmonger:  {title:'⏰ Horaires & Produits',        services:'Produits de la mer',     tpl:'template Poissonnerie'},
+    florist:     {title:'⏰ Horaires & Compositions',   services:'Bouquets & Créations',   tpl:'template Fleuriste'},
+    // Professionnels
+    law:         {title:'⏰ Horaires & Consultations',  services:'Types de consultation',  tpl:'template Avocat'},
+    architect:   {title:'⏰ Horaires & Prestations',    services:'Prestations',            tpl:'template Architecte'},
+    accountant:  {title:'⏰ Horaires & Prestations',    services:'Missions comptables',    tpl:'template Comptable'},
+    realtor:     {title:'⏰ Horaires & Services',        services:'Types de bien',          tpl:'template Immobilier'},
+    training:    {title:'⏰ Horaires & Formations',     services:'Formations & Cours',     tpl:'template Formation'},
+    // Sport & Loisirs
+    gym:         {title:'⏰ Horaires & Cours',           services:'Cours & Abonnements',    tpl:'template Salle de sport'},
+    cinema:      {title:'⏰ Horaires & Séances',         services:'Types de séance',        tpl:'template Cinéma'},
+    escapegame:  {title:'⏰ Horaires & Salles',          services:'Salles & Tarifs',        tpl:'template Escape Game'},
+    pool:        {title:'⏰ Horaires & Entrées',         services:'Entrées & Cours',        tpl:'template Piscine'},
+    // Techniques
+    garage:      {title:'⏰ Horaires & Prestations',    services:'Prestations garage',     tpl:'template Garage'},
+    plumber:     {title:'⏰ Horaires & Interventions',  services:'Types d intervention',   tpl:'template Artisan'},
+    cleaning:    {title:'⏰ Horaires & Prestations',    services:'Prestations ménage',     tpl:'template Nettoyage'},
+    gardener:    {title:'⏰ Horaires & Prestations',    services:'Prestations jardinage',  tpl:'template Jardinier'},
+    // Santé & Animaux
+    medical:     {title:'⏰ Horaires & Consultations',  services:'Types de consultation',  tpl:'template Cabinet médical'},
+    vet:         {title:'⏰ Horaires & Consultations',  services:'Actes vétérinaires',     tpl:'template Vétérinaire'},
+    grooming:    {title:'⏰ Horaires & Prestations',    services:'Prestations toilettage', tpl:'template Toilettage'},
+    // Commerce & Hébergement
+    retail:      {title:'⏰ Horaires & Produits',        services:'Produits & Services',    tpl:'template Boutique'},
+    hotel:       {title:'⏰ Horaires & Chambres',        services:'Chambres & Services',    tpl:'template Hôtel'},
+    // Autres
+    photographer:{title:'⏰ Horaires & Séances',         services:'Types de séance photo',  tpl:'template Photographe'},
+    laundry:     {title:'⏰ Horaires & Prestations',    services:'Articles & Tarifs',      tpl:'template Pressing'},
+  };
+  const c = cfg[type] || {title:'⏰ Horaires & Services', services:'Services principaux', tpl:'template'};
+  t.textContent = c.title;
+  if (sl) sl.textContent = c.services;
+  if (tb) tb.textContent = `📋 Charger le ${c.tpl}`;
+
+  // Adapter note RDV selon type
+  const rdvMode = RDV_MODE_DEFAULT[type];
+  const tplSection = document.getElementById('templateSection');
+  if (tplSection) {
+    const noteEl = tplSection.querySelector('.rdv-type-note');
+    if (noteEl) noteEl.remove();
+    if (rdvMode === 'link') {
+      const note = document.createElement('div');
+      note.className = 'rdv-type-note';
+      note.style.cssText = 'margin-top:10px;padding:8px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.6);';
+      note.innerHTML = '💡 Pour ce type de commerce, nous vous recommanderons un <strong style="color:#F59E0B;">lien de réservation externe</strong> à l\'étape suivante (Planity, TheFork, Booking, etc.)';
+      tplSection.appendChild(note);
+    } else if (rdvMode === 'none') {
+      const note = document.createElement('div');
+      note.className = 'rdv-type-note';
+      note.style.cssText = 'margin-top:10px;padding:8px 12px;background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.5);';
+      note.innerHTML = '💬 Ce type de commerce ne nécessite généralement pas de prise de RDV en ligne.';
+      tplSection.appendChild(note);
+    }
+  }
+}
+
+// ─── SLUG ───
+document.getElementById('bizName')?.addEventListener('input', function() {
+  autoSlug(this.value);
+});
+
+function autoSlug(name) {
+  const slug = name.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-|-$/g,'');
+  document.getElementById('bizSlug').value = slug;
+  updateSlugPreview(slug);
+}
+
+function sanitizeSlug(input) {
+  input.value = input.value.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  updateSlugPreview(input.value);
+}
+
+function updateSlugPreview(slug) {
+  const el = document.getElementById('slugPreview');
+  if (el) el.textContent = slug ? `localreply.ai/${slug}` : '';
+}
+
+// ─── HORAIRES ───
+function buildHoursGrid() {
+  const container = document.getElementById('hoursSimple');
+  container.innerHTML = DAYS.map((d,i) => `
+    <div class="hour-row" id="hour_${d}">
+      <div class="hour-day">${DAY_LABELS[i]}</div>
+      <input type="time" value="09:00" class="hour-input" id="hopen_${d}">
+      <input type="time" value="18:00" class="hour-input" id="hclose_${d}">
+      <label class="hour-closed">
+        <input type="checkbox" id="hclosed_${d}" onchange="toggleHourRow('${d}',this)" style="accent-color:#EF4444;width:13px;height:13px;" ${d==='dim'?'checked':''}>
+        <span>Fermé</span>
+      </label>
+    </div>
+  `).join('');
+  // Appliquer dimanche fermé
+  toggleHourRow('dim', document.getElementById('hclosed_dim'));
+}
+
+function toggleHourRow(day, cb) {
+  const row = document.getElementById('hour_'+day);
+  row.querySelectorAll('.hour-input').forEach(i => {
+    i.disabled = cb.checked;
+    i.style.opacity = cb.checked ? '0.3' : '1';
+  });
+}
+
+function loadTemplate() {
+  const tpl = TEMPLATES[selectedBizType] || TEMPLATES.default;
+  // Horaires
+  DAYS.forEach(d => {
+    const val = tpl.hours[d];
+    const cb = document.getElementById(`hclosed_${d}`);
+    const op = document.getElementById(`hopen_${d}`);
+    const cl = document.getElementById(`hclose_${d}`);
+    if (!cb) return;
+    cb.checked = !val;
+    toggleHourRow(d, cb);
+    if (val && op && cl) {
+      op.value = String(val[0]).padStart(2,'0')+':00';
+      cl.value = String(val[1]).padStart(2,'0')+':00';
+    }
+  });
+  // Services — appliquer visibilité durée AVANT de créer les rows
+  applyDurationVisibility(selectedBizType);
+  const list = document.getElementById('servicesList');
+  list.innerHTML = '';
+  tpl.services.forEach(s => addServiceRow(s.name, s.price, s.duration));
+
+  // Pour restaurant/hotel, afficher un conseil sur la gestion des tables/chambres
+  const rdvMode = RDV_MODE_DEFAULT[selectedBizType];
+  if (rdvMode === 'link' || rdvMode === 'none') {
+    showToast('✅ Template chargé ! Pensez à configurer votre lien de réservation à l\'étape suivante.');
+  } else {
+    showToast('✅ Template chargé !');
+  }
+}
+
+// ─── SERVICES ───
+function addServiceRow(name='', price='', duration='') {
+  const list = document.getElementById('servicesList');
+  const div = document.createElement('div');
+  const hideDur = window._hideDuration || false;
+  div.className = 'service-row';
+  // Adapter grid selon visibilité durée
+  div.style.cssText = hideDur
+    ? 'display:grid;grid-template-columns:2fr 80px auto;gap:8px;align-items:center;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;'
+    : 'display:grid;grid-template-columns:2fr 80px 80px auto;gap:8px;align-items:center;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;';
+  div.innerHTML = `
+    <input type="text" value="${name}" placeholder="Nom du service" class="ob-input" style="padding:9px 12px;">
+    <input type="number" value="${price||''}" placeholder="Prix €" class="ob-input" style="padding:9px 10px;">
+    ${hideDur ? '' : `<input type="number" value="${duration||''}" placeholder="Min" class="ob-input" style="padding:9px 10px;">`}
+    <button onclick="this.parentElement.remove()" style="padding:8px 10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:8px;color:#EF4444;cursor:pointer;font-size:14px;">🗑️</button>
+  `;
+  list.appendChild(div);
+}
+
+// ─── OPTIONS RDV ───
+function selectRdvOption(opt) {
+  selectedRdvOption = opt;
+  ['google','link','manual','none'].forEach(o => {
+    const el = document.getElementById('rdvOpt'+o.charAt(0).toUpperCase()+o.slice(1));
+    const radio = document.getElementById('radio_'+o);
+    if (el) el.classList.toggle('selected', o===opt);
+    if (radio) radio.classList.toggle('selected', o===opt);
+  });
+  document.getElementById('calendarConnectBtn').style.display = opt==='google' ? 'block' : 'none';
+  document.getElementById('rdvLinkInput').style.display = opt==='link' ? 'block' : 'none';
+}
+
+function connectCalendar(e) {
+  e.stopPropagation();
+  fetch(`${API_BASE}/api/calendar/connect?business_id=${businessId}`,{headers:{'Authorization':'Bearer '+token}})
+    .then(r=>r.json()).then(d=>{if(d.auth_url) window.location.href=d.auth_url;})
+    .catch(()=>showToast('❌ Erreur de connexion','error'));
+}
+
+// ─── TOGGLES NOTIFS ───
+function obSyncToggle(cb) {
+  const id = cb.id.replace('ob_notif_','');
+  const tgl = document.getElementById('ob_tgl_'+id);
+  const dot = document.getElementById('ob_dot_'+id);
+  if (!tgl || !dot) return;
+  tgl.style.background = cb.checked ? 'linear-gradient(135deg,#0052CC,#00D4FF)' : 'rgba(255,255,255,0.15)';
+  dot.style.left  = cb.checked ? 'calc(100% - 18px)' : '3px';
+  dot.style.right = cb.checked ? 'auto' : 'auto';
+}
+
+// ─── NAVIGATION ───
+function updateProgress(step) {
+  const pct = Math.round((step/STEPS)*100);
+  document.getElementById('progressBar').style.width = pct+'%';
+  document.getElementById('stepLabel').textContent = `Étape ${step} sur ${STEPS}`;
+  document.getElementById('stepPercent').textContent = pct+'%';
+
+  // Dots
+  for (let i=1;i<=STEPS;i++) {
+    const dot = document.getElementById('dot'+i);
+    if (!dot) continue;
+    if (i < step) {
+      dot.style.background = 'rgba(16,185,129,0.3)';
+      dot.style.border = '2px solid #10B981';
+      dot.innerHTML = '✓';
+      dot.style.color = '#10B981';
+      dot.style.cursor = 'pointer';
+    } else if (i === step) {
+      dot.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+      dot.style.border = 'none';
+      dot.innerHTML = i;
+      dot.style.color = '#fff';
+      dot.style.cursor = 'default';
+    } else {
+      dot.style.background = 'rgba(255,255,255,0.08)';
+      dot.style.border = 'none';
+      dot.innerHTML = i;
+      dot.style.color = 'rgba(255,255,255,0.3)';
+      dot.style.cursor = 'default';
+    }
+  }
+
+  // Boutons
+  document.getElementById('btnBack').style.display = step > 1 ? 'block' : 'none';
+  document.getElementById('step3Skip').style.display = step===3 ? 'block' : 'none';
+  const btnNext = document.getElementById('btnNext');
+  if (step === STEPS) {
+    btnNext.style.display = 'none';
+  } else {
+    btnNext.style.display = 'block';
+    btnNext.textContent = step === STEPS-1 ? 'Terminer 🎉' : 'Continuer →';
+  }
+}
+
+function showStep(n) {
+  for (let i=1;i<=STEPS;i++) {
+    const el = document.getElementById('step'+i);
+    if (el) {
+      el.style.display = i===n ? 'block' : 'none';
+      if (i===n) el.style.animation = 'slideIn 0.3s ease';
+    }
+  }
+  currentStep = n;
+  updateProgress(n);
+  localStorage.setItem('ob_step', n);
+}
+
+function goToStep(n) {
+  if (n >= currentStep) return; // Peut revenir en arrière uniquement
+  showStep(n);
+}
+
+async function nextStep() {
+  if (!validateStep(currentStep)) return;
+  await saveStep(currentStep);
+  if (currentStep < STEPS) showStep(currentStep+1);
+  if (currentStep+1 === STEPS) buildFinalStep();
+}
+
+function prevStep() {
+  if (currentStep > 1) showStep(currentStep-1);
+}
+
+function skipStep3() {
+  selectedRdvOption = 'manual';
+  saveStep(3);
+  showStep(4);
+}
+
+// ─── VALIDATION ───
+function validateStep(step) {
+  if (step === 1) {
+    const sel = document.getElementById('businessTypeSelect');
+    if (sel && sel.value) selectedBizType = sel.value;
+    if (!selectedBizType) { showToast('❌ Choisissez votre type de commerce','error'); return false; }
+    if (!document.getElementById('bizName').value.trim()) { showToast('❌ Entrez le nom de votre commerce','error'); return false; }
+    if (!document.getElementById('bizSlug').value.trim()) { showToast('❌ Entrez votre lien public','error'); return false; }
+  }
+  if (step === 3 && !selectedRdvOption) { showToast('❌ Choisissez une option de prise de RDV','error'); return false; }
+  return true;
+}
+
+// ─── SAUVEGARDE ───
+async function saveStep(step) {
+  try {
+    if (step === 1) {
+      await apiRequest(`/api/business/${businessId}/config`, 'POST', {
+        name: document.getElementById('bizName').value.trim(),
+        business_type: selectedBizType,
+        slug: document.getElementById('bizSlug').value.trim(),
+        timezone: document.getElementById('bizTimezone').value,
+      });
+    }
+    if (step === 2) {
+      // Horaires
+      const dayMap = {lun:'mon',mar:'tue',mer:'wed',jeu:'thu',ven:'fri',sam:'sat',dim:'sun'};
+      const hours = DAYS.map(d => ({
+        day: dayMap[d],
+        open_time: document.getElementById('hopen_'+d)?.value||'09:00',
+        close_time: document.getElementById('hclose_'+d)?.value||'18:00',
+        is_closed: document.getElementById('hclosed_'+d)?.checked||false
+      }));
+      await apiRequest(`/api/business/${businessId}/hours`, 'POST', hours);
+      // Services
+      const services = [...document.querySelectorAll('.service-row')].map(row => {
+        const inputs = row.querySelectorAll('input');
+        return inputs[0].value ? {name:inputs[0].value, price:parseFloat(inputs[1].value)||0, duration_minutes:parseInt(inputs[2].value)||60, is_active:true} : null;
+      }).filter(Boolean);
+      if (services.length) await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
+    }
+    if (step === 3) {
+      const extUrl = document.getElementById('externalRdvUrl')?.value||'';
+      await apiRequest(`/api/business/${businessId}/config`, 'POST', {
+        rdv_mode: selectedRdvOption,
+        external_rdv_url: extUrl,
+      }).catch(()=>{}); // Pas critique si endpoint pas encore dispo
+    }
+    if (step === 4) {
+      const target = document.querySelector('input[name="ob_emailTarget"]:checked')?.value||'account';
+      const prefs = {
+        new_appointment:    {email:document.getElementById('ob_notif_new_email')?.checked??true,    sms:isPro&&(document.getElementById('ob_notif_new_sms')?.checked??true)},
+        urgent_appointment: {email:document.getElementById('ob_notif_urgent_email')?.checked??true,  sms:isPro&&(document.getElementById('ob_notif_urgent_sms')?.checked??true)},
+        unknown_question:   {email:document.getElementById('ob_notif_unknown_email')?.checked??true,  sms:isPro&&(document.getElementById('ob_notif_unknown_sms')?.checked??false)},
+        notification_email_target: target
+      };
+      await apiRequest(`/api/business/${businessId}/notification-preferences`, 'PUT', prefs).catch(()=>{
+        // Fallback
+        apiRequest(`/api/business/${businessId}/notifications`, 'POST', {notification_email_target:target}).catch(()=>{});
+      });
+      // Marquer onboarding complété
+      await apiRequest(`/api/business/${businessId}/config`, 'POST', {onboarding_completed:true}).catch(()=>{});
+    }
+  } catch(e) {
+    console.error('Save error:', e);
+  }
+}
+
+function buildFinalStep() {
+  const slug = document.getElementById('bizSlug')?.value || '';
+  document.getElementById('finalLink').textContent = `localreply.ai/${slug}`;
+  const btn = document.getElementById('testIABtn');
+  if (btn && slug) btn.href = `https://localreplyai.odoo.com/chat?slug=${slug}`;
+}
+
+function goToDashboard() {
+  localStorage.removeItem('ob_step');
+  window.location.href = '/dashboard';
+}
+
+function copyFinalLink() {
+  const slug = document.getElementById('bizSlug')?.value||'';
+  navigator.clipboard.writeText(`https://localreply.ai/${slug}`).then(()=>showToast('✅ Lien copié !'));
+}
+
+// ─── API ───
+async function apiRequest(endpoint, method='GET', data=null) {
+  const opts = {method, headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}};
+  if (data && method!=='GET') opts.body = JSON.stringify(data);
+  const r = await fetch(API_BASE+endpoint, opts);
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+// ─── TOAST ───
+function showToast(msg, type='success') {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = `position:fixed;bottom:24px;right:24px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#fff;padding:12px 18px;border-radius:11px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:10000;animation:fadeUp 0.3s ease;font-family:inherit;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 3000);
+}
+</script>
+
+</body>
+</html>

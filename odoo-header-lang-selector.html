@@ -1,0 +1,183 @@
+<!-- ══════════════════════════════════════════════════
+  LocalReply — Sélecteur de langue global
+  À coller UNE SEULE FOIS dans le header Odoo
+  Site Web → Thème → Éditeur de code → header.html
+  (ou dans un snippet "Custom HTML" dans le header)
+══════════════════════════════════════════════════ -->
+
+<!-- SÉLECTEUR visible dans la nav -->
+<div class="lr-lang-wrapper" style="display:inline-flex;align-items:center;gap:6px;">
+  <span id="lrLangFlag" style="font-size:16px;line-height:1;">🇫🇷</span>
+  <select
+    id="lrLangSelect"
+    onchange="lrSetLang(this.value)"
+    style="background:transparent;border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;color:#FFFFFF;font-size:13px;font-weight:600;padding:5px 26px 5px 8px;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2210%22 height=%228%22 viewBox=%220 0 10 8%22%3E%3Cpath fill=%22%23fff%22 d=%22M5 8L0 0h10z%22/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 7px center;transition:border-color 0.2s;"
+  >
+    <option value="fr">🇫🇷 FR</option>
+    <option value="en">🇬🇧 EN</option>
+    <option value="de">🇩🇪 DE</option>
+    <option value="it">🇮🇹 IT</option>
+    <option value="es">🇪🇸 ES</option>
+    <option value="pt">🇵🇹 PT</option>
+  </select>
+</div>
+
+<style>
+#lrLangSelect:hover, #lrLangSelect:focus { border-color: #00D4FF !important; }
+#lrLangSelect option { background: #0A1628; color: #FFF; }
+</style>
+
+<script>
+// ══════════════════════════════════════════════
+// LocalReply i18n — inline (pas de fichier externe)
+// ══════════════════════════════════════════════
+var LR_T = {
+  fr: {
+    nav_home:'Accueil', nav_features:'Fonctionnalités', nav_pricing:'Tarifs',
+    nav_demo:'Démo', nav_about:'À propos', nav_contact:'Contact',
+    nav_login:'Connexion', nav_trial:'Essai gratuit',
+    hero_title:'Votre commerce répond', hero_title2:'24h/24 — sans vous',
+    hero_sub:'Un assistant IA qui parle 6 langues, prend vos RDV et répond à vos clients en permanence.',
+    hero_cta:'Commencer gratuitement', hero_cta2:'Voir la démo',
+    hero_trust1:'Annulable à tout moment', hero_trust2:'Opérationnel en 5 minutes', hero_trust3:'RGPD compliant',
+    feat_label:'Ce que fait LocalReply', feat_title:'Pas un chatbot FAQ.', feat_title2:'Un vrai assistant.',
+    pricing_label:'Tarifs simples', pricing_title:'Choisissez votre formule',
+    footer_rights:'Tous droits réservés', footer_made:'Fait avec ❤️ en Europe',
+    dash_home:'Accueil', dash_config:'Configuration', dash_messages:'Messages',
+    dash_rdv:'Rendez-vous', dash_analytics:'Analytics', dash_account:'Mon compte',
+    dash_sub:'Abonnement', dash_logout:'Déconnexion',
+    common_loading:'Chargement...', common_save:'Enregistrer', common_cancel:'Annuler',
+    common_search:'Rechercher', common_no_data:'Aucune donnée',
+  },
+  en: {
+    nav_home:'Home', nav_features:'Features', nav_pricing:'Pricing',
+    nav_demo:'Demo', nav_about:'About', nav_contact:'Contact',
+    nav_login:'Login', nav_trial:'Free trial',
+    hero_title:'Your business replies', hero_title2:'24/7 — without you',
+    hero_sub:'An AI assistant that speaks 6 languages, books appointments and answers your clients around the clock.',
+    hero_cta:'Start for free', hero_cta2:'See demo',
+    hero_trust1:'Cancel anytime', hero_trust2:'Live in 5 minutes', hero_trust3:'GDPR compliant',
+    feat_label:'What LocalReply does', feat_title:'Not a FAQ chatbot.', feat_title2:'A real assistant.',
+    pricing_label:'Simple pricing', pricing_title:'Choose your plan',
+    footer_rights:'All rights reserved', footer_made:'Made with ❤️ in Europe',
+    dash_home:'Home', dash_config:'Configuration', dash_messages:'Messages',
+    dash_rdv:'Appointments', dash_analytics:'Analytics', dash_account:'My account',
+    dash_sub:'Subscription', dash_logout:'Log out',
+    common_loading:'Loading...', common_save:'Save', common_cancel:'Cancel',
+    common_search:'Search', common_no_data:'No data available',
+  },
+  de: {
+    nav_home:'Startseite', nav_features:'Funktionen', nav_pricing:'Preise',
+    nav_demo:'Demo', nav_about:'Über uns', nav_contact:'Kontakt',
+    nav_login:'Anmelden', nav_trial:'Kostenlos testen',
+    hero_title:'Ihr Unternehmen antwortet', hero_title2:'24/7 — ohne Sie',
+    hero_sub:'Ein KI-Assistent, der 6 Sprachen spricht, Termine bucht und Ihre Kunden rund um die Uhr betreut.',
+    hero_cta:'Kostenlos starten', hero_cta2:'Demo ansehen',
+    hero_trust1:'Jederzeit kündbar', hero_trust2:'In 5 Minuten bereit', hero_trust3:'DSGVO-konform',
+    feat_label:'Was LocalReply macht', feat_title:'Kein FAQ-Chatbot.', feat_title2:'Ein echter Assistent.',
+    pricing_label:'Einfache Preise', pricing_title:'Wählen Sie Ihren Plan',
+    footer_rights:'Alle Rechte vorbehalten', footer_made:'Mit ❤️ in Europa gemacht',
+    dash_home:'Startseite', dash_config:'Konfiguration', dash_messages:'Nachrichten',
+    dash_rdv:'Termine', dash_analytics:'Analysen', dash_account:'Mein Konto',
+    dash_sub:'Abonnement', dash_logout:'Abmelden',
+    common_loading:'Laden...', common_save:'Speichern', common_cancel:'Abbrechen',
+    common_search:'Suchen', common_no_data:'Keine Daten',
+  },
+  it: {
+    nav_home:'Home', nav_features:'Funzionalità', nav_pricing:'Prezzi',
+    nav_demo:'Demo', nav_about:'Chi siamo', nav_contact:'Contatto',
+    nav_login:'Accedi', nav_trial:'Prova gratuita',
+    hero_title:'La tua attività risponde', hero_title2:'24h/24 — senza di te',
+    hero_sub:"Un assistente IA che parla 6 lingue, gestisce gli appuntamenti e risponde ai tuoi clienti in qualsiasi momento.",
+    hero_cta:'Inizia gratuitamente', hero_cta2:'Vedi la demo',
+    hero_trust1:'Cancellabile in qualsiasi momento', hero_trust2:'Operativo in 5 minuti', hero_trust3:'Conforme al GDPR',
+    feat_label:'Cosa fa LocalReply', feat_title:'Non un chatbot FAQ.', feat_title2:'Un vero assistente.',
+    pricing_label:'Prezzi semplici', pricing_title:'Scegli il tuo piano',
+    footer_rights:'Tutti i diritti riservati', footer_made:'Fatto con ❤️ in Europa',
+    dash_home:'Home', dash_config:'Configurazione', dash_messages:'Messaggi',
+    dash_rdv:'Appuntamenti', dash_analytics:'Analytics', dash_account:'Il mio account',
+    dash_sub:'Abbonamento', dash_logout:'Esci',
+    common_loading:'Caricamento...', common_save:'Salva', common_cancel:'Annulla',
+    common_search:'Cerca', common_no_data:'Nessun dato',
+  },
+  es: {
+    nav_home:'Inicio', nav_features:'Funciones', nav_pricing:'Precios',
+    nav_demo:'Demo', nav_about:'Nosotros', nav_contact:'Contacto',
+    nav_login:'Iniciar sesión', nav_trial:'Prueba gratuita',
+    hero_title:'Tu negocio responde', hero_title2:'24h/24 — sin ti',
+    hero_sub:'Un asistente IA que habla 6 idiomas, gestiona citas y atiende a tus clientes en todo momento.',
+    hero_cta:'Empieza gratis', hero_cta2:'Ver demo',
+    hero_trust1:'Cancelable en cualquier momento', hero_trust2:'Operativo en 5 minutos', hero_trust3:'Cumple el RGPD',
+    feat_label:'Qué hace LocalReply', feat_title:'No un chatbot de FAQ.', feat_title2:'Un verdadero asistente.',
+    pricing_label:'Precios simples', pricing_title:'Elige tu plan',
+    footer_rights:'Todos los derechos reservados', footer_made:'Hecho con ❤️ en Europa',
+    dash_home:'Inicio', dash_config:'Configuración', dash_messages:'Mensajes',
+    dash_rdv:'Citas', dash_analytics:'Analíticas', dash_account:'Mi cuenta',
+    dash_sub:'Suscripción', dash_logout:'Cerrar sesión',
+    common_loading:'Cargando...', common_save:'Guardar', common_cancel:'Cancelar',
+    common_search:'Buscar', common_no_data:'Sin datos',
+  },
+  pt: {
+    nav_home:'Início', nav_features:'Funcionalidades', nav_pricing:'Preços',
+    nav_demo:'Demo', nav_about:'Sobre nós', nav_contact:'Contacto',
+    nav_login:'Entrar', nav_trial:'Teste gratuito',
+    hero_title:'O seu negócio responde', hero_title2:'24h/24 — sem você',
+    hero_sub:'Um assistente IA que fala 6 idiomas, gere marcações e responde aos seus clientes a qualquer hora.',
+    hero_cta:'Começar gratuitamente', hero_cta2:'Ver demo',
+    hero_trust1:'Cancelável a qualquer momento', hero_trust2:'Operacional em 5 minutos', hero_trust3:'Conforme RGPD',
+    feat_label:'O que faz o LocalReply', feat_title:'Não um chatbot de FAQ.', feat_title2:'Um verdadeiro assistente.',
+    pricing_label:'Preços simples', pricing_title:'Escolha o seu plano',
+    footer_rights:'Todos os direitos reservados', footer_made:'Feito com ❤️ na Europa',
+    dash_home:'Início', dash_config:'Configuração', dash_messages:'Mensagens',
+    dash_rdv:'Marcações', dash_analytics:'Análises', dash_account:'A minha conta',
+    dash_sub:'Subscrição', dash_logout:'Sair',
+    common_loading:'A carregar...', common_save:'Guardar', common_cancel:'Cancelar',
+    common_search:'Pesquisar', common_no_data:'Sem dados',
+  }
+};
+
+var LR_FLAGS = { fr:'🇫🇷', en:'🇬🇧', de:'🇩🇪', it:'🇮🇹', es:'🇪🇸', pt:'🇵🇹' };
+
+function lrT(key) {
+  var lang = localStorage.getItem('lr_lang') || 'fr';
+  return (LR_T[lang] && LR_T[lang][key]) || (LR_T['fr'] && LR_T['fr'][key]) || key;
+}
+
+function lrApply() {
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    var attr = el.getAttribute('data-i18n-attr');
+    var val = lrT(key);
+    if (attr) el.setAttribute(attr, val);
+    else el.textContent = val;
+  });
+}
+
+function lrSetLang(lang) {
+  if (!LR_T[lang]) return;
+  localStorage.setItem('lr_lang', lang);
+  // Mettre à jour tous les sélecteurs sur la page
+  document.querySelectorAll('#lrLangSelect, .lr-lang-selector').forEach(function(s) { s.value = lang; });
+  // Mettre à jour tous les drapeaux
+  document.querySelectorAll('#lrLangFlag, .lr-lang-flag').forEach(function(f) { f.textContent = LR_FLAGS[lang] || '🌐'; });
+  // Appliquer les traductions
+  lrApply();
+}
+
+// Init au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('lr_lang');
+  // Auto-détection navigateur si première visite
+  if (!saved) {
+    var bl = (navigator.language || 'fr').slice(0,2);
+    saved = LR_T[bl] ? bl : 'fr';
+    localStorage.setItem('lr_lang', saved);
+  }
+  // Sync sélecteur + drapeau
+  var sel = document.getElementById('lrLangSelect');
+  if (sel) sel.value = saved;
+  document.querySelectorAll('#lrLangFlag, .lr-lang-flag').forEach(function(f) { f.textContent = LR_FLAGS[saved] || '🌐'; });
+  // Appliquer
+  lrApply();
+});
+</script>

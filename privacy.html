@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confidentialité — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<style>
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --dark: #0A1628;
+  --green: #10B981;
+  --white: #FFFFFF;
+  --gray: #F5F7FA;
+  --text: #1A2340;
+  --muted: #6B7280;
+  --border: rgba(0,82,204,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.lrp { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; color: var(--text); }
+
+.lrp-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 80px 20px 60px; text-align: center; }
+.lrp-hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.5px; }
+.lrp-hero p { font-size: 16px; color: rgba(255,255,255,0.6); }
+
+.lrp-body { max-width: 820px; margin: 0 auto; padding: 64px 20px 100px; }
+
+.lrp-toc { background: var(--gray); border-radius: 16px; padding: 28px 32px; margin-bottom: 56px; border: 1px solid var(--border); }
+.lrp-toc h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.lrp-toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.lrp-toc ol li a { font-size: 14px; color: var(--blue); text-decoration: none; }
+.lrp-toc ol li a:hover { text-decoration: underline; }
+
+.lrp-section { margin-bottom: 52px; scroll-margin-top: 24px; }
+.lrp-section h2 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.lrp-section h2 span { font-size: 20px; }
+.lrp-section h3 { font-size: 16px; font-weight: 700; color: var(--text); margin: 20px 0 10px; }
+.lrp-section p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
+.lrp-section p:last-child { margin-bottom: 0; }
+.lrp-section ul, .lrp-section ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.lrp-section ul li, .lrp-section ol li { font-size: 15px; color: var(--muted); line-height: 1.7; }
+.lrp-section strong { color: var(--text); font-weight: 600; }
+
+.lrp-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+.lrp-table th { background: var(--gray); padding: 12px 16px; text-align: left; font-weight: 700; color: var(--text); border: 1px solid var(--border); font-size: 13px; }
+.lrp-table td { padding: 12px 16px; border: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+.lrp-table tr:nth-child(even) td { background: var(--gray); }
+
+.lrp-alert { background: rgba(0,82,204,0.05); border: 1px solid rgba(0,82,204,0.2); border-left: 4px solid var(--blue); border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
+.lrp-alert p { font-size: 14px; color: var(--text); margin: 0; line-height: 1.6; }
+
+.lrp-contact { background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 40px; text-align: center; margin-top: 56px; }
+.lrp-contact h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.lrp-contact p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+.lrp-contact a { display: inline-block; padding: 12px 28px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 10px; color: #fff; text-decoration: none; font-size: 15px; font-weight: 600; }
+
+.lrp-updated { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 40px; padding: 12px; background: var(--gray); border-radius: 8px; }
+
+@media (max-width: 640px) {
+  .lrp-body { padding: 40px 16px 80px; }
+  .lrp-toc { padding: 20px; }
+  .lrp-contact { padding: 28px 20px; }
+}
+</style>
+
+<div class="lrp">
+
+  <section class="lrp-hero">
+    <h1>Politique de Confidentialité</h1>
+    <p>Comment LocalReply collecte, utilise et protège vos données personnelles</p>
+  </section>
+
+  <div class="lrp-body">
+
+    <p class="lrp-updated">📅 Dernière mise à jour : Mars 2025 — Document soumis au droit suisse et au RGPD européen</p>
+
+    <!-- TABLE DES MATIÈRES -->
+    <div class="lrp-toc">
+      <h3>Table des matières</h3>
+      <ol>
+        <li><a href="#responsable">Responsable du traitement</a></li>
+        <li><a href="#collecte">Données collectées</a></li>
+        <li><a href="#utilisation">Finalités et bases légales</a></li>
+        <li><a href="#tiers">Sous-traitants et tiers</a></li>
+        <li><a href="#conservation">Durée de conservation</a></li>
+        <li><a href="#droits">Vos droits</a></li>
+        <li><a href="#securite">Sécurité des données</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#mineurs">Mineurs</a></li>
+        <li><a href="#modifications">Modifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. RESPONSABLE -->
+    <div class="lrp-section" id="responsable">
+      <h2><span>1.</span> Responsable du traitement</h2>
+      <p>Le responsable du traitement des données personnelles collectées via la plateforme LocalReply est :</p>
+      <p><strong>LocalReply</strong><br>
+      Opéré par un indépendant basé en Suisse<br>
+      Email : <a href="/cdn-cgi/l/email-protection#5a3635393b36283f2a3623743b3374293b3b291a3d373b333674393537" style="color: var(--blue);"><span class="__cf_email__" data-cfemail="96faf9f5f7fae4f3e6faefb8f7ffb8e5f7f7e5d6f1fbf7fffab8f5f9fb">[email&#160;protected]</span></a></p>
+    </div>
+
+    <!-- 2. DONNÉES COLLECTÉES -->
+    <div class="lrp-section" id="collecte">
+      <h2><span>2.</span> Données collectées</h2>
+
+      <h3>2.1 Données des entreprises clientes (abonnés LocalReply)</h3>
+      <table class="lrp-table">
+        <tr><th>Donnée</th><th>Source</th><th>Obligatoire</th></tr>
+        <tr><td>Nom, prénom</td><td>Formulaire d'inscription</td><td>Oui</td></tr>
+        <tr><td>Adresse email professionnelle</td><td>Formulaire d'inscription</td><td>Oui</td></tr>
+        <tr><td>Numéro de téléphone</td><td>Configuration du compte</td><td>Non</td></tr>
+        <tr><td>Nom et adresse du commerce</td><td>Configuration du compte</td><td>Oui</td></tr>
+        <tr><td>Informations de paiement</td><td>Stripe (jamais stockées chez nous)</td><td>Oui</td></tr>
+        <tr><td>Tokens Google Calendar</td><td>Autorisation OAuth Google</td><td>Non</td></tr>
+        <tr><td>Données d'usage (connexions, actions)</td><td>Automatique</td><td>Automatique</td></tr>
+      </table>
+
+      <h3>2.2 Données des clients finaux (visiteurs du widget chat)</h3>
+      <table class="lrp-table">
+        <tr><th>Donnée</th><th>Source</th><th>Obligatoire</th></tr>
+        <tr><td>Messages de la conversation</td><td>Widget chat</td><td>Oui</td></tr>
+        <tr><td>Nom (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
+        <tr><td>Téléphone (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
+        <tr><td>Email (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
+        <tr><td>Langue détectée</td><td>Automatique</td><td>Automatique</td></tr>
+        <tr><td>Adresse IP anonymisée</td><td>Automatique</td><td>Automatique</td></tr>
+        <tr><td>Identifiant de session (hash)</td><td>Automatique</td><td>Automatique</td></tr>
+      </table>
+    </div>
+
+    <!-- 3. FINALITÉS -->
+    <div class="lrp-section" id="utilisation">
+      <h2><span>3.</span> Finalités et bases légales</h2>
+      <table class="lrp-table">
+        <tr><th>Finalité</th><th>Base légale (RGPD)</th></tr>
+        <tr><td>Fourniture du service (IA, RDV, dashboard)</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
+        <tr><td>Facturation et gestion des abonnements</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
+        <tr><td>Envoi d'emails transactionnels (confirmations, alertes)</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
+        <tr><td>Amélioration du service et détection d'anomalies</td><td>Intérêt légitime — Art. 6(1)(f)</td></tr>
+        <tr><td>Respect des obligations légales</td><td>Obligation légale — Art. 6(1)(c)</td></tr>
+        <tr><td>Envoi d'emails marketing (si consentement)</td><td>Consentement — Art. 6(1)(a)</td></tr>
+      </table>
+      <p>Les données des conversations sont traitées pour fournir les réponses de l'IA. Elles ne sont pas utilisées pour entraîner nos modèles d'IA sans consentement explicite.</p>
+    </div>
+
+    <!-- 4. SOUS-TRAITANTS -->
+    <div class="lrp-section" id="tiers">
+      <h2><span>4.</span> Sous-traitants et tiers</h2>
+      <p>LocalReply fait appel aux prestataires suivants, chacun disposant de sa propre politique de confidentialité :</p>
+      <table class="lrp-table">
+        <tr><th>Prestataire</th><th>Rôle</th><th>Localisation</th><th>Politique</th></tr>
+        <tr><td><strong>Stripe</strong></td><td>Traitement des paiements</td><td>États-Unis / EU</td><td><a href="https://stripe.com/privacy" target="_blank" style="color:var(--blue);">stripe.com/privacy</a></td></tr>
+        <tr><td><strong>SendGrid (Twilio)</strong></td><td>Envoi d'emails</td><td>États-Unis</td><td><a href="https://sendgrid.com/policies/privacy" target="_blank" style="color:var(--blue);">sendgrid.com</a></td></tr>
+        <tr><td><strong>Google Calendar API</strong></td><td>Synchronisation agenda</td><td>États-Unis / EU</td><td><a href="https://policies.google.com/privacy" target="_blank" style="color:var(--blue);">policies.google.com</a></td></tr>
+        <tr><td><strong>OpenAI</strong></td><td>Traitement IA des conversations</td><td>États-Unis</td><td><a href="https://openai.com/privacy" target="_blank" style="color:var(--blue);">openai.com/privacy</a></td></tr>
+        <tr><td><strong>Twilio</strong></td><td>Envoi de SMS (plan Pro)</td><td>États-Unis</td><td><a href="https://www.twilio.com/legal/privacy" target="_blank" style="color:var(--blue);">twilio.com/legal</a></td></tr>
+        <tr><td><strong>Render</strong></td><td>Hébergement backend</td><td>États-Unis</td><td><a href="https://render.com/privacy" target="_blank" style="color:var(--blue);">render.com/privacy</a></td></tr>
+      </table>
+      <p>Les transferts vers des pays hors UE/Suisse s'effectuent sur la base des clauses contractuelles types (CCT) approuvées par la Commission européenne, ou d'autres mécanismes de transfert adéquats.</p>
+    </div>
+
+    <!-- 5. CONSERVATION -->
+    <div class="lrp-section" id="conservation">
+      <h2><span>5.</span> Durée de conservation</h2>
+      <table class="lrp-table">
+        <tr><th>Type de données</th><th>Durée de conservation</th></tr>
+        <tr><td>Données de compte (abonné)</td><td>Durée de l'abonnement + 3 ans</td></tr>
+        <tr><td>Données de facturation</td><td>10 ans (obligation légale comptable)</td></tr>
+        <tr><td>Conversations et messages</td><td>12 mois après la dernière activité</td></tr>
+        <tr><td>Données de rendez-vous</td><td>24 mois après la date du RDV</td></tr>
+        <tr><td>Logs techniques</td><td>90 jours</td></tr>
+        <tr><td>Données clients finaux (visiteurs)</td><td>6 mois après la conversation</td></tr>
+      </table>
+      <p>À l'expiration de ces délais, les données sont supprimées ou anonymisées de manière irréversible.</p>
+    </div>
+
+    <!-- 6. DROITS -->
+    <div class="lrp-section" id="droits">
+      <h2><span>6.</span> Vos droits</h2>
+      <p>Conformément au RGPD (UE 2016/679) et à la loi fédérale suisse sur la protection des données (nLPD), vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès (Art. 15 RGPD)</strong> — obtenir une copie de vos données personnelles</li>
+        <li><strong>Droit de rectification (Art. 16)</strong> — corriger des données inexactes ou incomplètes</li>
+        <li><strong>Droit à l'effacement (Art. 17)</strong> — demander la suppression de vos données ("droit à l'oubli")</li>
+        <li><strong>Droit à la limitation (Art. 18)</strong> — restreindre le traitement dans certains cas</li>
+        <li><strong>Droit à la portabilité (Art. 20)</strong> — recevoir vos données dans un format structuré</li>
+        <li><strong>Droit d'opposition (Art. 21)</strong> — s'opposer au traitement fondé sur l'intérêt légitime</li>
+        <li><strong>Droit de retirer le consentement</strong> — à tout moment, sans affecter la licéité du traitement antérieur</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous à <a href="/cdn-cgi/l/email-protection#87ebe8e4e6ebf5e2f7ebfea9e6eea9f4e6e6f4c7e0eae6eeeba9e4e8ea" style="color:var(--blue);"><span class="__cf_email__" data-cfemail="5935363a38352b3c293520773830772a38382a193e34383035773a3634">[email&#160;protected]</span></a>. Nous répondrons dans un délai de 30 jours.</p>
+      <p>Vous avez également le droit d'introduire une réclamation auprès de l'autorité de protection des données compétente — en Suisse, le <strong>Préposé fédéral à la protection des données et à la transparence (PFPDT)</strong>.</p>
+    </div>
+
+    <!-- 7. SÉCURITÉ -->
+    <div class="lrp-section" id="securite">
+      <h2><span>7.</span> Sécurité des données</h2>
+      <p>LocalReply met en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou destruction :</p>
+      <ul>
+        <li>Chiffrement des données en transit via TLS/HTTPS</li>
+        <li>Chiffrement des tokens sensibles (Google Calendar) en base de données</li>
+        <li>Authentification par tokens JWT à durée limitée</li>
+        <li>Accès aux données restreint au strict nécessaire</li>
+        <li>Sauvegardes automatiques quotidiennes</li>
+        <li>Monitoring des accès et des anomalies</li>
+      </ul>
+      <p>En cas de violation de données susceptible d'engendrer un risque élevé pour vos droits et libertés, nous vous notifierons dans les 72 heures conformément à l'Art. 33 RGPD.</p>
+    </div>
+
+    <!-- 8. COOKIES -->
+    <div class="lrp-section" id="cookies">
+      <h2><span>8.</span> Cookies</h2>
+      <p>LocalReply utilise un nombre limité de cookies strictement nécessaires au fonctionnement du service :</p>
+      <table class="lrp-table">
+        <tr><th>Cookie</th><th>Finalité</th><th>Durée</th></tr>
+        <tr><td>auth_token</td><td>Authentification de l'utilisateur connecté</td><td>Session / 30 jours</td></tr>
+        <tr><td>business_id</td><td>Identification du commerce actif</td><td>Session</td></tr>
+      </table>
+      <p>Nous n'utilisons pas de cookies publicitaires ou de tracking tiers. Aucune donnée n'est partagée avec des régies publicitaires.</p>
+    </div>
+
+    <!-- 9. MINEURS -->
+    <div class="lrp-section" id="mineurs">
+      <h2><span>9.</span> Mineurs</h2>
+      <p>LocalReply est un service destiné aux professionnels et aux adultes. Nous ne collectons pas sciemment de données personnelles concernant des enfants de moins de 16 ans. Si vous pensez qu'un mineur nous a fourni des données, contactez-nous pour suppression immédiate.</p>
+    </div>
+
+    <!-- 10. MODIFICATIONS -->
+    <div class="lrp-section" id="modifications">
+      <h2><span>10.</span> Modifications de la politique</h2>
+      <p>Nous nous réservons le droit de modifier la présente politique de confidentialité à tout moment. En cas de modification substantielle, vous serez notifié par email au moins 30 jours avant l'entrée en vigueur des nouvelles dispositions.</p>
+      <p>La version en vigueur est toujours accessible à l'adresse <strong>localreply.ai/privacy</strong>. La date de dernière mise à jour figure en haut de ce document.</p>
+    </div>
+
+    <!-- 11. CONTACT -->
+    <div class="lrp-section" id="contact">
+      <h2><span>11.</span> Contact</h2>
+      <p>Pour toute question relative à la présente politique ou pour exercer vos droits :</p>
+    </div>
+
+    <div class="lrp-contact">
+      <h3>Une question sur vos données ?</h3>
+      <p>Nous nous engageons à répondre dans un délai de 30 jours.</p>
+      <a href="/cdn-cgi/l/email-protection#6b0704080a07190e1b0712450a0245180a0a182b0c060a020745080406"><span clas
+</body>
+</html>

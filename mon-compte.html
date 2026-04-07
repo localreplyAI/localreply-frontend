@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon compte — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+
+  <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
+    <div style="position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 65%);border-radius:50%;"></div>
+    <div style="position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,212,255,0.08) 0%,transparent 65%);border-radius:50%;"></div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">🏢</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:600;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+    <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+    </div>
+  </div>
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>📈</span>Analytics</a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.3),rgba(0,212,255,0.15));color:#fff;font-size:14px;"><span>👤</span>Mon compte</a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>💳</span>Abonnement</a>
+    <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span>🚪</span>Déconnexion</button>
+  </div>
+
+  <!-- MAIN -->
+  <div id="mainContent" style="flex:1;min-width:0;padding:32px 36px 60px;overflow-y:auto;position:relative;z-index:1;">
+
+    <!-- HEADER avec avatar -->
+    <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;flex-wrap:wrap;">
+      <div id="avatarCircle" style="width:64px;height:64px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 6px 20px rgba(0,212,255,0.3);">?</div>
+      <div>
+        <h1 id="headerName" style="font-size:clamp(22px,3vw,32px);font-weight:800;color:#fff;margin:0 0 3px;letter-spacing:-0.5px;">Mon compte</h1>
+        <p id="headerEmail" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;"></p>
+      </div>
+      <div style="margin-left:auto;">
+        <a href="/abonnement" id="planBadge" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:20px;color:#F59E0B;font-size:13px;font-weight:700;text-decoration:none;">⭐ Plan Pro</a>
+      </div>
+    </div>
+
+    <!-- GRILLE PRINCIPALE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;" id="mainGrid">
+
+      <!-- INFOS PERSONNELLES -->
+      <div class="ac-card">
+        <div class="ac-card-header">
+          <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">👤</div>
+          <div>
+            <div class="ac-card-title">Informations personnelles</div>
+            <div class="ac-card-sub">Vos coordonnées de compte</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="ac-field">
+              <label class="ac-label">Prénom</label>
+              <input id="accountFirstName" type="text" placeholder="Prénom" class="ac-input">
+            </div>
+            <div class="ac-field">
+              <label class="ac-label">Nom</label>
+              <input id="accountLastName" type="text" placeholder="Nom" class="ac-input">
+            </div>
+          </div>
+          <div class="ac-field">
+            <label class="ac-label">Email <span style="font-size:10px;color:rgba(255,255,255,0.3);font-weight:400;">(non modifiable)</span></label>
+            <div style="position:relative;">
+              <input id="accountEmail" type="email" readonly class="ac-input" style="padding-right:40px;opacity:0.6;cursor:default;">
+              <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.4;">🔒</span>
+            </div>
+          </div>
+          <div class="ac-field">
+            <label class="ac-label">Téléphone</label>
+            <input id="accountPhone" type="tel" placeholder="+41 79 123 45 67" class="ac-input">
+          </div>
+        </div>
+        <button onclick="saveAccountInfo()" class="ac-btn-save" style="margin-top:18px;">💾 Enregistrer</button>
+      </div>
+
+      <!-- COLONNE DROITE -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+
+        <!-- MOT DE PASSE -->
+        <div class="ac-card">
+          <div class="ac-card-header">
+            <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🔒</div>
+            <div>
+              <div class="ac-card-title">Mot de passe</div>
+              <div class="ac-card-sub">Sécurisez votre accès</div>
+            </div>
+          </div>
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 14px;line-height:1.6;">Pour modifier votre mot de passe, cliquez ci-dessous. Un email de réinitialisation vous sera envoyé.</p>
+          <a href="/forgot-password" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(0,82,204,0.3);">
+            🔒 Changer le mot de passe
+          </a>
+        </div>
+
+        <!-- ABONNEMENT RAPIDE -->
+        <div class="ac-card" id="planCard">
+          <div class="ac-card-header">
+            <div class="ac-card-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">💳</div>
+            <div>
+              <div class="ac-card-title">Abonnement</div>
+              <div class="ac-card-sub" id="planSubtitle">Chargement...</div>
+            </div>
+          </div>
+          <div id="planDetails" style="margin-bottom:14px;">
+            <div style="height:14px;background:rgba(255,255,255,0.06);border-radius:4px;margin-bottom:8px;width:60%;"></div>
+            <div style="height:12px;background:rgba(255,255,255,0.04);border-radius:4px;width:40%;"></div>
+          </div>
+          <a href="/abonnement" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:10px;color:#F59E0B;font-size:13px;font-weight:700;text-decoration:none;">
+            ⚙️ Gérer l'abonnement →
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div class="ac-card" style="margin-bottom:16px;">
+      <div class="ac-card-header">
+        <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🔔</div>
+        <div>
+          <div class="ac-card-title">Préférences de notifications</div>
+          <div class="ac-card-sub">Choisissez comment être alerté pour chaque événement</div>
+        </div>
+      </div>
+
+      <!-- Email destination -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">📧 Envoyer les notifications email à</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <label class="notif-radio" id="labelNotifAccount">
+            <input type="radio" name="notifEmailTarget" id="notifEmailAccount" value="account" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;">Email du compte</div>
+              <div id="accountEmailPreview" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">—</div>
+            </div>
+            <span style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:2px 8px;border-radius:6px;font-weight:600;flex-shrink:0;">Recommandé</span>
+          </label>
+          <label class="notif-radio" id="labelNotifContact">
+            <input type="radio" name="notifEmailTarget" id="notifEmailContact" value="contact" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;">Email du commerce</div>
+              <div id="contactEmailPreview" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Défini dans Configuration</div>
+            </div>
+          </label>
+          <label class="notif-radio" id="labelNotifBoth">
+            <input type="radio" name="notifEmailTarget" id="notifEmailBoth" value="both" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:#fff;">Les deux</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Compte + commerce</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Tableau granulaire -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">Canal de notification par événement</div>
+
+        <!-- Header colonnes -->
+        <div style="display:grid;grid-template-columns:1fr 72px 72px;padding:0 14px 8px;gap:8px;">
+          <div></div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);">📧 Email</div>
+          <div style="text-align:center;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);" id="smsColHeader">
+            📱 SMS
+            <span style="display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;border-radius:4px;margin-left:3px;">PRO</span>
+          </div>
+        </div>
+
+        <!-- Ligne 1 : Nouvelle demande RDV -->
+        <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#fff;">📅 Nouvelle demande RDV</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Quand un client soumet une demande</div>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_new_appointment_email" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_new_appointment_email" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_new_appointment_email" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+          <div style="display:flex;justify-content:center;" class="sms-col">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_new_appointment_sms" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_new_appointment_sms" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_new_appointment_sms" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Ligne 2 : Demande urgente -->
+        <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#fff;">🔴 Demande urgente</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Client avec une urgence détectée par l'IA</div>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_urgent_appointment_email" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_urgent_appointment_email" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_urgent_appointment_email" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+          <div style="display:flex;justify-content:center;" class="sms-col">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_urgent_appointment_sms" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_urgent_appointment_sms" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_urgent_appointment_sms" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Ligne 3 : Question sans réponse -->
+        <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#fff;">❓ Question sans réponse</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">L'IA ne sait pas répondre à un client</div>
+          </div>
+          <div style="display:flex;justify-content:center;">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_unknown_question_email" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_unknown_question_email" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_unknown_question_email" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+          <div style="display:flex;justify-content:center;" class="sms-col">
+            <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
+              <input type="checkbox" id="notif_unknown_question_sms" onchange="syncNotifToggle(this)" style="opacity:0;width:0;height:0;position:absolute;">
+              <span class="ntgl" id="tgl_unknown_question_sms" style="position:absolute;inset:0;background:rgba(255,255,255,0.15);border-radius:20px;transition:0.25s;">
+                <span class="ntdot" id="dot_unknown_question_sms" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:0.25s;"></span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Note Standard -->
+        <div id="smsStandardNote" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;display:none;align-items:center;gap:10px;">
+          <span style="font-size:16px;">⭐</span>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);">Les notifications SMS sont réservées au plan Pro.
+            <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;margin-left:4px;">Passer au Pro →</a>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="saveNotifications()" class="ac-btn-save">💾 Enregistrer les préférences</button>
+    </div>
+
+    <!-- ZONE DANGER -->
+    <div style="background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:16px;padding:22px 24px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div style="width:40px;height:40px;background:rgba(239,68,68,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;">⚠️</div>
+        <div>
+          <div style="font-size:16px;font-weight:700;color:#EF4444;">Zone de danger</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Ces actions sont irréversibles</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:16px;background:rgba(239,68,68,0.06);border-radius:12px;border:1px solid rgba(239,68,68,0.15);">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Supprimer mon compte</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;">irréversible</strong>.</div>
+        </div>
+        <button onclick="confirmDeleteAccount()" style="padding:11px 20px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.25)'" onmouseleave="this.style.background='rgba(239,68,68,0.15)'">
+          🗑️ Supprimer le compte
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL SUPPRESSION -->
+<div id="deleteModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:rgba(8,16,35,0.99);border:1px solid rgba(239,68,68,0.4);border-radius:20px;padding:40px;max-width:440px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+    <div style="font-size:48px;margin-bottom:16px;">⚠️</div>
+    <h3 style="font-size:22px;font-weight:700;color:#fff;margin:0 0 12px;">Êtes-vous sûr ?</h3>
+    <p style="color:rgba(255,255,255,0.55);font-size:14px;margin:0 0 20px;line-height:1.6;">Cette action supprimera <strong style="color:#EF4444;">définitivement</strong> votre compte et toutes vos données.</p>
+    <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:0 0 12px;font-weight:600;">Tapez <span style="color:#EF4444;font-weight:700;">SUPPRIMER</span> pour confirmer</p>
+    <input id="deleteConfirmInput" type="text" placeholder="SUPPRIMER" style="width:100%;padding:13px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(239,68,68,0.4);border-radius:10px;font-size:15px;color:#fff;outline:none;text-align:center;margin-bottom:20px;letter-spacing:2px;font-family:inherit;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <button onclick="closeDeleteModal()" style="padding:13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Annuler</button>
+      <button onclick="deleteAccount()" style="padding:13px;background:linear-gradient(135deg,#EF4444,#DC2626);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🗑️ Confirmer</button>
+    </div>
+  </div>
+</div>
+
+<style>
+*{box-sizing:border-box;}body{margin:0;padding:0;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+.ac-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;animation:fadeUp 0.3s ease both;}
+.ac-card-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.ac-card-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 4px 12px rgba(0,212,255,0.2);}
+.ac-card-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px;}
+.ac-card-sub{font-size:12px;color:rgba(255,255,255,0.4);}
+.ac-field{display:flex;flex-direction:column;gap:5px;}
+.ac-label{font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;}
+.ac-input{padding:12px 14px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:11px;font-size:14px;color:#fff;outline:none;transition:border 0.2s;font-family:inherit;width:100%;}
+.ac-input:focus{border-color:#00D4FF;box-shadow:0 0 0 3px rgba(0,212,255,0.12);}
+.ac-input::placeholder{color:rgba(255,255,255,0.25);}
+.ac-btn-save{width:100%;padding:13px;background:linear-gradient(135deg,#10B981,#059669);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(16,185,129,0.3);font-family:inherit;}
+.ac-btn-save:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(16,185,129,0.4);}
+.notif-radio{display:flex;align-items:center;gap:10px;cursor:pointer;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:10px;transition:all 0.2s;}
+.notif-radio:hover{background:rgba(255,255,255,0.07);}
+@media(max-width:900px){
+  #sidebar{display:none!important;}#bottomNav{display:block!important;}
+  #mainContent{padding:18px 14px 80px!important;}
+  #mainGrid{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+}
+</style>
+
+<script>
+const API_BASE = 'https://localreply-api.onrender.com';
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+
+function getUserId() { try { return JSON.parse(atob(token.split('.')[1])).sub; } catch { return null; } }
+const userId = getUserId();
+
+function getEmailFromJWT() { try { const p=JSON.parse(atob(token.split('.')[1])); return p.email||p.sub||''; } catch { return ''; } }
+
+async function apiRequest(endpoint, method='GET', data=null) {
+  const opts = { method, headers:{'Content-Type':'application/json','Authorization':'Bearer '+token} };
+  if (data && method!=='GET') opts.body = JSON.stringify(data);
+  const res = await fetch(API_BASE+endpoint, opts);
+  if (!res.ok) { const err=await res.json().catch(()=>({})); throw new Error(JSON.stringify(err.detail||err)); }
+  return res.json();
+}
+
+function showNotification(msg, type='success') {
+  const el=document.createElement('div'); el.textContent=msg;
+  el.style.cssText=`position:fixed;bottom:80px;right:20px;background:${type==='error'?'rgba(239,68,68,0.95)':'rgba(16,185,129,0.95)'};color:#fff;padding:12px 18px;border-radius:11px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:10000;animation:fadeUp 0.3s ease;`;
+  document.body.appendChild(el); setTimeout(()=>el.remove(),3500);
+}
+
+function syncToggle(id) {
+  const cb=document.getElementById(id);
+  const bg=document.getElementById('toggle'+id.charAt(0).toUpperCase()+id.slice(1));
+  const dot=document.getElementById('dot'+id.charAt(0).toUpperCase()+id.slice(1));
+  if(!bg||!dot) return;
+  bg.style.background = cb.checked ? 'linear-gradient(135deg,#0052CC,#00D4FF)' : 'rgba(255,255,255,0.15)';
+  dot.style.transform = cb.checked ? 'translateX(21px)' : 'translateX(0)';
+}
+function setToggle(id, val) { const cb=document.getElementById(id); if(cb){cb.checked=!!val;syncToggle(id);} }
+
+// Nouveau système de toggles granulaires
+function syncNotifToggle(cb) {
+  const id = cb.id; // ex: notif_new_appointment_sms
+  const tgl = document.getElementById('tgl_' + id.replace('notif_',''));
+  const dot = document.getElementById('dot_' + id.replace('notif_',''));
+  if (!tgl || !dot) return;
+  tgl.style.background = cb.checked ? 'linear-gradient(135deg,#0052CC,#00D4FF)' : 'rgba(255,255,255,0.15)';
+  dot.style.left = cb.checked ? 'calc(100% - 19px)' : '3px';
+}
+
+function setNotifToggle(event_type, channel, val) {
+  const cb = document.getElementById(`notif_${event_type}_${channel}`);
+  const tgl = document.getElementById(`tgl_${event_type}_${channel}`);
+  const dot = document.getElementById(`dot_${event_type}_${channel}`);
+  if (!cb) return;
+  cb.checked = !!val;
+  if (tgl) tgl.style.background = val ? 'linear-gradient(135deg,#0052CC,#00D4FF)' : 'rgba(255,255,255,0.15)';
+  if (dot) dot.style.left = val ? 'calc(100% - 19px)' : '3px';
+}
+
+function applySmsColState(isPro) {
+  // Griser toute la colonne SMS si Standard
+  document.querySelectorAll('.sms-col').forEach(col => {
+    col.style.opacity = isPro ? '1' : '0.35';
+    col.style.pointerEvents = isPro ? 'auto' : 'none';
+  });
+  const note = document.getElementById('smsStandardNote');
+  if (note) note.style.display = isPro ? 'none' : 'flex';
+  const hdr = document.getElementById('smsColHeader');
+  if (hdr) hdr.style.opacity = isPro ? '1' : '0.4';
+}
+
+function updateEmailPreview() {
+  ['labelNotifAccount','labelNotifContact','labelNotifBoth'].forEach(id=>{
+    const el=document.getElementById(id); if(!el) return;
+    const radio=el.querySelector('input[type="radio"]');
+    el.style.borderColor = radio?.checked ? '#00D4FF' : 'rgba(255,255,255,0.08)';
+    el.style.background = radio?.checked ? 'rgba(0,212,255,0.07)' : 'rgba(255,255,255,0.04)';
+  });
+}
+
+async function saveAccountInfo() {
+  try {
+    await apiRequest('/api/business/'+businessId+'/owner','POST',{
+      first_name: document.getElementById('accountFirstName').value,
+      last_name:  document.getElementById('accountLastName').value,
+      phone:      document.getElementById('accountPhone').value
+    });
+    // Mettre à jour le header
+    const fn=document.getElementById('accountFirstName').value;
+    const ln=document.getElementById('accountLastName').value;
+    if(fn||ln) {
+      document.getElementById('headerName').textContent = [fn,ln].filter(Boolean).join(' ');
+      document.getElementById('avatarCircle').textContent = (fn?fn[0]:'?').toUpperCase();
+    }
+    showNotification('✅ Informations enregistrées !');
+  } catch(e) { showNotification('❌ '+e.message,'error'); }
+}
+
+async function saveNotifications() {
+  try {
+    const target = document.querySelector('input[name="notifEmailTarget"]:checked')?.value || 'account';
+    const events = ['new_appointment', 'urgent_appointment', 'unknown_question'];
+    const prefs = {};
+    events.forEach(ev => {
+      const emailVal = document.getElementById(`notif_${ev}_email`)?.checked ?? true;
+      const smsVal   = document.getElementById(`notif_${ev}_sms`)?.checked ?? false;
+      // Forcer email si les deux sont off
+      prefs[ev] = { email: emailVal || !smsVal, sms: smsVal };
+      if (!emailVal && !smsVal) setNotifToggle(ev, 'email', true);
+    });
+    try {
+      await apiRequest('/api/business/'+businessId+'/notification-preferences','PUT',{
+        ...prefs, notification_email_target: target
+      });
+    } catch {
+      // Fallback ancien endpoint
+      await apiRequest('/api/business/'+businessId+'/notifications','POST',{
+        notification_email_target: target,
+        unknown_questions: prefs.unknown_question?.email ?? true
+      });
+    }
+    showNotification('✅ Préférences enregistrées !');
+  } catch(e) { showNotification('❌ '+e.message,'error'); }
+}
+
+async function loadNotificationPrefs() {
+  let isPro = false;
+  try {
+    const sub = await apiRequest('/api/billing/subscription/'+userId);
+    isPro = sub?.plan==='pro' || sub?.plan==='trial';
+  } catch {}
+
+  applySmsColState(isPro);
+
+  // Valeurs par défaut
+  const events = ['new_appointment','urgent_appointment','unknown_question'];
+  events.forEach(ev => {
+    setNotifToggle(ev, 'email', true);
+    setNotifToggle(ev, 'sms', isPro);
+  });
+
+  // Charger préférences réelles
+  try {
+    const d = await apiRequest('/api/business/'+businessId+'/notification-preferences');
+    const prefs = d.preferences || d;
+    events.forEach(ev => {
+      if (prefs[ev]) {
+        setNotifToggle(ev, 'email', prefs[ev].email !== false);
+        setNotifToggle(ev, 'sms', isPro && prefs[ev].sms !== false);
+      }
+    });
+    const target = d.notification_email_target || prefs.notification_email_target || 'account';
+    const radio = document.getElementById(target==='both'?'notifEmailBoth':target==='contact'?'notifEmailContact':'notifEmailAccount');
+    if (radio) { radio.checked=true; updateEmailPreview(); }
+  } catch {
+    try {
+      const d = await apiRequest('/api/business/'+businessId+'/notifications');
+      const target = d.notification_email_target||'account';
+      const radio = document.getElementById(target==='both'?'notifEmailBoth':target==='contact'?'notifEmailContact':'notifEmailAccount');
+      if (radio) { radio.checked=true; updateEmailPreview(); }
+    } catch {}
+  }
+
+  // Email contact preview
+  try {
+    const config = await apiRequest('/api/business/'+businessId+'/config');
+    const ce = config?.business?.email||'';
+    const el = document.getElementById('contactEmailPreview');
+    if (el) el.textContent = ce||'Non défini dans Configuration';
+    if (!ce) { const l=document.getElementById('labelNotifContact'); if(l){l.style.opacity='0.4';l.style.pointerEvents='none';} }
+  } catch {}
+}
+
+function confirmDeleteAccount() { document.getElementById('deleteModal').style.display='flex'; document.getElementById('deleteConfirmInput').value=''; }
+function closeDeleteModal() { document.getElementById('deleteModal').style.display='none'; }
+async function deleteAccount() {
+  if(document.getElementById('deleteConfirmInput').value!=='SUPPRIMER'){showNotification('❌ Tapez exactement SUPPRIMER','error');return;}
+  try {
+    await apiRequest('/api/business/'+businessId,'DELETE');
+    localStorage.removeItem('auth_token'); localStorage.removeItem('business_id');
+    window.location.href='/auth';
+  } catch(e) { showNotification('❌ '+e.message,'error'); }
+}
+
+function toggleMobileMenu() {
+  const ov=document.getElementById('mobileMenuOverlay'),pp=document.getElementById('mobileMenuPopup');
+  const open=pp.style.display==='block';
+  if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
+  else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
+}
+function logout() { if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';} }
+
+async function loadSidebarInfo() {
+  try {
+    const [config,sub] = await Promise.all([
+      apiRequest('/api/business/'+businessId+'/config'),
+      apiRequest('/api/billing/subscription/'+userId).catch(()=>null)
+    ]);
+    const biz=config.business||{};
+    const sn=document.getElementById('sidebarBusinessName'); if(sn&&biz.name) sn.textContent=biz.name;
+    const sp=document.getElementById('sidebarPlan');
+    const plan=sub?.plan||'standard';
+    if(sp) sp.textContent=plan==='pro'?'⭐ Plan Pro':plan==='trial'?'🎁 Essai gratuit':'Plan Standard';
+    const icons={salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
+    const sl=document.getElementById('sidebarLogo'); if(sl) sl.textContent=icons[biz.business_type]||'🏢';
+
+    // Plan badge header
+    const pb=document.getElementById('planBadge');
+    const ps=document.getElementById('planSubtitle');
+    const pd=document.getElementById('planDetails');
+    if(plan==='pro'){
+      if(pb){pb.textContent='⭐ Plan Pro';pb.style.color='#F59E0B';}
+      if(ps) ps.textContent='Plan Pro actif';
+      if(pd) pd.innerHTML='<div style="font-size:13px;color:rgba(255,255,255,0.65);">✅ Analytics avancés · SMS · Personnalité IA</div>';
+    } else if(plan==='trial'){
+      if(pb){pb.textContent='🎁 Essai gratuit';pb.style.color='#10B981';pb.style.borderColor='rgba(16,185,129,0.3)';pb.style.background='rgba(16,185,129,0.1)';}
+      if(ps) ps.textContent='Trial en cours — accès Pro complet';
+      if(pd) pd.innerHTML='<div style="font-size:13px;color:#F59E0B;">⚠️ Choisissez un plan avant la fin du trial</div>';
+    } else {
+      if(pb){pb.textContent='📦 Standard';pb.style.color='#00D4FF';pb.style.borderColor='rgba(0,212,255,0.3)';pb.style.background='rgba(0,212,255,0.1)';}
+      if(ps) ps.textContent='Plan Standard';
+      if(pd) pd.innerHTML='<div style="font-size:13px;color:rgba(255,255,255,0.5);">Passez au Pro pour les analytics et SMS</div>';
+    }
+  } catch(e) { console.error('Sidebar:',e); }
+}
+
+async function loadAccountData() {
+  const email=getEmailFromJWT();
+  if(email) {
+    document.getElementById('accountEmail').value=email;
+    document.getElementById('headerEmail').textContent=email;
+    document.getElementById('accountEmailPreview').textContent=email;
+  }
+  try {
+    const d=await apiRequest('/api/business/'+businessId+'/owner');
+    if(d.first_name) document.getElementById('accountFirstName').value=d.first_name;
+    if(d.last_name)  document.getElementById('accountLastName').value=d.last_name;
+    if(d.phone)      document.getElementById('accountPhone').value=d.phone;
+    const fn=d.first_name||'', ln=d.last_name||'';
+    const name=[fn,ln].filter(Boolean).join(' ');
+    if(name) document.getElementById('headerName').textContent=name;
+    document.getElementById('avatarCircle').textContent=(fn?fn[0]:email?email[0]:'?').toUpperCase();
+  } catch {}
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+  loadAccountData();
+  loadSidebarInfo();
+  loadNotificationPrefs();
+
+  // Badges
+  try {
+    const [_q,_a]=await Promise.all([
+      fetch(API_BASE+`/api/business/${businessId}/unknown-questions?status=pending`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>({questions:[]})),
+      fetch(API_BASE+`/api/appointments/?business_id=${businessId}`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>[])
+    ]);
+    const _mc=_q?.questions?.length||0,_rc=Array.isArray(_a)?_a.filter(a=>a.status==='pending').length:0;
+    const _sb=(c,...ids)=>ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(c>0){el.textContent=c>9?'9+':c;el.style.display='flex';}else el.style.display='none';});
+    _sb(_mc,'sbBadgeMsg','bnBadgeMsg');_sb(_rc,'sbBadgeRdv','bnBadgeRdv');
+  } catch {}
+});
+</script>
+
+</body>
+</html>

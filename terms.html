@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conditions d'utilisation — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<style>
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --dark: #0A1628;
+  --green: #10B981;
+  --white: #FFFFFF;
+  --gray: #F5F7FA;
+  --text: #1A2340;
+  --muted: #6B7280;
+  --border: rgba(0,82,204,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.lrt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; color: var(--text); }
+.lrt-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 80px 20px 60px; text-align: center; }
+.lrt-hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing: -0.5px; }
+.lrt-hero p { font-size: 16px; color: rgba(255,255,255,0.6); }
+.lrt-body { max-width: 820px; margin: 0 auto; padding: 64px 20px 100px; }
+.lrt-toc { background: var(--gray); border-radius: 16px; padding: 28px 32px; margin-bottom: 56px; border: 1px solid var(--border); }
+.lrt-toc h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.lrt-toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.lrt-toc ol li a { font-size: 14px; color: var(--blue); text-decoration: none; }
+.lrt-toc ol li a:hover { text-decoration: underline; }
+.lrt-section { margin-bottom: 52px; scroll-margin-top: 24px; }
+.lrt-section h2 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.lrt-section h3 { font-size: 16px; font-weight: 700; color: var(--text); margin: 20px 0 10px; }
+.lrt-section p { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 14px; }
+.lrt-section p:last-child { margin-bottom: 0; }
+.lrt-section ul, .lrt-section ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.lrt-section ul li, .lrt-section ol li { font-size: 15px; color: var(--muted); line-height: 1.7; }
+.lrt-section strong { color: var(--text); font-weight: 600; }
+.lrt-alert { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-left: 4px solid #EF4444; border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
+.lrt-alert p { font-size: 14px; color: var(--text); margin: 0; line-height: 1.6; }
+.lrt-info { background: rgba(0,82,204,0.05); border: 1px solid rgba(0,82,204,0.2); border-left: 4px solid var(--blue); border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
+.lrt-info p { font-size: 14px; color: var(--text); margin: 0; line-height: 1.6; }
+.lrt-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+.lrt-table th { background: var(--gray); padding: 12px 16px; text-align: left; font-weight: 700; color: var(--text); border: 1px solid var(--border); font-size: 13px; }
+.lrt-table td { padding: 12px 16px; border: 1px solid var(--border); color: var(--muted); vertical-align: top; line-height: 1.6; }
+.lrt-table tr:nth-child(even) td { background: var(--gray); }
+.lrt-contact { background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 40px; text-align: center; margin-top: 56px; }
+.lrt-contact h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.lrt-contact p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+.lrt-contact a { display: inline-block; padding: 12px 28px; background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 10px; color: #fff; text-decoration: none; font-size: 15px; font-weight: 600; }
+.lrt-updated { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 40px; padding: 12px; background: var(--gray); border-radius: 8px; }
+@media (max-width: 640px) {
+  .lrt-body { padding: 40px 16px 80px; }
+  .lrt-toc { padding: 20px; }
+  .lrt-contact { padding: 28px 20px; }
+}
+</style>
+
+<div class="lrt">
+
+  <section class="lrt-hero">
+    <h1>Conditions Générales d'Utilisation</h1>
+    <p>Les règles qui régissent l'utilisation de la plateforme LocalReply</p>
+  </section>
+
+  <div class="lrt-body">
+
+    <p class="lrt-updated">📅 Dernière mise à jour : Mars 2025 — Droit applicable : droit suisse (CO)</p>
+
+    <div class="lrt-toc">
+      <h3>Table des matières</h3>
+      <ol>
+        <li><a href="#definitions">Définitions</a></li>
+        <li><a href="#acceptation">Acceptation des CGU</a></li>
+        <li><a href="#service">Description du service</a></li>
+        <li><a href="#compte">Création de compte et accès</a></li>
+        <li><a href="#abonnements">Abonnements et facturation</a></li>
+        <li><a href="#obligations">Obligations de l'utilisateur</a></li>
+        <li><a href="#interdictions">Utilisations interdites</a></li>
+        <li><a href="#propriete">Propriété intellectuelle</a></li>
+        <li><a href="#responsabilite">Limitation de responsabilité</a></li>
+        <li><a href="#disponibilite">Disponibilité du service</a></li>
+        <li><a href="#resiliation">Résiliation</a></li>
+        <li><a href="#modifications">Modifications des CGU</a></li>
+        <li><a href="#droit">Droit applicable et litiges</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. DÉFINITIONS -->
+    <div class="lrt-section" id="definitions">
+      <h2><span>1.</span> Définitions</h2>
+      <ul>
+        <li><strong>« LocalReply »</strong> désigne la plateforme SaaS d'assistant IA pour commerces, opérée par un indépendant basé en Suisse.</li>
+        <li><strong>« Service »</strong> désigne l'ensemble des fonctionnalités de la plateforme LocalReply, incluant l'assistant IA, la gestion de rendez-vous, le dashboard et les analytics.</li>
+        <li><strong>« Utilisateur » ou « Abonné »</strong> désigne toute personne physique ou morale ayant créé un compte sur LocalReply.</li>
+        <li><strong>« Client final »</strong> désigne toute personne interagissant avec le widget chat déployé par un Abonné.</li>
+        <li><strong>« Contenu »</strong> désigne toutes les informations, textes, données et configurations fournis par l'Utilisateur sur la plateforme.</li>
+        <li><strong>« Période d'essai »</strong> désigne les 14 premiers jours suivant l'inscription, durant lesquels l'accès au plan Pro est offert.</li>
+      </ul>
+    </div>
+
+    <!-- 2. ACCEPTATION -->
+    <div class="lrt-section" id="acceptation">
+      <h2><span>2.</span> Acceptation des CGU</h2>
+      <p>En créant un compte sur LocalReply, en accédant au Service ou en l'utilisant de quelque manière que ce soit, vous acceptez sans réserve les présentes Conditions Générales d'Utilisation.</p>
+      <p>Si vous n'acceptez pas ces conditions, vous ne devez pas utiliser le Service. L'utilisation du Service vaut acceptation pleine et entière des présentes CGU.</p>
+      <p>Ces CGU s'appliquent à tout accès et toute utilisation du Service, qu'il soit gratuit (période d'essai) ou payant.</p>
+    </div>
+
+    <!-- 3. SERVICE -->
+    <div class="lrt-section" id="service">
+      <h2><span>3.</span> Description du service</h2>
+      <p>LocalReply est une plateforme SaaS permettant aux commerces indépendants de déployer un assistant IA conversationnel pour répondre à leurs clients, gérer des rendez-vous et analyser leurs interactions.</p>
+      <p>Le Service comprend notamment :</p>
+      <ul>
+        <li>Un assistant IA conversationnel en 6 langues (français, allemand, italien, espagnol, anglais, portugais)</li>
+        <li>La gestion de rendez-vous avec synchronisation Google Calendar</li>
+        <li>Un dashboard de gestion des conversations et rendez-vous</li>
+        <li>Des analytics et résumés générés par IA</li>
+        <li>Un lien unique et un QR code par commerce</li>
+        <li>Des notifications par email et SMS (plan Pro)</li>
+      </ul>
+      <div class="lrt-info">
+        <p>ℹ️ LocalReply est un outil d'assistance. Les réponses générées par l'IA sont fournies à titre informatif. LocalReply ne peut être tenu responsable des décisions prises sur la base de ces réponses.</p>
+      </div>
+    </div>
+
+    <!-- 4. COMPTE -->
+    <div class="lrt-section" id="compte">
+      <h2><span>4.</span> Création de compte et accès</h2>
+      <h3>4.1 Conditions d'inscription</h3>
+      <p>Pour créer un compte, vous devez :</p>
+      <ul>
+        <li>Être une personne physique majeure (18 ans ou plus) ou une entité légalement constituée</li>
+        <li>Fournir des informations exactes, complètes et à jour</li>
+        <li>Disposer d'une adresse email valide</li>
+        <li>Accepter les présentes CGU et la Politique de confidentialité</li>
+      </ul>
+      <h3>4.2 Sécurité du compte</h3>
+      <p>Vous êtes seul responsable de la confidentialité de vos identifiants de connexion. Toute activité réalisée depuis votre compte est réputée effectuée par vous. En cas d'utilisation non autorisée, vous devez nous en informer immédiatement à <a href="/cdn-cgi/l/email-protection#315d5e52505d4354415d481f50581f4250504271565c50585d1f525e5c" style="color:var(--blue);"><span class="__cf_email__" data-cfemail="0f63606c6e637d6a7f6376216e66217c6e6e7c4f68626e6663216c6062">[email&#160;protected]</span></a>.</p>
+      <h3>4.3 Période d'essai</h3>
+      <p>Tout nouvel abonné bénéficie d'une période d'essai de 14 jours avec accès complet au plan Pro. Une carte bancaire valide est requise à l'inscription. Aucun prélèvement n'est effectué durant la période d'essai. À l'issue de celle-ci, l'abonnement choisi est automatiquement activé sauf résiliation avant la fin de la période d'essai.</p>
+    </div>
+
+    <!-- 5. ABONNEMENTS -->
+    <div class="lrt-section" id="abonnements">
+      <h2><span>5.</span> Abonnements et facturation</h2>
+      <h3>5.1 Plans disponibles</h3>
+      <table class="lrt-table">
+        <tr><th>Plan</th><th>Prix</th><th>Facturation</th></tr>
+        <tr><td>Standard</td><td>39 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
+        <tr><td>Pro</td><td>49 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
+        <tr><td>Essai gratuit</td><td>0 € (14 jours)</td><td>Sans prélèvement pendant l'essai</td></tr>
+      </table>
+      <h3>5.2 Facturation</h3>
+      <p>Les abonnements sont facturés mensuellement à la date anniversaire de l'activation. Le paiement est traité par Stripe. En cas d'échec de paiement, une nouvelle tentative est effectuée. Après 3 échecs consécutifs, le compte est suspendu.</p>
+      <h3>5.3 Modification de plan</h3>
+      <p>Vous pouvez passer d'un plan à l'autre à tout moment depuis votre espace client. Le changement prend effet immédiatement. En cas d'upgrade, la différence est facturée au prorata. En cas de downgrade, le remboursement au prorata est crédité sur la prochaine facture.</p>
+      <h3>5.4 Remboursements</h3>
+      <p>Les abonnements ne sont pas remboursables, sauf obligation légale contraire. En cas de défaillance technique avérée imputable à LocalReply d'une durée supérieure à 48 heures consécutives, un avoir proportionnel pourra être accordé à la discrétion de LocalReply.</p>
+      <h3>5.5 SMS supplémentaires (Plan Pro)</h3>
+      <p>Le plan Pro inclut 50 SMS par mois. Au-delà, chaque SMS est facturé 0.10 € HT. Ces frais sont prélevés en fin de mois avec l'abonnement.</p>
+    </div>
+
+    <!-- 6. OBLIGATIONS -->
+    <div class="lrt-section" id="obligations">
+      <h2><span>6.</span> Obligations de l'utilisateur</h2>
+      <p>En utilisant LocalReply, vous vous engagez à :</p>
+      <ul>
+        <li>Fournir des informations exactes sur votre commerce (services, horaires, tarifs)</li>
+        <li>Ne pas induire vos clients finaux en erreur via les réponses de l'IA</li>
+        <li>Informer vos clients finaux qu'ils interagissent avec un assistant IA</li>
+        <li>Respecter le RGPD et la législation applicable concernant les données de vos clients finaux</li>
+        <li>Maintenir vos informations de paiement à jour</li>
+        <li>Ne pas partager vos identifiants de connexion avec des tiers</li>
+        <li>Signaler tout dysfonctionnement ou abus constaté</li>
+      </ul>
+    </div>
+
+    <!-- 7. INTERDICTIONS -->
+    <div class="lrt-section" id="interdictions">
+      <h2><span>7.</span> Utilisations interdites</h2>
+      <div class="lrt-alert">
+        <p>⚠️ Toute violation de ces interdictions peut entraîner la résiliation immédiate du compte sans remboursement.</p>
+      </div>
+      <p>Il est strictement interdit d'utiliser LocalReply pour :</p>
+      <ul>
+        <li>Diffuser des contenus illégaux, diffamatoires, obscènes ou contraires aux bonnes mœurs</li>
+        <li>Collecter des données personnelles de clients finaux sans base légale valide</li>
+        <li>Usurper l'identité d'un tiers ou d'une entreprise</li>
+        <li>Tenter de contourner les mesures de sécurité de la plateforme</li>
+        <li>Utiliser le Service à des fins de spam ou de démarchage non sollicité</li>
+        <li>Reproduire, copier ou revendre tout ou partie du Service sans autorisation</li>
+        <li>Effectuer des tests de charge ou d'intrusion sans accord préalable écrit</li>
+        <li>Utiliser le Service dans un secteur d'activité illégal dans le pays d'exploitation</li>
+      </ul>
+    </div>
+
+    <!-- 8. PROPRIÉTÉ INTELLECTUELLE -->
+    <div class="lrt-section" id="propriete">
+      <h2><span>8.</span> Propriété intellectuelle</h2>
+      <h3>8.1 Droits de LocalReply</h3>
+      <p>La plateforme LocalReply, son code source, ses interfaces, ses algorithmes, sa marque, son logo et toute sa documentation sont la propriété exclusive de LocalReply et sont protégés par les lois sur la propriété intellectuelle. Toute reproduction ou utilisation non autorisée est interdite.</p>
+      <h3>8.2 Droits de l'Utilisateur</h3>
+      <p>Vous conservez la pleine propriété des contenus que vous publiez sur la plateforme (informations de votre commerce, FAQ, services, etc.). En les publiant, vous accordez à LocalReply une licence limitée, non exclusive et gratuite permettant d'utiliser ces contenus pour fournir le Service.</p>
+      <h3>8.3 Données générées par l'IA</h3>
+      <p>Les résumés, analyses et insights générés par l'IA à partir de vos données vous appartiennent. LocalReply ne les utilise pas à des fins commerciales tierces sans votre consentement.</p>
+    </div>
+
+    <!-- 9. RESPONSABILITÉ -->
+    <div class="lrt-section" id="responsabilite">
+      <h2><span>9.</span> Limitation de responsabilité</h2>
+      <div class="lrt-alert">
+        <p>⚠️ Dans toute la mesure permise par le droit suisse applicable, la responsabilité de LocalReply est expressément limitée.</p>
+      </div>
+      <p>LocalReply ne peut être tenu responsable :</p>
+      <ul>
+        <li>Des réponses générées par l'IA, qui peuvent contenir des inexactitudes</li>
+        <li>Des décisions prises par l'Utilisateur ou ses clients finaux sur la base des réponses de l'IA</li>
+        <li>Des pertes de données liées à des défaillances techniques indépendantes de notre volonté</li>
+        <li>Des interruptions de service liées aux prestataires tiers (OpenAI, Google, Stripe, etc.)</li>
+        <li>Des dommages indirects, pertes de chiffre d'affaires ou manques à gagner</li>
+        <li>Des actes ou omissions de tiers, y compris les prestataires de services</li>
+      </ul>
+      <p>En tout état de cause, la responsabilité totale de LocalReply à l'égard d'un Utilisateur est limitée au montant des sommes effectivement payées par cet Utilisateur au cours des 3 derniers mois précédant le fait générateur.</p>
+    </div>
+
+    <!-- 10. DISPONIBILITÉ -->
+    <div class="lrt-section" id="disponibilite">
+      <h2><span>10.</span> Disponibilité du service</h2>
+      <p>LocalReply s'efforce de maintenir le Service disponible 24h/24 et 7j/7. Toutefois, nous ne garantissons pas une disponibilité ininterrompue. Des interruptions peuvent survenir pour :</p>
+      <ul>
+        <li>Des opérations de maintenance planifiées (annoncées 24h à l'avance dans la mesure du possible)</li>
+        <li>Des défaillances techniques imprévues</li>
+        <li>Des incidents chez nos prestataires d'hébergement ou d'API</li>
+        <li>Des cas de force majeure</li>
+      </ul>
+      <p>En cas d'interruption majeure, nous communiquerons par email dans les meilleurs délais.</p>
+    </div>
+
+    <!-- 11. RÉSILIATION -->
+    <div class="lrt-section" id="resiliation">
+      <h2><span>11.</span> Résiliation</h2>
+      <h3>11.1 Résiliation par l'Utilisateur</h3>
+      <p>Vous pouvez résilier votre abonnement à tout moment depuis votre espace client ou en nous contactant par email. La résiliation prend effet à la fin de la période de facturation en cours. Aucun remboursement n'est effectué pour la période déjà facturée.</p>
+      <h3>11.2 Résiliation durant la période d'essai</h3>
+      <p>Si vous résiliez avant la fin des 14 jours d'essai, aucun prélèvement ne sera effectué.</p>
+      <h3>11.3 Résiliation par LocalReply</h3>
+      <p>LocalReply se réserve le droit de suspendre ou résilier un compte sans préavis en cas de :</p>
+      <ul>
+        <li>Violation des présentes CGU</li>
+        <li>Comportement frauduleux ou abusif</li>
+        <li>Non-paiement après 3 tentatives infructueuses</li>
+        <li>Utilisation du Service à des fins illicites</li>
+      </ul>
+      <h3>11.4 Conséquences de la résiliation</h3>
+      <p>À la résiliation, l'accès au Service est coupé. Vos données sont conservées 30 jours supplémentaires, durant lesquels vous pouvez demander leur export. Passé ce délai, elles sont supprimées définitivement conformément à notre Politique de confidentialité.</p>
+    </div>
+
+    <!-- 12. MODIFICATIONS CGU -->
+    <div class="lrt-section" id="modifications">
+      <h2><span>12.</span> Modifications des CGU</h2>
+      <p>LocalReply se réserve le droit de modifier les présentes CGU à tout moment. En cas de modification substantielle, vous serez notifié par email au moins 30 jours avant l'entrée en vigueur des nouvelles dispositions.</p>
+      <p>Si vous continuez à utiliser le Service après l'entrée en vigueur des nouvelles CGU, vous êtes réputé les avoir acceptées. Dans le cas contraire, vous devez résilier votre abonnement avant la date d'entrée en vigueur.</p>
+    </div>
+
+    <!-- 13. DROIT APPLICABLE -->
+    <div class="lrt-section" id="droit">
+      <h2><span>13.</span> Droit applicable et litiges</h2>
+      <p>Les présentes CGU sont régies par le droit suisse, notamment le Code des obligations (CO). Tout litige relatif à l'interprétation ou à l'exécution des présentes CGU sera soumis à la compétence exclusive des tribunaux suisses compétents.</p>
+      <p>En cas de litige, nous vous invitons à nous contacter en premier lieu afin de rechercher une solution amiable. Si aucune solution amiable n'est trouvée dans un délai de 30 jours, les parties pourront saisir la juridiction compétente.</p>
+      <div class="lrt-info">
+        <p>ℹ️ Pour les consommateurs résidant dans l'Union européenne, les dispositions impératives de protection des consommateurs de votre pays de résidence restent applicables.</p>
+      </div>
+    </div>
+
+    <!-- 14. CONTACT -->
+    <div class="lrt-section" id="contact">
+      <h2><span>14.</span> Contact</h2>
+      <p>Pour toute question relative aux présentes CGU :</p>
+    </div>
+
+    <div class="lrt-contact">
+      <h3>Une question sur nos CGU ?</h3>
+      <p>Notre équipe vous 
+</body>
+</html>
