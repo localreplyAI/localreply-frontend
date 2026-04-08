@@ -10,6 +10,141 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
   </style>
+
+
+
+<style>
+/* ── home.html Fix sections claires home.html ── home.html */
+.lrh-features { background: #F5F7FA !important; }
+.lrh-feat-card { background: #ffffff !important; box-shadow: 0 2px 16px rgba(0,82,204,0.08) !important; }
+.lrh-feat-title { color: #1A2340 !important; }
+.lrh-feat-desc { color: #6B7280 !important; }
+.lrh-how { background: #ffffff !important; }
+.lrh-how h2 { color: #1A2340 !important; }
+.lrh-step-title { color: #1A2340 !important; }
+.lrh-step-desc { color: #6B7280 !important; }
+.lrh-sectors { background: #F5F7FA !important; }
+.lrh-sectors h2 { color: #1A2340 !important; }
+.lrh-sector-card { background: #ffffff !important; }
+.lrh-sector-name { color: #1A2340 !important; }
+.lrh-testimonials { background: #ffffff !important; }
+.lrh-testi-text { color: #1A2340 !important; }
+.lrh-testi-author { color: #6B7280 !important; }
+.lrh-section-title { color: #1A2340 !important; }
+.lrh-section-sub { color: #6B7280 !important; }
+/* Sections sombres → garder sombre */
+.lrh-hero, .lrh-cta-section, .lrh-qs { background: inherit; }
+</style>
+
+<style>
+/* ════════════════════════════════════════
+   MASTER FIX VERCEL — LocalReply
+   Force les couleurs correctes sur toutes
+   les sections claires de toutes les pages
+════════════════════════════════════════ */
+
+/* 1. Sections claires → fond garanti */
+section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class*="gradient"]) {
+  background: #F5F7FA;
+}
+
+/* 2. Cartes → fond blanc */
+[class*="-card"]:not([class*="dark"]):not([class*="chat"]):not([class*="msg"]) {
+  background: #ffffff !important;
+  color: #1A2340 !important;
+}
+
+/* 3. Textes dans sections claires */
+[class*="-card"] h1, [class*="-card"] h2, [class*="-card"] h3,
+[class*="-card"] h4, [class*="-card"] p, [class*="-card"] li,
+[class*="-card"] span:not([class*="badge"]):not([class*="tag"]) {
+  color: #1A2340 !important;
+}
+
+/* 4. Titres de section */
+[class*="-title"]:not([class*="hero"]):not(.lrh-h1):not(.lrf-hero h1):not(.lrp-hero h1) {
+  color: #1A2340 !important;
+}
+[class*="-subtitle"], [class*="-desc"]:not([class*="hero"]),
+[class*="-sub"]:not(.lrh-sub) {
+  color: #6B7280 !important;
+}
+
+/* 5. Tables → fond blanc */
+[class*="-table"] {
+  background: #ffffff !important;
+}
+[class*="-table"] th {
+  background: #F5F7FA !important;
+  color: #1A2340 !important;
+}
+[class*="-table"] td {
+  color: #6B7280 !important;
+}
+
+/* 6. Pricing plans */
+[class*="-plan"]:not([class*="featured"]):not([class*="pro"]) {
+  background: #ffffff !important;
+  color: #1A2340 !important;
+}
+[class*="-plan"] [class*="-name"],
+[class*="-plan"] [class*="-price"],
+[class*="-plan"] [class*="-list"] li {
+  color: #1A2340 !important;
+}
+[class*="-plan"] [class*="-desc"] {
+  color: #6B7280 !important;
+}
+
+/* 7. FAQ items */
+[class*="-faq"]:not([class*="hero"]) {
+  background: #ffffff !important;
+  color: #1A2340 !important;
+}
+[class*="-faq"] p, [class*="-faq"] span {
+  color: #6B7280 !important;
+}
+
+/* 8. Body wrapper des pages */
+[class*="-body"]:not([class*="hero"]):not([class*="dark"]) {
+  background: #ffffff;
+}
+
+/* 9. Sections testimonials, stats, values */
+[class*="-testi"]:not([class*="card"]) {
+  background: #F5F7FA !important;
+}
+[class*="-testi-text"] { color: #1A2340 !important; }
+[class*="-testi-author"], [class*="-testi-role"] { color: #6B7280 !important; }
+
+[class*="-stat"], [class*="-number"], [class*="-value"] {
+  color: #0052CC !important;
+}
+
+/* 10. Garder SOMBRE : hero, cta, gradient, dark */
+[class*="hero"], [class*="cta-section"], [class*="gradient"],
+[class*="-dark"], .lrh-qs, .lrh-cta {
+  /* Ne pas toucher */
+}
+
+/* 11. Channel/contact cards */
+[class*="-channel"], [class*="-contact-card"],
+[class*="-info-card"], [class*="-method"] {
+  background: #ffffff !important;
+  color: #1A2340 !important;
+}
+
+/* 12. Highlight sections */
+[class*="-highlight"] {
+  background: #F5F7FA !important;
+}
+[class*="-highlight"] h2, [class*="-highlight"] h3 {
+  color: #1A2340 !important;
+}
+[class*="-highlight"] p, [class*="-highlight"] li {
+  color: #6B7280 !important;
+}
+</style>
 </head>
 <body>
 <style>
