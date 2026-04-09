@@ -731,7 +731,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const isPro = subData?.plan==='pro' || subData?.plan==='trial';
   const calConnected = calData?.connected || false;
-  const slug = configData?.business?.slug || '';
+  // Récupérer le slug — depuis config ou fallback API simple
+  let slug = configData?.business?.slug || localStorage.getItem('business_slug') || '';
+  
+  // Si pas de slug, tenter un appel direct
+  if (!slug) {
+    try {
+      const bizData = await api(`/api/business/${businessId}`).catch(()=>null);
+      slug = bizData?.slug || bizData?.business?.slug || '';
+    } catch {}
+  }
+  if (slug) localStorage.setItem('business_slug', slug);
 
   // Sidebar & header
   const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
