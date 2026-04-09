@@ -600,7 +600,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 
 <script>
 const API = 'https://localreply-api.onrender.com';
-const BUSINESS_ID = 1;
+const BUSINESS_ID = 3; // chez-marco — business de démo
 const MAX_MSGS = 5;
 const SUBSCRIBE_URL = 'https://localreply-frontend.vercel.app/auth';
 
@@ -611,11 +611,28 @@ let sessionUserId = Math.floor(Math.random() * 2000000000);
 
 const BIZ_ICONS = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'💬' };
 
+// Suggestions par défaut pour la démo (FR)
 const SUGGESTIONS = {
-  rdv:      [{ l:'📅 Créneaux disponibles', t:'Quels créneaux sont disponibles ?', p:true },{ l:'⏱️ Durée du RDV', t:'Combien de temps dure le RDV ?' }],
-  services: [{ l:'💰 Tarifs', t:'Quels sont vos tarifs ?' },{ l:'📅 Réserver', t:'Je voudrais prendre un RDV', p:true }],
-  horaires: [{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true },{ l:'📍 Adresse', t:'Où êtes-vous situé ?' }],
-  default:  [{ l:'💼 Services', t:'Quels sont vos services ?' },{ l:'⏰ Horaires', t:'Quels sont vos horaires ?' },{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true }]
+  default: [
+    { l:'💼 Voir les services', t:'Quels sont vos services ?' },
+    { l:'💰 Voir les tarifs', t:'Quels sont vos tarifs ?' },
+    { l:'📅 Prendre rendez-vous', t:'Je voudrais prendre un rendez-vous', p:true },
+  ],
+  rdv: [
+    { l:'🗓️ Voir les disponibilités', t:'Quels créneaux sont disponibles ?' },
+    { l:'⏱️ Durée du RDV', t:'Combien de temps dure le rendez-vous ?' },
+    { l:'💰 Voir les tarifs', t:'Quels sont vos tarifs ?' },
+  ],
+  services: [
+    { l:'💰 Voir les tarifs', t:'Quels sont vos tarifs ?' },
+    { l:'📅 Réserver', t:'Je voudrais prendre un rendez-vous', p:true },
+    { l:'⏰ Horaires', t:"Quels sont vos horaires d'ouverture ?" },
+  ],
+  horaires: [
+    { l:'✅ Ouvert maintenant ?', t:"Êtes-vous ouverts en ce moment ?" },
+    { l:'📅 Prendre rendez-vous', t:'Je voudrais prendre un rendez-vous', p:true },
+    { l:'📍 Adresse', t:'Où êtes-vous situés ?' },
+  ],
 };
 
 function detectIntent(text) {

@@ -500,7 +500,22 @@ function setupLinks(slug) {
   document.getElementById('linkInstagram').textContent = 'localreply.ai/'+slug+'?src=instagram';
   document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=google';
   document.getElementById('linkQR').textContent        = 'localreply.ai/'+slug+'?src=qr';
-  ['testIABtn','testIABtn2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://localreply-frontend.vercel.app/chat?slug='+slug; });
+  ['testIABtn','testIABtn2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    if(slug) {
+      el.href='https://localreply-frontend.vercel.app/chat?slug='+slug;
+    } else {
+      // Slug pas encore chargé — clic dynamique
+      el.addEventListener('click', function(e) {
+        const s = localStorage.getItem('business_slug') || slug;
+        if(s) { this.href='https://localreply-frontend.vercel.app/chat?slug='+s; }
+        else { e.preventDefault(); showNotif('⏳ Chargement en cours...','info'); }
+      });
+    }
+  });
+  // Sauvegarder le slug pour accès rapide
+  if(slug) localStorage.setItem('business_slug', slug);
   const qrEl = document.getElementById('qrcode');
   if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
 }

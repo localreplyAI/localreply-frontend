@@ -543,12 +543,199 @@ const GREETINGS = {
   fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá'
 };
 
-const SUGGESTIONS = {
-  rdv:     [{ l:'📅 Créneaux disponibles', t:'Quels créneaux sont disponibles ?', p:true },{ l:'⏱️ Durée', t:'Combien de temps dure le RDV ?' }],
-  services:[{ l:'💰 Tarifs', t:'Quels sont vos tarifs ?' },{ l:'📅 Réserver', t:'Je voudrais prendre un RDV', p:true }],
-  horaires:[{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true },{ l:'📍 Adresse', t:'Où êtes-vous situé ?' }],
-  default: [{ l:'💼 Services', t:'Quels sont vos services ?' },{ l:'⏰ Horaires', t:'Quels sont vos horaires ?' },{ l:'📅 Prendre RDV', t:'Je voudrais prendre un RDV', p:true }]
+// ── Suggestions intelligentes et contextuelles ──
+// Chargées depuis la config du commerce, adaptées à la langue et au contexte
+
+let bizConfig = null; // config chargée depuis l'API
+let conversationContext = []; // historique local pour détecter le contexte
+let suggestionsShown = new Set(); // éviter les doublons
+
+// Suggestions par langue
+const SUGGESTIONS_I18N = {
+  fr: {
+    rdv_cta:    '📅 Prendre rendez-vous',
+    rdv_slots:  '🗓️ Voir les disponibilités',
+    rdv_dur:    '⏱️ Durée du rendez-vous',
+    prices:     '💰 Voir les tarifs',
+    services:   '💼 Voir les services',
+    hours:      '⏰ Horaires d'ouverture',
+    address:    '📍 Adresse & accès',
+    payment:    '💳 Moyens de paiement',
+    parking:    '🅿️ Parking disponible ?',
+    open_now:   '✅ Êtes-vous ouvert maintenant ?',
+    urgent:     '🚨 J'ai une urgence',
+    contact:    '📞 Vous contacter',
+  },
+  en: {
+    rdv_cta:    '📅 Book an appointment',
+    rdv_slots:  '🗓️ See availability',
+    rdv_dur:    '⏱️ Appointment duration',
+    prices:     '💰 View pricing',
+    services:   '💼 View services',
+    hours:      '⏰ Opening hours',
+    address:    '📍 Address & directions',
+    payment:    '💳 Payment methods',
+    parking:    '🅿️ Parking available?',
+    open_now:   '✅ Are you open now?',
+    urgent:     '🚨 I have an emergency',
+    contact:    '📞 Contact you',
+  },
+  de: {
+    rdv_cta:    '📅 Termin buchen',
+    rdv_slots:  '🗓️ Verfügbarkeit prüfen',
+    rdv_dur:    '⏱️ Termindauer',
+    prices:     '💰 Preise ansehen',
+    services:   '💼 Leistungen ansehen',
+    hours:      '⏰ Öffnungszeiten',
+    address:    '📍 Adresse & Anfahrt',
+    payment:    '💳 Zahlungsmethoden',
+    parking:    '🅿️ Parkplatz vorhanden?',
+    open_now:   '✅ Sind Sie jetzt geöffnet?',
+    urgent:     '🚨 Ich habe einen Notfall',
+    contact:    '📞 Kontakt aufnehmen',
+  },
+  it: {
+    rdv_cta:    '📅 Prenota un appuntamento',
+    rdv_slots:  '🗓️ Vedi disponibilità',
+    rdv_dur:    '⏱️ Durata appuntamento',
+    prices:     '💰 Vedere i prezzi',
+    services:   '💼 Vedere i servizi',
+    hours:      '⏰ Orari di apertura',
+    address:    '📍 Indirizzo & come arrivarci',
+    payment:    '💳 Metodi di pagamento',
+    parking:    '🅿️ Parcheggio disponibile?',
+    open_now:   '✅ Siete aperti adesso?',
+    urgent:     '🚨 Ho un'urgenza',
+    contact:    '📞 Contattarvi',
+  },
+  es: {
+    rdv_cta:    '📅 Reservar una cita',
+    rdv_slots:  '🗓️ Ver disponibilidad',
+    rdv_dur:    '⏱️ Duración de la cita',
+    prices:     '💰 Ver precios',
+    services:   '💼 Ver servicios',
+    hours:      '⏰ Horario de apertura',
+    address:    '📍 Dirección & cómo llegar',
+    payment:    '💳 Métodos de pago',
+    parking:    '🅿️ ¿Hay aparcamiento?',
+    open_now:   '✅ ¿Están abiertos ahora?',
+    urgent:     '🚨 Tengo una urgencia',
+    contact:    '📞 Contactarles',
+  },
+  pt: {
+    rdv_cta:    '📅 Marcar consulta',
+    rdv_slots:  '🗓️ Ver disponibilidade',
+    rdv_dur:    '⏱️ Duração da consulta',
+    prices:     '💰 Ver preços',
+    services:   '💼 Ver serviços',
+    hours:      '⏰ Horário de abertura',
+    address:    '📍 Morada & como chegar',
+    payment:    '💳 Métodos de pagamento',
+    parking:    '🅿️ Estacionamento disponível?',
+    open_now:   '✅ Estão abertos agora?',
+    urgent:     '🚨 Tenho uma urgência',
+    contact:    '📞 Contactar',
+  },
+  nl: {
+    rdv_cta:    '📅 Afspraak maken',
+    rdv_slots:  '🗓️ Beschikbaarheid bekijken',
+    rdv_dur:    '⏱️ Duur van de afspraak',
+    prices:     '💰 Tarieven bekijken',
+    services:   '💼 Diensten bekijken',
+    hours:      '⏰ Openingstijden',
+    address:    '📍 Adres & routebeschrijving',
+    payment:    '💳 Betaalmethoden',
+    parking:    '🅿️ Parkeren mogelijk?',
+    open_now:   '✅ Bent u nu open?',
+    urgent:     '🚨 Ik heb een noodgeval',
+    contact:    '📞 Contact opnemen',
+  },
+  pl: {
+    rdv_cta:    '📅 Umów wizytę',
+    rdv_slots:  '🗓️ Sprawdź dostępność',
+    rdv_dur:    '⏱️ Czas trwania wizyty',
+    prices:     '💰 Zobacz ceny',
+    services:   '💼 Zobacz usługi',
+    hours:      '⏰ Godziny otwarcia',
+    address:    '📍 Adres & dojazd',
+    payment:    '💳 Metody płatności',
+    parking:    '🅿️ Parking dostępny?',
+    open_now:   '✅ Czy jesteście teraz otwarci?',
+    urgent:     '🚨 Mam pilną sprawę',
+    contact:    '📞 Skontaktować się',
+  },
 };
+
+function getSuggestionsI18n() {
+  return SUGGESTIONS_I18N[detectedLang] || SUGGESTIONS_I18N.fr;
+}
+
+// Construire des suggestions intelligentes selon le contexte
+function buildSmartSuggestions(context) {
+  const s = getSuggestionsI18n();
+  const hour = new Date().getHours();
+  const isEvening = hour >= 18 || hour < 8;
+  const hasRdvMode = bizConfig?.rdv_mode && bizConfig.rdv_mode !== 'none';
+  const businessType = bizConfig?.business?.business_type || 'other';
+
+  // Contexte de la conversation
+  const lastAiMsg = (context || '').toLowerCase();
+  const isDiscussingRdv = /rdv|rendez|appointment|afspraak|termin|wizyt|cita|consulta/i.test(lastAiMsg);
+  const isDiscussingPrice = /prix|tarif|price|preis|prezzo|prijs|cena|preço/i.test(lastAiMsg);
+  const isDiscussingHours = /heure|horaire|hour|öffnungs|orari|openings|godzin|horario/i.test(lastAiMsg);
+
+  let suggestions = [];
+
+  // Après message IA sur RDV → proposer de réserver
+  if (isDiscussingRdv && hasRdvMode) {
+    suggestions = [
+      { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^\w\s]+\s*/, ''), p: true },
+      { l: s.rdv_slots, t: s.rdv_slots.replace(/^[^\w\s]+\s*/, '') },
+      { l: s.prices, t: s.prices.replace(/^[^\w\s]+\s*/, '') },
+    ];
+  }
+  // Après message IA sur prix → proposer services et RDV
+  else if (isDiscussingPrice) {
+    suggestions = [
+      { l: s.services, t: s.services.replace(/^[^\w\s]+\s*/, '') },
+      hasRdvMode ? { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^\w\s]+\s*/, ''), p: true } : null,
+      { l: s.hours, t: s.hours.replace(/^[^\w\s]+\s*/, '') },
+    ].filter(Boolean);
+  }
+  // Après message IA sur horaires → vérifier si ouvert + RDV
+  else if (isDiscussingHours) {
+    suggestions = [
+      isEvening ? { l: s.open_now, t: s.open_now.replace(/^[^\w\s]+\s*/, '') } : null,
+      hasRdvMode ? { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^\w\s]+\s*/, ''), p: true } : null,
+      { l: s.address, t: s.address.replace(/^[^\w\s]+\s*/, '') },
+    ].filter(Boolean);
+  }
+  // Suggestions initiales selon le type de commerce
+  else {
+    // Base
+    suggestions = [
+      { l: s.services, t: s.services.replace(/^[^\w\s]+\s*/, '') },
+      { l: s.prices, t: s.prices.replace(/^[^\w\s]+\s*/, '') },
+    ];
+    // RDV si disponible
+    if (hasRdvMode) {
+      suggestions.push({ l: s.rdv_cta, t: s.rdv_cta.replace(/^[^\w\s]+\s*/, ''), p: true });
+    }
+    // Le soir → "Êtes-vous ouvert ?"
+    if (isEvening) {
+      suggestions.unshift({ l: s.open_now, t: s.open_now.replace(/^[^\w\s]+\s*/, '') });
+      suggestions = suggestions.slice(0, 3);
+    }
+    // Types urgents (médecin, plombier, garage)
+    if (['medical','dentist','plumber','garage','vet'].includes(businessType)) {
+      suggestions.push({ l: s.urgent, t: s.urgent.replace(/^[^\w\s]+\s*/, '') });
+    }
+    // Limiter à 3 suggestions max
+    suggestions = suggestions.slice(0, 3);
+  }
+
+  return suggestions;
+}
 
 let isSending = false;
 let currentEscalationQuestionId = null;
@@ -627,13 +814,16 @@ function showTyping() {
 }
 function removeTyping() { document.getElementById('lrcTyping')?.remove(); }
 
-function renderSuggestionsFallback(intent) {
+function renderSuggestionsFallback(intent, lastAiResponse='') {
   const wrap = document.getElementById('lrcSuggestions');
-  const items = SUGGESTIONS[intent] || SUGGESTIONS.default;
+  if (!wrap) return;
+  // Utiliser les suggestions intelligentes
+  const items = buildSmartSuggestions(lastAiResponse);
+  wrap.style.display = items.length ? 'flex' : 'none';
   wrap.innerHTML = '';
   items.forEach((s,i) => {
     const btn = document.createElement('button');
-    const isRdv = s.p || /rdv|réserv/i.test(s.l);
+    const isRdv = s.p || /rdv|réserv|book|afspraak|wizyt/i.test(s.l);
     btn.className = 'lrc-sug' + (s.p ? ' primary' : '');
     btn.style.animationDelay = (i*0.07)+'s';
     btn.textContent = s.l;
@@ -751,7 +941,7 @@ async function lrcSendText(text) {
     if (backendSuggestions.length > 0) {
       renderSuggestionsFromBackend(backendSuggestions);
     } else {
-      renderSuggestionsFallback(detectIntent(full + ' ' + text));
+      renderSuggestionsFallback(detectIntent(full + ' ' + text), full);
     }
 
   } catch(streamErr) {
@@ -775,17 +965,17 @@ async function lrcSendText(text) {
         if (data.suggestions && data.suggestions.length) {
           renderSuggestionsFromBackend(data.suggestions);
         } else {
-          renderSuggestionsFallback(detectIntent(msg));
+          renderSuggestionsFallback(detectIntent(msg), data.response || msg);
         }
       } else {
         console.error('Empty response from /api/chat:', data);
         addMsg("Je n'ai pas pu traiter votre demande. Pouvez-vous reformuler ?");
-        renderSuggestionsFallback('default');
+        renderSuggestionsFallback('default', '');
       }
     } catch(fallbackErr) {
       console.error('Both stream and fallback failed:', fallbackErr.message);
       addMsg("Le service est momentanement indisponible. Veuillez reessayer dans quelques instants.");
-      renderSuggestionsFallback('default');
+      renderSuggestionsFallback('default', '');
     }
   }
 
@@ -804,7 +994,7 @@ function showUI(bizName, icon, greeting, customGreeting=null) {
     ? customGreeting.replace('{business_name}', bizName)
     : `${greeting} ! 👋<br>Je suis l'assistant de <strong>${bizName}</strong>.<br>Comment puis-je vous aider ?`;
   addMsg(welcomeMsg);
-  renderSuggestionsFallback('default');
+  renderSuggestionsFallback('default', '');
   setTimeout(() => document.getElementById('lrcInput').focus(), 300);
 }
 
@@ -1016,6 +1206,8 @@ async function lrcInit() {
     const biz = await res.json();
 
     businessId = biz.id;
+    // Stocker la config pour les suggestions intelligentes
+    bizConfig = biz;
     const icon = BIZ_ICONS[biz.business_type] || '💬';
     bizAvatar = icon;
 

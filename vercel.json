@@ -7,6 +7,7 @@
     { "source": "/dashboard-configuration", "destination": "/dashboard-configuration.html" },
     { "source": "/dashboard-rendez-vous", "destination": "/dashboard-rendez-vous.html" },
     { "source": "/dashboard-messages", "destination": "/dashboard-messages.html" },
+    { "source": "/dashboard-conversations", "destination": "/dashboard-messages.html" },
     { "source": "/dashboard-analytics", "destination": "/dashboard-analytics.html" },
     { "source": "/mon-compte", "destination": "/mon-compte.html" },
     { "source": "/abonnement", "destination": "/abonnement.html" },
