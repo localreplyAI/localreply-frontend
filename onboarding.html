@@ -27,7 +27,7 @@
     <div style="padding:24px 28px 0;">
       <!-- Logo -->
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
-        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:36px;height:36px;border-radius:9px;background:#fff;padding:4px;">
+        <img src="/assets/logo.png" alt="LocalReply" style="width:36px;height:36px;border-radius:9px;background:#fff;padding:4px;">
         <span style="font-size:16px;font-weight:700;color:#fff;">LocalReply</span>
       </div>
 
@@ -1100,7 +1100,7 @@ function buildFinalStep() {
   const slug = document.getElementById('bizSlug')?.value || '';
   document.getElementById('finalLink').textContent = `localreply.ai/${slug}`;
   const btn = document.getElementById('testIABtn');
-  if (btn && slug) btn.href = `https://localreplyai.odoo.com/chat?slug=${slug}`;
+  if (btn && slug) btn.href = `https://localreply-frontend.vercel.app/chat?slug=${slug}`;
 }
 
 function goToDashboard() {

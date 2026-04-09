@@ -12,7 +12,7 @@
     <!-- Logo -->
     <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-        <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
         <div><div style="font-size:16px;font-weight:700;color:#fff;letter-spacing:-0.3px;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
       </div>
       <!-- Business card -->
@@ -497,7 +497,7 @@ function setupLinks(slug) {
   document.getElementById('linkInstagram').textContent = 'localreply.ai/'+slug+'?src=instagram';
   document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=google';
   document.getElementById('linkQR').textContent        = 'localreply.ai/'+slug+'?src=qr';
-  ['testIABtn','testIABtn2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://localreplyai.odoo.com/chat?slug='+slug; });
+  ['testIABtn','testIABtn2'].forEach(id=>{ const el=document.getElementById(id); if(el) el.href='https://localreply-frontend.vercel.app/chat?slug='+slug; });
   const qrEl = document.getElementById('qrcode');
   if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
 }

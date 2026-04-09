@@ -17,7 +17,7 @@
           <!-- Brand -->
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-              <img src="https://localreplyai.odoo.com/web/image/641-827d8c47/logo%20localreplyAI%20v2-1.png"
+              <img src="/assets/logo.png"
                 alt="LocalReply" style="width:28px;height:28px;border-radius:7px;background:#fff;padding:3px;">
               <span style="font-size:16px;font-weight:800;color:#fff;">LocalReply</span>
             </div>
