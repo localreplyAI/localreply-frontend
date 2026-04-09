@@ -889,13 +889,19 @@ async function lrcSendText(text) {
           const d = line.slice(6).trim();
           if (d==='[DONE]') break;
           try {
-            const tok = JSON.parse(d).text||'';
-            full += tok;
-            // Nettoyer [SUGGESTIONS:...] en temps réel avant affichage
-            const displayText = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g, '').trim();
-            bubble.innerHTML = esc(displayText).replace(/\n/g,'<br>');
-            bubble.id = '';
-            c.scrollTop = c.scrollHeight;
+            const parsed = JSON.parse(d);
+            const tok = parsed.text || '';
+            if (tok) {
+              full += tok;
+              const displayText = full
+                .replace(/\[SUGGESTIONS:[^\]]*\]?/g,'')
+                .replace(/\[EMAIL_CAPTURE:[^\]]*\]/g,'')
+                .trim();
+              if (bubble) {
+                bubble.textContent = displayText;
+                c.scrollTop = c.scrollHeight;
+              }
+            }
           } catch{}
         }
       }
@@ -923,7 +929,10 @@ async function lrcSendText(text) {
       }
 
       // Mettre à jour la bulle avec le texte final propre
-      bubble.innerHTML = esc(full).replace(/\n/g, '<br>');
+      if (bubble) {
+        bubble.textContent = full;
+        bubble.id = '';
+      }
     } catch {}
 
     // Mettre à jour flag langue depuis backend ou heuristique

@@ -672,18 +672,29 @@ async function lrcSendText(text) {
           const d = line.slice(6).trim();
           if (d==='[DONE]') break;
           try {
-            const tok = JSON.parse(d).text||'';
-            full += tok;
-            bubble.innerHTML = esc(full.replace(/\[SUGGESTIONS:[^\]]*\]?/g, '').trim()).replace(/\n/g,'<br>');
-            bubble.id = '';
-            c.scrollTop = c.scrollHeight;
+            const parsed = JSON.parse(d);
+            const tok = parsed.text || '';
+            if (tok) {
+              full += tok;
+              const clean = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g,'').replace(/\[EMAIL_CAPTURE:[^\]]*\]/g,'').trim();
+              if (bubble) {
+                bubble.textContent = clean;
+                c.scrollTop = c.scrollHeight;
+              }
+            }
           } catch{}
         }
       }
     }
 
-    document.getElementById('lrcStreamTime').textContent = now();
-    document.getElementById('lrcStreamTime').id = '';
+    // Finaliser la bulle stream
+    if (bubble) {
+      const finalClean = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g,'').replace(/\[EMAIL_CAPTURE:[^\]]*\]/g,'').trim();
+      bubble.textContent = finalClean;
+      bubble.id = '';
+    }
+    const timeEl = document.getElementById('lrcStreamTime');
+    if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
     // Lire suggestions depuis stream
     let backendSuggestions = [];
     try {
