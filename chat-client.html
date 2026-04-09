@@ -668,70 +668,131 @@ function getSuggestionsI18n() {
 }
 
 // Construire des suggestions intelligentes selon le contexte
-function buildSmartSuggestions(context) {
-  const s = getSuggestionsI18n();
+function buildSmartSuggestions(lastAiResponse) {
+  const lang = detectedLang || 'fr';
   const hour = new Date().getHours();
-  const isEvening = hour >= 18 || hour < 8;
-  const hasRdvMode = bizConfig?.rdv_mode && bizConfig.rdv_mode !== 'none';
-  const businessType = bizConfig?.business?.business_type || 'other';
+  const isEvening = hour >= 19 || hour < 8;
+  const hasRdvMode = bizConfig && bizConfig.rdv_mode && bizConfig.rdv_mode !== 'none';
+  const bType = (bizConfig && bizConfig.business_type) || 'other';
+  const ctx = (lastAiResponse || '').toLowerCase();
 
-  // Contexte de la conversation
-  const lastAiMsg = (context || '').toLowerCase();
-  const isDiscussingRdv = /rdv|rendez|appointment|afspraak|termin|wizyt|cita|consulta/i.test(lastAiMsg);
-  const isDiscussingPrice = /prix|tarif|price|preis|prezzo|prijs|cena|preço/i.test(lastAiMsg);
-  const isDiscussingHours = /heure|horaire|hour|öffnungs|orari|openings|godzin|horario/i.test(lastAiMsg);
+  // Suggestions par langue et type — textes naturels complets
+  const SUGG = {
+    fr: {
+      default: {
+        base: ['💼 Quels sont vos services ?', '💰 Quels sont vos tarifs ?', '⏰ Quels sont vos horaires ?'],
+        rdv: ['📅 Je souhaite prendre rendez-vous', '💼 Quels sont vos services ?', '💰 Voir les tarifs'],
+        evening: ['✅ Êtes-vous encore ouverts ce soir ?', '⏰ Quels sont vos horaires ?', '📅 Prendre rendez-vous'],
+      },
+      salon:       { base: ['💇 Quels services proposez-vous ?', '💰 Quels sont vos tarifs ?', '📅 Prendre un rendez-vous'] },
+      spa:         { base: ['💆 Quels soins proposez-vous ?', '💰 Quels sont vos tarifs ?', '📅 Réserver une séance'] },
+      medical:     { base: ['🏥 Prenez-vous de nouveaux patients ?', '🚨 J\'ai besoin d\'un rendez-vous urgent', '⏰ Quels sont vos horaires ?'] },
+      dentist:     { base: ['🦷 Quels soins proposez-vous ?', '🚨 J\'ai une urgence dentaire', '📅 Prendre rendez-vous'] },
+      restaurant:  { base: ['🍽️ Quel est votre menu ?', '📅 Réserver une table', '⏰ Quels sont vos horaires ?'] },
+      cafe:        { base: ['☕ Quelles sont vos spécialités ?', '⏰ Quels sont vos horaires ?', '📍 Où êtes-vous situés ?'] },
+      pizzeria:    { base: ['🍕 Quelle est votre carte ?', '📅 Réserver une table', '🛵 Livrez-vous à domicile ?'] },
+      bakery:      { base: ['🥐 Quels sont vos produits ?', '⏰ À quelle heure ouvrez-vous ?', '📍 Où êtes-vous ?'] },
+      butcher:     { base: ['🥩 Quels produits proposez-vous ?', '💰 Quels sont vos prix ?', '⏰ Quels sont vos horaires ?'] },
+      hotel:       { base: ['🏨 Quelles chambres sont disponibles ?', '💰 Quels sont vos tarifs ?', '📅 Réserver une chambre'] },
+      garage:      { base: ['🔧 Quelles réparations faites-vous ?', '💰 Quels sont vos tarifs ?', '🚨 J\'ai une urgence mécanique'] },
+      plumber:     { base: ['🔨 Quelles interventions faites-vous ?', '🚨 J\'ai une urgence plomberie', '💰 Quels sont vos tarifs ?'] },
+      gym:         { base: ['🏋️ Quels cours proposez-vous ?', '💰 Quels sont vos abonnements ?', '📅 Essai gratuit ?'] },
+      vet:         { base: ['🐾 Quels soins proposez-vous ?', '🚨 Mon animal a une urgence', '📅 Prendre rendez-vous'] },
+      grooming:    { base: ['✂️ Quels services pour mon animal ?', '💰 Quels sont vos tarifs ?', '📅 Prendre rendez-vous'] },
+    },
+    en: {
+      default: {
+        base: ['💼 What services do you offer?', '💰 What are your prices?', '⏰ What are your opening hours?'],
+        rdv: ['📅 I would like to book an appointment', '💼 What services do you offer?', '💰 View pricing'],
+        evening: ['✅ Are you still open tonight?', '⏰ What are your hours?', '📅 Book an appointment'],
+      },
+    },
+    de: {
+      default: {
+        base: ['💼 Welche Leistungen bieten Sie an?', '💰 Was sind Ihre Preise?', '⏰ Welche Öffnungszeiten haben Sie?'],
+        rdv: ['📅 Ich möchte einen Termin buchen', '💼 Welche Leistungen bieten Sie an?', '💰 Preise ansehen'],
+        evening: ['✅ Haben Sie heute Abend noch geöffnet?', '⏰ Öffnungszeiten', '📅 Termin buchen'],
+      },
+    },
+    it: {
+      default: {
+        base: ['💼 Quali servizi offrite?', '💰 Quali sono i vostri prezzi?', '⏰ Quali sono gli orari?'],
+        rdv: ['📅 Vorrei prenotare un appuntamento', '💼 Quali servizi offrite?', '💰 Vedere i prezzi'],
+        evening: ['✅ Siete ancora aperti stasera?', '⏰ Orari di apertura', '📅 Prenotare'],
+      },
+    },
+    es: {
+      default: {
+        base: ['💼 ¿Qué servicios ofrecen?', '💰 ¿Cuáles son sus precios?', '⏰ ¿Cuál es su horario?'],
+        rdv: ['📅 Me gustaría reservar una cita', '💼 ¿Qué servicios ofrecen?', '💰 Ver precios'],
+        evening: ['✅ ¿Siguen abiertos esta noche?', '⏰ Horario de apertura', '📅 Reservar cita'],
+      },
+    },
+    pt: {
+      default: {
+        base: ['💼 Que serviços oferecem?', '💰 Quais são os preços?', '⏰ Quais são os horários?'],
+        rdv: ['📅 Quero marcar uma consulta', '💼 Que serviços oferecem?', '💰 Ver preços'],
+        evening: ['✅ Ainda estão abertos hoje?', '⏰ Horário de abertura', '📅 Marcar consulta'],
+      },
+    },
+    nl: {
+      default: {
+        base: ['💼 Welke diensten biedt u aan?', '💰 Wat zijn uw tarieven?', '⏰ Wat zijn uw openingstijden?'],
+        rdv: ['📅 Ik wil een afspraak maken', '💼 Welke diensten biedt u aan?', '💰 Tarieven bekijken'],
+        evening: ['✅ Bent u vanavond nog open?', '⏰ Openingstijden', '📅 Afspraak maken'],
+      },
+    },
+    pl: {
+      default: {
+        base: ['💼 Jakie usługi oferujecie?', '💰 Jakie są ceny?', '⏰ Jakie są godziny otwarcia?'],
+        rdv: ['📅 Chciałbym umówić wizytę', '💼 Jakie usługi oferujecie?', '💰 Zobacz ceny'],
+        evening: ['✅ Czy jesteście jeszcze otwarci?', '⏰ Godziny otwarcia', '📅 Umówić wizytę'],
+      },
+    },
+  };
 
-  let suggestions = [];
+  const langData = SUGG[lang] || SUGG.fr;
+  const typeData = langData[bType] || langData.default || SUGG.fr.default;
 
-  // Après message IA sur RDV → proposer de réserver
-  if (isDiscussingRdv && hasRdvMode) {
-    suggestions = [
-      { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^a-zA-Z0-9\s]+\s*/, ''), p: true },
-      { l: s.rdv_slots, t: s.rdv_slots.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-      { l: s.prices, t: s.prices.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-    ];
-  }
-  // Après message IA sur prix → proposer services et RDV
-  else if (isDiscussingPrice) {
-    suggestions = [
-      { l: s.services, t: s.services.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-      hasRdvMode ? { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^a-zA-Z0-9\s]+\s*/, ''), p: true } : null,
-      { l: s.hours, t: s.hours.replace(/^\S+\s*/, '') },
-    ].filter(Boolean);
-  }
-  // Après message IA sur horaires → vérifier si ouvert + RDV
-  else if (isDiscussingHours) {
-    suggestions = [
-      isEvening ? { l: s.open_now, t: s.open_now.replace(/^[^a-zA-Z0-9\s]+\s*/, '') } : null,
-      hasRdvMode ? { l: s.rdv_cta, t: s.rdv_cta.replace(/^[^a-zA-Z0-9\s]+\s*/, ''), p: true } : null,
-      { l: s.address, t: s.address.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-    ].filter(Boolean);
-  }
-  // Suggestions initiales selon le type de commerce
-  else {
-    // Base
-    suggestions = [
-      { l: s.services, t: s.services.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-      { l: s.prices, t: s.prices.replace(/^[^a-zA-Z0-9\s]+\s*/, '') },
-    ];
-    // RDV si disponible
-    if (hasRdvMode) {
-      suggestions.push({ l: s.rdv_cta, t: s.rdv_cta.replace(/^[^a-zA-Z0-9\s]+\s*/, ''), p: true });
-    }
-    // Le soir → "Êtes-vous ouvert ?"
-    if (isEvening) {
-      suggestions.unshift({ l: s.open_now, t: s.open_now.replace(/^[^a-zA-Z0-9\s]+\s*/, '') });
-      suggestions = suggestions.slice(0, 3);
-    }
-    // Types urgents (médecin, plombier, garage)
-    if (['medical','dentist','plumber','garage','vet'].includes(businessType)) {
-      suggestions.push({ l: s.urgent, t: s.urgent.replace(/^\S+\s*/, '') });
-    }
-    // Limiter à 3 suggestions max
-    suggestions = suggestions.slice(0, 3);
+  // Contexte de la réponse IA
+  const talkingAboutRdv   = /rdv|rendez|appointment|termin|réserver|book|afspraak|wizyt/i.test(ctx);
+  const talkingAboutPrice = /prix|tarif|price|preis|prezzo|prijs|cena|coût|kosten/i.test(ctx);
+  const talkingAboutHours = /heure|horaire|ouvert|fermé|opening|öffnung|orari|godzin/i.test(ctx);
+
+  let labels = [];
+
+  if (talkingAboutRdv && hasRdvMode) {
+    // Après discussion RDV → inciter à réserver
+    const rdvSuggs = (langData.default && langData.default.rdv) || SUGG.fr.default.rdv;
+    labels = rdvSuggs.slice(0, 3);
+  } else if (talkingAboutPrice) {
+    // Après discussion prix → services + RDV
+    labels = [
+      (typeData.base || SUGG.fr.default.base)[0],
+      hasRdvMode ? ((langData.default && langData.default.rdv) || SUGG.fr.default.rdv)[0] : null,
+      (typeData.base || SUGG.fr.default.base)[2],
+    ].filter(Boolean).slice(0, 3);
+  } else if (talkingAboutHours) {
+    // Après discussion horaires
+    labels = [
+      isEvening ? '✅ Êtes-vous encore ouverts ?' : (typeData.base || SUGG.fr.default.base)[0],
+      hasRdvMode ? ((langData.default && langData.default.rdv) || SUGG.fr.default.rdv)[0] : (typeData.base || SUGG.fr.default.base)[1],
+      '📍 Où êtes-vous situés ?',
+    ].filter(Boolean).slice(0, 3);
+  } else if (isEvening) {
+    const eveningSuggs = (langData.default && langData.default.evening) || SUGG.fr.default.evening;
+    labels = eveningSuggs.slice(0, 3);
+  } else {
+    // Suggestions par défaut selon le type de commerce
+    labels = (typeData.base || SUGG.fr.default.base).slice(0, 3);
   }
 
-  return suggestions;
+  // Convertir en objets suggestion
+  return labels.map((l, i) => ({
+    l: l,
+    t: l.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\s]+/u, '').trim() || l,
+    p: i === 0 && hasRdvMode && talkingAboutRdv,
+  }));
 }
 
 let isSending = false;
@@ -839,19 +900,8 @@ async function lrcSend() {
 }
 
 async function lrcSendText(text) {
-  if (isSending) return;
-
-  // Si c'est une demande de RDV et que c'est pas déjà un message de formulaire complet
-  const isFormSubmit = /Je souhaite réserver|je souhaite reserver/i.test(text);
-  if (needsRdvForm(text) && !isFormSubmit) {
-    addMsg(text, true);
-    // Réponse IA simulée pour guider vers le formulaire
-    setTimeout(() => {
-      addMsg('Bien sûr ! 📅 Remplissez le formulaire ci-dessous pour votre demande de rendez-vous.');
-      openRdvForm();
-    }, 400);
-    return;
-  }
+  if (!text.trim() || isSending) return;
+  text = text.trim();
 
   isSending = true;
   document.getElementById('lrcSendBtn').disabled = true;
@@ -860,128 +910,141 @@ async function lrcSendText(text) {
   addMsg(text, true);
   showTyping();
 
+  // Créer bulle IA
+  removeTyping();
+  const c = document.getElementById('lrcMessages');
+  const streamRow = document.createElement('div');
+  streamRow.className = 'lrc-msg-row';
+  streamRow.innerHTML = '<div class="lrc-msg-avatar">' + bizAvatar + '</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream">&nbsp;</div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>';
+  c.appendChild(streamRow);
+  const bubble = document.getElementById('lrcStream');
+  let full = '';
+
+  function cleanStreamText(t) {
+    return t
+      .replace(/\[SUGGESTIONS:[^\]]*\]?/g, '')
+      .replace(/\[EMAIL_CAPTURE:[^\]]*\]/g, '')
+      .replace(/\[ESCALATE[^\]]*\]/g, '')
+      .replace(/\[FEEDBACK[^\]]*\]/g, '')
+      .trim();
+  }
+
   try {
-    const res = await fetch(`${API}/api/chat/stream`, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ message:text, business_id:businessId, user_id:sessionUserId, source:getSource() })
+    const res = await fetch(API + '/api/chat/stream', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource() })
     });
 
-    removeTyping();
-    if (!res.ok) throw new Error('stream');
-
-    const c = document.getElementById('lrcMessages');
-    const row = document.createElement('div');
-    row.className = 'lrc-msg-row';
-    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream"></div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>`;
-    c.appendChild(row);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
 
     const reader = res.body.getReader();
-    const dec = new TextDecoder();
-    let full = '';
-    const bubble = document.getElementById('lrcStream');
+    const decoder = new TextDecoder('utf-8');
+    let buffer = '';
+    let suggs = [];
+    let emailCaptureId = null;
+    let streamDone = false;
 
-    while (true) {
-      const {done,value} = await reader.read();
-      if (done) break;
-      for (const line of dec.decode(value,{stream:true}).split('\n')) {
-        if (line.startsWith('data: ')) {
-          const d = line.slice(6).trim();
-          if (d==='[DONE]') break;
-          try {
-            const parsed = JSON.parse(d);
-            const tok = parsed.text || '';
-            if (tok) {
-              full += tok;
-              const displayText = full
-                .replace(/\[SUGGESTIONS:[^\]]*\]?/g,'')
-                .replace(/\[EMAIL_CAPTURE:[^\]]*\]/g,'')
-                .trim();
-              if (bubble) {
-                bubble.textContent = displayText;
-                c.scrollTop = c.scrollHeight;
-              }
+    while (!streamDone) {
+      const result = await reader.read();
+      streamDone = result.done;
+      if (result.value) {
+        buffer += decoder.decode(result.value, {stream: !result.done});
+      }
+
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data:')) continue;
+        const raw = trimmed.slice(5).trim();
+        if (!raw) continue;
+
+        try {
+          const obj = JSON.parse(raw);
+
+          if (typeof obj.text === 'string' && obj.text) {
+            full += obj.text;
+            const display = cleanStreamText(full);
+            if (bubble && display) {
+              bubble.textContent = display;
+              c.scrollTop = c.scrollHeight;
             }
-          } catch{}
-        }
+          }
+
+          if (obj.done === true) {
+            suggs = obj.suggestions || [];
+            if (obj.email_capture) emailCaptureId = obj.email_capture.question_id;
+          }
+        } catch (_) {}
       }
     }
 
+    // Traiter buffer restant
+    if (buffer.trim().startsWith('data:')) {
+      try {
+        const obj = JSON.parse(buffer.trim().slice(5).trim());
+        if (obj.text) full += obj.text;
+        if (obj.done && obj.suggestions) suggs = obj.suggestions;
+      } catch (_) {}
+    }
+
+    // Détecter EMAIL_CAPTURE dans le texte
+    const emailMatch = full.match(/\[EMAIL_CAPTURE:question_id=(\d+)\]/);
+    if (emailMatch) {
+      emailCaptureId = emailMatch[1];
+      currentEscalationQuestionId = emailCaptureId;
+    }
+
+    // Affichage final
+    const finalText = cleanStreamText(full);
+    if (bubble) {
+      bubble.textContent = finalText || 'Désolé, je n\'ai pas pu répondre.';
+      bubble.id = '';
+    }
     const timeEl = document.getElementById('lrcStreamTime');
     if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
 
-    // Extraire suggestions depuis le texte complet
-    let backendSuggestions = [];
-    try {
-      const sugMatch = full.match(/\[SUGGESTIONS:([^\]]+)\]/);
-      if (sugMatch) {
-        backendSuggestions = sugMatch[1].split(',').map(s => s.trim().replace(/^["']|["']$/g, ''));
-      }
-      // Texte propre sans le tag suggestions
-      full = full.replace(/\[SUGGESTIONS:[^\]]*\]?/g, '').trim();
+    // Email capture
+    if (emailCaptureId) {
+      currentEscalationQuestionId = emailCaptureId;
+      setTimeout(() => openEmailCapture(), 400);
+    }
 
-      // Détecter [EMAIL_CAPTURE:question_id=X]
-      const emailMatch = full.match(/\[EMAIL_CAPTURE:question_id=(\d+)\]/);
-      if (emailMatch) {
-        currentEscalationQuestionId = emailMatch[1];
-        full = full.replace(/\[EMAIL_CAPTURE:[^\]]*\]/g, '').trim();
-        setTimeout(() => openEmailCapture(), 400);
-      }
-
-      // Mettre à jour la bulle avec le texte final propre
-      if (bubble) {
-        bubble.textContent = full;
-        bubble.id = '';
-      }
-    } catch {}
-
-    // Mettre à jour flag langue depuis backend ou heuristique
-    const langMatch = full.match(/\b(bonjour|hallo|hello|ciao|hola|olá)\b/i);
+    // Détection langue
+    const langMatch = finalText.match(/\b(bonjour|hallo|hello|ciao|hola)\b/i);
     if (langMatch) {
-      const flagMap = { bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸','olá':'🇵🇹' };
+      const flagMap = {bonjour:'🇫🇷', hallo:'🇩🇪', hello:'🇬🇧', ciao:'🇮🇹', hola:'🇪🇸'};
       const flag = flagMap[langMatch[1].toLowerCase()];
-      if (flag) document.getElementById('lrcLangFlag').textContent = flag;
+      if (flag) { const lf = document.getElementById('lrcLangFlag'); if (lf) lf.textContent = flag; }
     }
 
-    // Suggestions : backend > fallback
-    if (backendSuggestions.length > 0) {
-      renderSuggestionsFromBackend(backendSuggestions);
+    // Suggestions
+    if (suggs.length > 0) {
+      renderSuggestionsFromBackend(suggs);
     } else {
-      renderSuggestionsFallback(detectIntent(full + ' ' + text), full);
+      renderSuggestionsFallback(detectIntent(finalText + ' ' + text), finalText);
     }
 
-  } catch(streamErr) {
-    removeTyping();
-    console.warn('Stream failed, trying /api/chat fallback:', streamErr);
+  } catch(err) {
+    console.warn('Stream failed:', err.message);
     try {
-      const r2 = await fetch(`${API}/api/chat`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({message:text, business_id:businessId, user_id:sessionUserId, source:getSource()})
+      if (bubble) bubble.textContent = '...';
+      const r2 = await fetch(API + '/api/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource() })
       });
-      if (!r2.ok) {
-        const errText = await r2.text();
-        console.error('Fallback error', r2.status, errText);
-        throw new Error(`HTTP ${r2.status}: ${errText.slice(0,200)}`);
-      }
       const data = await r2.json();
-      const msg = data.message || data.response || data.text || '';
-      if (msg) {
-        addMsg(msg);
-        if (data.suggestions && data.suggestions.length) {
-          renderSuggestionsFromBackend(data.suggestions);
-        } else {
-          renderSuggestionsFallback(detectIntent(msg), data.response || msg);
-        }
-      } else {
-        console.error('Empty response from /api/chat:', data);
-        addMsg("Je n'ai pas pu traiter votre demande. Pouvez-vous reformuler ?");
-        renderSuggestionsFallback('default', '');
-      }
-    } catch(fallbackErr) {
-      console.error('Both stream and fallback failed:', fallbackErr.message);
-      addMsg("Le service est momentanement indisponible. Veuillez reessayer dans quelques instants.");
-      renderSuggestionsFallback('default', '');
+      const msg = data.message || data.response || '';
+      if (bubble) { bubble.textContent = msg || 'Service indisponible.'; bubble.id = ''; }
+      const timeEl2 = document.getElementById('lrcStreamTime');
+      if (timeEl2) { timeEl2.textContent = now(); timeEl2.id = ''; }
+      if (data.suggestions && data.suggestions.length) renderSuggestionsFromBackend(data.suggestions);
+      else renderSuggestionsFallback(detectIntent(msg), msg);
+    } catch(e2) {
+      if (bubble) { bubble.textContent = '⚠️ Service momentanément indisponible.'; bubble.id = ''; }
     }
   }
 
