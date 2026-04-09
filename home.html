@@ -27,13 +27,13 @@
 .lrh-sectors h2 { color: #1A2340 !important; }
 .lrh-sector-card { background: #ffffff !important; }
 .lrh-sector-name { color: #1A2340 !important; }
-.lrh-testimonials { background: #ffffff !important; }
-.lrh-testi-text { color: #1A2340 !important; }
-.lrh-testi-author { color: #6B7280 !important; }
+
+
+
 .lrh-section-title { color: #1A2340 !important; }
 .lrh-section-sub { color: #6B7280 !important; }
 /* Sections sombres → garder sombre */
-.lrh-hero, .lrh-cta-section, .lrh-qs { background: inherit; }
+.lrh-hero { background: inherit; }
 </style>
 
 <style>
@@ -394,9 +394,14 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
   z-index: 3;
 }
-.lrh-bubble-1 { top: 10%; right: 0; animation-delay: 0s; }
-.lrh-bubble-2 { top: 50%; left: 0; transform: translateY(-50%); animation-delay: -1s; }
-.lrh-bubble-3 { bottom: 10%; right: 0; animation-delay: -2s; }
+.lrh-bubble-1 { top: 2%; right: 0; animation-delay: 0s; }
+.lrh-bubble-2 { top: 18%; left: 0; animation-delay: -1s; }
+.lrh-bubble-3 { top: 36%; right: 0; animation-delay: -2s; }
+.lrh-bubble-4 { top: 52%; left: 0; animation-delay: -3s; }
+.lrh-bubble-5 { top: 68%; right: 0; animation-delay: -4s; }
+.lrh-bubble-6 { top: 82%; left: 0; animation-delay: -5s; }
+.lrh-bubble-7 { bottom: 10%; right: 0; animation-delay: -6s; }
+.lrh-bubble-8 { bottom: 2%; left: 0; animation-delay: -7s; }
 @keyframes lrhBubble { 0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
 
 /* ══════════════════════════════
@@ -749,8 +754,8 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(0,82,204,0.2);
 }
-.lrh-why-item-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
-.lrh-why-item-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.lrh-why-item-title { font-size: 16px; font-weight: 700; color: #1A2340; margin-bottom: 5px; }
+.lrh-why-item-desc { font-size: 14px; color: #6B7280; line-height: 1.6; }
 
 .lrh-why-right {
   background: linear-gradient(135deg, #0A1628 0%, #0052CC 60%, #00D4FF 100%);
@@ -807,7 +812,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 }
 
 .lrh-qs-card {
-  background: var(--gray);
+  background: #F5F7FA;
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 28px 24px;
@@ -830,8 +835,8 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
   box-shadow: 0 4px 10px rgba(0,82,204,0.25);
 }
 .lrh-qs-icon { font-size: 28px; margin-bottom: 12px; }
-.lrh-qs-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
-.lrh-qs-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.lrh-qs-title { font-size: 15px; font-weight: 700; color: #1A2340; margin-bottom: 8px; line-height: 1.3; }
+.lrh-qs-desc { font-size: 13px; color: #6B7280; line-height: 1.65; }
 .lrh-qs-tag {
   display: inline-block;
   margin-top: 12px;
@@ -849,7 +854,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
   border: 1px solid rgba(0,82,204,0.1);
   border-radius: 16px;
 }
-.lrh-qs-cta-wrap p { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+.lrh-qs-cta-wrap p { font-size: 15px; color: #6B7280; margin-bottom: 16px; }
 .lrh-qs-cta-wrap a {
   display: inline-block;
   padding: 12px 28px;
@@ -881,14 +886,14 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 
       <!-- Gauche -->
       <div class="lrh-hero-left">
-        <div class="lrh-lang-badge">🇫🇷 FR &nbsp;·&nbsp; 🇬🇧 EN &nbsp;·&nbsp; 🇩🇪 DE &nbsp;·&nbsp; 🇮🇹 IT &nbsp;·&nbsp; 🇪🇸 ES &nbsp;·&nbsp; 🇵🇹 PT</div>
+        <div class="lrh-lang-badge">🇫🇷 FR &nbsp;·&nbsp; 🇬🇧 EN &nbsp;·&nbsp; 🇩🇪 DE &nbsp;·&nbsp; 🇮🇹 IT &nbsp;·&nbsp; 🇪🇸 ES &nbsp;·&nbsp; 🇵🇹 PT &nbsp;·&nbsp; 🇳🇱 NL &nbsp;·&nbsp; 🇵🇱 PL</div>
 
         <h1 class="lrh-h1">
           Votre commerce répond<br>
           <span class="lrh-grad">24h/24, 7j/7</span><br>
           sans vous.
         </h1>
-        <p class="lrh-sub">L'assistant IA qui répond aux questions de vos clients, gère vos services, horaires, FAQ et rendez-vous — en 6 langues, 24h/24. Pour tous les petits commerces d'Europe.</p>
+        <p class="lrh-sub">L'assistant IA qui répond aux questions de vos clients, gère vos services, horaires, FAQ et rendez-vous — en 8 langues, 24h/24. Pour tous les petits commerces d'Europe.</p>
         <p class="lrh-sub-en"><em>Answers questions, shares services, hours & pricing, books appointments — in 6 languages, 24/7.</em></p>
 
         <div class="lrh-ctas">
@@ -916,6 +921,11 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
         <div class="lrh-lang-bubble lrh-bubble-1">🇩🇪 Guten Tag!</div>
         <div class="lrh-lang-bubble lrh-bubble-2">🇫🇷 Bonjour !</div>
         <div class="lrh-lang-bubble lrh-bubble-3">🇬🇧 Hello!</div>
+        <div class="lrh-lang-bubble lrh-bubble-4">🇮🇹 Ciao!</div>
+        <div class="lrh-lang-bubble lrh-bubble-5">🇪🇸 ¡Hola!</div>
+        <div class="lrh-lang-bubble lrh-bubble-6">🇵🇹 Olá!</div>
+        <div class="lrh-lang-bubble lrh-bubble-7">🇳🇱 Hallo!</div>
+        <div class="lrh-lang-bubble lrh-bubble-8">🇵🇱 Dzień dobry!</div>
       </div>
 
     </div>
@@ -933,7 +943,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
         <div class="lrh-stat-label">Temps de réponse IA<br><span style="font-size:11px;color:#9ca3af;">AI response time</span></div>
       </div>
       <div class="lrh-stat">
-        <div class="lrh-stat-num">6</div>
+        <div class="lrh-stat-num">8</div>
         <div class="lrh-stat-label">Langues supportées<br><span style="font-size:11px;color:#9ca3af;">Languages supported</span></div>
       </div>
       <div class="lrh-stat">
@@ -1038,7 +1048,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
       <div class="lrh-feat-grid">
         <div class="lrh-feat-card">
           <div class="lrh-feat-icon">🌍</div>
-          <div class="lrh-feat-title">6 Langues automatiques</div>
+          <div class="lrh-feat-title">8 Langues automatiques</div>
           <div class="lrh-feat-title-en">6 automatic languages</div>
           <div class="lrh-feat-desc">FR, DE, IT, ES, EN, PT. L'IA détecte et répond dans la langue de votre client instantanément — sans aucune configuration.</div>
         </div>
@@ -1106,7 +1116,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
           <div class="lrh-step-num">3</div>
           <div class="lrh-step-title">L'IA travaille pour vous</div>
           <div class="lrh-step-title-en">AI works for you</div>
-          <div class="lrh-step-desc">Vos clients obtiennent des réponses instantanées à leurs questions, peuvent prendre RDV — même à 3h du matin, en 6 langues.</div>
+          <div class="lrh-step-desc">Vos clients obtiennent des réponses instantanées à leurs questions, peuvent prendre RDV — même à 3h du matin, en 8 langues.</div>
         </div>
       </div>
     </div>

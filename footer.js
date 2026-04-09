@@ -22,10 +22,10 @@
               <span style="font-size:16px;font-weight:800;color:#fff;">LocalReply</span>
             </div>
             <p style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:280px;">
-              L'assistant IA 24/7 pour les petits commerces en Europe. 6 langues, prise de RDV automatique, FAQ intelligente.
+              L'assistant IA 24/7 pour les petits commerces en Europe. 8 langues, prise de RDV automatique, FAQ intelligente.
             </p>
             <div style="margin-top:16px;font-size:13px;color:rgba(255,255,255,0.35);">
-              🇫🇷 FR &nbsp;·&nbsp; 🇬🇧 EN &nbsp;·&nbsp; 🇩🇪 DE &nbsp;·&nbsp; 🇮🇹 IT &nbsp;·&nbsp; 🇪🇸 ES &nbsp;·&nbsp; 🇵🇹 PT
+              🇫🇷 FR · 🇬🇧 EN · 🇩🇪 DE · 🇮🇹 IT · 🇪🇸 ES · 🇵🇹 PT · 🇳🇱 NL · 🇵🇱 PL
             </div>
           </div>
 
