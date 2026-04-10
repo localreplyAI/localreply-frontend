@@ -682,17 +682,22 @@ async function lrcSendText(text) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
 
     // Lire le stream SSE
+    console.log('[Demo] Stream started, BUSINESS_ID:', BUSINESS_ID);
     const reader = res.body.getReader();
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
     let suggs = [];
     let done = false;
+    let chunkCount = 0;
 
     while (!done) {
       const result = await reader.read();
       done = result.done;
       if (result.value) {
-        buffer += decoder.decode(result.value, {stream: !result.done});
+        const decoded = decoder.decode(result.value, {stream: !result.done});
+        chunkCount++;
+        console.log('[Demo] Chunk', chunkCount, ':', decoded.slice(0, 300));
+        buffer += decoded;
       }
 
       // Traiter toutes les lignes complètes dans le buffer

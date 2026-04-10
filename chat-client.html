@@ -938,9 +938,11 @@ async function lrcSendText(text) {
 
     if (!res.ok) throw new Error('HTTP ' + res.status);
 
+    console.log('[LocalReply] Stream started, businessId:', businessId || 'BUSINESS_ID');
     const reader = res.body.getReader();
     const decoder = new TextDecoder('utf-8');
     let buffer = '';
+    let chunkCount = 0;
     let suggs = [];
     let emailCaptureId = null;
     let streamDone = false;
@@ -949,7 +951,10 @@ async function lrcSendText(text) {
       const result = await reader.read();
       streamDone = result.done;
       if (result.value) {
-        buffer += decoder.decode(result.value, {stream: !result.done});
+        const decoded = decoder.decode(result.value, {stream: !result.done});
+        chunkCount++;
+        console.log('[LocalReply] Chunk', chunkCount, ':', decoded.slice(0, 200));
+        buffer += decoded;
       }
 
       const lines = buffer.split('\n');
