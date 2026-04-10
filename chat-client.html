@@ -467,7 +467,7 @@
           <span id="lrcStatusText">Assistant IA · En ligne 24/7</span>
         </div>
       </div>
-      <div class="lrc-header-lang-flag" id="lrcLangFlag">🌍</div>
+
     </div>
 
     <!-- LOADING -->
@@ -958,7 +958,6 @@ async function lrcSendText(text) {
     if (langMatch) {
       const flagMap = {bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸'};
       const flag = flagMap[langMatch[1].toLowerCase()];
-      if (flag) { const lf = document.getElementById('lrcLangFlag'); if (lf) lf.textContent = flag; }
     }
     
     // Suggestions
@@ -1192,7 +1191,6 @@ async function lrcInit() {
   const greeting = GREETINGS[detectedLang] || 'Bonjour';
   const placeholder = PLACEHOLDERS[detectedLang] || 'Posez votre question...';
 
-  document.getElementById('lrcLangFlag').textContent = flag;
   document.getElementById('lrcInput').placeholder = placeholder;
 
   if (!slug) {
