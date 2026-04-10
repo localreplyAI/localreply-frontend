@@ -910,147 +910,74 @@ async function lrcSendText(text) {
   addMsg(text, true);
   showTyping();
 
-  // Créer bulle IA
+  // Créer bulle IA avec animation chargement
   removeTyping();
   const c = document.getElementById('lrcMessages');
   const streamRow = document.createElement('div');
   streamRow.className = 'lrc-msg-row';
-  streamRow.innerHTML = '<div class="lrc-msg-avatar">' + bizAvatar + '</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream">&nbsp;</div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>';
+  streamRow.innerHTML = '<div class="lrc-msg-avatar">' + bizAvatar + '</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream">···</div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>';
   c.appendChild(streamRow);
   const bubble = document.getElementById('lrcStream');
-  let full = '';
+  c.scrollTop = c.scrollHeight;
 
-  function cleanStreamText(t) {
-    return t
-      .replace(/\[SUGGESTIONS:[^\]]*\]?/g, '')
-      .replace(/\[EMAIL_CAPTURE:[^\]]*\]/g, '')
-      .replace(/\[ESCALATE[^\]]*\]/g, '')
-      .replace(/\[FEEDBACK[^\]]*\]/g, '')
-      .trim();
-  }
+  // Animation points de chargement
+  let dots = 0;
+  const dotsInterval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    if (bubble) bubble.textContent = '·'.repeat(dots + 1) || '·';
+  }, 400);
 
   try {
-    const res = await fetch(API + '/api/chat/stream', {
+    const res = await fetch(API + '/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource() })
     });
-
+    
+    clearInterval(dotsInterval);
+    
     if (!res.ok) throw new Error('HTTP ' + res.status);
-
-    console.log('[LocalReply] Stream started, businessId:', businessId || 'BUSINESS_ID');
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder('utf-8');
-    let buffer = '';
-    let chunkCount = 0;
-    let suggs = [];
-    let emailCaptureId = null;
-    let streamDone = false;
-
-    while (!streamDone) {
-      const result = await reader.read();
-      streamDone = result.done;
-      if (result.value) {
-        const decoded = decoder.decode(result.value, {stream: !result.done});
-        chunkCount++;
-        console.log('[LocalReply] Chunk', chunkCount, ':', decoded.slice(0, 200));
-        buffer += decoded;
-      }
-
-      const lines = buffer.split('\n');
-      buffer = lines.pop() || '';
-
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed.startsWith('data:')) continue;
-        const raw = trimmed.slice(5).trim();
-        if (!raw) continue;
-
-        try {
-          const obj = JSON.parse(raw);
-
-          if (typeof obj.text === 'string' && obj.text) {
-            full += obj.text;
-            const display = cleanStreamText(full);
-            if (bubble && display) {
-              bubble.textContent = display;
-              c.scrollTop = c.scrollHeight;
-            }
-          }
-
-          if (obj.done === true) {
-            suggs = obj.suggestions || [];
-            if (obj.email_capture) emailCaptureId = obj.email_capture.question_id;
-          }
-        } catch (_) {}
-      }
-    }
-
-    // Traiter buffer restant
-    if (buffer.trim().startsWith('data:')) {
-      try {
-        const obj = JSON.parse(buffer.trim().slice(5).trim());
-        if (obj.text) full += obj.text;
-        if (obj.done && obj.suggestions) suggs = obj.suggestions;
-      } catch (_) {}
-    }
-
-    // Détecter EMAIL_CAPTURE dans le texte
-    const emailMatch = full.match(/\[EMAIL_CAPTURE:question_id=(\d+)\]/);
-    if (emailMatch) {
-      emailCaptureId = emailMatch[1];
-      currentEscalationQuestionId = emailCaptureId;
-    }
-
-    // Affichage final
-    const finalText = cleanStreamText(full);
+    const data = await res.json();
+    const msg = data.message || data.response || '';
+    
     if (bubble) {
-      bubble.textContent = finalText || 'Désolé, je n\'ai pas pu répondre.';
+      bubble.textContent = msg || 'Désolé, je n\'ai pas pu répondre.';
       bubble.id = '';
     }
     const timeEl = document.getElementById('lrcStreamTime');
     if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
-
+    
     // Email capture
-    if (emailCaptureId) {
-      currentEscalationQuestionId = emailCaptureId;
+    if (data.email_capture) {
+      currentEscalationQuestionId = data.email_capture.question_id;
       setTimeout(() => openEmailCapture(), 400);
     }
-
-    // Détection langue
-    const langMatch = finalText.match(/\b(bonjour|hallo|hello|ciao|hola)\b/i);
+    
+    // Langue
+    const langMatch = msg.match(/\b(bonjour|hallo|hello|ciao|hola)\b/i);
     if (langMatch) {
-      const flagMap = {bonjour:'🇫🇷', hallo:'🇩🇪', hello:'🇬🇧', ciao:'🇮🇹', hola:'🇪🇸'};
+      const flagMap = {bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸'};
       const flag = flagMap[langMatch[1].toLowerCase()];
       if (flag) { const lf = document.getElementById('lrcLangFlag'); if (lf) lf.textContent = flag; }
     }
-
+    
     // Suggestions
-    if (suggs.length > 0) {
-      renderSuggestionsFromBackend(suggs);
+    if (data.suggestions && data.suggestions.length) {
+      renderSuggestionsFromBackend(data.suggestions);
     } else {
-      renderSuggestionsFallback(detectIntent(finalText + ' ' + text), finalText);
+      renderSuggestionsFallback(detectIntent(msg + ' ' + text), msg);
     }
-
+    
   } catch(err) {
-    console.warn('Stream failed:', err.message);
-    try {
-      if (bubble) bubble.textContent = '...';
-      const r2 = await fetch(API + '/api/chat', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource() })
-      });
-      const data = await r2.json();
-      const msg = data.message || data.response || '';
-      if (bubble) { bubble.textContent = msg || 'Service indisponible.'; bubble.id = ''; }
-      const timeEl2 = document.getElementById('lrcStreamTime');
-      if (timeEl2) { timeEl2.textContent = now(); timeEl2.id = ''; }
-      if (data.suggestions && data.suggestions.length) renderSuggestionsFromBackend(data.suggestions);
-      else renderSuggestionsFallback(detectIntent(msg), msg);
-    } catch(e2) {
-      if (bubble) { bubble.textContent = '⚠️ Service momentanément indisponible.'; bubble.id = ''; }
+    clearInterval(dotsInterval);
+    console.warn('Chat error:', err.message);
+    if (bubble) {
+      bubble.textContent = '⚠️ Service momentanément indisponible.';
+      bubble.id = '';
     }
+    const timeEl = document.getElementById('lrcStreamTime');
+    if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
+    renderSuggestionsFallback('default', '')
   }
 
   isSending = false;

@@ -643,150 +643,60 @@ async function lrcSendText(text) {
 
   showTyping();
 
-  // Créer la bulle IA immédiatement
+  // Afficher indicateur de chargement
   removeTyping();
   const c = document.getElementById('lrcMessages');
   const row = document.createElement('div');
   row.className = 'lrc-msg-row';
-  row.innerHTML = '<div class="lrc-msg-avatar">🤖</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream">&nbsp;</div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>';
+  row.innerHTML = '<div class="lrc-msg-avatar">🤖</div><div class="lrc-msg-content"><div class="lrc-bubble ai" id="lrcStream">···</div><div class="lrc-msg-time" id="lrcStreamTime"></div></div>';
   c.appendChild(row);
   const bubble = document.getElementById('lrcStream');
-  let full = '';
+  c.scrollTop = c.scrollHeight;
 
-  function cleanText(t) {
-    return t
-      .replace(/\[SUGGESTIONS:[^\]]*\]?/g, '')
-      .replace(/\[EMAIL_CAPTURE:[^\]]*\]/g, '')
-      .replace(/\[ESCALATE[^\]]*\]/g, '')
-      .replace(/\[FEEDBACK[^\]]*\]/g, '')
-      .trim();
-  }
-
-  function parseSuggestions(t) {
-    const m = t.match(/\[SUGGESTIONS:"([^"]*?)","([^"]*?)","([^"]*?)"\]/);
-    if (m) return [m[1], m[2], m[3]];
-    const m2 = t.match(/\[SUGGESTIONS:"([^"]*?)","([^"]*?)"\]/);
-    if (m2) return [m2[1], m2[2]];
-    const m3 = t.match(/\[SUGGESTIONS:"([^"]*?)"\]/);
-    if (m3) return [m3[1]];
-    return [];
-  }
+  // Animation points de chargement
+  let dots = 0;
+  const dotsInterval = setInterval(() => {
+    dots = (dots + 1) % 4;
+    if (bubble) bubble.textContent = '·'.repeat(dots + 1) || '·';
+  }, 400);
 
   try {
-    const res = await fetch(API + '/api/chat/stream', {
+    const r = await fetch(API + '/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ message: text, business_id: BUSINESS_ID, user_id: sessionUserId, source: 'demo' })
     });
-
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-
-    // Lire le stream SSE
-    console.log('[Demo] Stream started, BUSINESS_ID:', BUSINESS_ID);
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder('utf-8');
-    let buffer = '';
-    let suggs = [];
-    let done = false;
-    let chunkCount = 0;
-
-    while (!done) {
-      const result = await reader.read();
-      done = result.done;
-      if (result.value) {
-        const decoded = decoder.decode(result.value, {stream: !result.done});
-        chunkCount++;
-        console.log('[Demo] Chunk', chunkCount, ':', decoded.slice(0, 300));
-        buffer += decoded;
-      }
-
-      // Traiter toutes les lignes complètes dans le buffer
-      const lines = buffer.split('\n');
-      // Garder la dernière ligne incomplète dans le buffer
-      buffer = lines.pop() || '';
-
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed.startsWith('data:')) continue;
-        const raw = trimmed.slice(5).trim();
-        if (!raw) continue;
-
-        try {
-          const obj = JSON.parse(raw);
-
-          // Token texte
-          if (typeof obj.text === 'string' && obj.text) {
-            full += obj.text;
-            const display = cleanText(full);
-            if (bubble && display) {
-              bubble.textContent = display;
-              c.scrollTop = c.scrollHeight;
-            }
-          }
-
-          // Event done avec suggestions
-          if (obj.done === true) {
-            suggs = obj.suggestions || [];
-          }
-        } catch (_) {
-          // ligne non-JSON, ignorer
-        }
-      }
-    }
-
-    // Traiter le buffer restant
-    if (buffer.trim().startsWith('data:')) {
-      try {
-        const obj = JSON.parse(buffer.trim().slice(5).trim());
-        if (obj.text) full += obj.text;
-        if (obj.done && obj.suggestions) suggs = obj.suggestions;
-      } catch (_) {}
-    }
-
-    // Affichage final
-    const finalText = cleanText(full);
+    
+    clearInterval(dotsInterval);
+    
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    const msg = data.message || data.response || '';
+    
     if (bubble) {
-      bubble.textContent = finalText || 'Désolé, je n\'ai pas pu répondre.';
+      bubble.textContent = msg || 'Désolé, je n\'ai pas pu répondre.';
       bubble.id = '';
     }
     const timeEl = document.getElementById('lrcStreamTime');
     if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
-
-    // Suggestions
-    if (suggs.length > 0) {
-      renderSuggestionsFromBackend(suggs);
+    
+    if (data.suggestions && data.suggestions.length) {
+      renderSuggestionsFromBackend(data.suggestions);
     } else {
-      const extracted = parseSuggestions(full);
-      if (extracted.length > 0) renderSuggestionsFromBackend(extracted);
-      else renderSuggestions(detectIntent(finalText + ' ' + text));
+      renderSuggestions(detectIntent(msg + ' ' + text));
     }
-
+    
   } catch(err) {
-    console.warn('Stream failed:', err.message);
-    // Fallback /api/chat
-    try {
-      if (bubble) bubble.textContent = '...';
-      const r2 = await fetch(API + '/api/chat', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ message: text, business_id: BUSINESS_ID, user_id: sessionUserId })
-      });
-      const data = await r2.json();
-      const msg = data.message || data.response || '';
-      if (bubble) { bubble.textContent = msg || 'Service indisponible.'; bubble.id = ''; }
-      const timeEl = document.getElementById('lrcStreamTime');
-      if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
-      const s = data.suggestions || [];
-      if (s.length) renderSuggestionsFromBackend(s);
-      else renderSuggestions(detectIntent(msg));
-    } catch(e2) {
-      if (bubble) { bubble.textContent = '⚠️ Service momentanément indisponible.'; bubble.id = ''; }
-      console.error('Fallback also failed:', e2.message);
+    clearInterval(dotsInterval);
+    console.warn('Chat error:', err.message);
+    if (bubble) {
+      bubble.textContent = '⚠️ Service momentanément indisponible.';
+      bubble.id = '';
     }
+    const timeEl = document.getElementById('lrcStreamTime');
+    if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
   }
 
-    isSending = false;
-  document.getElementById('lrcSendBtn').disabled = false;
   document.getElementById('lrcInput').focus();
 
   if (userMsgCount >= MAX_MSGS) setTimeout(showSubscribePopup, 800);
