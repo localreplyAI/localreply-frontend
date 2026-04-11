@@ -394,6 +394,28 @@
   .lrc-card { max-width: 100%; height: 100dvh; border-radius: 0; }
 }
 
+/* Landscape mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .lrc-page { padding: 0; align-items: stretch; }
+  .lrc-card { 
+    max-width: 100%; 
+    height: 100dvh; 
+    border-radius: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+  }
+  .lrc-header { padding: 8px 16px; min-height: 48px; }
+  .lrc-header-avatar { width: 32px; height: 32px; font-size: 16px; }
+  .lrc-header-name { font-size: 13px; }
+  .lrc-header-status { display: none; }
+  .lrc-messages { padding: 8px 12px; }
+  .lrc-suggestions { padding: 6px 12px; flex-wrap: nowrap; overflow-x: auto; }
+  .lrc-suggestions::-webkit-scrollbar { display: none; }
+  .lrc-input-area { padding: 8px 12px; }
+  .lrc-rdv-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .lrc-footer { display: none; }
+}
+
 /* ── FORMULAIRE RDV ── */
 .lrc-rdv-form {
   padding: 16px;
@@ -801,6 +823,7 @@ let detectedLang = 'fr';
 let sessionUserId = Math.floor(Math.random() * 2000000000);
 let businessId = null;
 let bizAvatar = '💬';
+let conversationId = null; // mémoriser l'ID de conversation pour la session
 
 // Récupérer le slug depuis l'URL
 function getSlug() {
@@ -849,6 +872,14 @@ function detectIntent(text) {
   return 'default';
 }
 
+function linkify(text) {
+  // Rendre les URLs cliquables dans les réponses IA
+  return text.replace(/(https?:\/\/[^\s<>"]+)/g, function(url) {
+    const display = url.length > 40 ? url.slice(0, 37) + '...' : url;
+    return '<a href="' + url + '" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;word-break:break-all;">' + display + '</a>';
+  });
+}
+
 function addMsg(text, isUser=false) {
   const c = document.getElementById('lrcMessages');
   const row = document.createElement('div');
@@ -856,7 +887,10 @@ function addMsg(text, isUser=false) {
   if (isUser) {
     row.innerHTML = `<div class="lrc-msg-content"><div class="lrc-bubble user">${esc(text)}</div><div class="lrc-msg-time">${now()}</div></div>`;
   } else {
-    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${text}</div><div class="lrc-msg-time">${now()}</div></div>`;
+    // Pour les messages IA : rendre les URLs cliquables
+    const safeText = esc(text);
+    const linkedText = linkify(safeText);
+    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${linkedText}</div><div class="lrc-msg-time">${now()}</div></div>`;
   }
   c.appendChild(row);
   c.scrollTop = c.scrollHeight;
@@ -931,17 +965,19 @@ async function lrcSendText(text) {
     const res = await fetch(API + '/api/chat', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource() })
+      body: JSON.stringify({ message: text, business_id: businessId, user_id: sessionUserId, source: getSource(), conversation_id: conversationId })
     });
     
     clearInterval(dotsInterval);
     
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
+    // Mémoriser conversation_id pour toute la session
+    if (data.conversation_id) conversationId = data.conversation_id;
     const msg = data.message || data.response || '';
     
     if (bubble) {
-      bubble.textContent = msg || 'Désolé, je n\'ai pas pu répondre.';
+      bubble.innerHTML = linkify(esc(msg)) || 'Désolé, je n\'ai pas pu répondre.';
       bubble.id = '';
     }
     const timeEl = document.getElementById('lrcStreamTime');
@@ -958,6 +994,14 @@ async function lrcSendText(text) {
     if (langMatch) {
       const flagMap = {bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸'};
       const flag = flagMap[langMatch[1].toLowerCase()];
+    }
+    
+    // Auto-ouvrir formulaire RDV si l'IA collecte des infos de réservation
+    const rdvMode = bizConfig && bizConfig.rdv_mode;
+    const aiWantsRdv = /rendez.vous|réserver|booking|appointment|créneau|disponib/i.test(msg);
+    const userWantsRdv = /rdv|rendez.vous|réserv|book|appointment|créneau|prendre un/i.test(text);
+    if (rdvMode === 'google' && userWantsRdv && aiWantsRdv && document.getElementById('lrcRdvForm').style.display === 'none') {
+      setTimeout(() => openRdvForm(), 500);
     }
     
     // Suggestions
