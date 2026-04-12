@@ -198,7 +198,7 @@
           <div id="chartLock" style="display:none;position:absolute;inset:0;background:rgba(10,18,40,0.85);backdrop-filter:blur(6px);border-radius:10px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:16px;">
             <div style="font-size:24px;margin-bottom:6px;">🔒</div>
             <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Réservé au Plan Pro</div>
-            <a href="/abonnement" style="font-size:12px;color:#F59E0B;font-weight:600;text-decoration:none;">Passer au Pro →</a>
+            <a href="/abonnement" style="font-size:12px;color:#00D4FF;font-weight:600;text-decoration:none;">Passer au Pro →</a>
           </div>
         </div>
       </div>
@@ -214,7 +214,7 @@
             <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Résumés IA quotidiens par email</div>
             <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>90 jours d'historique</div>
           </div>
-          <a href="/abonnement" style="display:block;padding:14px 24px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,0.35);">⭐ Passer au Plan Pro — 49€/mois</a>
+          <a href="/abonnement" style="display:block;padding:14px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(0,82,204,0.35);">⭐ Passer au Plan Pro — 49€/mois</a>
         </div>
       </div>
     </div>
@@ -615,8 +615,9 @@ async function loadSystemStatus(config, calConnected, isPro) {
   el.innerHTML = [
     sRow(hasConfig,'Configuration IA', hasConfig?'Complète':'À compléter', hasConfig?'#10B981':'#F59E0B'),
     sRow(calConnected,'Google Calendar', calConnected?'Connecté':'Non connecté', calConnected?'#10B981':'rgba(255,255,255,0.3)'),
-    sRow(true,'Assistant IA','Actif 24/7','#10B981'),
-    sRow(true,'Abonnement', isPro?'Pro ⭐':'Standard', isPro?'#F59E0B':'#00D4FF'),
+    sRow(true,'Assistant IA 24/7','Actif · 8 langues','#10B981'),
+    sRow(effectivePro,'Analytics','Analytics 90j inclus',effectivePro?'#10B981':'rgba(255,255,255,0.3)'),
+    sRow(true,'Abonnement', effectivePro?(isTrial?'Essai gratuit 🎁':'Pro ⭐'):'Standard 📦', effectivePro?'#F59E0B':'#00D4FF'),
   ].join('');
   const tips = [
     'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
@@ -730,7 +731,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  const isPro = subData?.plan==='pro' || subData?.plan==='trial';
+  const isPro = subData?.plan==='pro';
+  const isTrial = subData?.status==='trialing';
+  const effectivePro = isPro || isTrial; // trial = accès Pro complet
   const calConnected = calData?.connected || false;
   // Récupérer le slug — depuis config ou fallback API simple
   let slug = configData?.business?.slug || localStorage.getItem('business_slug') || '';
@@ -748,14 +751,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
   const sn=document.getElementById('sidebarBusinessName'); if(sn&&configData?.business?.name) sn.textContent=configData.business.name;
   const bn=document.getElementById('businessName'); if(bn&&configData?.business?.name) bn.textContent=configData.business.name;
-  const sp=document.getElementById('sidebarPlan'); if(sp) sp.textContent=subData?.plan==='pro'?'⭐ Plan Pro':subData?.plan==='trial'?'🎁 Essai gratuit':'Plan Standard';
+  const sp=document.getElementById('sidebarPlan');
+  if(sp) {
+    const p = subData?.plan || 'standard';
+    const s = subData?.status || '';
+    if (s === 'trialing') sp.textContent = '🎁 Essai gratuit — ' + (p==='pro'?'Pro':'Standard');
+    else if (p === 'pro') sp.textContent = '⭐ Plan Pro';
+    else sp.textContent = '📦 Plan Standard';
+  }
   const sl=document.getElementById('sidebarLogo'); if(sl) sl.textContent=icons[configData?.business?.business_type]||'🏢';
   if(slug) setupLinks(slug);
 
   // Score santé IA (instantané, pas d'appel API)
   computeHealthScore(configData, calConnected);
   renderOnboarding(configData, calConnected);
-  loadSystemStatus(configData, calConnected, isPro);
+  loadSystemStatus(configData, calConnected, effectivePro);
 
   // Métriques + analytics en parallèle
   const [convData, aptData, reqData] = await Promise.all([
@@ -787,6 +797,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderActivity(wC, apts);
 
   // Analytics (après le reste)
-  await loadAnalyticsPreview(isPro);
+  await loadAnalyticsPreview(effectivePro);
 });
 </script>
