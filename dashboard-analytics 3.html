@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics — LocalReply</title>
+  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+  </style>
+</head>
+<body>
+<script>
+// Guard abonnement global — bloque l'accès si pas d'abonnement actif
+(async function() {
+  const token = localStorage.getItem('auth_token');
+  const userId = localStorage.getItem('user_id');
+  if (!token || !userId) return; // laisse le guard principal gérer
+  try {
+    const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!r.ok) return;
+    const sub = await r.json();
+    const plan = sub.plan || 'none';
+    const status = sub.status || 'inactive';
+    const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
+    if (blocked) window.location.href = '/choisir-plan?new=true';
+  } catch(e) {}
+})();
+</script>
+<div id="dashboardWrapper" style="display: flex; min-height: 100vh; background:#0A1628; position: relative; overflow-x: hidden;">
+  
+  <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 20s infinite ease-in-out; pointer-events: none;"></div>
+  <div style="position: absolute; bottom: -150px; left: -150px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 82, 204, 0.15) 0%, transparent 70%); border-radius: 50%; animation: float 25s infinite ease-in-out reverse; pointer-events: none;"></div>
+  
+    <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+    <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;"><span id="sidebarLogo">💇</span></div>
+        <div style="flex:1;min-width:0;">
+          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
+        </div>
+      </div>
+    </div>
+    <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:600;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+    </nav>
+    <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
+            <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
+        <span>🌐</span><span>Retour au site</span>
+      </a>
+<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+    </div>
+  </div>
+
+  <div id="bottomNav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 22, 40, 0.98); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 0; z-index: 9999;">
+    <div style="display: flex; justify-content: space-around; align-items: center; max-width: 600px; margin: 0 auto;">
+      <a href="/dashboard" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
+        <span style="font-size: 24px;">🏠</span><span style="font-size: 11px;">Accueil</span>
+      </a>
+      <a href="/dashboard-configuration" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
+        <span style="font-size: 24px;">⚙️</span><span style="font-size: 11px;">Config</span>
+      </a>
+      <a href="/dashboard-conversations" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
+        <span style="font-size: 24px;">💬</span><span style="font-size: 11px;">Messages</span>
+      </a>
+      <a href="/dashboard-rendez-vous" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
+        <span style="font-size: 24px;">📅</span><span style="font-size: 11px;">RDV</span>
+      </a>
+      <button onclick="toggleMobileMenu()" style="display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 12px; cursor: pointer;">
+        <span style="font-size: 24px;">☰</span><span style="font-size: 11px;">Plus</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 9997; opacity: 0; transition: opacity 0.3s;"></div>
+  <div id="mobileMenuPopup" style="display: none; position: fixed; bottom: 70px; right: 10px; background: rgba(10,22,40,0.98); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); padding: 10px; z-index: 9998; transform: translateY(20px); opacity: 0; transition: all 0.3s;">
+    <a href="/dashboard-analytics" style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; text-decoration: none; color: rgba(255,255,255,0.9); white-space: nowrap;"><span style="font-size: 20px;">📈</span><span>Analytics</span></a>
+    <a href="/mon-compte" style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; text-decoration: none; color: rgba(255,255,255,0.9); white-space: nowrap;"><span style="font-size: 20px;">👤</span><span>Mon compte</span></a>
+    <a href="/abonnement" style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; text-decoration: none; color: rgba(255,255,255,0.9); white-space: nowrap;"><span style="font-size: 20px;">💳</span><span>Abonnement</span></a>
+    <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 8px 0;"></div>
+    <button onclick="logout()" style="width: 100%; display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-radius: 12px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.5); color: #EF4444; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap;"><span style="font-size: 20px;">🚪</span><span>Déconnexion</span></button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="mainContent" style="flex: 1; padding: 40px; overflow-y: auto; position: relative; z-index: 1;">
+
+    <!-- TITRE -->
+    <div style="margin-bottom: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 20px; margin-bottom: 20px;">
+        <div>
+          <h1 style="font-size: 42px; font-weight: 700; background: linear-gradient(135deg, #FFFFFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px 0; letter-spacing: -1px;">Analytics</h1>
+          <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); margin: 0;">Analysez les performances de votre assistant IA</p>
+        </div>
+        <div style="display: flex; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
+          <style>
+            .period-btn { padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+            .period-btn.active { background: linear-gradient(135deg, #0052CC, #00D4FF) !important; color: #FFFFFF !important; }
+          </style>
+          <button id="btn7days" class="period-btn active" onclick="switchPeriod(7)">7 jours</button>
+          <button id="btn30days" class="period-btn" onclick="switchPeriod(30)">30 jours</button>
+          <button id="btn90days" class="period-btn" onclick="switchPeriod(90)">90 jours</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENU ANALYTICS — flouté si non-PRO -->
+    <div id="analyticsContent" style="position: relative;">
+
+      <!-- OVERLAY PRO (caché par défaut, affiché si non-PRO) -->
+      <div id="proOverlay" style="display: none; position: absolute; inset: 0; z-index: 10; border-radius: 20px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); background: rgba(10,22,40,0.7); align-items: center; justify-content: center;">
+        <div style="background: linear-gradient(145deg, rgba(10,26,56,0.98), rgba(5,15,35,0.98)); border: 1px solid rgba(245,158,11,0.3); border-radius: 24px; padding: 48px 40px; text-align: center; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+          <div style="font-size: 56px; margin-bottom: 16px;">📊</div>
+          <div style="font-family: sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;">Analytics avancés</div>
+          <p style="font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 28px;">
+            Débloquez les graphiques détaillés, les questions fréquentes, les taux de conversion et 90 jours d'historique avec le <strong style="color: #F59E0B;">Plan Pro</strong>.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left;">
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> Graphiques conversations & RDV</div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> Questions les plus posées</div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> Taux de conversion en RDV</div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> 90 jours d'historique</div>
+          </div>
+          <a href="/abonnement" style="display: block; padding: 16px 32px; background: linear-gradient(135deg, #0052CC, #00D4FF); border-radius: 14px; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 24px rgba(245,158,11,0.4); transition: all 0.3s;">
+            ⭐ Passer au Plan Pro — 49€/mois
+          </a>
+          <div style="margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.3);">Sans engagement • Annulable à tout moment</div>
+        </div>
+      </div>
+
+      <!-- MÉTRIQUES -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px;">
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+          <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;">💬 Conversations</div>
+          <div style="font-size: 36px; font-weight: 700; color: #00D4FF; margin-bottom: 8px;" id="metricConversations">-</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Total conversations IA</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+          <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;">📅 Rendez-vous</div>
+          <div style="font-size: 36px; font-weight: 700; color: #10B981; margin-bottom: 8px;" id="metricAppointments">-</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.5);">RDV créés par l'IA</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+          <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;">📈 Conversion</div>
+          <div style="font-size: 36px; font-weight: 700; color: #F59E0B; margin-bottom: 8px;" id="metricConversion">-</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Taux de conversion en RDV</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+          <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;">⚡ Performance IA</div>
+          <div style="font-size: 36px; font-weight: 700; color: #8B5CF6; margin-bottom: 8px;" id="metricAI">-</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.5);">Résolution automatique</div>
+        </div>
+      </div>
+
+      <!-- GRAPHIQUE -->
+      <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; margin-bottom: 35px;">
+        <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 25px 0;">📈 Évolution</h2>
+        <canvas id="analyticsChart" style="max-height: 300px;"></canvas>
+      </div>
+
+      <!-- QUESTIONS + PERFORMANCE -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">💬 Questions fréquentes</h2>
+          <div id="topQuestions"></div>
+        </div>
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+          <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">⚡ Performance détaillée</h2>
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Résolution automatique</div>
+              <div style="font-size: 16px; font-weight: 700; color: #10B981;" id="perfAuto">-</div>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+              <div id="barAuto" style="height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 10px; width: 0%; transition: width 1s ease;"></div>
+            </div>
+          </div>
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <div style="font-size: 14px; color: rgba(255,255,255,0.7);">Transféré au business</div>
+              <div style="font-size: 16px; font-weight: 700; color: #F59E0B;" id="perfEscalated">-</div>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+              <div id="barEscalated" style="height: 100%; background: linear-gradient(90deg, #F59E0B, #D97706); border-radius: 10px; width: 0%; transition: width 1s ease;"></div>
+            </div>
+          </div>
+          <div style="background: rgba(0,212,255,0.1); border-radius: 12px; padding: 15px; border-left: 3px solid #00D4FF; margin-top: 20px;">
+            <div style="font-size: 13px; color: #00D4FF; font-weight: 600; margin-bottom: 8px;">💡 Conseil</div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6;">Un taux de résolution automatique élevé indique que votre IA est bien configurée et répond efficacement aux besoins de vos clients.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOURCES TRAFIC + FEEDBACK -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; margin-top: 25px;">
+
+        <!-- Sources trafic -->
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+          <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">🔗 Sources de trafic</h2>
+          <div id="trafficSources">
+            <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
+          </div>
+        </div>
+
+        <!-- Feedback clients -->
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+          <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">💬 Feedback clients</h2>
+          <div id="clientFeedback">
+            <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!-- DERNIER SUMMARY IA -->
+      <div style="background: linear-gradient(135deg, rgba(0,82,204,0.2), rgba(0,212,255,0.1)); backdrop-filter: blur(20px); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px; padding: 30px; margin-top: 25px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0;">📋 Dernier résumé IA</h2>
+          <span id="summaryPeriodLabel" style="font-size:12px;color:rgba(255,255,255,0.5);background:rgba(0,212,255,0.1);padding:4px 12px;border-radius:100px;border:1px solid rgba(0,212,255,0.2);">Chargement...</span>
+        </div>
+        <div id="lastSummary">
+          <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; }
+@keyframes float { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-30px) scale(1.05);} }
+button:hover { transform: translateY(-2px); }
+.sbnav:hover{background:rgba(255,255,255,0.06)!important;color:#fff!important;}
+.sbnav.active{background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2))!important;border:1px solid rgba(0,212,255,0.2)!important;color:#fff!important;}
+.nav-item:hover { background: rgba(255,255,255,0.1) !important; color: #FFFFFF !important; }
+.nav-item.active { background: linear-gradient(135deg, #0052CC, #00D4FF) !important; color: #FFFFFF !important; }
+#analyticsContent.blurred > *:not(#proOverlay) { filter: blur(4px); pointer-events: none; user-select: none; }
+@media (max-width: 768px) {
+  #sidebar { display: none !important; }
+  #bottomNav { display: block !important; }
+  #mainContent { padding: 20px 15px 100px !important; }
+  #mainContent h1 { font-size: 32px !important; }
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script>
+const token = localStorage.getItem('auth_token');
+const businessId = localStorage.getItem('business_id');
+if (!token || !businessId) window.location.href = '/auth';
+
+const API_BASE_URL = 'https://localreply-api.onrender.com';
+let currentPeriod = 7;
+let analyticsChart = null;
+let isPro = false;
+
+function getUserIdFromToken() {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.sub || payload.user_id || payload.id;
+  } catch { return null; }
+}
+const userId = getUserIdFromToken();
+
+async function apiRequest(endpoint, method = 'GET', data = null) {
+  const options = {
+    method,
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+  };
+  if (data && method !== 'GET') options.body = JSON.stringify(data);
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(JSON.stringify(error.detail || error));
+  }
+  return response.json();
+}
+
+// ── Vérification plan PRO ──
+async function checkProAccess() {
+  try {
+    const sub = await apiRequest(`/api/billing/subscription/${userId}`);
+    const plan = sub?.plan || 'standard';
+    isPro = (plan === 'pro');
+    if (!isPro) {
+      document.getElementById('analyticsContent').classList.add('blurred');
+      const overlay = document.getElementById('proOverlay');
+      overlay.style.display = 'flex';
+    }
+    return isPro;
+  } catch (e) { console.error('Erreur plan:', e); return false; }
+}
+
+async function loadSidebarInfo() {
+  try {
+    // Config + subscription en parallèle — évite le double appel subscription
+    const [config, sub] = await Promise.all([
+      apiRequest(`/api/business/${businessId}/config`),
+      apiRequest(`/api/billing/subscription/${userId}`).catch(() => null)
+    ]);
+    const biz = config.business || {};
+    const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
+    const sp = document.getElementById('sidebarPlan');
+    if (sp) sp.textContent = sub?.plan === 'pro' ? '⭐ Plan Pro' : sub?.plan === 'trial' ? '🎁 Essai gratuit' : 'Plan Standard';
+    const icons = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',opticien:'👓',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',fishmonger:'🐟',florist:'🌿',law:'⚖️',architect:'📐',accountant:'📊',realtor:'🏡',training:'🎓',gym:'🏋️',cinema:'🎬',escapegame:'🎮',pool:'🏊',garage:'🔧',plumber:'🔨',cleaning:'🧹',gardener:'🌳',medical:'🏥',vet:'🐾',grooming:'✂️',retail:'🛍️',hotel:'🏨',photographer:'📸',laundry:'👗',other:'🎨' };
+    const sl = document.getElementById('sidebarLogo'); if (sl) sl.textContent = icons[biz.business_type] || '🏢';
+  } catch (e) { console.error('Sidebar:', e); }
+}
+
+async function loadOverview() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
+    let period;
+    if (currentPeriod === 7) period = data.last_7_days;
+    else if (currentPeriod === 30) period = data.last_30_days;
+    else period = data.last_90_days || data.last_30_days; // fallback si pas encore dispo
+    period = period || {};
+    document.getElementById('metricConversations').textContent = period.total_conversations || 0;
+    document.getElementById('metricAppointments').textContent = period.total_appointments || 0;
+    document.getElementById('metricConversion').textContent = period.conversion_rate ? period.conversion_rate.toFixed(1) + '%' : '0%';
+    document.getElementById('metricAI').textContent = period.ai_resolution_rate ? period.ai_resolution_rate.toFixed(0) + '%' : '0%';
+    const autoRate = period.ai_resolution_rate || 0;
+    const escalatedRate = 100 - autoRate;
+    document.getElementById('perfAuto').textContent = autoRate.toFixed(0) + '%';
+    document.getElementById('perfEscalated').textContent = escalatedRate.toFixed(0) + '%';
+    setTimeout(() => {
+      document.getElementById('barAuto').style.width = autoRate + '%';
+      document.getElementById('barEscalated').style.width = escalatedRate + '%';
+    }, 100);
+  } catch (e) { console.error('Erreur overview:', e); }
+}
+
+async function loadTimeline() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/timeline?days=${currentPeriod}`);
+    if (!data.timeline || data.timeline.length === 0) return;
+    const labels = data.timeline.map(item => new Date(item.date).toLocaleDateString('fr-FR', { day:'numeric', month:'short' }));
+    const conversationsData = data.timeline.map(item => item.conversations || 0);
+    const appointmentsData = data.timeline.map(item => item.appointments || 0);
+    if (analyticsChart) analyticsChart.destroy();
+    const ctx = document.getElementById('analyticsChart').getContext('2d');
+    analyticsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Conversations', data: conversationsData, borderColor: '#00D4FF', backgroundColor: 'rgba(0,212,255,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#00D4FF', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 },
+          { label: 'Rendez-vous', data: appointmentsData, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#10B981', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: {
+          legend: { display: true, position: 'top', labels: { color: 'rgba(255,255,255,0.9)', font: { size: 13, weight: 600 }, padding: 15, usePointStyle: true } },
+          tooltip: { backgroundColor: 'rgba(10,22,40,0.95)', titleColor: '#FFFFFF', bodyColor: '#FFFFFF', borderColor: 'rgba(255,255,255,0.2)', borderWidth: 1, padding: 12 }
+        },
+        scales: {
+          y: { beginAtZero: true, ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 12 }, stepSize: 1 }, grid: { color: 'rgba(255,255,255,0.1)' } },
+          x: { ticks: { color: 'rgba(255,255,255,0.7)', font: { size: 12 } }, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+      }
+    });
+  } catch (e) { console.error('Erreur timeline:', e); }
+}
+
+async function loadTopQuestions() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/top-questions?limit=5`);
+    const container = document.getElementById('topQuestions');
+    if (!data.top_questions || data.top_questions.length === 0) {
+      container.innerHTML = `<div style="text-align:center;padding:40px 20px;color:rgba(255,255,255,0.5);"><div style="font-size:48px;margin-bottom:15px;opacity:0.3;">💬</div><div style="font-size:14px;">Pas encore assez de données</div></div>`;
+      return;
+    }
+    container.innerHTML = '';
+    data.top_questions.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.style.cssText = `padding:15px;background:rgba(255,255,255,0.05);border-left:3px solid ${index===0?'#00D4FF':'rgba(255,255,255,0.2)'};border-radius:10px;margin-bottom:12px;`;
+      div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:start;gap:15px;"><div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:5px;">#${index+1}</div><div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;line-height:1.5;">${item.question}</div></div><div style="padding:6px 12px;background:rgba(0,212,255,0.2);border-radius:8px;font-size:14px;font-weight:700;color:#00D4FF;">${item.count}</div></div>`;
+      container.appendChild(div);
+    });
+  } catch (e) { console.error('Erreur top questions:', e); }
+}
+
+function switchPeriod(days) {
+  if (!isPro) return;
+  currentPeriod = days;
+  [7, 30, 90].forEach(d => {
+    const btn = document.getElementById('btn' + d + 'days');
+    if (!btn) return;
+    btn.classList.toggle('active', days === d);
+  });
+  loadOverview();
+  loadTimeline();
+  loadTopQuestions();
+  loadTrafficSources();
+}
+
+function toggleMobileMenu() {
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const popup = document.getElementById('mobileMenuPopup');
+  const open = popup.style.display === 'block';
+  if (open) {
+    popup.style.opacity='0'; popup.style.transform='translateY(20px)'; overlay.style.opacity='0';
+    setTimeout(() => { popup.style.display='none'; overlay.style.display='none'; }, 300);
+  } else {
+    overlay.style.display='block'; popup.style.display='block';
+    setTimeout(() => { overlay.style.opacity='1'; popup.style.opacity='1'; popup.style.transform='translateY(0)'; }, 10);
+  }
+}
+
+function logout() {
+  if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('business_id');
+    window.location.href = '/auth';
+  }
+}
+
+async function loadTrafficSources() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/sources?days=${currentPeriod}`);
+    const container = document.getElementById('trafficSources');
+    const sources = data.sources || {};
+    const total = Object.values(sources).reduce((a,b) => a+b, 0) || 1;
+    const items = [
+      { key:'qr', label:'📱 QR Code', color:'#00D4FF' },
+      { key:'instagram', label:'📸 Instagram', color:'#F59E0B' },
+      { key:'website', label:'🌐 Site web', color:'#10B981' },
+      { key:'google', label:'🔍 Google', color:'#8B5CF6' },
+      { key:'direct', label:'🔗 Direct', color:'rgba(255,255,255,0.4)' },
+    ];
+    container.innerHTML = items.map(s => {
+      const count = sources[s.key] || 0;
+      const pct = Math.round((count/total)*100);
+      return `<div style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:13px;color:rgba(255,255,255,0.8);">${s.label}</span>
+          <span style="font-size:13px;font-weight:700;color:${s.color};">${count} (${pct}%)</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;">
+          <div style="height:100%;background:${s.color};border-radius:10px;width:0%;transition:width 0.8s ease;" data-width="${pct}"></div>
+        </div>
+      </div>`;
+    }).join('');
+    // Animer les barres
+    setTimeout(() => container.querySelectorAll('[data-width]').forEach(b => b.style.width = b.dataset.width + '%'), 100);
+  } catch { document.getElementById('trafficSources').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
+}
+
+async function loadClientFeedback() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/feedback?days=${currentPeriod}`);
+    const container = document.getElementById('clientFeedback');
+    const pos = data.positive || [];
+    const neg = data.negative || [];
+    if (!pos.length && !neg.length) {
+      container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore de feedback détecté</div>`;
+      return;
+    }
+    let html = '';
+    if (pos.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#10B981;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">😊 Positifs (${pos.length})</div>`;
+      pos.slice(0,3).forEach(f => {
+        html += `<div style="padding:10px 14px;background:rgba(16,185,129,0.1);border-left:3px solid #10B981;border-radius:8px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.8);">"${f.text}"</div>`;
+      });
+    }
+    if (neg.length) {
+      html += `<div style="font-size:12px;font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:0.8px;margin:${pos.length?'16px':0} 0 10px 0;">⚠️ Points d'attention (${neg.length})</div>`;
+      neg.slice(0,3).forEach(f => {
+        html += `<div style="padding:10px 14px;background:rgba(245,158,11,0.1);border-left:3px solid #F59E0B;border-radius:8px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.8);">"${f.text}"</div>`;
+      });
+    }
+    container.innerHTML = html;
+  } catch { document.getElementById('clientFeedback').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
+}
+
+async function loadUnansweredQuestions() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/top-questions?unanswered=true&limit=8`);
+    const container = document.getElementById('unansweredQuestions');
+    const questions = data.top_questions || data.unanswered || [];
+    if (!questions.length) {
+      container.innerHTML = `<div style="text-align:center;padding:30px;"><div style="font-size:40px;margin-bottom:12px;">✅</div><div style="color:rgba(255,255,255,0.6);font-size:14px;">Aucune question sans réponse — l'IA gère tout !</div></div>`;
+      return;
+    }
+    container.innerHTML = `<div style="display:grid;gap:10px;">${questions.map(q => `
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:12px;">
+        <div style="font-size:22px;flex-shrink:0;">❓</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;margin-bottom:3px;">${q.question || q.original_text}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Posée ${q.count || q.unanswered_count || 1}x · Dernière fois ${q.last_asked ? new Date(q.last_asked).toLocaleDateString('fr-FR') : 'récemment'}</div>
+        </div>
+        <a href="/dashboard-conversations" style="padding:7px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;flex-shrink:0;">Répondre</a>
+      </div>`).join('')}</div>`;
+  } catch { document.getElementById('unansweredQuestions').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
+}
+
+async function loadLastSummary() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/summary/latest`);
+    const container = document.getElementById('lastSummary');
+    const label = document.getElementById('summaryPeriodLabel');
+    if (!data || !data.summary_text) {
+      container.innerHTML = `<div style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;">Le premier résumé IA sera généré automatiquement prochainement.</div>`;
+      label.textContent = 'Aucun résumé';
+      return;
+    }
+    const periodLabel = data.period_type === 'daily' ? 'Résumé quotidien' : 'Résumé hebdomadaire';
+    const dateLabel = data.period_end ? new Date(data.period_end).toLocaleDateString('fr-FR', {day:'numeric',month:'long'}) : '';
+    label.textContent = `${periodLabel} · ${dateLabel}`;
+    container.innerHTML = `
+      <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${data.summary_text}</div>
+      ${data.missing_faqs && data.missing_faqs.length ? `
+      <div style="margin-top:20px;padding:16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
+        <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;">💡 FAQ à compléter</div>
+        ${data.missing_faqs.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.times}x)</div>`).join('')}
+      </div>` : ''}`;
+  } catch { 
+    document.getElementById('lastSummary').innerHTML = `<div style="color:rgba(255,255,255,0.5);font-size:14px;">Le résumé IA sera disponible prochainement.</div>`;
+    document.getElementById('summaryPeriodLabel').textContent = 'En attente';
+  }
+}
+
+async function loadLanguageDistrib() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
+    const period = currentPeriod === 7 ? data.last_7_days : (currentPeriod === 90 ? (data.last_90_days || data.last_30_days) : data.last_30_days);
+    const langs = period?.languages || {};
+    const container = document.getElementById('languageDistrib');
+    const flags = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
+    const names = { fr:'Français',en:'Anglais',de:'Allemand',it:'Italien',es:'Espagnol',pt:'Portugais' };
+    const total = Object.values(langs).reduce((a,b) => a+b, 0) || 1;
+    const sorted = Object.entries(langs).sort((a,b) => b[1]-a[1]);
+    if (!sorted.length) {
+      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore de données</div>`;
+      return;
+    }
+    container.innerHTML = sorted.map(([lang, count]) => {
+      const pct = Math.round((count/total)*100);
+      return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <span style="font-size:20px;">${flags[lang]||'🌍'}</span>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span style="font-size:13px;color:rgba(255,255,255,0.8);">${names[lang]||lang}</span>
+            <span style="font-size:13px;font-weight:700;color:#00D4FF;">${pct}%</span>
+          </div>
+          <div style="height:5px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;">
+            <div style="height:100%;background:linear-gradient(90deg,#0052CC,#00D4FF);border-radius:10px;width:${pct}%;"></div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch {}
+}
+
+async function loadUrgencyDistrib() {
+  if (!isPro) return;
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
+    const period = currentPeriod === 7 ? data.last_7_days : (currentPeriod === 90 ? (data.last_90_days || data.last_30_days) : data.last_30_days);
+    const urgency = period?.urgency || {};
+    const container = document.getElementById('urgencyDistrib');
+    const levels = [
+      { key:'high', label:'🔴 Urgences hautes', color:'#EF4444', bg:'rgba(239,68,68,0.15)' },
+      { key:'medium', label:'🟡 Urgences moyennes', color:'#F59E0B', bg:'rgba(245,158,11,0.15)' },
+      { key:'normal', label:'🟢 Demandes normales', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
+    ];
+    const total = Object.values(urgency).reduce((a,b) => a+b, 0) || 1;
+    container.innerHTML = levels.map(l => {
+      const count = urgency[l.key] || 0;
+      const pct = Math.round((count/total)*100);
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:${l.bg};border-radius:10px;margin-bottom:10px;">
+        <span style="font-size:14px;color:rgba(255,255,255,0.9);">${l.label}</span>
+        <span style="font-size:16px;font-weight:800;color:${l.color};">${count} <span style="font-size:11px;opacity:0.7;">(${pct}%)</span></span>
+      </div>`;
+    }).join('');
+  } catch {}
+}
+
+document.addEventListener('DOMContentLoaded', async function() {
+  // Sidebar + plan + badges en parallèle
+  const [_, hasPro] = await Promise.all([
+    loadSidebarInfo(),
+    checkProAccess()
+  ]);
+
+  // Badges navigation
+  try {
+    const [_bq, _ba] = await Promise.all([
+      fetch(API_BASE_URL+`/api/business/${businessId}/unknown-questions?status=pending`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>({questions:[]})),
+      fetch(API_BASE_URL+`/api/appointments/?business_id=${businessId}`,{headers:{'Authorization':'Bearer '+token}}).then(r=>r.json()).catch(()=>[])
+    ]);
+    const _bmc=_bq?.questions?.length||0, _brc=Array.isArray(_ba)?_ba.filter(a=>a.status==='pending').length:0;
+    const _bset=(c,...ids)=>ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;if(c>0){el.textContent=c>9?'9+':c;el.style.display='flex';}else el.style.display='none';});
+    _bset(_bmc,'sbBadgeMsg','bnBadgeMsg');_bset(_brc,'sbBadgeRdv','bnBadgeRdv');
+  } catch {}
+
+  if (hasPro) {
+    await Promise.all([
+      loadOverview(),
+      loadTimeline(),
+      loadTopQuestions(),
+      loadTrafficSources(),
+      loadClientFeedback(),
+      loadLastSummary(),
+    ]);
+  }
+});
+</script>
+
+</body>
+</html>
