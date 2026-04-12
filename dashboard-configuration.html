@@ -189,6 +189,26 @@
             <label class="cfg-label">Description <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(vue par l'IA pour comprendre votre commerce)</span></label>
             <textarea id="businessDescription" rows="3" class="cfg-input" style="resize:vertical;" placeholder="Ex: Salon de coiffure homme moderne, ambiance détendue, café offert..."></textarea>
           </div>
+
+          <!-- LOGO UPLOAD -->
+          <div class="cfg-field" style="margin-top:16px;">
+            <label class="cfg-label">Logo du commerce <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(affiché dans le chat client)</span></label>
+            <div style="display:flex;align-items:center;gap:16px;margin-top:8px;">
+              <!-- Preview -->
+              <div id="logoPreview" style="width:64px;height:64px;border-radius:14px;background:rgba(255,255,255,0.08);border:2px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;font-size:28px;transition:all 0.2s;">
+                🏢
+              </div>
+              <!-- Upload zone -->
+              <div style="flex:1;">
+                <input type="file" id="logoFileInput" accept="image/jpeg,image/png,image/webp,image/gif" style="display:none;" onchange="handleLogoUpload(this)">
+                <button onclick="document.getElementById('logoFileInput').click()" style="padding:10px 18px;background:rgba(0,82,204,0.2);border:1.5px solid rgba(0,82,204,0.4);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;display:block;margin-bottom:8px;" onmouseover="this.style.background='rgba(0,82,204,0.3)'" onmouseout="this.style.background='rgba(0,82,204,0.2)'">
+                  📁 Choisir un logo
+                </button>
+                <div id="logoStatus" style="font-size:12px;color:rgba(255,255,255,0.4);">PNG, JPG ou WebP · Max 2MB</div>
+                <button id="logoRemoveBtn" onclick="removeLogo()" style="display:none;margin-top:6px;padding:6px 14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;font-size:12px;cursor:pointer;font-family:inherit;">🗑️ Supprimer le logo</button>
+              </div>
+            </div>
+          </div>
           <div class="cfg-grid-2" style="margin-top:16px;">
             <div class="cfg-field">
               <label class="cfg-label">Slug URL <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(lien public)</span></label>
@@ -822,6 +842,82 @@ function logout() {
 }
 
 // ── SAUVEGARDES ──
+// ── LOGO UPLOAD ──
+let currentLogoUrl = null;
+
+function handleLogoUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  
+  // Validation
+  if (!file.type.startsWith('image/')) {
+    document.getElementById('logoStatus').textContent = '❌ Fichier non valide — image uniquement';
+    document.getElementById('logoStatus').style.color = '#EF4444';
+    return;
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    document.getElementById('logoStatus').textContent = '❌ Image trop lourde — max 2MB';
+    document.getElementById('logoStatus').style.color = '#EF4444';
+    return;
+  }
+  
+  document.getElementById('logoStatus').textContent = '⏳ Upload en cours...';
+  document.getElementById('logoStatus').style.color = 'rgba(255,255,255,0.4)';
+  
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const token = localStorage.getItem('auth_token');
+  fetch(`${API}/api/business/${businessId}/logo`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` },
+    body: formData
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.logo_url) {
+      currentLogoUrl = data.logo_url;
+      const preview = document.getElementById('logoPreview');
+      preview.innerHTML = `<img src="${data.logo_url}" style="width:100%;height:100%;object-fit:cover;">`;
+      document.getElementById('logoStatus').textContent = '✅ Logo enregistré !';
+      document.getElementById('logoStatus').style.color = '#10B981';
+      document.getElementById('logoRemoveBtn').style.display = 'block';
+    } else {
+      throw new Error(data.detail || 'Erreur upload');
+    }
+  })
+  .catch(err => {
+    document.getElementById('logoStatus').textContent = '❌ Erreur : ' + err.message;
+    document.getElementById('logoStatus').style.color = '#EF4444';
+  });
+}
+
+async function removeLogo() {
+  try {
+    await apiRequest(`/api/business/${businessId}/logo`, 'DELETE', {});
+    currentLogoUrl = null;
+    document.getElementById('logoPreview').innerHTML = '🏢';
+    document.getElementById('logoStatus').textContent = 'PNG, JPG ou WebP · Max 2MB';
+    document.getElementById('logoStatus').style.color = 'rgba(255,255,255,0.4)';
+    document.getElementById('logoRemoveBtn').style.display = 'none';
+    document.getElementById('logoFileInput').value = '';
+    showNotification('✅ Logo supprimé');
+  } catch(e) {
+    showNotification('❌ Erreur : ' + e.message, 'error');
+  }
+}
+
+function loadLogoPreview(logoUrl) {
+  if (!logoUrl) return;
+  currentLogoUrl = logoUrl;
+  const preview = document.getElementById('logoPreview');
+  if (preview) {
+    preview.innerHTML = `<img src="${logoUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='🏢'">`;
+    const removeBtn = document.getElementById('logoRemoveBtn');
+    if (removeBtn) removeBtn.style.display = 'block';
+  }
+}
+
 async function saveBusinessInfo() {
   try {
     await apiRequest(`/api/business/${businessId}/config`, 'POST', {
@@ -1034,6 +1130,7 @@ async function loadBusinessConfig() {
     const set = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.value = val; };
     set('businessType', bc.business_type||'salon'); updateBusinessIcon();
     set('businessName', bc.name); set('businessEmail', bc.email); set('businessPhone', bc.phone);
+    if (bc.logo_url) loadLogoPreview(bc.logo_url);
     set('businessAddress', bc.address); set('businessDescription', bc.description);
     set('businessSlug', bc.slug); set('businessTimezone', bc.timezone||'Europe/Paris'); set('interfaceLanguage', bc.interface_language||'fr');
 

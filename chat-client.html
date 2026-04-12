@@ -917,16 +917,30 @@ function getSource() {
 }
 
 // ── Suggestions dynamiques retournées par le backend ──
+function addEmojiToSuggestion(text) {
+  const t = text.toLowerCase();
+  if (/rdv|rendez|réserv|book|termin|réserver|prendre/i.test(t)) return '📅 ' + text;
+  if (/tarif|prix|price|coût|combien/i.test(t)) return '💰 ' + text;
+  if (/service|presta|soin|coupe/i.test(t)) return '💼 ' + text;
+  if (/horaire|heure|ouvert|fermé/i.test(t)) return '⏰ ' + text;
+  if (/adresse|où|accès/i.test(t)) return '📍 ' + text;
+  if (/urgent|urgence/i.test(t)) return '🚨 ' + text;
+  if (/paiement|carte|moyen/i.test(t)) return '💳 ' + text;
+  return text;
+}
+
 function renderSuggestionsFromBackend(suggestions) {
   const wrap = document.getElementById('lrcSuggestions');
-  if (!suggestions || !suggestions.length) { renderSuggestionsFallback('default'); return; }
+  if (!suggestions || !suggestions.length) { renderSuggestionsFallback('default', ''); return; }
+  wrap.style.display = 'flex';
   wrap.innerHTML = '';
   suggestions.forEach((s, i) => {
     const btn = document.createElement('button');
-    btn.className = 'lrc-sug' + (/rdv|réserv|book|termin/i.test(s) ? ' primary' : '');
-    btn.style.animationDelay = (i * 0.07) + 's';
-    btn.textContent = s;
-    btn.onclick = () => lrcSendText(s.replace(/^[^a-zA-Z0-9\s]+\s*/, '').trim());
+    const isRdv = /rdv|réserv|book|rendez|termin/i.test(s);
+    btn.className = 'lrc-sug' + (isRdv ? ' primary' : '');
+    btn.style.animationDelay = (i * 0.08) + 's';
+    btn.textContent = addEmojiToSuggestion(s);
+    btn.onclick = () => lrcSendText(s);
     wrap.appendChild(btn);
   });
 }
@@ -947,17 +961,17 @@ function linkify(text) {
   });
 }
 
-function addMsg(text, isUser=false) {
+function addMsg(text, isUser=false, isHtml=false) {
   const c = document.getElementById('lrcMessages');
   const row = document.createElement('div');
   row.className = 'lrc-msg-row' + (isUser ? ' user' : '');
   if (isUser) {
     row.innerHTML = `<div class="lrc-msg-content"><div class="lrc-bubble user">${esc(text)}</div><div class="lrc-msg-time">${now()}</div></div>`;
   } else {
-    // Pour les messages IA : rendre les URLs cliquables
-    const safeText = esc(text);
-    const linkedText = linkify(safeText);
-    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${linkedText}</div><div class="lrc-msg-time">${now()}</div></div>`;
+    // isHtml=true pour les messages d'accueil avec <br> et <strong>
+    // sinon : échapper puis linkifier
+    const content = isHtml ? linkify(text) : linkify(esc(text));
+    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${content}</div><div class="lrc-msg-time">${now()}</div></div>`;
   }
   c.appendChild(row);
   c.scrollTop = c.scrollHeight;
@@ -1105,7 +1119,7 @@ function showUI(bizName, icon, greeting, customGreeting=null) {
   const welcomeMsg = customGreeting
     ? customGreeting.replace('{business_name}', bizName)
     : `${greeting} ! 👋<br>Je suis l'assistant de <strong>${bizName}</strong>.<br>Comment puis-je vous aider ?`;
-  addMsg(welcomeMsg);
+  addMsg(welcomeMsg, false, true);
   renderSuggestionsFallback('default', '');
   setTimeout(() => document.getElementById('lrcInput').focus(), 300);
 }
