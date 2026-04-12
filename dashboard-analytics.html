@@ -133,7 +133,7 @@
             <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> Taux de conversion en RDV</div>
             <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> 90 jours d'historique</div>
           </div>
-          <a href="/abonnement" style="display: block; padding: 16px 32px; background: linear-gradient(135deg, #F59E0B, #D97706); border-radius: 14px; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 24px rgba(245,158,11,0.4); transition: all 0.3s;">
+          <a href="/abonnement" style="display: block; padding: 16px 32px; background: linear-gradient(135deg, #0052CC, #00D4FF); border-radius: 14px; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 24px rgba(245,158,11,0.4); transition: all 0.3s;">
             ⭐ Passer au Plan Pro — 49€/mois
           </a>
           <div style="margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.3);">Sans engagement • Annulable à tout moment</div>
@@ -299,7 +299,7 @@ async function checkProAccess() {
   try {
     const sub = await apiRequest(`/api/billing/subscription/${userId}`);
     const plan = sub?.plan || 'standard';
-    isPro = (plan === 'pro' || plan === 'trial');
+    isPro = (plan === 'pro');
     if (!isPro) {
       document.getElementById('analyticsContent').classList.add('blurred');
       const overlay = document.getElementById('proOverlay');
