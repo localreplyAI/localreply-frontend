@@ -129,7 +129,7 @@
           <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Notifications SMS</span></li>
           <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Analytics avancés</span></li>
         </ul>
-        <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std">Choisir Standard</button>
+        <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std">🎁 Essayer 14j gratuit</button>
       </div>
 
       <!-- PRO -->
@@ -152,7 +152,7 @@
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> Alertes urgences temps réel</li>
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> Nouvelles features en avant-première</li>
         </ul>
-        <button id="btnPro" onclick="subscribe('pro')" class="plan-btn plan-btn-pro">Choisir Pro</button>
+        <button id="btnPro" onclick="subscribe('pro')" class="plan-btn plan-btn-pro">🎁 Essayer 14j gratuit</button>
       </div>
 
     </div>
@@ -275,13 +275,13 @@ function checkURLAlerts(){
   const banner=document.getElementById('alertBanner');
   const isNewSignup=params.get('new')==='true';
 
-  // Nouveau compte → afficher un message d'accueil et forcer le choix
+  // Nouveau compte → afficher message d'accueil invitant à choisir un plan
   if(isNewSignup && params.get('success')!=='true'){
     banner.innerHTML=`<div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.25);border-left:4px solid #00D4FF;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
       <span style="font-size:28px;">👋</span>
       <div>
         <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:3px;">Bienvenue sur LocalReply !</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.75);">Choisissez votre plan pour démarrer votre essai gratuit de 14 jours. Aucun prélèvement pendant l'essai.</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);">Choisissez votre plan et démarrez votre essai gratuit de 14 jours. Votre carte ne sera débitée qu'après l'essai, annulable à tout moment.</div>
       </div>
     </div>`;
     banner.style.display='block';

@@ -12,6 +12,25 @@
   </style>
 </head>
 <body>
+<script>
+// Guard abonnement global — bloque l'accès si pas d'abonnement actif
+(async function() {
+  const token = localStorage.getItem('auth_token');
+  const userId = localStorage.getItem('user_id');
+  if (!token || !userId) return; // laisse le guard principal gérer
+  try {
+    const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!r.ok) return;
+    const sub = await r.json();
+    const plan = sub.plan || 'none';
+    const status = sub.status || 'inactive';
+    const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
+    if (blocked) window.location.href = '/abonnement?new=true';
+  } catch(e) {}
+})();
+</script>
 <div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
 
   <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
