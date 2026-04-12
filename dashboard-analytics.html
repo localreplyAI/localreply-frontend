@@ -110,9 +110,13 @@
           <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); margin: 0;">Analysez les performances de votre assistant IA</p>
         </div>
         <div style="display: flex; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
-          <button id="btn7days" onclick="switchPeriod(7)" style="padding: 10px 20px; background: linear-gradient(135deg, #0052CC, #00D4FF); color: #FFFFFF; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">7 jours</button>
-          <button id="btn30days" onclick="switchPeriod(30)" style="padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">30 jours</button>
-          <button id="btn90days" onclick="switchPeriod(90)" style="padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">90 jours</button>
+          <style>
+            .period-btn { padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+            .period-btn.active { background: linear-gradient(135deg, #0052CC, #00D4FF) !important; color: #FFFFFF !important; }
+          </style>
+          <button id="btn7days" class="period-btn active" onclick="switchPeriod(7)">7 jours</button>
+          <button id="btn30days" class="period-btn" onclick="switchPeriod(30)">30 jours</button>
+          <button id="btn90days" class="period-btn" onclick="switchPeriod(90)">90 jours</button>
         </div>
       </div>
     </div>
@@ -300,7 +304,8 @@ async function checkProAccess() {
   try {
     const sub = await apiRequest(`/api/billing/subscription/${userId}`);
     const plan = sub?.plan || 'standard';
-    isPro = (plan === 'pro');
+    const status = sub?.status || 'inactive';
+    isPro = (plan === 'pro') || (status === 'trialing');
     if (!isPro) {
       document.getElementById('analyticsContent').classList.add('blurred');
       const overlay = document.getElementById('proOverlay');
@@ -406,10 +411,11 @@ async function loadTopQuestions() {
 function switchPeriod(days) {
   if (!isPro) return;
   currentPeriod = days;
-  document.getElementById('btn7days').style.background = days === 7 ? 'linear-gradient(135deg, #0052CC, #00D4FF)' : 'transparent';
-  document.getElementById('btn7days').style.color = days === 7 ? '#FFFFFF' : 'rgba(255,255,255,0.7)';
-  document.getElementById('btn30days').style.background = days === 30 ? 'linear-gradient(135deg, #0052CC, #00D4FF)' : 'transparent';
-  document.getElementById('btn30days').style.color = days === 30 ? '#FFFFFF' : 'rgba(255,255,255,0.7)';
+  [7, 30, 90].forEach(d => {
+    const btn = document.getElementById('btn' + d + 'days');
+    if (!btn) return;
+    btn.classList.toggle('active', days === d);
+  });
   loadOverview();
   loadTimeline();
   loadTopQuestions();
