@@ -112,6 +112,7 @@
         <div style="display: flex; gap: 10px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
           <button id="btn7days" onclick="switchPeriod(7)" style="padding: 10px 20px; background: linear-gradient(135deg, #0052CC, #00D4FF); color: #FFFFFF; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">7 jours</button>
           <button id="btn30days" onclick="switchPeriod(30)" style="padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">30 jours</button>
+          <button id="btn90days" onclick="switchPeriod(90)" style="padding: 10px 20px; background: transparent; color: rgba(255,255,255,0.7); border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s;">90 jours</button>
         </div>
       </div>
     </div>
@@ -329,7 +330,11 @@ async function loadOverview() {
   if (!isPro) return;
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
-    const period = currentPeriod === 7 ? data.last_7_days : data.last_30_days;
+    let period;
+    if (currentPeriod === 7) period = data.last_7_days;
+    else if (currentPeriod === 30) period = data.last_30_days;
+    else period = data.last_90_days || data.last_30_days; // fallback si pas encore dispo
+    period = period || {};
     document.getElementById('metricConversations').textContent = period.total_conversations || 0;
     document.getElementById('metricAppointments').textContent = period.total_appointments || 0;
     document.getElementById('metricConversion').textContent = period.conversion_rate ? period.conversion_rate.toFixed(1) + '%' : '0%';
@@ -545,7 +550,7 @@ async function loadLanguageDistrib() {
   if (!isPro) return;
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
-    const period = currentPeriod === 7 ? data.last_7_days : data.last_30_days;
+    const period = currentPeriod === 7 ? data.last_7_days : (currentPeriod === 90 ? (data.last_90_days || data.last_30_days) : data.last_30_days);
     const langs = period?.languages || {};
     const container = document.getElementById('languageDistrib');
     const flags = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
@@ -578,7 +583,7 @@ async function loadUrgencyDistrib() {
   if (!isPro) return;
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/overview`);
-    const period = currentPeriod === 7 ? data.last_7_days : data.last_30_days;
+    const period = currentPeriod === 7 ? data.last_7_days : (currentPeriod === 90 ? (data.last_90_days || data.last_30_days) : data.last_30_days);
     const urgency = period?.urgency || {};
     const container = document.getElementById('urgencyDistrib');
     const levels = [
