@@ -491,7 +491,8 @@
 
 <script>
 const API = 'https://localreply-api.onrender.com';
-const BUSINESS_ID = 1; // Salon Marie — business de démo
+const BUSINESS_ID = 1;
+let bizAvatar = '🤖'; // Salon Marie — business de démo
 const MAX_MSGS = 5;
 const SUBSCRIBE_URL = 'https://localreply-frontend.vercel.app/auth';
 
@@ -539,14 +540,22 @@ function now() {
 }
 function esc(t) { return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
 
-function addMsg(text, isUser=false) {
+function linkify(text) {
+  return text.replace(/(https?:\/\/[^\s<>"]+)/g, function(url) {
+    const display = url.length > 40 ? url.slice(0, 37) + '...' : url;
+    return '<a href="' + url + '" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:underline;">' + display + '</a>';
+  });
+}
+
+function addMsg(text, isUser=false, isHtml=false) {
   const c = document.getElementById('lrcMessages');
   const row = document.createElement('div');
   row.className = 'lrc-msg-row' + (isUser ? ' user' : '');
   if (isUser) {
     row.innerHTML = `<div class="lrc-msg-content"><div class="lrc-bubble user">${esc(text)}</div><div class="lrc-msg-time">${now()}</div></div>`;
   } else {
-    row.innerHTML = `<div class="lrc-msg-avatar">🤖</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${text}</div><div class="lrc-msg-time">${now()}</div></div>`;
+    const content = isHtml ? linkify(text) : linkify(esc(text));
+    row.innerHTML = `<div class="lrc-msg-avatar">${bizAvatar||'🤖'}</div><div class="lrc-msg-content"><div class="lrc-bubble ai">${content}</div><div class="lrc-msg-time">${now()}</div></div>`;
   }
   c.appendChild(row);
   c.scrollTop = c.scrollHeight;
@@ -563,16 +572,29 @@ function showTyping() {
 }
 function removeTyping() { document.getElementById('lrcTyping')?.remove(); }
 
+function addEmojiToSuggestion(text) {
+  const t = text.toLowerCase();
+  if (/rdv|rendez|réserv|book|termin|réserver|prendre/i.test(t)) return '📅 ' + text;
+  if (/tarif|prix|price|coût|combien/i.test(t)) return '💰 ' + text;
+  if (/service|presta|soin|coupe/i.test(t)) return '💼 ' + text;
+  if (/horaire|heure|ouvert|fermé/i.test(t)) return '⏰ ' + text;
+  if (/adresse|où|accès/i.test(t)) return '📍 ' + text;
+  if (/paiement|carte|moyen/i.test(t)) return '💳 ' + text;
+  return text;
+}
+
 function renderSuggestionsFromBackend(suggestions) {
   const wrap = document.getElementById('lrcSuggestions');
   if (!suggestions || !suggestions.length) { renderSuggestions('default'); return; }
+  wrap.style.display = 'flex';
   wrap.innerHTML = '';
   suggestions.forEach((s, i) => {
     const btn = document.createElement('button');
-    btn.className = 'lrc-sug' + (/rdv|réserv|book|termin/i.test(s) ? ' primary' : '');
-    btn.style.animationDelay = (i * 0.07) + 's';
-    btn.textContent = s;
-    btn.onclick = () => lrcSendText(s.replace(/^[^\w\s]+\s*/, '').trim());
+    const isRdv = /rdv|réserv|book|rendez|termin/i.test(s);
+    btn.className = 'lrc-sug' + (isRdv ? ' primary' : '');
+    btn.style.animationDelay = (i * 0.08) + 's';
+    btn.textContent = addEmojiToSuggestion(s);
+    btn.onclick = () => lrcSendText(s);
     wrap.appendChild(btn);
   });
 }
@@ -709,7 +731,22 @@ async function lrcInit() {
     const data = await res.json();
     const biz = data.business || {};
 
-    document.getElementById('lrcAvatar').textContent = BIZ_ICONS[biz.business_type] || '💬';
+    // Avatar : logo > initiales > emoji
+    const avatarEl = document.getElementById('lrcAvatar');
+    const bizIcon = BIZ_ICONS[biz.business_type] || '💬';
+    if (biz.logo_url) {
+      bizAvatar = `<img src="${biz.logo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.textContent='${bizIcon}'">`;
+      avatarEl.innerHTML = bizAvatar;
+    } else {
+      const initials = (biz.name||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+      if (initials.length >= 2) {
+        bizAvatar = `<span style="font-size:12px;font-weight:700;color:#fff;">${initials}</span>`;
+        avatarEl.innerHTML = bizAvatar;
+      } else {
+        bizAvatar = bizIcon;
+        avatarEl.textContent = bizIcon;
+      }
+    }
     document.getElementById('lrcName').textContent = biz.name || 'Assistant LocalReply';
 
     document.getElementById('lrcLoading').style.display = 'none';
@@ -718,7 +755,7 @@ async function lrcInit() {
     document.getElementById('lrcInputArea').style.display = 'flex';
     document.getElementById('lrcFooter').style.display = 'block';
 
-    addMsg(`Bonjour ! 👋 Je suis l'assistant de <strong>${biz.name||'ce commerce'}</strong>.<br>Comment puis-je vous aider ?`);
+    addMsg(`Bonjour ! 👋 Je suis l'assistant de <strong>${biz.name||'ce commerce'}</strong>.<br>Comment puis-je vous aider ?`, false, true);
     renderSuggestions('default');
     setTimeout(() => document.getElementById('lrcInput').focus(), 300);
   } catch {
