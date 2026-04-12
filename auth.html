@@ -220,8 +220,14 @@ const googleBusinessId = urlParams.get('business_id');
 const googleNew = urlParams.get('new_account') === 'true';
 
 if (googleToken && googleBusinessId && verifyMode !== 'verify') {
+  // Vider l'ancien token avant de sauvegarder le nouveau
+  localStorage.clear();
   localStorage.setItem('auth_token', googleToken);
   localStorage.setItem('business_id', String(googleBusinessId));
+  // Sauvegarder aussi le slug si présent
+  const googleSlug = urlParams.get('slug');
+  if (googleSlug) localStorage.setItem('business_slug', googleSlug);
+  
   if (googleNew) {
     // Nouveau compte Google → choisir abonnement d'abord
     window.location.href = '/abonnement?new=true';
@@ -235,6 +241,8 @@ if (googleToken && googleBusinessId && verifyMode !== 'verify') {
       window.location.href = '/dashboard';
     }
   }
+  // STOP — ne pas exécuter la suite
+  throw new Error('redirect');
 }
 
 // ─── Déjà connecté → dashboard ───
