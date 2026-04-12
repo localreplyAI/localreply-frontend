@@ -11,6 +11,7 @@
     { "source": "/dashboard-analytics", "destination": "/dashboard-analytics.html" },
     { "source": "/mon-compte", "destination": "/mon-compte.html" },
     { "source": "/abonnement", "destination": "/abonnement.html" },
+    { "source": "/choisir-plan", "destination": "/choisir-plan.html" },
     { "source": "/pricing", "destination": "/pricing.html" },
     { "source": "/features", "destination": "/features.html" },
     { "source": "/about", "destination": "/about.html" },

@@ -204,7 +204,7 @@ if (verifyToken && verifyMode === 'verify') {
         }
         if (bid) localStorage.setItem('business_id', String(bid));
         // Nouveau compte → choisir un abonnement d'abord
-        window.location.href = '/abonnement?new=true';
+        window.location.href = '/choisir-plan?new=true';
       } else {
         showError('❌ ' + (data.detail || 'Lien de vérification invalide ou expiré.'));
       }
@@ -230,7 +230,7 @@ if (googleToken && googleBusinessId && verifyMode !== 'verify') {
   
   if (googleNew) {
     // Nouveau compte Google → choisir abonnement d'abord
-    window.location.href = '/abonnement?new=true';
+    window.location.href = '/choisir-plan?new=true';
   } else {
     // Compte existant → vérifier onboarding complété
     try {
