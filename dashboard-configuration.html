@@ -887,13 +887,21 @@ function handleLogoUpload(input) {
   formData.append('file', file);
   
   const token = localStorage.getItem('auth_token');
+  console.log('[Logo] Envoi vers', `${API}/api/business/${businessId}/logo`);
   fetch(`${API}/api/business/${businessId}/logo`, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${token}` },
     body: formData
   })
-  .then(r => r.json())
+  .then(r => {
+    console.log('[Logo] Status HTTP:', r.status);
+    if (!r.ok) {
+      return r.text().then(t => { throw new Error('HTTP ' + r.status + ' — ' + t.slice(0,200)); });
+    }
+    return r.json();
+  })
   .then(data => {
+    console.log('[Logo] Réponse:', data);
     if (data.logo_url) {
       currentLogoUrl = data.logo_url;
       const preview = document.getElementById('logoPreview');
@@ -902,11 +910,12 @@ function handleLogoUpload(input) {
       document.getElementById('logoStatus').style.color = '#10B981';
       document.getElementById('logoRemoveBtn').style.display = 'block';
     } else {
-      throw new Error(data.detail || 'Erreur upload');
+      throw new Error(data.detail || 'Pas de logo_url dans la réponse');
     }
   })
   .catch(err => {
-    document.getElementById('logoStatus').textContent = '❌ Erreur : ' + err.message;
+    console.error('[Logo] Erreur:', err.message);
+    document.getElementById('logoStatus').textContent = '❌ ' + err.message;
     document.getElementById('logoStatus').style.color = '#EF4444';
   });
 }
