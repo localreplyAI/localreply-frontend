@@ -327,7 +327,15 @@ async function loadSidebarInfo() {
     const sp = document.getElementById('sidebarPlan');
     if (sp) sp.textContent = sub?.plan === 'pro' ? '⭐ Plan Pro' : sub?.plan === 'trial' ? '🎁 Essai gratuit' : 'Plan Standard';
     const icons = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',opticien:'👓',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',fishmonger:'🐟',florist:'🌿',law:'⚖️',architect:'📐',accountant:'📊',realtor:'🏡',training:'🎓',gym:'🏋️',cinema:'🎬',escapegame:'🎮',pool:'🏊',garage:'🔧',plumber:'🔨',cleaning:'🧹',gardener:'🌳',medical:'🏥',vet:'🐾',grooming:'✂️',retail:'🛍️',hotel:'🏨',photographer:'📸',laundry:'👗',other:'🎨' };
-    const sl = document.getElementById('sidebarLogo'); if (sl) sl.textContent = icons[biz.business_type] || '🏢';
+    const _sl = document.getElementById('sidebarLogo');
+    const _slWrap = document.getElementById('sidebarLogoWrap');
+    const _logoUrl = biz.logo_url;
+    if (_logoUrl && _slWrap) {
+      _slWrap.style.background = 'none';
+      _slWrap.innerHTML = '<img src="' + _logoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:9px;" onerror="this.parentElement.style.background='linear-gradient(135deg,#0052CC,#00D4FF)';this.parentElement.innerHTML='<span>🏢</span>';">';
+    } else if (_sl) {
+      _sl.textContent = icons[biz.business_type]||'🏢';
+    }
   } catch (e) { console.error('Sidebar:', e); }
 }
 

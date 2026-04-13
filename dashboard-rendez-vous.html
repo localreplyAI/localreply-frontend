@@ -401,7 +401,15 @@ async function loadSidebarInfo() {
       'photographer':'📸','laundry':'👗','other':'🎨'
     };
     const sidebarLogo = document.getElementById('sidebarLogo');
-    if (sidebarLogo) sidebarLogo.textContent = icons[biz.business_type] || '🏢';
+    const _sl = document.getElementById('sidebarLogo');
+    const _slWrap = document.getElementById('sidebarLogoWrap');
+    const _logoUrl = biz.logo_url;
+    if (_logoUrl && _slWrap) {
+      _slWrap.style.background = 'none';
+      _slWrap.innerHTML = '<img src="' + _logoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:9px;" onerror="this.parentElement.style.background='linear-gradient(135deg,#0052CC,#00D4FF)';this.parentElement.innerHTML='<span>🏢</span>';">';
+    } else if (_sl) {
+      _sl.textContent = icons[biz.business_type]||'🏢';
+    }
   } catch (e) {
     console.error('Erreur sidebar:', e);
   }
