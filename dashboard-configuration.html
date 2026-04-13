@@ -887,8 +887,8 @@ function handleLogoUpload(input) {
   formData.append('file', file);
   
   const token = localStorage.getItem('auth_token');
-  console.log('[Logo] Envoi vers', `${API}/api/business/${businessId}/logo`);
-  fetch(`${API}/api/business/${businessId}/logo`, {
+  console.log('[Logo] Envoi vers', `${API_BASE_URL}/api/business/${businessId}/logo`);
+  fetch(`${API_BASE_URL}/api/business/${businessId}/logo`, {
     method: 'POST',
     headers: { 'Authorization': `Bearer ${token}` },
     body: formData
