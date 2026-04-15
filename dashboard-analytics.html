@@ -317,26 +317,47 @@ async function checkProAccess() {
 
 async function loadSidebarInfo() {
   try {
-    // Config + subscription en parallèle — évite le double appel subscription
     const [config, sub] = await Promise.all([
-      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>apiRequest(`/api/business/${businessId}/config`)),
+      apiRequest(`/api/business/${businessId}/config/full`).catch(() =>
+        apiRequest(`/api/business/${businessId}/config`).catch(() => null)
+      ),
       apiRequest(`/api/billing/subscription/${userId}`).catch(() => null)
     ]);
-    const biz = config.business || {};
-    const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
+
+    const biz = config?.business || config || {};
+
+    const sn = document.getElementById('sidebarBusinessName');
+    if (sn && biz.name) sn.textContent = biz.name;
+
     const sp = document.getElementById('sidebarPlan');
-    if (sp) sp.textContent = sub?.plan === 'pro' ? '⭐ Plan Pro' : sub?.plan === 'trial' ? '🎁 Essai gratuit' : 'Plan Standard';
-    const icons = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',opticien:'👓',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',fishmonger:'🐟',florist:'🌿',law:'⚖️',architect:'📐',accountant:'📊',realtor:'🏡',training:'🎓',gym:'🏋️',cinema:'🎬',escapegame:'🎮',pool:'🏊',garage:'🔧',plumber:'🔨',cleaning:'🧹',gardener:'🌳',medical:'🏥',vet:'🐾',grooming:'✂️',retail:'🛍️',hotel:'🏨',photographer:'📸',laundry:'👗',other:'🎨' };
-    const _sl = document.getElementById('sidebarLogo');
-    const _slWrap = document.getElementById('sidebarLogoWrap');
-    const _logoUrl = biz.logo_url;
-    if (_logoUrl && _slWrap) {
-      _slWrap.style.background = 'none';
-      _slWrap.innerHTML = '<img src="' + _logoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:9px;" onerror="this.parentElement.style.background='linear-gradient(135deg,#0052CC,#00D4FF)';this.parentElement.innerHTML='<span>🏢</span>';">';
-    } else if (_sl) {
-      _sl.textContent = icons[biz.business_type]||'🏢';
+    if (sp) {
+      const plan = sub?.plan || 'standard';
+      const status = sub?.status || '';
+      if (status === 'trialing') sp.textContent = '🎁 Essai gratuit — ' + (plan === 'pro' ? 'Pro' : 'Standard');
+      else if (plan === 'pro') sp.textContent = '⭐ Plan Pro';
+      else sp.textContent = '📦 Plan Standard';
     }
-  } catch (e) { console.error('Sidebar:', e); }
+
+    const slWrap = document.getElementById('sidebarLogoWrap');
+    const sl = document.getElementById('sidebarLogo');
+    const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',butcher:'🥩',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
+    if (biz.logo_url && slWrap) {
+      slWrap.style.background = 'none';
+      slWrap.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = biz.logo_url;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:9px;';
+      img.onerror = function() {
+        slWrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+        slWrap.innerHTML = '<span style="font-size:20px;">' + (icons[biz.business_type] || '🏢') + '</span>';
+      };
+      slWrap.appendChild(img);
+    } else if (sl) {
+      sl.textContent = icons[biz.business_type] || '🏢';
+    }
+  } catch(e) {
+    console.error('Sidebar error:', e);
+  }
 }
 
 async function loadOverview() {
