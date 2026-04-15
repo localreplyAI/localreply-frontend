@@ -1078,12 +1078,13 @@ async function lrcSendText(text) {
       const flag = flagMap[langMatch[1].toLowerCase()];
     }
     
-    // Auto-ouvrir formulaire RDV si l'IA collecte des infos de réservation
+    // Auto-ouvrir formulaire RDV si l'IA demande des infos de réservation
     const rdvMode = bizConfig && bizConfig.rdv_mode;
-    const aiWantsRdv = /rendez.vous|réserver|booking|appointment|créneau|disponib/i.test(msg);
-    const userWantsRdv = /rdv|rendez.vous|réserv|book|appointment|créneau|prendre un/i.test(text);
-    if (rdvMode === 'google' && userWantsRdv && aiWantsRdv && document.getElementById('lrcRdvForm').style.display === 'none') {
-      setTimeout(() => openRdvForm(), 500);
+    const userWantsRdv = /rdv|rendez.vous|réserv|book|appointment|créneau|prendre|venir|passer/i.test(text);
+    const aiAsksInfo = /nom|téléphone|service|date|heure|informations|besoin de|quel service|quelle date|numéro|souhaitez/i.test(msg);
+    const rdvFormHidden = document.getElementById('lrcRdvForm') && document.getElementById('lrcRdvForm').style.display === 'none';
+    if (rdvMode === 'google' && userWantsRdv && aiAsksInfo && rdvFormHidden) {
+      setTimeout(() => openRdvForm(), 400);
     }
     
     // Suggestions

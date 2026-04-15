@@ -818,6 +818,14 @@ async function lrcSendText(text) {
     const timeEl = document.getElementById('lrcStreamTime');
     if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
     
+    // Auto-ouvrir formulaire RDV si l'IA demande des infos
+    const userWantsRdvD = /rdv|rendez.vous|réserv|book|appointment|créneau|prendre|venir/i.test(text);
+    const aiAsksInfoD = /nom|téléphone|service|date|heure|informations|besoin de|quel service|quelle date|numéro|souhaitez/i.test(msg);
+    const rdvFormD = document.getElementById('lrcRdvForm');
+    if (userWantsRdvD && aiAsksInfoD && rdvFormD && rdvFormD.style.display === 'none') {
+      setTimeout(() => openRdvForm(), 400);
+    }
+
     if (data.suggestions && data.suggestions.length) {
       renderSuggestionsFromBackend(data.suggestions);
     } else {
