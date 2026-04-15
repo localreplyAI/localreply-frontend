@@ -258,15 +258,30 @@ function showToast(msg,type='success'){
 async function loadSidebarInfo() {
   try {
     const [config,sub]=await Promise.all([
-      apiRequest(`/api/business/${businessId}/config`),
+      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>apiRequest(`/api/business/${businessId}/config`)),
       apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null)
     ]);
-    const biz=config.business||{};
+    const biz=config?.business || config || {};
     const sn=document.getElementById('sidebarBusinessName');if(sn&&biz.name)sn.textContent=biz.name;
     const sp=document.getElementById('sidebarPlan');
     if(sp){const plan=sub?.plan||'standard';sp.textContent=plan==='pro'?'⭐ Plan Pro':plan==='trial'?'🎁 Essai gratuit':'Plan Standard';}
     const icons={salon:'💇',spa:'💅',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'🎨'};
-    const sl=document.getElementById('sidebarLogo');if(sl)sl.textContent=icons[biz.business_type]||'🏢';
+    const sl = document.getElementById('sidebarLogo');
+    const slWrap = document.getElementById('sidebarLogoWrap');
+    if (biz.logo_url && slWrap) {
+      slWrap.style.background = 'none';
+      slWrap.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = biz.logo_url;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:12px;';
+      img.onerror = function() {
+        slWrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+        slWrap.innerHTML = '<span style="font-size:20px;">' + (icons[biz.business_type]||'🏢') + '</span>';
+      };
+      slWrap.appendChild(img);
+    } else if (sl) {
+      sl.textContent = icons[biz.business_type]||'🏢';
+    }
   } catch(e){console.error('Sidebar:',e);}
 }
 
