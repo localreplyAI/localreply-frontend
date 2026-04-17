@@ -761,7 +761,7 @@ function buildSmartSuggestions(lastAiResponse) {
   const lang = detectedLang || 'fr';
   const hour = new Date().getHours();
   const isEvening = hour >= 19 || hour < 8;
-  const hasRdvMode = bizConfig && bizConfig.rdv_mode && bizConfig.rdv_mode !== 'none';
+  const hasRdvMode = bizConfig && bizConfig.rdv_mode === 'google';
   const bType = (bizConfig && bizConfig.business_type) || 'other';
   const ctx = (lastAiResponse || '').toLowerCase();
 
@@ -940,7 +940,9 @@ function renderSuggestionsFromBackend(suggestions) {
     btn.className = 'lrc-sug' + (isRdv ? ' primary' : '');
     btn.style.animationDelay = (i * 0.08) + 's';
     btn.textContent = addEmojiToSuggestion(s);
-    btn.onclick = () => lrcSendText(s);
+    const isRdvBackend = /rdv|réserv|book|rendez|termin/i.test(s);
+    const rdvModeOkB = bizConfig && bizConfig.rdv_mode === 'google';
+    btn.onclick = (isRdvBackend && rdvModeOkB) ? () => openRdvForm() : () => lrcSendText(s);
     wrap.appendChild(btn);
   });
 }
@@ -996,11 +998,13 @@ function renderSuggestionsFallback(intent, lastAiResponse='') {
   wrap.innerHTML = '';
   items.forEach((s,i) => {
     const btn = document.createElement('button');
-    const isRdv = s.p || /rdv|réserv|book|afspraak|wizyt/i.test(s.l);
+    const isRdv = s.p || /rdv|réserv|book|afspraak|wizyt|rendez/i.test(s.l);
+    const rdvModeOk = bizConfig && bizConfig.rdv_mode === 'google';
     btn.className = 'lrc-sug' + (s.p ? ' primary' : '');
     btn.style.animationDelay = (i*0.07)+'s';
     btn.textContent = s.l;
-    btn.onclick = isRdv ? () => openRdvForm() : () => lrcSendText(s.t);
+    // Ouvrir le formulaire seulement si Google Calendar configuré
+    btn.onclick = (isRdv && rdvModeOk) ? () => openRdvForm() : () => lrcSendText(s.t);
     wrap.appendChild(btn);
   });
 }

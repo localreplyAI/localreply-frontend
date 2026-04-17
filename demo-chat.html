@@ -710,7 +710,7 @@ function renderSuggestionsFromBackend(suggestions) {
     btn.className = 'lrc-sug' + (isRdv ? ' primary' : '');
     btn.style.animationDelay = (i * 0.08) + 's';
     btn.textContent = addEmojiToSuggestion(s);
-    btn.onclick = () => lrcSendText(s);
+    btn.onclick = isRdv ? () => openRdvForm() : () => lrcSendText(s);
     wrap.appendChild(btn);
   });
 }
@@ -724,7 +724,8 @@ function renderSuggestions(intent) {
     btn.className = 'lrc-sug' + (s.p ? ' primary' : '');
     btn.style.animationDelay = (i*0.07)+'s';
     btn.textContent = s.l;
-    btn.onclick = () => lrcSendText(s.t);
+    const isRdvStatic = s.p || /rdv|réserv|rendez/i.test(s.l);
+    btn.onclick = isRdvStatic ? () => openRdvForm() : () => lrcSendText(s.t);
     wrap.appendChild(btn);
   });
 }
