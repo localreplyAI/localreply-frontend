@@ -719,18 +719,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>`;
       return;
     }
-    // Calendar déconnecté → alerte si rdv_mode=google
-  if (!calConnected && configData?.business?.rdv_mode === 'google') {
-    const mc = document.getElementById('mainContent');
-    if (mc) {
-      const calAlert = document.createElement('div');
-      calAlert.style.cssText = 'margin-bottom:16px;padding:14px 18px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:12px;display:flex;align-items:center;gap:12px;';
-      calAlert.innerHTML = '<span style="font-size:20px;">📅</span><div style="flex:1;font-size:13px;color:rgba(255,255,255,0.8);"><strong style="color:#EF4444;">Google Calendar déconnecté</strong> — Les prises de RDV ne fonctionnent plus. Veuillez reconnecter votre calendrier.</div><a href="/dashboard-rendez-vous" style="padding:8px 14px;background:#EF4444;border-radius:8px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">Reconnecter →</a>';
-      mc.insertBefore(calAlert, mc.firstChild);
-    }
-  }
-
-  // past_due → banner d'avertissement mais accès maintenu
+    // past_due → banner d'avertissement mais accès maintenu
     if (status === 'past_due') {
       const mc = document.getElementById('mainContent');
       if (mc) {
@@ -746,6 +735,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   const isTrial = subData?.status==='trialing';
   const effectivePro = isPro || isTrial; // trial = accès Pro complet
   const calConnected = calData?.connected || false;
+
+  // Alerte si Google Calendar déconnecté et rdv_mode=google
+  if (!calConnected && configData?.business?.rdv_mode === 'google') {
+    const mc = document.getElementById('mainContent');
+    if (mc) {
+      const calAlert = document.createElement('div');
+      calAlert.style.cssText = 'margin-bottom:16px;padding:14px 18px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:12px;display:flex;align-items:center;gap:12px;';
+      calAlert.innerHTML = '<span style="font-size:20px;">📅</span><div style="flex:1;font-size:13px;color:rgba(255,255,255,0.8);"><strong style="color:#EF4444;">Google Calendar déconnecté</strong> — Les prises de RDV ne fonctionnent plus. Reconnectez votre calendrier.</div><a href="/dashboard-rendez-vous" style="padding:8px 14px;background:#EF4444;border-radius:8px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">Reconnecter →</a>';
+      mc.insertBefore(calAlert, mc.firstChild);
+    }
+  }
   // Récupérer le slug — depuis config ou fallback API simple
   let slug = configData?.business?.slug || localStorage.getItem('business_slug') || '';
   
