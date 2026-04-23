@@ -1069,10 +1069,14 @@ async function lrcSendText(text) {
     const timeEl = document.getElementById('lrcStreamTime');
     if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
     
-    // Email capture
+    // Email capture — via backend ou détection du message IA
     if (data.email_capture) {
       currentEscalationQuestionId = data.email_capture.question_id;
       setTimeout(() => openEmailCapture(), 400);
+    } else if (/notif.*email|email.*notif|être notifié|par email|vous notifier|souhaitez.*(email|notif)/i.test(msg)) {
+      // L'IA demande si le client veut être notifié → ouvrir la bulle email
+      currentEscalationQuestionId = data.question_id || null;
+      setTimeout(() => openEmailCapture(), 600);
     }
     
     // Langue

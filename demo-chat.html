@@ -582,6 +582,18 @@
       <div class="lrc-date-sep">Aujourd'hui</div>
     </div>
 
+    <!-- FORMULAIRE RDV -->
+    <div class="lrc-rdv-form" id="lrcRdvForm" style="display:none;"></div>
+    <div class="lrc-rdv-form" id="lrcEmailForm" style="display:none;">
+      <div class="lrc-rdv-title">📧 Recevoir la réponse par email</div>
+      <p style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <input id="lrcEmailInput" type="email" placeholder="votre@email.com" style="flex:1;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" onkeydown="if(event.key==='Enter')submitEmailCapture()">
+        <button class="lrc-rdv-submit" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
+      </div>
+      <button class="lrc-rdv-cancel" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
+    </div>
+
     <!-- SUGGESTIONS -->
     <div class="lrc-suggestions" id="lrcSuggestions" style="display:none;"></div>
 
@@ -827,6 +839,15 @@ async function lrcSendText(text) {
       setTimeout(() => openRdvForm(), 400);
     }
 
+    // Email capture
+    if (data.email_capture) {
+      currentEscalationQuestionId = data.email_capture.question_id;
+      setTimeout(() => openEmailCapture(), 400);
+    } else if (/notif.*email|email.*notif|être notifié|par email|vous notifier|souhaitez.*(email|notif)/i.test(msg)) {
+      currentEscalationQuestionId = data.question_id || null;
+      setTimeout(() => openEmailCapture(), 600);
+    }
+
     if (data.suggestions && data.suggestions.length) {
       renderSuggestionsFromBackend(data.suggestions);
     } else {
@@ -847,6 +868,136 @@ async function lrcSendText(text) {
   document.getElementById('lrcInput').focus();
 
   if (userMsgCount >= MAX_MSGS) setTimeout(showSubscribePopup, 800);
+}
+
+
+let currentEscalationQuestionId = null;
+
+async function openRdvForm(prefill={}) {
+  if (!window._bizServices && businessId) {
+    await loadBizServices(businessId);
+  }
+  const wrap = document.getElementById('lrcRdvForm');
+  const input = document.getElementById('lrcInputArea');
+  const sugg  = document.getElementById('lrcSuggestions');
+  const services = window._bizServices || [];
+  const serviceOptions = services.map(s => {
+    const price = s.price ? ` — ${s.price}${s.currency||'CHF'} (${s.duration_minutes||'?'}min)` : '';
+    const sel = (prefill.service === s.name) ? ' selected' : '';
+    return `<option value="${s.name}"${sel}>${s.name}${price}</option>`;
+  }).join('');
+  const serviceSelect = `
+    <select id="rdvService" onchange="toggleCustomService(this)" style="width:100%;">
+      <option value="">-- Choisir un service --</option>
+      ${serviceOptions}
+      <option value="__custom__">✏️ Autre (saisie libre)</option>
+    </select>
+    <input id="rdvServiceCustom" type="text" placeholder="Décrivez votre demande..."
+      style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
+  const today = new Date();
+  const maxDate = new Date(); maxDate.setDate(today.getDate()+30);
+  const toISO = d => d.toISOString().split('T')[0];
+  wrap.innerHTML = `
+    <div class="lrc-rdv-title">📅 Demande de rendez-vous</div>
+    <div class="lrc-rdv-grid">
+      <div class="lrc-rdv-field full"><label>Service souhaité</label>${serviceSelect}</div>
+      <div class="lrc-rdv-field"><label>Date</label><input id="rdvDate" type="date" min="${toISO(today)}" max="${toISO(maxDate)}" value="${prefill.date||''}"></div>
+      <div class="lrc-rdv-field"><label>Heure souhaitée</label><input id="rdvTime" type="time" value="${prefill.time||''}"></div>
+      <div class="lrc-rdv-field"><label>Prénom & Nom</label><input id="rdvName" type="text" placeholder="Thomas Dupont" value="${prefill.name||''}"></div>
+      <div class="lrc-rdv-field"><label>Téléphone</label><input id="rdvPhone" type="tel" placeholder="+41 79 123 45 67" value="${prefill.phone||''}"></div>
+      <div class="lrc-rdv-field full"><label>Email <span style="font-weight:400;opacity:0.6;">(optionnel)</span></label><input id="rdvEmail" type="email" placeholder="thomas@email.com" value="${prefill.email||''}"></div>
+    </div>
+    <div class="lrc-rdv-btns">
+      <button class="lrc-rdv-submit" onclick="submitRdvForm()">✅ Confirmer la demande</button>
+      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">Annuler</button>
+    </div>`;
+  wrap.style.display = 'block';
+  sugg.style.display = 'none';
+  input.style.display = 'none';
+}
+
+function toggleCustomService(sel) {
+  const custom = document.getElementById('rdvServiceCustom');
+  if (custom) custom.style.display = sel.value === '__custom__' ? 'block' : 'none';
+}
+
+function closeRdvForm() {
+  document.getElementById('lrcRdvForm').style.display = 'none';
+  document.getElementById('lrcInputArea').style.display = 'flex';
+  document.getElementById('lrcSuggestions').style.display = 'flex';
+}
+
+async function submitRdvForm() {
+  const serviceEl = document.getElementById('rdvService');
+  const customEl  = document.getElementById('rdvServiceCustom');
+  const service   = (serviceEl.value === '__custom__' && customEl?.value) ? customEl.value.trim() : serviceEl.value;
+  const date    = document.getElementById('rdvDate').value;
+  const time    = document.getElementById('rdvTime').value;
+  const name    = document.getElementById('rdvName').value;
+  const phone   = document.getElementById('rdvPhone').value;
+  if (!service || !date || !time || !name || !phone) {
+    ['rdvService','rdvDate','rdvTime','rdvName','rdvPhone'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { if (!el.value) el.style.borderColor = '#EF4444'; else el.style.borderColor = ''; }
+    });
+    return;
+  }
+  const email = document.getElementById('rdvEmail')?.value || '';
+  const dateLabel = new Date(date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  const emailPart = email ? `, Email : ${email}` : '';
+  const msg = `Je souhaite réserver une ${service} le ${dateLabel} à ${time}. Nom : ${name}, Tél : ${phone}${emailPart}.`;
+  closeRdvForm();
+  lrcSendText(msg);
+}
+
+async function loadBizServices(bizId) {
+  try {
+    let services = [];
+    try {
+      const d = await fetch(`${API}/api/business/${bizId}/config/full`).then(r=>r.json());
+      services = d.services || [];
+    } catch {
+      const d = await fetch(`${API}/api/business/${bizId}/config`).then(r=>r.json());
+      services = d.services || [];
+    }
+    const seen = new Set();
+    window._bizServices = services.filter(s => {
+      if (!s.name || seen.has(s.name)) return false;
+      seen.add(s.name); return true;
+    });
+  } catch(e) { window._bizServices = []; }
+}
+
+function openEmailCapture() {
+  document.getElementById('lrcEmailForm').style.display = 'block';
+  document.getElementById('lrcEmailForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setTimeout(() => document.getElementById('lrcEmailInput')?.focus(), 300);
+}
+
+function closeEmailCapture() {
+  document.getElementById('lrcEmailForm').style.display = 'none';
+  document.getElementById('lrcEmailInput').value = '';
+  currentEscalationQuestionId = null;
+}
+
+async function submitEmailCapture() {
+  const email = document.getElementById('lrcEmailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('lrcEmailInput').style.borderColor = '#EF4444';
+    setTimeout(() => document.getElementById('lrcEmailInput').style.borderColor = 'var(--border)', 2000);
+    return;
+  }
+  try {
+    if (currentEscalationQuestionId) {
+      await fetch(`${API}/api/business/${businessId}/unknown-questions/${currentEscalationQuestionId}/set-client-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ client_email: email })
+      });
+    }
+  } catch(e) {}
+  closeEmailCapture();
+  addMsg('Parfait ! Vous serez notifié à ' + email + ' dès que l\'équipe aura répondu. 👍', false);
 }
 
 async function lrcInit() {
