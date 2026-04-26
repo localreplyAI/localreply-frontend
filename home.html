@@ -200,7 +200,8 @@
 .lrh-orbit {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,212,255,0.18);
+  box-shadow: 0 0 30px rgba(0,212,255,0.06);
 }
 .lrh-orbit-1 { width: 260px; height: 260px; animation: lrhSpin 20s linear infinite; }
 .lrh-orbit-2 { width: 200px; height: 200px; animation: lrhSpin 14s linear infinite reverse; }
@@ -226,39 +227,22 @@
 .lrh-logo-glow {
   position: absolute;
   width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(0,212,255,0.3) 0%, transparent 70%);
   border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,0.22) 0%, rgba(0,82,204,0.08) 50%, transparent 70%);
   animation: lrhPulse 3s ease-in-out infinite;
 }
 @keyframes lrhPulse { 0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.15);opacity:1;} }
 
 .lrh-logo-img {
-  width: 160px; height: 160px;
+  width: 130px; height: 130px;
   border-radius: 32px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 16px;
-  position: relative; z-index: 2;
-  animation: lrhFloatImg 4s ease-in-out infinite;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(0,212,255,0.2);
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 24px 48px rgba(0,82,204,0.55)) drop-shadow(0 0 40px rgba(0,212,255,0.22));
+  animation: lrhFloat 4s ease-in-out infinite;
 }
 @keyframes lrhFloatImg { 0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);} }
 
 /* Bulles de langues flottantes */
-.lrh-lang-bubble {
-  position: absolute;
-  padding: 8px 14px;
-  background: rgba(10,22,40,0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 100px;
-  font-size: 13px; font-weight: 600; color: #fff;
-  white-space: nowrap;
-  animation: lrhBubble 3s ease-in-out infinite;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  z-index: 3;
-}
 .lrh-bubble-1 { top: 2%; right: 0; animation-delay: 0s; }
 .lrh-bubble-2 { top: 18%; left: 0; animation-delay: -1s; }
 .lrh-bubble-3 { top: 36%; right: 0; animation-delay: -2s; }
@@ -553,17 +537,31 @@
    RESPONSIVE
 ══════════════════════════════ */
 @media (max-width: 900px) {
-  .lrh-hero-inner { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+  .lrh-hero-inner { grid-template-columns: 1fr; text-align: center; gap: 32px; }
   .lrh-hero-left { align-items: center; }
   .lrh-sub { text-align: center; }
   .lrh-hero-right { order: -1; }
-  .lrh-logo-wrap { width: 180px; height: 180px; }
-  .lrh-logo-img { width: 100px; height: 100px; border-radius: 24px; }
-  .lrh-orbit-1 { width: 170px; height: 170px; }
-  .lrh-orbit-2 { width: 135px; height: 135px; }
-  .lrh-logo-glow { width: 120px; height: 120px; }
-  .lrh-lang-bubble { display: none; }
+  .lrh-logo-wrap { width: 160px; height: 160px; }
+  .lrh-logo-img { width: 90px; height: 90px; border-radius: 20px; }
+  .lrh-orbit-1 { width: 150px; height: 150px; }
+  .lrh-orbit-2 { width: 120px; height: 120px; }
+  .lrh-logo-glow { width: 100px; height: 100px; }
+  /* Bulles langues : masquer les positionnées absolument */
   .lrh-steps::before { display: none; }
+  /* Afficher les bulles compactes à la place */
+}
+
+/* Section QR right — stack vertical sur mobile */
+@media(max-width:900px){
+  .lrh-qrsec-right {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .lrh-qrsec-arrow { flex-direction: row; gap: 8px; }
+  .lrh-qrsec-arrowline { width: 30px; height: 1.5px; }
+  .lrh-qrsec-phone, .lrh-qrsec-chat { width: 100%; max-width: 280px; }
 }
 @media (max-width: 600px) {
   .lrh-hero { padding: 48px 16px 40px; min-height: auto; overflow: hidden; }
@@ -952,8 +950,10 @@
 .lrh-qrsec-msg.me { background: linear-gradient(135deg,#0052CC,#00D4FF); color: #fff; border-radius: 8px 2px 8px 8px; text-align: right; }
 
 @media(max-width:900px){
-  .lrh-qrsec-inner { grid-template-columns: 1fr; gap: 48px; }
-  .lrh-qrsec-right { display: none; }
+  .lrh-qrsec-inner { grid-template-columns: 1fr; gap: 40px; }
+  .lrh-qrsec-vs { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:600px){
   .lrh-qrsec-vs { grid-template-columns: 1fr; }
 }
 
@@ -981,6 +981,7 @@
 .lrh-qrsec-ex-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-bottom: 8px; }
 .lrh-qrsec-ex-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .lrh-qrsec-ex-tags span { font-size: 10.5px; padding: 3px 8px; background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.2); border-radius: 6px; color: rgba(255,255,255,.7); }
+
 </style>
 </head>
 <body>
@@ -999,7 +1000,6 @@
 
       <!-- Gauche -->
       <div class="lrh-hero-left">
-        <div class="lrh-lang-badge">🇫🇷 FR &nbsp;·&nbsp; 🇬🇧 EN &nbsp;·&nbsp; 🇩🇪 DE &nbsp;·&nbsp; 🇮🇹 IT &nbsp;·&nbsp; 🇪🇸 ES &nbsp;·&nbsp; 🇵🇹 PT &nbsp;·&nbsp; 🇳🇱 NL &nbsp;·&nbsp; 🇵🇱 PL</div>
 
         <h1 class="lrh-h1">
           Votre commerce répond<br>
@@ -1031,14 +1031,6 @@
                alt="LocalReply AI"
                class="lrh-logo-img">
         </div>
-        <div class="lrh-lang-bubble lrh-bubble-1">🇩🇪 Guten Tag!</div>
-        <div class="lrh-lang-bubble lrh-bubble-2">🇫🇷 Bonjour !</div>
-        <div class="lrh-lang-bubble lrh-bubble-3">🇬🇧 Hello!</div>
-        <div class="lrh-lang-bubble lrh-bubble-4">🇮🇹 Ciao!</div>
-        <div class="lrh-lang-bubble lrh-bubble-5">🇪🇸 ¡Hola!</div>
-        <div class="lrh-lang-bubble lrh-bubble-6">🇵🇹 Olá!</div>
-        <div class="lrh-lang-bubble lrh-bubble-7">🇳🇱 Hallo!</div>
-        <div class="lrh-lang-bubble lrh-bubble-8">🇵🇱 Dzień dobry!</div>
       </div>
 
     </div>
@@ -1113,7 +1105,7 @@
         </div>
 
         <div class="lrh-qrsec-examples sr d4">
-          <div class="lrh-qrsec-ex-label">Exemple de ce que vous recevez :</div>
+          <div class="lrh-qrsec-ex-label">Votre QR code &amp; lien personnalisé :</div>
           <div class="lrh-qrsec-ex-row">
             <div class="lrh-qrsec-ex-qr" id="lrQrExample">
               <!-- QR généré par JS -->
