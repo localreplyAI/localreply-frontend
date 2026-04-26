@@ -189,12 +189,6 @@
   min-height: 360px;
 }
 
-.lrh-logo-wrap {
-  position: relative;
-  width: 200px; height: 200px;
-  display: flex; align-items: center; justify-content: center;
-  overflow: visible;
-}
 
 /* Cercles orbitaux */
 .lrh-orbit {
@@ -541,8 +535,7 @@
   .lrh-hero-left { align-items: center; }
   .lrh-sub { text-align: center; }
   .lrh-hero-right { order: -1; }
-  .lrh-logo-wrap { width: 160px; height: 160px; }
-  .lrh-logo-img { width: 90px; height: 90px; border-radius: 20px; }
+    .lrh-logo-img { width: 90px; height: 90px; border-radius: 20px; }
   .lrh-orbit-1 { width: 150px; height: 150px; }
   .lrh-orbit-2 { width: 120px; height: 120px; }
   .lrh-logo-glow { width: 100px; height: 100px; }
@@ -928,11 +921,11 @@
 }
 .lrh-qrsec-notch { width: 40px; height: 5px; background: rgba(255,255,255,.1); border-radius: 4px; margin: 0 auto 12px; }
 .lrh-qrsec-screen { background: rgba(255,255,255,.04); border-radius: 12px; padding: 12px; text-align: center; }
-.lrh-qrsec-qr { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; width: 80px; height: 80px; margin: 0 auto 8px; }
+.lrh-qrsec-qr { display: grid; grid-template-columns: repeat(23,1fr); gap: 1px; width: 90px; height: 90px; margin: 0 auto 8px; }
 .lrh-qrsec-qr div { border-radius: 1px; }
 .lrh-qrsec-qr .on { background: #fff; }
 .lrh-qrsec-qr .off { background: transparent; }
-.lrh-qrsec-logo { width: 20px; height: 20px; background: linear-gradient(135deg,#0052CC,#00D4FF); border-radius: 4px; margin: -38px auto 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; position: relative; }
+.lrh-qrsec-logo { width: 18px; height: 18px; background: linear-gradient(135deg,#0052CC,#00D4FF); border-radius: 3px; margin: -42px auto 8px; display: flex; align-items: center; justify-content: center; font-size: 9px; position: relative; z-index: 2; }
 .lrh-qrsec-url { font-size: 8px; color: #00D4FF; letter-spacing: .02em; }
 .lrh-qrsec-arrow { display: flex; flex-direction: column; align-items: center; gap: 5px; color: rgba(255,255,255,.2); font-size: 10px; }
 .lrh-qrsec-arrowline { width: 40px; height: 1px; background: linear-gradient(90deg,transparent,rgba(0,212,255,.4),transparent); }
@@ -973,7 +966,7 @@
 .lrh-qrsec-examples { margin-top: 8px; }
 .lrh-qrsec-ex-label { font-size: 11px; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
 .lrh-qrsec-ex-row { display: flex; align-items: center; gap: 16px; padding: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; }
-.lrh-qrsec-ex-qr { width: 64px; height: 64px; background: #fff; border-radius: 8px; padding: 5px; display: grid; grid-template-columns: repeat(7,1fr); gap: 1.5px; flex-shrink: 0; }
+.lrh-qrsec-ex-qr { width: 72px; height: 72px; background: #fff; border-radius: 8px; padding: 5px; display: grid; grid-template-columns: repeat(23,1fr); gap: 0.5px; flex-shrink: 0; }
 .lrh-qrsec-ex-qr div { border-radius: 1px; }
 .lrh-qrsec-ex-qr .on { background: #0A1628; }
 .lrh-qrsec-ex-qr .off { background: transparent; }
@@ -982,6 +975,136 @@
 .lrh-qrsec-ex-tags { display: flex; gap: 6px; flex-wrap: wrap; }
 .lrh-qrsec-ex-tags span { font-size: 10.5px; padding: 3px 8px; background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.2); border-radius: 6px; color: rgba(255,255,255,.7); }
 
+
+/* ══ VISUAL STAGE HERO ══ */
+.lrh-visual-stage {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Anneaux pulsants */
+.lrh-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,0.15);
+  animation: lrhRingPulse 3s ease-in-out infinite;
+}
+.lrh-ring-1 { width: 320px; height: 320px; animation-delay: 0s; }
+.lrh-ring-2 { width: 260px; height: 260px; animation-delay: .6s; border-color: rgba(0,82,204,0.2); }
+.lrh-ring-3 { width: 200px; height: 200px; animation-delay: 1.2s; border-color: rgba(0,212,255,0.1); }
+@keyframes lrhRingPulse {
+  0%,100% { transform: scale(1); opacity: .6; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+/* Orbites avec point lumineux */
+.lrh-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,0.18);
+}
+.lrh-orbit-1 { width: 280px; height: 280px; animation: lrhSpin 18s linear infinite; }
+.lrh-orbit-2 { width: 220px; height: 220px; animation: lrhSpin 12s linear infinite reverse; }
+
+.lrh-orbit-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #00D4FF;
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px 3px rgba(0,212,255,.6);
+}
+
+/* Halo glow */
+.lrh-logo-glow {
+  position: absolute;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,0.3) 0%, rgba(0,82,204,0.15) 40%, transparent 70%);
+  animation: lrhPulse 3s ease-in-out infinite;
+  filter: blur(20px);
+}
+
+/* Logo */
+.lrh-logo-img {
+  width: 120px; height: 120px;
+  border-radius: 30px;
+  position: relative; z-index: 2;
+  filter: drop-shadow(0 20px 40px rgba(0,82,204,0.6)) drop-shadow(0 0 30px rgba(0,212,255,0.3));
+  animation: lrhFloat 4s ease-in-out infinite;
+}
+
+/* Badges flottants */
+.lrh-vis-badge {
+  position: absolute;
+  background: rgba(8,18,35,0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lrh-vis-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16,185,129,.6);
+  animation: lrhPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.lrh-vis-badge-title { font-size: 12.5px; font-weight: 600; color: #fff; white-space: nowrap; }
+.lrh-vis-badge-sub { font-size: 10.5px; color: rgba(255,255,255,.45); white-space: nowrap; }
+
+.lrh-vis-badge-1 {
+  bottom: -24px; left: 50%;
+  transform: translateX(-50%);
+  animation: lrhFloat 3.5s .5s ease-in-out infinite;
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .lrh-visual-stage { width: 240px; height: 240px; }
+  .lrh-ring-1 { width: 220px; height: 220px; }
+  .lrh-ring-2 { width: 180px; height: 180px; }
+  .lrh-ring-3 { width: 140px; height: 140px; }
+  .lrh-orbit-1 { width: 200px; height: 200px; }
+  .lrh-orbit-2 { width: 160px; height: 160px; }
+  .lrh-logo-img { width: 90px; height: 90px; border-radius: 22px; }
+  .lrh-vis-badge-1 { left: -10px; top: 0; }
+  .lrh-vis-badge-2 { right: -10px; bottom: 10px; }
+}
+
+/* Langs strip */
+.lrh-langs-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.lrh-langs-label {
+  font-size: 11.5px;
+  color: rgba(255,255,255,.4);
+  font-weight: 500;
+  letter-spacing: .04em;
+  margin-right: 4px;
+}
+.lrh-lang-flag {
+  font-size: 20px;
+  transition: transform .2s cubic-bezier(.22,1,.36,1);
+  cursor: default;
+  line-height: 1;
+}
+.lrh-lang-flag:hover { transform: scale(1.35) translateY(-3px); }
 </style>
 </head>
 <body>
@@ -1001,20 +1124,33 @@
       <!-- Gauche -->
       <div class="lrh-hero-left">
 
-        <h1 class="lrh-h1">
+        <h1 class="lrh-h1 sr">
           Votre commerce répond<br>
           <span class="lrh-grad">24h/24, 7j/7</span><br>
           sans vous.
         </h1>
-        <p class="lrh-sub">L'assistant IA qui répond aux questions de vos clients, gère vos services, horaires, FAQ et rendez-vous — en 8 langues, 24h/24. Pour tous les petits commerces d'Europe.</p>
-        <p class="lrh-sub-en"><em>Answers questions, shares services, hours & pricing, books appointments — in 8 languages, 24/7 via QR code or bio link.</em></p>
 
-        <div class="lrh-ctas">
+        <!-- Langues disponibles -->
+        <div class="lrh-langs-strip sr d1">
+          <span class="lrh-langs-label">Parle vos langues :</span>
+          <span class="lrh-lang-flag" title="Français">🇫🇷</span>
+          <span class="lrh-lang-flag" title="English">🇬🇧</span>
+          <span class="lrh-lang-flag" title="Deutsch">🇩🇪</span>
+          <span class="lrh-lang-flag" title="Italiano">🇮🇹</span>
+          <span class="lrh-lang-flag" title="Español">🇪🇸</span>
+          <span class="lrh-lang-flag" title="Português">🇵🇹</span>
+          <span class="lrh-lang-flag" title="Nederlands">🇳🇱</span>
+          <span class="lrh-lang-flag" title="Polski">🇵🇱</span>
+        </div>
+
+        <p class="lrh-sub sr d2">L'assistant IA qui répond à vos clients en 8 langues, 24h/24. Partagez votre QR code en vitrine ou en bio Instagram — vos clients scannent et discutent avec votre IA en secondes.</p>
+
+        <div class="lrh-ctas sr d3">
           <a href="/auth" class="lrh-cta-primary">🚀 Essai gratuit 14 jours</a>
           <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrh-cta-secondary">Voir la démo →</a>
         </div>
 
-        <div class="lrh-trust">
+        <div class="lrh-trust sr d4">
           <div class="lrh-trust-item"><span>🎁</span><span>14 jours d'essai gratuit</span></div>
           <div class="lrh-trust-item"><span>⚡</span><span>Opérationnel en 5 min</span></div>
           <div class="lrh-trust-item"><span>🔒</span><span>RGPD compliant</span></div>
@@ -1023,13 +1159,31 @@
 
       <!-- Droite — logo flottant -->
       <div class="lrh-hero-right">
-        <div class="lrh-logo-wrap">
-          <div class="lrh-orbit lrh-orbit-1"></div>
-          <div class="lrh-orbit lrh-orbit-2"></div>
+        <div class="lrh-visual-stage">
+
+          <!-- Anneaux pulsants -->
+          <div class="lrh-ring lrh-ring-1"></div>
+          <div class="lrh-ring lrh-ring-2"></div>
+          <div class="lrh-ring lrh-ring-3"></div>
+
+          <!-- Orbites tournantes avec point lumineux -->
+          <div class="lrh-orbit lrh-orbit-1">
+            <div class="lrh-orbit-dot"></div>
+          </div>
+          <div class="lrh-orbit lrh-orbit-2">
+            <div class="lrh-orbit-dot"></div>
+          </div>
+
+          <!-- Halo glow multi-couche -->
           <div class="lrh-logo-glow"></div>
-          <img src="/assets/logo.png"
-               alt="LocalReply AI"
-               class="lrh-logo-img">
+
+          <!-- Logo -->
+          <img src="/assets/logo.png" alt="LocalReply AI" class="lrh-logo-img">
+
+
+
+
+
         </div>
       </div>
 
@@ -1040,19 +1194,19 @@
     <div class="lrh-stats-inner">
       <div class="lrh-stat">
         <div class="lrh-stat-num">5 min</div>
-        <div class="lrh-stat-label">Pour être opérationnel<br><span style="font-size:11px;color:#9ca3af;">To go live</span></div>
+        <div class="lrh-stat-label">Pour être opérationnel</div>
       </div>
       <div class="lrh-stat">
         <div class="lrh-stat-num">&lt;3s</div>
-        <div class="lrh-stat-label">Temps de réponse IA<br><span style="font-size:11px;color:#9ca3af;">AI response time</span></div>
+        <div class="lrh-stat-label">Temps de réponse IA</div>
       </div>
       <div class="lrh-stat">
         <div class="lrh-stat-num">8</div>
-        <div class="lrh-stat-label">Langues supportées<br><span style="font-size:11px;color:#9ca3af;">Languages supported</span></div>
+        <div class="lrh-stat-label">Langues supportées</div>
       </div>
       <div class="lrh-stat">
         <div class="lrh-stat-num">24/7</div>
-        <div class="lrh-stat-label">Disponibilité totale<br><span style="font-size:11px;color:#9ca3af;">Always available</span></div>
+        <div class="lrh-stat-label">Disponibilité totale</div>
       </div>
     </div>
   </section>
@@ -1228,7 +1382,7 @@
             <div class="lrh-why-metric-icon">⚡</div>
             <div>
               <div class="lrh-why-metric-val">5 min</div>
-              <div class="lrh-why-metric-label">Pour être opérationnel · To go live</div>
+              <div class="lrh-why-metric-label">Pour être opérationnel</div>
             </div>
           </div>
         </div>
@@ -1282,7 +1436,7 @@
 
   <section class="lrh-sectors">
     <div class="lrh-sectors-inner">
-      <div class="lrh-section-eyebrow">Pour tous les commerces · For every business</div>
+      <div class="lrh-section-eyebrow">Pour tous les commerces</div>
       <h2 class="lrh-section-title">Quel que soit votre secteur</h2>
       <p class="lrh-section-sub">Whatever your industry — LocalReply adapts to your business in minutes.</p>
 
@@ -1318,9 +1472,9 @@
 
   <section class="lrh-quickstart">
     <div class="lrh-quickstart-inner">
-      <div class="lrh-section-eyebrow">Prise en main · Getting started</div>
+      <div class="lrh-section-eyebrow">Prise en main</div>
       <h2 class="lrh-section-title">Opérationnel en quelques minutes</h2>
-      <p class="lrh-section-sub">Pas de compétences techniques requises. Une page de documentation complète est disponible pour aller plus loin.<br><em>No technical skills needed — a full guide is available for deeper setup.</em></p>
+      <p class="lrh-section-sub">Pas de compétences techniques requises. Une page de documentation complète est disponible pour aller plus loin.<br></p>
 
       <div class="lrh-qs-grid">
 
@@ -1359,7 +1513,7 @@
       </div>
 
       <div class="lrh-qs-cta-wrap">
-        <p>Prêt en 5 minutes · <em>Ready in 5 minutes</em></p>
+        <p>Prêt en 5 minutes</p>
         <a href="/auth">🚀 Commencer l'essai gratuit</a>
       </div>
     </div>
@@ -1367,7 +1521,7 @@
 
   <section class="lrh-testimonials">
     <div class="lrh-testimonials-inner">
-      <div class="lrh-section-eyebrow">Cas d'usage · Use cases</div>
+      <div class="lrh-section-eyebrow">Cas d'usage</div>
       <h2 class="lrh-section-title">LocalReply en action</h2>
       <p class="lrh-section-sub">Des scénarios réels, chaque jour, pour des commerces comme le vôtre.</p>
 
@@ -1456,10 +1610,17 @@ var _sb=document.querySelector('.lrh-stats');if(_sb)_co.observe(_sb);
 
 /* QR CODE */
 (function(){
-  var p=[1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1];
+  // Vraie matrice QR 23x23 avec zones de détection
+  var p=[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,0,1,0,1,1,0,1,0,0,1,0,0,1,0,0,0,1,1,0,1,0,0,0,1,0,1,0,0,1,0,0,1,0,1,0,1,1,1,0,0,0,1,0,1,0,1,0,1,1,0,1,1,0,0,0,1,0,1,0,0,0,1,0,1,1,0,0,1,0,1,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0,1,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1,0,0,1,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,0,1,0,1,0,1,1,0,0,1,0,1,0,1,1,1,0,1,0,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,0,1,1,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,1,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,0,0,1,0,0,1,1,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var cols=23;
   ['lrQrGrid2','lrQrExample'].forEach(function(id){
     var g=document.getElementById(id);if(!g)return;
-    p.forEach(function(b){var d=document.createElement('div');d.className=b?'on':'off';g.appendChild(d);});
+    g.style.gridTemplateColumns='repeat('+cols+',1fr)';
+    p.forEach(function(b){
+      var d=document.createElement('div');
+      d.style.cssText='border-radius:1px;background:'+(b?'#0A1628':'transparent')+';';
+      g.appendChild(d);
+    });
   });
 })();
 </script>
