@@ -901,7 +901,7 @@
 .lrh-qrsec-col.good .lrh-qrsec-col-title { color: #00D4FF; }
 .lrh-qrsec-row {
   display: flex; align-items: flex-start; gap: 8px;
-  font-size: 12.5px; color: rgba(255,255,255,.6);
+  font-size: 12.5px; color: rgba(255,255,255,.8);
   margin-bottom: 7px; line-height: 1.4;
 }
 .lrh-x { color: rgba(239,68,68,.7); flex-shrink: 0; }
@@ -957,7 +957,31 @@
   .lrh-qrsec-vs { grid-template-columns: 1fr; }
 }
 
-  </style>
+  
+.lrh-touch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+.lrh-touch-item { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 16px 14px; text-align: center; transition: all .25s; cursor: default; }
+.lrh-touch-item:hover { background: rgba(0,212,255,.15); border-color: rgba(0,212,255,.4); transform: translateY(-2px); }
+.lrh-touch-icon { font-size: 24px; margin-bottom: 8px; }
+.lrh-touch-label { font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
+.lrh-touch-sub { font-size: 11px; color: rgba(255,255,255,.85); line-height: 1.4; }
+.lrh-qrsec-link { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 18px; background: rgba(0,212,255,.10); border: 1px solid rgba(0,212,255,.35); border-radius: 12px; margin-top: 4px; }
+.lrh-qrsec-link-prefix { font-size: 15px; color: rgba(255,255,255,.75); font-family: monospace; }
+.lrh-qrsec-link-slug { font-size: 15px; color: #00D4FF; font-weight: 700; font-family: monospace; }
+.lrh-qrsec-link-badge { font-size: 11px; color: rgba(255,255,255,.75); padding: 3px 8px; background: rgba(255,255,255,.1); border-radius: 6px; }
+@media(max-width:600px){ .lrh-touch-grid { grid-template-columns: repeat(2,1fr); } }
+
+.lrh-qrsec-examples { margin-top: 8px; }
+.lrh-qrsec-ex-label { font-size: 11px; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
+.lrh-qrsec-ex-row { display: flex; align-items: center; gap: 16px; padding: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; }
+.lrh-qrsec-ex-qr { width: 64px; height: 64px; background: #fff; border-radius: 8px; padding: 5px; display: grid; grid-template-columns: repeat(7,1fr); gap: 1.5px; flex-shrink: 0; }
+.lrh-qrsec-ex-qr div { border-radius: 1px; }
+.lrh-qrsec-ex-qr .on { background: #0A1628; }
+.lrh-qrsec-ex-qr .off { background: transparent; }
+.lrh-qrsec-ex-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.9); font-family: monospace; margin-bottom: 4px; }
+.lrh-qrsec-ex-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-bottom: 8px; }
+.lrh-qrsec-ex-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.lrh-qrsec-ex-tags span { font-size: 10.5px; padding: 3px 8px; background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.2); border-radius: 6px; color: rgba(255,255,255,.7); }
+</style>
 </head>
 <body>
 <canvas id="lrBgCanvas"></canvas>
@@ -1063,8 +1087,8 @@
           </div>
           <div class="lrh-touch-item">
             <div class="lrh-touch-icon">📸</div>
-            <div class="lrh-touch-label">Bio Instagram</div>
-            <div class="lrh-touch-sub">Lien direct en bio</div>
+            <div class="lrh-touch-label">Bio réseaux sociaux</div>
+            <div class="lrh-touch-sub">Instagram, TikTok, Facebook…</div>
           </div>
           <div class="lrh-touch-item">
             <div class="lrh-touch-icon">🍽️</div>
@@ -1078,8 +1102,8 @@
           </div>
           <div class="lrh-touch-item">
             <div class="lrh-touch-icon">📄</div>
-            <div class="lrh-touch-label">Flyers & menus</div>
-            <div class="lrh-touch-sub">Infos + RDV en un scan</div>
+            <div class="lrh-touch-label">Flyers & affiches</div>
+            <div class="lrh-touch-sub">QR sur tous vos supports print</div>
           </div>
           <div class="lrh-touch-item">
             <div class="lrh-touch-icon">💬</div>
@@ -1088,9 +1112,22 @@
           </div>
         </div>
 
-        <div class="lrh-qrsec-link sr d4">
-          <span class="lrh-qrsec-link-prefix">localreply.ai/</span><span class="lrh-qrsec-link-slug">votre-commerce</span>
-          <span class="lrh-qrsec-link-badge">Votre lien personnalisé</span>
+        <div class="lrh-qrsec-examples sr d4">
+          <div class="lrh-qrsec-ex-label">Exemple de ce que vous recevez :</div>
+          <div class="lrh-qrsec-ex-row">
+            <div class="lrh-qrsec-ex-qr" id="lrQrExample">
+              <!-- QR généré par JS -->
+            </div>
+            <div class="lrh-qrsec-ex-info">
+              <div class="lrh-qrsec-ex-title">localreply.ai/<span style="color:#00D4FF;font-weight:700;">salon-marco</span></div>
+              <div class="lrh-qrsec-ex-sub">PNG · PDF · prêt à imprimer</div>
+              <div class="lrh-qrsec-ex-tags">
+                <span>🏪 Vitrine</span>
+                <span>📸 Bio</span>
+                <span>🃏 Carte</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1222,8 +1259,8 @@
         </div>
         <div class="lrh-feat-card">
           <div class="lrh-feat-icon">💬</div>
-          <div class="lrh-feat-title">Répond à toutes les questions</div>
-          <div class="lrh-feat-desc">Tarifs, horaires, services, adresse, parking, paiements... L'IA connaît votre commerce par cœur et répond instantanément, à toute heure. Plus besoin de décrocher.</div>
+          <div class="lrh-feat-title">FAQ & réponses instantanées</div>
+          <div class="lrh-feat-desc">Tarifs, horaires, FAQ, services, adresse, parking, paiements... L'IA connaît votre commerce par cœur et répond en secondes, à toute heure. Plus besoin de décrocher.</div>
         </div>
         <div class="lrh-feat-card">
           <div class="lrh-feat-icon">📅</div>
@@ -1249,34 +1286,7 @@
     </div>
   </section>
 
-  <section class="lrh-how">
-    <div class="lrh-how-inner">
-      <div class="lrh-section-eyebrow">Comment ça marche · How it works</div>
-      <h2 class="lrh-section-title">Opérationnel en 3 étapes</h2>
-      <p class="lrh-section-sub" style="margin-bottom:60px;">Up and running in 3 simple steps — no tech skills needed.</p>
-
-      <div class="lrh-steps">
-        <div class="lrh-step">
-          <div class="lrh-step-num">1</div>
-          <div class="lrh-step-title">Renseignez votre commerce</div>
-          <div class="lrh-step-title-en">Tell your AI about your business</div>
-          <div class="lrh-step-desc">Services, tarifs, horaires, FAQ, adresse... Utilisez nos templates par secteur pour être prêt en 5 minutes.</div>
-        </div>
-        <div class="lrh-step">
-          <div class="lrh-step-num">2</div>
-          <div class="lrh-step-title">Partagez votre lien</div>
-          <div class="lrh-step-title-en">Share your link</div>
-          <div class="lrh-step-desc">Collez votre QR code en vitrine ou partagez votre lien sur Instagram, Google, votre site web.</div>
-        </div>
-        <div class="lrh-step">
-          <div class="lrh-step-num">3</div>
-          <div class="lrh-step-title">L'IA travaille pour vous</div>
-          <div class="lrh-step-title-en">AI works for you</div>
-          <div class="lrh-step-desc">Vos clients obtiennent des réponses instantanées à leurs questions, peuvent prendre RDV — même à 3h du matin, en 8 langues.</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <section class="lrh-sectors">
     <div class="lrh-sectors-inner">
@@ -1414,7 +1424,7 @@
         Prêt à ne plus jamais<br>
         <span class="lrh-cta-grad">rater un client ?</span>
       </h2>
-      <p class="lrh-cta-sub">Rejoignez les commerces qui répondent à toutes les questions de leurs clients — horaires, services, tarifs, RDV — même à 3h du matin.<br><em style="font-size:14px;color:#9ca3af;">Answer every customer question — hours, services, prices, bookings — even at 3am.</em></p>
+      <p class="lrh-cta-sub">Rejoignez les commerces et indépendants qui ne ratent plus jamais un client. Configuré en 5 minutes, opérationnel 24h/24.<br></p>
       <div class="lrh-cta-btns">
         <a href="/auth" class="lrh-cta-btn-main">🚀 Essai gratuit 14 jours</a>
         <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrh-cta-btn-demo">Voir la démo live →</a>
@@ -1454,9 +1464,9 @@ var _sb=document.querySelector('.lrh-stats');if(_sb)_co.observe(_sb);
 
 /* QR CODE */
 (function(){
-  ['lrQrGrid2'].forEach(function(id){
+  var p=[1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1];
+  ['lrQrGrid2','lrQrExample'].forEach(function(id){
     var g=document.getElementById(id);if(!g)return;
-    var p=[1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1];
     p.forEach(function(b){var d=document.createElement('div');d.className=b?'on':'off';g.appendChild(d);});
   });
 })();
