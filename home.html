@@ -1105,6 +1105,84 @@
   line-height: 1;
 }
 .lrh-lang-flag:hover { transform: scale(1.35) translateY(-3px); }
+
+/* ── QR CARTE IMPRIMÉE ── */
+.lrh-qr-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px 16px;
+  width: 180px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.lrh-qr-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.lrh-qr-card-logo {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  object-fit: contain;
+  background: linear-gradient(135deg,#0052CC,#00D4FF);
+  padding: 2px;
+}
+.lrh-qr-card-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0A1628;
+  font-family: 'Syne', sans-serif;
+}
+.lrh-qr-card-code {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lrh-qr-card-code .lrh-qrsec-qr {
+  width: 140px !important;
+  height: 140px !important;
+  margin: 0 !important;
+}
+.lrh-qr-card-code .lrh-qrsec-logo {
+  margin: -54px auto 0 !important;
+  width: 26px !important;
+  height: 26px !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px #fff !important;
+  border-radius: 5px !important;
+  padding: 3px !important;
+}
+.lrh-qr-card-url {
+  font-size: 9.5px;
+  color: #444;
+  font-family: monospace;
+  text-align: center;
+  letter-spacing: .02em;
+}
+.lrh-qr-card-url strong { color: #0052CC; }
+.lrh-qr-card-hint {
+  font-size: 8.5px;
+  color: #999;
+  text-align: center;
+  line-height: 1.4;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  width: 100%;
+}
+
+@media(max-width:900px){
+  .lrh-qr-card { width: 150px; }
+  .lrh-qr-card-code { width: 116px; height: 116px; }
+  .lrh-qr-card-code .lrh-qrsec-qr { width: 116px !important; height: 116px !important; }
+}
 </style>
 </head>
 <body>
@@ -1277,20 +1355,32 @@
       </div>
 
       <div class="lrh-qrsec-right sr d2">
-        <div class="lrh-qrsec-phone">
-          <div class="lrh-qrsec-notch"></div>
-          <div class="lrh-qrsec-screen">
-            <div class="lrh-qrsec-qr" id="lrQrGrid2"></div>
-            <div class="lrh-qrsec-logo"><img src="/assets/logo.png" alt="" style="width:14px;height:14px;object-fit:contain;border-radius:2px;"></div>
-            <div class="lrh-qrsec-url">localreply.ai/salon-marco</div>
+
+        <!-- QR carte imprimée -->
+        <div class="lrh-qr-card" style="animation:lrhFloat 4s ease-in-out infinite;">
+          <div class="lrh-qr-card-top">
+            <img src="/assets/logo.png" alt="LocalReply" class="lrh-qr-card-logo">
+            <div class="lrh-qr-card-name">Salon Marco</div>
           </div>
+          <div class="lrh-qr-card-code">
+            <div class="lrh-qrsec-qr" id="lrQrGrid2"></div>
+            <div class="lrh-qrsec-logo">
+              <img src="/assets/logo.png" alt="" style="width:13px;height:13px;object-fit:contain;border-radius:2px;">
+            </div>
+          </div>
+          <div class="lrh-qr-card-url">localreply.ai/<strong>salon-marco</strong></div>
+          <div class="lrh-qr-card-hint">Scannez pour discuter avec notre assistant IA</div>
         </div>
+
+        <!-- Flèche -->
         <div class="lrh-qrsec-arrow">
           <div class="lrh-qrsec-arrowline"></div>
           <span>scan</span>
           <div class="lrh-qrsec-arrowline"></div>
         </div>
-        <div class="lrh-qrsec-chat">
+
+        <!-- Chat résultat -->
+        <div class="lrh-qrsec-chat" style="animation:lrhFloat 4.5s 1s ease-in-out infinite;">
           <div class="lrh-qrsec-chat-head">💇 Salon Marco · IA 24/7</div>
           <div class="lrh-qrsec-msg ai">Bonjour ! 👋 Comment puis-je vous aider ?</div>
           <div class="lrh-qrsec-msg me">Vous êtes ouverts dimanche ?</div>
@@ -1298,6 +1388,7 @@
           <div class="lrh-qrsec-msg me">Oui s'il vous plaît</div>
           <div class="lrh-qrsec-msg ai">✅ RDV enregistré ! Confirmation par SMS.</div>
         </div>
+
       </div>
 
     </div>
@@ -1308,9 +1399,9 @@
 
   <section class="lrh-why">
     <div class="lrh-why-inner">
-      <div class="lrh-section-eyebrow">Pourquoi choisir LocalReply · Why LocalReply</div>
+      <div class="lrh-section-eyebrow">Pourquoi choisir LocalReply</div>
       <h2 class="lrh-section-title">Quelle que soit votre situation</h2>
-      <p class="lrh-section-sub">Chaque soir, des clients écrivent à votre commerce. Sans réponse, ils vont chez le concurrent.<br><em>Every evening, customers message your business. Without a reply, they go to your competitor.</em></p>
+      <p class="lrh-section-sub">Chaque soir, des clients écrivent à votre commerce. Sans réponse, ils vont chez le concurrent.</p>
 
       <div class="lrh-why-grid">
 
