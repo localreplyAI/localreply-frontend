@@ -6,9 +6,12 @@
   <title>Fonctionnalités — LocalReply</title>
   <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    body { background: #060D1A; font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   </style>
 
 
@@ -24,17 +27,22 @@
 :root {
   --blue: #0052CC;
   --cyan: #00D4FF;
-  --dark: #0A1628;
+  --dark: #060D1A;
   --green: #10B981;
   --gold: #F59E0B;
   --white: #FFFFFF;
-  --gray: #F5F7FA;
-  --text: #1A2340;
-  --muted: #6B7280;
-  --border: rgba(0,82,204,0.12);
+  --gray: rgba(255,255,255,0.04);
+  --text: #fff;
+  --muted: rgba(255,255,255,0.55);
+  --border: rgba(255,255,255,0.08);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-.lrf { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; color: #1A2340;  background: #ffffff; min-height: 100vh;}
+.lrf { font-family: 'DM Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; color: #fff; background: #060D1A; min-height: 100vh; }
+
+/* SCROLL REVEAL */
+.sr { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr.in { opacity: 1; transform: none; }
+.sr.d1{transition-delay:.09s;}.sr.d2{transition-delay:.18s;}.sr.d3{transition-delay:.27s;}
 
 /* HERO */
 .lrf-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 100px 20px 80px; text-align: center; }
@@ -49,13 +57,13 @@
 .lrf-btn-secondary:hover { background: rgba(255,255,255,0.18); }
 
 /* SECTIONS */
-.lrf-section { padding: 90px 20px; background: #F5F7FA; }
-.lrf-section-alt { background: #ffffff; }
+.lrf-section { padding: 90px 20px; background: #060D1A; }
+.lrf-section-alt { background: #0A1628; }
 .lrf-container { max-width: 1160px; margin: 0 auto; }
-.lrf-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
-.lrf-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; color: #1A2340; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; }
-.lrf-title span { color: var(--blue); }
-.lrf-subtitle { font-size: 17px; color: #6B7280; line-height: 1.7; max-width: 560px; }
+.lrf-label { font-size: 11.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+.lrf-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; font-family: "Syne", sans-serif; }
+.lrf-title span { color: var(--cyan); }
+.lrf-subtitle { font-size: 17px; color: rgba(255,255,255,.6); line-height: 1.7; max-width: 560px; }
 .lrf-header { margin-bottom: 56px; }
 
 /* GRID FEATURES */
@@ -63,16 +71,16 @@
 .lrf-grid-3 { grid-template-columns: repeat(3, 1fr); }
 .lrf-grid-2 { grid-template-columns: repeat(2, 1fr); }
 
-.lrf-card { background: #fff; border-radius: 20px; padding: 36px 32px; border: 1px solid var(--border); transition: all 0.25s; }
-.lrf-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,82,204,0.1); border-color: rgba(0,82,204,0.2); }
+.lrf-card { background: rgba(255,255,255,.03); border-radius: 20px; padding: 36px 32px; border: 1px solid rgba(255,255,255,.07); transition: all 0.25s; }
+.lrf-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.35); border-color: rgba(0,212,255,.22); }
 .lrf-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
 .lrf-card-icon-blue { background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1)); }
 .lrf-card-icon-green { background: rgba(16,185,129,0.1); }
 .lrf-card-icon-gold { background: rgba(245,158,11,0.1); }
-.lrf-card h3 { font-size: 18px; font-weight: 700; color: #1A2340; margin-bottom: 10px; }
-.lrf-card p { font-size: 15px; color: #6B7280; line-height: 1.65; }
+.lrf-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; font-family: "Syne", sans-serif; }
+.lrf-card p { font-size: 15px; color: rgba(255,255,255,.55); line-height: 1.65; }
 .lrf-card ul { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
-.lrf-card ul li { font-size: 14px; color: #6B7280; display: flex; align-items: flex-start; gap: 8px; }
+.lrf-card ul li { font-size: 14px; color: rgba(255,255,255,.6); display: flex; align-items: flex-start; gap: 8px; }
 .lrf-card ul li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 
 /* FEATURE HIGHLIGHT (grande feature) */
@@ -80,10 +88,10 @@
 .lrf-highlight-reverse { direction: rtl; }
 .lrf-highlight-reverse > * { direction: ltr; }
 .lrf-highlight-text .lrf-label { margin-bottom: 10px; }
-.lrf-highlight-text h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: #1A2340; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.25; }
-.lrf-highlight-text p { font-size: 16px; color: #6B7280; line-height: 1.75; margin-bottom: 20px; }
+.lrf-highlight-text h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.25; font-family: "Syne", sans-serif; }
+.lrf-highlight-text p { font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.75; margin-bottom: 20px; }
 .lrf-highlight-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.lrf-highlight-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: #1A2340; }
+.lrf-highlight-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,.8); }
 .lrf-highlight-list li span:first-child { width: 22px; height: 22px; background: linear-gradient(135deg, var(--blue), var(--cyan)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
 .lrf-highlight-visual { background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 24px; padding: 36px; min-height: 340px; display: flex; flex-direction: column; justify-content: center; gap: 16px; box-shadow: 0 20px 60px rgba(0,82,204,0.2); }
 
@@ -99,22 +107,22 @@
 .lrf-lang-badge { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
 
 /* PLANS COMPARAISON */
-.lrf-plan { background: #fff; border-radius: 20px; padding: 36px 28px; border: 2px solid var(--border); transition: all 0.25s; position: relative; }
-.lrf-plan-featured { border-color: var(--blue); box-shadow: 0 12px 40px rgba(0,82,204,0.15); }
+.lrf-plan { background: rgba(255,255,255,.03); border-radius: 20px; padding: 36px 28px; border: 1px solid rgba(255,255,255,.08); transition: all 0.25s; position: relative; }
+.lrf-plan-featured { border-color: rgba(0,212,255,.3); box-shadow: 0 0 0 1px rgba(0,212,255,.1), 0 24px 60px rgba(0,0,0,.4); background: #0D1B2E; }
 .lrf-plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.lrf-plan-name { font-size: 14px; font-weight: 700; color: #6B7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.lrf-plan-price { font-size: 44px; font-weight: 800; color: #1A2340; line-height: 1; margin-bottom: 4px; }
+.lrf-plan-name { font-size: 14px; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: "Syne", sans-serif; }
+.lrf-plan-price { font-size: 44px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; font-family: "Syne", sans-serif; }
 .lrf-plan-price sup { font-size: 20px; vertical-align: super; }
-.lrf-plan-price span { font-size: 16px; font-weight: 400; color: #6B7280; }
-.lrf-plan-desc { font-size: 14px; color: #6B7280; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.lrf-plan-price span { font-size: 16px; font-weight: 400; color: rgba(255,255,255,.45); }
+.lrf-plan-desc { font-size: 14px; color: rgba(255,255,255,.5); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.07); }
 .lrf-plan-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-.lrf-plan-list li { font-size: 14px; color: #1A2340; display: flex; align-items: flex-start; gap: 8px; }
+.lrf-plan-list li { font-size: 14px; color: rgba(255,255,255,.8); display: flex; align-items: flex-start; gap: 8px; }
 .lrf-plan-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-.lrf-plan-list li.dim { color: #6B7280; }
+.lrf-plan-list li.dim { color: rgba(255,255,255,.3); }
 .lrf-plan-list li.dim::before { color: #D1D5DB; }
 .lrf-plan-cta { display: block; text-align: center; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
 .lrf-plan-cta-featured { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; box-shadow: 0 6px 20px rgba(0,82,204,0.25); }
-.lrf-plan-cta-default { background: var(--gray); color: #1A2340; }
+.lrf-plan-cta-default { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.1); }
 .lrf-plan-cta:hover { transform: translateY(-1px); }
 
 /* CTA FINAL */
@@ -134,6 +142,145 @@
   .lrf-grid-3, .lrf-grid-2 { grid-template-columns: 1fr; }
   .lrf-section { padding: 60px 20px; }
 }
+
+/* ── DASHBOARD MOCK ── */
+.lrf-dash {
+  background: #0B1525;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 32px 80px rgba(0,0,0,.5);
+}
+.lrf-dash-bar {
+  background: #060D1A;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.lrf-dash-dot { width: 10px; height: 10px; border-radius: 50%; }
+.lrf-dash-inner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.lrf-dash-sidebar {
+  background: #080F1E;
+  border-right: 1px solid rgba(255,255,255,.06);
+  padding: 16px 0;
+}
+.lrf-dash-nav-item {
+  padding: 9px 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,.45);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+.lrf-dash-nav-item.active {
+  background: rgba(0,212,255,.08);
+  color: #fff;
+  border-right: 2px solid #00D4FF;
+}
+.lrf-dash-content { padding: 20px; }
+.lrf-dash-kpis {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.lrf-dash-kpi {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.lrf-dash-kpi-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.lrf-dash-kpi-label { font-size: 11px; color: rgba(255,255,255,.4); }
+.lrf-dash-msgs { display: flex; flex-direction: column; gap: 8px; }
+.lrf-dash-msg-row {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lrf-dash-msg-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.lrf-dash-msg-name { font-size: 12.5px; font-weight: 600; color: #fff; }
+.lrf-dash-msg-preview { font-size: 11.5px; color: rgba(255,255,255,.4); margin-top: 1px; }
+.lrf-dash-msg-time { font-size: 10.5px; color: rgba(255,255,255,.25); margin-left: auto; white-space: nowrap; }
+.lrf-dash-msg-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 5px; white-space: nowrap;
+}
+
+/* ── ONBOARDING STEPS ── */
+.lrf-onboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+  position: relative;
+}
+.lrf-onboard-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,212,255,.3), rgba(0,82,204,.3));
+}
+.lrf-onboard-step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.lrf-onboard-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#0052CC,#00D4FF);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow: 0 8px 24px rgba(0,212,255,.25);
+}
+.lrf-onboard-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  font-family: 'Syne', sans-serif;
+}
+.lrf-onboard-desc {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.5;
+}
+
+@media(max-width:768px){
+  .lrf-dash-inner { grid-template-columns: 1fr; }
+  .lrf-dash-sidebar { display: none; }
+  .lrf-onboard-grid { grid-template-columns: repeat(2,1fr); }
+  .lrf-onboard-grid::before { display: none; }
+  .lrf-dash-kpis { grid-template-columns: repeat(3,1fr); }
+}
+
 </style>
 
 <div class="lrf">
@@ -141,8 +288,8 @@
   <!-- HERO -->
   <section class="lrf-hero">
     <div class="lrf-container">
-      <div class="lrf-hero-badge">✦ Toutes les fonctionnalités</div>
-      <h1>Votre commerce répond<br><span>24h/24 — sans vous</span></h1>
+      <div class="lrf-hero-badge sr">✦ Toutes les fonctionnalités</div>
+      <h1 class="sr d1">Votre commerce répond<br><span>24h/24 — sans vous</span></h1>
       <p>Un assistant IA complet qui parle 8 langues, gère vos RDV et apprend de chaque conversation.</p>
       <div class="lrf-hero-cta">
         <a href="/auth" class="lrf-btn-primary">Essai gratuit 14 jours →</a>
@@ -160,35 +307,35 @@
         <p class="lrf-subtitle">LocalReply comprend le contexte, anticipe les besoins et répond comme un collaborateur qualifié — pas comme un robot.</p>
       </div>
       <div class="lrf-grid lrf-grid-3">
-        <div class="lrf-card">
+        <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-blue">🌍</div>
           <h3>8 langues automatiques</h3>
           <p>Détecte et répond dans la langue du client instantanément. Français, Allemand, Italien, Espagnol, Anglais, Portugais, Néerlandais, Polonais.</p>
         </div>
-        <div class="lrf-card">
+        <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-blue">📅</div>
           <h3>Prise de RDV intelligente</h3>
           <p>Le client dit "mardi vers 14h", l'IA gère la réservation selon votre mode : Google Calendar, lien externe, manuel ou désactivé.</p>
         </div>
-        <div class="lrf-card">
+        <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-blue">⚡</div>
           <h3>Détection d'urgence</h3>
-          <p>L'IA détecte les demandes urgentes 🔴 et les signale en priorité dans votre dashboard pour action immédiate.</p>
+          <p>L'IA détecte les demandes urgentes 🔴 et les remonte en priorité dans votre dashboard — inclus pour tous. Alerte SMS instantanée <span style="color:#F59E0B;font-size:11px;font-weight:600;background:rgba(245,158,11,0.1);padding:2px 7px;border-radius:5px;">PRO</span></p>
         </div>
-        <div class="lrf-card">
+        <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-green">🧠</div>
           <h3>IA qui apprend</h3>
           <p>Quand elle ne sait pas, elle vous demande et retient la réponse. Plus elle travaille, plus elle devient performante.</p>
         </div>
-        <div class="lrf-card">
+        <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-green">📊</div>
           <h3>Analytics & Insights <span style="font-size:11px;font-weight:600;color:#F59E0B;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:6px;margin-left:6px;">PRO</span></h3>
           <p>Résumés hebdomadaires ou quotidiens avec les tendances, les opportunités détectées et les FAQ manquantes.</p>
         </div>
-        <div class="lrf-card">
-          <div class="lrf-card-icon lrf-card-icon-gold">🔗</div>
-          <h3>Lien & QR code</h3>
-          <p>Chaque commerce a son lien unique <strong>localreply.ai/votre-commerce</strong> et son QR code prêt à imprimer.</p>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-gold">📱</div>
+          <h3>QR code & lien partout</h3>
+          <p>Vitrine, flyers, bio Instagram, carte de visite — un scan et votre client parle à votre IA. Lien unique <strong>localreply.ai/votre-commerce</strong>, QR téléchargeable PNG & PDF.</p>
         </div>
       </div>
     </div>
@@ -198,7 +345,7 @@
   <section class="lrf-section lrf-section-alt">
     <div class="lrf-container">
       <div class="lrf-highlight">
-        <div class="lrf-highlight-text">
+        <div class="lrf-highlight-text sr">
           <div class="lrf-label">Multilingue natif</div>
           <h2>Vos clients parlent, l'IA répond — dans leur langue</h2>
           <p>Un client allemand arrive sur votre page, l'IA détecte automatiquement la langue et répond en allemand. Sans configuration, sans délai.</p>
@@ -213,19 +360,19 @@
           <div class="lrf-chat-wrap">
             <div>
               <div class="lrf-chat-ai-name">Client</div>
-              <div class="lrf-chat-msg lrf-chat-user">Ich hätte gerne einen Termin für Donnerstag</div>
+              <div class="lrf-chat-msg lrf-chat-user">Was kostet ein Haarschnitt bei Ihnen?</div>
             </div>
             <div>
               <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
-              <div class="lrf-chat-msg lrf-chat-ai">Natürlich! Donnerstag haben wir noch Plätze frei. Um welche Uhrzeit möchten Sie kommen? 😊</div>
+              <div class="lrf-chat-msg lrf-chat-ai">Ein Herrenhaarschnitt kostet 35€ (30 Min). Möchten Sie einen Termin vereinbaren? 😊</div>
             </div>
             <div>
               <div class="lrf-chat-ai-name">Client</div>
-              <div class="lrf-chat-msg lrf-chat-user">Um 14 Uhr bitte</div>
+              <div class="lrf-chat-msg lrf-chat-user">Ja, am Donnerstagnachmittag</div>
             </div>
             <div>
               <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
-              <div class="lrf-chat-msg lrf-chat-ai">Perfekt! Donnerstag um 14:00 Uhr ist reserviert. Auf Wiedersehen! ✅</div>
+              <div class="lrf-chat-msg lrf-chat-ai">Perfekt! Ich leite Ihre Anfrage weiter. Darf ich Ihren Namen und Ihre Telefonnummer?</div>
             </div>
           </div>
           <div class="lrf-lang-grid">
@@ -235,6 +382,9 @@
             <div class="lrf-lang-badge">🇬🇧 English</div>
             <div class="lrf-lang-badge">🇪🇸 Español</div>
             <div class="lrf-lang-badge">🇵🇹 Português</div>
+            <div class="lrf-lang-badge">🇳🇱 Nederlands</div>
+            <div class="lrf-lang-badge">🇵🇱 Polski</div>
+            <div class="lrf-lang-badge">🇷🇺 Русский</div>
           </div>
         </div>
       </div>
@@ -265,15 +415,14 @@
             </div>
           </div>
         </div>
-        <div class="lrf-highlight-text">
+        <div class="lrf-highlight-text sr">
           <div class="lrf-label">Gestion RDV</div>
           <h2>La prise de RDV en conversation naturelle</h2>
           <p>Aucun formulaire compliqué. Le client parle normalement, l'IA comprend et gère les réservations selon votre mode choisi.</p>
           <ul class="lrf-highlight-list">
             <li><span>✓</span> 4 modes : Google Calendar, lien externe (Planity, Doctolib…), manuel ou désactivé</li>
-            <li><span>✓</span> Confirmation ou refus en 1 clic depuis votre email</li>
+            <li><span>✓</span> Confirmation ou refus en 1 clic par email ou SMS</li>
             <li><span>✓</span> RDV ajouté automatiquement au Calendar si connecté</li>
-            <li><span>✓</span> Rappels automatiques 24h avant</li>
           </ul>
         </div>
       </div>
@@ -285,15 +434,15 @@
   <section class="lrf-section">
     <div class="lrf-container">
       <div class="lrf-highlight">
-        <div class="lrf-highlight-text">
+        <div class="lrf-highlight-text sr">
           <div class="lrf-label">Votre vitrine digitale</div>
           <h2>Un lien, un QR code — partout où sont vos clients</h2>
           <p>Chaque commerce reçoit un lien unique et un QR code prêt à imprimer. Affichez-le en vitrine, partagez-le sur Instagram, ajoutez-le sur Google — vos clients vous trouvent à tout moment.</p>
           <ul class="lrf-highlight-list">
             <li><span>✓</span> Lien unique <strong>localreply.ai/votre-commerce</strong></li>
             <li><span>✓</span> QR code téléchargeable en PNG ou PDF</li>
-            <li><span>✓</span> Liens de tracking par source (Instagram, Google, site web, QR)</li>
-            <li><span>✓</span> Savoir exactement d'où viennent vos clients</li>
+            <li><span>✓</span> Détection automatique de la source (QR, Instagram, site web, Google)</li>
+            <li><span>✓</span> Analytics par source dans votre dashboard</li>
             <li><span>✓</span> Zéro configuration technique requise</li>
           </ul>
         </div>
@@ -332,27 +481,28 @@
               <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;">Téléchargez en PNG ou PDF — plastifiez et affichez en vitrine, sur vos tables ou à la caisse.</div>
             </div>
           </div>
-          <!-- Liens tracking -->
+          <!-- Sources de trafic -->
           <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;">
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Liens de tracking par source</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">D'où viennent vos clients ?</div>
             <div style="display:flex;flex-direction:column;gap:8px;">
               <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
-                <span style="font-size:13px;color:rgba(255,255,255,0.8);">📸 Instagram</span>
-                <span style="font-size:11px;color:#00D4FF;">?src=instagram</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
-                <span style="font-size:13px;color:rgba(255,255,255,0.8);">🔍 Google</span>
-                <span style="font-size:11px;color:#00D4FF;">?src=google</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
                 <span style="font-size:13px;color:rgba(255,255,255,0.8);">📱 QR Code vitrine</span>
-                <span style="font-size:11px;color:#00D4FF;">?src=qr</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">43%</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">📸 Instagram</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">31%</span>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
                 <span style="font-size:13px;color:rgba(255,255,255,0.8);">🌐 Site web</span>
-                <span style="font-size:11px;color:#00D4FF;">?src=website</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">18%</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">🔗 Direct / autres</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">8%</span>
               </div>
             </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:10px;font-style:italic;">Données disponibles dans votre dashboard Analytics</div>
           </div>
         </div>
       </div>
@@ -363,26 +513,28 @@
   <section class="lrf-section">
     <div class="lrf-container">
       <div class="lrf-highlight">
-        <div class="lrf-highlight-text">
+        <div class="lrf-highlight-text sr">
           <div class="lrf-label">Apprentissage continu</div>
           <h2>L'IA qui ne reste pas bloquée</h2>
           <p>Quand un client pose une question que l'IA ne connaît pas encore, elle ne répond pas n'importe quoi — elle vous alerte et intègre votre réponse pour la prochaine fois.</p>
           <ul class="lrf-highlight-list">
-            <li><span>✓</span> Notification immédiate dans le dashboard</li>
-            <li><span>✓</span> Vous répondez en 1 clic → FAQ enrichie automatiquement</li>
-            <li><span>✓</span> L'IA répond seule la prochaine fois</li>
+            <li><span>✓</span> Question reçue dans n'importe quelle langue → traduction automatique en français sous la question</li>
+            <li><span>✓</span> Vous répondez en français → votre réponse est automatiquement traduite dans la langue du client</li>
+            <li><span>✓</span> Réponse ajoutée à la FAQ — l'IA répond seule la prochaine fois</li>
             <li><span>✓</span> Base de connaissances qui grandit avec votre activité</li>
           </ul>
         </div>
         <div class="lrf-highlight-visual">
           <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px;">
             <div style="font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Question sans réponse</div>
-            <div style="font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 16px;">"Vous faites aussi le rasage à la serviette chaude ?"</div>
+            <div style="font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 4px;">"Fate anche il rasaggio con l'asciugamano caldo?"</div>
+            <div style="font-size: 12px; color: rgba(0,212,255,.7); margin-bottom: 16px;">🔄 Traduction : "Faites-vous aussi le rasage à la serviette chaude ?"</div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button style="padding: 8px 14px; background: linear-gradient(135deg, #0052CC, #00D4FF); border: none; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;">✓ Oui — 25 CHF</button>
               <button style="padding: 8px 14px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; color: #FCA5A5; font-size: 13px; font-weight: 600; cursor: pointer;">✗ Non</button>
               <button style="padding: 8px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer;">Ignorer</button>
             </div>
+            <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;font-style:italic;">✓ Votre réponse sera automatiquement traduite en italien pour le client</div>
           </div>
           <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px;">
             <span style="font-size: 20px;">✅</span>
@@ -393,51 +545,160 @@
     </div>
   </section>
 
-  <!-- PLANS -->
+
+  <!-- DASHBOARD MOCK -->
+  <section class="lrf-section lrf-section-alt">
+    <div class="lrf-container">
+      <div class="lrf-header" style="text-align:center;margin-bottom:48px;">
+        <div class="lrf-label sr" style="text-align:center;">Votre tableau de bord</div>
+        <h2 class="lrf-title sr d1" style="text-align:center;">Tout sous contrôle,<br><span>en un coup d'œil</span></h2>
+        <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;">Conversations en cours, RDV en attente, questions sans réponse — tout ce dont vous avez besoin pour gérer votre commerce à distance.</p>
+      </div>
+
+      <!-- Mock Dashboard -->
+      <div class="lrf-dash sr">
+        <div class="lrf-dash-bar">
+          <div class="lrf-dash-dot" style="background:#EF4444;"></div>
+          <div class="lrf-dash-dot" style="background:#F59E0B;"></div>
+          <div class="lrf-dash-dot" style="background:#10B981;"></div>
+          <span style="font-size:12px;color:rgba(255,255,255,.3);margin-left:8px;">LocalReply Dashboard</span>
+        </div>
+        <div class="lrf-dash-inner">
+          <!-- Sidebar -->
+          <div class="lrf-dash-sidebar">
+            <div style="padding:12px 16px 16px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:7px;"></div>
+                <div>
+                  <div style="font-size:12px;font-weight:600;color:#fff;">Salon Marco</div>
+                  <div style="font-size:10px;color:rgba(255,255,255,.35);">⭐ Plan Pro</div>
+                </div>
+              </div>
+            </div>
+            <div class="lrf-dash-nav-item active">🏠 Accueil</div>
+            <div class="lrf-dash-nav-item">⚙️ Configuration</div>
+            <div class="lrf-dash-nav-item">💬 Messages</div>
+            <div class="lrf-dash-nav-item">📅 Rendez-vous</div>
+            <div class="lrf-dash-nav-item">📊 Analytics</div>
+          </div>
+          <!-- Content -->
+          <div class="lrf-dash-content">
+            <!-- KPIs -->
+            <div class="lrf-dash-kpis">
+              <div class="lrf-dash-kpi">
+                <div class="lrf-dash-kpi-val">24</div>
+                <div class="lrf-dash-kpi-label">Conversations aujourd'hui</div>
+              </div>
+              <div class="lrf-dash-kpi">
+                <div class="lrf-dash-kpi-val" style="color:#10B981;">6</div>
+                <div class="lrf-dash-kpi-label">RDV en attente</div>
+              </div>
+              <div class="lrf-dash-kpi">
+                <div class="lrf-dash-kpi-val" style="color:#F59E0B;">3</div>
+                <div class="lrf-dash-kpi-label">Questions sans réponse</div>
+              </div>
+            </div>
+            <!-- Messages récents -->
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Activité récente</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Activité récente</div>
+            <div class="lrf-dash-msgs">
+              <div class="lrf-dash-msg-row">
+                <div class="lrf-dash-msg-dot" style="background:#EF4444;box-shadow:0 0 6px rgba(239,68,68,.5);"></div>
+                <div style="flex:1;">
+                  <div class="lrf-dash-msg-name">💬 Conversation 🇩🇪 <span style="font-size:10px;color:rgba(255,255,255,.3);font-weight:400;">Client anonyme</span></div>
+                  <div class="lrf-dash-msg-preview">Ich brauche dringend einen Termin heute...</div>
+                  <div style="font-size:10px;color:rgba(0,212,255,.7);margin-top:2px;">🔄 Traduction : J'ai besoin d'un RDV urgent aujourd'hui...</div>
+                </div>
+                <span class="lrf-dash-msg-badge" style="background:rgba(239,68,68,.15);color:#EF4444;">🔴 Urgent</span>
+                <div class="lrf-dash-msg-time">Il y a 3 min</div>
+              </div>
+              <div class="lrf-dash-msg-row">
+                <div class="lrf-dash-msg-dot" style="background:#10B981;"></div>
+                <div style="flex:1;">
+                  <div class="lrf-dash-msg-name">📅 RDV confirmé — Marie D. 🇫🇷</div>
+                  <div class="lrf-dash-msg-preview">Coupe femme · Vendredi 14h30</div>
+                </div>
+                <span class="lrf-dash-msg-badge" style="background:rgba(16,185,129,.1);color:#10B981;">✅ Confirmé</span>
+                <div class="lrf-dash-msg-time">Il y a 12 min</div>
+              </div>
+              <div class="lrf-dash-msg-row">
+                <div class="lrf-dash-msg-dot" style="background:#F59E0B;"></div>
+                <div style="flex:1;">
+                  <div class="lrf-dash-msg-name">❓ Question sans réponse 🇮🇹</div>
+                  <div class="lrf-dash-msg-preview">Fate anche la barba con la scure?</div>
+                  <div style="font-size:10px;color:rgba(0,212,255,.7);margin-top:2px;">🔄 Traduction : Faites-vous aussi la barbe au coupe-chou ?</div>
+                </div>
+                <span class="lrf-dash-msg-badge" style="background:rgba(245,158,11,.1);color:#F59E0B;">Répondre</span>
+                <div class="lrf-dash-msg-time">Il y a 28 min</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Points clés dashboard -->
+      <div class="lrf-grid lrf-grid-3" style="margin-top:32px;">
+        <div class="lrf-card sr" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:10px;">🔴</div>
+          <h3 style="font-size:15px;margin-bottom:6px;">Urgences en priorité</h3>
+          <p style="font-size:13px;">Visible dans le dashboard pour tous. Alerte SMS instantanée <span style="color:#F59E0B;font-size:11px;font-weight:600;">PRO</span></p>
+        </div>
+        <div class="lrf-card sr d1" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:10px;">❓</div>
+          <h3 style="font-size:15px;margin-bottom:6px;">Questions sans réponse</h3>
+          <p style="font-size:13px;">Répondez en 1 clic — la réponse est ajoutée à la FAQ automatiquement.</p>
+        </div>
+        <div class="lrf-card sr d2" style="padding:24px;">
+          <div style="font-size:24px;margin-bottom:10px;">📊</div>
+          <h3 style="font-size:15px;margin-bottom:6px;">Analytics en temps réel</h3>
+          <p style="font-size:13px;">Conversations, RDV, langues, sources de trafic — tout en un coup d'œil. <span style="color:#F59E0B;font-size:11px;font-weight:600;">PRO</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ONBOARDING — 4 étapes -->
   <section class="lrf-section">
     <div class="lrf-container">
-      <div class="lrf-header" style="text-align: center;">
-        <div class="lrf-label" style="text-align: center;">Tarifs simples</div>
-        <h2 class="lrf-title" style="text-align: center;">Choisissez votre formule</h2>
-        <p class="lrf-subtitle" style="margin: 0 auto; text-align: center;">Essai gratuit 14 jours — accès Pro complet — carte bancaire requise — annulable à tout moment.</p>
+      <div class="lrf-header" style="text-align:center;margin-bottom:48px;">
+        <div class="lrf-label sr" style="text-align:center;">Démarrage</div>
+        <h2 class="lrf-title sr d1" style="text-align:center;">Opérationnel en<br><span>5 minutes chrono</span></h2>
+        <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;">Pas besoin de développeur, pas de configuration technique. Vous guidez, l'IA suit.</p>
       </div>
-      <div class="lrf-grid lrf-grid-2" style="max-width: 760px; margin: 0 auto;">
-        <div class="lrf-plan">
-          <div class="lrf-plan-name">Standard</div>
-          <div class="lrf-plan-price"><sup>€</sup>29<span>/mois</span></div>
-          <p class="lrf-plan-desc">Pour démarrer et répondre à vos clients automatiquement.</p>
-          <ul class="lrf-plan-list">
-            <li>IA 8 langues complète</li>
-            <li>Conversations illimitées</li>
-            <li>Prise de RDV — 4 modes <span style="color:#9CA3AF;font-size:12px;">(Calendar, lien, manuel, aucun)</span></li>
-            <li>Confirmations RDV par email</li>
-            
-            <li>Résumés IA hebdomadaires</li>
-            <li>Lien personnalisé + QR code</li>
-            <li>Support email</li>
-            <li class="dim">SMS non inclus</li>
-            <li class="dim">Pas d'analytics</li>
-          </ul>
-          <a href="/auth" class="lrf-plan-cta lrf-plan-cta-default">Commencer →</a>
+      <div class="lrf-onboard-grid">
+        <div class="lrf-onboard-step sr">
+          <div class="lrf-onboard-num">1</div>
+          <div class="lrf-onboard-title">Créez votre compte</div>
+          <div class="lrf-onboard-desc">Choisissez votre type de commerce. Templates FAQ prêts par secteur (coiffure, restaurant, coach…).</div>
         </div>
-        <div class="lrf-plan lrf-plan-featured">
-          <div class="lrf-plan-badge">⭐ Recommandé</div>
-          <div class="lrf-plan-name">Pro</div>
-          <div class="lrf-plan-price"><sup>€</sup>39<span>/mois</span></div>
-          <p class="lrf-plan-desc">Pour les commerces qui veulent le maximum.</p>
-          <ul class="lrf-plan-list">
-            <li>Tout Standard +</li>
-            <li>Conversations illimitées</li>
-            <li>SMS alertes business (RDV, urgences, questions)</li>
-            <li>Résumés IA quotidiens</li>
-            <li>Analytics & insights — 30 jours <span style="color:#9CA3AF;font-size:12px;">(graphiques, tendances, opportunités)</span></li>
-                        <li>Personnalité IA ajustable</li>
-            <li>Message d'accueil personnalisé</li>
-            <li>Couleurs widget chat</li>
-            <li>Support prioritaire</li>
-          </ul>
-          <a href="/auth" class="lrf-plan-cta lrf-plan-cta-featured">Commencer →</a>
+        <div class="lrf-onboard-step sr d1">
+          <div class="lrf-onboard-num">2</div>
+          <div class="lrf-onboard-title">Renseignez vos infos</div>
+          <div class="lrf-onboard-desc">Services, tarifs, horaires, adresse. L'IA les apprend et répond en votre nom dès maintenant.</div>
         </div>
+        <div class="lrf-onboard-step sr d2">
+          <div class="lrf-onboard-num">3</div>
+          <div class="lrf-onboard-title">Connectez vos outils</div>
+          <div class="lrf-onboard-desc">Google Calendar en 1 clic pour les RDV automatiques. Ou choisissez un lien externe (Planity…).</div>
+        </div>
+        <div class="lrf-onboard-step sr" style="transition-delay:.3s;">
+          <div class="lrf-onboard-num">4</div>
+          <div class="lrf-onboard-title">Partagez votre lien</div>
+          <div class="lrf-onboard-desc">QR code en vitrine, lien en bio Instagram. Vos clients peuvent vous contacter dès ce soir.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING CTA allégé -->
+  <section class="lrf-section lrf-section-alt">
+    <div class="lrf-container" style="text-align:center;">
+      <div class="lrf-label sr" style="text-align:center;">Tarifs</div>
+      <h2 class="lrf-title sr d1" style="text-align:center;">Standard à 39€/mois.<br><span>Pro à 49€/mois.</span></h2>
+      <p class="lrf-subtitle sr d2" style="margin:0 auto 36px;text-align:center;">14 jours d'essai Pro gratuit inclus. Toutes les fonctionnalités, zéro engagement.</p>
+      <div class="sr d3" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="/pricing" class="lrf-btn-secondary" style="border-color:rgba(0,212,255,.3);color:#00D4FF;">Voir le détail des tarifs →</a>
+        <a href="/auth" class="lrf-btn-primary">Commencer gratuitement →</a>
       </div>
     </div>
   </section>
@@ -450,7 +711,7 @@
       <a href="/auth" class="lrf-btn-primary" style="font-size: 18px; padding: 18px 40px;">Commencer gratuitement →</a>
       <div class="lrf-trust">
         <span>✓ Annulable à tout moment</span>
-        <span>✓ Annulable avant la fin du trial</span>
+        <span>✓ Carte bancaire requise au démarrage</span>
         <span>✓ Support inclus</span>
         <span>✓ RGPD compliant</span>
       </div>
@@ -462,5 +723,9 @@
 
   <script src="/nav.js"></script>
   <script src="/footer.js"></script>
+  <script>
+    var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.sr').forEach(function(el){obs.observe(el);});
+  </script>
 </body>
 </html>
