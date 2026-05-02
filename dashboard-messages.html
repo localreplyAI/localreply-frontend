@@ -200,6 +200,10 @@
   <!-- Réponse -->
   <div style="margin-bottom:18px;">
     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Votre réponse</div>
+    <div id="modalLangNote" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:10px;margin-bottom:10px;">
+      <span style="font-size:18px;">🌍</span>
+      <span style="font-size:12.5px;color:rgba(0,212,255,0.85);"></span>
+    </div>
     <textarea id="modalAnswer" rows="4" placeholder="Rédigez votre réponse ici..." style="width:100%;padding:14px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;color:#fff;font-size:14px;font-family:inherit;resize:vertical;outline:none;transition:border 0.2s;line-height:1.6;" onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'"></textarea>
   </div>
 
@@ -328,6 +332,15 @@ function timeAgo(dateStr) {
   return `Il y a ${Math.floor(diff/86400)}j`;
 }
 
+
+function langName(code) {
+  const names = {
+    'de':'allemand','it':'italien','es':'espagnol','en':'anglais',
+    'pt':'portugais','nl':'néerlandais','pl':'polonais','ru':'russe'
+  };
+  return names[code] || code;
+}
+
 function renderQuestion(q, tab) {
   window._questions = window._questions || {};
   window._questions[q.id] = q;
@@ -347,15 +360,18 @@ function renderQuestion(q, tab) {
           <span style="font-size:11px;color:rgba(255,255,255,0.35);">${timeAgo(q.created_at)}</span>
           ${q.added_to_faq ? `<span style="font-size:11px;color:#00D4FF;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:3px 9px;border-radius:100px;">📚 Dans la FAQ</span>` : ''}
         </div>
-        <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.5;">"${q.question}"</div>
+        <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.5;">"${q.question}"</div>
+        ${q.translated_text && q.translated_text !== q.question ? `<div style="font-size:12px;color:rgba(0,212,255,0.7);margin-bottom:6px;display:flex;align-items:flex-start;gap:5px;"><span>🔄</span><span>${q.translated_text}</span></div>` : ''}
+        ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' && !q.translated_text ? `<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">⏳ Traduction en cours...</div>` : ''}
         ${clientInfo ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">👤 ${clientInfo}</div>` : '<div style="font-size:12px;color:rgba(255,255,255,0.25);">👤 Client anonyme</div>'}
       </div>
     </div>
 
     ${q.business_answer ? `
     <div style="padding:12px 14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;margin-bottom:12px;">
-      <div style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse</div>
+      <div style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse (en français)</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;">${q.business_answer}</div>
+      ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' ? `<div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:8px;">✓ Traduite automatiquement en ${langName(q.detected_language)} pour le client</div>` : ''}
     </div>` : ''}
 
     ${q.context ? `
@@ -471,6 +487,15 @@ function openReplyModalById(id) {
 function openReplyModal(id, question, clientEmail) {
   currentQuestionId = id;
   document.getElementById('modalQuestion').textContent = question;
+  // Afficher note de traduction si langue non-FR
+  const q = window._questions && window._questions[id];
+  const langNote = document.getElementById('modalLangNote');
+  if (langNote && q && q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown') {
+    langNote.style.display = 'flex';
+    langNote.querySelector('span').textContent = `Votre réponse sera automatiquement traduite en ${langName(q.detected_language)} pour le client.`;
+  } else if (langNote) {
+    langNote.style.display = 'none';
+  }
   document.getElementById('modalAnswer').value = '';
   document.getElementById('optAddFaq').checked = true;
   document.getElementById('optNotifyClient').checked = !!clientEmail;
