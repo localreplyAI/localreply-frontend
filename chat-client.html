@@ -8,7 +8,7 @@
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: linear-gradient(145deg, #f0f4fb 0%, #e8f0fb 50%, #f5f7fa 100%); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    body { background: #060D1A; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
   </style>
 </head>
 <body>
@@ -84,9 +84,9 @@
   width: 100%;
   max-width: 420px;
   height: min(700px, calc(100dvh - 48px));
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(245,248,255,0.98);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: var(--radius);
   box-shadow: 
     0 32px 80px rgba(0,10,40,0.5),
@@ -254,14 +254,14 @@
   position: relative;
 }
 .lrc-bubble.ai {
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
   color: var(--text);
   border-radius: 4px var(--radius-msg) var(--radius-msg) var(--radius-msg);
   box-shadow: 
-    0 1px 3px rgba(0,30,100,0.06),
-    0 4px 16px rgba(0,30,100,0.07),
+    0 1px 3px rgba(0,30,100,0.07),
+    0 6px 20px rgba(0,30,100,0.08),
     inset 0 1px 0 rgba(255,255,255,1);
-  border: 1px solid rgba(0,82,204,0.08);
+  border: 1px solid rgba(0,82,204,0.1);
 }
 .lrc-bubble.user {
   background: linear-gradient(135deg, #0052CC 0%, #0077EE 100%);
@@ -286,12 +286,12 @@
   margin-bottom: 10px;
 }
 .lrc-typing-bubble {
-  background: #ffffff;
-  border: 1px solid rgba(0,82,204,0.08);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
+  border: 1px solid rgba(0,82,204,0.1);
   border-radius: 4px var(--radius-msg) var(--radius-msg) var(--radius-msg);
-  padding: 14px 18px;
+  padding: 12px 18px;
   display: flex; gap: 5px; align-items: center;
-  box-shadow: 0 2px 10px rgba(0,30,100,0.07);
+  box-shadow: 0 2px 10px rgba(0,30,100,0.08);
 }
 .lrc-typing-dot {
   width: 6px; height: 6px;
@@ -313,35 +313,37 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  background: #ffffff;
-  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, #f0f5ff 0%, #f5f8ff 100%);
+  border-top: 1px solid rgba(0,82,204,0.08);
   flex-shrink: 0;
   align-items: center;
 }
 .lrc-sug {
-  padding: 7px 14px;
-  background: var(--surface-2);
-  border: 1.5px solid var(--border-2);
+  padding: 7px 16px;
+  background: rgba(255,255,255,0.85);
+  border: 1.5px solid rgba(0,82,204,0.12);
   border-radius: 100px;
   font-size: 12.5px; font-weight: 500;
-  color: var(--text-2);
+  color: #1a3060;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.16,1,0.3,1);
   white-space: nowrap;
   animation: lrcSugIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
   font-family: var(--font);
   letter-spacing: -0.1px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 4px rgba(0,30,100,0.06);
 }
 @keyframes lrcSugIn { 
   from { opacity:0; transform: translateY(6px) scale(0.94); }
   to   { opacity:1; transform: none; }
 }
 .lrc-sug:hover {
-  background: var(--blue-light);
-  border-color: rgba(0,82,204,0.25);
+  background: linear-gradient(135deg, rgba(0,82,204,0.08), rgba(0,153,221,0.06));
+  border-color: rgba(0,82,204,0.3);
   color: var(--blue);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,82,204,0.1);
+  box-shadow: 0 4px 16px rgba(0,82,204,0.12);
 }
 .lrc-sug.primary {
   background: linear-gradient(135deg, #0052CC, #0099DD);
@@ -795,6 +797,11 @@ function buildSmartSuggestions(lastAiResponse) {
         rdv: ['📅 I would like to book an appointment', '💼 What services do you offer?', '💰 View pricing'],
         evening: ['✅ Are you still open tonight?', '⏰ What are your hours?', '📅 Book an appointment'],
       },
+      salon:      { base: ['💇 What services do you offer?', '💰 What are your prices?', '📅 Book an appointment'] },
+      restaurant: { base: ['🍽️ What is your menu?', '📅 Reserve a table', '⏰ What are your hours?'] },
+      cafe:       { base: ['☕ What are your specialities?', '⏰ What are your hours?', '📍 Where are you located?'] },
+      medical:    { base: ['🏥 Are you taking new patients?', '🚨 I need an urgent appointment', '⏰ What are your hours?'] },
+      garage:     { base: ['🔧 What repairs do you do?', '💰 What are your prices?', '🚨 I have a mechanical emergency'] },
     },
     de: {
       default: {
@@ -802,6 +809,10 @@ function buildSmartSuggestions(lastAiResponse) {
         rdv: ['📅 Ich möchte einen Termin buchen', '💼 Welche Leistungen bieten Sie an?', '💰 Preise ansehen'],
         evening: ['✅ Haben Sie heute Abend noch geöffnet?', '⏰ Öffnungszeiten', '📅 Termin buchen'],
       },
+      salon:      { base: ['💇 Welche Leistungen bieten Sie an?', '💰 Was sind Ihre Preise?', '📅 Termin buchen'] },
+      restaurant: { base: ['🍽️ Was ist Ihre Speisekarte?', '📅 Tisch reservieren', '⏰ Öffnungszeiten?'] },
+      medical:    { base: ['🏥 Nehmen Sie neue Patienten an?', '🚨 Ich brauche dringend einen Termin', '⏰ Öffnungszeiten?'] },
+      garage:     { base: ['🔧 Welche Reparaturen machen Sie?', '💰 Preise?', '🚨 Ich habe eine Panne'] },
     },
     it: {
       default: {
@@ -809,6 +820,9 @@ function buildSmartSuggestions(lastAiResponse) {
         rdv: ['📅 Vorrei prenotare un appuntamento', '💼 Quali servizi offrite?', '💰 Vedere i prezzi'],
         evening: ['✅ Siete ancora aperti stasera?', '⏰ Orari di apertura', '📅 Prenotare'],
       },
+      salon:      { base: ['💇 Quali servizi offrite?', '💰 Quali sono i prezzi?', '📅 Prenotare un appuntamento'] },
+      restaurant: { base: ['🍽️ Qual è il vostro menu?', '📅 Prenotare un tavolo', '⏰ Orari?'] },
+      medical:    { base: ['🏥 Accettate nuovi pazienti?', '🚨 Ho bisogno di un appuntamento urgente', '⏰ Orari?'] },
     },
     es: {
       default: {
@@ -862,11 +876,17 @@ function buildSmartSuggestions(lastAiResponse) {
       (typeData.base || SUGG.fr.default.base)[2],
     ].filter(Boolean).slice(0, 3);
   } else if (talkingAboutHours) {
-    // Après discussion horaires
+    // Après discussion horaires — tout dans la bonne langue
+    const eveningSuggHours = (langData.default && langData.default.evening) || SUGG.fr.default.evening;
+    const locationSugg = {
+      fr:'📍 Où êtes-vous situés ?', en:'📍 Where are you located?', de:'📍 Wo befinden Sie sich?',
+      it:'📍 Dove siete situati?', es:'📍 ¿Dónde están ubicados?', pt:'📍 Onde estão localizados?',
+      nl:'📍 Waar bent u gevestigd?', pl:'📍 Gdzie się Państwo znajdują?'
+    };
     labels = [
-      isEvening ? '✅ Êtes-vous encore ouverts ?' : (typeData.base || SUGG.fr.default.base)[0],
+      isEvening ? eveningSuggHours[0] : (typeData.base || SUGG.fr.default.base)[0],
       hasRdvMode ? ((langData.default && langData.default.rdv) || SUGG.fr.default.rdv)[0] : (typeData.base || SUGG.fr.default.base)[1],
-      '📍 Où êtes-vous situés ?',
+      locationSugg[lang] || locationSugg.fr,
     ].filter(Boolean).slice(0, 3);
   } else if (isEvening) {
     const eveningSuggs = (langData.default && langData.default.evening) || SUGG.fr.default.evening;
@@ -1079,11 +1099,20 @@ async function lrcSendText(text) {
       setTimeout(() => openEmailCapture(), 600);
     }
     
-    // Langue
-    const langMatch = msg.match(/\b(bonjour|hallo|hello|ciao|hola)\b/i);
-    if (langMatch) {
-      const flagMap = {bonjour:'🇫🇷',hallo:'🇩🇪',hello:'🇬🇧',ciao:'🇮🇹',hola:'🇪🇸'};
-      const flag = flagMap[langMatch[1].toLowerCase()];
+    // Langue — mettre à jour depuis la réponse backend (plus fiable)
+    if (data.detected_language && data.detected_language !== 'unknown') {
+      const supported = ['fr','en','de','it','es','pt','nl','pl'];
+      if (supported.includes(data.detected_language)) {
+        detectedLang = data.detected_language;
+      }
+    } else {
+      // Fallback regex sur le message IA
+      const langMatch = msg.match(/\b(bonjour|hallo|hello|ciao|hola|olá|hallo|dzień)\b/i);
+      if (langMatch) {
+        const lMap = {bonjour:'fr',hallo:'de',hello:'en',ciao:'it',hola:'es','olá':'pt',dzień:'pl'};
+        const l = lMap[langMatch[1].toLowerCase()];
+        if (l) detectedLang = l;
+      }
     }
     
     // Auto-ouvrir formulaire RDV si l'IA demande des infos de réservation

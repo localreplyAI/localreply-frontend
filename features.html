@@ -399,35 +399,51 @@
           <div class="lrf-chat-wrap">
             <div>
               <div class="lrf-chat-ai-name">Client</div>
-              <div class="lrf-chat-msg lrf-chat-user">J'aimerais une coupe samedi matin</div>
+              <div class="lrf-chat-msg lrf-chat-user">Je voudrais prendre un RDV pour une coupe</div>
             </div>
             <div>
               <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
-              <div class="lrf-chat-msg lrf-chat-ai">Samedi 9h et 10h30 sont disponibles. Quelle heure vous convient ? ✂️</div>
+              <div class="lrf-chat-msg lrf-chat-ai">Bien sûr ! Merci de remplir ce formulaire 👇</div>
             </div>
-            <div>
-              <div class="lrf-chat-ai-name">Client</div>
-              <div class="lrf-chat-msg lrf-chat-user">10h30 parfait !</div>
-            </div>
-            <div>
-              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
-              <div class="lrf-chat-msg lrf-chat-ai">Votre nom et numéro de téléphone ? Je transmets la demande au salon.</div>
+            <!-- Formulaire style dark cohérent -->
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:14px;padding:14px;">
+              <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;">📅 Demande de rendez-vous</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);">-- Choisir un service --</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.7);">03/05/2026</div>
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.7);">12 : 30</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);">Thomas Dupont</div>
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);">+41 79 123 45 67</div>
+                </div>
+                <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.25);">thomas@email.com <span style="font-size:10px;opacity:.6;">(optionnel)</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:4px;">
+                  <div style="padding:10px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-align:center;">✅ Confirmer la demande</div>
+                  <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.45);font-size:13px;text-align:center;">Annuler</div>
+                </div>
+              </div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;">Le salon confirmera par email ou SMS</div>
             </div>
           </div>
         </div>
         <div class="lrf-highlight-text sr">
           <div class="lrf-label">Gestion RDV</div>
-          <h2>La prise de RDV en conversation naturelle</h2>
-          <p>Aucun formulaire compliqué. Le client parle normalement, l'IA comprend et gère les réservations selon votre mode choisi.</p>
+          <h2>Un formulaire intelligent,<br>pas un calendrier compliqué</h2>
+          <p>Dès que le client exprime l'envie de réserver, l'IA ouvre automatiquement un formulaire dans le chat. Aucune app à télécharger, aucune navigation complexe.</p>
           <ul class="lrf-highlight-list">
-            <li><span>✓</span> 4 modes : Google Calendar, lien externe (Planity, Doctolib…), manuel ou désactivé</li>
-            <li><span>✓</span> Confirmation ou refus en 1 clic par email ou SMS</li>
+            <li><span>✓</span> Google Calendar connecté → demande transmise, vous confirmez par email ou SMS</li>
+            <li><span>✓</span> Planity, Doctolib, TheFork → l'IA envoie directement le lien de réservation</li>
+            <li><span>✓</span> Mode manuel → vous gérez les confirmations vous-même</li>
             <li><span>✓</span> RDV ajouté automatiquement au Calendar si connecté</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
+
+
 
 
   <!-- HIGHLIGHT 3 — QR CODE & LIENS -->
@@ -525,20 +541,55 @@
           </ul>
         </div>
         <div class="lrf-highlight-visual">
-          <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px;">
-            <div style="font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Question sans réponse</div>
-            <div style="font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 4px;">"Fate anche il rasaggio con l'asciugamano caldo?"</div>
-            <div style="font-size: 12px; color: rgba(0,212,255,.7); margin-bottom: 16px;">🔄 Traduction : "Faites-vous aussi le rasage à la serviette chaude ?"</div>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button style="padding: 8px 14px; background: linear-gradient(135deg, #0052CC, #00D4FF); border: none; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;">✓ Oui — 25 CHF</button>
-              <button style="padding: 8px 14px; background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; color: #FCA5A5; font-size: 13px; font-weight: 600; cursor: pointer;">✗ Non</button>
-              <button style="padding: 8px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer;">Ignorer</button>
+          <!-- Modale "Répondre au client" — reproduction fidèle -->
+          <div style="background:#0D1B2E;border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+
+            <!-- Header modale -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:18px;">💬</span>
+                <span style="font-size:16px;font-weight:700;color:#fff;">Répondre au client</span>
+              </div>
+              <div style="width:24px;height:24px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:12px;">✕</div>
             </div>
-            <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;font-style:italic;">✓ Votre réponse sera automatiquement traduite en italien pour le client</div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px;">
-            <span style="font-size: 20px;">✅</span>
-            <div style="font-size: 14px; color: rgba(255,255,255,0.8);">Réponse ajoutée à la FAQ — l'IA répond seule dès maintenant</div>
+
+            <!-- Question du client -->
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Question du client</div>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:10px;border-left:3px solid #00D4FF;margin-bottom:6px;">
+              <div style="font-size:14px;color:#fff;font-weight:500;margin-bottom:4px;">Avez-vous une fontaine à eau ?</div>
+              <div style="font-size:11px;color:rgba(0,212,255,0.7);">🔄 Traduction depuis l'italien</div>
+            </div>
+            <div style="padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:14px;">✉️ La réponse sera envoyée par email au client</div>
+
+            <!-- Votre réponse -->
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Votre réponse</div>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(0,212,255,0.35);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.35);height:72px;margin-bottom:14px;">Rédigez votre réponse ici...</div>
+
+            <!-- Options -->
+            <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:10px;font-weight:700;color:#00D4FF;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Options</div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+                <div style="width:16px;height:16px;background:#0052CC;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:10px;">✓</span></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#fff;">📚 Ajouter à la FAQ</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);">L'IA répondra automatiquement à cette question pour tous les clients suivants</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:16px;height:16px;background:#0052CC;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:10px;">✓</span></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#fff;">✉️ Notifier le client</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);">Envoyer votre réponse par email au client (si adresse disponible)</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:grid;grid-template-columns:1fr auto;gap:10px;">
+              <div style="padding:12px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-align:center;">✅ Envoyer la réponse</div>
+              <div style="padding:12px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.5);font-size:14px;text-align:center;">Ignorer</div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -555,18 +606,18 @@
         <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;">Conversations en cours, RDV en attente, questions sans réponse — tout ce dont vous avez besoin pour gérer votre commerce à distance.</p>
       </div>
 
-      <!-- Mock Dashboard -->
+      <!-- Mock Dashboard — fidèle au vrai dashboard -->
       <div class="lrf-dash sr">
         <div class="lrf-dash-bar">
           <div class="lrf-dash-dot" style="background:#EF4444;"></div>
           <div class="lrf-dash-dot" style="background:#F59E0B;"></div>
           <div class="lrf-dash-dot" style="background:#10B981;"></div>
-          <span style="font-size:12px;color:rgba(255,255,255,.3);margin-left:8px;">LocalReply Dashboard</span>
+          <span style="font-size:12px;color:rgba(255,255,255,.3);margin-left:8px;">LocalReply — Tableau de bord</span>
         </div>
         <div class="lrf-dash-inner">
-          <!-- Sidebar -->
+          <!-- Sidebar fidèle -->
           <div class="lrf-dash-sidebar">
-            <div style="padding:12px 16px 16px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:8px;">
+            <div style="padding:12px 16px 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:8px;">
               <div style="display:flex;align-items:center;gap:8px;">
                 <div style="width:28px;height:28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:7px;"></div>
                 <div>
@@ -577,40 +628,48 @@
             </div>
             <div class="lrf-dash-nav-item active">🏠 Accueil</div>
             <div class="lrf-dash-nav-item">⚙️ Configuration</div>
-            <div class="lrf-dash-nav-item">💬 Messages</div>
+            <div class="lrf-dash-nav-item" style="position:relative;">💬 Messages <span style="margin-left:auto;background:#EF4444;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;">3</span></div>
             <div class="lrf-dash-nav-item">📅 Rendez-vous</div>
-            <div class="lrf-dash-nav-item">📊 Analytics</div>
+            <div class="lrf-dash-nav-item">📈 Analytics <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:1px 5px;border-radius:4px;font-weight:700;">PRO</span></div>
           </div>
-          <!-- Content -->
+          <!-- Contenu fidèle -->
           <div class="lrf-dash-content">
-            <!-- KPIs -->
+            <!-- En-tête avec salutation -->
+            <div style="margin-bottom:14px;">
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;">Bonsoir, Salon Marco 👋</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.35);">Samedi 26 avril</div>
+            </div>
+            <!-- Alerte questions sans réponse -->
+            <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:9px 13px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:14px;">🤖</span>
+              <span style="font-size:12px;color:rgba(255,255,255,.8);">3 questions sans réponse — <span style="color:#F59E0B;font-weight:600;">Répondre pour enrichir la FAQ</span></span>
+            </div>
+            <!-- KPIs sur 30j -->
             <div class="lrf-dash-kpis">
               <div class="lrf-dash-kpi">
-                <div class="lrf-dash-kpi-val">24</div>
-                <div class="lrf-dash-kpi-label">Conversations aujourd'hui</div>
+                <div class="lrf-dash-kpi-val" style="color:#00D4FF;">47</div>
+                <div class="lrf-dash-kpi-label">Conversations · 30j</div>
               </div>
               <div class="lrf-dash-kpi">
-                <div class="lrf-dash-kpi-val" style="color:#10B981;">6</div>
-                <div class="lrf-dash-kpi-label">RDV en attente</div>
+                <div class="lrf-dash-kpi-val" style="color:#10B981;">12</div>
+                <div class="lrf-dash-kpi-label">RDV confirmés · 30j</div>
               </div>
               <div class="lrf-dash-kpi">
                 <div class="lrf-dash-kpi-val" style="color:#F59E0B;">3</div>
-                <div class="lrf-dash-kpi-label">Questions sans réponse</div>
+                <div class="lrf-dash-kpi-label">À traiter</div>
               </div>
             </div>
-            <!-- Messages récents -->
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Activité récente</div>
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Activité récente</div>
+            <!-- Activité récente -->
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between;"><span>Activité récente — 7 derniers jours</span><span style="color:#00D4FF;font-weight:600;cursor:default;">Voir tout →</span></div>
             <div class="lrf-dash-msgs">
               <div class="lrf-dash-msg-row">
-                <div class="lrf-dash-msg-dot" style="background:#EF4444;box-shadow:0 0 6px rgba(239,68,68,.5);"></div>
+                <div class="lrf-dash-msg-dot" style="background:#EF4444;box-shadow:0 0 5px rgba(239,68,68,.5);"></div>
                 <div style="flex:1;">
-                  <div class="lrf-dash-msg-name">💬 Conversation 🇩🇪 <span style="font-size:10px;color:rgba(255,255,255,.3);font-weight:400;">Client anonyme</span></div>
-                  <div class="lrf-dash-msg-preview">Ich brauche dringend einen Termin heute...</div>
-                  <div style="font-size:10px;color:rgba(0,212,255,.7);margin-top:2px;">🔄 Traduction : J'ai besoin d'un RDV urgent aujourd'hui...</div>
+                  <div class="lrf-dash-msg-name">❓ Question sans réponse 🇩🇪</div>
+                  <div class="lrf-dash-msg-preview">Machen Sie auch Bartpflege?</div>
+                  <div style="font-size:10px;color:rgba(0,212,255,.7);margin-top:1px;">🔄 Faites-vous aussi l'entretien de barbe ?</div>
                 </div>
-                <span class="lrf-dash-msg-badge" style="background:rgba(239,68,68,.15);color:#EF4444;">🔴 Urgent</span>
-                <div class="lrf-dash-msg-time">Il y a 3 min</div>
+                <div class="lrf-dash-msg-time">Il y a 8 min</div>
               </div>
               <div class="lrf-dash-msg-row">
                 <div class="lrf-dash-msg-dot" style="background:#10B981;"></div>
@@ -618,18 +677,15 @@
                   <div class="lrf-dash-msg-name">📅 RDV confirmé — Marie D. 🇫🇷</div>
                   <div class="lrf-dash-msg-preview">Coupe femme · Vendredi 14h30</div>
                 </div>
-                <span class="lrf-dash-msg-badge" style="background:rgba(16,185,129,.1);color:#10B981;">✅ Confirmé</span>
-                <div class="lrf-dash-msg-time">Il y a 12 min</div>
+                <div class="lrf-dash-msg-time">Il y a 2h</div>
               </div>
               <div class="lrf-dash-msg-row">
-                <div class="lrf-dash-msg-dot" style="background:#F59E0B;"></div>
+                <div class="lrf-dash-msg-dot" style="background:#00D4FF;"></div>
                 <div style="flex:1;">
-                  <div class="lrf-dash-msg-name">❓ Question sans réponse 🇮🇹</div>
-                  <div class="lrf-dash-msg-preview">Fate anche la barba con la scure?</div>
-                  <div style="font-size:10px;color:rgba(0,212,255,.7);margin-top:2px;">🔄 Traduction : Faites-vous aussi la barbe au coupe-chou ?</div>
+                  <div class="lrf-dash-msg-name">💬 Conversation 🇮🇹</div>
+                  <div class="lrf-dash-msg-preview">Quanto costa un taglio uomo?</div>
                 </div>
-                <span class="lrf-dash-msg-badge" style="background:rgba(245,158,11,.1);color:#F59E0B;">Répondre</span>
-                <div class="lrf-dash-msg-time">Il y a 28 min</div>
+                <div class="lrf-dash-msg-time">Hier</div>
               </div>
             </div>
           </div>
