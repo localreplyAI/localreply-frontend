@@ -341,7 +341,9 @@
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">✉️</div><div><div class="guide-title">Signature email</div><div class="guide-time">Visibilité passive · 2 min</div></div></div><p class="guide-text">Ajoutez votre lien dans votre signature email. Chaque email envoyé devient une opportunité de faire connaître votre assistant.</p><div class="guide-tip">💡 "📅 Réservez 24h/24 → localreply.ai/votre-commerce"</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">💬</div><div><div class="guide-title">SMS clients habituels</div><div class="guide-time">Réactivation · 5 min</div></div></div><p class="guide-text">Envoyez un SMS à vos clients réguliers pour annoncer la nouveauté. Taux d'ouverture SMS : 98%.</p><div class="guide-tip">💡 "Bonjour ! Réservez maintenant 24h/24 → [votre lien]"</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626);">🌐</div><div><div class="guide-title">Votre site web</div><div class="guide-time">Conversion max · 5 min</div></div></div><p class="guide-text">Ajoutez un bouton "Prendre RDV" pointant vers LocalReply. Vos visiteurs web deviennent des clients potentiels.</p><div class="guide-tip">💡 Utilisez ?src=website pour tracker ce trafic.</div></div>
-          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#00D4FF,#0052CC);">⚙️</div><div><div class="guide-title">Enrichissez votre FAQ</div><div class="guide-time">Qualité des réponses · continu</div></div></div><p class="guide-text">Plus votre FAQ est complète, plus l'IA répond précisément. Répondez aux questions sans réponse — elles s'ajoutent à la FAQ.</p><div class="guide-tip">💡 Objectif : 20+ FAQ sur prix, horaires, services, paiement.</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#00D4FF,#0052CC);">⚙️</div><div><div class="guide-title">Enrichissez votre FAQ</div><div class="guide-time">Qualité des réponses · continu</div></div></div><p class="guide-text">Plus votre FAQ est complète, plus l'IA répond précisément. Répondez aux questions sans réponse dans Messages — elles enrichissent la FAQ automatiquement.</p><div class="guide-tip">💡 Objectif : 20+ entrées sur prix, horaires, services, paiement, parking.</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#25D366,#128C7E);">💬</div><div><div class="guide-title">WhatsApp & groupes locaux</div><div class="guide-time">Communauté · 5 min</div></div></div><p class="guide-text">Partagez votre lien dans vos groupes WhatsApp de quartier ou de clients. Un message suffit pour toucher des dizaines de personnes.</p><div class="guide-tip">💡 "Vous pouvez maintenant réserver 24h/24 → [votre lien]"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">🌍</div><div><div class="guide-title">Traduction automatique</div><div class="guide-time">Clients étrangers · immédiat</div></div></div><p class="guide-text">Votre IA répond déjà en 8 langues. Si un client pose une question dans une langue que vous ne comprenez pas, le dashboard traduit la question automatiquement en français.</p><div class="guide-tip">💡 Répondez en français — la réponse est retraduite pour le client.</div></div>
         </div>
         <!-- Checklist -->
         <div style="padding:18px 20px;background:linear-gradient(135deg,rgba(0,82,204,0.1),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.15);border-radius:12px;">
@@ -354,6 +356,8 @@
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="web" style="accent-color:#00D4FF;width:14px;height:14px;"> Bouton sur le site web</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="sms" style="accent-color:#00D4FF;width:14px;height:14px;"> SMS envoyé aux clients habituels</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="faq" style="accent-color:#00D4FF;width:14px;height:14px;"> 20+ FAQ configurées</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="whatsapp" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien partagé sur WhatsApp</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="questions" style="accent-color:#00D4FF;width:14px;height:14px;"> Questions sans réponse traitées</label>
           </div>
         </div>
       </div>
@@ -547,77 +551,133 @@ function renderAlerts(pendingApts, pendingReqs) {
 }
 
 // ─ Narrative ─
-function buildNarrative(convs, apts) {
+function buildNarrative(convs, apts, reqs) {
   const total = convs.length;
   const confirmed = apts.filter(a=>a.status==='confirmed').length;
   const pending = apts.filter(a=>a.status==='pending').length;
-  if (!total) return `Votre assistant IA est <strong style="color:#10B981;">actif et prêt</strong> à accueillir vos premiers clients. Partagez votre lien pour commencer ! 🚀`;
-  let msg = `Votre IA a géré <strong style="color:#00D4FF;">${total} conversation${total>1?'s':''}</strong>`;
-  if (confirmed) msg += `, dont <strong style="color:#10B981;">${confirmed} RDV confirmé${confirmed>1?'s':''}</strong>`;
-  if (pending) msg += `. <span style="color:#F59E0B;">${pending} RDV en attente</span> de votre validation`;
-  msg += '.';
-  const conv = total>0 ? Math.round((confirmed/total)*100) : 0;
-  if (conv >= 20) msg += ` Taux de conversion : <strong style="color:#10B981;">${conv}%</strong> 🎯`;
+  const unanswered = reqs ? reqs.length : 0;
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Ce matin' : hour < 18 ? 'Cette semaine' : 'Cette semaine';
+
+  // Aucune activité — message motivant et actionnable
+  if (!total && !confirmed && !unanswered) {
+    return `Votre assistant IA est <strong style="color:#10B981;">actif et prêt</strong> 🚀<br>
+    <span style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;">
+      Aucun client ne s'est encore manifesté. Pour démarrer rapidement :<br>
+      • Affichez votre <strong style="color:#00D4FF;">QR code en vitrine</strong> — téléchargeable dans Configuration<br>
+      • Ajoutez votre lien en <strong style="color:#00D4FF;">bio Instagram</strong> avec "Réservez 24h/24 👇"<br>
+      • Répondez aux <strong style="color:#F59E0B;">${unanswered > 0 ? unanswered + ' question(s) en attente' : 'questions sans réponse'}</strong> pour enrichir la FAQ
+    </span>`;
+  }
+
+  // Avec activité — résumé structuré
+  let lines = [];
+
+  if (total > 0) {
+    lines.push(`<strong style="color:#00D4FF;">${total} conversation${total>1?'s':''}</strong> gérée${total>1?'s':''} par votre IA cette semaine`);
+  }
+  if (confirmed > 0) {
+    lines.push(`<strong style="color:#10B981;">${confirmed} RDV confirmé${confirmed>1?'s':''}</strong>`);
+  }
+  if (pending > 0) {
+    lines.push(`<span style="color:#F59E0B;">${pending} RDV en attente</span> — confirmez depuis l'onglet Rendez-vous`);
+  }
+  if (unanswered > 0) {
+    lines.push(`<span style="color:#F59E0B;">${unanswered} question${unanswered>1?'s':''} sans réponse</span> — répondez pour enrichir votre FAQ`);
+  }
+
+  let msg = lines.map(l => `• ${l}`).join('<br>');
+
+  // Taux de conversion si significatif
+  if (total >= 3 && confirmed > 0) {
+    const rate = Math.round((confirmed/total)*100);
+    msg += `<br><span style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;display:block;">Taux de conversion cette semaine : <strong style="color:#10B981;">${rate}%</strong></span>`;
+  }
+
+  // Conseil contextuel
+  if (!unanswered && total > 0) {
+    msg += `<br><span style="font-size:12px;color:rgba(255,255,255,0.4);">✅ Toutes les questions ont reçu une réponse — votre FAQ est à jour.</span>`;
+  }
+
   return msg;
 }
-
-// ─ Analytics preview ─
-async function loadAnalyticsPreview(isPro) {
-  try {
-    const data = await api(`/api/business/${businessId}/analytics/overview`);
-    const p = data.last_7_days || {};
-    document.getElementById('kpiConversations').textContent = p.total_conversations ?? '—';
-    document.getElementById('kpiAppointments').textContent  = p.total_appointments  ?? '—';
-    document.getElementById('kpiConversion').textContent    = p.conversion_rate != null ? p.conversion_rate.toFixed(1)+'%' : '—';
-    document.getElementById('kpiResolution').textContent    = p.ai_resolution_rate != null ? p.ai_resolution_rate.toFixed(0)+'%' : '—';
-  } catch {}
-  if (!isPro) {
-    document.getElementById('analyticsOverlay').style.display = 'flex';
-    document.getElementById('chartLock').style.display = 'flex';
-    drawPlaceholderChart();
-  } else {
-    await drawRealChart();
-  }
-}
-
-function drawPlaceholderChart() {
-  const ctx = document.getElementById('miniChart').getContext('2d');
-  if (miniChartInstance) miniChartInstance.destroy();
-  miniChartInstance = new Chart(ctx, { type:'line', data:{ labels:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], datasets:[{ data:[3,7,5,12,8,15,10], borderColor:'rgba(0,212,255,0.2)', backgroundColor:'rgba(0,212,255,0.04)', borderWidth:2, fill:true, tension:0.4, pointRadius:0 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{display:false}, tooltip:{enabled:false} }, scales:{ x:{display:false}, y:{display:false} } } });
-}
-
-async function drawRealChart() {
-  try {
-    const data = await api(`/api/business/${businessId}/analytics/timeline?days=7`);
-    if (!data.timeline?.length) { drawPlaceholderChart(); return; }
-    const labels = data.timeline.map(i=>new Date(i.date).toLocaleDateString('fr-FR',{weekday:'short'}));
-    const ctx = document.getElementById('miniChart').getContext('2d');
-    if (miniChartInstance) miniChartInstance.destroy();
-    miniChartInstance = new Chart(ctx, { type:'line', data:{ labels, datasets:[ { label:'Conversations', data:data.timeline.map(i=>i.conversations||0), borderColor:'#00D4FF', backgroundColor:'rgba(0,212,255,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#00D4FF' }, { label:'RDV', data:data.timeline.map(i=>i.appointments||0), borderColor:'#10B981', backgroundColor:'rgba(16,185,129,0.08)', borderWidth:2, fill:true, tension:0.4, pointRadius:3, pointBackgroundColor:'#10B981' } ] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:true, position:'top', labels:{ color:'rgba(255,255,255,0.55)', font:{size:11}, padding:10, usePointStyle:true } }, tooltip:{ backgroundColor:'rgba(5,12,28,0.95)', titleColor:'#fff', bodyColor:'rgba(255,255,255,0.8)', borderColor:'rgba(255,255,255,0.1)', borderWidth:1 } }, scales:{ x:{ ticks:{ color:'rgba(255,255,255,0.4)', font:{size:11} }, grid:{ color:'rgba(255,255,255,0.04)' } }, y:{ beginAtZero:true, ticks:{ color:'rgba(255,255,255,0.4)', font:{size:11}, stepSize:1 }, grid:{ color:'rgba(255,255,255,0.06)' } } } } });
-  } catch { drawPlaceholderChart(); }
-}
-
 // ─ Activité ─
-function renderActivity(convs, apts) {
+function renderActivity(convs, apts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
-  convs.slice(0,4).forEach(c=>items.push({icon:'💬',text:`Conversation${c.client_name?' avec '+c.client_name:''}`,time:c.created_at,color:'#00D4FF'}));
-  apts.slice(0,4).forEach(a=>items.push({icon:'📅',text:`RDV ${a.status==='confirmed'?'confirmé':'en attente'}${a.client_name?' — '+a.client_name:''}`,time:a.created_at,color:a.status==='confirmed'?'#10B981':'#F59E0B'}));
-  items.sort((a,b)=>new Date(b.time)-new Date(a.time));
-  if (!items.length) { el.innerHTML=`<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.25);"><div style="font-size:36px;opacity:0.3;margin-bottom:10px;">🕐</div><div style="font-size:13px;">Aucune activité récente</div></div>`; return; }
-  el.innerHTML = items.slice(0,5).map(a=>`<div style="padding:11px 13px;background:rgba(255,255,255,0.03);border-left:2px solid ${a.color};border-radius:9px;margin-bottom:8px;display:flex;align-items:start;gap:10px;"><div style="font-size:18px;">${a.icon}</div><div><div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;">${a.text}</div><div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">${timeAgo(a.time)}</div></div></div>`).join('');
+  const cutoff = new Date(Date.now() - 7*24*60*60*1000); // 7 jours max
+
+  // Conversations — avec aperçu du premier message si dispo
+  convs.filter(c => new Date(c.updated_at || c.created_at) > cutoff).slice(0,5).forEach(c => {
+    const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
+    const preview = c.last_message || c.title || 'Nouvelle conversation';
+    items.push({
+      icon:'💬', color:'#00D4FF',
+      text:`Conversation ${langFlag}`,
+      sub: preview.length > 55 ? preview.slice(0,55)+'…' : preview,
+      time: c.updated_at || c.created_at
+    });
+  });
+
+  // RDV — avec nom client et service (7 jours max)
+  apts.filter(a => new Date(a.start_time || a.created_at) > cutoff).slice(0,5).forEach(a => {
+    const status = a.status === 'confirmed' ? 'confirmé' : a.status === 'pending' ? 'en attente' : a.status;
+    const color = a.status === 'confirmed' ? '#10B981' : '#F59E0B';
+    const icon = a.status === 'confirmed' ? '📅' : '⏳';
+    items.push({
+      icon, color,
+      text: `RDV ${status}${a.client_name ? ' — ' + a.client_name : ''}`,
+      sub: a.service_name || a.summary || '',
+      time: a.start_time || a.created_at
+    });
+  });
+
+  // Questions sans réponse
+  if (reqs && reqs.length) {
+    reqs.slice(0,2).forEach(q => {
+      items.push({
+        icon: '❓', color: '#F59E0B',
+        text: 'Question sans réponse',
+        sub: (q.raw_message || q.question || '').slice(0,55),
+        time: q.created_at
+      });
+    });
+  }
+
+  items.sort((a,b) => new Date(b.time) - new Date(a.time));
+
+  if (!items.length) {
+    el.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.25);"><div style="font-size:36px;opacity:0.3;margin-bottom:10px;">🕐</div><div style="font-size:13px;">Aucune activité récente</div></div>`;
+    return;
+  }
+
+  el.innerHTML = items.slice(0,6).map(a => `
+    <div style="padding:10px 13px;background:rgba(255,255,255,0.03);border-left:2px solid ${a.color};border-radius:9px;margin-bottom:7px;display:flex;align-items:start;gap:10px;">
+      <div style="font-size:17px;margin-top:1px;">${a.icon}</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;">${a.text}</div>
+        ${a.sub ? `<div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${a.sub}</div>` : ''}
+        <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:3px;">${timeAgo(a.time)}</div>
+      </div>
+    </div>`).join('');
 }
 
 // ─ Statut système ─
-async function loadSystemStatus(config, calConnected, isPro) {
+async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   const el = document.getElementById('systemStatus');
-  const hasConfig = (config?.services?.length||0)>0 && (config?.hours?.length||0)>0 && (config?.faq?.length||0)>0;
+  const hasServices = (config?.services?.length||0) > 0;
+  const hasHours    = (config?.hours?.length||0) > 0;
+  const hasFaq      = (config?.faq?.length||0) > 0;
+  const hasConfig   = hasServices && hasHours && hasFaq;
+  const servicesCount = config?.services?.length || 0;
+  const faqCount      = config?.faq?.length || 0;
   el.innerHTML = [
-    sRow(hasConfig,'Configuration IA', hasConfig?'Complète':'À compléter', hasConfig?'#10B981':'#F59E0B'),
-    sRow(calConnected,'Google Calendar', calConnected?'Connecté':'⚠️ Déconnecté — reconnecter', calConnected?'#10B981':'#EF4444'),
-    sRow(true,'Assistant IA 24/7','Actif · 8 langues','#10B981'),
-    sRow(effectivePro,'Analytics','Analytics 90j inclus',effectivePro?'#10B981':'rgba(255,255,255,0.3)'),
-    sRow(true,'Abonnement', effectivePro?(isTrial?'Essai gratuit 🎁':'Pro ⭐'):'Standard 📦', effectivePro?'#F59E0B':'#00D4FF'),
+    sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} service${servicesCount>1?'s':''} configuré${servicesCount>1?'s':''}` : 'À configurer dans Configuration', hasServices?'#10B981':'#F59E0B'),
+    sRow(hasHours,    'Horaires',             hasHours    ? 'Définis' : 'À configurer dans Configuration', hasHours?'#10B981':'#F59E0B'),
+    sRow(hasFaq,      'FAQ',                  hasFaq      ? `${faqCount} question${faqCount>1?'s':''}` : 'À enrichir dans Configuration', hasFaq?'#10B981':'#F59E0B'),
+    sRow(calConnected,'Google Calendar',      calConnected? 'Connecté · RDV automatiques actifs' : '⚠️ Déconnecté — <a href="/dashboard-rendez-vous" style="color:#EF4444;">Reconnecter</a>', calConnected?'#10B981':'#EF4444'),
+    sRow(true,        'Assistant IA 24/7',   'Actif · 8 langues', '#10B981'),
+    sRow(true,        'Abonnement',           isPro ? (isTrial ? 'Essai Pro gratuit 🎁' : 'Pro ⭐') : 'Standard 📦', isPro ? '#F59E0B' : '#00D4FF'),
   ].join('');
   const tips = [
     'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
@@ -785,7 +845,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Score santé IA (instantané, pas d'appel API)
   computeHealthScore(configData, calConnected);
   renderOnboarding(configData, calConnected);
-  loadSystemStatus(configData, calConnected, effectivePro);
+  loadSystemStatus(configData, calConnected, effectivePro, isTrial);
 
   // Métriques + analytics en parallèle
   const [convData, aptData, reqData] = await Promise.all([
@@ -813,10 +873,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   setBadge(pA.length,   'sbBadgeRdv', 'bnBadgeRdv');
 
   renderAlerts(pA, reqs);
-  document.getElementById('aiNarrative').innerHTML = buildNarrative(wC, apts);
-  renderActivity(wC, apts);
+  document.getElementById('aiNarrative').innerHTML = buildNarrative(wC, apts, reqs);
+  renderActivity(wC, apts, reqs);
 
-  // Analytics (après le reste)
-  await loadAnalyticsPreview(effectivePro);
+  // Analytics retirés du home — voir /dashboard-analytics
 });
 </script>
