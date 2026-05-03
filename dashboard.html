@@ -160,65 +160,6 @@
       </div>
     </div>
 
-    <!-- ANALYTICS PREVIEW -->
-    <div style="position:relative;margin-bottom:20px;">
-      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;">
-          <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:18px;">📊</span>
-            <span style="font-size:17px;font-weight:700;color:#fff;">Analytics</span>
-            <span style="padding:2px 8px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:6px;font-size:10px;font-weight:700;color:#fff;">PRO</span>
-          </div>
-          <a href="/dashboard-analytics" style="font-size:13px;color:#00D4FF;text-decoration:none;font-weight:600;display:flex;align-items:center;gap:4px;">Voir tout <span style="font-size:16px;">→</span></a>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;">
-          <div class="kpi-card" style="border-color:rgba(0,212,255,0.2);">
-            <div class="kpi-val" id="kpiConversations" style="color:#00D4FF;">—</div>
-            <div class="kpi-lbl">Conversations</div>
-            <div class="kpi-sub">7 derniers jours</div>
-          </div>
-          <div class="kpi-card" style="border-color:rgba(16,185,129,0.2);">
-            <div class="kpi-val" id="kpiAppointments" style="color:#10B981;">—</div>
-            <div class="kpi-lbl">RDV créés</div>
-            <div class="kpi-sub">7 derniers jours</div>
-          </div>
-          <div class="kpi-card" style="border-color:rgba(245,158,11,0.2);">
-            <div class="kpi-val" id="kpiConversion" style="color:#F59E0B;">—</div>
-            <div class="kpi-lbl">Taux conversion</div>
-            <div class="kpi-sub">Conv → RDV</div>
-          </div>
-          <div class="kpi-card" style="border-color:rgba(139,92,246,0.2);">
-            <div class="kpi-val" id="kpiResolution" style="color:#8B5CF6;">—</div>
-            <div class="kpi-lbl">Résolution IA</div>
-            <div class="kpi-sub">Questions résolues</div>
-          </div>
-        </div>
-        <div style="position:relative;">
-          <canvas id="miniChart" style="max-height:120px;"></canvas>
-          <div id="chartLock" style="display:none;position:absolute;inset:0;background:rgba(10,18,40,0.85);backdrop-filter:blur(6px);border-radius:10px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:16px;">
-            <div style="font-size:24px;margin-bottom:6px;">🔒</div>
-            <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;">Réservé au Plan Pro</div>
-            <a href="/abonnement" style="font-size:12px;color:#00D4FF;font-weight:600;text-decoration:none;">Passer au Pro →</a>
-          </div>
-        </div>
-      </div>
-      <!-- Overlay Pro -->
-      <div id="analyticsOverlay" style="display:none;position:absolute;inset:0;background:rgba(10,18,40,0.65);backdrop-filter:blur(10px);border-radius:16px;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:30px;">
-        <div style="background:rgba(10,20,45,0.98);border:1px solid rgba(245,158,11,0.3);border-radius:20px;padding:32px 28px;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-          <div style="font-size:40px;margin-bottom:12px;">📊</div>
-          <h3 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 10px;">Analytics avancés</h3>
-          <p style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:20px;">Taux de conversion, résolution IA, graphiques, 90j d'historique, résumés quotidiens.</p>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:20px;text-align:left;">
-            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Graphiques conversations & RDV</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Questions les plus posées</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>Résumés IA quotidiens par email</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.75);display:flex;gap:8px;"><span style="color:#F59E0B;">✓</span>90 jours d'historique</div>
-          </div>
-          <a href="/abonnement" style="display:block;padding:14px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(0,82,204,0.35);">⭐ Passer au Plan Pro — 49€/mois</a>
-        </div>
-      </div>
-    </div>
-
     <!-- LIEN & QR CODE -->
     <div id="linkSection" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;margin-bottom:20px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
@@ -269,12 +210,12 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
       <!-- Activité récente -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-        <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 16px;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 7 derniers jours</span></h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 7 derniers jours</span></h2><a href="/dashboard-messages" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;">Voir tout →</a></div>
         <div id="recentActivity"><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;"></div></div>
       </div>
       <!-- Statut système -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-        <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 16px;display:flex;align-items:center;gap:8px;">✅ Statut du système</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;">✅ Statut du système</h2><a href="/dashboard-configuration" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;">Configurer →</a></div>
         <div id="systemStatus"><div class="skeleton" style="height:44px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:44px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:44px;border-radius:8px;"></div></div>
         <div style="margin-top:16px;padding:13px 15px;background:rgba(0,212,255,0.06);border-radius:11px;border-left:3px solid rgba(0,212,255,0.4);">
           <div style="font-size:11px;color:#00D4FF;font-weight:700;margin-bottom:5px;">💡 Astuce du jour</div>
@@ -335,7 +276,7 @@
         <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px;line-height:1.7;">Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px;">
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">📱</div><div><div class="guide-title">QR Code en vitrine</div><div class="guide-time">Impact immédiat · 2 min</div></div></div><p class="guide-text">Imprimez votre QR code et affichez-le à l'entrée, sur le comptoir ou les tables. Un client qui attend peut déjà prendre RDV.</p><div class="guide-tip">💡 Plastifiez-le et collez-le sur la caisse ou la porte d'entrée.</div></div>
-          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#E1306C,#F77737);">📸</div><div><div class="guide-title">Bio Instagram</div><div class="guide-time">Trafic permanent · 1 min</div></div></div><p class="guide-text">Ajoutez votre lien LocalReply dans votre bio Instagram — le seul lien cliquable. Vos abonnés peuvent poser leurs questions ou prendre RDV.</p><div class="guide-tip">💡 "Réservez ou posez vos questions 24h/24 👇"</div></div>
+          <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#E1306C,#F77737);">📸</div><div><div class="guide-title">Bio réseaux sociaux</div><div class="guide-time">Trafic permanent · 1 min</div></div></div><p class="guide-text">Ajoutez votre lien LocalReply dans votre bio Instagram, TikTok ou Facebook — vos abonnés peuvent poser leurs questions ou réserver directement.</p><div class="guide-tip">💡 "Réservez ou posez vos questions 24h/24 👇"</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#4285F4,#34A853);">🔍</div><div><div class="guide-title">Google My Business</div><div class="guide-time">Visibilité locale · 3 min</div></div></div><p class="guide-text">Ajoutez votre lien dans "Site web" ou "Réserver" sur votre fiche Google. Les clients qui vous trouvent sur Google interagissent directement.</p><div class="guide-tip">💡 Utilisez ?src=google pour tracker ce trafic.</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#10B981,#059669);">🗣️</div><div><div class="guide-title">En caisse, à voix haute</div><div class="guide-time">Bouche à oreille · 0 min</div></div></div><p class="guide-text">Mentionnez que vos clients peuvent prendre RDV en ligne 24h/24 — même à 23h. Simple et naturel à dire.</p><div class="guide-tip">💡 "Vous pouvez réserver directement en scannant ce code !"</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">✉️</div><div><div class="guide-title">Signature email</div><div class="guide-time">Visibilité passive · 2 min</div></div></div><p class="guide-text">Ajoutez votre lien dans votre signature email. Chaque email envoyé devient une opportunité de faire connaître votre assistant.</p><div class="guide-tip">💡 "📅 Réservez 24h/24 → localreply.ai/votre-commerce"</div></div>
@@ -350,7 +291,7 @@
           <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;">✅ À faire une seule fois</div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="qr" style="accent-color:#00D4FF;width:14px;height:14px;"> QR code imprimé & affiché</label>
-            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="ig" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien ajouté à la bio Instagram</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="ig" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien ajouté à la bio réseaux sociaux</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="gmb" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien sur Google My Business</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="email" style="accent-color:#00D4FF;width:14px;height:14px;"> Lien dans la signature email</label>
             <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.65);cursor:pointer;"><input type="checkbox" onchange="saveGuideCheck(this)" data-key="web" style="accent-color:#00D4FF;width:14px;height:14px;"> Bouton sur le site web</label>
@@ -429,13 +370,12 @@
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 <script>
 const token = localStorage.getItem('auth_token');
 const businessId = localStorage.getItem('business_id');
 if (!token || !businessId) window.location.href = '/auth';
 const API = 'https://localreply-api.onrender.com';
-let currentSlug = '', miniChartInstance = null;
+let currentSlug = '';
 
 function userId() {
   try { const p = JSON.parse(atob(token.split('.')[1])); return p.sub||p.user_id||p.id; } catch { return null; }
