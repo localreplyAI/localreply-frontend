@@ -230,11 +230,13 @@
           </div>
           <div class="cfg-grid-2" style="margin-top:16px;">
             <div class="cfg-field">
-              <label class="cfg-label">Slug URL <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(lien public)</span></label>
-              <div style="display:flex;align-items:center;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;overflow:hidden;transition:all 0.2s;" id="slugWrap">
+              <label class="cfg-label">Lien public <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">— permanent</span></label>
+              <div style="display:flex;align-items:center;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;cursor:default;" id="slugWrap">
                 <span style="padding:0 8px 0 14px;font-size:12px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">localreply.ai/</span>
-                <input id="businessSlug" type="text" style="flex:1;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:#FFFFFF;outline:none;" placeholder="mon-commerce" oninput="sanitizeSlug(this)">
+                <input id="businessSlug" type="text" readonly style="flex:1;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:rgba(255,255,255,0.7);outline:none;cursor:default;pointer-events:none;" placeholder="mon-commerce">
+                <span style="padding:0 14px;font-size:14px;color:rgba(255,255,255,0.25);" title="Le lien public ne peut pas être modifié">🔒</span>
               </div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.</div>
             </div>
             <div class="cfg-field">
               <label class="cfg-label">Fuseau horaire</label>
@@ -955,7 +957,6 @@ async function saveBusinessInfo() {
       phone: document.getElementById('businessPhone').value,
       address: document.getElementById('businessAddress').value,
       description: document.getElementById('businessDescription').value,
-      slug: document.getElementById('businessSlug').value,
       timezone: document.getElementById('businessTimezone').value,
       interface_language: document.getElementById('interfaceLanguage').value,
     });
