@@ -316,6 +316,56 @@
             <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;margin-left:4px;">Passer au Pro →</a>
           </div>
         </div>
+
+        <!-- Résumés IA -->
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">📊 Résumés IA par email</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6;">Recevez un résumé de l'activité de votre assistant : conversations, questions fréquentes, opportunités détectées.</div>
+
+          <div style="display:flex;flex-direction:column;gap:8px;" id="summaryFreqOptions">
+
+            <!-- Aucun -->
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;cursor:pointer;transition:all .2s;" id="summaryOpt_none">
+              <input type="radio" name="summaryFreq" id="summaryFreq_none" value="none" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Aucun</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Pas de résumé envoyé par email</div>
+              </div>
+            </label>
+
+            <!-- Hebdomadaire -->
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;cursor:pointer;transition:all .2s;" id="summaryOpt_weekly">
+              <input type="radio" name="summaryFreq" id="summaryFreq_weekly" value="weekly" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Hebdomadaire</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Tous les lundis matin — résumé de la semaine écoulée</div>
+              </div>
+            </label>
+
+            <!-- Quotidien (Pro seulement) -->
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;transition:all .2s;" id="summaryOpt_daily"
+              onclick="if(!window._isPro) { event.preventDefault(); document.getElementById('summaryProNote').style.display='flex'; }">
+              <input type="radio" name="summaryFreq" id="summaryFreq_daily" value="daily" style="accent-color:#F59E0B;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;gap:7px;">
+                  <span style="font-size:13px;font-weight:600;" id="summaryDailyLabel">Quotidien</span>
+                  <span style="font-size:10px;font-weight:700;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:2px 7px;border-radius:5px;">PRO</span>
+                </div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);" id="summaryDailySub">Chaque matin — résumé de la veille</div>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Note upgrade Pro -->
+          <div id="summaryProNote" style="display:none;margin-top:10px;padding:10px 14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;align-items:center;gap:10px;">
+            <span style="font-size:16px;">⭐</span>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);">Les résumés quotidiens sont réservés au plan Pro.
+              <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;margin-left:4px;">Passer au Pro →</a>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <button onclick="saveNotifications()" class="ac-btn-save">💾 Enregistrer les préférences</button>
@@ -441,6 +491,53 @@ function setNotifToggle(event_type, channel, val) {
   if (dot) dot.style.left = val ? 'calc(100% - 19px)' : '3px';
 }
 
+function applySummaryFreqState(isPro) {
+  const dailyOpt = document.getElementById('summaryOpt_daily');
+  const dailyRadio = document.getElementById('summaryFreq_daily');
+  const dailyLabel = document.getElementById('summaryDailyLabel');
+  const dailySub = document.getElementById('summaryDailySub');
+
+  if (!isPro) {
+    // Grisé, non cliquable
+    if (dailyOpt) {
+      dailyOpt.style.background = 'rgba(255,255,255,0.02)';
+      dailyOpt.style.border = '1px solid rgba(255,255,255,0.04)';
+      dailyOpt.style.cursor = 'not-allowed';
+      dailyOpt.style.opacity = '0.5';
+    }
+    if (dailyRadio) dailyRadio.disabled = true;
+    if (dailyLabel) dailyLabel.style.color = 'rgba(255,255,255,0.4)';
+    if (dailySub) dailySub.style.color = 'rgba(255,255,255,0.25)';
+  } else {
+    if (dailyOpt) {
+      dailyOpt.style.background = 'rgba(255,255,255,0.03)';
+      dailyOpt.style.border = '1px solid rgba(255,255,255,0.07)';
+      dailyOpt.style.cursor = 'pointer';
+      dailyOpt.style.opacity = '1';
+    }
+    if (dailyRadio) dailyRadio.disabled = false;
+    if (dailyLabel) dailyLabel.style.color = '#fff';
+    if (dailySub) dailySub.style.color = 'rgba(255,255,255,0.4)';
+  }
+
+  // Highlight de l'option sélectionnée
+  updateSummaryPreview();
+}
+
+function updateSummaryPreview() {
+  ['none','weekly','daily'].forEach(val => {
+    const opt = document.getElementById('summaryOpt_' + val);
+    const radio = document.getElementById('summaryFreq_' + val);
+    if (!opt || !radio) return;
+    const selected = radio.checked;
+    const isDisabled = radio.disabled;
+    if (!isDisabled) {
+      opt.style.background = selected ? 'rgba(0,212,255,0.08)' : 'rgba(255,255,255,0.03)';
+      opt.style.border = selected ? '1px solid rgba(0,212,255,0.3)' : '1px solid rgba(255,255,255,0.07)';
+    }
+  });
+}
+
 function applySmsColState(isPro) {
   // Griser toute la colonne SMS si Standard
   document.querySelectorAll('.sms-col').forEach(col => {
@@ -492,15 +589,20 @@ async function saveNotifications() {
       prefs[ev] = { email: emailVal || !smsVal, sms: smsVal };
       if (!emailVal && !smsVal) setNotifToggle(ev, 'email', true);
     });
+
+    // Fréquence résumés
+    const summaryFreq = document.querySelector('input[name="summaryFreq"]:checked')?.value || 'weekly';
+
     try {
       await apiRequest('/api/business/'+businessId+'/notification-preferences','PUT',{
-        ...prefs, notification_email_target: target
+        ...prefs, notification_email_target: target, summary_frequency: summaryFreq
       });
     } catch {
       // Fallback ancien endpoint
       await apiRequest('/api/business/'+businessId+'/notifications','POST',{
         notification_email_target: target,
-        unknown_questions: prefs.unknown_question?.email ?? true
+        unknown_questions: prefs.unknown_question?.email ?? true,
+        summary_frequency: summaryFreq
       });
     }
     showNotification('✅ Préférences enregistrées !');
@@ -513,6 +615,12 @@ async function loadNotificationPrefs() {
     const sub = await apiRequest('/api/billing/subscription/'+userId);
     isPro = sub?.plan==='pro' || sub?.plan==='trial';
   } catch {}
+
+  // Stocker isPro globalement pour le sélecteur résumés
+  window._isPro = isPro;
+
+  // Initialiser le sélecteur résumés selon le plan
+  applySummaryFreqState(isPro);
 
   applySmsColState(isPro);
 
@@ -536,6 +644,17 @@ async function loadNotificationPrefs() {
     const target = d.notification_email_target || prefs.notification_email_target || 'account';
     const radio = document.getElementById(target==='both'?'notifEmailBoth':target==='contact'?'notifEmailContact':'notifEmailAccount');
     if (radio) { radio.checked=true; updateEmailPreview(); }
+
+    // Charger fréquence résumés
+    const freq = d.summary_frequency || prefs.summary_frequency || 'weekly';
+    const freqRadio = document.getElementById('summaryFreq_' + freq);
+    if (freqRadio && (!freq || freq !== 'daily' || isPro)) {
+      freqRadio.checked = true;
+    } else {
+      const defaultRadio = document.getElementById('summaryFreq_weekly');
+      if (defaultRadio) defaultRadio.checked = true;
+    }
+    updateSummaryPreview();
   } catch {
     try {
       const d = await apiRequest('/api/business/'+businessId+'/notifications');
