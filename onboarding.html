@@ -280,6 +280,48 @@
             🔒 Les SMS sont réservés au plan Pro. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">Voir les plans →</a>
           </div>
         </div>
+
+        <!-- Résumés IA -->
+        <div class="ob-field">
+          <label class="ob-label">📊 Résumés IA par email</label>
+          <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px;line-height:1.6;">Recevez un récapitulatif de l'activité de votre assistant : questions fréquentes, opportunités, conversations.</div>
+
+          <div style="display:flex;flex-direction:column;gap:8px;">
+
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;cursor:pointer;" id="ob_summaryOpt_none">
+              <input type="radio" name="ob_summaryFreq" id="ob_summaryFreq_none" value="none" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="obUpdateSummary()">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Aucun</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Pas de résumé par email</div>
+              </div>
+            </label>
+
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:10px;cursor:pointer;" id="ob_summaryOpt_weekly">
+              <input type="radio" name="ob_summaryFreq" id="ob_summaryFreq_weekly" value="weekly" checked style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="obUpdateSummary()">
+              <div>
+                <div style="font-size:13px;font-weight:600;color:#fff;">Hebdomadaire</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">Tous les lundis matin</div>
+              </div>
+            </label>
+
+            <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;transition:all .2s;" id="ob_summaryOpt_daily">
+              <input type="radio" name="ob_summaryFreq" id="ob_summaryFreq_daily" value="daily" style="accent-color:#F59E0B;width:15px;height:15px;flex-shrink:0;" onchange="obUpdateSummary()">
+              <div style="flex:1;">
+                <div style="display:flex;align-items:center;gap:7px;">
+                  <span style="font-size:13px;font-weight:600;color:#fff;">Quotidien</span>
+                  <span style="font-size:10px;font-weight:700;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:2px 7px;border-radius:5px;">PRO</span>
+                </div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Chaque matin — résumé de la veille</div>
+              </div>
+            </label>
+
+          </div>
+
+          <div id="ob_summaryProNote" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.5);">
+            ⭐ Les résumés quotidiens sont réservés au plan Pro. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">Voir les plans →</a>
+          </div>
+        </div>
+
       </div>
 
       <!-- ═══ ÉTAPE 5 : C'est prêt ! ═══ -->
@@ -678,6 +720,50 @@ function applySmsCols() {
       const cb = document.getElementById(`ob_notif_${ev}_sms`);
       if (cb) { cb.checked=false; obSyncToggle(cb); }
     });
+  }
+  // Appliquer aussi l'état des résumés
+  applyObSummaryState();
+}
+
+function applyObSummaryState() {
+  const dailyOpt   = document.getElementById('ob_summaryOpt_daily');
+  const dailyRadio = document.getElementById('ob_summaryFreq_daily');
+  const proNote    = document.getElementById('ob_summaryProNote');
+
+  if (!isPro) {
+    if (dailyOpt)   { dailyOpt.style.opacity='0.45'; dailyOpt.style.cursor='not-allowed'; dailyOpt.style.background='rgba(255,255,255,0.02)'; dailyOpt.style.border='1px solid rgba(255,255,255,0.04)'; }
+    if (dailyRadio) { dailyRadio.disabled = true; }
+    // Si quotidien était sélectionné, revenir à hebdo
+    if (dailyRadio?.checked) {
+      dailyRadio.checked = false;
+      const weekly = document.getElementById('ob_summaryFreq_weekly');
+      if (weekly) { weekly.checked = true; obUpdateSummary(); }
+    }
+  } else {
+    if (dailyOpt)   { dailyOpt.style.opacity='1'; dailyOpt.style.cursor='pointer'; dailyOpt.style.background='rgba(255,255,255,0.03)'; dailyOpt.style.border='1px solid rgba(255,255,255,0.07)'; }
+    if (dailyRadio) { dailyRadio.disabled = false; }
+    if (proNote)    { proNote.style.display = 'none'; }
+  }
+  obUpdateSummary();
+}
+
+function obUpdateSummary() {
+  ['none','weekly','daily'].forEach(val => {
+    const opt   = document.getElementById('ob_summaryOpt_' + val);
+    const radio = document.getElementById('ob_summaryFreq_' + val);
+    if (!opt || !radio || radio.disabled) return;
+    const sel = radio.checked;
+    opt.style.background = sel ? 'rgba(0,212,255,0.08)' : 'rgba(255,255,255,0.03)';
+    opt.style.border      = sel ? '1px solid rgba(0,212,255,0.3)' : '1px solid rgba(255,255,255,0.07)';
+  });
+  // Bloquer le clic sur daily si Standard
+  const dailyOpt = document.getElementById('ob_summaryOpt_daily');
+  if (dailyOpt && !isPro) {
+    dailyOpt.onclick = function(e) {
+      e.preventDefault();
+      const note = document.getElementById('ob_summaryProNote');
+      if (note) note.style.display = 'flex';
+    };
   }
 }
 
@@ -1082,7 +1168,8 @@ async function saveStep(step) {
         new_appointment:    {email:document.getElementById('ob_notif_new_email')?.checked??true,    sms:isPro&&(document.getElementById('ob_notif_new_sms')?.checked??true)},
         urgent_appointment: {email:document.getElementById('ob_notif_urgent_email')?.checked??true,  sms:isPro&&(document.getElementById('ob_notif_urgent_sms')?.checked??true)},
         unknown_question:   {email:document.getElementById('ob_notif_unknown_email')?.checked??true,  sms:isPro&&(document.getElementById('ob_notif_unknown_sms')?.checked??false)},
-        notification_email_target: target
+        notification_email_target: target,
+        summary_frequency: (()=>{ const r=document.querySelector('input[name="ob_summaryFreq"]:checked'); return r&&(r.value!=='daily'||isPro)?r?.value||'weekly':'weekly'; })()
       };
       await apiRequest(`/api/business/${businessId}/notification-preferences`, 'PUT', prefs).catch(()=>{
         // Fallback
