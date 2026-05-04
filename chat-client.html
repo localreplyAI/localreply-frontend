@@ -1077,6 +1077,27 @@ async function lrcSendText(text) {
     
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
+
+    // ── Business bloqué (abonnement inactif) ──
+    if (data.blocked) {
+      if (bubble) {
+        bubble.innerHTML = esc(data.message || data.response || '');
+        bubble.id = '';
+        bubble.style.opacity = '0.6';
+      }
+      const timeEl = document.getElementById('lrcStreamTime');
+      if (timeEl) { timeEl.textContent = now(); timeEl.id = ''; }
+      // Bloquer l'input définitivement
+      const inp = document.getElementById('lrcInput');
+      const btn = document.getElementById('lrcSend');
+      if (inp) { inp.disabled = true; inp.placeholder = 'Service indisponible'; }
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.35'; }
+      // Masquer les suggestions
+      const sugg = document.getElementById('lrcSuggestions');
+      if (sugg) sugg.style.display = 'none';
+      return;
+    }
+
     // Mémoriser conversation_id pour toute la session
     if (data.conversation_id) conversationId = data.conversation_id;
     const msg = data.message || data.response || '';
