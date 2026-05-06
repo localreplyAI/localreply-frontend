@@ -11,7 +11,7 @@
     { href: '/features',  label: 'Fonctionnalités' },
     { href: '/pricing',   label: 'Tarifs'          },
     { href: '/demo',      label: 'Démo'            },
-    { href: '/blog',      label: 'Blog'            },
+    { href: '/about',     label: 'À propos'        },
   ];
 
   const isActive = (href) => {
