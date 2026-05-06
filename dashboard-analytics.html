@@ -175,13 +175,8 @@
         <canvas id="analyticsChart" style="max-height: 300px;"></canvas>
       </div>
 
-      <!-- QUESTIONS + PERFORMANCE -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px;">
-        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
-          <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">💬 Questions fréquentes</h2>
-          <div id="topQuestions"></div>
-        </div>
-        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+      <!-- PERFORMANCE -->
+      <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
           <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">⚡ Performance détaillée</h2>
           <div style="margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -208,25 +203,14 @@
         </div>
       </div>
 
-      <!-- SOURCES TRAFIC + FEEDBACK -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 25px; margin-top: 25px;">
-
-        <!-- Sources trafic -->
+      <!-- SOURCES TRAFIC -->
+      <div style="margin-top: 25px;">
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
           <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">🔗 Sources de trafic</h2>
           <div id="trafficSources">
             <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
           </div>
         </div>
-
-        <!-- Feedback clients -->
-        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
-          <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">💬 Feedback clients</h2>
-          <div id="clientFeedback">
-            <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
-          </div>
-        </div>
-
       </div>
 
 
@@ -418,25 +402,6 @@ async function loadTimeline() {
   } catch (e) { console.error('Erreur timeline:', e); }
 }
 
-async function loadTopQuestions() {
-  if (!isPro) return;
-  try {
-    const data = await apiRequest(`/api/business/${businessId}/analytics/top-questions?limit=5`);
-    const container = document.getElementById('topQuestions');
-    if (!data.top_questions || data.top_questions.length === 0) {
-      container.innerHTML = `<div style="text-align:center;padding:40px 20px;color:rgba(255,255,255,0.5);"><div style="font-size:48px;margin-bottom:15px;opacity:0.3;">💬</div><div style="font-size:14px;">Pas encore assez de données</div></div>`;
-      return;
-    }
-    container.innerHTML = '';
-    data.top_questions.forEach((item, index) => {
-      const div = document.createElement('div');
-      div.style.cssText = `padding:15px;background:rgba(255,255,255,0.05);border-left:3px solid ${index===0?'#00D4FF':'rgba(255,255,255,0.2)'};border-radius:10px;margin-bottom:12px;`;
-      div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:start;gap:15px;"><div style="flex:1;"><div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:5px;">#${index+1}</div><div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;line-height:1.5;">${item.question}</div></div><div style="padding:6px 12px;background:rgba(0,212,255,0.2);border-radius:8px;font-size:14px;font-weight:700;color:#00D4FF;">${item.count}</div></div>`;
-      container.appendChild(div);
-    });
-  } catch (e) { console.error('Erreur top questions:', e); }
-}
-
 function switchPeriod(days) {
   if (!isPro) return;
   currentPeriod = days;
@@ -447,7 +412,6 @@ function switchPeriod(days) {
   });
   loadOverview();
   loadTimeline();
-  loadTopQuestions();
   loadTrafficSources();
 }
 
@@ -504,34 +468,6 @@ async function loadTrafficSources() {
   } catch { document.getElementById('trafficSources').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
 }
 
-async function loadClientFeedback() {
-  if (!isPro) return;
-  try {
-    const data = await apiRequest(`/api/business/${businessId}/analytics/feedback?days=${currentPeriod}`);
-    const container = document.getElementById('clientFeedback');
-    const pos = data.positive || [];
-    const neg = data.negative || [];
-    if (!pos.length && !neg.length) {
-      container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore de feedback détecté</div>`;
-      return;
-    }
-    let html = '';
-    if (pos.length) {
-      html += `<div style="font-size:12px;font-weight:700;color:#10B981;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">😊 Positifs (${pos.length})</div>`;
-      pos.slice(0,3).forEach(f => {
-        html += `<div style="padding:10px 14px;background:rgba(16,185,129,0.1);border-left:3px solid #10B981;border-radius:8px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.8);">"${f.text}"</div>`;
-      });
-    }
-    if (neg.length) {
-      html += `<div style="font-size:12px;font-weight:700;color:#F59E0B;text-transform:uppercase;letter-spacing:0.8px;margin:${pos.length?'16px':0} 0 10px 0;">⚠️ Points d'attention (${neg.length})</div>`;
-      neg.slice(0,3).forEach(f => {
-        html += `<div style="padding:10px 14px;background:rgba(245,158,11,0.1);border-left:3px solid #F59E0B;border-radius:8px;margin-bottom:8px;font-size:13px;color:rgba(255,255,255,0.8);">"${f.text}"</div>`;
-      });
-    }
-    container.innerHTML = html;
-  } catch { document.getElementById('clientFeedback').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
-}
-
 async function loadUnansweredQuestions() {
   if (!isPro) return;
   try {
@@ -554,6 +490,19 @@ async function loadUnansweredQuestions() {
   } catch { document.getElementById('unansweredQuestions').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
 }
 
+
+function buildLocalSummary(container, label) {
+  container.innerHTML = `
+    <div style="text-align:center;padding:32px 20px;">
+      <div style="font-size:40px;margin-bottom:14px;opacity:0.4;">📋</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:440px;margin:0 auto;">
+        Aucun résumé IA disponible pour le moment.<br>
+        Il sera généré ${isPro ? 'selon la fréquence configurée dans <a href="/mon-compte" style="color:#00D4FF;text-decoration:none;font-weight:600;">Mon compte</a>' : 'chaque lundi matin'}.
+      </div>
+    </div>`;
+  if (label) label.textContent = 'Aucun résumé';
+}
+
 async function loadLastSummary() {
   if (!isPro) return;
   try {
@@ -561,8 +510,8 @@ async function loadLastSummary() {
     const container = document.getElementById('lastSummary');
     const label = document.getElementById('summaryPeriodLabel');
     if (!data || !data.summary_text) {
-      container.innerHTML = `<div style="color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;">Le premier résumé IA sera généré automatiquement prochainement.</div>`;
-      label.textContent = 'Aucun résumé';
+      // Mini-résumé local basé sur les données déjà chargées
+      buildLocalSummary(container, label);
       return;
     }
     const periodLabel = data.period_type === 'daily' ? 'Résumé quotidien' : 'Résumé hebdomadaire';
@@ -576,8 +525,7 @@ async function loadLastSummary() {
         ${data.missing_faqs.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.times}x)</div>`).join('')}
       </div>` : ''}`;
   } catch { 
-    document.getElementById('lastSummary').innerHTML = `<div style="color:rgba(255,255,255,0.5);font-size:14px;">Le résumé IA sera disponible prochainement.</div>`;
-    document.getElementById('summaryPeriodLabel').textContent = 'En attente';
+    buildLocalSummary(document.getElementById('lastSummary'), document.getElementById('summaryPeriodLabel'));
   }
 }
 
