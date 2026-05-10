@@ -203,14 +203,24 @@
         </div>
       </div>
 
-      <!-- SOURCES TRAFIC -->
-      <div style="margin-top: 25px;">
+      <!-- SOURCES TRAFIC + HEURE DE POINTE -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:25px;margin-top:25px;">
+
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
           <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">🔗 Sources de trafic</h2>
           <div id="trafficSources">
             <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
           </div>
         </div>
+
+        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px;">
+          <h2 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin: 0 0 6px 0;">⏰ Heures de pointe</h2>
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:20px;">À quelle heure vos clients vous contactent le plus.</div>
+          <div id="peakHours">
+            <div style="text-align:center;padding:30px;color:rgba(255,255,255,0.4);font-size:13px;">Chargement...</div>
+          </div>
+        </div>
+
       </div>
 
 
@@ -413,6 +423,7 @@ function switchPeriod(days) {
   loadOverview();
   loadTimeline();
   loadTrafficSources();
+  loadPeakHours();
 }
 
 function toggleMobileMenu() {
@@ -433,6 +444,104 @@ function logout() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('business_id');
     window.location.href = '/auth';
+  }
+}
+
+async function loadPeakHours() {
+  if (!isPro) return;
+  const container = document.getElementById('peakHours');
+  try {
+    const data = await apiRequest(`/api/business/${businessId}/analytics/peak-hours?days=${currentPeriod}`);
+    const hours = data.hours || data; // tableau de 24 valeurs ou objet {hours:[...]}
+    const arr = Array.isArray(hours) ? hours : Object.values(hours);
+
+    if (!arr.length || arr.every(v => v === 0)) {
+      container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore assez de données</div>`;
+      return;
+    }
+
+    const max = Math.max(...arr) || 1;
+    // Trouver l'heure de pointe
+    const peakIdx = arr.indexOf(max);
+    const peakLabel = `${peakIdx}h – ${peakIdx+1}h`;
+
+    // Regrouper en plages lisibles : nuit (0-6), matin (7-12), après-midi (13-18), soir (19-23)
+    const slots = [
+      { label: '🌙 Nuit', range: [0,6], color: 'rgba(139,92,246,0.6)' },
+      { label: '🌅 Matin', range: [7,12], color: 'rgba(0,212,255,0.6)' },
+      { label: '☀️ Après-midi', range: [13,18], color: 'rgba(16,185,129,0.6)' },
+      { label: '🌆 Soir', range: [19,23], color: 'rgba(245,158,11,0.6)' },
+    ];
+
+    // Mini barres par heure (24 barres)
+    const barsHtml = arr.map((val, h) => {
+      const pct = Math.round((val / max) * 100);
+      const isPeak = val === max;
+      const slotColor = slots.find(s => h >= s.range[0] && h <= s.range[1])?.color || 'rgba(0,212,255,0.5)';
+      return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">
+        <div style="height:60px;display:flex;align-items:flex-end;">
+          <div style="width:100%;background:${isPeak?'#00D4FF':slotColor};border-radius:3px 3px 0 0;height:${Math.max(pct,4)}%;min-height:3px;transition:height .5s ease;${isPeak?'box-shadow:0 0 8px rgba(0,212,255,0.5);':''}" title="${h}h : ${val} conv."></div>
+        </div>
+        <div style="font-size:8.5px;color:${isPeak?'#00D4FF':'rgba(255,255,255,0.25)'};font-weight:${isPeak?'700':'400'}">${h}</div>
+      </div>`;
+    }).join('');
+
+    // Résumé par plage
+    const slotSummary = slots.map(s => {
+      const total = arr.slice(s.range[0], s.range[1]+1).reduce((a,b)=>a+b,0);
+      return `<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <span style="font-size:13px;color:rgba(255,255,255,0.7);">${s.label}</span>
+        <span style="font-size:13px;font-weight:600;color:${s.color.replace('0.6','1')};">${total} conv.</span>
+      </div>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">📍</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">Pic d'activité : <span style="color:#00D4FF;">${peakLabel}</span></div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">${max} conversation${max>1?'s':''} sur la période</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:2px;margin-bottom:8px;">${barsHtml}</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;margin-bottom:14px;">heure de la journée (0h – 23h)</div>
+      <div>${slotSummary}</div>`;
+
+  } catch {
+    // Fallback : calculer localement depuis les conversations si l'endpoint n'existe pas
+    try {
+      const convs = await apiRequest(`/api/business/${businessId}/conversations?days=${currentPeriod}&limit=200`);
+      const list = Array.isArray(convs) ? convs : (convs.conversations || []);
+      const counts = new Array(24).fill(0);
+      list.forEach(c => {
+        const h = new Date(c.created_at).getHours();
+        if (h >= 0 && h < 24) counts[h]++;
+      });
+      const max2 = Math.max(...counts) || 1;
+      const peakIdx2 = counts.indexOf(max2);
+      if (counts.every(v=>v===0)) {
+        container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore assez de données</div>`;
+        return;
+      }
+      const barsHtml2 = counts.map((val,h) => {
+        const pct = Math.round((val/max2)*100);
+        const isPeak = h === peakIdx2;
+        return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;">
+          <div style="height:60px;display:flex;align-items:flex-end;">
+            <div style="width:100%;background:${isPeak?'#00D4FF':'rgba(0,212,255,0.3)'};border-radius:3px 3px 0 0;height:${Math.max(pct,4)}%;min-height:3px;" title="${h}h : ${val}"></div>
+          </div>
+          <div style="font-size:8.5px;color:${isPeak?'#00D4FF':'rgba(255,255,255,0.25)'};font-weight:${isPeak?'700':'400'}">${h}</div>
+        </div>`;
+      }).join('');
+      container.innerHTML = `
+        <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:700;color:#fff;">Pic d'activité : <span style="color:#00D4FF;">${peakIdx2}h – ${peakIdx2+1}h</span></div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:2px;margin-bottom:8px;">${barsHtml2}</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;">heure de la journée (0h – 23h)</div>`;
+    } catch {
+      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">Données non disponibles</div>`;
+    }
   }
 }
 
@@ -492,31 +601,43 @@ async function loadUnansweredQuestions() {
 
 
 function buildLocalSummary(container, label) {
+  const proFlag = typeof isPro !== 'undefined' ? isPro : false;
   container.innerHTML = `
     <div style="text-align:center;padding:32px 20px;">
       <div style="font-size:40px;margin-bottom:14px;opacity:0.4;">📋</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:440px;margin:0 auto;">
         Aucun résumé IA disponible pour le moment.<br>
-        Il sera généré ${isPro ? 'selon la fréquence configurée dans <a href="/mon-compte" style="color:#00D4FF;text-decoration:none;font-weight:600;">Mon compte</a>' : 'chaque lundi matin'}.
+        ${proFlag
+          ? 'Il sera généré selon la fréquence configurée dans <a href="/mon-compte" style="color:#00D4FF;text-decoration:none;font-weight:600;">Mon compte</a>.'
+          : 'Il sera généré chaque lundi matin.'}
       </div>
     </div>`;
   if (label) label.textContent = 'Aucun résumé';
 }
 
 async function loadLastSummary() {
-  if (!isPro) return;
+  const container = document.getElementById('lastSummary');
+  const label = document.getElementById('summaryPeriodLabel');
+  if (!container) return;
+
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/summary/latest`);
-    const container = document.getElementById('lastSummary');
-    const label = document.getElementById('summaryPeriodLabel');
-    if (!data || !data.summary_text) {
-      // Mini-résumé local basé sur les données déjà chargées
+
+    // Tous les cas où il n'y a pas de contenu à afficher
+    if (!data
+      || typeof data !== 'object'
+      || !data.summary_text
+      || data.summary_text.trim() === '') {
       buildLocalSummary(container, label);
       return;
     }
+
     const periodLabel = data.period_type === 'daily' ? 'Résumé quotidien' : 'Résumé hebdomadaire';
-    const dateLabel = data.period_end ? new Date(data.period_end).toLocaleDateString('fr-FR', {day:'numeric',month:'long'}) : '';
-    label.textContent = `${periodLabel} · ${dateLabel}`;
+    const dateLabel = data.period_end
+      ? new Date(data.period_end).toLocaleDateString('fr-FR', {day:'numeric', month:'long'})
+      : '';
+    if (label) label.textContent = `${periodLabel}${dateLabel ? ' · ' + dateLabel : ''}`;
+
     container.innerHTML = `
       <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${data.summary_text}</div>
       ${data.missing_faqs && data.missing_faqs.length ? `
@@ -524,8 +645,10 @@ async function loadLastSummary() {
         <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;">💡 FAQ à compléter</div>
         ${data.missing_faqs.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.times}x)</div>`).join('')}
       </div>` : ''}`;
-  } catch { 
-    buildLocalSummary(document.getElementById('lastSummary'), document.getElementById('summaryPeriodLabel'));
+
+  } catch(err) {
+    console.warn('loadLastSummary error:', err);
+    buildLocalSummary(container, label);
   }
 }
 
@@ -604,14 +727,15 @@ document.addEventListener('DOMContentLoaded', async function() {
     _bset(_bmc,'sbBadgeMsg','bnBadgeMsg');_bset(_brc,'sbBadgeRdv','bnBadgeRdv');
   } catch {}
 
+  // Résumé accessible à tous
+  loadLastSummary();
+
   if (hasPro) {
     await Promise.all([
       loadOverview(),
       loadTimeline(),
-      loadTopQuestions(),
       loadTrafficSources(),
-      loadClientFeedback(),
-      loadLastSummary(),
+      loadPeakHours(),
     ]);
   }
 });
