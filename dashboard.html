@@ -156,6 +156,7 @@
           </div>
         </div>
         <div id="healthLabel" style="font-size:13px;font-weight:600;color:#00D4FF;">Calcul...</div>
+        <div id="healthDesc" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:5px;line-height:1.5;padding:0 4px;"></div>
         <div style="margin-top:10px;display:flex;flex-direction:column;gap:5px;width:100%;text-align:left;" id="healthItems"></div>
       </div>
     </div>
@@ -185,8 +186,8 @@
               <button onclick="copySourceLink('instagram')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
-              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">🔍 Google</span><div id="linkWebsite" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
-              <button onclick="copySourceLink('google')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">🌐 Site web</span><div id="linkWebsite" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <button onclick="copySourceLink('website')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
               <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">📱 QR Vitrine</span><div id="linkQR" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
@@ -285,7 +286,7 @@
         </div>
         <span id="guideArrow" style="font-size:16px;color:#00D4FF;transition:transform 0.3s;">▼</span>
       </button>
-      <div id="guideContent" style="display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-top:none;border-radius:0 0 16px 16px;padding:22px 24px;">
+      <div id="guideContent" style="display:block;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-top:none;border-radius:0 0 16px 16px;padding:22px 24px;">
         <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px;line-height:1.7;">Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px;">
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">📱</div><div><div class="guide-title">QR Code en vitrine</div><div class="guide-time">Impact immédiat · 2 min</div></div></div><p class="guide-text">Imprimez votre QR code et affichez-le à l'entrée, sur le comptoir ou les tables. Un client qui attend peut déjà prendre RDV.</p><div class="guide-tip">💡 Plastifiez-le et collez-le sur la caisse ou la porte d'entrée.</div></div>
@@ -440,8 +441,19 @@ function computeHealthScore(config, calConnected) {
   if (ring) { const dash = 264; ring.style.strokeDashoffset = dash - (dash * score / 100); }
   if (scoreEl) scoreEl.textContent = score;
   if (labelEl) {
-    labelEl.textContent = score >= 80 ? '🟢 Excellent' : score >= 50 ? '🟡 À améliorer' : '🔴 À compléter';
-    labelEl.style.color = score >= 80 ? '#10B981' : score >= 50 ? '#F59E0B' : '#EF4444';
+    const isEx = score >= 80, isOk = score >= 50;
+    labelEl.textContent = isEx ? '🟢 Excellent' : isOk ? '🟡 À améliorer' : '🔴 À compléter';
+    labelEl.style.color = isEx ? '#10B981' : isOk ? '#F59E0B' : '#EF4444';
+  }
+  // Phrase explicative
+  const healthDesc = document.getElementById('healthDesc');
+  if (healthDesc) {
+    healthDesc.textContent = score >= 80
+      ? 'Votre IA est parfaitement configurée et répondra à toutes les questions.'
+      : score >= 50
+      ? 'Quelques points à compléter pour améliorer la qualité des réponses.'
+      : 'Complétez la configuration pour que l\'IA réponde correctement.';
+    healthDesc.style.color = score >= 80 ? 'rgba(16,185,129,0.7)' : score >= 50 ? 'rgba(245,158,11,0.7)' : 'rgba(239,68,68,0.7)';
   }
   if (itemsEl) itemsEl.innerHTML = checks.map(c=>`
     <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
@@ -455,7 +467,7 @@ function setupLinks(slug) {
   currentSlug = slug;
   ['slugDisplay','qrSlug'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=slug; });
   document.getElementById('linkInstagram').textContent = 'localreply.ai/'+slug+'?src=instagram';
-  document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=google';
+  document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=website';
   document.getElementById('linkQR').textContent        = 'localreply.ai/'+slug+'?src=qr';
   ['testIABtn','testIABtn2'].forEach(id=>{
     const el=document.getElementById(id);
@@ -850,9 +862,9 @@ function buildNarrative(convs, apts, reqs) {
 function renderActivity(convs, apts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
-  const cutoff = new Date(Date.now() - 7*24*60*60*1000); // 7 jours max
+  const cutoff = new Date(Date.now() - 7*24*60*60*1000);
 
-  // Conversations — avec aperçu du premier message si dispo
+  // Conversations — avec aperçu et langue
   convs.filter(c => new Date(c.updated_at || c.created_at) > cutoff).slice(0,5).forEach(c => {
     const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
     const preview = c.last_message || c.title || 'Nouvelle conversation';
