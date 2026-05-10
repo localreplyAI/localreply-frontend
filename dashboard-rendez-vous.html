@@ -975,10 +975,12 @@ function displayConfirmedAppointments(appointments) {
 // Créer carte RDV confirmé
 function createConfirmedCard(apt) {
   const card = document.createElement('div');
-  card.style.cssText = 'background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 25px; margin-bottom: 20px; transition: all 0.3s;';
+  const aptDate = new Date(apt.start_time);
+  const isPast = aptDate < new Date();
+
+  card.style.cssText = `background: ${isPast ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)'}; backdrop-filter: blur(20px); border: 1px solid ${isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.1)'}; border-radius: 16px; padding: 25px; margin-bottom: 20px; transition: all 0.3s; ${isPast ? 'opacity:0.7;' : ''}`;
   card.id = `apt-${apt.id}`;
   
-  const aptDate = new Date(apt.start_time);
   const dateStr = formatDate(aptDate);
   const timeStr = formatTime(aptDate);
   const isToday = isDateToday(aptDate);
@@ -991,13 +993,13 @@ function createConfirmedCard(apt) {
   card.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
       <div>
-        <h3 style="font-size: 18px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
+        <h3 style="font-size: 18px; font-weight: 700; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
         <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">
           📧 ${apt.client_email || 'Non renseigné'} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
         </div>
       </div>
-      <div style="padding: 6px 12px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 10px; font-size: 12px; font-weight: 600; color: #10B981;">
-        ✅ Confirmé
+      <div style="padding: 6px 12px; background: ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
+        ${isPast ? '🕐 Passé' : '✅ Confirmé'}
       </div>
     </div>
     
@@ -1005,11 +1007,11 @@ function createConfirmedCard(apt) {
       <div style="display: grid; gap: 10px;">
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">📅 DATE & HEURE</div>
-          <div style="font-size: 15px; color: #FFFFFF; font-weight: 600;">${dateLabel} à ${timeStr}</div>
+          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${dateLabel} à ${timeStr}</div>
         </div>
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">💇 SERVICE</div>
-          <div style="font-size: 15px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
+          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
         </div>
         ${apt.description ? `
         <div>
@@ -1020,9 +1022,10 @@ function createConfirmedCard(apt) {
       </div>
     </div>
     
+    ${isPast ? '' : `
     <button onclick="cancelAppointment(${apt.id})" style="padding: 12px 24px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; color: #EF4444; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
       <span>❌</span> Annuler le RDV
-    </button>
+    </button>`}
   `;
   
   return card;
