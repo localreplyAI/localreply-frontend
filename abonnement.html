@@ -6,13 +6,16 @@
   <title>Abonnement — LocalReply</title>
   <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+    body { background: #060D1A; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; -webkit-font-smoothing: antialiased; }
   </style>
 </head>
 <body>
-<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
+<div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#060D1A;position:relative;overflow-x:hidden;">
 
   <div style="position:fixed;inset:0;pointer-events:none;z-index:0;">
     <div style="position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 65%);border-radius:50%;"></div>
@@ -78,7 +81,7 @@
 
     <!-- HEADER -->
     <div style="margin-bottom:24px;">
-      <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💳 Abonnement</h1>
+      <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-1px;font-family:'Syne',sans-serif;">💳 Abonnement</h1>
       <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez votre plan et votre facturation</p>
     </div>
 
@@ -114,19 +117,20 @@
         <div style="margin-bottom:20px;">
           <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,0.8);margin-bottom:10px;">📦 Standard</div>
           <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
-            <span id="abPriceStd" style="font-size:44px;font-weight:800;color:#fff;line-height:1;">39€</span>
+            <span id="abPriceStd" style="font-size:44px;font-weight:800;color:#fff;line-height:1;font-family:'Syne',sans-serif;">39€</span>
             <span id="abPeriodStd" style="font-size:14px;color:rgba(255,255,255,0.45);">/mois</span>
           </div>
           <div style="font-size:12px;color:rgba(255,255,255,0.4);">Idéal pour démarrer</div>
         </div>
         <ul class="plan-features">
-          <li><span class="feat-check" style="color:#10B981;">✓</span> IA 6 langues européennes</li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> IA 8 langues européennes</li>
           <li><span class="feat-check" style="color:#10B981;">✓</span> Conversations illimitées</li>
           <li><span class="feat-check" style="color:#10B981;">✓</span> Prise de RDV + Google Calendar</li>
           <li><span class="feat-check" style="color:#10B981;">✓</span> Confirmations par email</li>
           <li><span class="feat-check" style="color:#10B981;">✓</span> Lien public + QR Code</li>
           <li><span class="feat-check" style="color:#10B981;">✓</span> Résumés IA hebdomadaires</li>
-          <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Notifications SMS</span></li>
+          <li><span class="feat-check" style="color:#10B981;">✓</span> Détection urgences dans dashboard</li>
+          <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Alertes SMS urgences</span></li>
           <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Analytics avancés</span></li>
         </ul>
         <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std">🎁 Essayer 14j gratuit</button>
@@ -238,8 +242,17 @@ const businessId = localStorage.getItem('business_id');
 if (!token || !businessId) window.location.href = '/auth';
 const API = 'https://localreply-api.onrender.com';
 
-function getUserIdFromToken() { try { const p=JSON.parse(atob(token.split('.')[1])); return p.sub||p.user_id||p.id; } catch { return null; } }
+function getUserIdFromToken() {
+  try {
+    const p = JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const id = p.sub || p.user_id || p.id;
+    return id ? String(id) : null;
+  } catch { return null; }
+}
 const userId = getUserIdFromToken();
+if (!userId) {
+  console.error('userId introuvable dans le token JWT');
+}
 
 async function apiRequest(endpoint, method='GET', data=null) {
   const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}};
@@ -259,7 +272,7 @@ async function loadSidebarInfo() {
   try {
     const [config,sub]=await Promise.all([
       apiRequest(`/api/business/${businessId}/config/full`).catch(()=>apiRequest(`/api/business/${businessId}/config`)),
-      apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null)
+      userId ? apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null) : Promise.resolve(null)
     ]);
     const biz=config?.business || config || {};
     const sn=document.getElementById('sidebarBusinessName');if(sn&&biz.name)sn.textContent=biz.name;
@@ -321,6 +334,10 @@ function checkURLAlerts(){
 
 async function loadCurrentPlan(){
   const container=document.getElementById('currentPlanContent');
+  if (!userId) {
+    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">Session expirée — <a href="/auth" style="color:#00D4FF;font-weight:600;">reconnectez-vous</a>.</div>`;
+    return;
+  }
   try {
     const sub=await apiRequest(`/api/billing/subscription/${userId}`);
     const plan=sub.plan||'trial';
