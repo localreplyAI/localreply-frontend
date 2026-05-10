@@ -1,3 +1,40 @@
+
+// Vérification expiration token JWT
+(function() {
+  const token = localStorage.getItem('auth_token');
+  const publicPages = ['/', '/auth', '/home', '/features', '/pricing', '/about', '/blog', '/chat'];
+  const path = window.location.pathname;
+  const isDashboard = path.startsWith('/dashboard') || 
+                      path === '/mon-compte' || 
+                      path === '/abonnement' ||
+                      path === '/onboarding' ||
+                      path === '/choisir-plan';
+  
+  if (!isDashboard) return; // Pages publiques — pas de vérif
+  
+  if (!token) {
+    window.location.href = '/auth';
+    return;
+  }
+  
+  // Vérifier expiration
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+    const exp = payload.exp;
+    if (exp && Date.now() / 1000 > exp) {
+      // Token expiré
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('business_id');
+      localStorage.removeItem('business_slug');
+      window.location.href = '/auth?expired=1';
+    }
+  } catch(e) {
+    // Token malformé
+    localStorage.removeItem('auth_token');
+    window.location.href = '/auth';
+  }
+})();
+
 // ══════════════════════════════════════════════
 //  LocalReply — Navbar publique partagée
 //  Injecté sur toutes les pages publiques

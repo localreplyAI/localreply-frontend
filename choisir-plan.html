@@ -314,6 +314,14 @@
       .price-amount { font-size: 40px; }
     }
   </style>
+<script>
+// Rediriger si déjà connecté
+(function(){
+  var t = localStorage.getItem('auth_token');
+  var b = localStorage.getItem('business_id');
+  if (t && b) { window.location.href = '/dashboard'; }
+})();
+</script>
 </head>
 <body>
 
