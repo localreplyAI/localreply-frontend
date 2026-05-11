@@ -234,8 +234,8 @@
 </style>
 
 <script>
-const token = localStorage.getItem('auth_token');
-const businessId = localStorage.getItem('business_id');
+const token = (() => { try { return localStorage.getItem('auth_token'); } catch(e) { return null; } })();
+const businessId = (() => { try { return localStorage.getItem('business_id'); } catch(e) { return null; } })();
 if (!token || !businessId) window.location.href = '/auth';
 const API = 'https://localreply-api.onrender.com';
 

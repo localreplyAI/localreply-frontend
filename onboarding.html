@@ -438,8 +438,8 @@ body{margin:0;padding:0;}
 
 <script>
 const API_BASE = 'https://localreply-api.onrender.com';
-const token = localStorage.getItem('auth_token');
-const businessId = localStorage.getItem('business_id');
+const token = (() => { try { return localStorage.getItem('auth_token'); } catch(e) { return null; } })();
+const businessId = (() => { try { return localStorage.getItem('business_id'); } catch(e) { return null; } })();
 if (!token || !businessId) window.location.href = '/auth';
 
 // ── Bloquer les flèches navigateur pendant l'onboarding ──
@@ -1126,7 +1126,10 @@ function validateStep(step) {
     if (sel && sel.value) selectedBizType = sel.value;
     if (!selectedBizType) { showToast('❌ Choisissez votre type de commerce','error'); return false; }
     if (!document.getElementById('bizName').value.trim()) { showToast('❌ Entrez le nom de votre commerce','error'); return false; }
-    if (!document.getElementById('bizSlug').value.trim()) { showToast('❌ Entrez votre lien public','error'); return false; }
+    const slugVal = document.getElementById('bizSlug').value.trim();
+    if (!slugVal) { showToast('❌ Entrez votre lien public','error'); return false; }
+    if (slugVal.length < 3) { showToast('❌ Le lien doit faire au moins 3 caractères','error'); return false; }
+    if (!/^[a-z0-9-]+$/.test(slugVal)) { showToast('❌ Le lien ne peut contenir que des lettres minuscules, chiffres et tirets','error'); return false; }
   }
   if (step === 3 && !selectedRdvOption) { showToast('❌ Choisissez une option de prise de RDV','error'); return false; }
   return true;

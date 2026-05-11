@@ -456,14 +456,32 @@ async function loadQuestions() {
   }
 }
 
+const PAGE_SIZE = 15;
+let currentPage = {};
+
 function renderTab(tab) {
+  currentPage[tab] = currentPage[tab] || 1;
   const list = allQuestions[tab] || [];
   const el = document.getElementById('questionsList');
-  el.innerHTML = list.length ? list.map(q => renderQuestion(q, tab)).join('') : renderEmpty(tab);
+  if (!list.length) { el.innerHTML = renderEmpty(tab); return; }
+  const visible = list.slice(0, currentPage[tab] * PAGE_SIZE);
+  const hasMore = visible.length < list.length;
+  el.innerHTML = visible.map(q => renderQuestion(q, tab)).join('') +
+    (hasMore ? `<div style="text-align:center;padding:20px;">
+      <button onclick="loadMoreTab('${tab}')" style="padding:10px 24px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;">
+        Charger plus (${list.length - visible.length} restants)
+      </button>
+    </div>` : '');
+}
+
+function loadMoreTab(tab) {
+  currentPage[tab] = (currentPage[tab] || 1) + 1;
+  renderTab(tab);
 }
 
 function switchTab(tab) {
   currentTab = tab;
+  currentPage[tab] = 1;
   ['pending','answered','ignored'].forEach(t => {
     const btn = document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
     if (!btn) return;
