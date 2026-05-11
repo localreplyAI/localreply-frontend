@@ -113,14 +113,14 @@
         <div class="scard-bg">💬</div>
         <div class="scard-label">Conversations</div>
         <div class="scard-val" id="statConversations" style="color:#00D4FF;">—</div>
-        <div class="scard-sub">7 derniers jours</div>
+        <div class="scard-sub">30 derniers jours</div>
       </div>
       <!-- RDV confirmés -->
       <div class="scard" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
         <div class="scard-bg">📅</div>
         <div class="scard-label">RDV confirmés</div>
         <div class="scard-val" id="statAppointments" style="color:#10B981;">—</div>
-        <div class="scard-sub">7 derniers jours</div>
+        <div class="scard-sub">30 derniers jours</div>
       </div>
       <!-- En attente -->
       <div class="scard" style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
@@ -217,7 +217,7 @@
             <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">⬇️ PNG</button>
             <div style="position:relative;">
               <button onclick="togglePrintMenu()" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">🖨️ Print ▾</button>
-              <div id="printMenu" style="display:none;position:absolute;bottom:calc(100% + 6px);right:0;background:#0D1B2E;border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:6px;min-width:180px;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+              <div id="printMenu" style="display:none;position:fixed;background:#0D1B2E;border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:6px;min-width:180px;z-index:9999;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
                 <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:4px 8px 6px;">Langue de la feuille</div>
                 <button onclick="printQR('fr')" style="width:100%;padding:8px 10px;background:none;border:none;color:rgba(255,255,255,0.8);font-size:12.5px;cursor:pointer;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,212,255,0.08)'" onmouseout="this.style.background='none'">🇫🇷 Français</button>
                 <button onclick="printQR('en')" style="width:100%;padding:8px 10px;background:none;border:none;color:rgba(255,255,255,0.8);font-size:12.5px;cursor:pointer;text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='rgba(0,212,255,0.08)'" onmouseout="this.style.background='none'">🇬🇧 English</button>
@@ -238,7 +238,7 @@
     <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:20px;">
       <!-- Activité récente -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 7 derniers jours</span></h2><a href="/dashboard-messages" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;">Voir tout →</a></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 30 derniers jours</span></h2><a href="/dashboard-messages" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;">Voir tout →</a></div>
         <div id="recentActivity"><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;"></div></div>
       </div>
 
@@ -521,15 +521,29 @@ function downloadQRPng() {
 }
 function togglePrintMenu() {
   const m = document.getElementById('printMenu');
-  m.style.display = m.style.display === 'none' ? 'block' : 'none';
-  // Fermer si clic dehors
-  if (m.style.display === 'block') {
-    setTimeout(() => {
-      document.addEventListener('click', function closePM(e) {
-        if (!m.contains(e.target)) { m.style.display='none'; document.removeEventListener('click',closePM); }
-      });
-    }, 10);
+  const btn = document.querySelector('[onclick="togglePrintMenu()"]');
+  if (m.style.display !== 'none') {
+    m.style.display = 'none';
+    return;
   }
+  // Positionner près du bouton
+  if (btn) {
+    const rect = btn.getBoundingClientRect();
+    m.style.top = (rect.bottom + 6) + 'px';
+    m.style.right = (window.innerWidth - rect.right) + 'px';
+    m.style.left = 'auto';
+  }
+  m.style.display = 'block';
+  // Fermer si clic dehors — delay pour éviter fermeture immédiate
+  setTimeout(() => {
+    function closePM(e) {
+      if (!m.contains(e.target)) {
+        m.style.display = 'none';
+        document.removeEventListener('click', closePM);
+      }
+    }
+    document.addEventListener('click', closePM);
+  }, 150);
 }
 
 function printQR(lang) {
@@ -954,6 +968,15 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   const hasConfig   = hasServices && hasHours && hasFaq;
   const servicesCount = config?.services?.length || 0;
   const faqCount      = config?.faq?.length || 0;
+  const tips = [
+    'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
+    'Partagez votre QR code sur vos réseaux sociaux pour augmenter votre visibilité.',
+    'Répondez aux questions sans réponse dans Messages — elles enrichissent votre FAQ automatiquement.',
+    'Connectez Google Calendar pour activer la prise de RDV automatique.',
+    'Ajoutez votre lien LocalReply dans votre bio Instagram pour générer du trafic en continu.',
+  ];
+  const tipEl = document.getElementById('tipText');
+  if (tipEl) tipEl.textContent = tips[new Date().getDay() % tips.length];
   if(!el) return;
   el.innerHTML = [
     sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} service${servicesCount>1?'s':''} configuré${servicesCount>1?'s':''}` : 'À configurer dans Configuration', hasServices?'#10B981':'#F59E0B'),
@@ -963,14 +986,6 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
     sRow(true,        'Assistant IA 24/7',   'Actif · 8 langues', '#10B981'),
     sRow(true,        'Abonnement',           isPro ? (isTrial ? 'Essai Pro gratuit 🎁' : 'Pro ⭐') : 'Standard 📦', isPro ? '#F59E0B' : '#00D4FF'),
   ].join('');
-  const tips = [
-    'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
-    'Partagez votre QR code sur vos réseaux sociaux pour augmenter votre visibilité.',
-    'Répondez aux questions sans réponse dans Messages — elles enrichissent votre FAQ automatiquement.',
-    'Connectez Google Calendar pour activer la prise de RDV automatique.',
-    'Ajoutez votre lien LocalReply dans votre bio Instagram pour générer du trafic en continu.',
-  ];
-  document.getElementById('tipText').textContent = tips[new Date().getDay() % tips.length];
 }
 function sRow(ok, lbl, val, color) {
   return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);"><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:14px;">${ok?'✅':'⚠️'}</span><span style="font-size:13px;color:rgba(255,255,255,0.8);">${lbl}</span></div><div style="font-size:12px;font-weight:700;color:${color};">${val}</div></div>`;
@@ -1143,8 +1158,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const apts = Array.isArray(aptData) ? aptData : [];
   const reqs = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
 
-  // Filtre 7 jours
-  const now = new Date(), ws = new Date(now); ws.setDate(ws.getDate()-7); ws.setHours(0,0,0,0);
+  // Filtre 30 jours
+  const now = new Date(), ws = new Date(now); ws.setDate(ws.getDate()-30); ws.setHours(0,0,0,0);
   const wC = convs.filter(c=>new Date(c.created_at)>=ws);
   const wA = apts.filter(a=>{ const d=new Date(a.start_time||a.requested_datetime||a.created_at); return d>=ws&&a.status==='confirmed'; });
   const pA = apts.filter(a=>a.status==='pending');
