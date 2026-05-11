@@ -155,10 +155,10 @@
             <div id="statLang" style="font-size:20px;font-weight:800;color:#fff;">—</div>
             <div id="statLangSub" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">des conversations</div>
           </div>
-          <div id="urgencyCard" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;cursor:pointer;" onclick="window.location.href='/dashboard-messages'">
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">❓ Sans réponse</div>
-            <div id="statUnanswered" style="font-size:20px;font-weight:800;color:#F59E0B;">—</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Répondre →</div>
+          <div id="urgencyCard" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;cursor:pointer;" onclick="window.location.href='/dashboard-rendez-vous'">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">📅 RDV en attente</div>
+            <div id="statPendingRdv" style="font-size:20px;font-weight:800;color:#F59E0B;">—</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">À confirmer →</div>
           </div>
         </div>
 
@@ -902,16 +902,16 @@ function buildNarrative(convs, apts, reqs) {
     }
   }
 
-  // Questions sans réponse
-  const unanswered = reqs ? reqs.length : 0;
-  const unansEl = document.getElementById('statUnanswered');
+  // RDV en attente de confirmation
+  const pendingRdv = apts.filter(a => a.status === 'pending').length;
+  const pendingEl = document.getElementById('statPendingRdv');
   const urgCard = document.getElementById('urgencyCard');
-  if (unansEl) {
-    unansEl.textContent = unanswered;
-    unansEl.style.color = unanswered > 5 ? '#EF4444' : unanswered > 0 ? '#F59E0B' : '#10B981';
+  if (pendingEl) {
+    pendingEl.textContent = pendingRdv;
+    pendingEl.style.color = pendingRdv > 3 ? '#EF4444' : pendingRdv > 0 ? '#F59E0B' : '#10B981';
   }
   if (urgCard) {
-    urgCard.style.borderColor = unanswered > 5 ? 'rgba(239,68,68,0.25)' : unanswered > 0 ? 'rgba(245,158,11,0.2)' : 'rgba(255,255,255,0.08)';
+    urgCard.style.borderColor = pendingRdv > 3 ? 'rgba(239,68,68,0.25)' : pendingRdv > 0 ? 'rgba(245,158,11,0.2)' : 'rgba(16,185,129,0.15)';
   }
 }
 
