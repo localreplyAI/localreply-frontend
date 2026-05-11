@@ -133,13 +133,35 @@
 
     <!-- RÉSUMÉ IA + SCORE SANTÉ -->
     <div style="display:grid;grid-template-columns:1fr 320px;gap:14px;margin-bottom:20px;" id="healthGrid">
-      <!-- Narrative IA -->
-      <div style="background:linear-gradient(135deg,rgba(0,82,204,0.14),rgba(0,212,255,0.06));border:1px solid rgba(0,212,255,0.18);border-radius:16px;padding:22px 24px;display:flex;align-items:start;gap:16px;">
-        <div style="width:44px;height:44px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;box-shadow:0 4px 14px rgba(0,212,255,0.25);">🤖</div>
-        <div style="flex:1;min-width:0;">
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;">Résumé IA — 30 derniers jours</div>
-          <div id="aiNarrative" style="font-size:15px;color:rgba(255,255,255,0.85);line-height:1.65;"><span style="color:rgba(255,255,255,0.3);font-style:italic;font-size:13px;">Chargement...</span></div>
+      <!-- KPIs enrichis (remplace narrative) -->
+      <div style="display:flex;flex-direction:column;gap:10px;">
+
+        <!-- Taux de conversion -->
+        <div style="background:linear-gradient(135deg,rgba(0,82,204,0.12),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.15);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:16px;">
+          <div style="width:42px;height:42px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎯</div>
+          <div style="flex:1;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Taux de conversion</div>
+            <div style="display:flex;align-items:baseline;gap:8px;">
+              <div id="statConvRate" style="font-size:26px;font-weight:800;color:#00D4FF;line-height:1;">—%</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);">des conversations → RDV confirmé</div>
+            </div>
+          </div>
         </div>
+
+        <!-- Langue dominante + questions sans réponse -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">🌍 Langue principale</div>
+            <div id="statLang" style="font-size:20px;font-weight:800;color:#fff;">—</div>
+            <div id="statLangSub" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">des conversations</div>
+          </div>
+          <div id="urgencyCard" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;cursor:pointer;" onclick="window.location.href='/dashboard-messages'">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">❓ Sans réponse</div>
+            <div id="statUnanswered" style="font-size:20px;font-weight:800;color:#F59E0B;">—</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">Répondre →</div>
+          </div>
+        </div>
+
       </div>
       <!-- Score IA + Statut fusionnés -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px;">
@@ -167,9 +189,9 @@
         <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
         <!-- Items statut (anciennement healthItems + systemStatus) -->
         <div style="display:flex;flex-direction:column;gap:6px;" id="healthItems"></div>
-        <!-- Astuce du jour -->
+        <!-- Astuce contextuelle -->
         <div style="padding:10px 13px;background:rgba(0,212,255,0.06);border-radius:10px;border-left:3px solid rgba(0,212,255,0.4);">
-          <div style="font-size:10px;color:#00D4FF;font-weight:700;margin-bottom:4px;">💡 Astuce du jour</div>
+          <div style="font-size:10px;color:#00D4FF;font-weight:700;margin-bottom:4px;">💡 Conseil</div>
           <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.55;" id="tipText">Chargement...</div>
         </div>
       </div>
@@ -849,56 +871,51 @@ function renderAlerts(pendingApts, pendingReqs) {
 
 // ─ Narrative ─
 function buildNarrative(convs, apts, reqs) {
+  // Calcul taux de conversion
   const total = convs.length;
   const confirmed = apts.filter(a=>a.status==='confirmed').length;
-  const pending = apts.filter(a=>a.status==='pending').length;
+  const rate = total > 0 ? Math.round((confirmed/total)*100) : 0;
+
+  // KPI taux de conversion
+  const rateEl = document.getElementById('statConvRate');
+  if (rateEl) {
+    rateEl.textContent = total > 0 ? rate+'%' : '—%';
+    rateEl.style.color = rate >= 30 ? '#10B981' : rate >= 10 ? '#00D4FF' : '#F59E0B';
+  }
+
+  // Langue dominante
+  const langCount = {};
+  convs.forEach(c => { if(c.detected_language) langCount[c.detected_language] = (langCount[c.detected_language]||0)+1; });
+  const langFlags = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'};
+  const langNames = {fr:'Français',en:'Anglais',de:'Allemand',it:'Italien',es:'Espagnol',pt:'Portugais',nl:'Néerlandais',pl:'Polonais'};
+  const topLang = Object.entries(langCount).sort((a,b)=>b[1]-a[1])[0];
+  const langEl = document.getElementById('statLang');
+  const langSubEl = document.getElementById('statLangSub');
+  if (langEl) {
+    if (topLang) {
+      const pct = Math.round((topLang[1]/total)*100);
+      langEl.textContent = (langFlags[topLang[0]]||'🌍') + ' ' + (langNames[topLang[0]]||topLang[0]);
+      if (langSubEl) langSubEl.textContent = pct+'% des conversations';
+    } else {
+      langEl.textContent = '—';
+      if (langSubEl) langSubEl.textContent = 'Pas encore de données';
+    }
+  }
+
+  // Questions sans réponse
   const unanswered = reqs ? reqs.length : 0;
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'Ce matin' : hour < 18 ? 'Cette semaine' : 'Cette semaine';
-
-  // Aucune activité — message motivant et actionnable
-  if (!total && !confirmed && !unanswered) {
-    return `Votre assistant IA est <strong style="color:#10B981;">actif et prêt</strong> 🚀<br>
-    <span style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;">
-      Aucun client ne s'est encore manifesté. Pour démarrer rapidement :<br>
-      • Affichez votre <strong style="color:#00D4FF;">QR code en vitrine</strong> — téléchargeable dans Configuration<br>
-      • Ajoutez votre lien en <strong style="color:#00D4FF;">bio Instagram</strong> avec "Réservez 24h/24 👇"<br>
-      • Répondez aux <strong style="color:#F59E0B;">${unanswered > 0 ? unanswered + ' question(s) en attente' : 'questions sans réponse'}</strong> pour enrichir la FAQ
-    </span>`;
+  const unansEl = document.getElementById('statUnanswered');
+  const urgCard = document.getElementById('urgencyCard');
+  if (unansEl) {
+    unansEl.textContent = unanswered;
+    unansEl.style.color = unanswered > 5 ? '#EF4444' : unanswered > 0 ? '#F59E0B' : '#10B981';
   }
-
-  // Avec activité — résumé structuré
-  let lines = [];
-
-  if (total > 0) {
-    lines.push(`<strong style="color:#00D4FF;">${total} conversation${total>1?'s':''}</strong> gérée${total>1?'s':''} par votre IA cette semaine`);
+  if (urgCard) {
+    urgCard.style.borderColor = unanswered > 5 ? 'rgba(239,68,68,0.25)' : unanswered > 0 ? 'rgba(245,158,11,0.2)' : 'rgba(255,255,255,0.08)';
   }
-  if (confirmed > 0) {
-    lines.push(`<strong style="color:#10B981;">${confirmed} RDV confirmé${confirmed>1?'s':''}</strong>`);
-  }
-  if (pending > 0) {
-    lines.push(`<span style="color:#F59E0B;">${pending} RDV en attente</span> — confirmez depuis l'onglet Rendez-vous`);
-  }
-  if (unanswered > 0) {
-    lines.push(`<span style="color:#F59E0B;">${unanswered} question${unanswered>1?'s':''} sans réponse</span> — répondez pour enrichir votre FAQ`);
-  }
-
-  let msg = lines.map(l => `• ${l}`).join('<br>');
-
-  // Taux de conversion si significatif
-  if (total >= 3 && confirmed > 0) {
-    const rate = Math.round((confirmed/total)*100);
-    msg += `<br><span style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;display:block;">Taux de conversion cette semaine : <strong style="color:#10B981;">${rate}%</strong></span>`;
-  }
-
-  // Conseil contextuel
-  if (!unanswered && total > 0) {
-    msg += `<br><span style="font-size:12px;color:rgba(255,255,255,0.4);">✅ Toutes les questions ont reçu une réponse — votre FAQ est à jour.</span>`;
-  }
-
-  return msg;
 }
-// ─ Activité ─
+
+
 function renderActivity(convs, apts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
@@ -968,15 +985,28 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   const hasConfig   = hasServices && hasHours && hasFaq;
   const servicesCount = config?.services?.length || 0;
   const faqCount      = config?.faq?.length || 0;
-  const tips = [
-    'Personnalisez le ton de votre IA dans Configuration → Avancé pour refléter l\'ambiance de votre commerce.',
-    'Partagez votre QR code sur vos réseaux sociaux pour augmenter votre visibilité.',
-    'Répondez aux questions sans réponse dans Messages — elles enrichissent votre FAQ automatiquement.',
-    'Connectez Google Calendar pour activer la prise de RDV automatique.',
-    'Ajoutez votre lien LocalReply dans votre bio Instagram pour générer du trafic en continu.',
-  ];
+  // Astuce contextuelle
   const tipEl = document.getElementById('tipText');
-  if (tipEl) tipEl.textContent = tips[new Date().getDay() % tips.length];
+  if (tipEl) {
+    if (!hasServices) {
+      tipEl.textContent = '⚙️ Ajoutez vos services et tarifs dans Configuration — l\'IA pourra répondre aux questions de prix.';
+    } else if (!hasHours) {
+      tipEl.textContent = '⏰ Configurez vos horaires d\'ouverture pour que l\'IA indique correctement quand vous êtes disponible.';
+    } else if (!hasFaq) {
+      tipEl.textContent = '📚 Enrichissez votre FAQ — plus elle est complète, plus l\'IA répond avec précision.';
+    } else if (!calConnected && config?.rdv_mode === 'google') {
+      tipEl.textContent = '📅 Reconnectez Google Calendar pour que la prise de RDV automatique fonctionne.';
+    } else {
+      const growthTips = [
+        '📲 Ajoutez votre lien dans votre bio Instagram pour générer du trafic en continu.',
+        '🖨️ Imprimez votre QR code et affichez-le en vitrine — vos clients peuvent vous contacter même fermé.',
+        '💬 Répondez aux questions sans réponse — elles enrichissent votre FAQ automatiquement.',
+        '🌍 Votre assistant répond en 8 langues — mentionnez-le à vos clients étrangers.',
+        '⭐ Demandez à vos clients satisfaits de laisser un avis Google.',
+      ];
+      tipEl.textContent = growthTips[new Date().getDay() % growthTips.length];
+    }
+  }
   if(!el) return;
   el.innerHTML = [
     sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} service${servicesCount>1?'s':''} configuré${servicesCount>1?'s':''}` : 'À configurer dans Configuration', hasServices?'#10B981':'#F59E0B'),
@@ -1173,7 +1203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   setBadge(pA.length,   'sbBadgeRdv', 'bnBadgeRdv');
 
   renderAlerts(pA, reqs);
-  document.getElementById('aiNarrative').innerHTML = buildNarrative(wC, apts, reqs);
+  // aiNarrative supprimé — buildNarrative(wC, apts, reqs);
   renderActivity(wC, apts, reqs);
 
   // Analytics retirés du home — voir /dashboard-analytics
