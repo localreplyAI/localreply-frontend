@@ -1010,14 +1010,16 @@ async function submitEmailCapture() {
 
 async function lrcInit() {
   try {
-    const res = await fetch(`${API}/api/business/${BUSINESS_ID}/config`);
+    // Utiliser le même endpoint que chat-client (slug)
+    const res = await fetch(`${API}/api/business/slug/salon-marie`);
     if (!res.ok) throw new Error();
-    const data = await res.json();
-    const biz = data.business || {};
+    const biz = await res.json();
+    // Fallback si l'endpoint slug ne marche pas, essayer config
+    if (!biz || !biz.name) throw new Error('no name');
 
     // Avatar : logo > initiales > emoji
     const avatarEl = document.getElementById('lrcAvatar');
-    const bizIcon = BIZ_ICONS[biz.business_type] || '💬';
+    const bizIcon = BIZ_ICONS[biz.business_type] || '💇';
     if (biz.logo_url) {
       bizAvatar = `<img src="${biz.logo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" onerror="this.parentElement.textContent='${bizIcon}'">`;
       avatarEl.innerHTML = bizAvatar;
@@ -1031,26 +1033,44 @@ async function lrcInit() {
         avatarEl.textContent = bizIcon;
       }
     }
-    document.getElementById('lrcName').textContent = biz.name || 'Assistant LocalReply';
-
+    document.getElementById('lrcName').textContent = biz.name;
     document.getElementById('lrcLoading').style.display = 'none';
     document.getElementById('lrcMessages').style.display = 'flex';
     document.getElementById('lrcSuggestions').style.display = 'flex';
     document.getElementById('lrcInputArea').style.display = 'flex';
     document.getElementById('lrcFooter').style.display = 'block';
-
-    addMsg(`Bonjour ! 👋 Je suis l'assistant de <strong>${biz.name||'ce commerce'}</strong>.<br>Comment puis-je vous aider ?`, false, true);
+    addMsg(`Bonjour ! 👋 Je suis l'assistant de <strong>${biz.name}</strong>.<br>Comment puis-je vous aider ?`, false, true);
     renderSuggestions('default');
     setTimeout(() => document.getElementById('lrcInput').focus(), 300);
   } catch {
-    document.getElementById('lrcName').textContent = 'Assistant LocalReply';
-    document.getElementById('lrcAvatar').textContent = '💬';
+    // Fallback direct sur /config si slug échoue
+    try {
+      const res2 = await fetch(`${API}/api/business/${BUSINESS_ID}/config`);
+      if (res2.ok) {
+        const data = await res2.json();
+        const biz = data.business || data;
+        const name = biz.name || 'Salon Marie';
+        document.getElementById('lrcName').textContent = name;
+        document.getElementById('lrcAvatar').textContent = BIZ_ICONS[biz.business_type] || '💇';
+        document.getElementById('lrcLoading').style.display = 'none';
+        document.getElementById('lrcMessages').style.display = 'flex';
+        document.getElementById('lrcSuggestions').style.display = 'flex';
+        document.getElementById('lrcInputArea').style.display = 'flex';
+        document.getElementById('lrcFooter').style.display = 'block';
+        addMsg(`Bonjour ! 👋 Je suis l'assistant de <strong>${name}</strong>.<br>Comment puis-je vous aider ?`, false, true);
+        renderSuggestions('default');
+        return;
+      }
+    } catch {}
+    // Fallback final hardcodé
+    document.getElementById('lrcName').textContent = 'Salon Marie';
+    document.getElementById('lrcAvatar').textContent = '💇';
     document.getElementById('lrcLoading').style.display = 'none';
     document.getElementById('lrcMessages').style.display = 'flex';
     document.getElementById('lrcSuggestions').style.display = 'flex';
     document.getElementById('lrcInputArea').style.display = 'flex';
     document.getElementById('lrcFooter').style.display = 'block';
-    addMsg("Bonjour ! 👋 Je suis votre assistant IA LocalReply. Comment puis-je vous aider ?");
+    addMsg("Bonjour ! 👋 Je suis l'assistant de <strong>Salon Marie</strong>.<br>Comment puis-je vous aider ?", false, true);
     renderSuggestions('default');
   }
 }
