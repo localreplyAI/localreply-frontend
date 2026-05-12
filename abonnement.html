@@ -268,7 +268,7 @@ function showToast(msg,type='success'){
 async function loadSidebarInfo() {
   try {
     const [config,sub]=await Promise.all([
-      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>apiRequest(`/api/business/${businessId}/config`)),
+      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>null),
       userId ? apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null) : Promise.resolve(null)
     ]);
     const biz=config?.business || config || {};

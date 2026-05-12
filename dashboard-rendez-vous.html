@@ -378,9 +378,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
 async function loadSidebarInfo() {
   try {
     const [config, sub] = await Promise.all([
-      apiRequest(`/api/business/${businessId}/config/full`).catch(() => 
-        apiRequest(`/api/business/${businessId}/config`).catch(() => null)
-      ),
+      apiRequest(`/api/business/${businessId}/config/full`).catch(() => null),
       apiRequest(`/api/billing/subscription/${userId}`).catch(() => null)
     ]);
 

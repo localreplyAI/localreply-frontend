@@ -588,7 +588,7 @@ async function ignoreQuestion() {
 async function loadSidebarInfo() {
   try {
     const [config, sub] = await Promise.all([
-      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>apiRequest(`/api/business/${businessId}/config`)),
+      apiRequest(`/api/business/${businessId}/config/full`).catch(()=>null),
       apiRequest(`/api/billing/subscription/${userId}`).catch(()=>null)
     ]);
     const biz = config.business || {};

@@ -1177,30 +1177,60 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderOnboarding(configData, calConnected);
   loadSystemStatus(configData, calConnected, effectivePro, isTrial);
 
-  // Métriques + analytics en parallèle
-  const [convData, aptData, reqData] = await Promise.all([
-    api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
-    api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
-    api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
-  ]);
+  // ── Tentative endpoint dashboard-data (1 appel au lieu de 3) ──
+  let dashData = null;
+  try {
+    dashData = await api(`/api/business/${businessId}/dashboard-data`);
+  } catch(e) { /* fallback ci-dessous */ }
 
-  const convs = convData.conversations || [];
-  const apts = Array.isArray(aptData) ? aptData : [];
-  const reqs = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
+  let convs = [], apts = [], reqs = [];
 
-  // Filtre 30 jours
-  const now = new Date(), ws = new Date(now); ws.setDate(ws.getDate()-30); ws.setHours(0,0,0,0);
-  const wC = convs.filter(c=>new Date(c.created_at)>=ws);
-  const wA = apts.filter(a=>{ const d=new Date(a.start_time||a.requested_datetime||a.created_at); return d>=ws&&a.status==='confirmed'; });
+  if (dashData) {
+    // Afficher les counts immédiatement depuis dashboard-data
+    const counts = dashData.counts || {};
+    document.getElementById('statConversations').textContent = counts.conversations_30d ?? '—';
+    document.getElementById('statAppointments').textContent  = counts.appointments_confirmed_30d ?? '—';
+    document.getElementById('statPending').textContent       = (counts.appointments_pending ?? 0) + (counts.questions_pending ?? 0);
+    setBadge(counts.questions_pending || 0, 'sbBadgeMsg', 'bnBadgeMsg');
+    setBadge(counts.appointments_pending || 0, 'sbBadgeRdv', 'bnBadgeRdv');
+
+    // Charger les listes complètes en arrière-plan pour narrative + activité
+    const [convData, aptData, reqData] = await Promise.all([
+      api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
+      api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
+      api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
+    ]);
+    convs = convData.conversations || [];
+    apts  = Array.isArray(aptData) ? aptData : [];
+    reqs  = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
+  } else {
+    // Fallback — ancien comportement
+    const [convData, aptData, reqData] = await Promise.all([
+      api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
+      api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
+      api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
+    ]);
+    convs = convData.conversations || [];
+    apts  = Array.isArray(aptData) ? aptData : [];
+    reqs  = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
+
+    // Filtre 30 jours
+    const now = new Date(), ws = new Date(now); ws.setDate(ws.getDate()-30); ws.setHours(0,0,0,0);
+    const wC = convs.filter(c=>new Date(c.created_at)>=ws);
+    const wA = apts.filter(a=>{ const d=new Date(a.start_time||a.requested_datetime||a.created_at); return d>=ws&&a.status==='confirmed'; });
+    const pA = apts.filter(a=>a.status==='pending');
+    document.getElementById('statConversations').textContent = wC.length;
+    document.getElementById('statAppointments').textContent  = wA.length;
+    document.getElementById('statPending').textContent       = pA.length + reqs.length;
+    setBadge(reqs.length, 'sbBadgeMsg', 'bnBadgeMsg');
+    setBadge(pA.length,   'sbBadgeRdv', 'bnBadgeRdv');
+  }
+
+  // Filtre 30j pour les vues
+  const now2 = new Date(), ws2 = new Date(now2); ws2.setDate(ws2.getDate()-30); ws2.setHours(0,0,0,0);
+  const wC = convs.filter(c=>new Date(c.created_at)>=ws2);
+  const wA = apts.filter(a=>{ const d=new Date(a.start_time||a.requested_datetime||a.created_at); return d>=ws2&&a.status==='confirmed'; });
   const pA = apts.filter(a=>a.status==='pending');
-
-  document.getElementById('statConversations').textContent = wC.length;
-  document.getElementById('statAppointments').textContent  = wA.length;
-  document.getElementById('statPending').textContent       = pA.length + reqs.length;
-
-  // Badges navigation
-  setBadge(reqs.length, 'sbBadgeMsg', 'bnBadgeMsg');
-  setBadge(pA.length,   'sbBadgeRdv', 'bnBadgeRdv');
 
   renderAlerts(pA, reqs);
   buildNarrative(wC, apts, reqs);

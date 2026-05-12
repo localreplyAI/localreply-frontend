@@ -647,7 +647,6 @@ async function loadNotificationPrefs() {
 
   // Email contact preview
   try {
-    const config = await apiRequest('/api/business/'+businessId+'/config');
     const ce = config?.business?.email||'';
     const el = document.getElementById('contactEmailPreview');
     if (el) el.textContent = ce||'Non défini dans Configuration';
