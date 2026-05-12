@@ -19,17 +19,17 @@
 
 <style>
 /* Fix pricing sections claires */
-.lrp-light { background: #f0f4fb !important; }
+.lrp-light { background: #060D1A !important; }
 .lrp-sec-label { color: #0052CC !important; }
-.lrp-sec-title { color: #1A2340 !important; }
-.lrp-th { color: #1A2340 !important; font-weight: 700; }
-.lrp-row-label { color: #1A2340 !important; }
-.lrp-row-sub { color: #6B7280 !important; }
-.lrp-faq-q { color: #1A2340 !important; }
-.lrp-faq-ans { color: #6B7280 !important; }
-.lrp-feature-label { color: #1A2340 !important; }
-.lrp-table { background: #fff !important; }
-.lrp-thead { background: #f9fafb !important; }
+.lrp-sec-title { color: #fff !important; }
+.lrp-th { color: rgba(255,255,255,0.5) !important; font-weight: 700; }
+.lrp-row-label { color: rgba(255,255,255,0.85) !important; }
+.lrp-row-sub { color: rgba(255,255,255,0.4) !important; }
+.lrp-faq-q { color: rgba(255,255,255,0.9) !important; }
+.lrp-faq-ans { color: rgba(255,255,255,0.65); }
+.lrp-feature-label { color: rgba(255,255,255,0.85) !important; }
+.lrp-table { background: rgba(255,255,255,0.03) !important; }
+.lrp-thead { background: rgba(255,255,255,0.06) !important; }
 </style>
 
 </head>
@@ -288,7 +288,7 @@
 
 /* ── ZONE LIGHT ── */
 .lrp-light {
-  background: #f0f4fb;
+  background: #060D1A;
   padding: 0 24px 72px;
 }
 
@@ -299,7 +299,7 @@
 }
 .lrp-sec-title {
   font-size: clamp(24px, 3.5vw, 36px);
-  font-weight: 700; color: #111827;
+  font-weight: 700; color: #fff;
   text-align: center; margin-bottom: 36px;
   line-height: 1.2; letter-spacing: -0.5px;
 }
@@ -307,54 +307,54 @@
 /* Comparatif */
 .lrp-table-wrap { max-width: 860px; margin: 0 auto; }
 .lrp-table {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,82,204,0.07);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .lrp-thead {
   display: grid; grid-template-columns: 1fr 110px 110px;
-  background: #f9fafb; border-bottom: 1px solid #e5e7eb;
+  background: rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.08);
   padding: 0 20px;
 }
 .lrp-th {
   padding: 16px 10px; font-size: 12px; font-weight: 700;
-  text-align: center; color: #6b7280; letter-spacing: 0.3px;
+  text-align: center; color: rgba(255,255,255,0.4); letter-spacing: 0.3px;
 }
 .lrp-th:first-child { text-align: left; }
-.lrp-th.pro { color: var(--blue); }
+.lrp-th.pro { color: var(--cyan); }
 .lrp-group {
   padding: 10px 20px 4px; font-size: 11px; font-weight: 700;
-  color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px;
-  background: #fafafa; border-top: 1px solid #f3f4f6;
+  color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.8px;
+  background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.06);
 }
 .lrp-row {
   display: grid; grid-template-columns: 1fr 110px 110px;
-  padding: 0 20px; border-bottom: 1px solid #f3f4f6;
+  padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
   transition: background 0.15s;
 }
 .lrp-row:last-child { border-bottom: none; }
-.lrp-row:hover { background: #f9fafb; }
+.lrp-row:hover { background: rgba(0,212,255,0.04); }
 .lrp-cell {
-  padding: 12px 10px; font-size: 13.5px; color: #374151;
+  padding: 12px 10px; font-size: 13.5px; color: rgba(255,255,255,0.75);
   display: flex; align-items: center;
 }
 .lrp-cell:not(:first-child) { justify-content: center; }
 .cy  { color: var(--green); font-size: 16px; }
-.cyp { color: var(--blue); font-size: 16px; }
-.cn  { color: #d1d5db; font-size: 16px; }
-.cv  { font-weight: 600; color: #374151; font-size: 13px; }
+.cyp { color: var(--cyan); font-size: 16px; }
+.cn  { color: rgba(255,255,255,0.15); font-size: 16px; }
+.cv  { font-weight: 600; color: rgba(255,255,255,0.75); font-size: 13px; }
 .cvp { font-weight: 700; color: var(--blue); font-size: 13px; }
 
 /* FAQ */
 .lrp-faq-wrap { max-width: 680px; margin: 0 auto; padding-top: 60px; }
-.lrp-faq-item { border-bottom: 1px solid #e5e7eb; }
+.lrp-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
 .lrp-faq-btn {
   width: 100%; display: flex; justify-content: space-between;
   align-items: center; padding: 17px 0;
   background: none; border: none; cursor: pointer; text-align: left; gap: 14px;
 }
-.lrp-faq-q { font-size: 15px; font-weight: 600; color: #111827; line-height: 1.4; }
+.lrp-faq-q { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.4; }
 .lrp-faq-ico {
   width: 26px; height: 26px; border-radius: 50%;
   background: rgba(0,82,204,0.08); border: 1px solid rgba(0,82,204,0.15);
@@ -365,7 +365,7 @@
 .lrp-faq-btn.open .lrp-faq-ico { transform: rotate(45deg); background: rgba(0,82,204,0.12); }
 .lrp-faq-ans {
   display: none; padding-bottom: 16px;
-  font-size: 14px; color: #6b7280; line-height: 1.7;
+  font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.7;
 }
 .lrp-faq-ans.open { display: block; animation: lrpUp 0.2s ease both; }
 
@@ -418,7 +418,7 @@
   display: flex; align-items: center; justify-content: center;
   gap: 24px; flex-wrap: wrap; padding: 28px 24px 0;
 }
-.lrp-trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: #9ca3af; }
+.lrp-trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: rgba(255,255,255,0.45); }
 
 @media (max-width: 640px) {
   .lrp-h1 { font-size: 28px; letter-spacing: -0.5px; }
@@ -544,7 +544,7 @@
       <div class="lrp-table">
         <div class="lrp-thead">
           <div class="lrp-th">Fonctionnalité</div>
-          <div class="lrp-th">Standard<br><span style="font-weight:400;font-size:11px;color:#9ca3af;">39€/mois</span></div>
+          <div class="lrp-th">Standard<br><span style="font-weight:400;font-size:11px;color:rgba(255,255,255,0.4);">39€/mois</span></div>
           <div class="lrp-th pro">Pro<br><span style="font-weight:400;font-size:11px;color:rgba(0,82,204,0.6);">49€/mois</span></div>
         </div>
         <div class="lrp-group">Assistant IA</div>
