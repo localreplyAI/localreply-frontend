@@ -378,9 +378,9 @@
   transition: all 0.2s;
 }
 .lrc-input-wrap:focus-within {
-  border-color: var(--blue-mid);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(0,82,204,0.07), 0 2px 8px rgba(0,82,204,0.08);
+  border-color: rgba(0,212,255,0.5);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
 }
 .lrc-input {
   flex: 1;
@@ -389,11 +389,11 @@
   padding: 13px 0;
   font-size: 14px;
   font-family: var(--font);
-  color: var(--text);
+  color: rgba(255,255,255,0.9);
   outline: none;
   font-weight: 400;
 }
-.lrc-input::placeholder { color: var(--text-3); font-weight: 400; }
+.lrc-input::placeholder { color: rgba(255,255,255,0.35); font-weight: 400; }
 .lrc-send-btn {
   width: 44px; height: 44px;
   border-radius: 50%;
@@ -882,8 +882,8 @@ async function lrcSendText(text) {
 let currentEscalationQuestionId = null;
 
 async function openRdvForm(prefill={}) {
-  if (!window._bizServices && businessId) {
-    await loadBizServices(businessId);
+  if (!window._bizServices && BUSINESS_ID) {
+    await loadBizServices(BUSINESS_ID);
   }
   const wrap = document.getElementById('lrcRdvForm');
   const input = document.getElementById('lrcInputArea');
@@ -997,7 +997,7 @@ async function submitEmailCapture() {
   }
   try {
     if (currentEscalationQuestionId) {
-      await fetch(`${API}/api/business/${businessId}/unknown-questions/${currentEscalationQuestionId}/set-client-email`, {
+      await fetch(`${API}/api/business/${BUSINESS_ID}/unknown-questions/${currentEscalationQuestionId}/set-client-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ client_email: email })

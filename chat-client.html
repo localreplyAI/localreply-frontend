@@ -377,9 +377,9 @@
   transition: all 0.2s;
 }
 .lrc-input-wrap:focus-within {
-  border-color: var(--blue-mid);
-  background: #fff;
-  box-shadow: 0 0 0 4px rgba(0,82,204,0.07), 0 2px 8px rgba(0,82,204,0.08);
+  border-color: rgba(0,212,255,0.5);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
 }
 .lrc-input {
   flex: 1;
@@ -388,11 +388,11 @@
   padding: 13px 0;
   font-size: 14px;
   font-family: var(--font);
-  color: var(--text);
+  color: rgba(255,255,255,0.9);
   outline: none;
   font-weight: 400;
 }
-.lrc-input::placeholder { color: var(--text-3); font-weight: 400; }
+.lrc-input::placeholder { color: rgba(255,255,255,0.35); font-weight: 400; }
 .lrc-send-btn {
   width: 44px; height: 44px;
   border-radius: 50%;
