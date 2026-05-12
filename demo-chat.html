@@ -21,13 +21,13 @@
   --blue-mid: #0066FF;
   --cyan: #00D4FF;
   --blue-light: #EEF4FF;
-  --surface: #ffffff;
-  --surface-2: #F8FAFF;
+  --surface: #0D1B2E;
+  --surface-2: #0A1525;
   --surface-3: #EEF4FF;
-  --border: #E2EAF8;
-  --border-2: #C8D8F5;
-  --text: #0F1C38;
-  --text-2: #3D4F73;
+  --border: rgba(255,255,255,0.08);
+  --border-2: rgba(0,212,255,0.2);
+  --text: rgba(255,255,255,0.9);
+  --text-2: rgba(255,255,255,0.55);
   --text-3: #8896B3;
   --shadow-sm: 0 1px 4px rgba(0,50,150,0.06);
   --shadow-md: 0 4px 20px rgba(0,50,150,0.08), 0 1px 4px rgba(0,0,0,0.04);
@@ -85,9 +85,13 @@
   width: 100%;
   max-width: 420px;
   height: min(700px, calc(100dvh - 48px));
-  background: rgba(245,248,255,0.98);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: #0A1628;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,82,204,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(0,180,220,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(0,212,255,0.07) 0%, transparent 50%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-radius: var(--radius);
   box-shadow: 
     0 32px 80px rgba(0,10,40,0.5),
@@ -192,11 +196,9 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  background: var(--surface-2);
+  background: transparent;
   scroll-behavior: smooth;
-  background-image: 
-    radial-gradient(ellipse 60% 40% at 10% 20%, rgba(0,82,204,0.03) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 90% 80%, rgba(0,212,255,0.03) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(0,82,204,0.3) 0%, transparent 70%);
 }
 .lrc-messages::-webkit-scrollbar { width: 3px; }
 .lrc-messages::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
@@ -255,14 +257,11 @@
   position: relative;
 }
 .lrc-bubble.ai {
-  background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
-  color: var(--text);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.9);
   border-radius: 4px var(--radius-msg) var(--radius-msg) var(--radius-msg);
-  box-shadow: 
-    0 1px 3px rgba(0,30,100,0.07),
-    0 6px 20px rgba(0,30,100,0.08),
-    inset 0 1px 0 rgba(255,255,255,1);
-  border: 1px solid rgba(0,82,204,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 .lrc-bubble.user {
   background: linear-gradient(135deg, #0052CC 0%, #0077EE 100%);
@@ -287,12 +286,12 @@
   margin-bottom: 10px;
 }
 .lrc-typing-bubble {
-  background: linear-gradient(135deg, #ffffff 0%, #f5f8ff 100%);
-  border: 1px solid rgba(0,82,204,0.1);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 4px var(--radius-msg) var(--radius-msg) var(--radius-msg);
   padding: 12px 18px;
   display: flex; gap: 5px; align-items: center;
-  box-shadow: 0 2px 10px rgba(0,30,100,0.08);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 .lrc-typing-dot {
   width: 6px; height: 6px;
@@ -314,37 +313,36 @@
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  background: linear-gradient(180deg, #f0f5ff 0%, #f5f8ff 100%);
-  border-top: 1px solid rgba(0,82,204,0.08);
+  background: rgba(10,22,40,0.75);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  backdrop-filter: blur(12px);
   flex-shrink: 0;
   align-items: center;
 }
 .lrc-sug {
   padding: 7px 16px;
-  background: rgba(255,255,255,0.85);
-  border: 1.5px solid rgba(0,82,204,0.12);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 100px;
   font-size: 12.5px; font-weight: 500;
-  color: #1a3060;
+  color: rgba(255,255,255,0.85);
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.16,1,0.3,1);
   white-space: nowrap;
   animation: lrcSugIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
   font-family: var(--font);
   letter-spacing: -0.1px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 1px 4px rgba(0,30,100,0.06);
 }
 @keyframes lrcSugIn { 
   from { opacity:0; transform: translateY(6px) scale(0.94); }
   to   { opacity:1; transform: none; }
 }
 .lrc-sug:hover {
-  background: linear-gradient(135deg, rgba(0,82,204,0.08), rgba(0,153,221,0.06));
-  border-color: rgba(0,82,204,0.3);
-  color: var(--blue);
+  background: rgba(0,212,255,0.15);
+  border-color: rgba(0,212,255,0.4);
+  color: #00D4FF;
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0,82,204,0.12);
+  box-shadow: 0 4px 16px rgba(0,212,255,0.1);
 }
 .lrc-sug.primary {
   background: linear-gradient(135deg, #0052CC, #0099DD);
@@ -362,8 +360,8 @@
 /* ── INPUT ── */
 .lrc-input-area {
   padding: 12px 14px;
-  background: #ffffff;
-  border-top: 1px solid var(--border);
+  background: rgba(10,22,40,0.8);
+  border-top: 1px solid rgba(255,255,255,0.07);
   display: flex;
   gap: 10px;
   align-items: center;
@@ -422,7 +420,7 @@
   font-size: 11px;
   color: var(--text-3);
   border-top: 1px solid var(--border);
-  background: #ffffff;
+  background: rgba(10,22,40,0.8);
   flex-shrink: 0;
   letter-spacing: 0.1px;
 }
@@ -489,8 +487,8 @@
 /* ── FORMULAIRE RDV ── */
 .lrc-rdv-form {
   padding: 16px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
+  background: rgba(10,22,40,0.8);
+  border-top: 1px solid rgba(255,255,255,0.07);
   flex-shrink: 0;
   animation: lrcMsgIn 0.3s ease both;
 }
