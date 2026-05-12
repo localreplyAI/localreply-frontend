@@ -53,16 +53,9 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 }
 
 /* 5. Tables → fond blanc */
-[class*="-table"] {
-  background: #ffffff !important;
-}
-[class*="-table"] th {
-  background: #F5F7FA !important;
-  color: #fff !important;
-}
-[class*="-table"] td {
-  color: rgba(255,255,255,0.55) !important;
-}
+
+
+
 
 /* 6. Pricing plans */
 [class*="-plan"]:not([class*="featured"]):not([class*="pro"]) {
@@ -155,7 +148,7 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 .lrt-section { margin-bottom: 52px; scroll-margin-top: 24px; }
 .lrt-section h2 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); display: flex; align-items: center; gap: 10px; }
 .lrt-section h3 { font-size: 16px; font-weight: 700; color: #fff; margin: 20px 0 10px; }
-.lrt-section p { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.8; margin-bottom: 14px; }
+.lrt-section p { font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.8; margin-bottom: 14px; }
 .lrt-section p:last-child { margin-bottom: 0; }
 .lrt-section ul, .lrt-section ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
 .lrt-section ul li, .lrt-section ol li { font-size: 15px; color: rgba(255,255,255,0.55); line-height: 1.7; }
@@ -164,10 +157,12 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
 .lrt-alert p { font-size: 14px; color: #fff; margin: 0; line-height: 1.6; }
 .lrt-info { background: rgba(0,82,204,0.05); border: 1px solid rgba(0,82,204,0.2); border-left: 4px solid var(--blue); border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
 .lrt-info p { font-size: 14px; color: #fff; margin: 0; line-height: 1.6; }
-.lrt-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-.lrt-table th { background: rgba(255,255,255,0.04); padding: 12px 16px; text-align: left; font-weight: 700; color: #fff; border: 1px solid rgba(255,255,255,0.08); font-size: 13px; }
-.lrt-table td { padding: 12px 16px; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.55); vertical-align: top; line-height: 1.6; }
-.lrt-table tr:nth-child(even) td { background: rgba(255,255,255,0.04); }
+.lrt-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; background: transparent !important; }
+.lrt-table th { background: rgba(0,82,204,0.15) !important; padding: 12px 16px; text-align: left; font-weight: 700; color: #00D4FF !important; border: 1px solid rgba(0,212,255,0.2) !important; font-size: 13px; }
+.lrt-table td { padding: 12px 16px; border: 1px solid rgba(255,255,255,0.08) !important; color: rgba(255,255,255,0.82) !important; background: transparent !important; vertical-align: top; line-height: 1.6; }
+.lrt-table tr { background: transparent !important; }
+.lrt-table tr:nth-child(even) td { background: rgba(255,255,255,0.04) !important; }
+.lrt-table tr:hover td { background: rgba(0,212,255,0.05) !important; }
 .lrt-contact { background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 40px; text-align: center; margin-top: 56px; }
 .lrt-contact h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 10px; }
 .lrt-contact p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
@@ -273,8 +268,10 @@ section:not([class*="hero"]):not([class*="dark"]):not([class*="cta"]):not([class
       <h3>5.1 Plans disponibles</h3>
       <table class="lrt-table">
         <tr><th>Plan</th><th>Prix</th><th>Facturation</th></tr>
-        <tr><td>Standard</td><td>39 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
-        <tr><td>Pro</td><td>49 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
+        <tr><td>Standard (mensuel)</td><td>39 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
+        <tr><td>Standard (annuel)</td><td>31 €/mois — 374 €/an</td><td>Annuelle, prélèvement automatique</td></tr>
+        <tr><td>Pro (mensuel)</td><td>49 €/mois</td><td>Mensuelle, prélèvement automatique</td></tr>
+        <tr><td>Pro (annuel)</td><td>39 €/mois — 470 €/an</td><td>Annuelle, prélèvement automatique</td></tr>
         <tr><td>Essai gratuit</td><td>0 € (14 jours)</td><td>Sans prélèvement pendant l'essai</td></tr>
       </table>
       <h3>5.2 Facturation</h3>
