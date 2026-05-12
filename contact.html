@@ -6,9 +6,12 @@
   <title>Contact — LocalReply</title>
   <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #ffffff; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; overflow-x: hidden; }
+    body { background: #060D1A; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   </style>
 
 
@@ -31,43 +34,43 @@
   --border: rgba(0,82,204,0.12);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-.lrc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; color: #1A2340;  background: #ffffff; min-height: 100vh;}
+.lrc { font-family: 'DM Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: #fff; background: #060D1A; min-height: 100vh;}
 
-.lrc-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 90px 20px 70px; text-align: center; }
+.lrc-hero { background: linear-gradient(135deg, #060D1A 0%, #0A1628 30%, #0052CC 70%, #0099DD 100%); padding: 90px 20px 70px; text-align: center; }
 .lrc-hero-badge { display: inline-block; padding: 8px 20px; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.35); border-radius: 30px; font-size: 14px; font-weight: 600; color: #00D4FF; margin-bottom: 24px; }
-.lrc-hero h1 { font-size: clamp(30px, 4vw, 48px); font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -1px; }
+.lrc-hero h1 { font-family: "Syne", sans-serif; font-size: clamp(30px, 4vw, 48px); font-weight: 800; color: #fff; margin-bottom: 14px; letter-spacing: -1px; }
 .lrc-hero p { font-size: 17px; color: rgba(255,255,255,0.65); max-width: 500px; margin: 0 auto; line-height: 1.7; }
 
-.lrc-body { background: #F5F7FA; max-width: 1100px; margin: 0 auto; padding: 72px 20px 100px; }
+.lrc-body { background: #060D1A; max-width: 1100px; margin: 0 auto; padding: 72px 20px 100px; }
 
 /* CANAUX DE CONTACT */
 .lrc-channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
-.lrc-channel { background: #ffffff; background: #fff; border-radius: 20px; padding: 36px 28px; border: 1px solid var(--border); text-align: center; transition: all 0.25s; }
-.lrc-channel:hover { background: #ffffff; transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,82,204,0.1); border-color: rgba(0,82,204,0.2); }
-.lrc-channel-icon { background: #ffffff; width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 20px; }
-.lrc-channel-icon-blue { background: #ffffff; background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1)); }
-.lrc-channel-icon-green { background: #ffffff; background: rgba(16,185,129,0.1); }
-.lrc-channel-icon-gold { background: #ffffff; background: rgba(245,158,11,0.1); }
-.lrc-channel h3 { background: #ffffff; font-size: 18px; font-weight: 700; color: #1A2340; margin-bottom: 8px; }
-.lrc-channel p { background: #ffffff; font-size: 14px; color: #6B7280; line-height: 1.65; margin-bottom: 20px; }
-.lrc-channel-badge { background: #ffffff; display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
+.lrc-channel { background: rgba(255,255,255,0.03); background: rgba(255,255,255,0.03); border-radius: 20px; padding: 36px 28px; border: 1px solid rgba(255,255,255,0.08); text-align: center; transition: all 0.25s; }
+.lrc-channel:hover { background: rgba(255,255,255,0.03); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,82,204,0.1); border-color: rgba(0,212,255,0.2); }
+.lrc-channel-icon { background: rgba(255,255,255,0.03); width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 20px; }
+.lrc-channel-icon-blue { background: rgba(255,255,255,0.03); background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1)); }
+.lrc-channel-icon-green { background: rgba(255,255,255,0.03); background: rgba(16,185,129,0.1); }
+.lrc-channel-icon-gold { background: rgba(255,255,255,0.03); background: rgba(245,158,11,0.1); }
+.lrc-channel h3 { font-family: "Syne", sans-serif; background: rgba(255,255,255,0.03); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.lrc-channel p { background: rgba(255,255,255,0.03); font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; margin-bottom: 20px; }
+.lrc-channel-badge { background: rgba(255,255,255,0.03); display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 16px; }
 .lrc-badge-green { background: rgba(16,185,129,0.1); color: var(--green); }
 .lrc-badge-blue { background: rgba(0,82,204,0.08); color: var(--blue); }
 .lrc-badge-gold { background: rgba(245,158,11,0.1); color: #D97706; }
-.lrc-channel a { background: #ffffff; display: inline-block; padding: 11px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
-.lrc-channel-cta-primary { background: #ffffff; background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
-.lrc-channel-cta-secondary { background: #ffffff; background: var(--gray); color: #1A2340; border: 1px solid var(--border); }
+.lrc-channel a { background: rgba(255,255,255,0.03); display: inline-block; padding: 11px 24px; border-radius: 10px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.lrc-channel-cta-primary { background: rgba(255,255,255,0.03); background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+.lrc-channel-cta-secondary { background: rgba(255,255,255,0.03); background: rgba(255,255,255,0.04); color: #fff; border: 1px solid rgba(255,255,255,0.08); }
 
 /* FAQ */
-.lrc-faq-title { font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: #1A2340; margin-bottom: 8px; letter-spacing: -0.5px; }
-.lrc-faq-sub { font-size: 16px; color: #6B7280; margin-bottom: 36px; }
+.lrc-faq-title { font-family: "Syne", sans-serif; font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.5px; }
+.lrc-faq-sub { font-size: 16px; color: rgba(255,255,255,0.55); margin-bottom: 36px; }
 .lrc-faq { display: flex; flex-direction: column; gap: 12px; margin-bottom: 64px; }
-.lrc-faq-item { background: #ffffff; background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
-.lrc-faq-q { width: 100%; padding: 20px 24px; background: none; border: none; text-align: left; font-size: 15px; font-weight: 700; color: #1A2340; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: inherit; transition: background 0.15s; }
-.lrc-faq-q:hover { background: var(--gray); }
+.lrc-faq-item { background: rgba(255,255,255,0.03); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+.lrc-faq-q { width: 100%; padding: 20px 24px; background: none; border: none; text-align: left; font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-family: inherit; transition: background 0.15s; }
+.lrc-faq-q:hover { background: rgba(255,255,255,0.04); }
 .lrc-faq-q .lrc-faq-arrow { font-size: 18px; color: var(--blue); transition: transform 0.25s; flex-shrink: 0; }
 .lrc-faq-q.open .lrc-faq-arrow { transform: rotate(45deg); }
-.lrc-faq-a { font-size: 14px; color: #6B7280; line-height: 1.75; padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+.lrc-faq-a { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.75; padding: 0 24px; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
 .lrc-faq-a.open { max-height: 300px; padding: 0 24px 20px; }
 .lrc-faq-a a { color: var(--blue); }
 
@@ -75,8 +78,8 @@
 .lrc-status { background: linear-gradient(135deg, rgba(16,185,129,0.05), rgba(0,212,255,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 20px; padding: 36px; display: flex; align-items: center; gap: 24px; margin-bottom: 64px; flex-wrap: wrap; }
 .lrc-status-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(16,185,129,0.2); flex-shrink: 0; animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(16,185,129,0.2); } 50% { box-shadow: 0 0 0 8px rgba(16,185,129,0.1); } }
-.lrc-status-text h3 { font-size: 17px; font-weight: 700; color: #1A2340; margin-bottom: 4px; }
-.lrc-status-text p { font-size: 14px; color: #6B7280; margin: 0; }
+.lrc-status-text h3 { font-size: 17px; font-weight: 700; color: #10B981; margin-bottom: 4px; }
+.lrc-status-text p { font-size: 14px; color: rgba(255,255,255,0.55); margin: 0; }
 .lrc-status-link { margin-left: auto; }
 .lrc-status-link a { font-size: 14px; font-weight: 600; color: var(--green); text-decoration: none; padding: 8px 16px; background: rgba(16,185,129,0.1); border-radius: 8px; }
 
@@ -84,7 +87,7 @@
   .lrc-channels { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
 }
 @media (max-width: 640px) {
-  .lrc-body { background: #F5F7FA; padding: 48px 16px 80px; }
+  .lrc-body { background: #060D1A; padding: 48px 16px 80px; }
   .lrc-status { flex-direction: column; text-align: center; }
   .lrc-status-link { margin-left: 0; }
 }
@@ -108,7 +111,7 @@
         <p>API LocalReply · Assistant IA · Google Calendar · Emails — Tout fonctionne normalement.</p>
       </div>
       <div class="lrc-status-link">
-        <a href="/cdn-cgi/l/email-protection#a8c4c7cbc9c4dacdd8c4d186c9c186dbc9c9dbe8cfc5c9c1c486cbc7c5">Signaler un problème →</a>
+        <a href="mailto:support@localreply.ai">Signaler un problème →</a>
       </div>
     </div>
 
@@ -117,23 +120,23 @@
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-blue">📧</div>
-        <h3>Email</h3>
+        <h3 style="color:#fff;">Email</h3>
         <p>Pour toute question sur votre compte, votre abonnement ou l'utilisation de la plateforme.</p>
-        <a href="/cdn-cgi/l/email-protection#4925262a28253b2c392530672820673a28283a092e24282025672a2624" class="lrc-channel-cta-primary">Envoyer un email</a>
+        <a href="mailto:support@localreply.ai" class="lrc-channel-cta-primary">Envoyer un email</a>
       </div>
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-green">⚡</div>
-        <h3>Support</h3>
+        <h3 style="color:#fff;">Support</h3>
         <p>Pour toute question urgente ou problème technique nécessitant une réponse rapide.</p>
-        <a href="/cdn-cgi/l/email-protection#bed2d1dddfd2ccdbced2c790dfd790cddfdfcdfed9d3dfd7d290ddd1d381cdcbdcd4dbddca83edcbceced1ccca9b8c8eeeccd19b8c8e939b8c8e" class="lrc-channel-cta-primary">Contacter en priorité</a>
+        <a href="mailto:support@localreply.ai" class="lrc-channel-cta-primary">Contacter en priorité</a>
       </div>
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-gold">💡</div>
-        <h3>Feedback & idées</h3>
+        <h3 style="color:#fff;">Feedback & idées</h3>
         <p>Une idée pour améliorer LocalReply ? On lit tous les retours et on les intègre dans la roadmap.</p>
-        <a href="/cdn-cgi/l/email-protection#6d01020e0c011f081d0114430c04431e0c0c1e2d0a000c0401430e0200521e180f07080e19503e180a0a081e19040203485f5d40485f5d" class="lrc-channel-cta-secondary">Partager une idée</a>
+        <a href="mailto:support@localreply.ai" class="lrc-channel-cta-secondary">Partager une idée</a>
       </div>
 
     </div>
@@ -200,7 +203,7 @@
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a">
-          LocalReply supporte 6 langues nativement : Français, Allemand, Italien, Espagnol, Anglais et Portugais. La détection est automatique dès le premier message du client — aucune configuration nécessaire.
+          LocalReply supporte 8 langues nativement : Français, Anglais, Allemand, Italien, Espagnol, Portugais, Néerlandais et Polonais. La détection est automatique dès le premier message du client — aucune configuration nécessaire.
         </div>
       </div>
 
@@ -220,7 +223,7 @@
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a">
-          Les abonnés Pro peuvent exporter leurs analytics en CSV depuis le dashboard → Analytics → Exporter. Pour une exportation complète de toutes vos données personnelles (droit à la portabilité RGPD), contactez-nous à <a href="/cdn-cgi/l/email-protection#d6bab9b5b7baa4b3a6baaff8b7bff8a5b7b7a596b1bbb7bfbaf8b5b9bb"><span class="__cf_email__" data-cfemail="e4888b878588968194889dca858dca97858597a48389858d88ca878b89">[email&#160;protected]</span></a>.
+          Les abonnés Pro peuvent exporter leurs analytics en CSV depuis le dashboard → Analytics → Exporter. Pour une exportation complète de toutes vos données personnelles (droit à la portabilité RGPD), contactez-nous à <a href="mailto:support@localreply.ai">support@localreply.ai</a>.
         </div>
       </div>
 
@@ -230,8 +233,8 @@
     <div style="background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 48px; text-align: center;">
       <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;">Vous n'avez pas trouvé votre réponse ?</h3>
       <p style="font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto;">On vous répond personnellement. Pas un chatbot — une vraie personne.</p>
-      <a href="/cdn-cgi/l/email-protection#65090a060409170015091c4b040c4b16040416250208040c094b060a08" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,212,255,0.2)); border: 1.5px solid rgba(0,212,255,0.4); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;">Écrire au support →</a>
-      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 16px;"><a hre
+      <a href="mailto:support@localreply.ai" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,212,255,0.2)); border: 1.5px solid rgba(0,212,255,0.4); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;">Écrire au support →</a>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 16px;">Délai de réponse : moins de 48h en semaine.
 
   <script src="/nav.js"></script>
   <script src="/footer.js"></script>
