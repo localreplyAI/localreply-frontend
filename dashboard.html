@@ -571,8 +571,12 @@ function printQR(lang) {
   const m = document.getElementById('printMenu');
   if (m) m.style.display = 'none';
 
+  // Ouvrir la fenêtre IMMÉDIATEMENT dans le contexte du clic
+  const w = window.open('', '_blank');
+  if (!w) { toast('❌ Popup bloqué — autorisez les popups pour ce site'); return; }
+
   const c = document.querySelector('#qrcode canvas');
-  if (!c) { toast('❌ QR non disponible'); return; }
+  if (!c) { w.close(); toast('❌ QR non disponible'); return; }
 
   const qrData   = c.toDataURL();
   const name     = configData?.business?.name || 'Notre commerce';
@@ -847,7 +851,6 @@ function printQR(lang) {
 </body>
 </html>`;
 
-  const w = window.open('', '_blank');
   w.document.write(html);
   w.document.close();
   setTimeout(function(){ w.print(); }, 800);
