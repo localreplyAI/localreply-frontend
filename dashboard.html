@@ -571,290 +571,118 @@ function printQR(lang) {
   const m = document.getElementById('printMenu');
   if (m) m.style.display = 'none';
 
-  // Ouvrir la fenêtre IMMÉDIATEMENT dans le contexte du clic
   const w = window.open('', '_blank');
   if (!w) { toast('❌ Popup bloqué — autorisez les popups pour ce site'); return; }
 
   const c = document.querySelector('#qrcode canvas');
   if (!c) { w.close(); toast('❌ QR non disponible'); return; }
 
-  const qrData   = c.toDataURL();
-  const name     = configData?.business?.name || 'Notre commerce';
-  const slug     = currentSlug || '';
-  const printLang = lang || configData?.business?.interface_language || 'fr';
-  const address  = configData?.business?.address || '';
-  const logoUrl  = configData?.business?.logo_url || '';
-  const type     = configData?.business?.business_type || 'default';
-  const url      = 'localreply.ai/' + slug;
+  const qrData    = c.toDataURL();
+  const name      = (configData && configData.business && configData.business.name) || 'Notre commerce';
+  const slug      = currentSlug || '';
+  const printLang = lang || (configData && configData.business && configData.business.interface_language) || 'fr';
+  const address   = (configData && configData.business && configData.business.address) || '';
+  const logoUrl   = (configData && configData.business && configData.business.logo_url) || '';
+  const type      = (configData && configData.business && configData.business.business_type) || 'default';
+  const url       = 'localreply.ai/' + slug;
 
-  // Textes bilingues (langue du business + anglais)
   const T = {
-    fr: { scan: 'Scannez pour nous parler', sub: 'Questions, tarifs, horaires, rendez-vous — disponible', available: '24h/24 · 7j/7', footer: 'Réponse instantanée · 8 langues · Aucune application requise' },
-    en: { scan: 'Scan to chat with us', sub: 'Questions, prices, hours, appointments — available', available: '24/7', footer: 'Instant reply · 8 languages · No app required' },
-    de: { scan: 'Scannen Sie, um uns zu kontaktieren', sub: 'Fragen, Preise, Öffnungszeiten, Termine — verfügbar', available: '24/7', footer: 'Sofortige Antwort · 8 Sprachen · Keine App erforderlich' },
-    it: { scan: 'Scansiona per contattarci', sub: 'Domande, prezzi, orari, appuntamenti — disponibile', available: '24/7', footer: 'Risposta immediata · 8 lingue · Nessuna app richiesta' },
-    es: { scan: 'Escanee para contactarnos', sub: 'Preguntas, precios, horarios, citas — disponible', available: '24/7', footer: 'Respuesta inmediata · 8 idiomas · Sin app necesaria' },
-    pt: { scan: 'Digitalize para nos contactar', sub: 'Perguntas, preços, horários, consultas — disponível', available: '24/7', footer: 'Resposta imediata · 8 línguas · Sem app necessária' },
-    nl: { scan: 'Scan om ons te contacteren', sub: 'Vragen, prijzen, uren, afspraken — beschikbaar', available: '24/7', footer: 'Direct antwoord · 8 talen · Geen app nodig' },
-    pl: { scan: 'Zeskanuj, aby się z nami skontaktować', sub: 'Pytania, ceny, godziny, wizyty — dostępne', available: '24/7', footer: 'Natychmiastowa odpowiedź · 8 języków · Bez aplikacji' },
+    fr: { scan: 'Scannez pour nous parler', sub: 'Questions, tarifs, horaires, rendez-vous', available: '24h/24 · 7j/7' },
+    en: { scan: 'Scan to chat with us', sub: 'Questions, prices, hours, appointments', available: '24/7' },
+    de: { scan: 'Scannen Sie, um uns zu kontaktieren', sub: 'Fragen, Preise, Zeiten, Termine', available: '24/7' },
+    it: { scan: 'Scansiona per contattarci', sub: 'Domande, prezzi, orari, appuntamenti', available: '24/7' },
+    es: { scan: 'Escanee para contactarnos', sub: 'Preguntas, precios, horarios, citas', available: '24/7' },
+    pt: { scan: 'Digitalize para nos contactar', sub: 'Perguntas, precos, horarios, consultas', available: '24/7' },
+    nl: { scan: 'Scan om ons te contacteren', sub: 'Vragen, prijzen, uren, afspraken', available: '24/7' },
+    pl: { scan: 'Zeskanuj aby sie z nami skontaktowac', sub: 'Pytania, ceny, godziny, wizyty', available: '24/7' },
   };
 
-  const t  = T[printLang] || T.fr;
-  const en = T.en;
+  const t   = T[printLang] || T.fr;
+  const en  = T.en;
   const isFr = printLang === 'fr';
   const isEn = printLang === 'en';
 
-  // Emoji icône selon type de commerce
   const icons = { salon:'💇', restaurant:'🍽️', cafe:'☕', medical:'🏥', garage:'🔧', coach:'💪', beauty:'💅', hotel:'🏨', retail:'🛍️', default:'💬' };
-  const icon = icons[type] || icons.default;
-
-  // Couleur selon type (subtil)
+  const icon  = icons[type] || icons.default;
   const accent = '#0052CC';
   const accentLight = '#00D4FF';
 
-  const html = `<!DOCTYPE html>
-<html lang="${printLang}">
-<head>
-<meta charset="UTF-8">
-<title>QR Code — ${name}</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body {
-    font-family: 'DM Sans', Arial, sans-serif;
-    background: #f5f5f5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  .page {
-    background: #fff;
-    width: 148mm;
-    min-height: 210mm;
-    padding: 12mm 10mm;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    box-shadow: 0 4px 40px rgba(0,0,0,0.12);
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  /* Bande dégradée en haut */
-  .page::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 6px;
-    background: linear-gradient(90deg, ${accent}, ${accentLight});
-  }
+  const avatarHTML = logoUrl
+    ? '<img src="' + logoUrl + '" alt="' + name + '" style="width:100%;height:100%;object-fit:contain;">'
+    : '<span>' + icon + '</span>';
+  const addressHTML = address
+    ? '<div style="font-size:11px;color:#888;text-align:center;">📍 ' + address + '</div>'
+    : '';
+  const subLangHTML = (!isFr && !isEn)
+    ? '<div style="font-size:12px;font-weight:400;color:#999;text-align:center;margin-bottom:5mm;font-style:italic;">' + en.scan + '</div>'
+    : '';
+  const taglineSecondHTML = !isEn
+    ? '<div style="margin-top:3px;font-size:11px;color:#aaa;">' + en.sub + ' <strong>' + en.available + '</strong></div>'
+    : '';
 
-  /* Header */
-  .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding-top: 6mm;
-    margin-bottom: 6mm;
-  }
-  .logo-wrap {
-    width: 52px; height: 52px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, ${accent}, ${accentLight});
-    display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,82,204,0.2);
-  }
-  .logo-wrap img { width:100%; height:100%; object-fit:contain; }
-  .business-name {
-    font-family: 'Syne', Arial, sans-serif;
-    font-size: 22px; font-weight: 800;
-    color: #0A1628;
-    text-align: center;
-    letter-spacing: -0.5px;
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-  .business-address {
-    font-size: 11px; color: #888;
-    text-align: center;
-    margin-bottom: 0;
-  }
+  const sansApp = {
+    fr:'Sans application', de:'Ohne App', it:'Senza app',
+    es:'Sin app', pt:'Sem app', nl:'Geen app', pl:'Bez aplikacji', en:'No app needed'
+  };
+  const langWord = {
+    fr:'langues', de:'Sprachen', it:'lingue',
+    es:'idiomas', pt:'linguas', nl:'talen', pl:'jezykow', en:'languages'
+  };
 
-  /* Séparateur */
-  .divider {
-    width: 40px; height: 3px;
-    background: linear-gradient(90deg, ${accent}, ${accentLight});
-    border-radius: 2px;
-    margin: 5mm 0;
-  }
-
-  /* Message principal */
-  .main-msg {
-    font-family: 'Syne', Arial, sans-serif;
-    font-size: 17px; font-weight: 800;
-    color: #0A1628;
-    text-align: center;
-    line-height: 1.25;
-    margin-bottom: 2mm;
-    letter-spacing: -0.3px;
-  }
-  .main-msg-en {
-    font-size: 12px; font-weight: 400;
-    color: #999;
-    text-align: center;
-    margin-bottom: 5mm;
-    font-style: italic;
-  }
-
-  /* QR */
-  .qr-wrap {
-    position: relative;
-    padding: 10px;
-    border: 2.5px solid #E8F0FF;
-    border-radius: 16px;
-    background: #fff;
-    margin-bottom: 5mm;
-    box-shadow: 0 2px 20px rgba(0,82,204,0.08);
-  }
-  .qr-wrap img { width: 52mm; height: 52mm; display: block; }
-
-  /* URL */
-  .url-box {
-    background: linear-gradient(135deg, rgba(0,82,204,0.06), rgba(0,212,255,0.04));
-    border: 1.5px solid rgba(0,82,204,0.15);
-    border-radius: 10px;
-    padding: 8px 18px;
-    font-size: 13px; font-weight: 700;
-    color: ${accent};
-    letter-spacing: 0.2px;
-    margin-bottom: 5mm;
-    font-family: 'DM Sans', monospace;
-  }
-
-  /* Pictos infos */
-  .infos {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 5mm;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .info-pill {
-    display: flex; align-items: center; gap: 5px;
-    background: #F5F7FA;
-    border-radius: 100px;
-    padding: 5px 12px;
-    font-size: 11px; font-weight: 600; color: #444;
-  }
-  .info-pill .ico { font-size: 13px; }
-
-  /* Tagline bilingue */
-  .tagline {
-    text-align: center;
-    font-size: 10.5px; color: #aaa;
-    line-height: 1.6;
-    max-width: 120mm;
-    margin-bottom: 5mm;
-  }
-  .tagline-main { color: #666; font-weight: 500; font-size: 11px; }
-
-  /* Footer */
-  .footer {
-    margin-top: auto;
-    padding-top: 4mm;
-    border-top: 1px solid #eee;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .footer-brand {
-    font-size: 10px; color: #bbb;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .footer-brand strong { color: ${accent}; font-weight: 700; }
-  .footer-dot {
-    width: 16px; height: 16px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, ${accent}, ${accentLight});
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 8px; color: #fff;
-    font-weight: 700;
-  }
-  .footer-langs {
-    font-size: 9.5px; color: #ccc;
-  }
-
-  @media print {
-    body { background: #fff; padding: 0; }
-    .page { box-shadow: none; border-radius: 0; width: 100%; min-height: 100vh; }
-  }
-</style>
-</head>
-<body>
-<div class="page">
-
-  <!-- Header -->
-  <div class="header">
-    <div class="logo-wrap">
-      ${logoUrl ? `<img src="${logoUrl}" alt="${name}">` : `<span>${icon}</span>`}
-    </div>
-    <div class="business-name">${name}</div>
-    ${address ? `<div class="business-address">📍 ${address}</div>` : ''}
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- Message -->
-  <div class="main-msg">${t.scan}</div>
-  ${(!isFr && !isEn) ? `<div class="main-msg-en">${en.scan}</div>` : ''}
-  ${isEn ? '' : (isFr ? '' : '')}
-
-  <!-- QR Code -->
-  <div class="qr-wrap">
-    <img src="${qrData}" alt="QR Code">
-  </div>
-
-  <!-- URL -->
-  <div class="url-box">🔗 ${url}</div>
-
-  <!-- Infos disponibilité -->
-  <div class="infos">
-    <div class="info-pill"><span class="ico">⚡</span> ${t.available}</div>
-    <div class="info-pill"><span class="ico">🌍</span> 8 ${printLang === 'fr' ? 'langues' : printLang === 'de' ? 'Sprachen' : printLang === 'it' ? 'lingue' : printLang === 'es' ? 'idiomas' : printLang === 'pt' ? 'línguas' : printLang === 'nl' ? 'talen' : printLang === 'pl' ? 'języków' : 'languages'}</div>
-    <div class="info-pill"><span class="ico">📱</span> ${lang === 'fr' ? 'Sans application' : lang === 'de' ? 'Ohne App' : lang === 'it' ? 'Senza app' : lang === 'es' ? 'Sin app' : lang === 'pt' ? 'Sem app' : lang === 'nl' ? 'Geen app' : lang === 'pl' ? 'Bez aplikacji' : 'No app needed'}</div>
-  </div>
-
-  <!-- Tagline bilingue -->
-  <div class="tagline">
-    <div class="tagline-main">${t.sub} <strong>${t.available}</strong></div>
-    ${!isEn ? `<div style="margin-top:3px;">${en.sub} <strong>${en.available}</strong></div>` : ''}
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div class="footer-brand">
-      <div class="footer-dot">L</div>
-      <span>Powered by <strong>LocalReply AI</strong></span>
-    </div>
-    <div class="footer-langs">🇫🇷 🇬🇧 🇩🇪 🇮🇹 🇪🇸 🇵🇹 🇳🇱 🇵🇱</div>
-  </div>
-
-</div>
-<scr\ipt>window.onload=function(){window.print();}<\/scr\ipt>
-</body>
-</html>`;
+  const html = '<!DOCTYPE html><html lang="' + printLang + '">'
+    + '<head><meta charset="UTF-8">'
+    + '<title>QR Code — ' + name + '</title>'
+    + '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    + '<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">'
+    + '<style>'
+    + '* { box-sizing:border-box; margin:0; padding:0; }'
+    + 'body { font-family:"DM Sans",Arial,sans-serif; background:#f0f0f0; display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px; }'
+    + '.page { background:#fff; width:148mm; min-height:210mm; padding:12mm 10mm; display:flex; flex-direction:column; align-items:center; position:relative; box-shadow:0 4px 40px rgba(0,0,0,0.12); border-radius:6px; overflow:hidden; }'
+    + '.page::before { content:""; position:absolute; top:0; left:0; right:0; height:6px; background:linear-gradient(90deg,' + accent + ',' + accentLight + '); }'
+    + '.logo-wrap { width:56px; height:56px; border-radius:14px; background:linear-gradient(135deg,' + accent + ',' + accentLight + '); display:flex; align-items:center; justify-content:center; font-size:26px; margin:6mm auto 10px; box-shadow:0 4px 16px rgba(0,82,204,0.2); overflow:hidden; }'
+    + '.biz-name { font-family:"Syne",Arial,sans-serif; font-size:22px; font-weight:800; color:#0A1628; text-align:center; letter-spacing:-0.5px; margin-bottom:4px; line-height:1.2; }'
+    + '.divider { width:40px; height:3px; background:linear-gradient(90deg,' + accent + ',' + accentLight + '); border-radius:2px; margin:5mm auto; }'
+    + '.main-msg { font-family:"Syne",Arial,sans-serif; font-size:17px; font-weight:800; color:#0A1628; text-align:center; line-height:1.25; margin-bottom:2mm; }'
+    + '.qr-wrap { padding:10px; border:2.5px solid #E8F0FF; border-radius:16px; margin:5mm auto; box-shadow:0 2px 20px rgba(0,82,204,0.08); }'
+    + '.qr-wrap img { width:52mm; height:52mm; display:block; }'
+    + '.url-box { background:rgba(0,82,204,0.06); border:1.5px solid rgba(0,82,204,0.15); border-radius:10px; padding:8px 18px; font-size:13px; font-weight:700; color:' + accent + '; margin:3mm auto 5mm; }'
+    + '.pills { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:4mm; }'
+    + '.pill { display:flex; align-items:center; gap:5px; background:#F5F7FA; border-radius:100px; padding:5px 12px; font-size:11px; font-weight:600; color:#444; }'
+    + '.tagline { text-align:center; font-size:11px; color:#666; line-height:1.6; max-width:120mm; margin-bottom:5mm; }'
+    + '.footer { margin-top:auto; padding-top:4mm; border-top:1px solid #eee; width:100%; display:flex; align-items:center; justify-content:space-between; }'
+    + '.footer-brand { font-size:10px; color:#bbb; display:flex; align-items:center; gap:4px; }'
+    + '.footer-brand strong { color:' + accent + '; }'
+    + '.footer-dot { width:16px; height:16px; border-radius:50%; background:linear-gradient(135deg,' + accent + ',' + accentLight + '); display:inline-flex; align-items:center; justify-content:center; font-size:8px; color:#fff; font-weight:700; }'
+    + '.footer-langs { font-size:9.5px; color:#ccc; }'
+    + '@media print { body { background:#fff; padding:0; } .page { box-shadow:none; border-radius:0; width:100%; } }'
+    + '</style></head><body>'
+    + '<div class="page">'
+    + '<div class="logo-wrap">' + avatarHTML + '</div>'
+    + '<div class="biz-name">' + name + '</div>'
+    + addressHTML
+    + '<div class="divider"></div>'
+    + '<div class="main-msg">' + t.scan + '</div>'
+    + subLangHTML
+    + '<div class="qr-wrap"><img src="' + qrData + '" alt="QR Code"></div>'
+    + '<div class="url-box">🔗 ' + url + '</div>'
+    + '<div class="pills">'
+    + '<div class="pill"><span>⚡</span> ' + t.available + '</div>'
+    + '<div class="pill"><span>🌍</span> 8 ' + (langWord[printLang] || 'languages') + '</div>'
+    + '<div class="pill"><span>📱</span> ' + (sansApp[printLang] || 'No app') + '</div>'
+    + '</div>'
+    + '<div class="tagline"><div style="color:#444;font-weight:500;">' + t.sub + ' <strong>' + t.available + '</strong></div>'
+    + taglineSecondHTML
+    + '</div>'
+    + '<div class="footer">'
+    + '<div class="footer-brand"><div class="footer-dot">L</div><span>Powered by <strong>LocalReply AI</strong></span></div>'
+    + '<div class="footer-langs">🇫🇷 🇬🇧 🇩🇪 🇮🇹 🇪🇸 🇵🇹 🇳🇱 🇵🇱</div>'
+    + '</div></div></body></html>';
 
   w.document.write(html);
   w.document.close();
   setTimeout(function(){ w.print(); }, 800);
 }
+
 
 // ─ Alertes ─
 function renderAlerts(pendingApts, pendingReqs) {
