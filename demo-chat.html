@@ -912,7 +912,7 @@ let conversationId = null; // mémoriser l'ID de conversation pour la session
 
 // Récupérer le slug depuis l'URL
 function getSlug() {
-  return 'salon-marie'; // Demo fixée sur business_id=1
+  return 'salon-marie-demo'; // Slug réel du business_id=1 en DB
 }
 
 // Détecter langue navigateur
@@ -1368,25 +1368,15 @@ async function loadBizServices(bizId) {
 }
 
 async function lrcInit() {
-  const slug = getSlug();
   detectedLang = detectBrowserLang();
-  const flag = LANG_FLAGS[detectedLang] || '🌍';
   const greeting = GREETINGS[detectedLang] || 'Bonjour';
   const placeholder = PLACEHOLDERS[detectedLang] || 'Posez votre question...';
-
   document.getElementById('lrcInput').placeholder = placeholder;
 
-  if (!slug) {
-    document.getElementById('lrcLoading').style.display = 'none';
-    document.getElementById('lrcError').style.display = 'flex';
-    return;
-  }
-
   try {
-    // Timeout 8s pour éviter le chargement infini
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
-    const res = await fetch(`${API}/api/business/slug/${slug}`, { signal: controller.signal });
+    const res = await fetch(`${API}/api/business/slug/salon-marie-demo`, { signal: controller.signal });
     clearTimeout(timeout);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const biz = await res.json();
