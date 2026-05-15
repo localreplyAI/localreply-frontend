@@ -571,98 +571,276 @@ function printQR(lang) {
   const qrCanvas = document.querySelector('#qrcode canvas');
   if (!qrCanvas) { toast('❌ QR code non disponible'); return; }
 
-  const cfg       = window.configData || {};
-  const biz       = cfg.business || cfg;
-  const name      = biz.name || 'Commerce';
-  const slug      = window.currentSlug || '';
+  const cfg  = window.configData || {};
+  const biz  = cfg.business || cfg;
+  const name = biz.name || 'Commerce';
+  const slug = window.currentSlug || '';
+  const logoUrl = biz.logo_url || '';
   const printLang = lang || 'fr';
-  const url       = 'localreply.ai/' + slug;
+  const url  = 'localreply.ai/' + slug;
 
+  // Tout traduit dans la langue choisie
   const T = {
-    fr: { scan: 'Scannez pour nous parler',      sub: 'Questions · Tarifs · Horaires · RDV', avail: '24h/24, 7j/7' },
-    en: { scan: 'Scan to chat with us',          sub: 'Questions · Prices · Hours · Appts',  avail: '24/7' },
-    de: { scan: 'Scannen Sie um uns zu erreichen', sub: 'Fragen · Preise · Zeiten · Termine', avail: '24/7' },
-    it: { scan: 'Scansiona per contattarci',     sub: 'Domande · Prezzi · Orari · Appuntamenti', avail: '24/7' },
-    es: { scan: 'Escanee para contactarnos',     sub: 'Preguntas · Precios · Horarios · Citas', avail: '24/7' },
-    pt: { scan: 'Digitalize para contactar',     sub: 'Perguntas · Precos · Horarios · Consultas', avail: '24/7' },
-    nl: { scan: 'Scan om ons te contacteren',    sub: 'Vragen · Prijzen · Uren · Afspraken', avail: '24/7' },
-    pl: { scan: 'Zeskanuj aby sie skontaktowac', sub: 'Pytania · Ceny · Godziny · Wizyty',   avail: '24/7' },
+    fr: {
+      tagline: 'Posez-nous vos questions — disponible',
+      avail:   '24h/24, 7j/7',
+      noApp:   'Sans application',
+      langs:   '8 langues',
+      instant: 'Réponse instantanée',
+      powered: 'Propulsé par',
+    },
+    en: {
+      tagline: 'Ask us anything — available',
+      avail:   '24/7',
+      noApp:   'No app needed',
+      langs:   '8 languages',
+      instant: 'Instant reply',
+      powered: 'Powered by',
+    },
+    de: {
+      tagline: 'Stellen Sie uns Ihre Fragen — verfügbar',
+      avail:   '24/7',
+      noApp:   'Keine App nötig',
+      langs:   '8 Sprachen',
+      instant: 'Sofortige Antwort',
+      powered: 'Betrieben von',
+    },
+    it: {
+      tagline: 'Fateci le vostre domande — disponibile',
+      avail:   '24/7',
+      noApp:   'Senza applicazione',
+      langs:   '8 lingue',
+      instant: 'Risposta immediata',
+      powered: 'Offerto da',
+    },
+    es: {
+      tagline: 'Háganos sus preguntas — disponible',
+      avail:   '24/7',
+      noApp:   'Sin aplicación',
+      langs:   '8 idiomas',
+      instant: 'Respuesta inmediata',
+      powered: 'Desarrollado por',
+    },
+    pt: {
+      tagline: 'Coloque-nos as suas questões — disponível',
+      avail:   '24/7',
+      noApp:   'Sem aplicação',
+      langs:   '8 línguas',
+      instant: 'Resposta imediata',
+      powered: 'Desenvolvido por',
+    },
+    nl: {
+      tagline: 'Stel ons uw vragen — beschikbaar',
+      avail:   '24/7',
+      noApp:   'Geen app nodig',
+      langs:   '8 talen',
+      instant: 'Direct antwoord',
+      powered: 'Aangeboden door',
+    },
+    pl: {
+      tagline: 'Zadaj nam swoje pytania — dostepne',
+      avail:   '24/7',
+      noApp:   'Bez aplikacji',
+      langs:   '8 jezykow',
+      instant: 'Natychmiastowa odpowiedz',
+      powered: 'Wspierane przez',
+    },
   };
   const t = T[printLang] || T.fr;
 
   try {
-    // Canvas A5 portrait
-    const W = 794, H = 1123;
-    const cv = document.createElement('canvas');
+    var W = 794, H = 1123;
+    var cv = document.createElement('canvas');
     cv.width = W; cv.height = H;
-    const ctx = cv.getContext('2d');
+    var ctx = cv.getContext('2d');
 
-    // Fond blanc
+    // ── Fond blanc ──
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, W, H);
 
-    // Barre top
-    const g = ctx.createLinearGradient(0,0,W,0);
-    g.addColorStop(0,'#0052CC'); g.addColorStop(1,'#00D4FF');
-    ctx.fillStyle = g; ctx.fillRect(0,0,W,12);
+    // ── Barre top gradient ──
+    var gTop = ctx.createLinearGradient(0, 0, W, 0);
+    gTop.addColorStop(0, '#0052CC');
+    gTop.addColorStop(1, '#00D4FF');
+    ctx.fillStyle = gTop;
+    ctx.fillRect(0, 0, W, 16);
 
-    // Nom
-    ctx.fillStyle = '#0A1628';
-    ctx.font = 'bold 48px Arial'; ctx.textAlign = 'center';
-    ctx.fillText(name.length > 26 ? name.substring(0,26)+'...' : name, W/2, 110);
+    // ── Zone bleue décorative en bas ──
+    var gBot = ctx.createLinearGradient(0, H-120, 0, H);
+    gBot.addColorStop(0, 'rgba(0,82,204,0.04)');
+    gBot.addColorStop(1, 'rgba(0,82,204,0.10)');
+    ctx.fillStyle = gBot;
+    ctx.fillRect(0, H-120, W, 120);
 
-    // URL
-    ctx.fillStyle = '#0052CC'; ctx.font = '26px Arial';
-    ctx.fillText(url, W/2, 155);
+    var yPos = 60;
 
-    // Séparateur
-    ctx.fillStyle = '#E8F0FF'; ctx.fillRect(W/2-60,178,120,3);
+    // ── Logo si disponible ──
+    function drawLogo(cb) {
+      if (logoUrl) {
+        var img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = function() {
+          var lw = 56, lh = 56, lx = W/2 - lw/2, ly = yPos;
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(lx + lw/2, ly + lh/2, lw/2, 0, Math.PI*2);
+          ctx.closePath();
+          ctx.clip();
+          ctx.drawImage(img, lx, ly, lw, lh);
+          ctx.restore();
+          // Cercle border
+          ctx.strokeStyle = 'rgba(0,82,204,0.15)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(lx + lw/2, ly + lh/2, lw/2, 0, Math.PI*2);
+          ctx.stroke();
+          yPos += lh + 16;
+          cb();
+        };
+        img.onerror = function() { cb(); };
+        img.src = logoUrl;
+      } else {
+        cb();
+      }
+    }
 
-    // Message
-    ctx.fillStyle = '#0A1628'; ctx.font = 'bold 34px Arial';
-    ctx.fillText(t.scan, W/2, 240);
+    function drawRest() {
+      // ── Nom du commerce ──
+      ctx.textAlign = 'center';
+      // Adapter la taille selon la longueur
+      var fontSize = name.length > 28 ? 36 : name.length > 20 ? 42 : 48;
+      ctx.font = 'bold ' + fontSize + 'px Arial';
+      ctx.fillStyle = '#0A1628';
+      // Tronquer si vraiment trop long mais sans "..."
+      var displayName = name;
+      ctx.fillText(displayName, W/2, yPos + fontSize);
+      yPos += fontSize + 12;
 
-    // QR
-    var qrSize = 360, qrX = (W-qrSize)/2, qrY = 270;
-    ctx.strokeStyle = '#E8F0FF'; ctx.lineWidth = 4;
-    ctx.strokeRect(qrX-12, qrY-12, qrSize+24, qrSize+24);
-    ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+      // ── URL ──
+      ctx.font = '22px Arial';
+      ctx.fillStyle = '#0052CC';
+      ctx.fillText(url, W/2, yPos + 22);
+      yPos += 22 + 28;
 
-    // Sous-texte
-    ctx.fillStyle = '#444444'; ctx.font = '22px Arial';
-    ctx.fillText(t.sub, W/2, qrY+qrSize+60);
-    ctx.fillStyle = '#0052CC'; ctx.font = 'bold 26px Arial';
-    ctx.fillText(t.avail, W/2, qrY+qrSize+100);
+      // ── Séparateur dégradé ──
+      var gSep = ctx.createLinearGradient(W/2-80, 0, W/2+80, 0);
+      gSep.addColorStop(0, 'rgba(0,82,204,0)');
+      gSep.addColorStop(0.5, '#00D4FF');
+      gSep.addColorStop(1, 'rgba(0,82,204,0)');
+      ctx.fillStyle = gSep;
+      ctx.fillRect(W/2-80, yPos, 160, 2);
+      yPos += 28;
 
-    // Pills texte
-    ctx.fillStyle = '#888888'; ctx.font = '18px Arial';
-    ctx.fillText('8 langues  ·  Sans application  ·  Réponse instantanée', W/2, qrY+qrSize+150);
+      // ── Tagline principale ──
+      ctx.font = 'bold 30px Arial';
+      ctx.fillStyle = '#0A1628';
+      ctx.fillText(t.tagline, W/2, yPos);
+      yPos += 36;
 
-    // Footer
-    ctx.fillStyle = '#eeeeee'; ctx.fillRect(40, H-70, W-80, 1);
-    ctx.fillStyle = '#aaaaaa'; ctx.font = '16px Arial';
-    ctx.textAlign = 'left'; ctx.fillText('Powered by LocalReply AI', 40, H-40);
-    ctx.textAlign = 'right'; ctx.fillText('FR · EN · DE · IT · ES · PT · NL · PL', W-40, H-40);
+      // ── Disponibilité ──
+      ctx.font = 'bold 26px Arial';
+      ctx.fillStyle = '#0052CC';
+      ctx.fillText(t.avail, W/2, yPos);
+      yPos += 36;
 
-    // Export PNG
-    var dataUrl = cv.toDataURL('image/png');
-    var fname = 'QR-' + name.replace(/[^a-zA-Z0-9]/g,'-') + '-' + printLang + '.png';
-    var a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = fname;
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function(){ document.body.removeChild(a); }, 1000);
-    toast('✅ Image téléchargée · Imprimez en A5');
+      // ── QR Code avec cadre élégant ──
+      var qrSize = 340;
+      var qrX = (W - qrSize) / 2;
+      var qrY = yPos + 10;
+
+      // Ombre douce
+      ctx.shadowColor = 'rgba(0,82,204,0.15)';
+      ctx.shadowBlur = 20;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
+      ctx.shadowBlur = 0;
+
+      // Bordure
+      ctx.strokeStyle = 'rgba(0,82,204,0.12)';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(qrX - 14, qrY - 14, qrSize + 28, qrSize + 28);
+
+      // Coins décoratifs
+      var cLen = 20, cW = 4;
+      ctx.fillStyle = '#0052CC';
+      // TL
+      ctx.fillRect(qrX-18, qrY-18, cLen, cW);
+      ctx.fillRect(qrX-18, qrY-18, cW, cLen);
+      // TR
+      ctx.fillRect(qrX+qrSize+18-cLen, qrY-18, cLen, cW);
+      ctx.fillRect(qrX+qrSize+14, qrY-18, cW, cLen);
+      // BL
+      ctx.fillRect(qrX-18, qrY+qrSize+14, cLen, cW);
+      ctx.fillRect(qrX-18, qrY+qrSize+18-cLen, cW, cLen);
+      // BR
+      ctx.fillRect(qrX+qrSize+18-cLen, qrY+qrSize+14, cLen, cW);
+      ctx.fillRect(qrX+qrSize+14, qrY+qrSize+18-cLen, cW, cLen);
+
+      ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+      yPos = qrY + qrSize + 44;
+
+      // ── Pills traduits ──
+      var pills = [t.langs, t.noApp, t.instant];
+      var pillH = 38, pillGap = 12;
+      var totalW = 0;
+      ctx.font = '18px Arial';
+      var pillWidths = pills.map(function(p){ return ctx.measureText(p).width + 36; });
+      pillWidths.forEach(function(w){ totalW += w + pillGap; });
+      totalW -= pillGap;
+      var pillX = (W - totalW) / 2;
+      pills.forEach(function(p, i) {
+        var pw = pillWidths[i];
+        ctx.fillStyle = 'rgba(0,82,204,0.06)';
+        ctx.strokeStyle = 'rgba(0,82,204,0.15)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.roundRect(pillX, yPos, pw, pillH, pillH/2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = '#0052CC';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(p, pillX + pw/2, yPos + 25);
+        pillX += pw + pillGap;
+      });
+      yPos += pillH + 30;
+
+      // ── Footer ──
+      ctx.strokeStyle = 'rgba(0,82,204,0.1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(40, H - 70);
+      ctx.lineTo(W - 40, H - 70);
+      ctx.stroke();
+
+      ctx.font = '14px Arial';
+      ctx.fillStyle = '#aaaaaa';
+      ctx.textAlign = 'left';
+      ctx.fillText(t.powered + ' LocalReply AI', 40, H - 42);
+      ctx.textAlign = 'right';
+      ctx.fillText('FR · EN · DE · IT · ES · PT · NL · PL', W - 40, H - 42);
+
+      // ── Export PNG ──
+      var dataUrl = cv.toDataURL('image/png');
+      var fname = 'QR-LocalReply-' + name.replace(/[^a-zA-Z0-9]/g, '-') + '-' + printLang + '.png';
+      var a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = fname;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function(){ document.body.removeChild(a); }, 1000);
+      toast('✅ Affiche téléchargée — imprimez en A5');
+    }
+
+    drawLogo(drawRest);
+
   } catch(e) {
     console.error('printQR error:', e);
     toast('❌ Erreur: ' + e.message);
   }
 }
 
-
-// ─ Alertes ─
 function renderAlerts(pendingApts, pendingReqs) {
   const s = document.getElementById('alertsSection');
   const pa = pendingApts.length, pr = Array.isArray(pendingReqs)?pendingReqs.length:0;
