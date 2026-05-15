@@ -73,7 +73,7 @@
         <!-- Logo -->
         <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
           <img src="/assets/logo.png"
-            alt="LocalReply" style="width:32px;height:32px;border-radius:8px;background:#fff;padding:3px;">
+            alt="LocalReply" style="width:36px;height:36px;border-radius:0;background:transparent;">
           <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.3px;">LocalReply</span>
         </a>
 

@@ -18,7 +18,7 @@
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
               <img src="/assets/logo.png"
-                alt="LocalReply" style="width:28px;height:28px;border-radius:7px;background:#fff;padding:3px;">
+                alt="LocalReply" style="width:32px;height:32px;background:transparent;">
               <span style="font-size:16px;font-weight:800;color:#fff;">LocalReply</span>
             </div>
             <p style="font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:280px;">
