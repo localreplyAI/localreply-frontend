@@ -571,274 +571,312 @@ function printQR(lang) {
   const qrCanvas = document.querySelector('#qrcode canvas');
   if (!qrCanvas) { toast('❌ QR code non disponible'); return; }
 
-  const cfg  = window.configData || {};
-  const biz  = cfg.business || cfg;
-  const name = biz.name || 'Commerce';
-  const slug = window.currentSlug || '';
+  const cfg     = window.configData || {};
+  const biz     = cfg.business || cfg;
+  const name    = biz.name || 'Commerce';
+  const slug    = window.currentSlug || '';
   const logoUrl = biz.logo_url || '';
   const printLang = lang || 'fr';
-  const url  = 'localreply.ai/' + slug;
+  const url     = 'localreply.ai/' + slug;
 
-  // Tout traduit dans la langue choisie
   const T = {
-    fr: {
-      tagline: 'Posez-nous vos questions — disponible',
-      avail:   '24h/24, 7j/7',
-      noApp:   'Sans application',
-      langs:   '8 langues',
-      instant: 'Réponse instantanée',
-      powered: 'Propulsé par',
-    },
-    en: {
-      tagline: 'Ask us anything — available',
-      avail:   '24/7',
-      noApp:   'No app needed',
-      langs:   '8 languages',
-      instant: 'Instant reply',
-      powered: 'Powered by',
-    },
-    de: {
-      tagline: 'Stellen Sie uns Ihre Fragen — verfügbar',
-      avail:   '24/7',
-      noApp:   'Keine App nötig',
-      langs:   '8 Sprachen',
-      instant: 'Sofortige Antwort',
-      powered: 'Betrieben von',
-    },
-    it: {
-      tagline: 'Fateci le vostre domande — disponibile',
-      avail:   '24/7',
-      noApp:   'Senza applicazione',
-      langs:   '8 lingue',
-      instant: 'Risposta immediata',
-      powered: 'Offerto da',
-    },
-    es: {
-      tagline: 'Háganos sus preguntas — disponible',
-      avail:   '24/7',
-      noApp:   'Sin aplicación',
-      langs:   '8 idiomas',
-      instant: 'Respuesta inmediata',
-      powered: 'Desarrollado por',
-    },
-    pt: {
-      tagline: 'Coloque-nos as suas questões — disponível',
-      avail:   '24/7',
-      noApp:   'Sem aplicação',
-      langs:   '8 línguas',
-      instant: 'Resposta imediata',
-      powered: 'Desenvolvido por',
-    },
-    nl: {
-      tagline: 'Stel ons uw vragen — beschikbaar',
-      avail:   '24/7',
-      noApp:   'Geen app nodig',
-      langs:   '8 talen',
-      instant: 'Direct antwoord',
-      powered: 'Aangeboden door',
-    },
-    pl: {
-      tagline: 'Zadaj nam swoje pytania — dostepne',
-      avail:   '24/7',
-      noApp:   'Bez aplikacji',
-      langs:   '8 jezykow',
-      instant: 'Natychmiastowa odpowiedz',
-      powered: 'Wspierane przez',
-    },
+    fr: { tagline:'Posez-nous vos questions', avail:'24h/24 · 7j/7', noApp:'Sans application', langs:'8 langues', instant:'Réponse instantanée', powered:'Propulsé par' },
+    en: { tagline:'Ask us anything',          avail:'24/7',           noApp:'No app needed',    langs:'8 languages', instant:'Instant reply',     powered:'Powered by' },
+    de: { tagline:'Stellen Sie uns Ihre Fragen', avail:'24/7',        noApp:'Keine App nötig',  langs:'8 Sprachen',  instant:'Sofortige Antwort', powered:'Betrieben von' },
+    it: { tagline:'Fateci le vostre domande', avail:'24/7',           noApp:'Senza applicazione', langs:'8 lingue', instant:'Risposta immediata',  powered:'Offerto da' },
+    es: { tagline:'Háganos sus preguntas',    avail:'24/7',           noApp:'Sin aplicación',   langs:'8 idiomas',   instant:'Respuesta inmediata', powered:'Desarrollado por' },
+    pt: { tagline:'Coloque-nos as suas questões', avail:'24/7',       noApp:'Sem aplicação',    langs:'8 línguas',   instant:'Resposta imediata',  powered:'Desenvolvido por' },
+    nl: { tagline:'Stel ons uw vragen',       avail:'24/7',           noApp:'Geen app nodig',   langs:'8 talen',     instant:'Direct antwoord',    powered:'Aangeboden door' },
+    pl: { tagline:'Zadaj nam pytania',         avail:'24/7',          noApp:'Bez aplikacji',    langs:'8 jezykow',   instant:'Natychmiastowa odp.', powered:'Wspierane przez' },
   };
   const t = T[printLang] || T.fr;
 
-  try {
-    var W = 794, H = 1123;
-    var cv = document.createElement('canvas');
-    cv.width = W; cv.height = H;
-    var ctx = cv.getContext('2d');
+  // Canvas A5 @ 150dpi
+  var W = 794, H = 1123;
+  var cv = document.createElement('canvas');
+  cv.width = W; cv.height = H;
+  var ctx = cv.getContext('2d');
 
-    // ── Fond blanc ──
-    ctx.fillStyle = '#ffffff';
+  function draw(logoImg, lrLogoImg) {
+    // ── Fond dégradé subtil ──
+    var bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+    bgGrad.addColorStop(0, '#f8faff');
+    bgGrad.addColorStop(1, '#edf2ff');
+    ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
+    // ── Cercle décoratif TL ──
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = '#0052CC';
+    ctx.beginPath();
+    ctx.arc(-40, -40, 220, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // ── Cercle décoratif BR ──
+    ctx.save();
+    ctx.globalAlpha = 0.05;
+    ctx.fillStyle = '#00D4FF';
+    ctx.beginPath();
+    ctx.arc(W+40, H+40, 200, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // ── Card blanche centrale ──
+    var cx = 50, cy = 50, cw = W-100, ch = H-100;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,82,204,0.12)';
+    ctx.shadowBlur = 40;
+    ctx.shadowOffsetY = 8;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.roundRect(cx, cy, cw, ch, 20);
+    ctx.fill();
+    ctx.restore();
+
     // ── Barre top gradient ──
-    var gTop = ctx.createLinearGradient(0, 0, W, 0);
+    var gTop = ctx.createLinearGradient(cx, 0, cx+cw, 0);
     gTop.addColorStop(0, '#0052CC');
     gTop.addColorStop(1, '#00D4FF');
+    ctx.save();
     ctx.fillStyle = gTop;
-    ctx.fillRect(0, 0, W, 16);
+    ctx.beginPath();
+    ctx.roundRect(cx, cy, cw, 10, [20, 20, 0, 0]);
+    ctx.fill();
+    ctx.restore();
 
-    // ── Zone bleue décorative en bas ──
-    var gBot = ctx.createLinearGradient(0, H-120, 0, H);
-    gBot.addColorStop(0, 'rgba(0,82,204,0.04)');
-    gBot.addColorStop(1, 'rgba(0,82,204,0.10)');
-    ctx.fillStyle = gBot;
-    ctx.fillRect(0, H-120, W, 120);
+    var y = cy + 10;
 
-    var yPos = 60;
-
-    // ── Logo si disponible ──
-    function drawLogo(cb) {
-      if (logoUrl) {
-        var img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = function() {
-          var lw = 56, lh = 56, lx = W/2 - lw/2, ly = yPos;
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(lx + lw/2, ly + lh/2, lw/2, 0, Math.PI*2);
-          ctx.closePath();
-          ctx.clip();
-          ctx.drawImage(img, lx, ly, lw, lh);
-          ctx.restore();
-          // Cercle border
-          ctx.strokeStyle = 'rgba(0,82,204,0.15)';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(lx + lw/2, ly + lh/2, lw/2, 0, Math.PI*2);
-          ctx.stroke();
-          yPos += lh + 16;
-          cb();
-        };
-        img.onerror = function() { cb(); };
-        img.src = logoUrl;
-      } else {
-        cb();
-      }
-    }
-
-    function drawRest() {
-      // ── Nom du commerce ──
-      ctx.textAlign = 'center';
-      // Adapter la taille selon la longueur
-      var fontSize = name.length > 28 ? 36 : name.length > 20 ? 42 : 48;
-      ctx.font = 'bold ' + fontSize + 'px Arial';
-      ctx.fillStyle = '#0A1628';
-      // Tronquer si vraiment trop long mais sans "..."
-      var displayName = name;
-      ctx.fillText(displayName, W/2, yPos + fontSize);
-      yPos += fontSize + 12;
-
-      // ── URL ──
-      ctx.font = '22px Arial';
-      ctx.fillStyle = '#0052CC';
-      ctx.fillText(url, W/2, yPos + 22);
-      yPos += 22 + 28;
-
-      // ── Séparateur dégradé ──
-      var gSep = ctx.createLinearGradient(W/2-80, 0, W/2+80, 0);
-      gSep.addColorStop(0, 'rgba(0,82,204,0)');
-      gSep.addColorStop(0.5, '#00D4FF');
-      gSep.addColorStop(1, 'rgba(0,82,204,0)');
-      ctx.fillStyle = gSep;
-      ctx.fillRect(W/2-80, yPos, 160, 2);
-      yPos += 28;
-
-      // ── Tagline principale ──
-      ctx.font = 'bold 30px Arial';
-      ctx.fillStyle = '#0A1628';
-      ctx.fillText(t.tagline, W/2, yPos);
-      yPos += 36;
-
-      // ── Disponibilité ──
-      ctx.font = 'bold 26px Arial';
-      ctx.fillStyle = '#0052CC';
-      ctx.fillText(t.avail, W/2, yPos);
-      yPos += 36;
-
-      // ── QR Code avec cadre élégant ──
-      var qrSize = 340;
-      var qrX = (W - qrSize) / 2;
-      var qrY = yPos + 10;
-
-      // Ombre douce
-      ctx.shadowColor = 'rgba(0,82,204,0.15)';
-      ctx.shadowBlur = 20;
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(qrX - 20, qrY - 20, qrSize + 40, qrSize + 40);
-      ctx.shadowBlur = 0;
-
-      // Bordure
-      ctx.strokeStyle = 'rgba(0,82,204,0.12)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(qrX - 14, qrY - 14, qrSize + 28, qrSize + 28);
-
-      // Coins décoratifs
-      var cLen = 20, cW = 4;
-      ctx.fillStyle = '#0052CC';
-      // TL
-      ctx.fillRect(qrX-18, qrY-18, cLen, cW);
-      ctx.fillRect(qrX-18, qrY-18, cW, cLen);
-      // TR
-      ctx.fillRect(qrX+qrSize+18-cLen, qrY-18, cLen, cW);
-      ctx.fillRect(qrX+qrSize+14, qrY-18, cW, cLen);
-      // BL
-      ctx.fillRect(qrX-18, qrY+qrSize+14, cLen, cW);
-      ctx.fillRect(qrX-18, qrY+qrSize+18-cLen, cW, cLen);
-      // BR
-      ctx.fillRect(qrX+qrSize+18-cLen, qrY+qrSize+14, cLen, cW);
-      ctx.fillRect(qrX+qrSize+14, qrY+qrSize+18-cLen, cW, cLen);
-
-      ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
-      yPos = qrY + qrSize + 44;
-
-      // ── Pills traduits ──
-      var pills = [t.langs, t.noApp, t.instant];
-      var pillH = 38, pillGap = 12;
-      var totalW = 0;
-      ctx.font = '18px Arial';
-      var pillWidths = pills.map(function(p){ return ctx.measureText(p).width + 36; });
-      pillWidths.forEach(function(w){ totalW += w + pillGap; });
-      totalW -= pillGap;
-      var pillX = (W - totalW) / 2;
-      pills.forEach(function(p, i) {
-        var pw = pillWidths[i];
-        ctx.fillStyle = 'rgba(0,82,204,0.06)';
-        ctx.strokeStyle = 'rgba(0,82,204,0.15)';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.roundRect(pillX, yPos, pw, pillH, pillH/2);
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = '#0052CC';
-        ctx.font = '16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(p, pillX + pw/2, yPos + 25);
-        pillX += pw + pillGap;
-      });
-      yPos += pillH + 30;
-
-      // ── Footer ──
-      ctx.strokeStyle = 'rgba(0,82,204,0.1)';
-      ctx.lineWidth = 1;
+    // ── Logo business ──
+    y += 44;
+    var logoSize = 72, logoX = W/2 - logoSize/2;
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(W/2, y + logoSize/2, logoSize/2, 0, Math.PI*2);
+    ctx.closePath();
+    if (logoImg) {
+      // Logo image
+      ctx.clip();
+      ctx.drawImage(logoImg, logoX, y, logoSize, logoSize);
+      ctx.restore();
+      // Bordure cercle
+      ctx.strokeStyle = 'rgba(0,82,204,0.15)';
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.moveTo(40, H - 70);
-      ctx.lineTo(W - 40, H - 70);
+      ctx.arc(W/2, y + logoSize/2, logoSize/2, 0, Math.PI*2);
       ctx.stroke();
-
-      ctx.font = '14px Arial';
-      ctx.fillStyle = '#aaaaaa';
-      ctx.textAlign = 'left';
-      ctx.fillText(t.powered + ' LocalReply AI', 40, H - 42);
-      ctx.textAlign = 'right';
-      ctx.fillText('FR · EN · DE · IT · ES · PT · NL · PL', W - 40, H - 42);
-
-      // ── Export PNG ──
-      var dataUrl = cv.toDataURL('image/png');
-      var fname = 'QR-LocalReply-' + name.replace(/[^a-zA-Z0-9]/g, '-') + '-' + printLang + '.png';
-      var a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = fname;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function(){ document.body.removeChild(a); }, 1000);
-      toast('✅ Affiche téléchargée — imprimez en A5');
+    } else {
+      // Initiales sur fond gradient
+      var gLogo = ctx.createLinearGradient(logoX, y, logoX+logoSize, y+logoSize);
+      gLogo.addColorStop(0, '#0052CC');
+      gLogo.addColorStop(1, '#00D4FF');
+      ctx.fillStyle = gLogo;
+      ctx.fill();
+      ctx.restore();
+      var initials = name.split(' ').slice(0, 2).map(function(w){ return w[0] || ''; }).join('').toUpperCase();
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 28px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(initials, W/2, y + logoSize/2);
+      ctx.textBaseline = 'alphabetic';
     }
+    y += logoSize + 22;
 
-    drawLogo(drawRest);
+    // ── Nom ──
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#0A1628';
+    var fontSize = name.length > 30 ? 28 : name.length > 22 ? 34 : 40;
+    ctx.font = 'bold ' + fontSize + 'px Arial';
+    ctx.fillText(name, W/2, y);
+    y += fontSize * 0.4 + 14;
 
-  } catch(e) {
-    console.error('printQR error:', e);
-    toast('❌ Erreur: ' + e.message);
+    // ── URL pill ──
+    var urlText = url;
+    ctx.font = '16px Arial';
+    var urlW = ctx.measureText(urlText).width + 40;
+    var urlX = W/2 - urlW/2;
+    ctx.fillStyle = 'rgba(0,82,204,0.08)';
+    ctx.beginPath();
+    ctx.roundRect(urlX, y - 18, urlW, 30, 15);
+    ctx.fill();
+    ctx.fillStyle = '#0052CC';
+    ctx.fillText(urlText, W/2, y + 4);
+    y += 36;
+
+    // ── Séparateur ──
+    var gSep = ctx.createLinearGradient(W/2-70, 0, W/2+70, 0);
+    gSep.addColorStop(0, 'rgba(0,82,204,0)');
+    gSep.addColorStop(0.5, '#00D4FF');
+    gSep.addColorStop(1, 'rgba(0,82,204,0)');
+    ctx.fillStyle = gSep;
+    ctx.fillRect(W/2 - 70, y, 140, 2);
+    y += 28;
+
+    // ── Tagline ──
+    ctx.fillStyle = '#1a2a4a';
+    ctx.font = 'bold 24px Arial';
+    ctx.fillText(t.tagline, W/2, y);
+    y += 34;
+    ctx.fillStyle = '#0052CC';
+    ctx.font = 'bold 28px Arial';
+    ctx.fillText('— ' + t.avail + ' —', W/2, y);
+    y += 38;
+
+    // ── QR Code avec cadre premium ──
+    var qrPad = 18, qrSize = 320;
+    var qrX = (W - qrSize) / 2, qrY = y + 10;
+    var frameSize = qrSize + qrPad * 2;
+    var frameX = qrX - qrPad, frameY = qrY - qrPad;
+
+    // Ombre du frame
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,82,204,0.15)';
+    ctx.shadowBlur = 24;
+    ctx.shadowOffsetY = 6;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.roundRect(frameX, frameY, frameSize, frameSize, 14);
+    ctx.fill();
+    ctx.restore();
+
+    // Bordure subtile
+    ctx.strokeStyle = 'rgba(0,82,204,0.10)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(frameX, frameY, frameSize, frameSize, 14);
+    ctx.stroke();
+
+    // QR image
+    ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+    // Coins décoratifs
+    var cLen = 22, cT = 4;
+    ctx.fillStyle = '#0052CC';
+    ctx.fillRect(frameX - 4, frameY - 4, cLen, cT);
+    ctx.fillRect(frameX - 4, frameY - 4, cT, cLen);
+    ctx.fillStyle = '#00D4FF';
+    ctx.fillRect(frameX + frameSize - cLen + 4, frameY - 4, cLen, cT);
+    ctx.fillRect(frameX + frameSize, frameY - 4, cT, cLen);
+    ctx.fillStyle = '#0052CC';
+    ctx.fillRect(frameX - 4, frameY + frameSize, cLen, cT);
+    ctx.fillRect(frameX - 4, frameY + frameSize - cLen + 4, cT, cLen);
+    ctx.fillStyle = '#00D4FF';
+    ctx.fillRect(frameX + frameSize - cLen + 4, frameY + frameSize, cLen, cT);
+    ctx.fillRect(frameX + frameSize, frameY + frameSize - cLen + 4, cT, cLen);
+
+    y = qrY + qrSize + qrPad + 32;
+
+    // ── Pills ──
+    var pills = [t.langs, t.noApp, t.instant];
+    ctx.font = '14px Arial';
+    var pillH = 34, pillGap = 10, pillPad = 22;
+    var pillWidths = pills.map(function(p) { return ctx.measureText(p).width + pillPad*2; });
+    var totalPW = pillWidths.reduce(function(a,b){ return a+b; }, 0) + pillGap*(pills.length-1);
+    var pillStartX = (W - totalPW) / 2;
+    var px = pillStartX;
+    pills.forEach(function(p, i) {
+      var pw = pillWidths[i];
+      var py = y;
+      // Fond
+      var gPill = ctx.createLinearGradient(px, py, px+pw, py);
+      gPill.addColorStop(0, 'rgba(0,82,204,0.07)');
+      gPill.addColorStop(1, 'rgba(0,212,255,0.07)');
+      ctx.fillStyle = gPill;
+      ctx.beginPath();
+      ctx.roundRect(px, py, pw, pillH, pillH/2);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(0,82,204,0.18)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.roundRect(px, py, pw, pillH, pillH/2);
+      ctx.stroke();
+      ctx.fillStyle = '#0052CC';
+      ctx.font = '13px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(p, px + pw/2, py + 22);
+      px += pw + pillGap;
+    });
+    y += pillH + 20;
+
+    // ── Drapeaux ──
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('🇫🇷  🇬🇧  🇩🇪  🇮🇹  🇪🇸  🇵🇹  🇳🇱  🇵🇱', W/2, y);
+    y += 38;
+
+    // ── Footer ──
+    var footerY = cy + ch - 52;
+    ctx.strokeStyle = 'rgba(0,82,204,0.08)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cx+30, footerY);
+    ctx.lineTo(cx+cw-30, footerY);
+    ctx.stroke();
+
+    // Logo LocalReply dans le footer
+    var lrX = cx + 36, lrY = footerY + 18;
+    if (lrLogoImg) {
+      ctx.drawImage(lrLogoImg, lrX, lrY - 14, 28, 28);
+      lrX += 36;
+    } else {
+      // Petit "L" gradient
+      var gLR = ctx.createLinearGradient(lrX, lrY-14, lrX+24, lrY+14);
+      gLR.addColorStop(0,'#0052CC'); gLR.addColorStop(1,'#00D4FF');
+      ctx.fillStyle = gLR;
+      ctx.beginPath();
+      ctx.arc(lrX+12, lrY, 12, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 12px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('L', lrX+12, lrY+4);
+      lrX += 30;
+    }
+    ctx.font = '13px Arial';
+    ctx.fillStyle = '#aaa';
+    ctx.textAlign = 'left';
+    ctx.fillText(t.powered + ' LocalReply AI', lrX, footerY + 22);
+    ctx.textAlign = 'right';
+    ctx.font = '11px Arial';
+    ctx.fillStyle = '#ccc';
+    ctx.fillText('FR · EN · DE · IT · ES · PT · NL · PL', cx+cw-36, footerY + 22);
+
+    // ── Export ──
+    var dataUrl = cv.toDataURL('image/png');
+    var fname = 'Affiche-LocalReply-' + name.replace(/[^a-zA-Z0-9]/g,'-') + '-' + printLang + '.png';
+    var a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = fname;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){ document.body.removeChild(a); }, 1000);
+    toast('✅ Affiche téléchargée — imprimez en A5');
   }
+
+  // Charger logo business ET logo LocalReply
+  var logoImg = null, lrLogoImg = null;
+  var LR_LOGO = '/assets/logo_localreply.png'; // chemin du logo LocalReply sur Vercel
+
+  function tryLoad(src, cb) {
+    if (!src) { cb(null); return; }
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function(){ cb(img); };
+    img.onerror = function(){ cb(null); };
+    img.src = src;
+  }
+
+  tryLoad(logoUrl, function(li) {
+    logoImg = li;
+    tryLoad(LR_LOGO, function(lri) {
+      lrLogoImg = lri;
+      try { draw(logoImg, lrLogoImg); }
+      catch(e) { console.error('printQR draw error:', e); toast('❌ Erreur: ' + e.message); }
+    });
+  });
 }
 
 function renderAlerts(pendingApts, pendingReqs) {
