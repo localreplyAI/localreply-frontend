@@ -27,7 +27,7 @@
         <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
-        <div id="sidebarLogoWrap" style="width:44px;height:44px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden;"><span id="sidebarLogo">🏢</span></div>
+        <div id="sidebarLogoWrap" style="width:44px;height:44px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden;"><span id="sidebarLogo"></span></div>
         <div style="flex:1;min-width:0;">
           <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
           <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
@@ -234,6 +234,49 @@
 </style>
 
 <script>
+
+function renderSidebarLogo(name, logoUrl, type) {
+  const wrap = document.getElementById('sidebarLogoWrap');
+  const span = document.getElementById('sidebarLogo');
+  if (!wrap && !span) return;
+  
+  const initials = (name||'')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(w => w[0].toUpperCase())
+    .join('');
+  const display = initials || '?';
+  
+  if (logoUrl) {
+    const img = new Image();
+    img.onload = function() {
+      if (wrap) {
+        wrap.style.background = 'none';
+        wrap.style.padding = '0';
+        wrap.innerHTML = '<img src="' + logoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+      }
+    };
+    img.onerror = function() {
+      // Fallback initiales si logo broken
+      if (wrap) {
+        wrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+        wrap.innerHTML = '<span style="color:#fff;font-weight:700;font-size:15px;letter-spacing:-0.5px;">' + display + '</span>';
+      } else if (span) { span.textContent = display; }
+    };
+    img.src = logoUrl;
+  } else {
+    // Initiales sur fond gradient
+    if (wrap) {
+      wrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+      wrap.style.display = 'flex';
+      wrap.style.alignItems = 'center';
+      wrap.style.justifyContent = 'center';
+      wrap.innerHTML = '<span style="color:#fff;font-weight:700;font-size:15px;letter-spacing:-0.5px;">' + display + '</span>';
+    } else if (span) { span.textContent = display; }
+  }
+}
+
 const token = (() => { try { return localStorage.getItem('auth_token'); } catch(e) { return null; } })();
 const businessId = (() => { try { return localStorage.getItem('business_id'); } catch(e) { return null; } })();
 if (!token || !businessId) window.location.href = '/auth';
@@ -290,7 +333,7 @@ async function loadSidebarInfo() {
       };
       slWrap.appendChild(img);
     } else if (sl) {
-      sl.textContent = icons[biz.business_type]||'🏢';
+      renderSidebarLogo(configData?.business?.name || bizName, configData?.business?.logo_url || bizLogoUrl, configData?.business?.business_type);
     }
   } catch(e){console.error('Sidebar:',e);}
 }
