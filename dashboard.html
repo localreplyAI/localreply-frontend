@@ -1,3 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — LocalReply</title>
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; font-family: "DM Sans", "Segoe UI", sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  </style>
+</head>
+<body>
+
 <div id="dashboardWrapper" style="display:flex;min-height:100vh;background:#0A1628;position:relative;overflow-x:hidden;">
 
   <!-- Fond ambiance -->
@@ -1058,3 +1074,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Analytics retirés du home — voir /dashboard-analytics
 });
 </script>
+
+<!-- Menu QR Affiche -->
+<div id="printMenu" style="display:none;position:fixed;background:#0D1B2E;border:1px solid rgba(0,212,255,0.25);border-radius:12px;padding:8px;min-width:190px;z-index:99999;box-shadow:0 12px 40px rgba(0,0,0,0.6);">
+  <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:4px 10px 8px;">Langue de l'affiche</div>
+  <button onclick="printQR('fr')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127467;&#127479; Fran&#231;ais</button>
+  <button onclick="printQR('en')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127468;&#127463; English</button>
+  <button onclick="printQR('de')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127465;&#127466; Deutsch</button>
+  <button onclick="printQR('it')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127470;&#127481; Italiano</button>
+  <button onclick="printQR('es')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127466;&#127480; Espa&#241;ol</button>
+  <button onclick="printQR('pt')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127477;&#127481; Portugu&#234;s</button>
+  <button onclick="printQR('nl')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127475;&#127473; Nederlands</button>
+  <button onclick="printQR('pl')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127477;&#127473; Polski</button>
+</div>
+
+<script src="/nav.js"></script>
+<script src="/footer.js"></script>
+</body>
+</html>
