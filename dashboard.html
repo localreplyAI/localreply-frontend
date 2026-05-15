@@ -571,123 +571,96 @@ function printQR(lang) {
   const qrCanvas = document.querySelector('#qrcode canvas');
   if (!qrCanvas) { toast('❌ QR code non disponible'); return; }
 
-  // Données de base
-  const name      = (configData && configData.business && configData.business.name) || 'Notre commerce';
-  const slug      = currentSlug || '';
+  const cfg       = window.configData || {};
+  const biz       = cfg.business || cfg;
+  const name      = biz.name || 'Commerce';
+  const slug      = window.currentSlug || '';
   const printLang = lang || 'fr';
   const url       = 'localreply.ai/' + slug;
 
   const T = {
-    fr: { scan: 'Scannez pour nous parler',       sub: 'Questions · Tarifs · Horaires · Rendez-vous', avail: '24h/24, 7j/7' },
-    en: { scan: 'Scan to chat with us',           sub: 'Questions · Prices · Hours · Appointments',   avail: '24/7'         },
-    de: { scan: 'Scannen um zu kontaktieren',     sub: 'Fragen · Preise · Zeiten · Termine',          avail: '24/7'         },
-    it: { scan: 'Scansiona per contattarci',      sub: 'Domande · Prezzi · Orari · Appuntamenti',     avail: '24/7'         },
-    es: { scan: 'Escanee para contactarnos',      sub: 'Preguntas · Precios · Horarios · Citas',      avail: '24/7'         },
-    pt: { scan: 'Digitalize para contactar',      sub: 'Perguntas · Precos · Horarios · Consultas',   avail: '24/7'         },
-    nl: { scan: 'Scan om ons te contacteren',     sub: 'Vragen · Prijzen · Uren · Afspraken',         avail: '24/7'         },
-    pl: { scan: 'Zeskanuj aby sie skontaktowac',  sub: 'Pytania · Ceny · Godziny · Wizyty',           avail: '24/7'         },
+    fr: { scan: 'Scannez pour nous parler',      sub: 'Questions · Tarifs · Horaires · RDV', avail: '24h/24, 7j/7' },
+    en: { scan: 'Scan to chat with us',          sub: 'Questions · Prices · Hours · Appts',  avail: '24/7' },
+    de: { scan: 'Scannen Sie um uns zu erreichen', sub: 'Fragen · Preise · Zeiten · Termine', avail: '24/7' },
+    it: { scan: 'Scansiona per contattarci',     sub: 'Domande · Prezzi · Orari · Appuntamenti', avail: '24/7' },
+    es: { scan: 'Escanee para contactarnos',     sub: 'Preguntas · Precios · Horarios · Citas', avail: '24/7' },
+    pt: { scan: 'Digitalize para contactar',     sub: 'Perguntas · Precos · Horarios · Consultas', avail: '24/7' },
+    nl: { scan: 'Scan om ons te contacteren',    sub: 'Vragen · Prijzen · Uren · Afspraken', avail: '24/7' },
+    pl: { scan: 'Zeskanuj aby sie skontaktowac', sub: 'Pytania · Ceny · Godziny · Wizyty',   avail: '24/7' },
   };
   const t = T[printLang] || T.fr;
 
-  // Canvas A5 @ 150dpi → 874x1240 px
-  const W = 874, H = 1240;
-  const cv = document.createElement('canvas');
-  cv.width = W; cv.height = H;
-  const ctx = cv.getContext('2d');
+  try {
+    // Canvas A5 portrait
+    const W = 794, H = 1123;
+    const cv = document.createElement('canvas');
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext('2d');
 
-  // Fond blanc
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, W, H);
+    // Fond blanc
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, W, H);
 
-  // Barre top gradient
-  const gTop = ctx.createLinearGradient(0,0,W,0);
-  gTop.addColorStop(0, '#0052CC');
-  gTop.addColorStop(1, '#00D4FF');
-  ctx.fillStyle = gTop;
-  ctx.fillRect(0, 0, W, 14);
+    // Barre top
+    const g = ctx.createLinearGradient(0,0,W,0);
+    g.addColorStop(0,'#0052CC'); g.addColorStop(1,'#00D4FF');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,12);
 
-  // Nom du commerce
-  ctx.fillStyle = '#0A1628';
-  ctx.font = 'bold 52px Arial';
-  ctx.textAlign = 'center';
-  const nameText = name.length > 24 ? name.substring(0,24)+'…' : name;
-  ctx.fillText(nameText, W/2, 120);
+    // Nom
+    ctx.fillStyle = '#0A1628';
+    ctx.font = 'bold 48px Arial'; ctx.textAlign = 'center';
+    ctx.fillText(name.length > 26 ? name.substring(0,26)+'...' : name, W/2, 110);
 
-  // URL
-  ctx.fillStyle = '#0052CC';
-  ctx.font = '28px Arial';
-  ctx.fillText(url, W/2, 170);
+    // URL
+    ctx.fillStyle = '#0052CC'; ctx.font = '26px Arial';
+    ctx.fillText(url, W/2, 155);
 
-  // Ligne séparatrice
-  const gDiv = ctx.createLinearGradient(W/2-50,0,W/2+50,0);
-  gDiv.addColorStop(0, '#0052CC');
-  gDiv.addColorStop(1, '#00D4FF');
-  ctx.fillStyle = gDiv;
-  ctx.fillRect(W/2-50, 195, 100, 4);
+    // Séparateur
+    ctx.fillStyle = '#E8F0FF'; ctx.fillRect(W/2-60,178,120,3);
 
-  // Message principal (scan)
-  ctx.fillStyle = '#0A1628';
-  ctx.font = 'bold 40px Arial';
-  ctx.fillText(t.scan, W/2, 265);
+    // Message
+    ctx.fillStyle = '#0A1628'; ctx.font = 'bold 34px Arial';
+    ctx.fillText(t.scan, W/2, 240);
 
-  // QR code — centré
-  const qrSize = 380;
-  const qrX = (W - qrSize) / 2;
-  const qrY = 295;
+    // QR
+    var qrSize = 360, qrX = (W-qrSize)/2, qrY = 270;
+    ctx.strokeStyle = '#E8F0FF'; ctx.lineWidth = 4;
+    ctx.strokeRect(qrX-12, qrY-12, qrSize+24, qrSize+24);
+    ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
 
-  // Cadre QR
-  ctx.strokeStyle = '#E8F0FF';
-  ctx.lineWidth = 6;
-  ctx.beginPath();
-  ctx.roundRect(qrX-16, qrY-16, qrSize+32, qrSize+32, 20);
-  ctx.stroke();
-  ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+    // Sous-texte
+    ctx.fillStyle = '#444444'; ctx.font = '22px Arial';
+    ctx.fillText(t.sub, W/2, qrY+qrSize+60);
+    ctx.fillStyle = '#0052CC'; ctx.font = 'bold 26px Arial';
+    ctx.fillText(t.avail, W/2, qrY+qrSize+100);
 
-  // Sous-message
-  ctx.fillStyle = '#444444';
-  ctx.font = '26px Arial';
-  ctx.fillText(t.sub, W/2, qrY + qrSize + 70);
+    // Pills texte
+    ctx.fillStyle = '#888888'; ctx.font = '18px Arial';
+    ctx.fillText('8 langues  ·  Sans application  ·  Réponse instantanée', W/2, qrY+qrSize+150);
 
-  // Disponibilité
-  ctx.fillStyle = '#0052CC';
-  ctx.font = 'bold 30px Arial';
-  ctx.fillText(t.avail, W/2, qrY + qrSize + 120);
+    // Footer
+    ctx.fillStyle = '#eeeeee'; ctx.fillRect(40, H-70, W-80, 1);
+    ctx.fillStyle = '#aaaaaa'; ctx.font = '16px Arial';
+    ctx.textAlign = 'left'; ctx.fillText('Powered by LocalReply AI', 40, H-40);
+    ctx.textAlign = 'right'; ctx.fillText('FR · EN · DE · IT · ES · PT · NL · PL', W-40, H-40);
 
-  // Pills
-  ctx.font = '22px Arial';
-  const pills = ['8 langues', 'Sans application', 'Réponse instantanée'];
-  const pillW = 200, pillH = 40, pillGap = 20;
-  const pillTotalW = pills.length * pillW + (pills.length-1) * pillGap;
-  let px = (W - pillTotalW) / 2;
-  const py = qrY + qrSize + 160;
-  pills.forEach(function(pill) {
-    ctx.fillStyle = '#F5F7FA';
-    ctx.beginPath();
-    ctx.roundRect(px, py, pillW, pillH, 20);
-    ctx.fill();
-    ctx.fillStyle = '#555';
-    ctx.fillText(pill, px + pillW/2, py + 27);
-    px += pillW + pillGap;
-  });
-
-  // Footer
-  ctx.fillStyle = '#cccccc';
-  ctx.fillRect(40, H-90, W-80, 1);
-  ctx.font = '20px Arial';
-  ctx.fillStyle = '#aaaaaa';
-  ctx.textAlign = 'left';
-  ctx.fillText('Powered by LocalReply AI', 40, H-55);
-  ctx.textAlign = 'right';
-  ctx.fillText('🇫🇷 🇬🇧 🇩🇪 🇮🇹 🇪🇸 🇵🇹 🇳🇱 🇵🇱', W-40, H-55);
-
-  // Téléchargement PNG direct
-  const filename = 'QR-LocalReply-' + name.replace(/[^a-zA-Z0-9]/g,'-') + '-' + printLang + '.png';
-  const a = document.createElement('a');
-  a.href = cv.toDataURL('image/png');
-  a.download = filename;
-  a.click();
-  toast('✅ Image téléchargée — imprimez-la en format A5');
+    // Export PNG
+    var dataUrl = cv.toDataURL('image/png');
+    var fname = 'QR-' + name.replace(/[^a-zA-Z0-9]/g,'-') + '-' + printLang + '.png';
+    var a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = fname;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function(){ document.body.removeChild(a); }, 1000);
+    toast('✅ Image téléchargée · Imprimez en A5');
+  } catch(e) {
+    console.error('printQR error:', e);
+    toast('❌ Erreur: ' + e.message);
+  }
 }
+
 
 // ─ Alertes ─
 function renderAlerts(pendingApts, pendingReqs) {
@@ -1008,6 +981,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Score santé IA (instantané, pas d'appel API)
   window._lastConfig = configData?.business_config || configData;
+  window.configData  = configData;
+  window.currentSlug = slug;
   computeHealthScore(configData, calConnected);
   renderOnboarding(configData, calConnected);
   loadSystemStatus(configData, calConnected, effectivePro, isTrial);
