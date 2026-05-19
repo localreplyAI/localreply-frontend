@@ -127,6 +127,38 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             </a>
           `}
 
+          <!-- Sélecteur de langue -->
+          <div id="lr-lang-wrap" style="position:relative;">
+            <button id="lr-lang-btn" onclick="lrToggleLangMenu()" style="
+              background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);
+              border-radius:8px;color:#fff;font-size:13px;font-weight:600;
+              padding:7px 12px;cursor:pointer;white-space:nowrap;
+              transition:background 0.2s;
+            "
+            onmouseenter="this.style.background='rgba(255,255,255,0.12)'"
+            onmouseleave="this.style.background='rgba(255,255,255,0.07)'">
+              🌍 FR ▾
+            </button>
+            <div id="lr-lang-dd" style="
+              display:none;position:absolute;top:calc(100% + 8px);right:0;
+              background:#0D1B2E;border:1px solid rgba(0,212,255,0.2);
+              border-radius:10px;padding:6px;min-width:160px;
+              box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:9999;
+            ">
+              ${['fr:🇫🇷:Français','en:🇬🇧:English','de:🇩🇪:Deutsch','it:🇮🇹:Italiano','es:🇪🇸:Español','pt:🇵🇹:Português','nl:🇳🇱:Nederlands','pl:🇵🇱:Polski'].map(l => {
+                const [code,flag,name] = l.split(':');
+                return `<button onclick="lrApplyLang('${code}')" style="
+                  width:100%;padding:8px 10px;background:none;border:none;
+                  color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;
+                  text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px;
+                " onmouseover="this.style.background='rgba(0,212,255,0.1)'"
+                   onmouseout="this.style.background='none'">
+                  ${flag} ${name}
+                </button>`;
+              }).join('')}
+            </div>
+          </div>
+
           <!-- Burger mobile -->
           <button id="lr-burger" onclick="lrToggleMenu()" style="
             display:none;background:transparent;border:none;cursor:pointer;
