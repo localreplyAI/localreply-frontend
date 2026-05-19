@@ -1198,6 +1198,123 @@
   .lrh-qr-card-code { width: 116px; height: 116px; }
   .lrh-qr-card-code .lrh-qrsec-qr { width: 116px !important; height: 116px !important; }
 }
+
+.lrh-inuse {
+  padding: 100px 24px;
+  background: transparent;
+}
+.lrh-inuse-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.lrh-inuse-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.lrh-inuse-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+.lrh-inuse-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.lrh-inuse-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.lrh-inuse-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.lrh-inuse-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,0.25);
+}
+.lrh-inuse-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.lrh-inuse-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.lrh-inuse-card:hover .lrh-inuse-img-wrap img {
+  transform: scale(1.04);
+}
+.lrh-inuse-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+}
+.lrh-inuse-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.lrh-inuse-caption strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.lrh-inuse-caption span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+}
+@media (max-width: 900px) {
+  .lrh-inuse-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .lrh-inuse-grid { grid-template-columns: 1fr; }
+  .lrh-inuse { padding: 60px 16px; }
+}
+.lrh-inuse-more {
+  text-align: center;
+  margin-top: 40px;
+  padding: 28px 24px;
+  border: 1px dashed rgba(0,212,255,0.2);
+  border-radius: 14px;
+  background: rgba(0,212,255,0.03);
+}
+.lrh-inuse-more-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.lrh-inuse-more-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,212,255,0.35);
+}
+.lrh-inuse-more p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+}
+.lrh-inuse-more strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -1410,7 +1527,92 @@
 
 
 
-  <section class="lrh-why">
+  
+<!-- ═══ SECTION : QR EN SITUATION ═══ -->
+<section class="lrh-inuse">
+  <div class="lrh-inuse-inner">
+    <div class="lrh-inuse-header">
+      <div class="lrh-label" style="text-align:center;display:block;margin-bottom:16px;">Partout où sont vos clients</div>
+      <h2 class="lrh-inuse-title">Un scan suffit.<br><span class="lrh-gradient-text">Vos clients vous parlent.</span></h2>
+      <p class="lrh-inuse-sub">En vitrine, sur table, sur vos réseaux — un simple QR code ou lien, et votre IA répond instantanément. Sans application, sans inscription.</p>
+    </div>
+    <div class="lrh-inuse-grid">
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-vitrine.jpg" alt="QR code sur vitrine de salon de coiffure à Paris" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🪟</span>
+          <div>
+            <strong>Vitrine & porte d'entrée</strong>
+            <span>Affiche A5 à l'entrée</span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-table.jpg" alt="QR code sur menu de restaurant scanné par un client" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🍽️</span>
+          <div>
+            <strong>Menu & tables</strong>
+            <span>Questions, horaires, allergènes</span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-reception.jpg" alt="QR code à l'accueil d'un salon beauté" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🏢</span>
+          <div>
+            <strong>Comptoir d'accueil</strong>
+            <span>Scanner pendant l'attente</span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-carte-visite.jpg" alt="Cartes de visite avec QR code localreply" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">💼</span>
+          <div>
+            <strong>Carte de visite</strong>
+            <span>Votre IA toujours avec vous</span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-instagram.jpg" alt="Lien LocalReply dans la bio Instagram d'un salon" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">📱</span>
+          <div>
+            <strong>Bio réseaux sociaux</strong>
+            <span>Instagram, TikTok, Facebook</span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-menu.jpg" alt="Client scannant un QR code sur un menu de brasserie" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">📋</span>
+          <div>
+            <strong>Flyers & affiches</strong>
+            <span>QR sur tous vos supports print</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="lrh-why">
     <div class="lrh-why-inner">
       <div class="lrh-section-eyebrow">Pourquoi choisir LocalReply</div>
       <h2 class="lrh-section-title">Quelle que soit votre situation</h2>
