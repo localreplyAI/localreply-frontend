@@ -44,11 +44,11 @@
   const currentPath = window.location.pathname;
 
   const links = [
-    { href: '/',          label: 'Accueil'         },
-    { href: '/features',  label: 'Fonctionnalités' },
-    { href: '/pricing',   label: 'Tarifs'          },
-    { href: '/demo',      label: 'Démo'            },
-    { href: '/about',     label: 'À propos'        },
+    { href: '/',          label: 'Accueil',         i18n: 'nav_home'     },
+    { href: '/features',  label: 'Fonctionnalités', i18n: 'nav_features' },
+    { href: '/pricing',   label: 'Tarifs',          i18n: 'nav_pricing'  },
+    { href: '/demo',      label: 'Démo',            i18n: 'nav_demo'     },
+    { href: '/about',     label: 'À propos',        i18n: 'nav_about'    },
   ];
 
   const isActive = (href) => {
@@ -179,14 +179,14 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             font-size:15px;font-weight:600;transition:all 0.2s;
             color:${isActive(l.href) ? '#00D4FF' : 'rgba(255,255,255,0.8)'};
             background:${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent'};
-          ">${l.label}</a>
+          "><span data-i18n="${l.i18n}">${l.label}</span></a>
         `).join('')}
         <div style="height:1px;background:rgba(255,255,255,0.08);margin:12px 0;"></div>
         ${isLoggedIn ? `
           <a href="/dashboard" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;">Dashboard →</a>
         ` : `
-          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;border:1px solid rgba(255,255,255,0.2);margin-bottom:8px;">Connexion</a>
-          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;">Essai gratuit 14 jours →</a>
+          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;border:1px solid rgba(255,255,255,0.2);margin-bottom:8px;"><span data-i18n="nav_login">Connexion</span></a>
+          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;"><span data-i18n="nav_cta">Essai gratuit →</span></a>
         `}
       </div>
     </nav>
