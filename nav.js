@@ -89,7 +89,7 @@
             onmouseenter="this.style.color='#fff';this.style.background='rgba(255,255,255,0.07)'"
             onmouseleave="this.style.color='${isActive(l.href) ? '#00D4FF' : 'rgba(255,255,255,0.7)'}';\
 this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent'}'">
-              ${l.label}
+              <span data-i18n="${l.i18n}">${l.label}</span>
             </a>
           `).join('')}
         </div>
@@ -114,7 +114,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             "
             onmouseenter="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='#fff'"
             onmouseleave="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.8)'">
-              Connexion
+              <span data-i18n="nav_login">Connexion</span>
             </a>
             <a href="/auth" style="
               padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);
@@ -123,7 +123,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             "
             onmouseenter="this.style.transform='translateY(-1px)'"
             onmouseleave="this.style.transform='none'">
-              Essai gratuit →
+              <span data-i18n="nav_cta">Essai gratuit →</span>
             </a>
           `}
 
@@ -222,4 +222,55 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
 
   window.addEventListener('resize', lrCheckResponsive);
   lrCheckResponsive();
+
+  // Appliquer la langue sauvegardée à la navbar dès l'injection
+  // (sur les pages sans i18n complet, seules les clés nav_* sont disponibles)
+  const _navLang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0, 2).toLowerCase();
+  const _navTranslations = {
+    fr: { nav_home: 'Accueil', nav_features: 'Fonctionnalités', nav_pricing: 'Tarifs', nav_demo: 'Démo', nav_about: 'À propos', nav_login: 'Connexion', nav_cta: 'Essai gratuit →' },
+    en: { nav_home: 'Home', nav_features: 'Features', nav_pricing: 'Pricing', nav_demo: 'Demo', nav_about: 'About', nav_login: 'Sign in', nav_cta: 'Free trial →' },
+    de: { nav_home: 'Startseite', nav_features: 'Funktionen', nav_pricing: 'Preise', nav_demo: 'Demo', nav_about: 'Über uns', nav_login: 'Anmelden', nav_cta: 'Kostenlos testen →' },
+    it: { nav_home: 'Home', nav_features: 'Funzionalità', nav_pricing: 'Prezzi', nav_demo: 'Demo', nav_about: 'Chi siamo', nav_login: 'Accedi', nav_cta: 'Prova gratuita →' },
+    es: { nav_home: 'Inicio', nav_features: 'Funcionalidades', nav_pricing: 'Precios', nav_demo: 'Demo', nav_about: 'Acerca de', nav_login: 'Iniciar sesión', nav_cta: 'Prueba gratuita →' },
+    pt: { nav_home: 'Início', nav_features: 'Funcionalidades', nav_pricing: 'Preços', nav_demo: 'Demo', nav_about: 'Sobre', nav_login: 'Entrar', nav_cta: 'Teste gratuito →' },
+    nl: { nav_home: 'Home', nav_features: 'Functies', nav_pricing: 'Prijzen', nav_demo: 'Demo', nav_about: 'Over ons', nav_login: 'Inloggen', nav_cta: 'Gratis proberen →' },
+    pl: { nav_home: 'Strona główna', nav_features: 'Funkcje', nav_pricing: 'Ceny', nav_demo: 'Demo', nav_about: 'O nas', nav_login: 'Zaloguj się', nav_cta: 'Bezpłatny test →' },
+  };
+
+  function lrApplyNavLang(lang) {
+    const t = _navTranslations[lang] || _navTranslations.fr;
+    // Mettre à jour tous les éléments data-i18n dans la navbar uniquement
+    const navbar = document.getElementById('lr-navbar');
+    if (navbar) {
+      navbar.querySelectorAll('[data-i18n]').forEach(function(el) {
+        const key = el.getAttribute('data-i18n');
+        if (t[key] !== undefined) el.textContent = t[key];
+      });
+    }
+    // Mettre à jour le bouton de langue
+    const btn = document.getElementById('lr-lang-btn');
+    const langMap = { fr:'🇫🇷', en:'🇬🇧', de:'🇩🇪', it:'🇮🇹', es:'🇪🇸', pt:'🇵🇹', nl:'🇳🇱', pl:'🇵🇱' };
+    if (btn) btn.innerHTML = (langMap[lang] || '🌍') + ' ' + lang.toUpperCase() + ' ▾';
+    localStorage.setItem('lr_lang', lang);
+  }
+
+  // Définir lrApplyLang globalement si elle n'existe pas encore (pages sans i18n complet)
+  if (typeof window.lrApplyLang === 'undefined') {
+    window.lrApplyLang = function(lang) {
+      lrApplyNavLang(lang);
+      const dd = document.getElementById('lr-lang-dd');
+      if (dd) dd.style.display = 'none';
+    };
+  } else {
+    // Sur home.html, lrApplyLang existe déjà — on la patch pour aussi mettre à jour la navbar
+    const _originalApplyLang = window.lrApplyLang;
+    window.lrApplyLang = function(lang) {
+      _originalApplyLang(lang);
+      lrApplyNavLang(lang);
+    };
+  }
+
+  // Appliquer la langue au chargement
+  const _supportedNavLangs = Object.keys(_navTranslations);
+  lrApplyNavLang(_supportedNavLangs.indexOf(_navLang) >= 0 ? _navLang : 'fr');
 })();
