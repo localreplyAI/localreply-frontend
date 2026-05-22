@@ -244,14 +244,30 @@ document.querySelectorAll('.sr').forEach(function(el){obs.observe(el);});
   (function(){
     var lang = localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
     var sup = Object.keys(LRA_T);
-    var t = LRA_T[sup.indexOf(lang)>=0?lang:'fr'];
-    document.querySelectorAll('[data-i18n]').forEach(function(el){
-      var key=el.getAttribute('data-i18n');
-      if(t[key]!==undefined) el.innerHTML=t[key];
-    });
-    document.documentElement.lang=lang;
-    var titles={fr:'À propos',en:'About',de:'Über uns',it:'Chi siamo',es:'Acerca de',pt:'Sobre',nl:'Over ons',pl:'O nas'};
-    document.title=(titles[lang]||'À propos')+' — LocalReply';
+    var activeLang = sup.indexOf(lang)>=0?lang:'fr';
+
+    function applyPageLang(l) {
+      var t = LRA_T[sup.indexOf(l)>=0?l:'fr'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-i18n');
+        if(t[key]!==undefined) el.innerHTML=t[key];
+      });
+      document.documentElement.lang=l;
+      var titles={fr:'À propos',en:'About',de:'Über uns',it:'Chi siamo',es:'Acerca de',pt:'Sobre',nl:'Over ons',pl:'O nas'};
+      document.title=(titles[l]||'À propos')+' — LocalReply';
+    }
+
+    window.lrApplyLang = function(l) {
+      localStorage.setItem('lr_lang', l);
+      applyPageLang(l);
+      var btn=document.getElementById('lr-lang-btn');
+      var flags={fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'};
+      if(btn) btn.innerHTML=(flags[l]||'🌍')+' '+l.toUpperCase()+' ▾';
+      var dd=document.getElementById('lr-lang-dd');
+      if(dd) dd.style.display='none';
+    };
+
+    applyPageLang(activeLang);
   })();
   </script>
 </html>
