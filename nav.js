@@ -220,6 +220,12 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     if (burger) burger.textContent = open ? '☰' : '✕';
   };
 
+  window.lrToggleLangMenu = function() {
+    const dd = document.getElementById('lr-lang-dd');
+    if (!dd) return;
+    dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+  };
+
   window.addEventListener('resize', lrCheckResponsive);
   lrCheckResponsive();
 
