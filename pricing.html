@@ -467,13 +467,13 @@
 
   <!-- HERO -->
   <div class="lrp-hero-bg">
-    <div class="lrp-eyebrow">💰 Tarifs simples & transparents</div>
-    <h1 class="lrp-h1">Votre commerce répond<br>24/7 sans vous</h1>
-    <p class="lrp-sub">Choisissez votre plan. Testez gratuitement pendant 14 jours.</p>
+    <div class="lrp-eyebrow" data-i18n="p_eyebrow">💰 Tarifs simples & transparents</div>
+    <h1 class="lrp-h1"><span data-i18n="p_title1">Votre commerce répond</span><br><span data-i18n="p_title2">24/7 sans vous</span></h1>
+    <p class="lrp-sub" data-i18n="p_sub">Choisissez votre plan. Testez gratuitement pendant 14 jours.</p>
     <div class="lrp-toggle">
-      <div class="lrp-tog-opt active" id="togM" onclick="lrpBilling('monthly')">Mensuel</div>
+      <div class="lrp-tog-opt active" id="togM" onclick="lrpBilling('monthly')" data-i18n="p_monthly">Mensuel</div>
       <div class="lrp-tog-opt" id="togY" onclick="lrpBilling('yearly')">
-        Annuel <span class="lrp-tog-badge">-20%</span>
+        <span data-i18n="p_yearly">Annuel</span> <span class="lrp-tog-badge" data-i18n="p_yearly_badge">-20%</span>
       </div>
     </div>
   </div>
@@ -486,50 +486,50 @@
       <div class="lrp-price-row">
         <span class="lrp-curr">€</span>
         <span class="lrp-price" id="pStd">39</span>
-        <span class="lrp-per">/mois</span>
+        <span class="lrp-per" data-i18n="p_per_month">/mois</span>
       </div>
-      <p class="lrp-desc" id="dStd">Idéal pour démarrer et automatiser votre accueil client.</p>
+      <p class="lrp-desc" id="dStd" data-i18n="p_std_desc">Idéal pour démarrer et automatiser votre accueil client.</p>
       <div class="lrp-hr"></div>
       <ul class="lrp-feats">
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> IA 8 langues européennes</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Conversations illimitées</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Prise de RDV — 4 modes <span style="font-size:12px;color:rgba(255,255,255,0.45);">(Calendar, lien, manuel, aucun)</span></li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Confirmations par email</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Dashboard & métriques basiques</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Résumés IA hebdomadaires</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Lien public + QR Code</li>
-        <li class="lrp-feat"><span class="lrp-ck y">✓</span> Support email</li>
-        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> SMS non inclus</li>
-        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> Pas d'analytics</li>
-        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> Personnalité IA ajustable</li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f1">IA 8 langues européennes</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f2">Conversations illimitées</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f3">Prise de RDV — 4 modes</span> <span style="font-size:12px;color:rgba(255,255,255,0.45);" data-i18n="p_f3b">(Calendar, lien, manuel, aucun)</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f4">Confirmations par email</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f5">Dashboard & métriques basiques</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f6">Résumés IA hebdomadaires</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f7">Lien public + QR Code</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f8">Support email</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f9">SMS non inclus</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f10">Pas d'analytics</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f11">Personnalité IA ajustable</span></li>
       </ul>
-      <a href="/auth?plan=standard&billing=monthly" id="ctaStd" class="lrp-cta lrp-cta-std">Commencer gratuitement</a>
-      <p class="lrp-note">14 jours gratuits inclus</p>
+      <a href="/auth?plan=standard&billing=monthly" id="ctaStd" class="lrp-cta lrp-cta-std" data-i18n="p_std_cta">Commencer gratuitement</a>
+      <p class="lrp-note" data-i18n="p_trial_note">14 jours gratuits inclus</p>
     </div>
 
     <div class="lrp-card lrp-card-pro">
-      <div class="lrp-badge">⭐ Recommandé</div>
+      <div class="lrp-badge" data-i18n="p_recommended">⭐ Recommandé</div>
       <div class="lrp-plan-name">Pro</div>
       <div class="lrp-price-row">
         <span class="lrp-curr" style="color:rgba(0,212,255,0.5);">€</span>
         <span class="lrp-price" id="pPro">49</span>
-        <span class="lrp-per">/mois</span>
+        <span class="lrp-per" data-i18n="p_per_month">/mois</span>
       </div>
-      <p class="lrp-desc" id="dPro" style="color:rgba(255,255,255,0.55);">Pour maximiser vos résultats et ne rater aucune opportunité.</p>
+      <p class="lrp-desc" id="dPro" style="color:rgba(255,255,255,0.55);" data-i18n="p_pro_desc">Pour maximiser vos résultats et ne rater aucune opportunité.</p>
       <div class="lrp-hr"></div>
       <ul class="lrp-feats">
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong>Tout le plan Standard</strong></li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong>Conversations illimitées</strong></li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong>SMS alertes business</strong> <span style="font-size:12px;color:rgba(255,255,255,0.5);">(RDV, urgences, questions)</span></li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong>Analytics & insights (90 jours)</strong></li>
-                <li class="lrp-feat"><span class="lrp-ck yp">✓</span> Personnalité IA ajustable</li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> Alertes urgences temps réel</li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong>Résumés IA quotidiens</strong></li>
-                <li class="lrp-feat"><span class="lrp-ck yp">✓</span> Support prioritaire</li>
-        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> Nouvelles features en avant-première</li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf1">Tout le plan Standard</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf2">Conversations illimitées</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf3">SMS alertes business</strong> <span style="font-size:12px;color:rgba(255,255,255,0.5);" data-i18n="p_pf3b">(RDV, urgences, questions)</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf4">Analytics & insights (90 jours)</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf5">Personnalité IA ajustable</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf6">Alertes urgences temps réel</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf7">Résumés IA quotidiens</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf8">Support prioritaire</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf9">Nouvelles features en avant-première</span></li>
       </ul>
-      <a href="/auth?plan=pro&billing=monthly" id="ctaPro" class="lrp-cta lrp-cta-pro">Démarrer avec Pro</a>
-      <p class="lrp-note" style="color:rgba(255,255,255,0.2);">14 jours gratuits inclus</p>
+      <a href="/auth?plan=pro&billing=monthly" id="ctaPro" class="lrp-cta lrp-cta-pro" data-i18n="p_pro_cta">Démarrer avec Pro</a>
+      <p class="lrp-note" style="color:rgba(255,255,255,0.2);" data-i18n="p_trial_note">14 jours gratuits inclus</p>
     </div>
 
   </div>
@@ -539,10 +539,10 @@
     <div class="lrp-trial">
       <div class="lrp-trial-icon">🎁</div>
       <div class="lrp-trial-txt">
-        <div class="lrp-trial-title">Essai gratuit 14 jours — Plan Pro complet</div>
-        <div class="lrp-trial-sub">Toutes les fonctionnalités Pro débloquées pendant 14 jours. Annulez à tout moment.</div>
+        <div class="lrp-trial-title" data-i18n="p_trial_title">Essai gratuit 14 jours — Plan Pro complet</div>
+        <div class="lrp-trial-sub" data-i18n="p_trial_sub">Toutes les fonctionnalités Pro débloquées pendant 14 jours. Annulez à tout moment.</div>
       </div>
-      <a href="/auth" class="lrp-trial-btn">Essayer gratuitement →</a>
+      <a href="/auth" class="lrp-trial-btn" data-i18n="p_trial_btn">Essayer gratuitement →</a>
     </div>
   </div>
 
@@ -551,8 +551,8 @@
 
     <!-- Comparatif -->
     <div class="lrp-table-wrap">
-      <div class="lrp-sec-label">Comparatif détaillé</div>
-      <h2 class="lrp-sec-title">Tout ce qui est inclus</h2>
+      <div class="lrp-sec-label" data-i18n="p_comp_label">Comparatif détaillé</div>
+      <h2 class="lrp-sec-title" data-i18n="p_comp_title">Tout ce qui est inclus</h2>
       <div class="lrp-table">
         <div class="lrp-thead">
           <div class="lrp-th">Fonctionnalité</div>
@@ -593,57 +593,57 @@
 
     <!-- FAQ -->
     <div class="lrp-faq-wrap">
-      <div class="lrp-sec-label">FAQ</div>
-      <h2 class="lrp-sec-title">Questions fréquentes</h2>
+      <div class="lrp-sec-label" data-i18n="p_faq_label">FAQ</div>
+      <h2 class="lrp-sec-title" data-i18n="p_faq_title">Questions fréquentes</h2>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Puis-je choisir la fréquence des résumés IA ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Oui. Depuis votre dashboard vous pouvez activer, désactiver ou changer la fréquence à tout moment. L'option quotidienne est réservée au Plan Pro.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq1_q">Puis-je choisir la fréquence des résumés IA ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq1_a">Oui. Depuis votre dashboard vous pouvez activer, désactiver ou changer la fréquence à tout moment. L'option quotidienne est réservée au Plan Pro.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Puis-je annuler à tout moment ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Oui. Annulez depuis votre tableau de bord en quelques clics. Vous gardez l'accès jusqu'à la fin de la période payée.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq2_q">Puis-je annuler à tout moment ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq2_a">Oui. Annulez depuis votre tableau de bord en quelques clics. Vous gardez l'accès jusqu'à la fin de la période payée.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Comment fonctionne l'essai gratuit 14 jours ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Accès complet au Plan Pro pendant 14 jours. Une carte bancaire est requise au démarrage — vous ne serez prélevé qu'après la fin du trial. Annulez avant et vous ne payez rien.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq3_q">Comment fonctionne l'essai gratuit 14 jours ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq3_a">Accès complet au Plan Pro pendant 14 jours. Une carte bancaire est requise au démarrage — vous ne serez prélevé qu'après la fin du trial. Annulez avant et vous ne payez rien.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Mes données de paiement sont-elles sécurisées ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Absolument. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte bancaire.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq4_q">Mes données de paiement sont-elles sécurisées ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq4_a">Absolument. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte bancaire.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Puis-je changer de plan après l'inscription ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Oui, à tout moment depuis votre espace Abonnement. Le changement est immédiat et la facturation est proratisée automatiquement par Stripe.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq5_q">Puis-je changer de plan après l'inscription ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq5_a">Oui, à tout moment depuis votre espace Abonnement. Le changement est immédiat et la facturation est proratisée automatiquement par Stripe.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">Que se passe-t-il si mon client parle une langue que je ne comprends pas ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Pas de problème. L'IA répond directement dans la langue du client. Dans votre dashboard, les questions sont automatiquement traduites en français pour vous. Quand vous répondez en français, votre réponse est retraduite dans la langue du client.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq6_q">Que se passe-t-il si mon client parle une langue que je ne comprends pas ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq6_a">Pas de problème. L'IA répond directement dans la langue du client. Dans votre dashboard, les questions sont automatiquement traduites en français pour vous.</div>
       </div>
       <div class="lrp-faq-item">
-        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q">L'IA parle vraiment 8 langues ?</span><div class="lrp-faq-ico">+</div></button>
-        <div class="lrp-faq-ans">Oui. LocalReply détecte automatiquement la langue du client et répond dans la même langue : Français, Anglais, Allemand, Italien, Espagnol, Portugais, Néerlandais et Polonais. Idéal pour les commerces en Suisse, Belgique, Luxembourg, et toute l'Europe.</div>
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq7_q">L'IA parle vraiment 8 langues ?</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq7_a">Oui. LocalReply détecte automatiquement la langue du client et répond dans la même langue : Français, Anglais, Allemand, Italien, Espagnol, Portugais, Néerlandais et Polonais.</div>
       </div>
     </div>
 
     <!-- Footer CTA -->
     <div class="lrp-footer">
       <div class="lrp-footer-inner">
-        <h2 class="lrp-footer-title">Prêt à démarrer ?</h2>
-        <p class="lrp-footer-sub">Rejoignez les commerces qui répondent à leurs clients 24h/24 — même pendant votre sommeil.</p>
+        <h2 class="lrp-footer-title" data-i18n="p_footer_title">Prêt à démarrer ?</h2>
+        <p class="lrp-footer-sub" data-i18n="p_footer_sub">Rejoignez les commerces qui répondent à leurs clients 24h/24 — même pendant votre sommeil.</p>
         <div class="lrp-footer-btns">
-          <a href="/auth" class="lrp-btn-w">Essai gratuit 14 jours →</a>
-          <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrp-btn-o">Voir la démo live</a>
+          <a href="/auth" class="lrp-btn-w" data-i18n="p_footer_cta1">Essai gratuit 14 jours →</a>
+          <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrp-btn-o" data-i18n="p_footer_cta2">Voir la démo live</a>
         </div>
       </div>
     </div>
 
     <!-- Trust -->
     <div class="lrp-trust">
-      <div class="lrp-trust-item"><span>🔒</span><span>Paiements Stripe</span></div>
-      <div class="lrp-trust-item"><span>🛡️</span><span>PCI DSS certifié</span></div>
-      <div class="lrp-trust-item"><span>🇪🇺</span><span>Hébergement EU</span></div>
-      <div class="lrp-trust-item"><span>🔄</span><span>Annulable à tout moment</span></div>
-      <div class="lrp-trust-item"><span>🎁</span><span>14 jours gratuits</span></div>
+      <div class="lrp-trust-item"><span>🔒</span><span data-i18n="p_trust1">Paiements Stripe</span></div>
+      <div class="lrp-trust-item"><span>🛡️</span><span data-i18n="p_trust2">PCI DSS certifié</span></div>
+      <div class="lrp-trust-item"><span>🇪🇺</span><span data-i18n="p_trust3">Hébergement EU</span></div>
+      <div class="lrp-trust-item"><span>🔄</span><span data-i18n="p_trust4">Annulable à tout moment</span></div>
+      <div class="lrp-trust-item"><span>🎁</span><span data-i18n="p_trust5">14 jours gratuits</span></div>
     </div>
 
   </div>
@@ -660,11 +660,13 @@ function lrpBilling(type) {
   const ps = document.getElementById('pStd'), pp = document.getElementById('pPro');
   const ds = document.getElementById('dStd'), dp = document.getElementById('dPro');
   [ps,pp].forEach(el => { el.style.opacity='0'; el.style.transform='translateY(-5px)'; });
+  var lang = localStorage.getItem('lr_lang')||'fr';
+  var t = (typeof LRP_T!=='undefined' && LRP_T[lang]) ? LRP_T[lang] : {};
   setTimeout(() => {
     ps.textContent = lrpPrices.std[type];
     pp.textContent = lrpPrices.pro[type];
-    ds.textContent = type==='yearly' ? 'Facturé 468€/an — économisez 96€ vs mensuel.' : 'Idéal pour démarrer et automatiser votre accueil client.';
-    dp.textContent = type==='yearly' ? 'Facturé 588€/an — économisez 120€ vs mensuel.' : 'Pour maximiser vos résultats et ne rater aucune opportunité.';
+    ds.textContent = type==='yearly' ? (t.p_std_desc_y||'Facturé 468€/an — économisez 96€ vs mensuel.') : (t.p_std_desc||'Idéal pour démarrer et automatiser votre accueil client.');
+    dp.textContent = type==='yearly' ? (t.p_pro_desc_y||'Facturé 588€/an — économisez 120€ vs mensuel.') : (t.p_pro_desc||'Pour maximiser vos résultats et ne rater aucune opportunité.');
     [ps,pp].forEach(el => { el.style.transition='all 0.25s'; el.style.opacity='1'; el.style.transform='none'; });
 
     // Mettre à jour les liens CTA avec le billing
@@ -690,5 +692,28 @@ function lrpFaq(btn) {
 
   <script src="/nav.js"></script>
   <script src="/footer.js"></script>
-</body>
+  <script>
+  var LRP_T = {
+    fr:{p_eyebrow:'💰 Tarifs simples & transparents',p_title1:'Votre commerce répond',p_title2:'24/7 sans vous',p_sub:'Choisissez votre plan. Testez gratuitement pendant 14 jours.',p_monthly:'Mensuel',p_yearly:'Annuel',p_yearly_badge:'-20%',p_per_month:'/mois',p_std_desc:'Idéal pour démarrer et automatiser votre accueil client.',p_std_desc_y:'Facturé 468€/an — économisez 96€ vs mensuel.',p_f1:'IA 8 langues européennes',p_f2:'Conversations illimitées',p_f3:'Prise de RDV — 4 modes',p_f3b:'(Calendar, lien, manuel, aucun)',p_f4:'Confirmations par email',p_f5:'Dashboard & métriques basiques',p_f6:'Résumés IA hebdomadaires',p_f7:'Lien public + QR Code',p_f8:'Support email',p_f9:'SMS non inclus',p_f10:'Pas d\'analytics',p_f11:'Personnalité IA ajustable',p_std_cta:'Commencer gratuitement',p_trial_note:'14 jours gratuits inclus',p_recommended:'⭐ Recommandé',p_pro_desc:'Pour maximiser vos résultats et ne rater aucune opportunité.',p_pro_desc_y:'Facturé 588€/an — économisez 120€ vs mensuel.',p_pf1:'Tout le plan Standard',p_pf2:'Conversations illimitées',p_pf3:'SMS alertes business',p_pf3b:'(RDV, urgences, questions)',p_pf4:'Analytics & insights (90 jours)',p_pf5:'Personnalité IA ajustable',p_pf6:'Alertes urgences temps réel',p_pf7:'Résumés IA quotidiens',p_pf8:'Support prioritaire',p_pf9:'Nouvelles features en avant-première',p_pro_cta:'Démarrer avec Pro',p_trial_title:'Essai gratuit 14 jours — Plan Pro complet',p_trial_sub:'Toutes les fonctionnalités Pro débloquées pendant 14 jours. Annulez à tout moment.',p_trial_btn:'Essayer gratuitement →',p_comp_label:'Comparatif détaillé',p_comp_title:'Tout ce qui est inclus',p_faq_label:'FAQ',p_faq_title:'Questions fréquentes',p_faq1_q:'Puis-je choisir la fréquence des résumés IA ?',p_faq1_a:'Oui. Depuis votre dashboard vous pouvez activer, désactiver ou changer la fréquence à tout moment.',p_faq2_q:'Puis-je annuler à tout moment ?',p_faq2_a:'Oui. Annulez depuis votre tableau de bord en quelques clics.',p_faq3_q:'Comment fonctionne l\'essai gratuit 14 jours ?',p_faq3_a:'Accès complet au Plan Pro pendant 14 jours. Une carte bancaire est requise — vous ne serez prélevé qu\'après la fin du trial.',p_faq4_q:'Mes données de paiement sont-elles sécurisées ?',p_faq4_a:'Absolument. Paiements gérés par Stripe, certifié PCI DSS niveau 1.',p_faq5_q:'Puis-je changer de plan après l\'inscription ?',p_faq5_a:'Oui, à tout moment depuis votre espace Abonnement. Le changement est immédiat.',p_faq6_q:'Que se passe-t-il si mon client parle une langue que je ne comprends pas ?',p_faq6_a:'L\'IA répond directement dans la langue du client. Dans votre dashboard, les questions sont traduites pour vous.',p_faq7_q:'L\'IA parle vraiment 8 langues ?',p_faq7_a:'Oui. LocalReply détecte automatiquement la langue et répond : FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Prêt à démarrer ?',p_footer_sub:'Rejoignez les commerces qui répondent à leurs clients 24h/24 — même pendant votre sommeil.',p_footer_cta1:'Essai gratuit 14 jours →',p_footer_cta2:'Voir la démo live',p_trust1:'Paiements Stripe',p_trust2:'PCI DSS certifié',p_trust3:'Hébergement EU',p_trust4:'Annulable à tout moment',p_trust5:'14 jours gratuits'},
+    en:{p_eyebrow:'💰 Simple & transparent pricing',p_title1:'Your business replies',p_title2:'24/7 without you',p_sub:'Choose your plan. Free 14-day trial.',p_monthly:'Monthly',p_yearly:'Yearly',p_yearly_badge:'-20%',p_per_month:'/month',p_std_desc:'Ideal to get started and automate your customer service.',p_std_desc_y:'Billed €468/year — save €96 vs monthly.',p_f1:'AI in 8 European languages',p_f2:'Unlimited conversations',p_f3:'Appointment booking — 4 modes',p_f3b:'(Calendar, link, manual, none)',p_f4:'Email confirmations',p_f5:'Dashboard & basic metrics',p_f6:'Weekly AI summaries',p_f7:'Public link + QR Code',p_f8:'Email support',p_f9:'SMS not included',p_f10:'No analytics',p_f11:'Adjustable AI personality',p_std_cta:'Get started for free',p_trial_note:'14-day free trial included',p_recommended:'⭐ Recommended',p_pro_desc:'To maximize your results and never miss an opportunity.',p_pro_desc_y:'Billed €588/year — save €120 vs monthly.',p_pf1:'Everything in Standard',p_pf2:'Unlimited conversations',p_pf3:'Business SMS alerts',p_pf3b:'(appointments, urgencies, questions)',p_pf4:'Analytics & insights (90 days)',p_pf5:'Adjustable AI personality',p_pf6:'Real-time urgency alerts',p_pf7:'Daily AI summaries',p_pf8:'Priority support',p_pf9:'Early access to new features',p_pro_cta:'Start with Pro',p_trial_title:'Free 14-day trial — Full Pro plan',p_trial_sub:'All Pro features unlocked for 14 days. Cancel anytime.',p_trial_btn:'Try for free →',p_comp_label:'Detailed comparison',p_comp_title:'Everything included',p_faq_label:'FAQ',p_faq_title:'Frequently asked questions',p_faq1_q:'Can I choose the frequency of AI summaries?',p_faq1_a:'Yes. From your dashboard you can enable, disable or change the frequency at any time.',p_faq2_q:'Can I cancel at any time?',p_faq2_a:'Yes. Cancel from your dashboard in a few clicks. You keep access until the end of the paid period.',p_faq3_q:'How does the 14-day free trial work?',p_faq3_a:'Full access to the Pro plan for 14 days. A credit card is required — you\'re only charged after the trial ends.',p_faq4_q:'Is my payment data secure?',p_faq4_a:'Absolutely. Payments are processed by Stripe, PCI DSS level 1 certified.',p_faq5_q:'Can I change plans after signing up?',p_faq5_a:'Yes, anytime from your Subscription page. The change is immediate and billing is prorated by Stripe.',p_faq6_q:'What if my customer speaks a language I don\'t understand?',p_faq6_a:'No problem. The AI replies in the customer\'s language. In your dashboard, questions are automatically translated for you.',p_faq7_q:'Does the AI really speak 8 languages?',p_faq7_a:'Yes. LocalReply auto-detects the language and replies in: French, English, German, Italian, Spanish, Portuguese, Dutch and Polish.',p_footer_title:'Ready to get started?',p_footer_sub:'Join businesses that reply to customers 24/7 — even while you sleep.',p_footer_cta1:'Free 14-day trial →',p_footer_cta2:'See live demo',p_trust1:'Stripe payments',p_trust2:'PCI DSS certified',p_trust3:'EU hosting',p_trust4:'Cancel anytime',p_trust5:'14 days free'},
+    de:{p_eyebrow:'💰 Einfache & transparente Preise',p_title1:'Ihr Geschäft antwortet',p_title2:'24/7 ohne Sie',p_sub:'Wählen Sie Ihren Plan. 14 Tage kostenlos testen.',p_monthly:'Monatlich',p_yearly:'Jährlich',p_yearly_badge:'-20%',p_per_month:'/Monat',p_std_desc:'Ideal für den Einstieg und die Automatisierung Ihres Kundenempfangs.',p_std_desc_y:'Jährlich 468€ — sparen Sie 96€ vs. monatlich.',p_f1:'KI in 8 europäischen Sprachen',p_f2:'Unbegrenzte Gespräche',p_f3:'Terminbuchung — 4 Modi',p_f3b:'(Kalender, Link, manuell, keiner)',p_f4:'E-Mail-Bestätigungen',p_f5:'Dashboard & Basismetriken',p_f6:'Wöchentliche KI-Zusammenfassungen',p_f7:'Öffentlicher Link + QR-Code',p_f8:'E-Mail-Support',p_f9:'SMS nicht inbegriffen',p_f10:'Keine Analytics',p_f11:'Einstellbare KI-Persönlichkeit',p_std_cta:'Kostenlos starten',p_trial_note:'14 Tage kostenlose Testversion',p_recommended:'⭐ Empfohlen',p_pro_desc:'Um Ihre Ergebnisse zu maximieren und keine Chance zu verpassen.',p_pro_desc_y:'Jährlich 588€ — sparen Sie 120€ vs. monatlich.',p_pf1:'Alles aus Standard',p_pf2:'Unbegrenzte Gespräche',p_pf3:'SMS-Geschäftsbenachrichtigungen',p_pf3b:'(Termine, Dringendes, Fragen)',p_pf4:'Analytics & Einblicke (90 Tage)',p_pf5:'Einstellbare KI-Persönlichkeit',p_pf6:'Echtzeit-Dringlichkeitswarnungen',p_pf7:'Tägliche KI-Zusammenfassungen',p_pf8:'Prioritätssupport',p_pf9:'Früher Zugang zu neuen Funktionen',p_pro_cta:'Mit Pro starten',p_trial_title:'14 Tage kostenlos — Vollständiger Pro-Plan',p_trial_sub:'Alle Pro-Funktionen für 14 Tage freigeschaltet. Jederzeit kündbar.',p_trial_btn:'Kostenlos testen →',p_comp_label:'Detaillierter Vergleich',p_comp_title:'Was alles enthalten ist',p_faq_label:'FAQ',p_faq_title:'Häufig gestellte Fragen',p_faq1_q:'Kann ich die Häufigkeit der KI-Zusammenfassungen wählen?',p_faq1_a:'Ja. Über Ihr Dashboard können Sie die Häufigkeit jederzeit aktivieren, deaktivieren oder ändern.',p_faq2_q:'Kann ich jederzeit kündigen?',p_faq2_a:'Ja. Kündigen Sie über Ihr Dashboard in wenigen Klicks.',p_faq3_q:'Wie funktioniert die 14-tägige kostenlose Testversion?',p_faq3_a:'Vollständiger Zugang zum Pro-Plan für 14 Tage. Eine Kreditkarte ist erforderlich — Sie werden erst nach Ende der Testphase belastet.',p_faq4_q:'Sind meine Zahlungsdaten sicher?',p_faq4_a:'Absolut. Zahlungen werden von Stripe verarbeitet, PCI DSS Level 1 zertifiziert.',p_faq5_q:'Kann ich nach der Anmeldung den Plan wechseln?',p_faq5_a:'Ja, jederzeit über Ihren Abonnementbereich. Die Änderung ist sofort wirksam.',p_faq6_q:'Was passiert, wenn mein Kunde eine Sprache spricht, die ich nicht verstehe?',p_faq6_a:'Kein Problem. Die KI antwortet direkt in der Sprache des Kunden. In Ihrem Dashboard werden Fragen automatisch für Sie übersetzt.',p_faq7_q:'Spricht die KI wirklich 8 Sprachen?',p_faq7_a:'Ja. LocalReply erkennt automatisch die Sprache und antwortet auf: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Bereit loszulegen?',p_footer_sub:'Schließen Sie sich Unternehmen an, die ihren Kunden 24/7 antworten — auch während Sie schlafen.',p_footer_cta1:'14 Tage kostenlos testen →',p_footer_cta2:'Live-Demo ansehen',p_trust1:'Stripe-Zahlungen',p_trust2:'PCI DSS zertifiziert',p_trust3:'EU-Hosting',p_trust4:'Jederzeit kündbar',p_trust5:'14 Tage kostenlos'},
+    it:{p_eyebrow:'💰 Prezzi semplici & trasparenti',p_title1:'Il tuo business risponde',p_title2:'24/7 senza di te',p_sub:'Scegli il tuo piano. Prova gratuita 14 giorni.',p_monthly:'Mensile',p_yearly:'Annuale',p_yearly_badge:'-20%',p_per_month:'/mese',p_std_desc:'Ideale per iniziare e automatizzare il tuo servizio clienti.',p_std_desc_y:'Fatturato 468€/anno — risparmia 96€ vs mensile.',p_f1:'IA in 8 lingue europee',p_f2:'Conversazioni illimitate',p_f3:'Prenotazione appuntamenti — 4 modalità',p_f3b:'(Calendar, link, manuale, nessuno)',p_f4:'Conferme via email',p_f5:'Dashboard & metriche base',p_f6:'Riepiloghi IA settimanali',p_f7:'Link pubblico + QR Code',p_f8:'Supporto email',p_f9:'SMS non inclusi',p_f10:'Nessuna analisi',p_f11:'Personalità IA regolabile',p_std_cta:'Inizia gratuitamente',p_trial_note:'14 giorni gratuiti inclusi',p_recommended:'⭐ Consigliato',p_pro_desc:'Per massimizzare i risultati e non perdere nessuna opportunità.',p_pro_desc_y:'Fatturato 588€/anno — risparmia 120€ vs mensile.',p_pf1:'Tutto il piano Standard',p_pf2:'Conversazioni illimitate',p_pf3:'SMS avvisi business',p_pf3b:'(appuntamenti, urgenze, domande)',p_pf4:'Analytics & insights (90 giorni)',p_pf5:'Personalità IA regolabile',p_pf6:'Avvisi urgenze in tempo reale',p_pf7:'Riepiloghi IA quotidiani',p_pf8:'Supporto prioritario',p_pf9:'Accesso anticipato alle nuove funzioni',p_pro_cta:'Inizia con Pro',p_trial_title:'Prova gratuita 14 giorni — Piano Pro completo',p_trial_sub:'Tutte le funzionalità Pro sbloccate per 14 giorni. Annullabile in qualsiasi momento.',p_trial_btn:'Prova gratuitamente →',p_comp_label:'Confronto dettagliato',p_comp_title:'Tutto ciò che è incluso',p_faq_label:'FAQ',p_faq_title:'Domande frequenti',p_faq1_q:'Posso scegliere la frequenza dei riepiloghi IA?',p_faq1_a:'Sì. Dal tuo dashboard puoi attivare, disattivare o cambiare la frequenza in qualsiasi momento.',p_faq2_q:'Posso annullare in qualsiasi momento?',p_faq2_a:'Sì. Annulla dal tuo dashboard in pochi clic.',p_faq3_q:'Come funziona la prova gratuita di 14 giorni?',p_faq3_a:'Accesso completo al Piano Pro per 14 giorni. È richiesta una carta di credito — verrai addebitato solo dopo la fine del trial.',p_faq4_q:'I miei dati di pagamento sono sicuri?',p_faq4_a:'Assolutamente. I pagamenti sono gestiti da Stripe, certificato PCI DSS livello 1.',p_faq5_q:'Posso cambiare piano dopo la registrazione?',p_faq5_a:'Sì, in qualsiasi momento dalla tua area Abbonamento. Il cambio è immediato.',p_faq6_q:'Cosa succede se il mio cliente parla una lingua che non capisco?',p_faq6_a:'Nessun problema. L\'IA risponde direttamente nella lingua del cliente. Nel tuo dashboard, le domande vengono tradotte automaticamente per te.',p_faq7_q:'L\'IA parla davvero 8 lingue?',p_faq7_a:'Sì. LocalReply rileva automaticamente la lingua e risponde in: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Pronto a iniziare?',p_footer_sub:'Unisciti alle attività che rispondono ai clienti 24/7 — anche mentre dormi.',p_footer_cta1:'Prova gratuita 14 giorni →',p_footer_cta2:'Vedi demo live',p_trust1:'Pagamenti Stripe',p_trust2:'Certificato PCI DSS',p_trust3:'Hosting EU',p_trust4:'Annullabile in qualsiasi momento',p_trust5:'14 giorni gratuiti'},
+    es:{p_eyebrow:'💰 Precios simples & transparentes',p_title1:'Tu negocio responde',p_title2:'24/7 sin ti',p_sub:'Elige tu plan. Prueba gratuita 14 días.',p_monthly:'Mensual',p_yearly:'Anual',p_yearly_badge:'-20%',p_per_month:'/mes',p_std_desc:'Ideal para empezar y automatizar tu atención al cliente.',p_std_desc_y:'Facturado 468€/año — ahorra 96€ vs mensual.',p_f1:'IA en 8 idiomas europeos',p_f2:'Conversaciones ilimitadas',p_f3:'Gestión de citas — 4 modos',p_f3b:'(Calendar, enlace, manual, ninguno)',p_f4:'Confirmaciones por email',p_f5:'Dashboard & métricas básicas',p_f6:'Resúmenes IA semanales',p_f7:'Enlace público + QR Code',p_f8:'Soporte email',p_f9:'SMS no incluido',p_f10:'Sin analytics',p_f11:'Personalidad IA ajustable',p_std_cta:'Empezar gratis',p_trial_note:'14 días gratis incluidos',p_recommended:'⭐ Recomendado',p_pro_desc:'Para maximizar tus resultados y no perder ninguna oportunidad.',p_pro_desc_y:'Facturado 588€/año — ahorra 120€ vs mensual.',p_pf1:'Todo el plan Standard',p_pf2:'Conversaciones ilimitadas',p_pf3:'SMS alertas business',p_pf3b:'(citas, urgencias, preguntas)',p_pf4:'Analytics & insights (90 días)',p_pf5:'Personalidad IA ajustable',p_pf6:'Alertas urgencias tiempo real',p_pf7:'Resúmenes IA diarios',p_pf8:'Soporte prioritario',p_pf9:'Acceso anticipado a nuevas funciones',p_pro_cta:'Empezar con Pro',p_trial_title:'Prueba gratuita 14 días — Plan Pro completo',p_trial_sub:'Todas las funcionalidades Pro desbloqueadas durante 14 días. Cancela cuando quieras.',p_trial_btn:'Probar gratis →',p_comp_label:'Comparativa detallada',p_comp_title:'Todo lo que está incluido',p_faq_label:'FAQ',p_faq_title:'Preguntas frecuentes',p_faq1_q:'¿Puedo elegir la frecuencia de los resúmenes IA?',p_faq1_a:'Sí. Desde tu dashboard puedes activar, desactivar o cambiar la frecuencia en cualquier momento.',p_faq2_q:'¿Puedo cancelar en cualquier momento?',p_faq2_a:'Sí. Cancela desde tu panel en unos pocos clics.',p_faq3_q:'¿Cómo funciona la prueba gratuita de 14 días?',p_faq3_a:'Acceso completo al Plan Pro durante 14 días. Se requiere tarjeta de crédito — solo se te cobra después del trial.',p_faq4_q:'¿Están seguros mis datos de pago?',p_faq4_a:'Absolutamente. Los pagos son gestionados por Stripe, certificado PCI DSS nivel 1.',p_faq5_q:'¿Puedo cambiar de plan después del registro?',p_faq5_a:'Sí, en cualquier momento desde tu área de Suscripción. El cambio es inmediato.',p_faq6_q:'¿Qué pasa si mi cliente habla un idioma que no entiendo?',p_faq6_a:'Sin problema. La IA responde directamente en el idioma del cliente. En tu dashboard, las preguntas se traducen automáticamente para ti.',p_faq7_q:'¿La IA realmente habla 8 idiomas?',p_faq7_a:'Sí. LocalReply detecta automáticamente el idioma y responde en: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'¿Listo para empezar?',p_footer_sub:'Únete a los negocios que responden a sus clientes 24/7 — incluso mientras duermes.',p_footer_cta1:'Prueba gratuita 14 días →',p_footer_cta2:'Ver demo en vivo',p_trust1:'Pagos Stripe',p_trust2:'Certificado PCI DSS',p_trust3:'Hosting EU',p_trust4:'Cancelable en cualquier momento',p_trust5:'14 días gratis'},
+    pt:{p_eyebrow:'💰 Preços simples & transparentes',p_title1:'O seu negócio responde',p_title2:'24/7 sem você',p_sub:'Escolha o seu plano. Teste gratuito 14 dias.',p_monthly:'Mensal',p_yearly:'Anual',p_yearly_badge:'-20%',p_per_month:'/mês',p_std_desc:'Ideal para começar e automatizar o seu atendimento ao cliente.',p_std_desc_y:'Faturado 468€/ano — poupe 96€ vs mensal.',p_f1:'IA em 8 línguas europeias',p_f2:'Conversas ilimitadas',p_f3:'Marcações — 4 modos',p_f3b:'(Calendar, link, manual, nenhum)',p_f4:'Confirmações por email',p_f5:'Dashboard & métricas básicas',p_f6:'Resumos IA semanais',p_f7:'Link público + QR Code',p_f8:'Suporte email',p_f9:'SMS não incluído',p_f10:'Sem analytics',p_f11:'Personalidade IA ajustável',p_std_cta:'Começar gratuitamente',p_trial_note:'14 dias grátis incluídos',p_recommended:'⭐ Recomendado',p_pro_desc:'Para maximizar os seus resultados e não perder nenhuma oportunidade.',p_pro_desc_y:'Faturado 588€/ano — poupe 120€ vs mensal.',p_pf1:'Tudo do plano Standard',p_pf2:'Conversas ilimitadas',p_pf3:'SMS alertas business',p_pf3b:'(marcações, urgências, perguntas)',p_pf4:'Analytics & insights (90 dias)',p_pf5:'Personalidade IA ajustável',p_pf6:'Alertas urgências tempo real',p_pf7:'Resumos IA diários',p_pf8:'Suporte prioritário',p_pf9:'Acesso antecipado a novas funcionalidades',p_pro_cta:'Iniciar com Pro',p_trial_title:'Teste gratuito 14 dias — Plano Pro completo',p_trial_sub:'Todas as funcionalidades Pro desbloqueadas por 14 dias. Cancele a qualquer momento.',p_trial_btn:'Experimentar gratuitamente →',p_comp_label:'Comparativo detalhado',p_comp_title:'Tudo o que está incluído',p_faq_label:'FAQ',p_faq_title:'Perguntas frequentes',p_faq1_q:'Posso escolher a frequência dos resumos IA?',p_faq1_a:'Sim. No seu dashboard pode ativar, desativar ou alterar a frequência a qualquer momento.',p_faq2_q:'Posso cancelar a qualquer momento?',p_faq2_a:'Sim. Cancele no seu painel em poucos cliques.',p_faq3_q:'Como funciona o teste gratuito de 14 dias?',p_faq3_a:'Acesso completo ao Plano Pro por 14 dias. É necessário cartão de crédito — só é cobrado após o trial.',p_faq4_q:'Os meus dados de pagamento estão seguros?',p_faq4_a:'Absolutamente. Os pagamentos são geridos pelo Stripe, certificado PCI DSS nível 1.',p_faq5_q:'Posso mudar de plano após o registo?',p_faq5_a:'Sim, a qualquer momento na sua área de Subscrição. A mudança é imediata.',p_faq6_q:'O que acontece se o meu cliente falar um idioma que não entendo?',p_faq6_a:'Sem problema. A IA responde diretamente na língua do cliente. No seu dashboard, as perguntas são traduzidas automaticamente.',p_faq7_q:'A IA fala mesmo 8 línguas?',p_faq7_a:'Sim. LocalReply deteta automaticamente a língua e responde em: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Pronto para começar?',p_footer_sub:'Junte-se aos negócios que respondem aos clientes 24/7 — mesmo enquanto dorme.',p_footer_cta1:'Teste gratuito 14 dias →',p_footer_cta2:'Ver demo ao vivo',p_trust1:'Pagamentos Stripe',p_trust2:'Certificado PCI DSS',p_trust3:'Alojamento EU',p_trust4:'Cancelável a qualquer momento',p_trust5:'14 dias grátis'},
+    nl:{p_eyebrow:'💰 Eenvoudige & transparante prijzen',p_title1:'Uw bedrijf antwoordt',p_title2:'24/7 zonder u',p_sub:'Kies uw plan. Gratis proberen 14 dagen.',p_monthly:'Maandelijks',p_yearly:'Jaarlijks',p_yearly_badge:'-20%',p_per_month:'/maand',p_std_desc:'Ideaal om te starten en uw klantenservice te automatiseren.',p_std_desc_y:'Jaarlijks €468 gefactureerd — bespaar €96 vs maandelijks.',p_f1:'AI in 8 Europese talen',p_f2:'Onbeperkte gesprekken',p_f3:'Afsprakenbeheer — 4 modi',p_f3b:'(Agenda, link, manueel, geen)',p_f4:'Bevestigingen per e-mail',p_f5:'Dashboard & basismetriekenelen',p_f6:'Wekelijkse AI-samenvattingen',p_f7:'Openbare link + QR-code',p_f8:'E-mailondersteuning',p_f9:'SMS niet inbegrepen',p_f10:'Geen analytics',p_f11:'Instelbare AI-persoonlijkheid',p_std_cta:'Gratis beginnen',p_trial_note:'14 dagen gratis inbegrepen',p_recommended:'⭐ Aanbevolen',p_pro_desc:'Om uw resultaten te maximaliseren en geen kansen te missen.',p_pro_desc_y:'Jaarlijks €588 gefactureerd — bespaar €120 vs maandelijks.',p_pf1:'Alles uit Standard',p_pf2:'Onbeperkte gesprekken',p_pf3:'SMS-zakelijke meldingen',p_pf3b:'(afspraken, urgentie, vragen)',p_pf4:'Analytics & inzichten (90 dagen)',p_pf5:'Instelbare AI-persoonlijkheid',p_pf6:'Realtime urgentiemeldingen',p_pf7:'Dagelijkse AI-samenvattingen',p_pf8:'Prioriteitsondersteuning',p_pf9:'Vroege toegang tot nieuwe functies',p_pro_cta:'Beginnen met Pro',p_trial_title:'14 dagen gratis — Volledig Pro-plan',p_trial_sub:'Alle Pro-functies 14 dagen ontgrendeld. Op elk moment opzegbaar.',p_trial_btn:'Gratis proberen →',p_comp_label:'Gedetailleerde vergelijking',p_comp_title:'Alles wat is inbegrepen',p_faq_label:'FAQ',p_faq_title:'Veelgestelde vragen',p_faq1_q:'Kan ik de frequentie van AI-samenvattingen kiezen?',p_faq1_a:'Ja. Vanuit uw dashboard kunt u de frequentie op elk moment activeren, deactiveren of wijzigen.',p_faq2_q:'Kan ik op elk moment opzeggen?',p_faq2_a:'Ja. Zeg op via uw dashboard in een paar klikken.',p_faq3_q:'Hoe werkt de gratis 14-daagse proefversie?',p_faq3_a:'Volledige toegang tot het Pro-plan voor 14 dagen. Een creditcard is vereist — u wordt alleen na de proefperiode in rekening gebracht.',p_faq4_q:'Zijn mijn betalingsgegevens veilig?',p_faq4_a:'Absoluut. Betalingen worden verwerkt door Stripe, PCI DSS niveau 1 gecertificeerd.',p_faq5_q:'Kan ik na aanmelding van plan veranderen?',p_faq5_a:'Ja, op elk moment via uw Abonnementspagina. De wijziging is direct.',p_faq6_q:'Wat als mijn klant een taal spreekt die ik niet begrijp?',p_faq6_a:'Geen probleem. De AI antwoordt direct in de taal van de klant. In uw dashboard worden vragen automatisch voor u vertaald.',p_faq7_q:'Spreekt de AI echt 8 talen?',p_faq7_a:'Ja. LocalReply detecteert automatisch de taal en antwoordt in: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Klaar om te beginnen?',p_footer_sub:'Sluit u aan bij bedrijven die 24/7 op klanten reageren — zelfs terwijl u slaapt.',p_footer_cta1:'14 dagen gratis proberen →',p_footer_cta2:'Live demo bekijken',p_trust1:'Stripe-betalingen',p_trust2:'PCI DSS gecertificeerd',p_trust3:'EU-hosting',p_trust4:'Op elk moment opzegbaar',p_trust5:'14 dagen gratis'},
+    pl:{p_eyebrow:'💰 Proste i przejrzyste ceny',p_title1:'Twój biznes odpowiada',p_title2:'24/7 bez Ciebie',p_sub:'Wybierz swój plan. Bezpłatny test 14 dni.',p_monthly:'Miesięcznie',p_yearly:'Rocznie',p_yearly_badge:'-20%',p_per_month:'/mies.',p_std_desc:'Idealny do rozpoczęcia i automatyzacji obsługi klienta.',p_std_desc_y:'Rocznie 468€ — oszczędzasz 96€ vs miesięcznie.',p_f1:'AI w 8 europejskich językach',p_f2:'Nieograniczone rozmowy',p_f3:'Rezerwacje — 4 tryby',p_f3b:'(Kalendarz, link, ręcznie, brak)',p_f4:'Potwierdzenia emailem',p_f5:'Dashboard & podstawowe metryki',p_f6:'Cotygodniowe podsumowania AI',p_f7:'Publiczny link + kod QR',p_f8:'Wsparcie email',p_f9:'SMS nie w zestawie',p_f10:'Brak analytics',p_f11:'Regulowana osobowość AI',p_std_cta:'Zacznij bezpłatnie',p_trial_note:'14 dni bezpłatnie w zestawie',p_recommended:'⭐ Rekomendowane',p_pro_desc:'Aby zmaksymalizować wyniki i nie przegapić żadnej szansy.',p_pro_desc_y:'Rocznie 588€ — oszczędzasz 120€ vs miesięcznie.',p_pf1:'Wszystko z planu Standard',p_pf2:'Nieograniczone rozmowy',p_pf3:'SMS alerty biznesowe',p_pf3b:'(wizyty, pilne, pytania)',p_pf4:'Analytics & insights (90 dni)',p_pf5:'Regulowana osobowość AI',p_pf6:'Alerty pilności w czasie rzeczywistym',p_pf7:'Codzienne podsumowania AI',p_pf8:'Wsparcie priorytetowe',p_pf9:'Wczesny dostęp do nowych funkcji',p_pro_cta:'Zacznij z Pro',p_trial_title:'Bezpłatny test 14 dni — Pełny plan Pro',p_trial_sub:'Wszystkie funkcje Pro odblokowane na 14 dni. Anuluj w dowolnym momencie.',p_trial_btn:'Wypróbuj bezpłatnie →',p_comp_label:'Szczegółowe porównanie',p_comp_title:'Wszystko co jest w zestawie',p_faq_label:'FAQ',p_faq_title:'Często zadawane pytania',p_faq1_q:'Czy mogę wybrać częstotliwość podsumowań AI?',p_faq1_a:'Tak. Z dashboardu możesz aktywować, dezaktywować lub zmienić częstotliwość w dowolnym momencie.',p_faq2_q:'Czy mogę anulować w dowolnym momencie?',p_faq2_a:'Tak. Anuluj z panelu kilkoma kliknięciami.',p_faq3_q:'Jak działa bezpłatny test 14 dni?',p_faq3_a:'Pełny dostęp do planu Pro przez 14 dni. Wymagana karta kredytowa — zostaniesz obciążony dopiero po zakończeniu trialu.',p_faq4_q:'Czy moje dane płatnicze są bezpieczne?',p_faq4_a:'Absolutnie. Płatności obsługuje Stripe, certyfikowany PCI DSS poziom 1.',p_faq5_q:'Czy mogę zmienić plan po rejestracji?',p_faq5_a:'Tak, w dowolnym momencie z obszaru Subskrypcja. Zmiana jest natychmiastowa.',p_faq6_q:'Co się stanie, jeśli mój klient mówi językiem, którego nie rozumiem?',p_faq6_a:'Żaden problem. AI odpowiada bezpośrednio w języku klienta. W dashboardzie pytania są automatycznie tłumaczone dla Ciebie.',p_faq7_q:'Czy AI naprawdę mówi 8 językami?',p_faq7_a:'Tak. LocalReply automatycznie wykrywa język i odpowiada w: FR, EN, DE, IT, ES, PT, NL, PL.',p_footer_title:'Gotowy do startu?',p_footer_sub:'Dołącz do firm odpowiadających klientom 24/7 — nawet gdy śpisz.',p_footer_cta1:'Bezpłatny test 14 dni →',p_footer_cta2:'Zobacz live demo',p_trust1:'Płatności Stripe',p_trust2:'Certyfikat PCI DSS',p_trust3:'Hosting EU',p_trust4:'Anuluj w dowolnym momencie',p_trust5:'14 dni bezpłatnie'}
+  };
+  (function(){
+    var lang = localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+    var sup = Object.keys(LRP_T);
+    var t = LRP_T[sup.indexOf(lang)>=0?lang:'fr'];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key=el.getAttribute('data-i18n');
+      if(t[key]!==undefined) el.innerHTML=t[key];
+    });
+    document.documentElement.lang=lang;
+    var titles={fr:'Tarifs',en:'Pricing',de:'Preise',it:'Prezzi',es:'Precios',pt:'Preços',nl:'Prijzen',pl:'Ceny'};
+    document.title=(titles[lang]||'Tarifs')+' — LocalReply';
+  })();
+  </script>
 </html>
