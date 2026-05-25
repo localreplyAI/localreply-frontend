@@ -85,211 +85,191 @@
 <div class="lrp">
 
   <section class="lrp-hero">
-    <h1>Politique de Confidentialité</h1>
-    <p>Comment LocalReply collecte, utilise et protège vos données personnelles</p>
+    <h1>Privacy Policy</h1>
+    <p>How we collect, use, and protect your data</p>
   </section>
 
   <div class="lrp-body">
 
-    <p class="lrp-updated">📅 Dernière mise à jour : Mars 2025 — Document soumis au droit suisse et au RGPD européen</p>
+    <p class="lrp-updated">📅 Last updated: March 2025 — Subject to Swiss law and the European GDPR</p>
 
-    <!-- TABLE DES MATIÈRES -->
+    <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;padding:12px 18px;margin-bottom:28px;font-size:13px;color:rgba(255,255,255,0.6);">
+      ℹ️ The French version of this document is the legally binding version. This English translation is provided for convenience only.
+      <a href="/privacy?lang=fr" style="color:#00D4FF;margin-left:8px;" onclick="localStorage.setItem('lr_lang','fr');location.reload();return false;">→ Version française</a>
+    </div>
+
     <div class="lrp-toc">
-      <h3>Table des matières</h3>
+      <h3>Table of Contents</h3>
       <ol>
-        <li><a href="#responsable">Responsable du traitement</a></li>
-        <li><a href="#collecte">Données collectées</a></li>
-        <li><a href="#utilisation">Finalités et bases légales</a></li>
-        <li><a href="#tiers">Sous-traitants et tiers</a></li>
-        <li><a href="#conservation">Durée de conservation</a></li>
-        <li><a href="#droits">Vos droits</a></li>
-        <li><a href="#securite">Sécurité des données</a></li>
+        <li><a href="#controller">Data Controller</a></li>
+        <li><a href="#data">Data Collected</a></li>
+        <li><a href="#purposes">Purposes and Legal Bases</a></li>
+        <li><a href="#processors">Sub-processors and Third Parties</a></li>
+        <li><a href="#retention">Retention Periods</a></li>
+        <li><a href="#rights">Your Rights</a></li>
+        <li><a href="#security">Data Security</a></li>
         <li><a href="#cookies">Cookies</a></li>
-        <li><a href="#mineurs">Mineurs</a></li>
-        <li><a href="#modifications">Modifications</a></li>
+        <li><a href="#minors">Minors</a></li>
+        <li><a href="#changes">Policy Changes</a></li>
         <li><a href="#contact">Contact</a></li>
       </ol>
     </div>
 
-    <!-- 1. RESPONSABLE -->
-    <div class="lrp-section" id="responsable">
-      <h2><span>1.</span> Responsable du traitement</h2>
-      <p>Le responsable du traitement des données personnelles collectées via la plateforme LocalReply est :</p>
-      <p><strong>LocalReply</strong><br>
-      Opéré par un indépendant basé en Suisse<br>
-      Email : <a href="mailto:support@localreply.ai" style="color: var(--blue);">support@localreply.ai</a></p>
+    <div class="lrp-section" id="controller">
+      <h2><span>1.</span> Data Controller</h2>
+      <div class="lrp-owner-card">
+        <div class="lrp-owner-label">Data Controller</div>
+        <div class="lrp-owner-name">LocalReply</div>
+        <div class="lrp-owner-detail">Independent operator — Switzerland</div>
+        <div class="lrp-owner-detail">📧 <a href="mailto:support@localreply.ai" style="color:var(--blue);">support@localreply.ai</a></div>
+      </div>
     </div>
 
-    <!-- 2. DONNÉES COLLECTÉES -->
-    <div class="lrp-section" id="collecte">
-      <h2><span>2.</span> Données collectées</h2>
+    <div class="lrp-section" id="data">
+      <h2><span>2.</span> Data Collected</h2>
 
-      <h3>2.1 Données des entreprises clientes (abonnés LocalReply)</h3>
+      <h3>2.1 Business customer data (LocalReply subscribers)</h3>
       <table class="lrp-table">
-        <tr><th>Donnée</th><th>Source</th><th>Obligatoire</th></tr>
-        <tr><td>Nom, prénom</td><td>Formulaire d'inscription</td><td>Oui</td></tr>
-        <tr><td>Adresse email professionnelle</td><td>Formulaire d'inscription</td><td>Oui</td></tr>
-        <tr><td>Numéro de téléphone</td><td>Configuration du compte</td><td>Non</td></tr>
-        <tr><td>Nom et adresse du commerce</td><td>Configuration du compte</td><td>Oui</td></tr>
-        <tr><td>Informations de paiement</td><td>Stripe (jamais stockées chez nous)</td><td>Oui</td></tr>
-        <tr><td>Tokens Google Calendar</td><td>Autorisation OAuth Google</td><td>Non</td></tr>
-        <tr><td>Données d'usage (connexions, actions)</td><td>Automatique</td><td>Automatique</td></tr>
+        <tr><th>Data</th><th>Source</th><th>Required</th></tr>
+        <tr><td>First and last name</td><td>Registration form</td><td>Yes</td></tr>
+        <tr><td>Professional email address</td><td>Registration form</td><td>Yes</td></tr>
+        <tr><td>Phone number</td><td>Account configuration</td><td>No</td></tr>
+        <tr><td>Business name and address</td><td>Account configuration</td><td>Yes</td></tr>
+        <tr><td>Payment information</td><td>Stripe (never stored by us)</td><td>Yes</td></tr>
+        <tr><td>Google Calendar tokens</td><td>Google OAuth authorization</td><td>No</td></tr>
+        <tr><td>Usage data (logins, actions)</td><td>Automatic</td><td>Automatic</td></tr>
       </table>
 
-      <h3>2.2 Données des clients finaux (visiteurs du widget chat)</h3>
+      <h3>2.2 End customer data (chat widget visitors)</h3>
       <table class="lrp-table">
-        <tr><th>Donnée</th><th>Source</th><th>Obligatoire</th></tr>
-        <tr><td>Messages de la conversation</td><td>Widget chat</td><td>Oui</td></tr>
-        <tr><td>Nom (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
-        <tr><td>Téléphone (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
-        <tr><td>Email (si fourni pour un RDV)</td><td>Conversation</td><td>Non</td></tr>
-        <tr><td>Langue détectée</td><td>Automatique</td><td>Automatique</td></tr>
-        <tr><td>Adresse IP anonymisée</td><td>Automatique</td><td>Automatique</td></tr>
-        <tr><td>Identifiant de session (hash)</td><td>Automatique</td><td>Automatique</td></tr>
+        <tr><th>Data</th><th>Source</th><th>Required</th></tr>
+        <tr><td>Conversation messages</td><td>Chat widget</td><td>Yes</td></tr>
+        <tr><td>Name (if provided for an appointment)</td><td>Conversation</td><td>No</td></tr>
+        <tr><td>Phone (if provided for an appointment)</td><td>Conversation</td><td>No</td></tr>
+        <tr><td>Email (if provided for an appointment)</td><td>Conversation</td><td>No</td></tr>
+        <tr><td>Detected language</td><td>Automatic</td><td>Automatic</td></tr>
+        <tr><td>Anonymized IP address</td><td>Automatic</td><td>Automatic</td></tr>
+        <tr><td>Session identifier (hash)</td><td>Automatic</td><td>Automatic</td></tr>
       </table>
     </div>
 
-    <!-- 3. FINALITÉS -->
-    <div class="lrp-section" id="utilisation">
-      <h2><span>3.</span> Finalités et bases légales</h2>
+    <div class="lrp-section" id="purposes">
+      <h2><span>3.</span> Purposes and Legal Bases</h2>
       <table class="lrp-table">
-        <tr><th>Finalité</th><th>Base légale (RGPD)</th></tr>
-        <tr><td>Fourniture du service (IA, RDV, dashboard)</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
-        <tr><td>Facturation et gestion des abonnements</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
-        <tr><td>Envoi d'emails transactionnels (confirmations, alertes)</td><td>Exécution du contrat — Art. 6(1)(b)</td></tr>
-        <tr><td>Amélioration du service et détection d'anomalies</td><td>Intérêt légitime — Art. 6(1)(f)</td></tr>
-        <tr><td>Respect des obligations légales</td><td>Obligation légale — Art. 6(1)(c)</td></tr>
-        <tr><td>Envoi d'emails marketing (si consentement)</td><td>Consentement — Art. 6(1)(a)</td></tr>
+        <tr><th>Purpose</th><th>Legal basis (GDPR)</th></tr>
+        <tr><td>Service delivery (AI, appointments, dashboard)</td><td>Contract performance — Art. 6(1)(b)</td></tr>
+        <tr><td>Billing and subscription management</td><td>Contract performance — Art. 6(1)(b)</td></tr>
+        <tr><td>Transactional emails (confirmations, alerts)</td><td>Contract performance — Art. 6(1)(b)</td></tr>
+        <tr><td>Service improvement and anomaly detection</td><td>Legitimate interest — Art. 6(1)(f)</td></tr>
+        <tr><td>Compliance with legal obligations</td><td>Legal obligation — Art. 6(1)(c)</td></tr>
+        <tr><td>Marketing emails (if consent given)</td><td>Consent — Art. 6(1)(a)</td></tr>
       </table>
-      <p>Les données des conversations sont traitées pour fournir les réponses de l'IA. Elles ne sont pas utilisées pour entraîner nos modèles d'IA sans consentement explicite.</p>
+      <p>Conversation data is processed to provide AI responses. It is not used to train our AI models without explicit consent.</p>
     </div>
 
-    <!-- 4. SOUS-TRAITANTS -->
-    <div class="lrp-section" id="tiers">
-      <h2><span>4.</span> Sous-traitants et tiers</h2>
-      <p>LocalReply fait appel aux prestataires suivants, chacun disposant de sa propre politique de confidentialité :</p>
+    <div class="lrp-section" id="processors">
+      <h2><span>4.</span> Sub-processors and Third Parties</h2>
+      <p>LocalReply uses the following providers, each with their own privacy policy:</p>
       <table class="lrp-table">
-        <tr><th>Prestataire</th><th>Rôle</th><th>Localisation</th><th>Politique</th></tr>
-        <tr><td><strong>Stripe</strong></td><td>Traitement des paiements</td><td>États-Unis / EU</td><td><a href="https://stripe.com/privacy" target="_blank" style="color:var(--blue);">stripe.com/privacy</a></td></tr>
-        <tr><td><strong>SendGrid (Twilio)</strong></td><td>Envoi d'emails</td><td>États-Unis</td><td><a href="https://sendgrid.com/policies/privacy" target="_blank" style="color:var(--blue);">sendgrid.com</a></td></tr>
-        <tr><td><strong>Google Calendar API</strong></td><td>Synchronisation agenda</td><td>États-Unis / EU</td><td><a href="https://policies.google.com/privacy" target="_blank" style="color:var(--blue);">policies.google.com</a></td></tr>
-        <tr><td><strong>OpenAI</strong></td><td>Traitement IA des conversations</td><td>États-Unis</td><td><a href="https://openai.com/privacy" target="_blank" style="color:var(--blue);">openai.com/privacy</a></td></tr>
-        <tr><td><strong>Twilio</strong></td><td>Envoi de SMS (plan Pro)</td><td>États-Unis</td><td><a href="https://www.twilio.com/legal/privacy" target="_blank" style="color:var(--blue);">twilio.com/legal</a></td></tr>
-        <tr><td><strong>Render</strong></td><td>Hébergement backend</td><td>États-Unis</td><td><a href="https://render.com/privacy" target="_blank" style="color:var(--blue);">render.com/privacy</a></td></tr>
+        <tr><th>Provider</th><th>Role</th><th>Location</th><th>Policy</th></tr>
+        <tr><td><strong>Stripe</strong></td><td>Payment processing</td><td>US / EU</td><td><a href="https://stripe.com/privacy" target="_blank" style="color:var(--blue);">stripe.com/privacy</a></td></tr>
+        <tr><td><strong>SendGrid (Twilio)</strong></td><td>Email delivery</td><td>US</td><td><a href="https://sendgrid.com/policies/privacy" target="_blank" style="color:var(--blue);">sendgrid.com</a></td></tr>
+        <tr><td><strong>Google Calendar API</strong></td><td>Calendar sync</td><td>US / EU</td><td><a href="https://policies.google.com/privacy" target="_blank" style="color:var(--blue);">policies.google.com</a></td></tr>
+        <tr><td><strong>OpenAI</strong></td><td>AI conversation processing</td><td>US</td><td><a href="https://openai.com/privacy" target="_blank" style="color:var(--blue);">openai.com/privacy</a></td></tr>
+        <tr><td><strong>Twilio</strong></td><td>SMS delivery (Pro plan)</td><td>US</td><td><a href="https://www.twilio.com/legal/privacy" target="_blank" style="color:var(--blue);">twilio.com/legal</a></td></tr>
+        <tr><td><strong>Render</strong></td><td>Backend hosting</td><td>US</td><td><a href="https://render.com/privacy" target="_blank" style="color:var(--blue);">render.com/privacy</a></td></tr>
       </table>
-      <p>Les transferts vers des pays hors UE/Suisse s'effectuent sur la base des clauses contractuelles types (CCT) approuvées par la Commission européenne, ou d'autres mécanismes de transfert adéquats.</p>
+      <p>Transfers to countries outside the EU/Switzerland are carried out on the basis of Standard Contractual Clauses (SCCs) approved by the European Commission, or other adequate transfer mechanisms.</p>
     </div>
 
-    <!-- 5. CONSERVATION -->
-    <div class="lrp-section" id="conservation">
-      <h2><span>5.</span> Durée de conservation</h2>
+    <div class="lrp-section" id="retention">
+      <h2><span>5.</span> Retention Periods</h2>
       <table class="lrp-table">
-        <tr><th>Type de données</th><th>Durée de conservation</th></tr>
-        <tr><td>Données de compte (abonné)</td><td>Durée de l'abonnement + 3 ans</td></tr>
-        <tr><td>Données de facturation</td><td>10 ans (obligation légale comptable)</td></tr>
-        <tr><td>Conversations et messages</td><td>12 mois après la dernière activité</td></tr>
-        <tr><td>Données de rendez-vous</td><td>24 mois après la date du RDV</td></tr>
-        <tr><td>Logs techniques</td><td>90 jours</td></tr>
-        <tr><td>Données clients finaux (visiteurs)</td><td>6 mois après la conversation</td></tr>
+        <tr><th>Data type</th><th>Retention period</th></tr>
+        <tr><td>Account data (subscriber)</td><td>Duration of subscription + 3 years</td></tr>
+        <tr><td>Billing data</td><td>10 years (legal accounting obligation)</td></tr>
+        <tr><td>Conversations and messages</td><td>12 months after last activity</td></tr>
+        <tr><td>Appointment data</td><td>24 months after appointment date</td></tr>
+        <tr><td>Technical logs</td><td>90 days</td></tr>
+        <tr><td>End customer data (visitors)</td><td>6 months after the conversation</td></tr>
       </table>
-      <p>À l'expiration de ces délais, les données sont supprimées ou anonymisées de manière irréversible.</p>
+      <p>Upon expiry of these periods, data is irreversibly deleted or anonymized.</p>
     </div>
 
-    <!-- 6. DROITS -->
-    <div class="lrp-section" id="droits">
-      <h2><span>6.</span> Vos droits</h2>
-      <p>Conformément au RGPD (UE 2016/679) et à la loi fédérale suisse sur la protection des données (nLPD), vous disposez des droits suivants :</p>
+    <div class="lrp-section" id="rights">
+      <h2><span>6.</span> Your Rights</h2>
+      <p>Under GDPR (EU 2016/679) and the Swiss Federal Act on Data Protection (nFADP), you have the following rights:</p>
       <ul>
-        <li><strong>Droit d'accès (Art. 15 RGPD)</strong> — obtenir une copie de vos données personnelles</li>
-        <li><strong>Droit de rectification (Art. 16)</strong> — corriger des données inexactes ou incomplètes</li>
-        <li><strong>Droit à l'effacement (Art. 17)</strong> — demander la suppression de vos données ("droit à l'oubli")</li>
-        <li><strong>Droit à la limitation (Art. 18)</strong> — restreindre le traitement dans certains cas</li>
-        <li><strong>Droit à la portabilité (Art. 20)</strong> — recevoir vos données dans un format structuré</li>
-        <li><strong>Droit d'opposition (Art. 21)</strong> — s'opposer au traitement fondé sur l'intérêt légitime</li>
-        <li><strong>Droit de retirer le consentement</strong> — à tout moment, sans affecter la licéité du traitement antérieur</li>
+        <li><strong>Right of access (Art. 15 GDPR)</strong> — obtain a copy of your personal data</li>
+        <li><strong>Right to rectification (Art. 16)</strong> — correct inaccurate or incomplete data</li>
+        <li><strong>Right to erasure (Art. 17)</strong> — request deletion of your data ("right to be forgotten")</li>
+        <li><strong>Right to restriction (Art. 18)</strong> — restrict processing in certain cases</li>
+        <li><strong>Right to data portability (Art. 20)</strong> — receive your data in a structured format</li>
+        <li><strong>Right to object (Art. 21)</strong> — object to processing based on legitimate interest</li>
+        <li><strong>Right to withdraw consent</strong> — at any time, without affecting the lawfulness of prior processing</li>
       </ul>
-      <p>Pour exercer ces droits, contactez-nous à <a href="mailto:support@localreply.ai" style="color:var(--blue);">support@localreply.ai</a>. Nous répondrons dans un délai de 30 jours.</p>
-      <p>Vous avez également le droit d'introduire une réclamation auprès de l'autorité de protection des données compétente — en Suisse, le <strong>Préposé fédéral à la protection des données et à la transparence (PFPDT)</strong>.</p>
+      <p>To exercise these rights, contact us at <a href="mailto:support@localreply.ai" style="color:var(--blue);">support@localreply.ai</a>. We will respond within 30 days.</p>
+      <p>You also have the right to lodge a complaint with the competent data protection authority — in Switzerland, the <strong>Federal Data Protection and Information Commissioner (FDPIC)</strong>.</p>
     </div>
 
-    <!-- 7. SÉCURITÉ -->
-    <div class="lrp-section" id="securite">
-      <h2><span>7.</span> Sécurité des données</h2>
-      <p>LocalReply met en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte ou destruction :</p>
+    <div class="lrp-section" id="security">
+      <h2><span>7.</span> Data Security</h2>
+      <p>LocalReply implements appropriate technical and organizational measures to protect your data against unauthorized access, loss, or destruction:</p>
       <ul>
-        <li>Chiffrement des données en transit via TLS/HTTPS</li>
-        <li>Chiffrement des tokens sensibles (Google Calendar) en base de données</li>
-        <li>Authentification par tokens JWT à durée limitée</li>
-        <li>Accès aux données restreint au strict nécessaire</li>
-        <li>Sauvegardes automatiques quotidiennes</li>
-        <li>Monitoring des accès et des anomalies</li>
+        <li>Data in transit encrypted via TLS/HTTPS</li>
+        <li>Sensitive tokens (Google Calendar) encrypted in the database</li>
+        <li>Authentication via time-limited JWT tokens</li>
+        <li>Data access restricted to the strict minimum</li>
+        <li>Automatic daily backups</li>
+        <li>Access and anomaly monitoring</li>
       </ul>
-      <p>En cas de violation de données susceptible d'engendrer un risque élevé pour vos droits et libertés, nous vous notifierons dans les 72 heures conformément à l'Art. 33 RGPD.</p>
+      <p>In the event of a data breach likely to result in a high risk to your rights and freedoms, we will notify you within 72 hours in accordance with Art. 33 GDPR.</p>
     </div>
 
-    <!-- 8. COOKIES -->
     <div class="lrp-section" id="cookies">
       <h2><span>8.</span> Cookies</h2>
-      <p>LocalReply utilise un nombre limité de cookies strictement nécessaires au fonctionnement du service :</p>
+      <p>LocalReply uses a limited number of strictly necessary cookies for the service to function:</p>
       <table class="lrp-table">
-        <tr><th>Cookie</th><th>Finalité</th><th>Durée</th></tr>
-        <tr><td>auth_token</td><td>Authentification de l'utilisateur connecté</td><td>Session / 30 jours</td></tr>
-        <tr><td>business_id</td><td>Identification du commerce actif</td><td>Session</td></tr>
+        <tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr>
+        <tr><td>auth_token</td><td>Authentication of logged-in user</td><td>Session / 30 days</td></tr>
+        <tr><td>business_id</td><td>Identification of active business</td><td>Session</td></tr>
       </table>
-      <p>Nous n'utilisons pas de cookies publicitaires ou de tracking tiers. Aucune donnée n'est partagée avec des régies publicitaires.</p>
+      <p>We do not use advertising or third-party tracking cookies. No data is shared with advertising networks.</p>
     </div>
 
-    <!-- 9. MINEURS -->
-    <div class="lrp-section" id="mineurs">
-      <h2><span>9.</span> Mineurs</h2>
-      <p>LocalReply est un service destiné aux professionnels et aux adultes. Nous ne collectons pas sciemment de données personnelles concernant des enfants de moins de 16 ans. Si vous pensez qu'un mineur nous a fourni des données, contactez-nous pour suppression immédiate.</p>
+    <div class="lrp-section" id="minors">
+      <h2><span>9.</span> Minors</h2>
+      <p>LocalReply is a service intended for professionals and adults. We do not knowingly collect personal data from children under 16. If you believe a minor has provided us with data, contact us for immediate deletion.</p>
     </div>
 
-    <!-- 10. MODIFICATIONS -->
-    <div class="lrp-section" id="modifications">
-      <h2><span>10.</span> Modifications de la politique</h2>
-      <p>Nous nous réservons le droit de modifier la présente politique de confidentialité à tout moment. En cas de modification substantielle, vous serez notifié par email au moins 30 jours avant l'entrée en vigueur des nouvelles dispositions.</p>
-      <p>La version en vigueur est toujours accessible à l'adresse <strong>localreply.ai/privacy</strong>. La date de dernière mise à jour figure en haut de ce document.</p>
+    <div class="lrp-section" id="changes">
+      <h2><span>10.</span> Policy Changes</h2>
+      <p>We reserve the right to modify this privacy policy at any time. In case of a material change, you will be notified by email at least 30 days before the new provisions come into effect.</p>
+      <p>The current version is always accessible at <strong>localreply.ai/privacy</strong>. The date of last update appears at the top of this document.</p>
     </div>
 
-    <!-- 11. CONTACT -->
     <div class="lrp-section" id="contact">
       <h2><span>11.</span> Contact</h2>
-      <p>Pour toute question relative à la présente politique ou pour exercer vos droits :</p>
+      <p>For any questions regarding this policy or to exercise your rights:</p>
     </div>
 
-        <div class="lrp-contact">
-      <h3>Une question sur vos données ?</h3>
-      <p>Nous nous engageons à répondre dans un délai de 30 jours.</p>
-      <a href="mailto:support@localreply.ai">📧 Nous contacter</a>
+    <div class="lrp-contact">
+      <h3>Questions about your data?</h3>
+      <p>We commit to responding within 30 days.</p>
+      <a href="mailto:support@localreply.ai">📧 Contact us</a>
     </div>
   </div>
   </div>
 
-  
   <script src="/nav.js"></script>
   <script src="/footer.js"></script>
   <script>
   (function(){
-    var lang=localStorage.getItem("lr_lang")||(navigator.language||"fr").substring(0,2).toLowerCase();
-    document.documentElement.lang=lang;
-    if(lang!=="fr"){
-      var LEGAL_NOTICE={
-        en:"This document is available in French only for legal accuracy. A summary is provided below.",
-        de:"Dieses Dokument ist aus rechtlichen Gründen nur auf Französisch verfügbar.",
-        it:"Questo documento è disponibile solo in francese per motivi legali.",
-        es:"Este documento solo está disponible en francés por razones legales.",
-        pt:"Este documento está disponível apenas em francês por razões legais.",
-        nl:"Dit document is om juridische redenen alleen beschikbaar in het Frans.",
-        pl:"Ten dokument jest dostępny wyłącznie w języku francuskim ze względów prawnych.",
-      };
-      var notice=document.createElement("div");
-      notice.style.cssText="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.25);border-radius:12px;padding:14px 20px;margin:0 auto 32px;max-width:860px;font-size:14px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:12px;";
-      notice.innerHTML="<span style=\"font-size:18px;\">🌐</span><span>"+(LEGAL_NOTICE[lang]||LEGAL_NOTICE.en)+"</span>";
-      var container=document.querySelector(".lrt-body,.lrpr-body,.lrgd-body,.lrt-container,.lrpr-container,.lrgd-container");
-      if(container)container.insertBefore(notice,container.firstChild);
-    }
-    window.lrApplyLang=function(l){localStorage.setItem("lr_lang",l);location.reload();};
+    var lang = localStorage.getItem("lr_lang") || (navigator.language || "en").substring(0,2).toLowerCase();
+    var isFr = lang === "fr";
+    document.documentElement.lang = isFr ? "fr" : "en";
+    document.title = isFr ? "Politique de Confidentialité — LocalReply" : "Privacy Policy — LocalReply";
+    window.lrApplyLang = function(l) { localStorage.setItem("lr_lang", l); location.reload(); };
   })();
   </script>
 </body>
