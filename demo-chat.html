@@ -1515,9 +1515,21 @@ function showUI(bizName, icon, greeting, customGreeting=null) {
   document.getElementById('lrcSuggestions').style.display = 'flex';
   document.getElementById('lrcInputArea').style.display = 'flex';
   document.getElementById('lrcFooter').style.display = 'block';
-  const welcomeMsg = customGreeting
-    ? customGreeting.replace('{business_name}', bizName)
-    : `${greeting} ! 👋<br>Je suis l'assistant de <strong>${bizName}</strong>.<br>Comment puis-je vous aider ?`;
+
+  // Traductions du message de bienvenue par langue
+  const WELCOME_I18N = {
+    fr: (name) => `${greeting} ! 👋<br>Je suis l\\'assistant de <strong>${name}</strong>.<br>Comment puis-je vous aider ?`,
+    en: (name) => `${greeting}! 👋<br>I\\'m the AI assistant for <strong>${name}</strong>.<br>How can I help you?`,
+    de: (name) => `${greeting}! 👋<br>Ich bin der KI-Assistent von <strong>${name}</strong>.<br>Wie kann ich Ihnen helfen?`,
+    it: (name) => `${greeting}! 👋<br>Sono l\\'assistente IA di <strong>${name}</strong>.<br>Come posso aiutarti?`,
+    es: (name) => `¡${greeting}! 👋<br>Soy el asistente IA de <strong>${name}</strong>.<br>¿En qué puedo ayudarte?`,
+    pt: (name) => `${greeting}! 👋<br>Sou o assistente IA de <strong>${name}</strong>.<br>Como posso ajudar?`,
+    nl: (name) => `${greeting}! 👋<br>Ik ben de AI-assistent van <strong>${name}</strong>.<br>Hoe kan ik je helpen?`,
+    pl: (name) => `${greeting}! 👋<br>Jestem asystentem AI firmy <strong>${name}</strong>.<br>Jak mogę pomóc?`,
+  };
+  const welcomeFn = WELCOME_I18N[detectedLang] || WELCOME_I18N.fr;
+  const welcomeMsg = welcomeFn(bizName);
+
   addMsg(welcomeMsg, false, true);
   renderSuggestionsFallback('default', '');
   setTimeout(() => document.getElementById('lrcInput').focus(), 300);
