@@ -49,7 +49,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 84px 16px 24px;
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   position: relative;
@@ -562,12 +562,12 @@
     <!-- LOADING -->
     <div class="lrc-loading" id="lrcLoading">
       <div class="lrc-spinner"></div>
-      <div class="lrc-loading-text">Connexion à l'assistant...</div>
+      <div class="lrc-loading-text" id="lrcLoadingText">Connexion à l'assistant...</div>
     </div>
 
     <!-- MESSAGES -->
     <div class="lrc-messages" id="lrcMessages" style="display:none;">
-      <div class="lrc-date-sep">Aujourd'hui</div>
+      <div class="lrc-date-sep" id="lrcDateSep">Aujourd'hui</div>
     </div>
 
     <!-- SUGGESTIONS -->
@@ -576,13 +576,13 @@
     <!-- FORMULAIRE RDV -->
     <div class="lrc-rdv-form" id="lrcRdvForm" style="display:none;"></div>
     <div class="lrc-rdv-form" id="lrcEmailForm" style="display:none;">
-      <div class="lrc-rdv-title">📧 Recevoir la réponse par email</div>
-      <p style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
+      <div class="lrc-rdv-title" id="lrcEmailTitle">📧 Recevoir la réponse par email</div>
+      <p id="lrcEmailDesc" style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
       <div style="display:flex;gap:8px;margin-bottom:10px;">
         <input id="lrcEmailInput" type="email" placeholder="votre@email.com" style="flex:1;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" onkeydown="if(event.key==='Enter')submitEmailCapture()">
-        <button class="lrc-rdv-submit" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
+        <button class="lrc-rdv-submit" id="lrcEmailAlertBtn" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
       </div>
-      <button class="lrc-rdv-cancel" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
+      <button class="lrc-rdv-cancel" id="lrcEmailSkipBtn" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
     </div>
 
     <!-- INPUT -->
@@ -602,19 +602,20 @@
 
     <!-- FOOTER -->
     <div class="lrc-footer" id="lrcFooter" style="display:none;">
-      Propulsé par <span>LocalReply AI</span>
+      <span id="lrcPoweredText">Propulsé par</span> <span>LocalReply AI</span>
     </div>
 
     <!-- ERROR -->
     <div class="lrc-error" id="lrcError" style="display:none;">
       <div class="lrc-error-icon">😕</div>
-      <div class="lrc-error-title">Commerce introuvable</div>
-      <div class="lrc-error-desc">Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.</div>
+      <div class="lrc-error-title" id="lrcErrorTitle">Commerce introuvable</div>
+      <div class="lrc-error-desc" id="lrcErrorDesc">Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.</div>
     </div>
 
   </div>
 </div>
 
+<script src="/nav.js"></script>
 <script>
 const API = 'https://localreply-api.onrender.com';
 
@@ -629,8 +630,263 @@ const PLACEHOLDERS = {
 };
 
 const GREETINGS = {
-  fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá'
+  fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá', nl:'Hallo', pl:'Cześć'
 };
+const UI_I18N = {
+  fr: {
+    loading:        'Connexion à l'assistant...',
+    status:         'Assistant IA · En ligne 24/7',
+    placeholder:    'Posez votre question...',
+    today:          'Aujourd'hui',
+    powered:        'Propulsé par',
+    error_title:    'Commerce introuvable',
+    error_desc:     'Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.',
+    error_timeout:  'Le serveur met trop de temps à répondre. Réessayez dans quelques secondes.',
+    error_404:      'Ce commerce est introuvable. Vérifiez le lien.',
+    rdv_title:      '📅 Demande de rendez-vous',
+    rdv_service:    'Service souhaité',
+    rdv_choose:     '-- Choisir un service --',
+    rdv_other:      '✏️ Autre (saisie libre)',
+    rdv_other_ph:   'Décrivez votre demande...',
+    rdv_date:       'Date',
+    rdv_time:       'Heure souhaitée',
+    rdv_name:       'Prénom & Nom',
+    rdv_name_ph:    'Thomas Dupont',
+    rdv_phone:      'Téléphone',
+    rdv_email:      'Email',
+    rdv_optional:   '(optionnel — pour la confirmation)',
+    rdv_confirm:    '✅ Confirmer la demande',
+    rdv_cancel:     'Annuler',
+    email_title:    '📧 Recevoir la réponse par email',
+    email_desc:     'Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.',
+    email_alert:    '✉️ M'alerter',
+    email_skip:     'Non merci, continuer sans',
+    email_ph:       'votre@email.com',
+    salon_confirm:  'Le salon confirmera par email ou SMS',
+  },
+  en: {
+    loading:        'Connecting to assistant...',
+    status:         'AI Assistant · Online 24/7',
+    placeholder:    'Ask your question...',
+    today:          'Today',
+    powered:        'Powered by',
+    error_title:    'Business not found',
+    error_desc:     'This link is not valid or the business no longer exists.<br>Check the URL and try again.',
+    error_timeout:  'The server is taking too long to respond. Try again in a few seconds.',
+    error_404:      'This business could not be found. Check the link.',
+    rdv_title:      '📅 Appointment request',
+    rdv_service:    'Desired service',
+    rdv_choose:     '-- Choose a service --',
+    rdv_other:      '✏️ Other (free text)',
+    rdv_other_ph:   'Describe your request...',
+    rdv_date:       'Date',
+    rdv_time:       'Preferred time',
+    rdv_name:       'First & Last name',
+    rdv_name_ph:    'John Smith',
+    rdv_phone:      'Phone',
+    rdv_email:      'Email',
+    rdv_optional:   '(optional — for confirmation)',
+    rdv_confirm:    '✅ Confirm request',
+    rdv_cancel:     'Cancel',
+    email_title:    '📧 Get a reply by email',
+    email_desc:     'Leave your email and we'll notify you as soon as the team has replied.',
+    email_alert:    '✉️ Alert me',
+    email_skip:     'No thanks, continue without',
+    email_ph:       'your@email.com',
+    salon_confirm:  'The salon will confirm by email or SMS',
+  },
+  de: {
+    loading:        'Verbindung zum Assistenten...',
+    status:         'KI-Assistent · Online 24/7',
+    placeholder:    'Ihre Frage...',
+    today:          'Heute',
+    powered:        'Angetrieben von',
+    error_title:    'Unternehmen nicht gefunden',
+    error_desc:     'Dieser Link ist ungültig oder das Unternehmen existiert nicht mehr.<br>Überprüfen Sie die URL und versuchen Sie es erneut.',
+    error_timeout:  'Der Server reagiert zu langsam. Versuchen Sie es in einigen Sekunden erneut.',
+    error_404:      'Dieses Unternehmen wurde nicht gefunden. Überprüfen Sie den Link.',
+    rdv_title:      '📅 Terminanfrage',
+    rdv_service:    'Gewünschte Leistung',
+    rdv_choose:     '-- Leistung wählen --',
+    rdv_other:      '✏️ Andere (Freitext)',
+    rdv_other_ph:   'Beschreiben Sie Ihre Anfrage...',
+    rdv_date:       'Datum',
+    rdv_time:       'Gewünschte Zeit',
+    rdv_name:       'Vor- & Nachname',
+    rdv_name_ph:    'Max Mustermann',
+    rdv_phone:      'Telefon',
+    rdv_email:      'E-Mail',
+    rdv_optional:   '(optional — zur Bestätigung)',
+    rdv_confirm:    '✅ Anfrage bestätigen',
+    rdv_cancel:     'Abbrechen',
+    email_title:    '📧 Antwort per E-Mail erhalten',
+    email_desc:     'Hinterlassen Sie Ihre E-Mail und wir benachrichtigen Sie, sobald das Team geantwortet hat.',
+    email_alert:    '✉️ Benachrichtigen',
+    email_skip:     'Nein danke, ohne fortfahren',
+    email_ph:       'ihre@email.de',
+    salon_confirm:  'Der Salon bestätigt per E-Mail oder SMS',
+  },
+  it: {
+    loading:        'Connessione all'assistente...',
+    status:         'Assistente IA · Online 24/7',
+    placeholder:    'La tua domanda...',
+    today:          'Oggi',
+    powered:        'Offerto da',
+    error_title:    'Attività non trovata',
+    error_desc:     'Questo link non è valido o l'attività non esiste più.<br>Controlla l'URL e riprova.',
+    error_timeout:  'Il server impiega troppo tempo a rispondere. Riprova tra qualche secondo.',
+    error_404:      'Questa attività non è stata trovata. Controlla il link.',
+    rdv_title:      '📅 Richiesta appuntamento',
+    rdv_service:    'Servizio desiderato',
+    rdv_choose:     '-- Scegli un servizio --',
+    rdv_other:      '✏️ Altro (testo libero)',
+    rdv_other_ph:   'Descrivi la tua richiesta...',
+    rdv_date:       'Data',
+    rdv_time:       'Orario preferito',
+    rdv_name:       'Nome e Cognome',
+    rdv_name_ph:    'Mario Rossi',
+    rdv_phone:      'Telefono',
+    rdv_email:      'Email',
+    rdv_optional:   '(facoltativo — per la conferma)',
+    rdv_confirm:    '✅ Conferma richiesta',
+    rdv_cancel:     'Annulla',
+    email_title:    '📧 Ricevi la risposta via email',
+    email_desc:     'Lascia la tua email e ti avviseremo non appena il team avrà risposto.',
+    email_alert:    '✉️ Avvisami',
+    email_skip:     'No grazie, continua senza',
+    email_ph:       'tua@email.it',
+    salon_confirm:  'Il salone confermerà via email o SMS',
+  },
+  es: {
+    loading:        'Conectando con el asistente...',
+    status:         'Asistente IA · En línea 24/7',
+    placeholder:    'Su pregunta...',
+    today:          'Hoy',
+    powered:        'Desarrollado por',
+    error_title:    'Negocio no encontrado',
+    error_desc:     'Este enlace no es válido o el negocio ya no existe.<br>Verifica la URL y vuelve a intentarlo.',
+    error_timeout:  'El servidor tarda demasiado en responder. Inténtalo de nuevo en unos segundos.',
+    error_404:      'Este negocio no se pudo encontrar. Verifica el enlace.',
+    rdv_title:      '📅 Solicitud de cita',
+    rdv_service:    'Servicio deseado',
+    rdv_choose:     '-- Elegir un servicio --',
+    rdv_other:      '✏️ Otro (texto libre)',
+    rdv_other_ph:   'Describe tu solicitud...',
+    rdv_date:       'Fecha',
+    rdv_time:       'Hora preferida',
+    rdv_name:       'Nombre y Apellido',
+    rdv_name_ph:    'Juan García',
+    rdv_phone:      'Teléfono',
+    rdv_email:      'Email',
+    rdv_optional:   '(opcional — para la confirmación)',
+    rdv_confirm:    '✅ Confirmar solicitud',
+    rdv_cancel:     'Cancelar',
+    email_title:    '📧 Recibir respuesta por email',
+    email_desc:     'Deja tu email y te notificaremos en cuanto el equipo haya respondido.',
+    email_alert:    '✉️ Alertarme',
+    email_skip:     'No gracias, continuar sin',
+    email_ph:       'tu@email.es',
+    salon_confirm:  'El salón confirmará por email o SMS',
+  },
+  pt: {
+    loading:        'A ligar ao assistente...',
+    status:         'Assistente IA · Online 24/7',
+    placeholder:    'A sua pergunta...',
+    today:          'Hoje',
+    powered:        'Desenvolvido por',
+    error_title:    'Negócio não encontrado',
+    error_desc:     'Este link não é válido ou o negócio já não existe.<br>Verifique o URL e tente novamente.',
+    error_timeout:  'O servidor está a demorar demasiado a responder. Tente novamente em alguns segundos.',
+    error_404:      'Este negócio não foi encontrado. Verifique o link.',
+    rdv_title:      '📅 Pedido de marcação',
+    rdv_service:    'Serviço pretendido',
+    rdv_choose:     '-- Escolher um serviço --',
+    rdv_other:      '✏️ Outro (texto livre)',
+    rdv_other_ph:   'Descreva o seu pedido...',
+    rdv_date:       'Data',
+    rdv_time:       'Hora preferida',
+    rdv_name:       'Nome e Apelido',
+    rdv_name_ph:    'João Silva',
+    rdv_phone:      'Telefone',
+    rdv_email:      'Email',
+    rdv_optional:   '(opcional — para confirmação)',
+    rdv_confirm:    '✅ Confirmar pedido',
+    rdv_cancel:     'Cancelar',
+    email_title:    '📧 Receber resposta por email',
+    email_desc:     'Deixe o seu email e notificamo-lo assim que a equipa tiver respondido.',
+    email_alert:    '✉️ Alertar-me',
+    email_skip:     'Não obrigado, continuar sem',
+    email_ph:       'seu@email.pt',
+    salon_confirm:  'O salão confirmará por email ou SMS',
+  },
+  nl: {
+    loading:        'Verbinding maken met assistent...',
+    status:         'AI-assistent · Online 24/7',
+    placeholder:    'Uw vraag...',
+    today:          'Vandaag',
+    powered:        'Aangedreven door',
+    error_title:    'Bedrijf niet gevonden',
+    error_desc:     'Deze link is niet geldig of het bedrijf bestaat niet meer.<br>Controleer de URL en probeer opnieuw.',
+    error_timeout:  'De server reageert te langzaam. Probeer het over een paar seconden opnieuw.',
+    error_404:      'Dit bedrijf kon niet worden gevonden. Controleer de link.',
+    rdv_title:      '📅 Afspraakverzoek',
+    rdv_service:    'Gewenste dienst',
+    rdv_choose:     '-- Kies een dienst --',
+    rdv_other:      '✏️ Andere (vrije tekst)',
+    rdv_other_ph:   'Beschrijf uw verzoek...',
+    rdv_date:       'Datum',
+    rdv_time:       'Gewenste tijd',
+    rdv_name:       'Voor- & Achternaam',
+    rdv_name_ph:    'Jan de Vries',
+    rdv_phone:      'Telefoon',
+    rdv_email:      'E-mail',
+    rdv_optional:   '(optioneel — voor bevestiging)',
+    rdv_confirm:    '✅ Verzoek bevestigen',
+    rdv_cancel:     'Annuleren',
+    email_title:    '📧 Antwoord per e-mail ontvangen',
+    email_desc:     'Laat uw e-mail achter en we laten u weten zodra het team heeft geantwoord.',
+    email_alert:    '✉️ Mij alerteren',
+    email_skip:     'Nee bedankt, doorgaan zonder',
+    email_ph:       'uw@email.nl',
+    salon_confirm:  'De salon bevestigt per e-mail of SMS',
+  },
+  pl: {
+    loading:        'Łączenie z asystentem...',
+    status:         'Asystent AI · Online 24/7',
+    placeholder:    'Twoje pytanie...',
+    today:          'Dzisiaj',
+    powered:        'Zasilany przez',
+    error_title:    'Firma nie znaleziona',
+    error_desc:     'Ten link jest nieprawidłowy lub firma już nie istnieje.<br>Sprawdź URL i spróbuj ponownie.',
+    error_timeout:  'Serwer odpowiada zbyt wolno. Spróbuj ponownie za kilka sekund.',
+    error_404:      'Tej firmy nie można znaleźć. Sprawdź link.',
+    rdv_title:      '📅 Prośba o wizytę',
+    rdv_service:    'Żądana usługa',
+    rdv_choose:     '-- Wybierz usługę --',
+    rdv_other:      '✏️ Inne (dowolny tekst)',
+    rdv_other_ph:   'Opisz swoją prośbę...',
+    rdv_date:       'Data',
+    rdv_time:       'Preferowana godzina',
+    rdv_name:       'Imię i Nazwisko',
+    rdv_name_ph:    'Jan Kowalski',
+    rdv_phone:      'Telefon',
+    rdv_email:      'Email',
+    rdv_optional:   '(opcjonalne — do potwierdzenia)',
+    rdv_confirm:    '✅ Potwierdź prośbę',
+    rdv_cancel:     'Anuluj',
+    email_title:    '📧 Otrzymaj odpowiedź emailem',
+    email_desc:     'Zostaw swój email, a powiadomimy Cię, gdy zespół odpowie.',
+    email_alert:    '✉️ Powiadom mnie',
+    email_skip:     'Nie dziękuję, kontynuuj bez',
+    email_ph:       'twoj@email.pl',
+    salon_confirm:  'Salon potwierdzi emailem lub SMS',
+  },
+};
+
+function ui(key) {
+  return (UI_I18N[detectedLang] || UI_I18N.fr)[key] || (UI_I18N.fr)[key] || '';
+}
+
 
 // ── Suggestions intelligentes et contextuelles ──
 let bizConfig = null;
@@ -1000,6 +1256,9 @@ function getSlug() {
 
 // Détecter langue navigateur
 function detectBrowserLang() {
+  // Priorité : langue choisie dans la navbar (lr_lang) > langue navigateur
+  const stored = localStorage.getItem('lr_lang');
+  if (stored && LANG_FLAGS[stored]) return stored;
   const l = (navigator.language || 'fr').split('-')[0].toLowerCase();
   return LANG_FLAGS[l] ? l : 'fr';
 }
@@ -1305,12 +1564,12 @@ async function openRdvForm(prefill={}) {
     .join('');
   const serviceSelect = `
     <select id="rdvService" onchange="toggleCustomService(this)" style="width:100%;">
-      <option value="">-- Choisir un service --</option>
+      <option value="">${ui('rdv_choose')}</option>
       ${serviceOptions}
-      <option value="__custom__">✏️ Autre (saisie libre)</option>
+      <option value="__custom__">${ui('rdv_other')}</option>
     </select>
     <input id="rdvServiceCustom" type="text" placeholder="Décrivez votre demande..." 
-      style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
+      placeholder="${ui('rdv_other_ph')}" style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
 
   // Calculer date min (aujourd'hui) et max (30 jours)
   const today = new Date();
@@ -1453,8 +1712,24 @@ async function loadBizServices(bizId) {
 async function lrcInit() {
   detectedLang = detectBrowserLang();
   const greeting = GREETINGS[detectedLang] || 'Bonjour';
-  const placeholder = PLACEHOLDERS[detectedLang] || 'Posez votre question...';
-  document.getElementById('lrcInput').placeholder = placeholder;
+  // Apply all UI strings based on detected language
+  document.getElementById('lrcInput').placeholder = ui('placeholder');
+  const loadingText = document.getElementById('lrcLoadingText');
+  if (loadingText) loadingText.textContent = ui('loading');
+  const dateSep = document.getElementById('lrcDateSep');
+  if (dateSep) dateSep.textContent = ui('today');
+  const poweredText = document.getElementById('lrcPoweredText');
+  if (poweredText) poweredText.textContent = ui('powered');
+  const emailTitle = document.getElementById('lrcEmailTitle');
+  if (emailTitle) emailTitle.textContent = ui('email_title');
+  const emailDesc = document.getElementById('lrcEmailDesc');
+  if (emailDesc) emailDesc.textContent = ui('email_desc');
+  const emailAlertBtn = document.getElementById('lrcEmailAlertBtn');
+  if (emailAlertBtn) emailAlertBtn.textContent = ui('email_alert');
+  const emailSkipBtn = document.getElementById('lrcEmailSkipBtn');
+  if (emailSkipBtn) emailSkipBtn.textContent = ui('email_skip');
+  const emailInput = document.getElementById('lrcEmailInput');
+  if (emailInput) emailInput.placeholder = ui('email_ph');
 
   try {
     const controller = new AbortController();
@@ -1487,7 +1762,7 @@ async function lrcInit() {
     }
 
     document.getElementById('lrcName').textContent = biz.name || 'Assistant IA';
-    document.getElementById('lrcStatusText').textContent = 'Assistant IA · En ligne 24/7';
+    document.getElementById('lrcStatusText').textContent = ui('status');
 
     // Appliquer couleur brand Pro si définie
     if (biz.brand_color && /^#[0-9A-Fa-f]{6}$/.test(biz.brand_color)) {
@@ -1511,9 +1786,9 @@ async function lrcInit() {
       const errMsg = error.querySelector('p');
       if (errMsg) {
         if (err.name === 'AbortError') {
-          errMsg.textContent = 'Le serveur met trop de temps à répondre. Réessayez dans quelques secondes.';
+          errMsg.textContent = ui('error_timeout');
         } else if (err.message.includes('404') || err.message.includes('not found')) {
-          errMsg.textContent = 'Ce commerce est introuvable. Vérifiez le lien.';
+          errMsg.textContent = ui('error_404');
         }
       }
     }
