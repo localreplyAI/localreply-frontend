@@ -280,7 +280,14 @@
     document.documentElement.lang=lang;
     var titles={fr:'Contact',en:'Contact',de:'Kontakt',it:'Contatto',es:'Contacto',pt:'Contacto',nl:'Contact',pl:'Kontakt'};
     document.title=(titles[lang]||'Contact')+' — LocalReply';
-    window.lrApplyLang=function(l){localStorage.setItem('lr_lang',l);location.reload();};
+    window.lrApplyLang=function(l){
+      localStorage.setItem('lr_lang',l);
+      var t2=LRC_T[Object.keys(LRC_T).indexOf(l)>=0?l:'fr'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t2[k])el.innerHTML=t2[k];});
+      document.documentElement.lang=l;
+      document.title=(titles[l]||'Contact')+' — LocalReply';
+      if(typeof window.lrUpdateFooter==='function')window.lrUpdateFooter();
+    };
   })();
   </script>
 </body>

@@ -117,7 +117,13 @@
     document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t[k])el.innerHTML=t[k];});
     document.documentElement.lang=lang;
     document.title=(lang==='en'?'Blog':lang==='de'?'Blog':lang==='it'?'Blog':'Blog')+' — LocalReply';
-    window.lrApplyLang=function(l){localStorage.setItem('lr_lang',l);location.reload();};
+    window.lrApplyLang=function(l){
+      localStorage.setItem('lr_lang',l);
+      var t2=LRB_T[Object.keys(LRB_T).indexOf(l)>=0?l:'fr'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t2[k])el.innerHTML=t2[k];});
+      document.documentElement.lang=l;
+      if(typeof window.lrUpdateFooter==='function')window.lrUpdateFooter();
+    };
   })();
   </script>
 </body>
