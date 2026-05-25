@@ -11,19 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0A1628;
-  background-image: 
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,82,204,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(0,180,220,0.20) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(0,212,255,0.10) 0%, transparent 50%);
-  background-image: 
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,82,204,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(0,180,220,0.20) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(0,212,255,0.10) 0%, transparent 50%);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(0,82,204,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,180,220,0.10) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 60% at 60% 40%, rgba(0,212,255,0.05) 0%, transparent 50%); font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body { background: #0A1628; background-image: radial-gradient(ellipse 80% 60% at 15% 0%, rgba(0,82,204,0.55) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 85% 100%, rgba(0,180,220,0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 30%, rgba(0,212,255,0.15) 0%, transparent 55%); background-attachment: fixed; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   </style>
 
 
@@ -72,45 +60,65 @@
 
 <div class="lrb">
   <section class="lrb-hero">
-    <div class="lrb-hero-badge">✦ Blog LocalReply</div>
-    <h1>Conseils & ressources</h1>
-    <p>Des articles pratiques pour développer votre commerce et tirer le meilleur de l'IA.</p>
+    <div class="lrb-hero-badge" data-i18n="bl_badge">✦ Blog LocalReply</div>
+    <h1 data-i18n="bl_title">Conseils & ressources</h1>
+    <p data-i18n="bl_sub">Des articles pratiques pour développer votre commerce et tirer le meilleur de l'IA.</p>
   </section>
   <div class="lrb-body">
     <div class="lrb-soon">✍️</div>
-    <h2>Le blog arrive bientôt</h2>
-    <p>Des guides pratiques, des études de cas et des conseils concrets pour aider les commerces indépendants à tirer le meilleur de l'IA — sans jargon technique.</p>
+    <h2 data-i18n="bl_soon_title">Le blog arrive bientôt</h2>
+    <p data-i18n="bl_soon_desc">Des guides pratiques, des études de cas et des conseils concrets pour aider les commerces indépendants à tirer le meilleur de l'IA — sans jargon technique.</p>
     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px;max-width:500px;margin:0 auto 36px;text-align:left;">
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;">Articles en préparation</div>
+      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;" data-i18n="bl_upcoming">Articles en préparation</div>
       <div style="display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,0.65);">
-          <span style="font-size:16px;">📱</span> Comment multiplier vos clients avec un simple QR code
+          <span style="font-size:16px;">📱</span> <span data-i18n="bl_art1">Comment multiplier vos clients avec un simple QR code</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,0.65);">
-          <span style="font-size:16px;">🌍</span> Pourquoi le multilinguisme est clé en Europe
+          <span style="font-size:16px;">🌍</span> <span data-i18n="bl_art2">Pourquoi le multilinguisme est clé en Europe</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,0.65);">
-          <span style="font-size:16px;">📅</span> Automatiser ses RDV sans perdre le contact humain
+          <span style="font-size:16px;">📅</span> <span data-i18n="bl_art3">Automatiser ses RDV sans perdre le contact humain</span>
         </div>
         <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:rgba(255,255,255,0.65);">
-          <span style="font-size:16px;">💡</span> 5 questions que vos clients posent toujours la nuit
+          <span style="font-size:16px;">💡</span> <span data-i18n="bl_art4">5 questions que vos clients posent toujours la nuit</span>
         </div>
       </div>
     </div>
     <div class="lrb-topics">
-      <span class="lrb-topic">🤖 IA pour commerces</span>
-      <span class="lrb-topic">📅 Gestion RDV</span>
-      <span class="lrb-topic">🌍 Multilinguisme</span>
-      <span class="lrb-topic">📊 Analytics</span>
-      <span class="lrb-topic">💡 Conseils pratiques</span>
-      <span class="lrb-topic">🚀 Croissance</span>
+      <span class="lrb-topic" data-i18n="bl_tag1">🤖 IA pour commerces</span>
+      <span class="lrb-topic" data-i18n="bl_tag2">📅 Gestion RDV</span>
+      <span class="lrb-topic" data-i18n="bl_tag3">🌍 Multilinguisme</span>
+      <span class="lrb-topic" data-i18n="bl_tag4">📊 Analytics</span>
+      <span class="lrb-topic" data-i18n="bl_tag5">💡 Conseils pratiques</span>
+      <span class="lrb-topic" data-i18n="bl_tag6">🚀 Croissance</span>
     </div>
-    <a href="/auth" class="lrb-cta">Essayer LocalReply en attendant →</a>
+    <a href="/auth" class="lrb-cta" data-i18n="bl_cta">Essayer LocalReply en attendant →</a>
   </div>
 </div>
 
 
   <script src="/nav.js"></script>
   <script src="/footer.js"></script>
+  <script>
+  var LRB_T = {
+    fr:{bl_badge:'✦ Blog LocalReply',bl_title:'Conseils & ressources',bl_sub:"Des articles pratiques pour développer votre commerce et tirer le meilleur de l'IA.",bl_soon_title:'Le blog arrive bientôt',bl_soon_desc:"Des guides pratiques, des études de cas et des conseils concrets pour aider les commerces indépendants à tirer le meilleur de l'IA — sans jargon technique.",bl_upcoming:'Articles en préparation',bl_art1:'Comment multiplier vos clients avec un simple QR code',bl_art2:'Pourquoi le multilinguisme est clé en Europe',bl_art3:'Automatiser ses RDV sans perdre le contact humain',bl_art4:'5 questions que vos clients posent toujours la nuit',bl_tag1:'🤖 IA pour commerces',bl_tag2:'📅 Gestion RDV',bl_tag3:'🌍 Multilinguisme',bl_tag4:'📊 Analytics',bl_tag5:'💡 Conseils pratiques',bl_tag6:'🚀 Croissance',bl_cta:'Essayer LocalReply en attendant →'},
+    en:{bl_badge:'✦ LocalReply Blog',bl_title:'Tips & resources',bl_sub:'Practical articles to grow your business and get the most out of AI.',bl_soon_title:'Blog coming soon',bl_soon_desc:'Practical guides, case studies and concrete advice to help independent businesses get the most out of AI — without the technical jargon.',bl_upcoming:'Articles in preparation',bl_art1:'How to multiply your customers with a simple QR code',bl_art2:'Why multilingualism is key in Europe',bl_art3:'Automating appointments without losing the human touch',bl_art4:'5 questions your customers always ask at night',bl_tag1:'🤖 AI for businesses',bl_tag2:'📅 Appointment management',bl_tag3:'🌍 Multilingualism',bl_tag4:'📊 Analytics',bl_tag5:'💡 Practical tips',bl_tag6:'🚀 Growth',bl_cta:'Try LocalReply in the meantime →'},
+    de:{bl_badge:'✦ LocalReply Blog',bl_title:'Tipps & Ressourcen',bl_sub:'Praktische Artikel, um Ihr Unternehmen zu entwickeln und das Beste aus KI herauszuholen.',bl_soon_title:'Blog kommt bald',bl_soon_desc:'Praxisanleitungen, Fallstudien und konkrete Ratschläge, um unabhängigen Unternehmen zu helfen, das Beste aus KI herauszuholen — ohne technischen Fachjargon.',bl_upcoming:'Artikel in Vorbereitung',bl_art1:'Wie Sie Ihre Kunden mit einem einfachen QR-Code vervielfachen',bl_art2:'Warum Mehrsprachigkeit in Europa entscheidend ist',bl_art3:'Termine automatisieren ohne den menschlichen Kontakt zu verlieren',bl_art4:'5 Fragen, die Ihre Kunden immer nachts stellen',bl_tag1:'🤖 KI für Unternehmen',bl_tag2:'📅 Terminverwaltung',bl_tag3:'🌍 Mehrsprachigkeit',bl_tag4:'📊 Analytics',bl_tag5:'💡 Praktische Tipps',bl_tag6:'🚀 Wachstum',bl_cta:'LocalReply in der Zwischenzeit testen →'},
+    it:{bl_badge:'✦ Blog LocalReply',bl_title:'Consigli & risorse',bl_sub:"Articoli pratici per sviluppare la tua attività e sfruttare al meglio l'IA.",bl_soon_title:'Il blog arriva presto',bl_soon_desc:"Guide pratiche, casi studio e consigli concreti per aiutare le attività indipendenti a sfruttare al meglio l'IA — senza gergo tecnico.",bl_upcoming:'Articoli in preparazione',bl_art1:'Come moltiplicare i tuoi clienti con un semplice QR code',bl_art2:'Perché il multilinguismo è fondamentale in Europa',bl_art3:'Automatizzare gli appuntamenti senza perdere il contatto umano',bl_art4:'5 domande che i tuoi clienti fanno sempre di notte',bl_tag1:'🤖 IA per attività',bl_tag2:'📅 Gestione appuntamenti',bl_tag3:'🌍 Multilinguismo',bl_tag4:'📊 Analytics',bl_tag5:'💡 Consigli pratici',bl_tag6:'🚀 Crescita',bl_cta:'Prova LocalReply nel frattempo →'},
+    es:{bl_badge:'✦ Blog LocalReply',bl_title:'Consejos & recursos',bl_sub:'Artículos prácticos para desarrollar tu negocio y sacar el máximo partido a la IA.',bl_soon_title:'Blog próximamente',bl_soon_desc:'Guías prácticas, casos de estudio y consejos concretos para ayudar a los negocios independientes a sacar el máximo partido a la IA — sin jerga técnica.',bl_upcoming:'Artículos en preparación',bl_art1:'Cómo multiplicar tus clientes con un simple código QR',bl_art2:'Por qué el multilingüismo es clave en Europa',bl_art3:'Automatizar citas sin perder el contacto humano',bl_art4:'5 preguntas que tus clientes siempre hacen de noche',bl_tag1:'🤖 IA para negocios',bl_tag2:'📅 Gestión de citas',bl_tag3:'🌍 Multilingüismo',bl_tag4:'📊 Analytics',bl_tag5:'💡 Consejos prácticos',bl_tag6:'🚀 Crecimiento',bl_cta:'Probar LocalReply mientras tanto →'},
+    pt:{bl_badge:'✦ Blog LocalReply',bl_title:'Dicas & recursos',bl_sub:'Artigos práticos para desenvolver o seu negócio e tirar o máximo partido da IA.',bl_soon_title:'Blog a chegar em breve',bl_soon_desc:'Guias práticos, estudos de caso e conselhos concretos para ajudar os negócios independentes a tirar o máximo partido da IA — sem jargão técnico.',bl_upcoming:'Artigos em preparação',bl_art1:'Como multiplicar os seus clientes com um simples QR code',bl_art2:'Por que o multilinguismo é fundamental na Europa',bl_art3:'Automatizar marcações sem perder o contacto humano',bl_art4:'5 perguntas que os seus clientes fazem sempre à noite',bl_tag1:'🤖 IA para negócios',bl_tag2:'📅 Gestão de marcações',bl_tag3:'🌍 Multilinguismo',bl_tag4:'📊 Analytics',bl_tag5:'💡 Dicas práticas',bl_tag6:'🚀 Crescimento',bl_cta:'Experimentar o LocalReply enquanto isso →'},
+    nl:{bl_badge:'✦ LocalReply Blog',bl_title:'Tips & resources',bl_sub:'Praktische artikelen om uw bedrijf te laten groeien en het meeste uit AI te halen.',bl_soon_title:'Blog komt binnenkort',bl_soon_desc:'Praktische gidsen, casestudy\'s en concrete adviezen om onafhankelijke bedrijven te helpen het meeste uit AI te halen — zonder technisch jargon.',bl_upcoming:'Artikelen in voorbereiding',bl_art1:'Hoe u uw klanten verveelvoudigt met een eenvoudige QR-code',bl_art2:'Waarom meertaligheid essentieel is in Europa',bl_art3:'Afspraken automatiseren zonder het menselijk contact te verliezen',bl_art4:'5 vragen die uw klanten altijd \'s nachts stellen',bl_tag1:'🤖 AI voor bedrijven',bl_tag2:'📅 Afsprakenbeheer',bl_tag3:'🌍 Meertaligheid',bl_tag4:'📊 Analytics',bl_tag5:'💡 Praktische tips',bl_tag6:'🚀 Groei',bl_cta:'LocalReply in de tussentijd uitproberen →'},
+    pl:{bl_badge:'✦ Blog LocalReply',bl_title:'Porady & zasoby',bl_sub:'Praktyczne artykuły do rozwijania firmy i czerpania jak największych korzyści z AI.',bl_soon_title:'Blog już wkrótce',bl_soon_desc:'Praktyczne przewodniki, studia przypadków i konkretne porady, które pomogą niezależnym firmom czerpać jak największe korzyści z AI — bez technicznego żargonu.',bl_upcoming:'Artykuły w przygotowaniu',bl_art1:'Jak zwielokrotnić liczbę klientów za pomocą prostego kodu QR',bl_art2:'Dlaczego wielojęzyczność jest kluczowa w Europie',bl_art3:'Automatyzacja wizyt bez utraty kontaktu z człowiekiem',bl_art4:'5 pytań, które Twoi klienci zawsze zadają w nocy',bl_tag1:'🤖 AI dla firm',bl_tag2:'📅 Zarządzanie wizytami',bl_tag3:'🌍 Wielojęzyczność',bl_tag4:'📊 Analytics',bl_tag5:'💡 Praktyczne wskazówki',bl_tag6:'🚀 Wzrost',bl_cta:'Wypróbuj LocalReply w międzyczasie →'},
+  };
+  (function(){
+    var lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+    var t=LRB_T[Object.keys(LRB_T).indexOf(lang)>=0?lang:'fr'];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t[k])el.innerHTML=t[k];});
+    document.documentElement.lang=lang;
+    document.title=(lang==='en'?'Blog':lang==='de'?'Blog':lang==='it'?'Blog':'Blog')+' — LocalReply';
+    window.lrApplyLang=function(l){localStorage.setItem('lr_lang',l);location.reload();};
+  })();
+  </script>
 </body>
 </html>

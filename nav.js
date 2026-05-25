@@ -266,6 +266,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
       lrApplyNavLang(lang);
       const dd = document.getElementById('lr-lang-dd');
       if (dd) dd.style.display = 'none';
+      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
     };
   } else {
     // Sur home.html, lrApplyLang existe déjà — on la patch pour aussi mettre à jour la navbar
@@ -273,6 +274,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     window.lrApplyLang = function(lang) {
       _originalApplyLang(lang);
       lrApplyNavLang(lang);
+      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
     };
   }
 
