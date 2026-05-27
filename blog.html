@@ -98,8 +98,6 @@
 </div>
 
 
-  <script src="/nav.js"></script>
-  <script src="/footer.js"></script>
   <script>
   var LRB_T = {
     fr:{bl_badge:'✦ Blog LocalReply',bl_title:'Conseils & ressources',bl_sub:"Des articles pratiques pour développer votre commerce et tirer le meilleur de l'IA.",bl_soon_title:'Le blog arrive bientôt',bl_soon_desc:"Des guides pratiques, des études de cas et des conseils concrets pour aider les commerces indépendants à tirer le meilleur de l'IA — sans jargon technique.",bl_upcoming:'Articles en préparation',bl_art1:'Comment multiplier vos clients avec un simple QR code',bl_art2:'Pourquoi le multilinguisme est clé en Europe',bl_art3:'Automatiser ses RDV sans perdre le contact humain',bl_art4:'5 questions que vos clients posent toujours la nuit',bl_tag1:'🤖 IA pour commerces',bl_tag2:'📅 Gestion RDV',bl_tag3:'🌍 Multilinguisme',bl_tag4:'📊 Analytics',bl_tag5:'💡 Conseils pratiques',bl_tag6:'🚀 Croissance',bl_cta:'Essayer LocalReply en attendant →'},
@@ -116,15 +114,27 @@
     var t=LRB_T[Object.keys(LRB_T).indexOf(lang)>=0?lang:'fr'];
     document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t[k])el.innerHTML=t[k];});
     document.documentElement.lang=lang;
-    document.title=(lang==='en'?'Blog':lang==='de'?'Blog':lang==='it'?'Blog':'Blog')+' — LocalReply';
-    window.lrApplyLang=function(l){
-      localStorage.setItem('lr_lang',l);
-      var t2=LRB_T[Object.keys(LRB_T).indexOf(l)>=0?l:'fr'];
-      document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(t2[k])el.innerHTML=t2[k];});
-      document.documentElement.lang=l;
-      if(typeof window.lrUpdateFooter==='function')window.lrUpdateFooter();
+    document.title = 'Blog — LocalReply';
+
+    window.lrApplyLang = function(l) {
+      localStorage.setItem('lr_lang', l);
+      var sup2 = Object.keys(LRB_T);
+      var t2 = LRB_T[sup2.indexOf(l) >= 0 ? l : 'fr'];
+      document.querySelectorAll('[data-i18n]').forEach(function(el){
+        var k = el.getAttribute('data-i18n');
+        if (t2[k] !== undefined) el.innerHTML = t2[k];
+      });
+      document.documentElement.lang = l;
+      var btn = document.getElementById('lr-lang-btn');
+      var flags = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'};
+      if (btn) btn.innerHTML = (flags[l] || '🌍') + ' ' + l.toUpperCase() + ' ▾';
+      var dd = document.getElementById('lr-lang-dd');
+      if (dd) dd.style.display = 'none';
+      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
     };
   })();
   </script>
+  <script src="/nav.js"></script>
+  <script src="/footer.js"></script>
 </body>
 </html>
