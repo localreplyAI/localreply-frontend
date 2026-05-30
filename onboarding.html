@@ -57,13 +57,13 @@
       <!-- ═══ ÉTAPE 1 : Votre commerce ═══ -->
       <div id="step1" class="step-panel">
         <div style="margin-bottom:24px;">
-          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">Bienvenue ! 👋</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Commençons par configurer votre commerce. Ces informations permettent à l'IA de se présenter correctement à vos clients.</p>
+          <h2 id="ob-step1-title" style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">Bienvenue ! 👋</h2>
+          <p id="ob-step1-sub" style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Commençons par configurer votre commerce. Ces informations permettent à l'IA de se présenter correctement à vos clients.</p>
         </div>
 
         <!-- Type de commerce EN PREMIER -->
         <div class="ob-field">
-          <label class="ob-label">Type de commerce <span style="color:#EF4444;">*</span></label>
+          <label id="ob-lbl-type" class="ob-label">Type de commerce <span style="color:#EF4444;">*</span></label>
           <select id="businessTypeSelect" class="ob-input" onchange="selectBizType(this.value)" style="margin-top:6px;">
             <option value="" disabled selected>— Choisir votre type de commerce —</option>
           </select>
@@ -71,11 +71,11 @@
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
           <div class="ob-field">
-            <label class="ob-label">Nom du commerce <span style="color:#EF4444;">*</span></label>
+            <label id="ob-lbl-name" class="ob-label">Nom du commerce <span style="color:#EF4444;">*</span></label>
             <input id="bizName" type="text" class="ob-input" placeholder="Ex: Salon Marco">
           </div>
           <div class="ob-field">
-            <label class="ob-label">Fuseau horaire</label>
+            <label id="ob-lbl-tz" class="ob-label">Fuseau horaire</label>
             <select id="bizTimezone" class="ob-input" style="appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%23FFFFFF%22 d=%22M6 9L1 4h10z%22/></svg>');background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;">
               <option value="Europe/Paris">🇫🇷 Europe/Paris</option>
               <option value="Europe/Zurich" selected>🇨🇭 Europe/Zurich</option>
@@ -89,7 +89,7 @@
         </div>
 
         <div class="ob-field" style="margin-top:14px;">
-          <label class="ob-label">Votre lien public LocalReply <span style="color:#EF4444;">*</span></label>
+          <label id="ob-lbl-slug" class="ob-label">Votre lien public LocalReply <span style="color:#EF4444;">*</span></label>
           <div style="display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;transition:border 0.2s;" id="slugWrap">
             <span style="padding:0 8px 0 14px;font-size:13px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">localreply.ai/</span>
             <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)">
@@ -97,7 +97,7 @@
           <div id="slugPreview" style="font-size:11px;color:rgba(0,212,255,0.7);margin-top:4px;"></div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-top:8px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;">
             <span style="font-size:14px;flex-shrink:0;">⚠️</span>
-            <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Ce lien est <strong style="color:#F59E0B;">définitif et ne pourra plus être modifié</strong>. Il sera utilisé dans vos QR codes, bio réseaux sociaux et flyers — choisissez-le bien.</div>
+            <div id="ob-slug-warning" style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Ce lien est <strong style="color:#F59E0B;">définitif et ne pourra plus être modifié</strong>. Il sera utilisé dans vos QR codes, bio réseaux sociaux et flyers — choisissez-le bien.</div>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
       <div id="step2" class="step-panel" style="display:none;">
         <div style="margin-bottom:20px;">
           <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;" id="step2Title">⏰ Horaires & Services</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">L'IA utilisera ces informations pour répondre à vos clients.</p>
+          <p id="ob-step2-sub" style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">L'IA utilisera ces informations pour répondre à vos clients.</p>
         </div>
 
         <!-- Template rapide -->
@@ -137,8 +137,8 @@
       <!-- ═══ ÉTAPE 3 : Prise de RDV ═══ -->
       <div id="step3" class="step-panel" style="display:none;">
         <div style="margin-bottom:20px;">
-          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">📅 Prise de rendez-vous</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Comment voulez-vous gérer les RDV de vos clients ?</p>
+          <h2 id="ob-step3-title" style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">📅 Prise de rendez-vous</h2>
+          <p id="ob-step3-sub" style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Comment voulez-vous gérer les RDV de vos clients ?</p>
         </div>
 
         <div style="display:flex;flex-direction:column;gap:10px;" id="rdvOptions">
@@ -148,13 +148,13 @@
             <div style="width:40px;height:40px;background:rgba(16,185,129,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📅</div>
             <div style="flex:1;">
               <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Google Calendar</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA vérifie vos disponibilités en temps réel et crée les RDV automatiquement dans votre calendrier.</div>
-              <div style="font-size:11.5px;color:rgba(245,158,11,0.7);margin-top:6px;line-height:1.5;">💡 Conseil : utilisez un calendar dédié à votre commerce, pas votre agenda personnel.</div>
+              <div id="ob-rdv-g-desc" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA vérifie vos disponibilités en temps réel et crée les RDV automatiquement dans votre calendrier.</div>
+              <div id="ob-rdv-g-tip" style="font-size:11.5px;color:rgba(245,158,11,0.7);margin-top:6px;line-height:1.5;">💡 Conseil : utilisez un calendar dédié à votre commerce, pas votre agenda personnel.</div>
               <div id="calendarConnectBtn" style="display:none;margin-top:12px;">
                 <button onclick="connectCalendar(event)" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px;">
-                  <span>🔗</span> Connecter Google Calendar
+                  <span>🔗</span id="ob-rdv-g-connect"> Connecter Google Calendar
                 </button>
-                <div id="calendarStatus" style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4);">Non connecté</div>
+                <div id="calendarStatus" style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4);"><span id="ob-rdv-g-status">Non connecté</span></div>
               </div>
             </div>
             <div class="rdv-radio" id="radio_google" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
@@ -164,11 +164,11 @@
           <label class="rdv-option" id="rdvOptLink" onclick="selectRdvOption('link')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
             <div style="width:40px;height:40px;background:rgba(0,212,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
             <div style="flex:1;">
-              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Système de RDV existant</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">Vous avez déjà Planity, Doctolib, Calendly ou autre ? L'IA enverra vos clients directement sur votre lien.</div>
+              <div id="ob-rdv-l-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Système de RDV existant</div>
+              <div id="ob-rdv-l-desc" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">Vous avez déjà Planity, Doctolib, Calendly ou autre ? L'IA enverra vos clients directement sur votre lien.</div>
               <div id="rdvLinkInput" style="display:none;margin-top:12px;">
                 <input type="url" id="externalRdvUrl" class="ob-input" placeholder="https://www.planity.com/votre-salon" style="font-size:13px;">
-                <div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:4px;">L'IA dira : "Réservez directement sur notre site →"</div>
+                <div id="ob-rdv-l-hint" style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:4px;">L'IA dira : "Réservez directement sur notre site →"</div>
               </div>
             </div>
             <div class="rdv-radio" id="radio_link" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
@@ -178,8 +178,8 @@
           <label class="rdv-option" id="rdvOptManual" onclick="selectRdvOption('manual')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
             <div style="width:40px;height:40px;background:rgba(245,158,11,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📞</div>
             <div style="flex:1;">
-              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Gestion manuelle</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA demandera aux clients de vous appeler ou d'envoyer un message pour convenir d'un RDV.</div>
+              <div id="ob-rdv-m-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Gestion manuelle</div>
+              <div id="ob-rdv-m-desc" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA demandera aux clients de vous appeler ou d'envoyer un message pour convenir d'un RDV.</div>
             </div>
             <div class="rdv-radio" id="radio_manual" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
           </label>
@@ -188,15 +188,15 @@
           <label class="rdv-option" id="rdvOptNone" onclick="selectRdvOption('none')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
             <div style="width:40px;height:40px;background:rgba(139,92,246,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">💬</div>
             <div style="flex:1;">
-              <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Pas de RDV</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA se concentre sur les questions, infos et FAQ. Idéal pour les boutiques, restaurants, etc.</div>
+              <div id="ob-rdv-n-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;">Pas de RDV</div>
+              <div id="ob-rdv-n-desc" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;">L'IA se concentre sur les questions, infos et FAQ. Idéal pour les boutiques, restaurants, etc.</div>
             </div>
             <div class="rdv-radio" id="radio_none" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
           </label>
         </div>
 
         <!-- Note skip -->
-        <div style="margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.35);text-align:center;">
+        <div id="ob-rdv-skip" style="margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.03);border-radius:10px;font-size:12px;color:rgba(255,255,255,0.35);text-align:center;">
           💡 Cette étape est optionnelle — vous pouvez la configurer plus tard dans le dashboard
         </div>
       </div>
@@ -204,34 +204,34 @@
       <!-- ═══ ÉTAPE 4 : Notifications ═══ -->
       <div id="step4" class="step-panel" style="display:none;">
         <div style="margin-bottom:20px;">
-          <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">🔔 Notifications</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Choisissez comment être alerté quand quelque chose se passe.</p>
+          <h2 id="ob-step4-title" style="font-size:24px;font-weight:800;color:#fff;margin:0 0 6px;letter-spacing:-0.5px;">🔔 Notifications</h2>
+          <p id="ob-step4-sub" style="font-size:14px;color:rgba(255,255,255,0.5);margin:0;line-height:1.6;">Choisissez comment être alerté quand quelque chose se passe.</p>
         </div>
 
         <!-- Info SMS -->
         <div style="padding:12px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;margin-bottom:16px;display:flex;gap:12px;align-items:start;">
           <span style="font-size:18px;flex-shrink:0;">💡</span>
           <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            <strong style="color:#00D4FF;">Les SMS vous sont envoyés à vous</strong> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.
+            <span id="ob-sms-note"><strong style="color:#00D4FF;">Les SMS vous sont envoyés à vous</strong></span> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.
           </div>
         </div>
 
         <!-- Email destination -->
         <div class="ob-field" style="margin-bottom:16px;">
-          <label class="ob-label">📧 Envoyer les notifications email à</label>
+          <label id="ob-lbl-email-notif" class="ob-label">📧 Envoyer les notifications email à</label>
           <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px;">
             <label style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(0,212,255,0.3);border-radius:10px;cursor:pointer;">
               <input type="radio" name="ob_emailTarget" value="account" checked style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
               <div>
-                <div style="font-size:13px;font-weight:600;color:#fff;">Email du compte <span style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:1px 7px;border-radius:5px;margin-left:6px;">Recommandé</span></div>
+                <div style="font-size:13px;font-weight:600;color:#fff;"><span id="ob-email-account">Email du compte</span> <span id="ob-email-recommended" style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:1px 7px;border-radius:5px;margin-left:6px;">Recommandé</span></div>
                 <div id="ob_accountEmail" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">—</div>
               </div>
             </label>
             <label style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;">
               <input type="radio" name="ob_emailTarget" value="both" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
               <div>
-                <div style="font-size:13px;font-weight:600;color:#fff;">Les deux</div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Email du compte + email du commerce</div>
+                <div style="font-size:13px;font-weight:600;color:#fff;"><span id="ob-email-both">Les deux</span></div>
+                <div id="ob-email-both-sub" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Email du compte + email du commerce</div>
               </div>
             </label>
           </div>
@@ -288,7 +288,7 @@
 
         <!-- Résumés IA -->
         <div class="ob-field">
-          <label class="ob-label">📊 Résumés IA par email</label>
+          <label id="ob-lbl-summary" class="ob-label">📊 Résumés IA par email</label>
           <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px;line-height:1.6;">Recevez un récapitulatif de l'activité de votre assistant : questions fréquentes, opportunités, conversations.</div>
 
           <div style="display:flex;flex-direction:column;gap:8px;">
@@ -304,8 +304,8 @@
             <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.3);border-radius:10px;cursor:pointer;" id="ob_summaryOpt_weekly">
               <input type="radio" name="ob_summaryFreq" id="ob_summaryFreq_weekly" value="weekly" checked style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="obUpdateSummary()">
               <div>
-                <div style="font-size:13px;font-weight:600;color:#fff;">Hebdomadaire</div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">Tous les lundis matin</div>
+                <div style="font-size:13px;font-weight:600;color:#fff;"><span id="ob-sum-weekly">Hebdomadaire</span></div>
+                <div id="ob-sum-weekly-sub" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:1px;">Tous les lundis matin</div>
               </div>
             </label>
 
@@ -313,10 +313,10 @@
               <input type="radio" name="ob_summaryFreq" id="ob_summaryFreq_daily" value="daily" style="accent-color:#F59E0B;width:15px;height:15px;flex-shrink:0;" onchange="obUpdateSummary()">
               <div style="flex:1;">
                 <div style="display:flex;align-items:center;gap:7px;">
-                  <span style="font-size:13px;font-weight:600;color:#fff;">Quotidien</span>
+                  <span id="ob-sum-daily" style="font-size:13px;font-weight:600;color:#fff;">Quotidien</span>
                   <span style="font-size:10px;font-weight:700;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:2px 7px;border-radius:5px;">PRO</span>
                 </div>
-                <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Chaque matin — résumé de la veille</div>
+                <div id="ob-sum-daily-sub" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px;">Chaque matin — résumé de la veille</div>
               </div>
             </label>
 
@@ -333,13 +333,13 @@
       <div id="step5" class="step-panel" style="display:none;">
         <div style="text-align:center;padding:10px 0 20px;">
           <div style="font-size:56px;margin-bottom:14px;animation:bounce 0.6s ease;">🎉</div>
-          <h2 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.5px;">Votre assistant est prêt !</h2>
-          <p style="font-size:14px;color:rgba(255,255,255,0.5);margin:0 auto;max-width:400px;line-height:1.6;">Partagez votre lien avec vos clients et l'IA s'occupe du reste 24h/24.</p>
+          <h2 id="ob-step5-title" style="font-size:26px;font-weight:800;color:#fff;margin:0 0 8px;letter-spacing:-0.5px;">Votre assistant est prêt !</h2>
+          <p id="ob-step5-sub" style="font-size:14px;color:rgba(255,255,255,0.5);margin:0 auto;max-width:400px;line-height:1.6;">Partagez votre lien avec vos clients et l'IA s'occupe du reste 24h/24.</p>
         </div>
 
         <!-- Lien public -->
         <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:14px;padding:16px;margin-bottom:14px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">🔗 Votre lien public</div>
+          <div id="ob-public-link-label" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">🔗 Votre lien public</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <div id="finalLink" style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.06);border-radius:10px;font-size:14px;font-weight:600;color:#00D4FF;word-break:break-all;">localreply.ai/...</div>
             <button onclick="copyFinalLink()" style="padding:11px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;">📋</button>
@@ -349,25 +349,25 @@
         <!-- Actions -->
         <div style="display:flex;flex-direction:column;gap:10px;">
           <a id="testIABtn" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px rgba(0,82,204,0.3);">
-            <span style="font-size:18px;">🤖</span> Tester mon assistant IA →
+            <span style="font-size:18px;">🤖</span> <span id="ob-test-ia">Tester mon assistant IA →</span>
           </a>
           <button onclick="goToDashboard()" style="padding:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.1)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">
-            Aller au dashboard →
+            <span id="ob-go-dashboard">Aller au dashboard →</span>
           </button>
         </div>
 
         <!-- Prochaines étapes -->
         <div style="margin-top:16px;padding:14px;background:rgba(255,255,255,0.03);border-radius:12px;">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">💡 Prochaines étapes recommandées</div>
+          <div id="ob-next-steps" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">💡 Prochaines étapes recommandées</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
-              <span style="color:#10B981;font-weight:700;">→</span> Affichez votre QR code en vitrine
+              <span style="color:#10B981;font-weight:700;">→</span> <span id="ob-ns1">Affichez votre QR code en vitrine</span>
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
-              <span style="color:#10B981;font-weight:700;">→</span> Ajoutez le lien dans votre bio Instagram
+              <span style="color:#10B981;font-weight:700;">→</span> <span id="ob-ns2">Ajoutez le lien dans votre bio Instagram</span>
             </div>
             <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.65);">
-              <span style="color:#10B981;font-weight:700;">→</span> Complétez votre FAQ dans Configuration
+              <span style="color:#10B981;font-weight:700;">→</span> <span id="ob-ns3">Complétez votre FAQ dans Configuration</span>
             </div>
           </div>
         </div>
@@ -377,10 +377,10 @@
 
     <!-- Footer boutons -->
     <div id="wizardFooter" style="padding:16px 28px 24px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;gap:12px;">
-      <button id="btnBack" onclick="prevStep()" style="padding:12px 20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;color:rgba(255,255,255,0.6);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.1)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'">← Retour</button>
+      <button id="btnBack" onclick="prevStep()" style="padding:12px 20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:11px;color:rgba(255,255,255,0.6);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;display:none;transition:all 0.2s;" onmouseenter="this.style.background='rgba(255,255,255,0.1)'" onmouseleave="this.style.background='rgba(255,255,255,0.06)'" id="btnBack">← Retour</button>
       <div style="flex:1;"></div>
       <div id="step3Skip" style="display:none;">
-        <button onclick="skipStep3()" style="padding:12px 18px;background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;">Passer cette étape →</button>
+        <button onclick="skipStep3()" style="padding:12px 18px;background:transparent;border:none;color:rgba(255,255,255,0.4);font-size:13px;cursor:pointer;font-family:inherit;" id="ob-step3-skip">Passer cette étape →</button>
       </div>
       <button id="btnNext" onclick="nextStep()" style="padding:12px 28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,82,204,0.3);transition:all 0.2s;" onmouseenter="this.style.transform='translateY(-1px)'" onmouseleave="this.style.transform='translateY(0)'">
         Continuer →
@@ -437,6 +437,188 @@ body{margin:0;padding:0;}
 </style>
 
 <script>
+
+const OB_T = {
+  fr:{
+    step1_title:'Bienvenue ! 👋', step1_sub:"Commençons par configurer votre commerce. Ces informations permettent à l'IA de se présenter correctement à vos clients.",
+    lbl_type:'Type de commerce', type_placeholder:'— Choisir votre type de commerce —',
+    lbl_name:'Nom du commerce', lbl_tz:'Fuseau horaire',
+    lbl_slug:'Votre lien public LocalReply',
+    slug_warning:"Ce lien est <strong style='color:#F59E0B;'>définitif et ne pourra plus être modifié</strong>. Il sera utilisé dans vos QR codes, bio réseaux sociaux et flyers — choisissez-le bien.",
+    step2_sub:"L'IA utilisera ces informations pour répondre à vos clients.",
+    lbl_hours:"Horaires d'ouverture", lbl_services:'Services principaux', lbl_template:'📋 Charger le template',
+    step3_title:'📅 Prise de rendez-vous', step3_sub:'Comment voulez-vous gérer les RDV de vos clients ?',
+    rdv_g_desc:"L'IA vérifie vos disponibilités en temps réel et crée les RDV automatiquement dans votre calendrier.",
+    rdv_g_tip:'💡 Conseil : utilisez un calendar dédié à votre commerce, pas votre agenda personnel.',
+    rdv_g_connect:'🔗 Connecter Google Calendar', rdv_g_status:'Non connecté',
+    rdv_l_title:'Système de RDV existant', rdv_l_desc:"Vous avez déjà Planity, Doctolib, Calendly ou autre ? L'IA enverra vos clients directement sur votre lien.",
+    rdv_l_hint:"L'IA dira : "Réservez directement sur notre site →"",
+    rdv_m_title:'Gestion manuelle', rdv_m_desc:"L'IA demandera aux clients de vous appeler ou d'envoyer un message pour convenir d'un RDV.",
+    rdv_n_title:'Pas de RDV', rdv_n_desc:"L'IA se concentre sur les questions, infos et FAQ. Idéal pour les boutiques, restaurants, etc.",
+    rdv_skip:'💡 Cette étape est optionnelle — vous pouvez la configurer plus tard dans le dashboard',
+    step4_title:'🔔 Notifications', step4_sub:'Choisissez comment être alerté quand quelque chose se passe.',
+    sms_note:"<strong style='color:#00D4FF;'>Les SMS vous sont envoyés à vous</strong> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.",
+    lbl_email_notif:'📧 Envoyer les notifications email à',
+    email_account:'Email du compte', email_recommended:'Recommandé', email_both:'Les deux', email_both_sub:'Email du compte + email du commerce',
+    lbl_events:'Canal par type d'événement',
+    event_new:'Nouvelle conversation/question', event_urgent:'Demande urgente 🔴', event_unknown:'Question sans réponse',
+    lbl_summary:'📊 Résumés IA par email',
+    sum_none:'Jamais', sum_weekly:'Hebdomadaire', sum_weekly_sub:'Tous les lundis matin',
+    sum_daily:'Quotidien', sum_daily_sub:'Chaque matin — résumé de la veille',
+    sum_pro_note:'⭐ Les résumés quotidiens sont réservés au plan Pro. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">Voir les plans →</a>',
+    step5_title:'Votre assistant est prêt !', step5_sub:'Partagez votre lien avec vos clients et l'IA s'occupe du reste 24h/24.',
+    public_link:'🔗 Votre lien public', test_ia:'🤖 Tester mon assistant IA →', go_dashboard:'Aller au dashboard →',
+    next_steps:'💡 Prochaines étapes recommandées',
+    ns1:'Affichez votre QR code en vitrine', ns2:'Ajoutez le lien dans votre bio Instagram', ns3:'Complétez votre FAQ dans Configuration',
+    btn_back:'← Retour', btn_next:'Continuer →', btn_finish:'Terminer 🎉', btn_skip:'Passer cette étape →',
+    page_title:'Configuration — LocalReply',
+    err_type:'⚠️ Veuillez choisir un type de commerce', err_name:'⚠️ Veuillez entrer le nom de votre commerce', err_slug:'⚠️ Veuillez choisir un lien public (ex: mon-salon)',
+    no_rdv_note:'💬 Ce type de commerce ne nécessite généralement pas de prise de RDV en ligne.',
+    saving:'Sauvegarde...', saved:'✅ Sauvegardé', error_save:'❌ Erreur de sauvegarde',
+  },
+  en:{
+    step1_title:'Welcome! 👋', step1_sub:"Let's configure your business. This information allows the AI to present itself correctly to your customers.",
+    lbl_type:'Business type', type_placeholder:'— Choose your business type —',
+    lbl_name:'Business name', lbl_tz:'Time zone',
+    lbl_slug:'Your LocalReply public link',
+    slug_warning:"This link is <strong style='color:#F59E0B;'>permanent and cannot be changed</strong>. It will be used in your QR codes, social media bios and flyers — choose carefully.",
+    step2_sub:'The AI will use this information to answer your customers.',
+    lbl_hours:'Opening hours', lbl_services:'Main services', lbl_template:'📋 Load template',
+    step3_title:'📅 Appointment booking', step3_sub:'How do you want to manage customer appointments?',
+    rdv_g_desc:"The AI checks your availability in real time and creates appointments automatically in your calendar.",
+    rdv_g_tip:'💡 Tip: use a calendar dedicated to your business, not your personal calendar.',
+    rdv_g_connect:'🔗 Connect Google Calendar', rdv_g_status:'Not connected',
+    rdv_l_title:'Existing booking system', rdv_l_desc:"Already using Planity, Doctolib, Calendly or similar? The AI will send customers directly to your link.",
+    rdv_l_hint:'The AI will say: "Book directly on our website →"',
+    rdv_m_title:'Manual management', rdv_m_desc:'The AI will ask customers to call you or send a message to arrange an appointment.',
+    rdv_n_title:'No appointments', rdv_n_desc:'The AI focuses on questions, information and FAQ. Ideal for shops, restaurants, etc.',
+    rdv_skip:'💡 This step is optional — you can configure it later in the dashboard',
+    step4_title:'🔔 Notifications', step4_sub:'Choose how you want to be alerted when something happens.',
+    sms_note:"<strong style='color:#00D4FF;'>SMS are sent to you</strong> — not to your customers. Your customers receive confirmation emails with a button to add the appointment to their calendar.",
+    lbl_email_notif:'📧 Send email notifications to',
+    email_account:'Account email', email_recommended:'Recommended', email_both:'Both', email_both_sub:'Account email + business email',
+    lbl_events:'Channel by event type',
+    event_new:'New conversation/question', event_urgent:'Urgent request 🔴', event_unknown:'Unanswered question',
+    lbl_summary:'📊 AI summaries by email',
+    sum_none:'Never', sum_weekly:'Weekly', sum_weekly_sub:'Every Monday morning',
+    sum_daily:'Daily', sum_daily_sub:'Every morning — yesterday's summary',
+    sum_pro_note:'⭐ Daily summaries are reserved for the Pro plan. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">View plans →</a>',
+    step5_title:'Your assistant is ready!', step5_sub:'Share your link with customers and the AI handles the rest 24/7.',
+    public_link:'🔗 Your public link', test_ia:'🤖 Test my AI assistant →', go_dashboard:'Go to dashboard →',
+    next_steps:'💡 Recommended next steps',
+    ns1:'Display your QR code in your window', ns2:'Add the link to your Instagram bio', ns3:'Complete your FAQ in Configuration',
+    btn_back:'← Back', btn_next:'Continue →', btn_finish:'Finish 🎉', btn_skip:'Skip this step →',
+    page_title:'Setup — LocalReply',
+    err_type:'⚠️ Please choose a business type', err_name:'⚠️ Please enter your business name', err_slug:'⚠️ Please choose a public link (e.g. my-salon)',
+    no_rdv_note:'💬 This type of business generally does not require online appointment booking.',
+    saving:'Saving...', saved:'✅ Saved', error_save:'❌ Save error',
+  },
+  de:{
+    step1_title:'Willkommen! 👋', step1_sub:'Konfigurieren wir Ihr Unternehmen. Diese Informationen ermöglichen der KI, sich Ihren Kunden korrekt vorzustellen.',
+    lbl_type:'Unternehmenstyp', type_placeholder:'— Unternehmenstyp wählen —',
+    lbl_name:'Unternehmensname', lbl_tz:'Zeitzone',
+    lbl_slug:'Ihr öffentlicher LocalReply-Link',
+    slug_warning:"Dieser Link ist <strong style='color:#F59E0B;'>dauerhaft und kann nicht geändert werden</strong>. Er wird in Ihren QR-Codes, Social-Media-Bios und Flyern verwendet.",
+    step2_sub:'Die KI verwendet diese Informationen, um Ihren Kunden zu antworten.',
+    lbl_hours:'Öffnungszeiten', lbl_services:'Hauptleistungen', lbl_template:'📋 Vorlage laden',
+    step3_title:'📅 Terminbuchung', step3_sub:'Wie möchten Sie Kundentermine verwalten?',
+    rdv_g_desc:'Die KI prüft Ihre Verfügbarkeit in Echtzeit und erstellt Termine automatisch in Ihrem Kalender.',
+    rdv_g_tip:'💡 Tipp: Verwenden Sie einen Kalender speziell für Ihr Unternehmen, nicht Ihren persönlichen.',
+    rdv_g_connect:'🔗 Google Kalender verbinden', rdv_g_status:'Nicht verbunden',
+    rdv_l_title:'Bestehendes Buchungssystem', rdv_l_desc:'Haben Sie bereits Planity, Doctolib, Calendly oder ähnliches? Die KI sendet Kunden direkt auf Ihren Link.',
+    rdv_l_hint:'Die KI wird sagen: "Direkt auf unserer Website buchen →"',
+    rdv_m_title:'Manuelle Verwaltung', rdv_m_desc:'Die KI bittet Kunden, Sie anzurufen oder eine Nachricht zu senden.',
+    rdv_n_title:'Keine Termine', rdv_n_desc:'Die KI konzentriert sich auf Fragen, Informationen und FAQ. Ideal für Geschäfte, Restaurants usw.',
+    rdv_skip:'💡 Dieser Schritt ist optional — Sie können ihn später im Dashboard konfigurieren',
+    step4_title:'🔔 Benachrichtigungen', step4_sub:'Wählen Sie, wie Sie benachrichtigt werden möchten.',
+    sms_note:"<strong style='color:#00D4FF;'>SMS werden an Sie gesendet</strong> — nicht an Ihre Kunden. Kunden erhalten Bestätigungs-E-Mails.",
+    lbl_email_notif:'📧 E-Mail-Benachrichtigungen senden an',
+    email_account:'Konto-E-Mail', email_recommended:'Empfohlen', email_both:'Beide', email_both_sub:'Konto-E-Mail + Unternehmens-E-Mail',
+    lbl_events:'Kanal nach Ereignistyp',
+    event_new:'Neues Gespräch/Frage', event_urgent:'Dringende Anfrage 🔴', event_unknown:'Unbeantwortete Frage',
+    lbl_summary:'📊 KI-Zusammenfassungen per E-Mail',
+    sum_none:'Nie', sum_weekly:'Wöchentlich', sum_weekly_sub:'Jeden Montagmorgen',
+    sum_daily:'Täglich', sum_daily_sub:'Jeden Morgen — Zusammenfassung von gestern',
+    sum_pro_note:'⭐ Tägliche Zusammenfassungen sind dem Pro-Plan vorbehalten. <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;">Pläne ansehen →</a>',
+    step5_title:'Ihr Assistent ist bereit!', step5_sub:'Teilen Sie Ihren Link mit Kunden und die KI kümmert sich 24/7 um den Rest.',
+    public_link:'🔗 Ihr öffentlicher Link', test_ia:'🤖 Meinen KI-Assistenten testen →', go_dashboard:'Zum Dashboard →',
+    next_steps:'💡 Empfohlene nächste Schritte',
+    ns1:'QR-Code im Schaufenster anzeigen', ns2:'Link in Instagram-Bio einfügen', ns3:'FAQ in Konfiguration vervollständigen',
+    btn_back:'← Zurück', btn_next:'Weiter →', btn_finish:'Fertig 🎉', btn_skip:'Diesen Schritt überspringen →',
+    page_title:'Einrichtung — LocalReply',
+    err_type:'⚠️ Bitte wählen Sie einen Unternehmenstyp', err_name:'⚠️ Bitte geben Sie Ihren Unternehmensnamen ein', err_slug:'⚠️ Bitte wählen Sie einen öffentlichen Link',
+    no_rdv_note:'💬 Dieser Unternehmenstyp benötigt generell keine Online-Terminbuchung.',
+    saving:'Speichern...', saved:'✅ Gespeichert', error_save:'❌ Speicherfehler',
+  },
+};
+OB_T.it = {...OB_T.en, step1_title:'Benvenuto! 👋',step1_sub:"Configuriamo la tua attività. Queste informazioni permettono all'IA di presentarsi correttamente ai tuoi clienti.",lbl_type:'Tipo di attività',type_placeholder:'— Scegli il tipo di attività —',lbl_name:"Nome dell'attività",lbl_tz:'Fuso orario',lbl_slug:'Il tuo link pubblico LocalReply',step2_sub:"L'IA userà queste informazioni per rispondere ai tuoi clienti.",lbl_hours:"Orari di apertura",lbl_services:'Servizi principali',lbl_template:'📋 Carica template',step3_title:'📅 Prenotazione appuntamenti',step3_sub:'Come vuoi gestire gli appuntamenti dei clienti?',rdv_g_connect:'🔗 Connetti Google Calendar',rdv_g_status:'Non connesso',rdv_l_title:'Sistema di prenotazione esistente',rdv_m_title:'Gestione manuale',rdv_n_title:'Nessun appuntamento',step4_title:'🔔 Notifiche',step4_sub:'Scegli come essere avvisato quando succede qualcosa.',lbl_email_notif:'📧 Invia notifiche email a',email_account:"Email dell'account",lbl_events:'Canale per tipo di evento',lbl_summary:'📊 Riepiloghi IA via email',sum_weekly:'Settimanale',sum_daily:'Quotidiano',step5_title:"Il tuo assistente è pronto!",step5_sub:"Condividi il tuo link con i clienti e l'IA si occupa del resto 24/7.",public_link:'🔗 Il tuo link pubblico',test_ia:'🤖 Testa il mio assistente IA →',go_dashboard:'Vai al dashboard →',next_steps:'💡 Prossimi passi consigliati',btn_back:'← Indietro',btn_next:'Continua →',btn_finish:'Fine 🎉',btn_skip:'Salta questo passaggio →',page_title:'Configurazione — LocalReply',err_type:'⚠️ Scegli un tipo di attività',err_name:"⚠️ Inserisci il nome della tua attività",err_slug:'⚠️ Scegli un link pubblico',saving:'Salvataggio...',saved:'✅ Salvato',error_save:'❌ Errore di salvataggio'};
+OB_T.es = {...OB_T.en, step1_title:'¡Bienvenido! 👋',step1_sub:"Configuremos tu negocio. Esta información permite a la IA presentarse correctamente a tus clientes.",lbl_type:'Tipo de negocio',type_placeholder:'— Elige tu tipo de negocio —',lbl_name:'Nombre del negocio',lbl_tz:'Zona horaria',lbl_slug:'Tu enlace público de LocalReply',step2_sub:'La IA usará esta información para responder a tus clientes.',lbl_hours:"Horario de apertura",lbl_services:'Servicios principales',lbl_template:'📋 Cargar plantilla',step3_title:'📅 Gestión de citas',step3_sub:'¿Cómo quieres gestionar las citas de tus clientes?',rdv_g_connect:'🔗 Conectar Google Calendar',rdv_g_status:'No conectado',rdv_l_title:'Sistema de citas existente',rdv_m_title:'Gestión manual',rdv_n_title:'Sin citas',step4_title:'🔔 Notificaciones',step4_sub:'Elige cómo quieres ser alertado.',lbl_email_notif:'📧 Enviar notificaciones por email a',email_account:'Email de la cuenta',lbl_events:'Canal por tipo de evento',lbl_summary:'📊 Resúmenes IA por email',sum_weekly:'Semanal',sum_daily:'Diario',step5_title:'¡Tu asistente está listo!',step5_sub:'Comparte tu enlace con los clientes y la IA se encarga del resto 24/7.',public_link:'🔗 Tu enlace público',test_ia:'🤖 Probar mi asistente IA →',go_dashboard:'Ir al dashboard →',next_steps:'💡 Próximos pasos recomendados',btn_back:'← Atrás',btn_next:'Continuar →',btn_finish:'Terminar 🎉',btn_skip:'Omitir este paso →',page_title:'Configuración — LocalReply',err_type:'⚠️ Elige un tipo de negocio',err_name:'⚠️ Introduce el nombre de tu negocio',err_slug:'⚠️ Elige un enlace público',saving:'Guardando...',saved:'✅ Guardado',error_save:'❌ Error al guardar'};
+OB_T.pt = {...OB_T.en, step1_title:'Bem-vindo! 👋',step1_sub:"Vamos configurar o seu negócio. Esta informação permite à IA apresentar-se corretamente aos seus clientes.",lbl_type:'Tipo de negócio',type_placeholder:'— Escolha o tipo de negócio —',lbl_name:'Nome do negócio',lbl_tz:'Fuso horário',lbl_slug:'O seu link público LocalReply',step2_sub:'A IA usará esta informação para responder aos seus clientes.',lbl_hours:"Horário de abertura",lbl_services:'Serviços principais',lbl_template:'📋 Carregar template',step3_title:'📅 Marcação de consultas',step3_sub:'Como quer gerir as marcações dos seus clientes?',rdv_g_connect:'🔗 Ligar Google Calendar',rdv_g_status:'Não ligado',rdv_l_title:'Sistema de marcações existente',rdv_m_title:'Gestão manual',rdv_n_title:'Sem marcações',step4_title:'🔔 Notificações',step4_sub:'Escolha como ser alertado quando algo acontecer.',lbl_email_notif:'📧 Enviar notificações por email para',email_account:'Email da conta',lbl_events:'Canal por tipo de evento',lbl_summary:'📊 Resumos IA por email',sum_weekly:'Semanal',sum_daily:'Diário',step5_title:'O seu assistente está pronto!',step5_sub:'Partilhe o seu link com os clientes e a IA trata do resto 24/7.',public_link:'🔗 O seu link público',test_ia:'🤖 Testar o meu assistente IA →',go_dashboard:'Ir ao dashboard →',next_steps:'💡 Próximos passos recomendados',btn_back:'← Voltar',btn_next:'Continuar →',btn_finish:'Terminar 🎉',btn_skip:'Saltar este passo →',page_title:'Configuração — LocalReply',err_type:'⚠️ Escolha um tipo de negócio',err_name:'⚠️ Introduza o nome do seu negócio',err_slug:'⚠️ Escolha um link público',saving:'A guardar...',saved:'✅ Guardado',error_save:'❌ Erro ao guardar'};
+OB_T.nl = {...OB_T.en, step1_title:'Welkom! 👋',step1_sub:"Laten we uw bedrijf configureren. Deze informatie stelt de AI in staat zich correct aan uw klanten voor te stellen.",lbl_type:'Bedrijfstype',type_placeholder:'— Kies uw bedrijfstype —',lbl_name:'Bedrijfsnaam',lbl_tz:'Tijdzone',lbl_slug:'Uw openbare LocalReply-link',step2_sub:'De AI gebruikt deze informatie om uw klanten te antwoorden.',lbl_hours:"Openingstijden",lbl_services:'Hoofddiensten',lbl_template:'📋 Sjabloon laden',step3_title:'📅 Afsprakenbeheer',step3_sub:'Hoe wilt u klantafspraken beheren?',rdv_g_connect:'🔗 Google Agenda verbinden',rdv_g_status:'Niet verbonden',rdv_l_title:'Bestaand boekingssysteem',rdv_m_title:'Handmatig beheer',rdv_n_title:'Geen afspraken',step4_title:'🔔 Meldingen',step4_sub:'Kies hoe u gewaarschuwd wilt worden.',lbl_email_notif:'📧 E-mailmeldingen sturen naar',email_account:'Account-e-mail',lbl_events:'Kanaal per gebeurtenistype',lbl_summary:'📊 AI-samenvattingen per e-mail',sum_weekly:'Wekelijks',sum_daily:'Dagelijks',step5_title:'Uw assistent is klaar!',step5_sub:'Deel uw link met klanten en de AI zorgt 24/7 voor de rest.',public_link:'🔗 Uw openbare link',test_ia:'🤖 Mijn AI-assistent testen →',go_dashboard:'Naar dashboard →',next_steps:'💡 Aanbevolen volgende stappen',btn_back:'← Terug',btn_next:'Doorgaan →',btn_finish:'Voltooien 🎉',btn_skip:'Deze stap overslaan →',page_title:'Instelling — LocalReply',err_type:'⚠️ Kies een bedrijfstype',err_name:'⚠️ Voer uw bedrijfsnaam in',err_slug:'⚠️ Kies een openbare link',saving:'Opslaan...',saved:'✅ Opgeslagen',error_save:'❌ Opslagfout'};
+OB_T.pl = {...OB_T.en, step1_title:'Witamy! 👋',step1_sub:"Skonfigurujmy Twoją firmę. Te informacje pozwalają AI poprawnie przedstawić się Twoim klientom.",lbl_type:'Typ firmy',type_placeholder:'— Wybierz typ firmy —',lbl_name:'Nazwa firmy',lbl_tz:'Strefa czasowa',lbl_slug:'Twój publiczny link LocalReply',step2_sub:'AI użyje tych informacji do odpowiadania Twoim klientom.',lbl_hours:"Godziny otwarcia",lbl_services:'Główne usługi',lbl_template:'📋 Załaduj szablon',step3_title:'📅 Rezerwacja wizyt',step3_sub:'Jak chcesz zarządzać wizytami klientów?',rdv_g_connect:'🔗 Połącz Kalendarz Google',rdv_g_status:'Niepołączony',rdv_l_title:'Istniejący system rezerwacji',rdv_m_title:'Ręczne zarządzanie',rdv_n_title:'Brak wizyt',step4_title:'🔔 Powiadomienia',step4_sub:'Wybierz jak chcesz być powiadamiany.',lbl_email_notif:'📧 Wyślij powiadomienia email do',email_account:'Email konta',lbl_events:'Kanał według rodzaju zdarzenia',lbl_summary:'📊 Podsumowania AI emailem',sum_weekly:'Tygodniowe',sum_daily:'Codzienne',step5_title:'Twój asystent jest gotowy!',step5_sub:'Udostępnij swój link klientom, a AI zajmie się resztą 24/7.',public_link:'🔗 Twój publiczny link',test_ia:'🤖 Przetestuj mojego asystenta AI →',go_dashboard:'Przejdź do dashboardu →',next_steps:'💡 Zalecane następne kroki',btn_back:'← Wstecz',btn_next:'Kontynuuj →',btn_finish:'Zakończ 🎉',btn_skip:'Pomiń ten krok →',page_title:'Konfiguracja — LocalReply',err_type:'⚠️ Wybierz typ firmy',err_name:'⚠️ Wprowadź nazwę firmy',err_slug:'⚠️ Wybierz publiczny link',saving:'Zapisywanie...',saved:'✅ Zapisano',error_save:'❌ Błąd zapisu'};
+
+(function(){
+  const lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+  const t=OB_T[OB_T.hasOwnProperty(lang)?lang:'fr'];
+  window._obt=t;
+  document.title=t.page_title;
+  document.documentElement.lang=lang;
+
+  // Apply static labels via IDs added below
+  const ids={
+    'ob-step1-title':t.step1_title,'ob-step1-sub':t.step1_sub,
+    'ob-lbl-type':t.lbl_type,'ob-type-placeholder':null,
+    'ob-lbl-name':t.lbl_name,'ob-lbl-tz':t.lbl_tz,
+    'ob-lbl-slug':t.lbl_slug,'ob-slug-warning':null,
+    'ob-step2-sub':t.step2_sub,'ob-lbl-hours':t.lbl_hours,'ob-lbl-services':t.lbl_services,
+    'ob-step3-title':t.step3_title,'ob-step3-sub':t.step3_sub,
+    'ob-rdv-g-desc':t.rdv_g_desc,'ob-rdv-g-tip':t.rdv_g_tip,
+    'ob-rdv-g-connect':t.rdv_g_connect,'ob-rdv-g-status':t.rdv_g_status,
+    'ob-rdv-l-title':t.rdv_l_title,'ob-rdv-l-desc':t.rdv_l_desc,'ob-rdv-l-hint':t.rdv_l_hint,
+    'ob-rdv-m-title':t.rdv_m_title,'ob-rdv-m-desc':t.rdv_m_desc,
+    'ob-rdv-n-title':t.rdv_n_title,'ob-rdv-n-desc':t.rdv_n_desc,
+    'ob-rdv-skip':t.rdv_skip,
+    'ob-step4-title':t.step4_title,'ob-step4-sub':t.step4_sub,
+    'ob-sms-note':null,
+    'ob-lbl-email-notif':t.lbl_email_notif,
+    'ob-email-account':t.email_account,'ob-email-recommended':t.email_recommended,
+    'ob-email-both':t.email_both,'ob-email-both-sub':t.email_both_sub,
+    'ob-lbl-events':t.lbl_events,
+    'ob-event-new':t.event_new,'ob-event-urgent':t.event_urgent,'ob-event-unknown':t.event_unknown,
+    'ob-lbl-summary':t.lbl_summary,
+    'ob-sum-none':t.sum_none,'ob-sum-weekly':t.sum_weekly,'ob-sum-weekly-sub':t.sum_weekly_sub,
+    'ob-sum-daily':t.sum_daily,'ob-sum-daily-sub':t.sum_daily_sub,
+    'ob-step5-title':t.step5_title,'ob-step5-sub':t.step5_sub,
+    'ob-public-link-label':t.public_link,'ob-test-ia':t.test_ia,'ob-go-dashboard':t.go_dashboard,
+    'ob-next-steps':t.next_steps,'ob-ns1':t.ns1,'ob-ns2':t.ns2,'ob-ns3':t.ns3,
+    'btnBack':t.btn_back,'btnNext':t.btn_next,
+    'ob-step3-skip':t.btn_skip,
+  };
+  Object.entries(ids).forEach(([id,txt])=>{
+    if(txt===null)return;
+    const el=document.getElementById(id);
+    if(el)el.innerHTML=txt;
+  });
+
+  // Placeholders
+  const typeSelect=document.getElementById('businessTypeSelect');
+  if(typeSelect&&typeSelect.options[0])typeSelect.options[0].text=t.type_placeholder;
+  const slugInput=document.getElementById('bizSlug');
+  if(slugInput)slugInput.placeholder=lang==='fr'?'mon-commerce':lang==='de'?'mein-betrieb':lang==='nl'?'mijn-bedrijf':'my-business';
+  const bizName=document.getElementById('bizName');
+  if(bizName)bizName.placeholder=lang==='fr'?'Ex: Salon Marco':'e.g. Marco Salon';
+
+  // Slug warning (innerHTML)
+  const sw=document.getElementById('ob-slug-warning');
+  if(sw)sw.innerHTML=t.slug_warning;
+  // SMS note
+  const sn=document.getElementById('ob-sms-note');
+  if(sn)sn.innerHTML=t.sms_note;
+  // sum_pro_note
+  const spn=document.getElementById('ob_summaryProNote');
+  if(spn)spn.innerHTML=t.sum_pro_note;
+})();
+
 const API_BASE = 'https://localreply-api.onrender.com';
 
 function renderSidebarLogo(name, logoUrl, type) {
@@ -946,7 +1128,7 @@ function adaptStep2ToType(type) {
       const note = document.createElement('div');
       note.className = 'rdv-type-note';
       note.style.cssText = 'margin-top:10px;padding:8px 12px;background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.2);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.5);';
-      note.innerHTML = '💬 Ce type de commerce ne nécessite généralement pas de prise de RDV en ligne.';
+      note.innerHTML = (_obt||OB_T.fr).no_rdv_note;
       tplSection.appendChild(note);
     }
   }
@@ -1123,7 +1305,7 @@ function updateProgress(step) {
     btnNext.style.display = 'none';
   } else {
     btnNext.style.display = 'block';
-    btnNext.textContent = step === STEPS-1 ? 'Terminer 🎉' : 'Continuer →';
+    btnNext.textContent = step === STEPS-1 ? (_obt||OB_T.fr).btn_finish : (_obt||OB_T.fr).btn_next;
   }
 }
 

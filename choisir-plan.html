@@ -334,8 +334,8 @@
     <span class="logo-text">LocalReply</span>
   </a>
   <div class="header-right">
-    <span class="header-step">Étape 1 sur 2 — Choisir votre plan</span>
-    <button class="logout-btn" onclick="logout()">Déconnexion</button>
+    <span class="header-step" id="cp-step">Étape 1 sur 2 — Choisir votre plan</span>
+    <button class="logout-btn" onclick="logout()" id="cp-logout">Déconnexion</button>
   </div>
 </header>
 
@@ -344,9 +344,9 @@
 
   <!-- TITRE -->
   <div class="title-block">
-    <div class="title-badge">Essai gratuit 14 jours</div>
-    <h1>Choisissez votre plan<br><span>pour démarrer</span></h1>
-    <p class="subtitle">Aucun prélèvement pendant 14 jours. Annulez à tout moment avant la fin de l'essai.</p>
+    <div class="title-badge" id="cp-badge">Essai gratuit 14 jours</div>
+    <h1><span id="cp-h1">Choisissez votre plan</span><br><span id="cp-h1b">pour démarrer</span></h1>
+    <p class="subtitle" id="cp-sub">Aucun prélèvement pendant 14 jours. Annulez à tout moment avant la fin de l'essai.</p>
   </div>
 
   <!-- BILLING TOGGLE -->
@@ -368,53 +368,53 @@
       <div class="plan-price">
         <span class="price-currency">€</span>
         <span class="price-amount" id="priceStd">39</span>
-        <span class="price-period">/mois</span>
+        <span class="price-period" id="cp-period-std">/mois</span>
       </div>
-      <div class="price-yearly" id="yearlyStd" style="visibility:hidden;">Soit <span>374€/an</span> — 2 mois offerts</div>
+      <div class="price-yearly" id="yearlyStd" style="visibility:hidden;"><span id="cp-yearly-std">Soit 374€/an — 2 mois offerts</span></div>
 
       <div class="plan-divider"></div>
 
       <ul class="plan-features">
-        <li class="highlight"><span class="icon">✦</span> IA conversationnelle 8 langues</li>
-        <li><span class="icon">✓</span> FAQ illimitée</li>
-        <li><span class="icon">✓</span> Google Calendar intégré</li>
-        <li><span class="icon">✓</span> Prise de RDV + confirmations email</li>
-        <li><span class="icon">✓</span> Conversations illimitées</li>
-        <li><span class="icon">✓</span> Dashboard basique (RDV, messages)</li>
-        <li><span class="icon">✓</span> Lien public + QR code</li>
-        <li><span class="icon">✓</span> Support email</li>
+        <li class="highlight"><span class="icon">✦</span> <span id="cp-f-ai">IA conversationnelle 8 langues</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-faq">FAQ illimitée</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-cal">Google Calendar intégré</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-rdv">Prise de RDV + confirmations email</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-conv">Conversations illimitées</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-dash">Dashboard basique (RDV, messages)</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-link">Lien public + QR code</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-support">Support email</span></li>
       </ul>
 
       <button class="plan-cta std" id="btnStandard" onclick="subscribe('standard')">
-        Démarrer l'essai — Standard
+        <span id="cp-btn-std">Démarrer l'essai — Standard</span>
       </button>
     </div>
 
     <!-- PRO -->
     <div class="plan-card featured">
-      <div class="plan-badge">Recommandé</div>
+      <div class="plan-badge" id="cp-recommended">Recommandé</div>
       <div class="plan-name">Pro</div>
       <div class="plan-price">
         <span class="price-currency">€</span>
         <span class="price-amount" id="pricePro">49</span>
-        <span class="price-period">/mois</span>
+        <span class="price-period" id="cp-period-pro">/mois</span>
       </div>
-      <div class="price-yearly" id="yearlyPro" style="visibility:hidden;">Soit <span>470€/an</span> — 2 mois offerts</div>
+      <div class="price-yearly" id="yearlyPro" style="visibility:hidden;"><span id="cp-yearly-pro">Soit 470€/an — 2 mois offerts</span></div>
 
       <div class="plan-divider"></div>
 
       <ul class="plan-features">
-        <li class="highlight"><span class="icon">✦</span> Tout Standard +</li>
-        <li class="highlight"><span class="icon">✦</span> SMS notifications business</li>
-        <li class="highlight"><span class="icon">✦</span> Summaries IA quotidiens</li>
-        <li class="highlight"><span class="icon">✦</span> Analytics complets (90 jours)</li>
-        <li><span class="icon">✓</span> Personnalité IA personnalisable</li>
-        <li><span class="icon">✓</span> Logo business dans le chat</li>
-        <li><span class="icon">✓</span> Support prioritaire</li>
+        <li class="highlight"><span class="icon">✦</span> <span id="cp-f-all">Tout Standard +</span></li>
+        <li class="highlight"><span class="icon">✦</span> <span id="cp-f-sms">SMS notifications business</span></li>
+        <li class="highlight"><span class="icon">✦</span> <span id="cp-f-sum">Summaries IA quotidiens</span></li>
+        <li class="highlight"><span class="icon">✦</span> <span id="cp-f-analytics">Analytics complets (90 jours)</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-perso">Personnalité IA personnalisable</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-logo">Logo business dans le chat</span></li>
+        <li><span class="icon">✓</span> <span id="cp-f-support-pro">Support prioritaire</span></li>
       </ul>
 
       <button class="plan-cta pro" id="btnPro" onclick="subscribe('pro')">
-        Démarrer l'essai — Pro
+        <span id="cp-btn-pro">Démarrer l'essai — Pro</span>
       </button>
     </div>
 
@@ -422,12 +422,12 @@
 
   <!-- TRIAL INFO -->
   <div class="trial-info">
-    <p>Votre carte ne sera <strong>pas débitée pendant 14 jours</strong>. À la fin de l'essai, votre abonnement démarre automatiquement sauf si vous annulez avant.</p>
+    <p id="cp-trial-info">Votre carte ne sera <strong>pas débitée pendant 14 jours</strong>. À la fin de l'essai, votre abonnement démarre automatiquement sauf si vous annulez avant.</p>
     <div class="trial-features">
-      <div class="trial-feature"><span class="check">✓</span> Annulation en 1 clic</div>
-      <div class="trial-feature"><span class="check">✓</span> Pas de frais cachés</div>
-      <div class="trial-feature"><span class="check">✓</span> Setup en 5 minutes</div>
-      <div class="trial-feature"><span class="check">✓</span> Support inclus</div>
+      <div class="trial-feature"><span class="check">✓</span> <span id="cp-tf1">Annulation en 1 clic</span></div>
+      <div class="trial-feature"><span class="check">✓</span> <span id="cp-tf2">Pas de frais cachés</span></div>
+      <div class="trial-feature"><span class="check">✓</span> <span id="cp-tf3">Setup en 5 minutes</span></div>
+      <div class="trial-feature"><span class="check">✓</span> <span id="cp-tf4">Support inclus</span></div>
     </div>
   </div>
 
@@ -436,6 +436,41 @@
 <div class="toast" id="toast"></div>
 
 <script>
+
+const CP_T = {
+  fr:{step:'Étape 1 sur 2 — Choisir votre plan',logout:'Déconnexion',badge:'Essai gratuit 14 jours',h1:'Choisissez votre plan',h1b:'pour démarrer',sub:"Aucun prélèvement pendant 14 jours. Annulez à tout moment avant la fin de l'essai.",monthly:'Mensuel',yearly:'Annuel',per_month:'/mois',yearly_std:'Soit 374€/an — 2 mois offerts',yearly_pro:'Soit 470€/an — 2 mois offerts',recommended:'Recommandé',f_ai:'✦ IA conversationnelle 8 langues',f_faq:'✓ FAQ illimitée',f_cal:'✓ Google Calendar intégré',f_rdv:'✓ Prise de RDV + confirmations email',f_conv:'✓ Conversations illimitées',f_dash:'✓ Dashboard basique (RDV, messages)',f_link:'✓ Lien public + QR code',f_support:'✓ Support email',btn_std:"Démarrer l'essai — Standard",f_all:'✦ Tout Standard +',f_sms:'✦ SMS notifications business',f_sum:'✦ Summaries IA quotidiens',f_analytics:'✦ Analytics complets (90 jours)',f_perso:'✓ Personnalité IA personnalisable',f_logo:'✓ Logo business dans le chat',f_support_pro:'✓ Support prioritaire',btn_pro:"Démarrer l'essai — Pro",trial_info:"Votre carte ne sera <strong>pas débitée pendant 14 jours</strong>. À la fin de l'essai, votre abonnement démarre automatiquement sauf si vous annulez avant.",tf1:'✓ Annulation en 1 clic',tf2:'✓ Pas de frais cachés',tf3:'✓ Setup en 5 minutes',tf4:'✓ Support inclus',loading:'⏳ Redirection vers le paiement...',page_title:'Choisir votre plan — LocalReply'},
+  en:{step:'Step 1 of 2 — Choose your plan',logout:'Sign out',badge:'14-day free trial',h1:'Choose your plan',h1b:'to get started',sub:'No charge for 14 days. Cancel anytime before the trial ends.',monthly:'Monthly',yearly:'Yearly',per_month:'/month',yearly_std:'€374/year — 2 months free',yearly_pro:'€470/year — 2 months free',recommended:'Recommended',f_ai:'✦ Conversational AI in 8 languages',f_faq:'✓ Unlimited FAQ',f_cal:'✓ Google Calendar integrated',f_rdv:'✓ Appointment booking + email confirmations',f_conv:'✓ Unlimited conversations',f_dash:'✓ Basic dashboard (appointments, messages)',f_link:'✓ Public link + QR code',f_support:'✓ Email support',btn_std:'Start trial — Standard',f_all:'✦ Everything in Standard +',f_sms:'✦ Business SMS notifications',f_sum:'✦ Daily AI summaries',f_analytics:'✦ Full analytics (90 days)',f_perso:'✓ Customizable AI personality',f_logo:'✓ Business logo in chat',f_support_pro:'✓ Priority support',btn_pro:'Start trial — Pro',trial_info:'Your card will <strong>not be charged for 14 days</strong>. After the trial, your subscription starts automatically unless you cancel before.',tf1:'✓ Cancel in 1 click',tf2:'✓ No hidden fees',tf3:'✓ Setup in 5 minutes',tf4:'✓ Support included',loading:'⏳ Redirecting to payment...',page_title:'Choose your plan — LocalReply'},
+  de:{step:'Schritt 1 von 2 — Plan wählen',logout:'Abmelden',badge:'14 Tage kostenlos testen',h1:'Wählen Sie Ihren Plan',h1b:'um zu starten',sub:'Keine Belastung für 14 Tage. Jederzeit vor Ende des Tests kündbar.',monthly:'Monatlich',yearly:'Jährlich',per_month:'/Monat',yearly_std:'374€/Jahr — 2 Monate gratis',yearly_pro:'470€/Jahr — 2 Monate gratis',recommended:'Empfohlen',f_ai:'✦ KI-Gespräche in 8 Sprachen',f_faq:'✓ Unbegrenzte FAQ',f_cal:'✓ Google Kalender integriert',f_rdv:'✓ Terminbuchung + E-Mail-Bestätigungen',f_conv:'✓ Unbegrenzte Gespräche',f_dash:'✓ Basis-Dashboard (Termine, Nachrichten)',f_link:'✓ Öffentlicher Link + QR-Code',f_support:'✓ E-Mail-Support',btn_std:'Test starten — Standard',f_all:'✦ Alles aus Standard +',f_sms:'✦ Geschäftliche SMS-Benachrichtigungen',f_sum:'✦ Tägliche KI-Zusammenfassungen',f_analytics:'✦ Vollständige Analytics (90 Tage)',f_perso:'✓ Anpassbare KI-Persönlichkeit',f_logo:'✓ Unternehmenslogo im Chat',f_support_pro:'✓ Prioritätssupport',btn_pro:'Test starten — Pro',trial_info:'Ihre Karte wird <strong>14 Tage lang nicht belastet</strong>. Nach dem Test startet Ihr Abonnement automatisch, sofern Sie nicht vorher kündigen.',tf1:'✓ Kündigung mit 1 Klick',tf2:'✓ Keine versteckten Gebühren',tf3:'✓ Einrichtung in 5 Minuten',tf4:'✓ Support inklusive',loading:'⏳ Weiterleitung zur Zahlung...',page_title:'Plan wählen — LocalReply'},
+  it:{step:'Passo 1 di 2 — Scegli il tuo piano',logout:'Esci',badge:'14 giorni di prova gratuita',h1:'Scegli il tuo piano',h1b:'per iniziare',sub:'Nessun addebito per 14 giorni. Annulla in qualsiasi momento prima della fine della prova.',monthly:'Mensile',yearly:'Annuale',per_month:'/mese',yearly_std:'374€/anno — 2 mesi gratis',yearly_pro:'470€/anno — 2 mesi gratis',recommended:'Consigliato',f_ai:'✦ IA conversazionale in 8 lingue',f_faq:'✓ FAQ illimitata',f_cal:'✓ Google Calendar integrato',f_rdv:'✓ Prenotazione + conferme email',f_conv:'✓ Conversazioni illimitate',f_dash:'✓ Dashboard base (appuntamenti, messaggi)',f_link:'✓ Link pubblico + QR code',f_support:'✓ Supporto email',btn_std:'Inizia la prova — Standard',f_all:'✦ Tutto Standard +',f_sms:'✦ SMS notifiche business',f_sum:'✦ Riepiloghi IA quotidiani',f_analytics:'✦ Analytics completi (90 giorni)',f_perso:'✓ Personalità IA personalizzabile',f_logo:'✓ Logo business nel chat',f_support_pro:'✓ Supporto prioritario',btn_pro:'Inizia la prova — Pro',trial_info:'La tua carta <strong>non verrà addebitata per 14 giorni</strong>. Dopo la prova, il tuo abbonamento inizia automaticamente a meno che tu non annulli prima.',tf1:'✓ Annulla con 1 clic',tf2:'✓ Nessun costo nascosto',tf3:'✓ Configurazione in 5 minuti',tf4:'✓ Supporto incluso',loading:'⏳ Reindirizzamento al pagamento...',page_title:'Scegli il tuo piano — LocalReply'},
+  es:{step:'Paso 1 de 2 — Elige tu plan',logout:'Cerrar sesión',badge:'14 días de prueba gratuita',h1:'Elige tu plan',h1b:'para empezar',sub:'Sin cargo durante 14 días. Cancela en cualquier momento antes de que termine la prueba.',monthly:'Mensual',yearly:'Anual',per_month:'/mes',yearly_std:'374€/año — 2 meses gratis',yearly_pro:'470€/año — 2 meses gratis',recommended:'Recomendado',f_ai:'✦ IA conversacional en 8 idiomas',f_faq:'✓ FAQ ilimitada',f_cal:'✓ Google Calendar integrado',f_rdv:'✓ Citas + confirmaciones por email',f_conv:'✓ Conversaciones ilimitadas',f_dash:'✓ Dashboard básico (citas, mensajes)',f_link:'✓ Enlace público + QR code',f_support:'✓ Soporte email',btn_std:'Iniciar prueba — Standard',f_all:'✦ Todo Standard +',f_sms:'✦ SMS notificaciones business',f_sum:'✦ Resúmenes IA diarios',f_analytics:'✦ Analytics completos (90 días)',f_perso:'✓ Personalidad IA personalizable',f_logo:'✓ Logo business en el chat',f_support_pro:'✓ Soporte prioritario',btn_pro:'Iniciar prueba — Pro',trial_info:'Tu tarjeta <strong>no será cobrada durante 14 días</strong>. Al final de la prueba, tu suscripción se inicia automáticamente a menos que canceles antes.',tf1:'✓ Cancelación en 1 clic',tf2:'✓ Sin costes ocultos',tf3:'✓ Configuración en 5 minutos',tf4:'✓ Soporte incluido',loading:'⏳ Redirigiendo al pago...',page_title:'Elige tu plan — LocalReply'},
+  pt:{step:'Passo 1 de 2 — Escolha o seu plano',logout:'Sair',badge:'14 dias de teste gratuito',h1:'Escolha o seu plano',h1b:'para começar',sub:'Sem cobrança durante 14 dias. Cancele a qualquer momento antes do fim do teste.',monthly:'Mensal',yearly:'Anual',per_month:'/mês',yearly_std:'374€/ano — 2 meses grátis',yearly_pro:'470€/ano — 2 meses grátis',recommended:'Recomendado',f_ai:'✦ IA conversacional em 8 línguas',f_faq:'✓ FAQ ilimitado',f_cal:'✓ Google Calendar integrado',f_rdv:'✓ Marcações + confirmações por email',f_conv:'✓ Conversas ilimitadas',f_dash:'✓ Dashboard básico (marcações, mensagens)',f_link:'✓ Link público + QR code',f_support:'✓ Suporte email',btn_std:'Iniciar teste — Standard',f_all:'✦ Tudo Standard +',f_sms:'✦ SMS notificações business',f_sum:'✦ Resumos IA diários',f_analytics:'✦ Analytics completos (90 dias)',f_perso:'✓ Personalidade IA personalizável',f_logo:'✓ Logo do negócio no chat',f_support_pro:'✓ Suporte prioritário',btn_pro:'Iniciar teste — Pro',trial_info:'O seu cartão <strong>não será cobrado durante 14 dias</strong>. No final do teste, a sua subscrição inicia automaticamente a menos que cancele antes.',tf1:'✓ Cancelação em 1 clique',tf2:'✓ Sem custos ocultos',tf3:'✓ Configuração em 5 minutos',tf4:'✓ Suporte incluído',loading:'⏳ A redirecionar para o pagamento...',page_title:'Escolha o seu plano — LocalReply'},
+  nl:{step:'Stap 1 van 2 — Kies uw plan',logout:'Uitloggen',badge:'14 dagen gratis proberen',h1:'Kies uw plan',h1b:'om te beginnen',sub:'Geen kosten gedurende 14 dagen. Opzeggen wanneer u wilt vóór het einde van de proefperiode.',monthly:'Maandelijks',yearly:'Jaarlijks',per_month:'/maand',yearly_std:'€374/jaar — 2 maanden gratis',yearly_pro:'€470/jaar — 2 maanden gratis',recommended:'Aanbevolen',f_ai:'✦ Conversationele AI in 8 talen',f_faq:'✓ Onbeperkte FAQ',f_cal:'✓ Google Agenda geïntegreerd',f_rdv:'✓ Afsprakenbeheer + e-mailbevestigingen',f_conv:'✓ Onbeperkte gesprekken',f_dash:'✓ Basis dashboard (afspraken, berichten)',f_link:'✓ Openbare link + QR-code',f_support:'✓ E-mailondersteuning',btn_std:'Proef starten — Standard',f_all:'✦ Alles uit Standard +',f_sms:'✦ Zakelijke SMS-meldingen',f_sum:'✦ Dagelijkse AI-samenvattingen',f_analytics:'✦ Volledige analytics (90 dagen)',f_perso:'✓ Aanpasbare AI-persoonlijkheid',f_logo:'✓ Bedrijfslogo in chat',f_support_pro:'✓ Prioriteitsondersteuning',btn_pro:'Proef starten — Pro',trial_info:'Uw kaart wordt <strong>14 dagen lang niet belast</strong>. Na de proefperiode begint uw abonnement automatisch tenzij u opzegt.',tf1:'✓ Annuleren met 1 klik',tf2:'✓ Geen verborgen kosten',tf3:'✓ Installatie in 5 minuten',tf4:'✓ Ondersteuning inbegrepen',loading:'⏳ Doorsturen naar betaling...',page_title:'Kies uw plan — LocalReply'},
+  pl:{step:'Krok 1 z 2 — Wybierz swój plan',logout:'Wyloguj się',badge:'14 dni bezpłatnego testu',h1:'Wybierz swój plan',h1b:'aby zacząć',sub:'Brak opłat przez 14 dni. Anuluj w dowolnym momencie przed końcem testu.',monthly:'Miesięcznie',yearly:'Rocznie',per_month:'/mies.',yearly_std:'374€/rok — 2 miesiące gratis',yearly_pro:'470€/rok — 2 miesiące gratis',recommended:'Rekomendowane',f_ai:'✦ Konwersacyjne AI w 8 językach',f_faq:'✓ Nieograniczone FAQ',f_cal:'✓ Kalendarz Google zintegrowany',f_rdv:'✓ Rezerwacje + potwierdzenia emailem',f_conv:'✓ Nieograniczone rozmowy',f_dash:'✓ Podstawowy dashboard (wizyty, wiadomości)',f_link:'✓ Publiczny link + kod QR',f_support:'✓ Wsparcie email',btn_std:'Rozpocznij test — Standard',f_all:'✦ Wszystko ze Standard +',f_sms:'✦ SMS powiadomienia biznesowe',f_sum:'✦ Codzienne podsumowania AI',f_analytics:'✦ Pełne analytics (90 dni)',f_perso:'✓ Personalizowalna osobowość AI',f_logo:'✓ Logo firmy w chacie',f_support_pro:'✓ Wsparcie priorytetowe',btn_pro:'Rozpocznij test — Pro',trial_info:'Twoja karta <strong>nie zostanie obciążona przez 14 dni</strong>. Po zakończeniu testu subskrypcja startuje automatycznie, chyba że anulujesz wcześniej.',tf1:'✓ Anulowanie 1 kliknięciem',tf2:'✓ Brak ukrytych opłat',tf3:'✓ Konfiguracja w 5 minut',tf4:'✓ Wsparcie w zestawie',loading:'⏳ Przekierowanie do płatności...',page_title:'Wybierz swój plan — LocalReply'},
+};
+(function(){
+  const lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+  const t=CP_T[CP_T.hasOwnProperty(lang)?lang:'fr'];
+  window._cpt=t;
+  document.title=t.page_title;
+  document.documentElement.lang=lang;
+  const ids={
+    'cp-step':t.step,'cp-logout':t.logout,'cp-badge':t.badge,
+    'cp-h1':t.h1,'cp-h1b':t.h1b,'cp-sub':t.sub,
+    'labelMonthly':t.monthly,'labelYearly':t.yearly,
+    'cp-period-std':t.per_month,'cp-period-pro':t.per_month,
+    'cp-yearly-std':t.yearly_std,'cp-yearly-pro':t.yearly_pro,
+    'cp-recommended':t.recommended,
+    'cp-f-ai':t.f_ai,'cp-f-faq':t.f_faq,'cp-f-cal':t.f_cal,
+    'cp-f-rdv':t.f_rdv,'cp-f-conv':t.f_conv,'cp-f-dash':t.f_dash,
+    'cp-f-link':t.f_link,'cp-f-support':t.f_support,'cp-btn-std':t.btn_std,
+    'cp-f-all':t.f_all,'cp-f-sms':t.f_sms,'cp-f-sum':t.f_sum,
+    'cp-f-analytics':t.f_analytics,'cp-f-perso':t.f_perso,'cp-f-logo':t.f_logo,
+    'cp-f-support-pro':t.f_support_pro,'cp-btn-pro':t.btn_pro,
+    'cp-tf1':t.tf1,'cp-tf2':t.tf2,'cp-tf3':t.tf3,'cp-tf4':t.tf4,
+  };
+  Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el)el.innerHTML=txt;});
+  const ti=document.getElementById('cp-trial-info');if(ti)ti.innerHTML=t.trial_info;
+})();
 const API = 'https://localreply-api.onrender.com';
 const token = localStorage.getItem('auth_token');
 const userId = localStorage.getItem('user_id') || getUserId();
@@ -500,9 +535,9 @@ function toggleBilling() {
 // ── Subscribe ──
 async function subscribe(plan) {
   const btn = document.getElementById(plan === 'standard' ? 'btnStandard' : 'btnPro');
-  const orig = btn.textContent;
+  const orig = (_cpt||CP_T.fr).btn_std;
   btn.disabled = true;
-  btn.textContent = '⏳ Redirection vers le paiement...';
+  btn.textContent = (_cpt||CP_T.fr).loading;
 
   try {
     const billing = isYearly ? 'yearly' : 'monthly';

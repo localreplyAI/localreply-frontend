@@ -25,7 +25,7 @@
     document.addEventListener('DOMContentLoaded', function() {
       const msg = document.createElement('div');
       msg.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.35);border-radius:10px;padding:12px 20px;color:#F59E0B;font-size:14px;font-weight:600;z-index:9999;';
-      msg.textContent = '⚠️ Votre session a expiré. Reconnectez-vous.';
+      msg.textContent = (_t||AUTH_T.fr).session_expired;
       document.body.appendChild(msg);
       setTimeout(() => msg.remove(), 5000);
     });
@@ -44,12 +44,12 @@
     <div style="text-align: center; margin-bottom: 40px;">
       <img src="/assets/logo.png" alt="LocalReply" style="width:60px;height:60px;background:transparent;" loading="lazy">
       <h1 style="font-size: 32px; font-weight: 700; background: linear-gradient(135deg, #FFFFFF 0%, #00D4FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 8px 0;">LocalReply</h1>
-      <p style="font-size: 15px; color: rgba(255, 255, 255, 0.6); margin: 0;">Votre assistant IA pour gérer vos clients</p>
+      <p style="font-size: 15px; color: rgba(255, 255, 255, 0.6); margin: 0;"><span id="auth-subtitle">Votre assistant IA pour gérer vos clients</span></p>
     </div>
     
     <div style="display: flex; gap: 10px; margin-bottom: 35px; background: rgba(255, 255, 255, 0.05); padding: 6px; border-radius: 12px;">
-      <button id="tabLogin" class="tab active" onclick="switchTab('login')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: #FFFFFF; border: none; background: linear-gradient(135deg, #0052CC, #00D4FF); box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);">Connexion</button>
-      <button id="tabSignup" class="tab" onclick="switchTab('signup')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: rgba(255, 255, 255, 0.6); border: none; background: transparent;">Inscription</button>
+      <button id="tabLogin" class="tab active" onclick="switchTab('login')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: #FFFFFF; border: none; background: linear-gradient(135deg, #0052CC, #00D4FF); box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4);" id="tabLoginLabel">Connexion</button>
+      <button id="tabSignup" class="tab" onclick="switchTab('signup')" style="flex: 1; padding: 12px; text-align: center; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; color: rgba(255, 255, 255, 0.6); border: none; background: transparent;" id="tabSignupLabel">Inscription</button>
     </div>
     
     <div id="errorMessage" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; padding: 12px 16px; color: #EF4444; font-size: 14px; margin-bottom: 20px; display: none;"></div>
@@ -58,17 +58,17 @@
     <!-- FORMULAIRE LOGIN -->
     <form id="loginForm">
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
+        <label id="lbl-login-email" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
         <input type="email" id="loginEmail" placeholder="votre@email.com" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; transition: all 0.3s; box-sizing: border-box;">
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
+        <label id="lbl-login-pwd" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
         <input type="password" id="loginPassword" placeholder="••••••••" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; transition: all 0.3s; box-sizing: border-box;">
       </div>
       <div style="text-align: right; margin-bottom: 20px;">
-        <a href="/forgot-password" style="font-size: 13px; color: #00D4FF; text-decoration: none; font-weight: 600;">Mot de passe oublié ?</a>
+        <a href="/forgot-password" style="font-size: 13px; color: #00D4FF; text-decoration: none; font-weight: 600;" id="forgot-pwd-link">Mot de passe oublié ?</a>
       </div>
-      <button type="submit" id="loginBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);">
+      <button type="submit" id="loginBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);" id="loginBtnLabel">
         Se connecter
       </button>
     </form>
@@ -76,38 +76,38 @@
     <!-- FORMULAIRE INSCRIPTION -->
     <form id="signupForm" style="display: none;">
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Nom du business</label>
+        <label id="lbl-biz-name" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Nom du business</label>
         <input type="text" id="signupBusinessName" placeholder="Salon Marie" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
+        <label id="lbl-signup-email" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Email</label>
         <input type="email" id="signupEmail" placeholder="votre@email.com" required style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
+        <label id="lbl-signup-pwd" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Mot de passe</label>
         <input type="password" id="signupPassword" placeholder="••••••••" required minlength="8" style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
       </div>
       <div style="margin-bottom: 20px;">
-        <label style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Confirmer le mot de passe</label>
+        <label id="lbl-confirm-pwd" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Confirmer le mot de passe</label>
         <input type="password" id="signupPasswordConfirm" placeholder="••••••••" required minlength="8" style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
       </div>
-      <button type="submit" id="signupBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); margin-top: 10px;">
+      <button type="submit" id="signupBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); margin-top: 10px;" id="signupBtnLabel">
         Créer mon compte
       </button>
       <div style="margin-top: 15px; font-size: 12px; color: rgba(255, 255, 255, 0.5); text-align: center;">
-        En créant un compte, vous acceptez nos <a href="/terms" style="color: #00D4FF;">conditions d'utilisation</a>
+        <span id="auth-terms">En créant un compte, vous acceptez nos</span> <a href="/terms" style="color: #00D4FF;" id="auth-terms-link">conditions d'utilisation</a>
       </div>
     </form>
     
     <!-- SÉPARATEUR -->
     <div style="text-align: center; margin: 30px 0; position: relative;">
       <div style="position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background: rgba(255, 255, 255, 0.1);"></div>
-      <span style="position: relative; background: rgba(10, 22, 40, 0.95); padding: 0 15px; font-size: 13px; color: rgba(255, 255, 255, 0.5);">ou</span>
+      <span style="position: relative; background: rgba(10, 22, 40, 0.95); padding: 0 15px; font-size: 13px; color: rgba(255, 255, 255, 0.5);" id="auth-or">ou</span>
     </div>
     
     <button onclick="loginWithGoogle()" style="width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;">
       <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path></svg>
-      Continuer avec Google
+      <span id="auth-google">Continuer avec Google</span>
     </button>
   </div>
 </div>
@@ -129,6 +129,229 @@ button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0,
 </style>
 
 <script>
+const AUTH_T = {
+  fr: {
+    title:'Votre assistant IA pour gérer vos clients',
+    tab_login:'Connexion', tab_signup:'Inscription',
+    lbl_email:'Email', lbl_pwd:'Mot de passe', lbl_biz:'Nom du business',
+    lbl_confirm:'Confirmer le mot de passe',
+    forgot:'Mot de passe oublié ?',
+    btn_login:'Se connecter', btn_signup:'Créer mon compte',
+    terms:'En créant un compte, vous acceptez nos', terms_link:'conditions d'utilisation',
+    or:'ou', google:'Continuer avec Google',
+    login_loading:'Connexion...', signup_loading:'Création du compte...',
+    login_ok:'✅ Connexion réussie ! Redirection...',
+    signup_ok:'✅ Compte créé ! Configuration de votre assistant...',
+    pwd_mismatch:'❌ Les mots de passe ne correspondent pas',
+    pwd_short:'❌ Le mot de passe doit contenir au moins 8 caractères',
+    verify_title:'Vérifiez votre email ✉️',
+    verify_sub:'Cliquez sur le lien dans l'email pour activer votre compte.',
+    verify_spam:'💡 Vérifiez aussi vos spams si vous ne voyez pas l'email.',
+    resend:'🔄 Renvoyer l'email', resending:'Envoi...', resent:'✅ Email renvoyé !', resend_err:'❌ Erreur, réessayez',
+    verify_invalid:'❌ Lien de vérification invalide ou expiré.',
+    verify_err:'❌ Erreur lors de la vérification. Réessayez.',
+    session_expired:'⚠️ Votre session a expiré. Reconnectez-vous.',
+    login_403:'❌ Email non vérifié — vérifiez votre boîte mail.',
+    page_title:'Connexion — LocalReply', verify_sent:'Un lien de confirmation a été envoyé à',
+  },
+  en: {
+    title:'Your AI assistant to manage your customers',
+    tab_login:'Sign in', tab_signup:'Sign up',
+    lbl_email:'Email', lbl_pwd:'Password', lbl_biz:'Business name',
+    lbl_confirm:'Confirm password',
+    forgot:'Forgot password?',
+    btn_login:'Sign in', btn_signup:'Create my account',
+    terms:'By creating an account, you agree to our', terms_link:'Terms of Service',
+    or:'or', google:'Continue with Google',
+    login_loading:'Signing in...', signup_loading:'Creating account...',
+    login_ok:'✅ Signed in! Redirecting...',
+    signup_ok:'✅ Account created! Setting up your assistant...',
+    pwd_mismatch:'❌ Passwords do not match',
+    pwd_short:'❌ Password must be at least 8 characters',
+    verify_title:'Check your email ✉️',
+    verify_sub:'Click the link in the email to activate your account.',
+    verify_spam:'💡 Also check your spam folder if you don't see the email.',
+    resend:'🔄 Resend email', resending:'Sending...', resent:'✅ Email resent!', resend_err:'❌ Error, try again',
+    verify_invalid:'❌ Invalid or expired verification link.',
+    verify_err:'❌ Verification error. Please try again.',
+    session_expired:'⚠️ Your session has expired. Please sign in again.',
+    login_403:'❌ Email not verified — check your inbox.',
+    page_title:'Sign in — LocalReply', verify_sent:'A confirmation link was sent to',
+  },
+  de: {
+    title:'Ihr KI-Assistent zur Kundenverwaltung',
+    tab_login:'Anmelden', tab_signup:'Registrieren',
+    lbl_email:'E-Mail', lbl_pwd:'Passwort', lbl_biz:'Unternehmensname',
+    lbl_confirm:'Passwort bestätigen',
+    forgot:'Passwort vergessen?',
+    btn_login:'Anmelden', btn_signup:'Konto erstellen',
+    terms:'Mit der Erstellung eines Kontos stimmen Sie unseren', terms_link:'Nutzungsbedingungen',
+    or:'oder', google:'Mit Google fortfahren',
+    login_loading:'Anmeldung...', signup_loading:'Konto wird erstellt...',
+    login_ok:'✅ Angemeldet! Weiterleitung...',
+    signup_ok:'✅ Konto erstellt! Einrichtung...',
+    pwd_mismatch:'❌ Passwörter stimmen nicht überein',
+    pwd_short:'❌ Passwort muss mindestens 8 Zeichen haben',
+    verify_title:'E-Mail überprüfen ✉️',
+    verify_sub:'Klicken Sie auf den Link in der E-Mail, um Ihr Konto zu aktivieren.',
+    verify_spam:'💡 Überprüfen Sie auch Ihren Spam-Ordner.',
+    resend:'🔄 E-Mail erneut senden', resending:'Senden...', resent:'✅ E-Mail gesendet!', resend_err:'❌ Fehler, erneut versuchen',
+    verify_invalid:'❌ Ungültiger oder abgelaufener Verifizierungslink.',
+    verify_err:'❌ Verifizierungsfehler. Erneut versuchen.',
+    session_expired:'⚠️ Sitzung abgelaufen. Bitte erneut anmelden.',
+    login_403:'❌ E-Mail nicht verifiziert — Posteingang prüfen.',
+    page_title:'Anmelden — LocalReply', verify_sent:'Ein Bestätigungslink wurde gesendet an',
+  },
+  it: {
+    title:'Il tuo assistente IA per gestire i tuoi clienti',
+    tab_login:'Accedi', tab_signup:'Registrati',
+    lbl_email:'Email', lbl_pwd:'Password', lbl_biz:'Nome del business',
+    lbl_confirm:'Conferma password',
+    forgot:'Password dimenticata?',
+    btn_login:'Accedi', btn_signup:'Crea il mio account',
+    terms:'Creando un account, accetti i nostri', terms_link:'Termini di servizio',
+    or:'o', google:'Continua con Google',
+    login_loading:'Accesso...', signup_loading:'Creazione account...',
+    login_ok:'✅ Accesso effettuato! Reindirizzamento...',
+    signup_ok:'✅ Account creato! Configurazione...',
+    pwd_mismatch:'❌ Le password non corrispondono',
+    pwd_short:'❌ La password deve contenere almeno 8 caratteri',
+    verify_title:'Controlla la tua email ✉️',
+    verify_sub:'Clicca sul link nell'email per attivare il tuo account.',
+    verify_spam:'💡 Controlla anche la cartella spam.',
+    resend:'🔄 Invia di nuovo', resending:'Invio...', resent:'✅ Email inviata!', resend_err:'❌ Errore, riprova',
+    verify_invalid:'❌ Link di verifica non valido o scaduto.',
+    verify_err:'❌ Errore di verifica. Riprova.',
+    session_expired:'⚠️ Sessione scaduta. Accedi di nuovo.',
+    login_403:'❌ Email non verificata — controlla la tua casella.',
+    page_title:'Accedi — LocalReply', verify_sent:'Un link di conferma è stato inviato a',
+  },
+  es: {
+    title:'Tu asistente IA para gestionar tus clientes',
+    tab_login:'Iniciar sesión', tab_signup:'Registrarse',
+    lbl_email:'Email', lbl_pwd:'Contraseña', lbl_biz:'Nombre del negocio',
+    lbl_confirm:'Confirmar contraseña',
+    forgot:'¿Olvidaste tu contraseña?',
+    btn_login:'Iniciar sesión', btn_signup:'Crear mi cuenta',
+    terms:'Al crear una cuenta, aceptas nuestros', terms_link:'Términos de servicio',
+    or:'o', google:'Continuar con Google',
+    login_loading:'Iniciando sesión...', signup_loading:'Creando cuenta...',
+    login_ok:'✅ ¡Sesión iniciada! Redirigiendo...',
+    signup_ok:'✅ ¡Cuenta creada! Configurando...',
+    pwd_mismatch:'❌ Las contraseñas no coinciden',
+    pwd_short:'❌ La contraseña debe tener al menos 8 caracteres',
+    verify_title:'Verifica tu email ✉️',
+    verify_sub:'Haz clic en el enlace del email para activar tu cuenta.',
+    verify_spam:'💡 Revisa también tu carpeta de spam.',
+    resend:'🔄 Reenviar email', resending:'Enviando...', resent:'✅ ¡Email enviado!', resend_err:'❌ Error, inténtalo de nuevo',
+    verify_invalid:'❌ Enlace de verificación inválido o expirado.',
+    verify_err:'❌ Error de verificación. Inténtalo de nuevo.',
+    session_expired:'⚠️ Tu sesión ha expirado. Inicia sesión de nuevo.',
+    login_403:'❌ Email no verificado — revisa tu bandeja de entrada.',
+    page_title:'Iniciar sesión — LocalReply', verify_sent:'Se ha enviado un enlace de confirmación a',
+  },
+  pt: {
+    title:'O seu assistente IA para gerir os seus clientes',
+    tab_login:'Entrar', tab_signup:'Registar',
+    lbl_email:'Email', lbl_pwd:'Palavra-passe', lbl_biz:'Nome do negócio',
+    lbl_confirm:'Confirmar palavra-passe',
+    forgot:'Esqueceu a palavra-passe?',
+    btn_login:'Entrar', btn_signup:'Criar a minha conta',
+    terms:'Ao criar uma conta, aceita os nossos', terms_link:'Termos de serviço',
+    or:'ou', google:'Continuar com o Google',
+    login_loading:'A entrar...', signup_loading:'A criar conta...',
+    login_ok:'✅ Entrou! A redirecionar...',
+    signup_ok:'✅ Conta criada! A configurar...',
+    pwd_mismatch:'❌ As palavras-passe não coincidem',
+    pwd_short:'❌ A palavra-passe deve ter pelo menos 8 caracteres',
+    verify_title:'Verifique o seu email ✉️',
+    verify_sub:'Clique no link do email para ativar a sua conta.',
+    verify_spam:'💡 Verifique também a pasta de spam.',
+    resend:'🔄 Reenviar email', resending:'A enviar...', resent:'✅ Email enviado!', resend_err:'❌ Erro, tente novamente',
+    verify_invalid:'❌ Link de verificação inválido ou expirado.',
+    verify_err:'❌ Erro de verificação. Tente novamente.',
+    session_expired:'⚠️ A sua sessão expirou. Entre novamente.',
+    login_403:'❌ Email não verificado — verifique a sua caixa de entrada.',
+    page_title:'Entrar — LocalReply', verify_sent:'Um link de confirmação foi enviado para',
+  },
+  nl: {
+    title:'Uw AI-assistent voor klantenbeheer',
+    tab_login:'Inloggen', tab_signup:'Registreren',
+    lbl_email:'E-mail', lbl_pwd:'Wachtwoord', lbl_biz:'Bedrijfsnaam',
+    lbl_confirm:'Wachtwoord bevestigen',
+    forgot:'Wachtwoord vergeten?',
+    btn_login:'Inloggen', btn_signup:'Mijn account aanmaken',
+    terms:'Door een account aan te maken, ga je akkoord met onze', terms_link:'Gebruiksvoorwaarden',
+    or:'of', google:'Doorgaan met Google',
+    login_loading:'Inloggen...', signup_loading:'Account aanmaken...',
+    login_ok:'✅ Ingelogd! Doorsturen...',
+    signup_ok:'✅ Account aangemaakt! Instellen...',
+    pwd_mismatch:'❌ Wachtwoorden komen niet overeen',
+    pwd_short:'❌ Wachtwoord moet minimaal 8 tekens bevatten',
+    verify_title:'Controleer uw e-mail ✉️',
+    verify_sub:'Klik op de link in de e-mail om uw account te activeren.',
+    verify_spam:'💡 Controleer ook uw spam-map.',
+    resend:'🔄 E-mail opnieuw sturen', resending:'Verzenden...', resent:'✅ E-mail verzonden!', resend_err:'❌ Fout, probeer opnieuw',
+    verify_invalid:'❌ Ongeldige of verlopen verificatielink.',
+    verify_err:'❌ Verificatiefout. Probeer opnieuw.',
+    session_expired:'⚠️ Sessie verlopen. Log opnieuw in.',
+    login_403:'❌ E-mail niet geverifieerd — controleer uw inbox.',
+    page_title:'Inloggen — LocalReply', verify_sent:'Een bevestigingslink is verzonden naar',
+  },
+  pl: {
+    title:'Twój asystent AI do zarządzania klientami',
+    tab_login:'Zaloguj się', tab_signup:'Zarejestruj się',
+    lbl_email:'Email', lbl_pwd:'Hasło', lbl_biz:'Nazwa firmy',
+    lbl_confirm:'Potwierdź hasło',
+    forgot:'Zapomniałeś hasła?',
+    btn_login:'Zaloguj się', btn_signup:'Utwórz konto',
+    terms:'Tworząc konto, akceptujesz nasze', terms_link:'Warunki korzystania',
+    or:'lub', google:'Kontynuuj z Google',
+    login_loading:'Logowanie...', signup_loading:'Tworzenie konta...',
+    login_ok:'✅ Zalogowano! Przekierowanie...',
+    signup_ok:'✅ Konto utworzone! Konfigurowanie...',
+    pwd_mismatch:'❌ Hasła nie są zgodne',
+    pwd_short:'❌ Hasło musi mieć co najmniej 8 znaków',
+    verify_title:'Sprawdź swojego emaila ✉️',
+    verify_sub:'Kliknij link w emailu, aby aktywować konto.',
+    verify_spam:'💡 Sprawdź też folder spam.',
+    resend:'🔄 Wyślij ponownie', resending:'Wysyłanie...', resent:'✅ Email wysłany!', resend_err:'❌ Błąd, spróbuj ponownie',
+    verify_invalid:'❌ Nieprawidłowy lub wygasły link weryfikacyjny.',
+    verify_err:'❌ Błąd weryfikacji. Spróbuj ponownie.',
+    session_expired:'⚠️ Sesja wygasła. Zaloguj się ponownie.',
+    login_403:'❌ Email nie zweryfikowany — sprawdź skrzynkę.',
+    page_title:'Zaloguj się — LocalReply', verify_sent:'Link potwierdzający został wysłany do',
+  },
+};
+
+(function() {
+  const lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const t = AUTH_T[AUTH_T.hasOwnProperty(lang) ? lang : 'fr'];
+  window._t = t; // make accessible to all functions
+
+  // Apply static labels
+  document.title = t.page_title;
+  const els = {
+    'auth-subtitle': t.title,
+    'tabLoginLabel': t.tab_login, 'tabSignupLabel': t.tab_signup,
+    'lbl-login-email': t.lbl_email, 'lbl-login-pwd': t.lbl_pwd,
+    'forgot-pwd-link': t.forgot, 'loginBtnLabel': t.btn_login,
+    'lbl-biz-name': t.lbl_biz, 'lbl-signup-email': t.lbl_email,
+    'lbl-signup-pwd': t.lbl_pwd, 'lbl-confirm-pwd': t.lbl_confirm,
+    'signupBtnLabel': t.btn_signup, 'auth-terms': t.terms,
+    'auth-terms-link': t.terms_link, 'auth-or': t.or, 'auth-google': t.google,
+  };
+  Object.entries(els).forEach(([id, txt]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = txt;
+  });
+
+  // Placeholders
+  const lp = document.getElementById('loginEmail'); if (lp) lp.placeholder = 'email@example.com';
+  const sp = document.getElementById('signupEmail'); if (sp) sp.placeholder = 'email@example.com';
+  const bn = document.getElementById('signupBusinessName'); if (bn) bn.placeholder = lang === 'fr' ? 'Salon Marie' : lang === 'de' ? 'Salon Marco' : 'My Business';
+})();
+
 const API_BASE_URL = 'https://localreply-api.onrender.com';
 
 // ─── Helper redirect ───
@@ -167,40 +390,40 @@ function redirectAfterAuth(data, isNewAccount = false) {
 // ─── Écran vérification email ───
 function showVerifyEmailScreen(email) {
   const card = document.querySelector('[style*="background: rgba(10, 22, 40"]');
-  if (!card) { showSuccess('✅ Un email de vérification a été envoyé à ' + email); return; }
-  card.innerHTML = `
+  if (!card) { showSuccess('✅ ' + (_t||AUTH_T.fr).verify_title.replace(' ✉️','') + ' — ' + email); return; }
+  const _tv = (_t||AUTH_T.fr); card.innerHTML = `
     <div style="text-align:center;padding:20px 0;">
       <div style="font-size:56px;margin-bottom:20px;">📬</div>
-      <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">Vérifiez votre email</h2>
+      <h2 style="font-size:24px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">${_tv.verify_title}</h2>
       <p style="font-size:15px;color:rgba(255,255,255,0.55);line-height:1.7;margin:0 0 8px;">
-        Un lien de confirmation a été envoyé à
+        ${_tv.verify_sent||'A confirmation link was sent to'}
       </p>
       <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:24px;">${email}</div>
       <p style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;margin:0 auto 28px;max-width:340px;">
-        Cliquez sur le lien dans l'email pour activer votre compte et accéder à votre dashboard.
+        ${_tv.verify_sub}
       </p>
       <div style="padding:14px 20px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:20px;">
-        💡 Vérifiez aussi vos spams si vous ne voyez pas l'email.
+        ${_tv.verify_spam}
       </div>
       <button onclick="resendVerification('${email}')" id="resendBtn" style="background:transparent;border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.5);padding:11px 20px;font-size:13px;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(0,212,255,0.4)';this.style.color='#00D4FF'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.5)'">
-        🔄 Renvoyer l'email
+        ${_tv.resend}
       </button>
     </div>`;
 }
 
 async function resendVerification(email) {
   const btn = document.getElementById('resendBtn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Envoi...'; }
+  if (btn) { btn.disabled = true; btn.textContent = (_t||AUTH_T.fr).resending; }
   try {
     await fetch(`${API_BASE_URL}/api/auth/resend-verification`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     });
-    if (btn) { btn.textContent = '✅ Email renvoyé !'; }
-    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = '🔄 Renvoyer l\'email'; } }, 5000);
+    if (btn) { btn.textContent = (_t||AUTH_T.fr).resent; }
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = (_t||AUTH_T.fr).resend; } }, 5000);
   } catch {
-    if (btn) { btn.disabled = false; btn.textContent = '❌ Erreur, réessayez'; }
+    if (btn) { btn.disabled = false; btn.textContent = (_t||AUTH_T.fr).resend_err; }
   }
 }
 
@@ -228,10 +451,10 @@ if (verifyToken && verifyMode === 'verify') {
         // Nouveau compte → choisir un abonnement d'abord
         window.location.href = '/choisir-plan?new=true';
       } else {
-        showError('❌ ' + (data.detail || 'Lien de vérification invalide ou expiré.'));
+        showError('❌ ' + (data.detail || (_t||AUTH_T.fr).verify_invalid));
       }
     } catch {
-      showError('❌ Erreur lors de la vérification. Réessayez.');
+      showError((_t||AUTH_T.fr).verify_err);
     }
   })();
 }
@@ -318,7 +541,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
   const btn = document.getElementById('loginBtn');
-  btn.disabled = true; btn.textContent = 'Connexion...';
+  btn.disabled = true; btn.textContent = (_t||AUTH_T.fr).login_loading;
 
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -332,17 +555,17 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       if (res.status === 403 && data.detail?.includes('vérif')) {
         const emailVal = document.getElementById('loginEmail').value;
         showVerifyEmailScreen(emailVal);
-        btn.disabled = false; btn.textContent = 'Se connecter';
+        btn.disabled = false; btn.textContent = (_t||AUTH_T.fr).btn_login;
         return;
       }
-      throw new Error(data.detail || 'Erreur de connexion');
+      throw new Error(data.detail || ((_t||AUTH_T.fr).login_err || 'Login error'));
     }
 
-    showSuccess('✅ Connexion réussie ! Redirection...');
+    showSuccess((_t||AUTH_T.fr).login_ok);
     setTimeout(() => redirectAfterAuth(data, false), 1000);
   } catch (err) {
     showError('❌ ' + err.message);
-    btn.disabled = false; btn.textContent = 'Se connecter';
+    btn.disabled = false; btn.textContent = (_t||AUTH_T.fr).btn_login;
   }
 });
 
@@ -356,10 +579,10 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
   const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
   const btn = document.getElementById('signupBtn');
 
-  if (password !== passwordConfirm) { showError('❌ Les mots de passe ne correspondent pas'); return; }
-  if (password.length < 8) { showError('❌ Le mot de passe doit contenir au moins 8 caractères'); return; }
+  if (password !== passwordConfirm) { showError((_t||AUTH_T.fr).pwd_mismatch); return; }
+  if (password.length < 8) { showError((_t||AUTH_T.fr).pwd_short); return; }
 
-  btn.disabled = true; btn.textContent = 'Création du compte...';
+  btn.disabled = true; btn.textContent = (_t||AUTH_T.fr).signup_loading;
 
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
@@ -372,7 +595,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
 
     // Si le backend retourne un token → inscription directe (Google ou sans vérif)
     if (data.access_token || data.token) {
-      showSuccess('✅ Compte créé ! Configuration de votre assistant...');
+      showSuccess((_t||AUTH_T.fr).signup_ok);
       setTimeout(() => redirectAfterAuth(data, true), 1500);
     } else {
       // Email de vérification envoyé → afficher l'écran d'attente
@@ -380,7 +603,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     }
   } catch (err) {
     showError('❌ ' + err.message);
-    btn.disabled = false; btn.textContent = 'Créer mon compte';
+    btn.disabled = false; btn.textContent = (_t||AUTH_T.fr).btn_signup;
   }
 });
 
