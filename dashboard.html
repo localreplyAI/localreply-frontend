@@ -1009,17 +1009,27 @@ function buildNarrative(convs, apts, reqs) {
 }
 
 
-function renderActivity(convs, apts, reqs) {
+function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
 
   // Conversations — trier par date décroissante AVANT de slice
+  // Afficher le dernier message du CLIENT (role=user), pas la réponse IA
   [...convs]
     .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))
     .slice(0, 8)
     .forEach(c => {
       const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
-      const preview = c.last_message || c.title || 'Nouvelle conversation';
+      // Trouver le dernier message du client (role=user)
+      let preview = 'Nouvelle conversation';
+      if (c.messages && Array.isArray(c.messages)) {
+        const userMsgs = c.messages.filter(m => m.role === 'user');
+        if (userMsgs.length) preview = userMsgs[userMsgs.length - 1].content || preview;
+      } else if (c.last_user_message) {
+        preview = c.last_user_message;
+      } else if (c.last_message && !c.last_message_role || c.last_message_role === 'user') {
+        preview = c.last_message;
+      }
       items.push({
         icon:'💬', color:'#00D4FF',
         text:`Conversation ${langFlag}`,
@@ -1028,19 +1038,29 @@ function renderActivity(convs, apts, reqs) {
       });
     });
 
-  // RDV — trier par date décroissante AVANT de slice
-  [...apts]
+  // RDV confirmés (déjà filtrés sur 30j) — trier avant slice
+  [...confirmedApts]
     .sort((a,b) => new Date(b.start_time||b.created_at) - new Date(a.start_time||a.created_at))
-    .slice(0, 5)
+    .slice(0, 4)
     .forEach(a => {
-      const status = a.status === 'confirmed' ? 'confirmé' : a.status === 'pending' ? 'en attente' : a.status;
-      const color = a.status === 'confirmed' ? '#10B981' : '#F59E0B';
-      const icon = a.status === 'confirmed' ? '📅' : '⏳';
       items.push({
-        icon, color,
-        text: `RDV ${status}${a.client_name ? ' — ' + a.client_name : ''}`,
+        icon: '📅', color: '#10B981',
+        text: `RDV confirmé${a.client_name ? ' — ' + a.client_name : ''}`,
         sub: a.service_name || a.summary || '',
         time: a.start_time || a.created_at
+      });
+    });
+
+  // RDV en attente (récents, pas de filtre 30j car c'est ce qui nécessite action)
+  [...pendingApts]
+    .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
+    .slice(0, 2)
+    .forEach(a => {
+      items.push({
+        icon: '⏳', color: '#F59E0B',
+        text: `RDV en attente${a.client_name ? ' — ' + a.client_name : ''}`,
+        sub: a.service_name || a.summary || '',
+        time: a.created_at
       });
     });
 
@@ -1326,7 +1346,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   renderAlerts(pA, reqs);
   buildNarrative(wC, apts, reqs);
-  renderActivity(wC, apts, reqs);
+  renderActivity(wC, wA, pA, reqs);
 
   // Analytics retirés du home — voir /dashboard-analytics
 });
