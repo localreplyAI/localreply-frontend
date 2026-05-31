@@ -1012,24 +1012,26 @@ function buildNarrative(convs, apts, reqs) {
 function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
+  const cutoff30 = new Date(Date.now() - 30*24*60*60*1000);
 
   // Conversations — trier par date décroissante AVANT de slice
-  // Afficher le dernier message du CLIENT (role=user), pas la réponse IA
   [...convs]
     .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))
     .slice(0, 8)
     .forEach(c => {
-      const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
-      // Trouver le dernier message du client (role=user)
+      const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language || c.detected_language] || '';
+      // Dernier message du CLIENT uniquement (role=user)
       let preview = 'Nouvelle conversation';
       if (c.messages && Array.isArray(c.messages)) {
         const userMsgs = c.messages.filter(m => m.role === 'user');
         if (userMsgs.length) preview = userMsgs[userMsgs.length - 1].content || preview;
       } else if (c.last_user_message) {
         preview = c.last_user_message;
-      } else if (c.last_message && !c.last_message_role || c.last_message_role === 'user') {
+      } else if (c.last_message && c.last_message_role === 'user') {
+        // Seulement si le rôle est EXPLICITEMENT 'user'
         preview = c.last_message;
       }
+      // Si on n'a aucun message user identifiable, on n'affiche pas de preview trompeur
       items.push({
         icon:'💬', color:'#00D4FF',
         text:`Conversation ${langFlag}`,
@@ -1038,7 +1040,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
       });
     });
 
-  // RDV confirmés (déjà filtrés sur 30j) — trier avant slice
+  // RDV confirmés (déjà filtrés sur 30j par l'appelant)
   [...confirmedApts]
     .sort((a,b) => new Date(b.start_time||b.created_at) - new Date(a.start_time||a.created_at))
     .slice(0, 4)
@@ -1051,8 +1053,9 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
       });
     });
 
-  // RDV en attente (récents, pas de filtre 30j car c'est ce qui nécessite action)
+  // RDV en attente — filtrés sur 30j pour l'affichage (les plus anciens restent dans les alertes)
   [...pendingApts]
+    .filter(a => new Date(a.created_at) >= cutoff30)
     .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
     .slice(0, 2)
     .forEach(a => {
@@ -1064,16 +1067,19 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
       });
     });
 
-  // Questions sans réponse
+  // Questions sans réponse — filtrées sur 30j
   if (reqs && reqs.length) {
-    reqs.slice(0, 3).forEach(q => {
-      items.push({
-        icon: '❓', color: '#F59E0B',
-        text: 'Question sans réponse',
-        sub: (q.raw_message || q.question || '').slice(0,55),
-        time: q.created_at
+    reqs
+      .filter(q => new Date(q.created_at) >= cutoff30)
+      .slice(0, 3)
+      .forEach(q => {
+        items.push({
+          icon: '❓', color: '#F59E0B',
+          text: 'Question sans réponse',
+          sub: (q.raw_message || q.question || '').slice(0,55),
+          time: q.created_at
+        });
       });
-    });
   }
 
   // Sort global par date décroissante
