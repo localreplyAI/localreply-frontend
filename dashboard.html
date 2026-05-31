@@ -1012,36 +1012,41 @@ function buildNarrative(convs, apts, reqs) {
 function renderActivity(convs, apts, reqs) {
   const el = document.getElementById('recentActivity');
   const items = [];
-  const cutoff = new Date(Date.now() - 7*24*60*60*1000);
 
-  // Conversations — avec aperçu et langue
-  convs.filter(c => new Date(c.updated_at || c.created_at) > cutoff).slice(0,5).forEach(c => {
-    const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
-    const preview = c.last_message || c.title || 'Nouvelle conversation';
-    items.push({
-      icon:'💬', color:'#00D4FF',
-      text:`Conversation ${langFlag}`,
-      sub: preview.length > 55 ? preview.slice(0,55)+'…' : preview,
-      time: c.updated_at || c.created_at
+  // Conversations — trier par date décroissante AVANT de slice
+  [...convs]
+    .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))
+    .slice(0, 8)
+    .forEach(c => {
+      const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language] || '';
+      const preview = c.last_message || c.title || 'Nouvelle conversation';
+      items.push({
+        icon:'💬', color:'#00D4FF',
+        text:`Conversation ${langFlag}`,
+        sub: preview.length > 55 ? preview.slice(0,55)+'…' : preview,
+        time: c.updated_at || c.created_at
+      });
     });
-  });
 
-  // RDV — avec nom client et service (7 jours max)
-  apts.filter(a => new Date(a.start_time || a.created_at) > cutoff).slice(0,5).forEach(a => {
-    const status = a.status === 'confirmed' ? 'confirmé' : a.status === 'pending' ? 'en attente' : a.status;
-    const color = a.status === 'confirmed' ? '#10B981' : '#F59E0B';
-    const icon = a.status === 'confirmed' ? '📅' : '⏳';
-    items.push({
-      icon, color,
-      text: `RDV ${status}${a.client_name ? ' — ' + a.client_name : ''}`,
-      sub: a.service_name || a.summary || '',
-      time: a.start_time || a.created_at
+  // RDV — trier par date décroissante AVANT de slice
+  [...apts]
+    .sort((a,b) => new Date(b.start_time||b.created_at) - new Date(a.start_time||a.created_at))
+    .slice(0, 5)
+    .forEach(a => {
+      const status = a.status === 'confirmed' ? 'confirmé' : a.status === 'pending' ? 'en attente' : a.status;
+      const color = a.status === 'confirmed' ? '#10B981' : '#F59E0B';
+      const icon = a.status === 'confirmed' ? '📅' : '⏳';
+      items.push({
+        icon, color,
+        text: `RDV ${status}${a.client_name ? ' — ' + a.client_name : ''}`,
+        sub: a.service_name || a.summary || '',
+        time: a.start_time || a.created_at
+      });
     });
-  });
 
   // Questions sans réponse
   if (reqs && reqs.length) {
-    reqs.slice(0,2).forEach(q => {
+    reqs.slice(0, 3).forEach(q => {
       items.push({
         icon: '❓', color: '#F59E0B',
         text: 'Question sans réponse',
@@ -1051,6 +1056,7 @@ function renderActivity(convs, apts, reqs) {
     });
   }
 
+  // Sort global par date décroissante
   items.sort((a,b) => new Date(b.time) - new Date(a.time));
 
   if (!items.length) {
