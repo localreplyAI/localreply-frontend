@@ -68,7 +68,7 @@
       <div style="text-align: right; margin-bottom: 20px;">
         <a href="/forgot-password" style="font-size: 13px; color: #00D4FF; text-decoration: none; font-weight: 600;" id="forgot-pwd-link">Mot de passe oublié ?</a>
       </div>
-      <button type="submit" id="loginBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);" id="loginBtnLabel">
+      <button type="submit" id="loginBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);">
         Se connecter
       </button>
     </form>
@@ -91,7 +91,7 @@
         <label id="lbl-confirm-pwd" style="display: block; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">Confirmer le mot de passe</label>
         <input type="password" id="signupPasswordConfirm" placeholder="••••••••" required minlength="8" style="width: 100%; padding: 14px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #FFFFFF; font-size: 15px; box-sizing: border-box;">
       </div>
-      <button type="submit" id="signupBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); margin-top: 10px;" id="signupBtnLabel">
+      <button type="submit" id="signupBtn" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #10B981, #059669); border: none; border-radius: 12px; color: #FFFFFF; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); margin-top: 10px;">
         Créer mon compte
       </button>
       <div style="margin-top: 15px; font-size: 12px; color: rgba(255, 255, 255, 0.5); text-align: center;">
@@ -137,7 +137,7 @@ const AUTH_T = {
     lbl_confirm:'Confirmer le mot de passe',
     forgot:'Mot de passe oublié ?',
     btn_login:'Se connecter', btn_signup:'Créer mon compte',
-    terms:'En créant un compte, vous acceptez nos', terms_link:'conditions d'utilisation',
+    terms:'En créant un compte, vous acceptez nos', terms_link:'conditions d\'utilisation',
     or:'ou', google:'Continuer avec Google',
     login_loading:'Connexion...', signup_loading:'Création du compte...',
     login_ok:'✅ Connexion réussie ! Redirection...',
@@ -145,9 +145,9 @@ const AUTH_T = {
     pwd_mismatch:'❌ Les mots de passe ne correspondent pas',
     pwd_short:'❌ Le mot de passe doit contenir au moins 8 caractères',
     verify_title:'Vérifiez votre email ✉️',
-    verify_sub:'Cliquez sur le lien dans l'email pour activer votre compte.',
-    verify_spam:'💡 Vérifiez aussi vos spams si vous ne voyez pas l'email.',
-    resend:'🔄 Renvoyer l'email', resending:'Envoi...', resent:'✅ Email renvoyé !', resend_err:'❌ Erreur, réessayez',
+    verify_sub:'Cliquez sur le lien dans l\'email pour activer votre compte.',
+    verify_spam:'💡 Vérifiez aussi vos spams si vous ne voyez pas l\'email.',
+    resend:'🔄 Renvoyer l\'email', resending:'Envoi...', resent:'✅ Email renvoyé !', resend_err:'❌ Erreur, réessayez',
     verify_invalid:'❌ Lien de vérification invalide ou expiré.',
     verify_err:'❌ Erreur lors de la vérification. Réessayez.',
     session_expired:'⚠️ Votre session a expiré. Reconnectez-vous.',
@@ -170,7 +170,7 @@ const AUTH_T = {
     pwd_short:'❌ Password must be at least 8 characters',
     verify_title:'Check your email ✉️',
     verify_sub:'Click the link in the email to activate your account.',
-    verify_spam:'💡 Also check your spam folder if you don't see the email.',
+    verify_spam:'💡 Also check your spam folder if you don\'t see the email.',
     resend:'🔄 Resend email', resending:'Sending...', resent:'✅ Email resent!', resend_err:'❌ Error, try again',
     verify_invalid:'❌ Invalid or expired verification link.',
     verify_err:'❌ Verification error. Please try again.',
@@ -217,7 +217,7 @@ const AUTH_T = {
     pwd_mismatch:'❌ Le password non corrispondono',
     pwd_short:'❌ La password deve contenere almeno 8 caratteri',
     verify_title:'Controlla la tua email ✉️',
-    verify_sub:'Clicca sul link nell'email per attivare il tuo account.',
+    verify_sub:'Clicca sul link nell\'email per attivare il tuo account.',
     verify_spam:'💡 Controlla anche la cartella spam.',
     resend:'🔄 Invia di nuovo', resending:'Invio...', resent:'✅ Email inviata!', resend_err:'❌ Errore, riprova',
     verify_invalid:'❌ Link di verifica non valido o scaduto.',
@@ -330,40 +330,31 @@ const AUTH_T = {
   window._t = t;
   document.title = t.page_title;
 
-  document.addEventListener('DOMContentLoaded', function() {
-    // Tab buttons
-    const tabLogin = document.getElementById('tabLogin');
-    const tabSignup = document.getElementById('tabSignup');
-    if (tabLogin) tabLogin.textContent = t.tab_login;
-    if (tabSignup) tabSignup.textContent = t.tab_signup;
-
+  function applyAuthLang() {
+    // Tabs
+    const tl = document.getElementById('tabLogin'); if (tl) tl.textContent = t.tab_login;
+    const ts = document.getElementById('tabSignup'); if (ts) ts.textContent = t.tab_signup;
     // Labels
-    const lblMap = {
-      'auth-subtitle': t.title,
-      'lbl-login-email': t.lbl_email, 'lbl-login-pwd': t.lbl_pwd,
-      'forgot-pwd-link': t.forgot,
-      'lbl-biz-name': t.lbl_biz, 'lbl-signup-email': t.lbl_email,
-      'lbl-signup-pwd': t.lbl_pwd, 'lbl-confirm-pwd': t.lbl_confirm,
-      'auth-terms': t.terms, 'auth-terms-link': t.terms_link,
-      'auth-or': t.or, 'auth-google': t.google,
-    };
-    Object.entries(lblMap).forEach(([id, txt]) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = txt;
-    });
-
-    // Submit buttons (use span inside or button directly)
-    const loginBtn = document.getElementById('loginBtn');
-    if (loginBtn) { const sp = loginBtn.querySelector('span') || loginBtn; sp.textContent = t.btn_login; }
-    const signupBtn = document.getElementById('signupBtn');
-    if (signupBtn) { const sp = signupBtn.querySelector('span') || signupBtn; sp.textContent = t.btn_signup; }
-
+    const m = {'auth-subtitle':t.title,'lbl-login-email':t.lbl_email,'lbl-login-pwd':t.lbl_pwd,
+      'forgot-pwd-link':t.forgot,'lbl-biz-name':t.lbl_biz,'lbl-signup-email':t.lbl_email,
+      'lbl-signup-pwd':t.lbl_pwd,'lbl-confirm-pwd':t.lbl_confirm,'auth-terms':t.terms,
+      'auth-terms-link':t.terms_link,'auth-or':t.or,'auth-google':t.google};
+    Object.entries(m).forEach(([id,txt])=>{const el=document.getElementById(id);if(el)el.textContent=txt;});
+    // Buttons (direct textContent on the button element)
+    const lb = document.getElementById('loginBtn'); if (lb) lb.textContent = t.btn_login;
+    const sb = document.getElementById('signupBtn'); if (sb) sb.textContent = t.btn_signup;
     // Placeholders
-    const lp = document.getElementById('loginEmail'); if (lp) lp.placeholder = 'email@example.com';
-    const sep = document.getElementById('signupEmail'); if (sep) sep.placeholder = 'email@example.com';
+    const le = document.getElementById('loginEmail'); if (le) le.placeholder = 'email@example.com';
+    const se = document.getElementById('signupEmail'); if (se) se.placeholder = 'email@example.com';
     const bn = document.getElementById('signupBusinessName');
-    if (bn) bn.placeholder = lang === 'fr' ? 'Salon Marie' : lang === 'de' ? 'Salon Marco' : 'My Business';
-  });
+    if (bn) bn.placeholder = lang === 'fr' ? 'Salon Marie' : 'My Business';
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyAuthLang);
+  } else {
+    applyAuthLang();
+  }
 })();
 
 const API_BASE_URL = 'https://localreply-api.onrender.com';
