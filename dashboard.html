@@ -1014,24 +1014,32 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   const items = [];
   const cutoff30 = new Date(Date.now() - 30*24*60*60*1000);
 
-  // Conversations — trier par date décroissante AVANT de slice
+  // DEBUG : log les champs réels du premier objet conversation (à supprimer après diagnostic)
+  if (convs && convs.length && !window._convFieldsLogged) {
+    console.log('[LocalReply] Conversation keys:', Object.keys(convs[0]));
+    console.log('[LocalReply] Sample:', JSON.stringify(convs[0]).slice(0, 500));
+    window._convFieldsLogged = true;
+  }
+
+  // Conversations — 6 max, triées par date décroissante
   [...convs]
     .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))
-    .slice(0, 8)
+    .slice(0, 6)
     .forEach(c => {
-      const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.session_language || c.detected_language] || '';
-      // Dernier message du CLIENT uniquement (role=user)
-      let preview = 'Nouvelle conversation';
-      if (c.messages && Array.isArray(c.messages)) {
+      // detected_language est le bon champ (session_language n'existe pas en DB)
+      const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.detected_language] || '';
+      // Aperçu du message client — plusieurs fallbacks selon ce que l'API retourne
+      let preview = null;
+      if (c.messages && Array.isArray(c.messages) && c.messages.length) {
         const userMsgs = c.messages.filter(m => m.role === 'user');
-        if (userMsgs.length) preview = userMsgs[userMsgs.length - 1].content || preview;
-      } else if (c.last_user_message) {
-        preview = c.last_user_message;
-      } else if (c.last_message && c.last_message_role === 'user') {
-        // Seulement si le rôle est EXPLICITEMENT 'user'
-        preview = c.last_message;
+        if (userMsgs.length) preview = userMsgs[userMsgs.length - 1].content;
       }
-      // Si on n'a aucun message user identifiable, on n'affiche pas de preview trompeur
+      if (!preview && c.last_user_message) preview = c.last_user_message;
+      if (!preview && c.client_message)    preview = c.client_message;
+      if (!preview && c.first_message)     preview = c.first_message;
+      if (!preview && c.last_message && c.last_message_role === 'user') preview = c.last_message;
+      if (!preview && c.ai_summary)        preview = c.ai_summary;
+      if (!preview) preview = '—';
       items.push({
         icon:'💬', color:'#00D4FF',
         text:`Conversation ${langFlag}`,
