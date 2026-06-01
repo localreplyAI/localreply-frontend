@@ -963,10 +963,10 @@ function renderAlerts(pendingApts, pendingReqs) {
 }
 
 // ─ Narrative ─
-function buildNarrative(convs, apts, reqs) {
-  // Calcul taux de conversion
+function buildNarrative(convs, confirmedApts, reqs, pendingApts) {
+  // Calcul taux de conversion — même fenêtre 30j pour numérateur et dénominateur
   const total = convs.length;
-  const confirmed = apts.filter(a=>a.status==='confirmed').length;
+  const confirmed = confirmedApts.length;
   const rate = total > 0 ? Math.round((confirmed/total)*100) : 0;
 
   // KPI taux de conversion
@@ -996,7 +996,7 @@ function buildNarrative(convs, apts, reqs) {
   }
 
   // RDV en attente de confirmation
-  const pendingRdv = apts.filter(a => a.status === 'pending').length;
+  const pendingRdv = (pendingApts || []).length;
   const pendingEl = document.getElementById('statPendingRdv');
   const urgCard = document.getElementById('urgencyCard');
   if (pendingEl) {
@@ -1359,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pA = apts.filter(a=>a.status==='pending');
 
   renderAlerts(pA, reqs);
-  buildNarrative(wC, apts, reqs);
+  buildNarrative(wC, wA, reqs, pA);
   renderActivity(wC, wA, pA, reqs);
 
   // Analytics retirés du home — voir /dashboard-analytics
