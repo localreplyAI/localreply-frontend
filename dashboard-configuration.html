@@ -53,41 +53,41 @@
     </div>
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
-      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
-      <a href="/dashboard-configuration" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:600;">Configuration</span></a>
-      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">⚙️</span><span id="dn-config" style="font-size:14px;font-weight:600;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span id="dn-messages" style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span id="dn-rdv" style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span id="dn-analytics" style="font-size:14px;font-weight:500;">Analytics</span><span id="dn-pro" style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
-      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
-      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;"><span id="dn-section-account">Compte</span></div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span id="dn-account" style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span id="dn-billing" style="font-size:14px;font-weight:500;">Abonnement</span></a>
     </nav>
     <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
             <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
-        <span>🌐</span><span>Retour au site</span>
+        <span>🌐</span><span id="dn-back">Retour au site</span>
       </a>
-<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span id="dn-logout">Déconnexion</span></button>
     </div>
   </div>
 
   <!-- BOTTOM NAV MOBILE -->
   <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
-      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
-      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;font-weight:700;">Config</span></a>
-      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
-      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
-      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);"><span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;font-weight:700;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span id="dn-mob-messages" style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;">Plus</span></button>
     </div>
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
   <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
-    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
-    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
-    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span><span id="dn-mob-analytics">Analytics</span></a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span><span id="dn-mob-account">Mon compte</span></a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span><span id="dn-mob-billing">Abonnement</span></a>
     <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
-    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span><span id="dn-mob-logout">Déconnexion</span></button>
   </div>
 
   <!-- MAIN -->
@@ -97,9 +97,9 @@
     <div style="padding:40px 40px 0;margin-bottom:0;">
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:6px;">
         <div style="width:12px;height:12px;background:#10B981;border-radius:50%;box-shadow:0 0 12px #10B981;animation:pulse 2s infinite;flex-shrink:0;"></div>
-        <h1 style="font-size:38px;font-weight:800;background:linear-gradient(135deg,#FFFFFF 0%,#00D4FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0;letter-spacing:-1px;">Configuration</h1>
+        <h1 style="font-size:38px;font-weight:800;background:linear-gradient(135deg,#FFFFFF 0%,#00D4FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0;letter-spacing:-1px;" id="cfg-h1">Configuration</h1>
       </div>
-      <p style="font-size:15px;color:rgba(255,255,255,0.55);margin:0 0 28px 40px;">Personnalisez votre assistant IA</p>
+      <p style="font-size:15px;color:rgba(255,255,255,0.55);margin:0 0 28px 40px;" id="cfg-subtitle">Personnalisez votre assistant IA</p>
     </div>
 
     <!-- ONGLETS STICKY -->
@@ -109,11 +109,11 @@
         <span style="color:rgba(255,255,255,0.4);font-size:16px;">›</span>
       </div>
       <div id="tabScrollContainer" style="display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;" onscroll="checkTabScroll()">
-        <button class="cfg-tab active" onclick="switchTab('commerce')" id="tab-commerce" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid #00D4FF;color:#00D4FF;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">🏪 Commerce</button>
-        <button class="cfg-tab" onclick="switchTab('horaires')" id="tab-horaires" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">⏰ Horaires</button>
-        <button class="cfg-tab" onclick="switchTab('services')" id="tab-services" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">💼 Services <span id="badge-services" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
-        <button class="cfg-tab" onclick="switchTab('faq')" id="tab-faq" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">❓ FAQ <span id="badge-faq" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
-        <button class="cfg-tab" onclick="switchTab('avance')" id="tab-avance" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;">✨ Avancé</button>
+        <button class="cfg-tab active" onclick="switchTab('commerce')" id="tab-commerce" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid #00D4FF;color:#00D4FF;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-commerce">🏪 Commerce</span></button>
+        <button class="cfg-tab" onclick="switchTab('horaires')" id="tab-horaires" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-horaires">⏰ Horaires</span></button>
+        <button class="cfg-tab" onclick="switchTab('services')" id="tab-services" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-services">💼 Services</span> <span id="badge-services" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
+        <button class="cfg-tab" onclick="switchTab('faq')" id="tab-faq" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-faq">❓ FAQ</span> <span id="badge-faq" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
+        <button class="cfg-tab" onclick="switchTab('avance')" id="tab-avance" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-avance">✨ Avancé</span></button>
       </div>
     </div>
 
@@ -126,13 +126,13 @@
           <div class="cfg-card-header">
             <div id="businessIcon" class="cfg-card-icon">💇</div>
             <div>
-              <h2 class="cfg-card-title">Informations du commerce</h2>
-              <p class="cfg-card-sub">Ces informations sont utilisées par l'IA pour répondre à vos clients</p>
+              <h2 class="cfg-card-title" id="cfg-title-commerce">Informations du commerce</h2>
+              <p class="cfg-card-sub" id="cfg-sub-commerce">Ces informations sont utilisées par l'IA pour répondre à vos clients</p>
             </div>
           </div>
           <div class="cfg-grid-2">
             <div class="cfg-field">
-              <label class="cfg-label">Type de commerce</label>
+              <label id="cfg-lbl-type" class="cfg-label">Type de commerce</label>
               <select id="businessType" onchange="updateBusinessIcon()" class="cfg-select">
                 <optgroup label="💇 Beauté &amp; Soins">
                   <option value="salon">💇 Salon de coiffure</option>
@@ -188,20 +188,20 @@
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Nom du commerce</label>
+              <label id="cfg-lbl-name" class="cfg-label">Nom du commerce</label>
               <input id="businessName" type="text" class="cfg-input" placeholder="Votre commerce">
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Email</label>
+              <label id="cfg-lbl-email" class="cfg-label">Email</label>
               <input id="businessEmail" type="email" class="cfg-input" placeholder="email@exemple.com">
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Téléphone</label>
+              <label id="cfg-lbl-phone" class="cfg-label">Téléphone</label>
               <input id="businessPhone" type="tel" class="cfg-input" placeholder="+41...">
             </div>
           </div>
           <div class="cfg-field" style="margin-top:16px;">
-            <label class="cfg-label">Adresse complète</label>
+            <label id="cfg-lbl-address" class="cfg-label">Adresse complète</label>
             <input id="businessAddress" type="text" class="cfg-input" placeholder="14 Rue de Rive, 1204 Genève">
           </div>
           <div class="cfg-field" style="margin-top:16px;">
@@ -224,7 +224,7 @@
                   📁 Choisir un logo
                 </button>
                 <div id="logoStatus" style="font-size:12px;color:rgba(255,255,255,0.4);">PNG, JPG ou WebP · Max 2MB</div>
-                <button id="logoRemoveBtn" onclick="removeLogo()" style="display:none;margin-top:6px;padding:6px 14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;font-size:12px;cursor:pointer;font-family:inherit;">🗑️ Supprimer le logo</button>
+                <button id="logoRemoveBtn" onclick="removeLogo()" style="display:none;margin-top:6px;padding:6px 14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;color:#EF4444;font-size:12px;cursor:pointer;font-family:inherit;" id="cfg-remove-logo">🗑️ Supprimer le logo</button>
               </div>
             </div>
           </div>
@@ -236,10 +236,10 @@
                 <input id="businessSlug" type="text" readonly style="flex:1;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:rgba(255,255,255,0.7);outline:none;cursor:default;pointer-events:none;" placeholder="mon-commerce">
                 <span style="padding:0 14px;font-size:14px;color:rgba(255,255,255,0.25);" title="Le lien public ne peut pas être modifié">🔒</span>
               </div>
-              <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.</div>
+              <div id="cfg-slug-warning" style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.</div>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Fuseau horaire</label>
+              <label id="cfg-lbl-timezone" class="cfg-label">Fuseau horaire</label>
               <select id="businessTimezone" class="cfg-select">
                 <option value="Europe/Paris">🇫🇷 Europe/Paris</option>
                 <option value="Europe/Zurich">🇨🇭 Europe/Zurich</option>
@@ -255,7 +255,7 @@
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Langue de l'interface <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(emails, dashboard)</span></label>
+              <label id="cfg-lbl-lang" class="cfg-label">Langue de l'interface <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(emails, dashboard)</span></label>
               <select id="interfaceLanguage" class="cfg-select">
                 <option value="fr">🇫🇷 Français</option>
                 <option value="de">🇩🇪 Deutsch</option>
@@ -278,7 +278,7 @@
           <div class="cfg-card-header">
             <div class="cfg-card-icon">⏰</div>
             <div>
-              <h2 class="cfg-card-title">Horaires d'ouverture</h2>
+              <h2 class="cfg-card-title" id="cfg-title-hours">Horaires d'ouverture</h2>
               <p class="cfg-card-sub">L'IA utilisera ces horaires pour répondre aux clients</p>
             </div>
           </div>
@@ -342,14 +342,14 @@
             <div class="cfg-card-header" style="margin-bottom:0;">
               <div class="cfg-card-icon">🚫</div>
               <div>
-                <h2 class="cfg-card-title">Fermetures exceptionnelles</h2>
+                <h2 class="cfg-card-title" id="cfg-title-closures">Fermetures exceptionnelles</h2>
                 <p class="cfg-card-sub">Jours fériés, congés, fermetures ponctuelles</p>
               </div>
             </div>
             <button onclick="addClosure()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;">+ Ajouter</button>
           </div>
           <div id="closuresList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;"></div>
-          <button onclick="saveClosures()" class="cfg-btn-save">💾 Enregistrer les fermetures</button>
+          <button onclick="saveClosures()" class="cfg-btn-save" id="cfg-save-closures">💾 Enregistrer les fermetures</button>
         </div>
       </div>
 
@@ -389,7 +389,7 @@
             <div class="cfg-card-header" style="margin-bottom:0;">
               <div class="cfg-card-icon">❓</div>
               <div>
-                <h2 class="cfg-card-title">FAQ — Questions fréquentes</h2>
+                <h2 class="cfg-card-title" id="cfg-title-faq">FAQ — Questions fréquentes</h2>
                 <p class="cfg-card-sub">L'IA répondra automatiquement à ces questions</p>
               </div>
             </div>
@@ -419,7 +419,7 @@
             <div class="cfg-card-header" style="margin-bottom:0;">
               <div class="cfg-card-icon">🔗</div>
               <div>
-                <h2 class="cfg-card-title">Services complémentaires</h2>
+                <h2 class="cfg-card-title" id="cfg-title-complementary">Services complémentaires</h2>
                 <p class="cfg-card-sub">Ce que l'IA peut suggérer après chaque service</p>
               </div>
             </div>
@@ -429,7 +429,7 @@
             💡 Exemple : Si le client choisit <strong style="color:#fff;">"Coupe homme"</strong> → l'IA suggère <strong style="color:#fff;">"Taille de barbe"</strong>
           </div>
           <div id="complementaryList" style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;"></div>
-          <button onclick="saveComplementary()" class="cfg-btn-save">💾 Enregistrer les complémentarités</button>
+          <button onclick="saveComplementary()" class="cfg-btn-save" id="cfg-save-complementary">💾 Enregistrer les complémentarités</button>
         </div>
 
         <!-- Personnalité IA -->
@@ -438,7 +438,7 @@
           <div class="cfg-card-header" style="margin-top:8px;">
             <div class="cfg-card-icon">🤖</div>
             <div>
-              <h2 class="cfg-card-title">Personnalité de l'IA</h2>
+              <h2 class="cfg-card-title" id="cfg-title-personality">Personnalité de l'IA</h2>
               <p class="cfg-card-sub">Créez une expérience unique pour vos clients</p>
             </div>
           </div>
@@ -446,7 +446,7 @@
           <h3 style="color:#00D4FF;font-size:15px;font-weight:700;margin:20px 0 14px;display:flex;align-items:center;gap:8px;">✨ Ton &amp; Style</h3>
           <div class="cfg-grid-3">
             <div class="cfg-field">
-              <label class="cfg-label">Ton de l'IA</label>
+              <label id="cfg-lbl-tone" class="cfg-label">Ton de l'IA</label>
               <select id="aiTone" class="cfg-select">
                 <option value="professional">👔 Professionnel</option>
                 <option value="friendly" selected>😊 Amical</option>
@@ -454,14 +454,14 @@
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Tutoiement</label>
+              <label id="cfg-lbl-tutoyer" class="cfg-label">Tutoiement</label>
               <select id="aiFormality" class="cfg-select">
                 <option value="tu" selected>Tu (informel)</option>
                 <option value="vous">Vous (formel)</option>
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Emojis</label>
+              <label id="cfg-lbl-emojis" class="cfg-label">Emojis</label>
               <select id="aiEmojis" class="cfg-select">
                 <option value="yes" selected>✅ Activés</option>
                 <option value="no">❌ Désactivés</option>
@@ -470,7 +470,7 @@
           </div>
           <div class="cfg-grid-2" style="margin-top:14px;">
             <div class="cfg-field">
-              <label class="cfg-label">Longueur des réponses</label>
+              <label id="cfg-lbl-length" class="cfg-label">Longueur des réponses</label>
               <select id="aiLength" class="cfg-select">
                 <option value="concise">📝 Concise (1-2 phrases)</option>
                 <option value="normal" selected>💬 Normale</option>
@@ -478,26 +478,26 @@
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Nom de l'assistant</label>
+              <label id="cfg-lbl-assistant" class="cfg-label">Nom de l'assistant</label>
               <input id="aiName" type="text" class="cfg-input" placeholder="Ex: Marie">
             </div>
           </div>
           <div class="cfg-field" style="margin-top:14px;">
-            <label class="cfg-label">Phrase d'accueil personnalisée</label>
+            <label id="cfg-lbl-greeting" class="cfg-label">Phrase d'accueil personnalisée</label>
             <input id="aiGreeting" type="text" class="cfg-input" placeholder="Bonjour ! Comment puis-je vous aider ?">
           </div>
 
           <h3 style="color:#00D4FF;font-size:15px;font-weight:700;margin:24px 0 14px;display:flex;align-items:center;gap:8px;">💼 Comportement commercial</h3>
           <div class="cfg-grid-3">
             <div class="cfg-field">
-              <label class="cfg-label">Proactivité</label>
+              <label id="cfg-lbl-proactivity" class="cfg-label">Proactivité</label>
               <select id="aiProactivity" class="cfg-select">
                 <option value="reactive">🙋 Réactive</option>
                 <option value="proactive" selected>💡 Proactive</option>
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Suggestions de services</label>
+              <label id="cfg-lbl-suggestions" class="cfg-label">Suggestions de services</label>
               <select id="aiSuggestions" class="cfg-select">
                 <option value="off">🚫 Désactivées</option>
                 <option value="subtle" selected>💬 Subtiles</option>
@@ -505,7 +505,7 @@
               </select>
             </div>
             <div class="cfg-field">
-              <label class="cfg-label">Collecte d'email</label>
+              <label id="cfg-lbl-email-collect" class="cfg-label">Collecte d'email</label>
               <select id="aiEmailCollection" class="cfg-select">
                 <option value="off">❌ Désactivée</option>
                 <option value="end" selected>📧 En fin de conversation</option>
@@ -863,7 +863,7 @@ function addFAQ(question='', answer='') {
 }
 
 function logout() {
-  if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); window.location.href = '/auth'; }
+  if (confirm((_dct||DASH_CFG_T.fr).logout_confirm)) { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); window.location.href = '/auth'; }
 }
 
 // ── SAUVEGARDES ──
@@ -909,7 +909,7 @@ function handleLogoUpload(input) {
       currentLogoUrl = data.logo_url;
       const preview = document.getElementById('logoPreview');
       preview.innerHTML = `<img src="${data.logo_url}" style="width:100%;height:100%;object-fit:cover;">`;
-      document.getElementById('logoStatus').textContent = '✅ Logo enregistré !';
+      document.getElementById('logoStatus').textContent = (_dct||DASH_CFG_T.fr).logo_ok;
       document.getElementById('logoStatus').style.color = '#10B981';
       document.getElementById('logoRemoveBtn').style.display = 'block';
     } else {
@@ -932,7 +932,7 @@ async function removeLogo() {
     document.getElementById('logoStatus').style.color = 'rgba(255,255,255,0.4)';
     document.getElementById('logoRemoveBtn').style.display = 'none';
     document.getElementById('logoFileInput').value = '';
-    showNotification('✅ Logo supprimé');
+    showNotification((_dct||DASH_CFG_T.fr).logo_removed);
   } catch(e) {
     showNotification('❌ Erreur : ' + e.message, 'error');
   }
@@ -963,7 +963,7 @@ async function saveBusinessInfo() {
     });
     const sn = document.getElementById('sidebarBusinessName');
     if (sn) sn.textContent = document.getElementById('businessName').value;
-    showNotification('✅ Informations enregistrées !');
+    showNotification((_dct||DASH_CFG_T.fr).save_info_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
@@ -976,7 +976,7 @@ async function saveHours() {
       return { day: dayNames[i], open_time: t[0].value||'09:00', close_time: t[1].value||'18:00', is_closed: cb.checked };
     });
     await apiRequest(`/api/business/${businessId}/hours`, 'POST', hours);
-    showNotification('✅ Horaires enregistrés !');
+    showNotification((_dct||DASH_CFG_T.fr).save_hours_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
@@ -991,7 +991,7 @@ async function saveServices() {
     }).filter(Boolean);
     if (!services.length) { showNotification('Ajoutez au moins un service', 'error'); return; }
     await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
-    showNotification('✅ Services enregistrés !');
+    showNotification((_dct||DASH_CFG_T.fr).save_services_ok);
     loadComplementaryOptions();
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
@@ -1004,12 +1004,12 @@ async function saveFAQ() {
       return (q && a) ? { question: q, answer: a, is_active: true } : null;
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/faq`, 'POST', faqs);
-    showNotification('✅ FAQ enregistrée !');
+    showNotification((_dct||DASH_CFG_T.fr).save_faq_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
 async function saveAICustomization() {
-  if (!window._isPro) { showNotification('Plan Pro requis pour la personnalité IA', 'error'); return; }
+  if (!window._isPro) { showNotification((_dct||DASH_CFG_T.fr).pro_required, 'error'); return; }
   try {
     await apiRequest(`/api/business/${businessId}/ai-personality`, 'POST', {
       tone: document.getElementById('aiTone').value,
@@ -1022,7 +1022,7 @@ async function saveAICustomization() {
       service_suggestions: document.getElementById('aiSuggestions').value,
       email_collection: document.getElementById('aiEmailCollection').value
     });
-    showNotification('✅ Personnalité IA enregistrée !');
+    showNotification((_dct||DASH_CFG_T.fr).save_personality_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
@@ -1047,7 +1047,7 @@ async function saveClosures() {
       return date ? { date, reason: reason||'Fermé' } : null;
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/special-closures`, 'POST', { closures });
-    showNotification('✅ Fermetures enregistrées !');
+    showNotification((_dct||DASH_CFG_T.fr).save_closures_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
@@ -1120,7 +1120,7 @@ async function saveComplementary() {
       return sugs.length ? { service: main, suggestions: sugs } : null;
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/complementary-services`, 'POST', { rules });
-    showNotification('✅ Complémentarités enregistrées !');
+    showNotification((_dct||DASH_CFG_T.fr).save_complementary_ok);
   } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
 }
 
@@ -1213,7 +1213,7 @@ async function loadBusinessConfig() {
     const sp = document.getElementById('sidebarPlan'); if (sp) sp.textContent = 'Plan Standard';
 
     updateBadges();
-  } catch(e) { console.error('Config:', e); showNotification('❌ Erreur de chargement', 'error'); }
+  } catch(e) { console.error('Config:', e); showNotification((_dct||DASH_CFG_T.fr).err_generic, 'error'); }
 }
 
 // ── INIT ──
@@ -1263,6 +1263,343 @@ async function checkPlanAndInit() {
     setBadge(rdvCount, 'sbBadgeRdv', 'bnBadgeRdv');
   } catch {}
 }
+</script>
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+const DASH_CFG_T = {
+  fr: {
+    page_title: 'Configuration — LocalReply',
+    h1: 'Configuration', subtitle: 'Personnalisez votre assistant IA',
+    tab_commerce: '🏪 Commerce', tab_horaires: '⏰ Horaires', tab_services: '💼 Services',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Avancé',
+    title_commerce: 'Informations du commerce',
+    sub_commerce: "Ces informations sont utilisées par l'IA pour répondre à vos clients",
+    title_hours: "Horaires d'ouverture", title_closures: 'Fermetures exceptionnelles',
+    title_faq: 'FAQ — Questions fréquentes', title_complementary: 'Services complémentaires',
+    title_personality: "Personnalité de l'IA",
+    lbl_type: 'Type de commerce', lbl_name: 'Nom du commerce',
+    lbl_email: 'Email', lbl_phone: 'Téléphone', lbl_address: 'Adresse complète',
+    lbl_timezone: 'Fuseau horaire', lbl_lang: "Langue de l'interface",
+    lbl_tone: "Ton de l'IA", lbl_tutoyer: 'Tutoiement', lbl_emojis: 'Emojis',
+    lbl_length: 'Longueur des réponses', lbl_assistant: "Nom de l'assistant",
+    lbl_greeting: 'Phrase d\'accueil personnalisée', lbl_proactivity: 'Proactivité',
+    lbl_suggestions: 'Suggestions de services', lbl_email_collect: 'Collecte d\'email',
+    slug_warning: 'Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.',
+    remove_logo: '🗑️ Supprimer le logo',
+    save_closures: '💾 Enregistrer les fermetures',
+    save_complementary: '💾 Enregistrer les complémentarités',
+    save_info_ok: '✅ Informations enregistrées !', save_hours_ok: '✅ Horaires enregistrés !',
+    save_services_ok: '✅ Services enregistrés !', save_faq_ok: '✅ FAQ enregistrée !',
+    save_personality_ok: '✅ Personnalité IA enregistrée !',
+    save_closures_ok: '✅ Fermetures enregistrées !',
+    save_complementary_ok: '✅ Complémentarités enregistrées !',
+    logo_ok: '✅ Logo enregistré !', logo_removed: '✅ Logo supprimé',
+    pro_required: 'Plan Pro requis pour la personnalité IA',
+    err_generic: '❌ Erreur de chargement',
+    logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
+    day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Jeu',
+    day_ven: 'Ven', day_sam: 'Sam', day_dim: 'Dim',
+    day_full_lun: 'Lundi', day_full_mar: 'Mardi', day_full_mer: 'Mercredi',
+    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche',
+    closed: 'Fermé',
+  },
+  en: {
+    page_title: 'Configuration — LocalReply',
+    h1: 'Configuration', subtitle: 'Customize your AI assistant',
+    tab_commerce: '🏪 Business', tab_horaires: '⏰ Hours', tab_services: '💼 Services',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Advanced',
+    title_commerce: 'Business information',
+    sub_commerce: 'This information is used by the AI to respond to your customers',
+    title_hours: 'Opening hours', title_closures: 'Special closures',
+    title_faq: 'FAQ — Frequently asked questions', title_complementary: 'Complementary services',
+    title_personality: 'AI Personality',
+    lbl_type: 'Business type', lbl_name: 'Business name',
+    lbl_email: 'Email', lbl_phone: 'Phone', lbl_address: 'Full address',
+    lbl_timezone: 'Time zone', lbl_lang: 'Interface language',
+    lbl_tone: 'AI tone', lbl_tutoyer: 'Informal address', lbl_emojis: 'Emojis',
+    lbl_length: 'Response length', lbl_assistant: 'Assistant name',
+    lbl_greeting: 'Custom greeting', lbl_proactivity: 'Proactivity',
+    lbl_suggestions: 'Service suggestions', lbl_email_collect: 'Email collection',
+    slug_warning: 'This link is permanent — it is used in your QR codes and shared links.',
+    remove_logo: '🗑️ Remove logo',
+    save_closures: '💾 Save closures',
+    save_complementary: '💾 Save complementary services',
+    save_info_ok: '✅ Information saved!', save_hours_ok: '✅ Hours saved!',
+    save_services_ok: '✅ Services saved!', save_faq_ok: '✅ FAQ saved!',
+    save_personality_ok: '✅ AI personality saved!',
+    save_closures_ok: '✅ Closures saved!',
+    save_complementary_ok: '✅ Complementary services saved!',
+    logo_ok: '✅ Logo saved!', logo_removed: '✅ Logo removed',
+    pro_required: 'Pro plan required for AI personality',
+    err_generic: '❌ Loading error',
+    logout_confirm: 'Are you sure you want to sign out?',
+    day_lun: 'Mon', day_mar: 'Tue', day_mer: 'Wed', day_jeu: 'Thu',
+    day_ven: 'Fri', day_sam: 'Sat', day_dim: 'Sun',
+    day_full_lun: 'Monday', day_full_mar: 'Tuesday', day_full_mer: 'Wednesday',
+    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday',
+    closed: 'Closed',
+  },
+  de: {
+    page_title: 'Konfiguration — LocalReply',
+    h1: 'Konfiguration', subtitle: 'Passen Sie Ihren KI-Assistenten an',
+    tab_commerce: '🏪 Unternehmen', tab_horaires: '⏰ Öffnungszeiten', tab_services: '💼 Dienste',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Erweitert',
+    title_commerce: 'Unternehmensinformationen',
+    sub_commerce: 'Diese Informationen werden von der KI verwendet, um Ihren Kunden zu antworten',
+    title_hours: 'Öffnungszeiten', title_closures: 'Sonderöffnungszeiten',
+    title_faq: 'FAQ — Häufig gestellte Fragen', title_complementary: 'Ergänzende Dienste',
+    title_personality: 'KI-Persönlichkeit',
+    lbl_type: 'Unternehmenstyp', lbl_name: 'Unternehmensname',
+    lbl_email: 'E-Mail', lbl_phone: 'Telefon', lbl_address: 'Vollständige Adresse',
+    lbl_timezone: 'Zeitzone', lbl_lang: 'Oberflächensprache',
+    lbl_tone: 'KI-Ton', lbl_tutoyer: 'Anrede', lbl_emojis: 'Emojis',
+    lbl_length: 'Antwortlänge', lbl_assistant: 'Assistentenname',
+    lbl_greeting: 'Benutzerdefinierte Begrüßung', lbl_proactivity: 'Proaktivität',
+    lbl_suggestions: 'Dienstvorschläge', lbl_email_collect: 'E-Mail-Erfassung',
+    slug_warning: 'Dieser Link ist dauerhaft — er wird in Ihren QR-Codes und geteilten Links verwendet.',
+    remove_logo: '🗑️ Logo entfernen',
+    save_closures: '💾 Schließzeiten speichern',
+    save_complementary: '💾 Ergänzende Dienste speichern',
+    save_info_ok: '✅ Informationen gespeichert!', save_hours_ok: '✅ Öffnungszeiten gespeichert!',
+    save_services_ok: '✅ Dienste gespeichert!', save_faq_ok: '✅ FAQ gespeichert!',
+    save_personality_ok: '✅ KI-Persönlichkeit gespeichert!',
+    save_closures_ok: '✅ Schließzeiten gespeichert!',
+    save_complementary_ok: '✅ Ergänzende Dienste gespeichert!',
+    logo_ok: '✅ Logo gespeichert!', logo_removed: '✅ Logo entfernt',
+    pro_required: 'Pro-Plan für KI-Persönlichkeit erforderlich',
+    err_generic: '❌ Ladefehler',
+    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    day_lun: 'Mo', day_mar: 'Di', day_mer: 'Mi', day_jeu: 'Do',
+    day_ven: 'Fr', day_sam: 'Sa', day_dim: 'So',
+    day_full_lun: 'Montag', day_full_mar: 'Dienstag', day_full_mer: 'Mittwoch',
+    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag',
+    closed: 'Geschlossen',
+  },
+  it: {
+    page_title: 'Configurazione — LocalReply',
+    h1: 'Configurazione', subtitle: 'Personalizza il tuo assistente IA',
+    tab_commerce: '🏪 Attività', tab_horaires: '⏰ Orari', tab_services: '💼 Servizi',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Avanzato',
+    title_commerce: "Informazioni sull'attività",
+    sub_commerce: "Queste informazioni vengono utilizzate dall'IA per rispondere ai tuoi clienti",
+    title_hours: 'Orari di apertura', title_closures: 'Chiusure speciali',
+    title_faq: 'FAQ — Domande frequenti', title_complementary: 'Servizi complementari',
+    title_personality: "Personalità dell'IA",
+    lbl_type: 'Tipo di attività', lbl_name: "Nome dell'attività",
+    lbl_email: 'Email', lbl_phone: 'Telefono', lbl_address: 'Indirizzo completo',
+    lbl_timezone: 'Fuso orario', lbl_lang: "Lingua dell'interfaccia",
+    lbl_tone: "Tono dell'IA", lbl_tutoyer: 'Forma di cortesia', lbl_emojis: 'Emoji',
+    lbl_length: 'Lunghezza risposte', lbl_assistant: "Nome dell'assistente",
+    lbl_greeting: 'Saluto personalizzato', lbl_proactivity: 'Proattività',
+    lbl_suggestions: 'Suggerimenti servizi', lbl_email_collect: 'Raccolta email',
+    slug_warning: 'Questo link è definitivo — viene utilizzato nei tuoi QR code e link condivisi.',
+    remove_logo: '🗑️ Rimuovi logo',
+    save_closures: '💾 Salva chiusure',
+    save_complementary: '💾 Salva servizi complementari',
+    save_info_ok: '✅ Informazioni salvate!', save_hours_ok: '✅ Orari salvati!',
+    save_services_ok: '✅ Servizi salvati!', save_faq_ok: '✅ FAQ salvata!',
+    save_personality_ok: '✅ Personalità IA salvata!',
+    save_closures_ok: '✅ Chiusure salvate!',
+    save_complementary_ok: '✅ Servizi complementari salvati!',
+    logo_ok: '✅ Logo salvato!', logo_removed: '✅ Logo rimosso',
+    pro_required: 'Piano Pro richiesto per la personalità IA',
+    err_generic: '❌ Errore di caricamento',
+    logout_confirm: 'Sei sicuro di voler uscire?',
+    day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Gio',
+    day_ven: 'Ven', day_sam: 'Sab', day_dim: 'Dom',
+    day_full_lun: 'Lunedì', day_full_mar: 'Martedì', day_full_mer: 'Mercoledì',
+    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica',
+    closed: 'Chiuso',
+  },
+  es: {
+    page_title: 'Configuración — LocalReply',
+    h1: 'Configuración', subtitle: 'Personaliza tu asistente IA',
+    tab_commerce: '🏪 Negocio', tab_horaires: '⏰ Horarios', tab_services: '💼 Servicios',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Avanzado',
+    title_commerce: 'Información del negocio',
+    sub_commerce: 'Esta información es utilizada por la IA para responder a tus clientes',
+    title_hours: 'Horario de apertura', title_closures: 'Cierres especiales',
+    title_faq: 'FAQ — Preguntas frecuentes', title_complementary: 'Servicios complementarios',
+    title_personality: 'Personalidad de la IA',
+    lbl_type: 'Tipo de negocio', lbl_name: 'Nombre del negocio',
+    lbl_email: 'Email', lbl_phone: 'Teléfono', lbl_address: 'Dirección completa',
+    lbl_timezone: 'Zona horaria', lbl_lang: 'Idioma de interfaz',
+    lbl_tone: 'Tono de la IA', lbl_tutoyer: 'Tuteo', lbl_emojis: 'Emojis',
+    lbl_length: 'Longitud de respuestas', lbl_assistant: 'Nombre del asistente',
+    lbl_greeting: 'Saludo personalizado', lbl_proactivity: 'Proactividad',
+    lbl_suggestions: 'Sugerencias de servicios', lbl_email_collect: 'Recogida de email',
+    slug_warning: 'Este enlace es definitivo — se usa en tus códigos QR y enlaces compartidos.',
+    remove_logo: '🗑️ Eliminar logo',
+    save_closures: '💾 Guardar cierres',
+    save_complementary: '💾 Guardar servicios complementarios',
+    save_info_ok: '✅ ¡Información guardada!', save_hours_ok: '✅ ¡Horarios guardados!',
+    save_services_ok: '✅ ¡Servicios guardados!', save_faq_ok: '✅ ¡FAQ guardado!',
+    save_personality_ok: '✅ ¡Personalidad IA guardada!',
+    save_closures_ok: '✅ ¡Cierres guardados!',
+    save_complementary_ok: '✅ ¡Servicios complementarios guardados!',
+    logo_ok: '✅ ¡Logo guardado!', logo_removed: '✅ Logo eliminado',
+    pro_required: 'Plan Pro requerido para la personalidad IA',
+    err_generic: '❌ Error de carga',
+    logout_confirm: '¿Seguro que quieres cerrar sesión?',
+    day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mié', day_jeu: 'Jue',
+    day_ven: 'Vie', day_sam: 'Sáb', day_dim: 'Dom',
+    day_full_lun: 'Lunes', day_full_mar: 'Martes', day_full_mer: 'Miércoles',
+    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo',
+    closed: 'Cerrado',
+  },
+  pt: {
+    page_title: 'Configuração — LocalReply',
+    h1: 'Configuração', subtitle: 'Personalize o seu assistente IA',
+    tab_commerce: '🏪 Negócio', tab_horaires: '⏰ Horários', tab_services: '💼 Serviços',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Avançado',
+    title_commerce: 'Informações do negócio',
+    sub_commerce: 'Esta informação é utilizada pela IA para responder aos seus clientes',
+    title_hours: 'Horário de abertura', title_closures: 'Encerramentos especiais',
+    title_faq: 'FAQ — Perguntas frequentes', title_complementary: 'Serviços complementares',
+    title_personality: 'Personalidade da IA',
+    lbl_type: 'Tipo de negócio', lbl_name: 'Nome do negócio',
+    lbl_email: 'Email', lbl_phone: 'Telefone', lbl_address: 'Endereço completo',
+    lbl_timezone: 'Fuso horário', lbl_lang: 'Idioma da interface',
+    lbl_tone: 'Tom da IA', lbl_tutoyer: 'Tratamento informal', lbl_emojis: 'Emojis',
+    lbl_length: 'Comprimento das respostas', lbl_assistant: 'Nome do assistente',
+    lbl_greeting: 'Saudação personalizada', lbl_proactivity: 'Proatividade',
+    lbl_suggestions: 'Sugestões de serviços', lbl_email_collect: 'Recolha de email',
+    slug_warning: 'Este link é definitivo — é utilizado nos seus QR codes e links partilhados.',
+    remove_logo: '🗑️ Remover logo',
+    save_closures: '💾 Guardar encerramentos',
+    save_complementary: '💾 Guardar serviços complementares',
+    save_info_ok: '✅ Informações guardadas!', save_hours_ok: '✅ Horários guardados!',
+    save_services_ok: '✅ Serviços guardados!', save_faq_ok: '✅ FAQ guardado!',
+    save_personality_ok: '✅ Personalidade IA guardada!',
+    save_closures_ok: '✅ Encerramentos guardados!',
+    save_complementary_ok: '✅ Serviços complementares guardados!',
+    logo_ok: '✅ Logo guardado!', logo_removed: '✅ Logo removido',
+    pro_required: 'Plano Pro necessário para a personalidade IA',
+    err_generic: '❌ Erro de carregamento',
+    logout_confirm: 'Tem a certeza que quer sair?',
+    day_lun: 'Seg', day_mar: 'Ter', day_mer: 'Qua', day_jeu: 'Qui',
+    day_ven: 'Sex', day_sam: 'Sáb', day_dim: 'Dom',
+    day_full_lun: 'Segunda', day_full_mar: 'Terça', day_full_mer: 'Quarta',
+    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo',
+    closed: 'Fechado',
+  },
+  nl: {
+    page_title: 'Configuratie — LocalReply',
+    h1: 'Configuratie', subtitle: 'Pas uw AI-assistent aan',
+    tab_commerce: '🏪 Bedrijf', tab_horaires: '⏰ Openingstijden', tab_services: '💼 Diensten',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Geavanceerd',
+    title_commerce: 'Bedrijfsinformatie',
+    sub_commerce: 'Deze informatie wordt door de AI gebruikt om uw klanten te antwoorden',
+    title_hours: 'Openingstijden', title_closures: 'Bijzondere sluitingen',
+    title_faq: 'FAQ — Veelgestelde vragen', title_complementary: 'Aanvullende diensten',
+    title_personality: 'AI-persoonlijkheid',
+    lbl_type: 'Bedrijfstype', lbl_name: 'Bedrijfsnaam',
+    lbl_email: 'E-mail', lbl_phone: 'Telefoon', lbl_address: 'Volledig adres',
+    lbl_timezone: 'Tijdzone', lbl_lang: 'Interfacetaal',
+    lbl_tone: 'AI-toon', lbl_tutoyer: 'Aanspreekvorm', lbl_emojis: 'Emoji\'s',
+    lbl_length: 'Antwoordlengte', lbl_assistant: 'Assistentnaam',
+    lbl_greeting: 'Aangepaste begroeting', lbl_proactivity: 'Proactiviteit',
+    lbl_suggestions: 'Dienstsuggesties', lbl_email_collect: 'E-mailverzameling',
+    slug_warning: 'Deze link is permanent — hij wordt gebruikt in uw QR-codes en gedeelde links.',
+    remove_logo: '🗑️ Logo verwijderen',
+    save_closures: '💾 Sluitingen opslaan',
+    save_complementary: '💾 Aanvullende diensten opslaan',
+    save_info_ok: '✅ Informatie opgeslagen!', save_hours_ok: '✅ Openingstijden opgeslagen!',
+    save_services_ok: '✅ Diensten opgeslagen!', save_faq_ok: '✅ FAQ opgeslagen!',
+    save_personality_ok: '✅ AI-persoonlijkheid opgeslagen!',
+    save_closures_ok: '✅ Sluitingen opgeslagen!',
+    save_complementary_ok: '✅ Aanvullende diensten opgeslagen!',
+    logo_ok: '✅ Logo opgeslagen!', logo_removed: '✅ Logo verwijderd',
+    pro_required: 'Pro-plan vereist voor AI-persoonlijkheid',
+    err_generic: '❌ Laaderfout',
+    logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+    day_lun: 'Ma', day_mar: 'Di', day_mer: 'Wo', day_jeu: 'Do',
+    day_ven: 'Vr', day_sam: 'Za', day_dim: 'Zo',
+    day_full_lun: 'Maandag', day_full_mar: 'Dinsdag', day_full_mer: 'Woensdag',
+    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag',
+    closed: 'Gesloten',
+  },
+  pl: {
+    page_title: 'Konfiguracja — LocalReply',
+    h1: 'Konfiguracja', subtitle: 'Dostosuj swojego asystenta AI',
+    tab_commerce: '🏪 Firma', tab_horaires: '⏰ Godziny', tab_services: '💼 Usługi',
+    tab_faq: '❓ FAQ', tab_avance: '✨ Zaawansowane',
+    title_commerce: 'Informacje o firmie',
+    sub_commerce: 'Te informacje są używane przez AI do odpowiadania Twoim klientom',
+    title_hours: 'Godziny otwarcia', title_closures: 'Zamknięcia specjalne',
+    title_faq: 'FAQ — Często zadawane pytania', title_complementary: 'Usługi uzupełniające',
+    title_personality: 'Osobowość AI',
+    lbl_type: 'Typ firmy', lbl_name: 'Nazwa firmy',
+    lbl_email: 'Email', lbl_phone: 'Telefon', lbl_address: 'Pełny adres',
+    lbl_timezone: 'Strefa czasowa', lbl_lang: 'Język interfejsu',
+    lbl_tone: 'Ton AI', lbl_tutoyer: 'Forma zwracania się', lbl_emojis: 'Emoji',
+    lbl_length: 'Długość odpowiedzi', lbl_assistant: 'Nazwa asystenta',
+    lbl_greeting: 'Spersonalizowane powitanie', lbl_proactivity: 'Proaktywność',
+    lbl_suggestions: 'Sugestie usług', lbl_email_collect: 'Zbieranie emaili',
+    slug_warning: 'Ten link jest stały — jest używany w kodach QR i udostępnionych linkach.',
+    remove_logo: '🗑️ Usuń logo',
+    save_closures: '💾 Zapisz zamknięcia',
+    save_complementary: '💾 Zapisz usługi uzupełniające',
+    save_info_ok: '✅ Informacje zapisane!', save_hours_ok: '✅ Godziny zapisane!',
+    save_services_ok: '✅ Usługi zapisane!', save_faq_ok: '✅ FAQ zapisane!',
+    save_personality_ok: '✅ Osobowość AI zapisana!',
+    save_closures_ok: '✅ Zamknięcia zapisane!',
+    save_complementary_ok: '✅ Usługi uzupełniające zapisane!',
+    logo_ok: '✅ Logo zapisane!', logo_removed: '✅ Logo usunięte',
+    pro_required: 'Plan Pro wymagany dla osobowości AI',
+    err_generic: '❌ Błąd ładowania',
+    logout_confirm: 'Czy na pewno chcesz się wylogować?',
+    day_lun: 'Pon', day_mar: 'Wt', day_mer: 'Śr', day_jeu: 'Czw',
+    day_ven: 'Pt', day_sam: 'Sob', day_dim: 'Nd',
+    day_full_lun: 'Poniedziałek', day_full_mar: 'Wtorek', day_full_mer: 'Środa',
+    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela',
+    closed: 'Zamknięte',
+  },
+};
+
+(function() {
+  const lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const t = DASH_CFG_T[DASH_CFG_T.hasOwnProperty(lang) ? lang : 'fr'];
+  window._dct = t;
+  document.title = t.page_title;
+
+  function applyCfgLang() {
+    const ids = {
+      'cfg-h1': t.h1, 'cfg-subtitle': t.subtitle,
+      'cfg-tab-commerce': t.tab_commerce, 'cfg-tab-horaires': t.tab_horaires,
+      'cfg-tab-services': t.tab_services, 'cfg-tab-faq': t.tab_faq,
+      'cfg-tab-avance': t.tab_avance,
+      'cfg-title-commerce': t.title_commerce, 'cfg-sub-commerce': t.sub_commerce,
+      'cfg-title-hours': t.title_hours, 'cfg-title-closures': t.title_closures,
+      'cfg-title-faq': t.title_faq, 'cfg-title-complementary': t.title_complementary,
+      'cfg-title-personality': t.title_personality,
+      'cfg-lbl-type': t.lbl_type, 'cfg-lbl-name': t.lbl_name,
+      'cfg-lbl-email': t.lbl_email, 'cfg-lbl-phone': t.lbl_phone,
+      'cfg-lbl-address': t.lbl_address, 'cfg-lbl-timezone': t.lbl_timezone,
+      'cfg-lbl-lang': t.lbl_lang,
+      'cfg-lbl-tone': t.lbl_tone, 'cfg-lbl-tutoyer': t.lbl_tutoyer,
+      'cfg-lbl-emojis': t.lbl_emojis, 'cfg-lbl-length': t.lbl_length,
+      'cfg-lbl-assistant': t.lbl_assistant, 'cfg-lbl-greeting': t.lbl_greeting,
+      'cfg-lbl-proactivity': t.lbl_proactivity, 'cfg-lbl-suggestions': t.lbl_suggestions,
+      'cfg-lbl-email-collect': t.lbl_email_collect,
+      'cfg-slug-warning': t.slug_warning,
+      'cfg-remove-logo': t.remove_logo,
+      'cfg-save-closures': t.save_closures,
+      'cfg-save-complementary': t.save_complementary,
+    };
+    Object.entries(ids).forEach(([id, txt]) => {
+      const el = document.getElementById(id);
+      if (el && txt) el.textContent = txt;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyCfgLang);
+  } else {
+    applyCfgLang();
+  }
+})();
 </script>
 
 </body>

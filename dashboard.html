@@ -44,33 +44,33 @@
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
       <a href="/dashboard" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;position:relative;">
-        <span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:600;">Accueil</span>
+        <span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:600;">Accueil</span>
       </a>
       <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span>
+        <span style="font-size:17px;">⚙️</span><span id="dn-config" style="font-size:14px;font-weight:500;">Configuration</span>
       </a>
       <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);position:relative;">
-        <span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span>
+        <span style="font-size:17px;">💬</span><span id="dn-messages" style="font-size:14px;font-weight:500;">Messages</span>
         <span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span>
       </a>
       <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span>
+        <span style="font-size:17px;">📅</span><span id="dn-rdv" style="font-size:14px;font-weight:500;">Rendez-vous</span>
         <span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span>
       </a>
       <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span>
-        <span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
+        <span style="font-size:17px;">📈</span><span id="dn-analytics" style="font-size:14px;font-weight:500;">Analytics</span>
+        <span id="dn-pro" style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
       </a>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
-      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
-      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;"><span id="dn-section-account">Compte</span></div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span id="dn-account" style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span id="dn-billing" style="font-size:14px;font-weight:500;">Abonnement</span></a>
     </nav>
     <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
       <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
-        <span>🌐</span><span>Retour au site</span>
+        <span>🌐</span><span id="dn-back">Retour au site</span>
       </a>
-      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;transition:all 0.2s;"><span>🚪</span><span>Déconnexion</span></button>
+      <button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;transition:all 0.2s;"><span>🚪</span><span id="dn-logout">Déconnexion</span></button>
     </div>
   </div>
 
@@ -78,31 +78,31 @@
   <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
       <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 14px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);">
-        <span style="font-size:20px;">🏠</span><span style="font-size:10px;font-weight:700;">Accueil</span>
+        <span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;font-weight:700;">Accueil</span>
       </a>
       <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;">
-        <span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span>
+        <span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;">Config</span>
       </a>
       <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
-        <span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span>
+        <span style="font-size:20px;">💬</span><span id="dn-mob-messages" style="font-size:10px;">Messages</span>
         <span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
       </a>
       <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
-        <span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span>
+        <span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;">RDV</span>
         <span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
       </a>
       <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;cursor:pointer;font-family:inherit;">
-        <span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span>
+        <span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;">Plus</span>
       </button>
     </div>
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
   <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
-    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
-    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
-    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span><span id="dn-mob-analytics">Analytics</span></a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span><span id="dn-mob-account">Mon compte</span></a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span><span id="dn-mob-billing">Abonnement</span></a>
     <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
-    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span><span id="dn-mob-logout">Déconnexion</span></button>
   </div>
 
   <!-- ═══ MAIN ═══ -->
@@ -127,23 +127,23 @@
       <!-- Conversations -->
       <div class="scard" style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,82,204,0.06));border:1px solid rgba(0,212,255,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
         <div class="scard-bg">💬</div>
-        <div class="scard-label">Conversations</div>
+        <div id="kpi-conv-label" class="scard-label">Conversations</div>
         <div class="scard-val" id="statConversations" style="color:#00D4FF;">—</div>
-        <div class="scard-sub">30 derniers jours</div>
+        <div id="kpi-sub-conv" class="scard-sub">30 derniers jours</div>
       </div>
       <!-- RDV confirmés -->
       <div class="scard" style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
         <div class="scard-bg">📅</div>
-        <div class="scard-label">RDV confirmés</div>
+        <div id="kpi-rdv-label" class="scard-label">RDV confirmés</div>
         <div class="scard-val" id="statAppointments" style="color:#10B981;">—</div>
-        <div class="scard-sub">30 derniers jours</div>
+        <div id="kpi-sub-rdv" class="scard-sub">30 derniers jours</div>
       </div>
       <!-- En attente -->
       <div class="scard" style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.18);border-radius:16px;padding:20px 22px;position:relative;overflow:hidden;">
         <div class="scard-bg">🔔</div>
-        <div class="scard-label">À traiter</div>
+        <div id="kpi-pending-label" class="scard-label">À traiter</div>
         <div class="scard-val" id="statPending" style="color:#F59E0B;">—</div>
-        <div class="scard-sub">RDV + questions en attente</div>
+        <div id="kpi-sub-pending" class="scard-sub">RDV + questions en attente</div>
       </div>
     </div>
 
@@ -156,10 +156,10 @@
         <div style="background:linear-gradient(135deg,rgba(0,82,204,0.12),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.15);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:16px;">
           <div style="width:42px;height:42px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🎯</div>
           <div style="flex:1;">
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Taux de conversion</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;" id="stat-rate-label">Taux de conversion</div>
             <div style="display:flex;align-items:baseline;gap:8px;">
               <div id="statConvRate" style="font-size:26px;font-weight:800;color:#00D4FF;line-height:1;">—%</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.4);">des conversations → RDV confirmé</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);" id="stat-rate-sub">des conversations → RDV confirmé</div>
             </div>
           </div>
         </div>
@@ -174,7 +174,7 @@
           <div id="urgencyCard" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;cursor:pointer;" onclick="window.location.href='/dashboard-rendez-vous'">
             <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">📅 RDV en attente</div>
             <div id="statPendingRdv" style="font-size:20px;font-weight:800;color:#F59E0B;">—</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">À confirmer →</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;" id="stat-pending-sub">À confirmer →</div>
           </div>
         </div>
 
@@ -195,7 +195,7 @@
             </div>
           </div>
           <div style="flex:1;min-width:0;">
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Score IA</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;" id="stat-score-label">Score IA</div>
             <div id="healthLabel" style="font-size:14px;font-weight:700;color:#00D4FF;">Calcul...</div>
             <div id="healthDesc" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.4;"></div>
           </div>
@@ -219,7 +219,7 @@
         <div style="width:40px;height:40px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
         <div>
           <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0;">Votre lien & QR Code</h2>
-          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:3px 0 0;">Partagez avec vos clients pour accéder à votre assistant 24/7</p>
+          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:3px 0 0;" id="link-share-desc">Partagez avec vos clients pour accéder à votre assistant 24/7</p>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
@@ -263,7 +263,7 @@
     <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:20px;">
       <!-- Activité récente -->
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;display:flex;align-items:center;gap:8px;">🕐 Activité récente <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;">— 30 derniers jours</span></h2><a href="/dashboard-messages" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;">Voir tout →</a></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;"><h2 style="font-size:16px;font-weight:700;color:#fff;margin:0;display:flex;align-items:center;gap:8px;"><span id="activity-title">🕐 Activité récente</span> <span style="font-size:11px;color:rgba(255,255,255,0.3);font-weight:400;"><span id="activity-sub">— 30 derniers jours</span></h2><a href="/dashboard-messages" style="font-size:12px;color:#00D4FF;text-decoration:none;font-weight:600;" id="activity-see-all">Voir tout →</a></div>
         <div id="recentActivity"><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;margin-bottom:8px;"></div><div class="skeleton" style="height:60px;border-radius:8px;"></div></div>
       </div>
 
@@ -274,7 +274,7 @@
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
           <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 3px;">🚀 Mise en route</h2>
-          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;">Complétez ces étapes pour tirer le meilleur de LocalReply</p>
+          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;" id="checklist-title">Complétez ces étapes pour tirer le meilleur de LocalReply</p>
         </div>
         <div id="onboardingProgress" style="font-size:12px;font-weight:700;color:#00D4FF;background:rgba(0,212,255,0.1);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,212,255,0.2);">0/4</div>
       </div>
@@ -312,13 +312,13 @@
           <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📖</div>
           <div style="text-align:left;">
             <div style="font-size:15px;font-weight:700;color:#fff;">Guide — Tirer le maximum de LocalReply</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">8 actions concrètes pour attirer plus de clients</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;" id="guide-subtitle">8 actions concrètes pour attirer plus de clients</div>
           </div>
         </div>
         <span id="guideArrow" style="font-size:16px;color:#00D4FF;transition:transform 0.3s;">▼</span>
       </button>
       <div id="guideContent" style="display:block;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-top:none;border-radius:0 0 16px 16px;padding:22px 24px;">
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px;line-height:1.7;">Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 20px;line-height:1.7;" id="guide-intro">Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px;">
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">📱</div><div><div class="guide-title">QR Code en vitrine</div><div class="guide-time">Impact immédiat · 2 min</div></div></div><p class="guide-text">Imprimez votre QR code et affichez-le à l'entrée, sur le comptoir ou les tables. Un client qui attend peut déjà prendre RDV.</p><div class="guide-tip">💡 Plastifiez-le et collez-le sur la caisse ou la porte d'entrée.</div></div>
           <div class="guide-card"><div class="guide-card-header"><div class="guide-icon" style="background:linear-gradient(135deg,#E1306C,#F77737);">📸</div><div><div class="guide-title">Bio réseaux sociaux</div><div class="guide-time">Trafic permanent · 1 min</div></div></div><p class="guide-text">Ajoutez votre lien LocalReply dans votre bio Instagram, TikTok ou Facebook — vos abonnés peuvent poser leurs questions ou réserver directement.</p><div class="guide-tip">💡 "Réservez ou posez vos questions 24h/24 👇"</div></div>
@@ -479,7 +479,7 @@ async function api(ep) {
 // ─ Header ─
 function initHeader() {
   const h = new Date().getHours();
-  document.getElementById('greeting').textContent = h<6?'Bonne nuit':h<12?'Bonjour':h<18?'Bon après-midi':'Bonsoir';
+  document.getElementById('greeting').textContent = h<6?'Bonne nuit':h<12?(_dht||DASH_HOME_T.fr).greeting_morning:h<18?(_dht||DASH_HOME_T.fr).greeting_afternoon:'Bonsoir';
   const d = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
   document.getElementById('currentDate').textContent = d.charAt(0).toUpperCase()+d.slice(1);
 }
@@ -516,25 +516,25 @@ function computeHealthScore(config, calConnected) {
   if (scoreEl) scoreEl.textContent = score;
   if (labelEl) {
     const isEx = score >= 80, isOk = score >= 50;
-    labelEl.textContent = isEx ? '🟢 Excellent' : isOk ? '🟡 À améliorer' : '🔴 À compléter';
+    labelEl.textContent = isEx ? '🟢 Excellent' : isOk ? (_dht||DASH_HOME_T.fr).health_ok : (_dht||DASH_HOME_T.fr).health_bad;
     labelEl.style.color = isEx ? '#10B981' : isOk ? '#F59E0B' : '#EF4444';
   }
   // Phrase explicative
   const healthDesc = document.getElementById('healthDesc');
   if (healthDesc) {
     healthDesc.textContent = score >= 80
-      ? 'Votre IA est parfaitement configurée et répondra à toutes les questions.'
+      ? (_dht||DASH_HOME_T.fr).score_great
       : score >= 50
-      ? 'Quelques points à compléter pour améliorer la qualité des réponses.'
+      ? (_dht||DASH_HOME_T.fr).score_ok
       : 'Complétez la configuration pour que l\'IA réponde correctement.';
     healthDesc.style.color = score >= 80 ? 'rgba(16,185,129,0.7)' : score >= 50 ? 'rgba(245,158,11,0.7)' : 'rgba(239,68,68,0.7)';
   }
   // Items avec détails (fusionné avec statut système)
   const details = {
-    services: { desc: v => v >= 3 ? `${v} service${v>1?'s':''} configuré${v>1?'s':''}` : 'À ajouter dans Configuration' },
-    hours:    { desc: v => v ? 'Définis' : 'À configurer dans Configuration' },
+    services: { desc: v => v >= 3 ? `${v} service${v>1?'s':''} configuré${v>1?'s':''}` : (_dht||DASH_HOME_T.fr).cfg_link },
+    hours:    { desc: v => v ? (_dht||DASH_HOME_T.fr).cfg_defined : (_dht||DASH_HOME_T.fr).cfg_missing },
     faq:      { desc: v => v >= 5 ? `${v} entrées` : `${v}/5 minimum recommandé` },
-    calendar: { desc: v => v ? 'Connecté · RDV automatiques actifs' : 'Non connecté' },
+    calendar: { desc: v => v ? (_dht||DASH_HOME_T.fr).cal_connected : (_dht||DASH_HOME_T.fr).cal_none },
   };
   const bc = window._lastConfig || {};
   if (itemsEl) itemsEl.innerHTML = checks.map(c => {
@@ -582,7 +582,7 @@ function setupLinks(slug) {
   const qrEl = document.getElementById('qrcode');
   if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
 }
-function copyLink() { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug).then(()=>toast('✅ Lien copié !')); }
+function copyLink() { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug).then(()=>toast((_dht||DASH_HOME_T.fr).copy_ok)); }
 function copySourceLink(s) { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug+'?src='+s).then(()=>toast('✅ Lien copié !')); }
 function downloadQRPng() {
   setTimeout(()=>{ const c=document.querySelector('#qrcode canvas'); if(!c){toast('❌ QR non disponible');return;} const a=document.createElement('a');a.download='qr-'+currentSlug+'.png';a.href=c.toDataURL();a.click();toast('✅ QR téléchargé !'); },100);
@@ -922,7 +922,7 @@ function printQR(lang) {
     document.body.appendChild(a);
     a.click();
     setTimeout(function(){ document.body.removeChild(a); }, 1000);
-    toast('✅ Affiche téléchargée — imprimez en A5');
+    toast((_dht||DASH_HOME_T.fr).print_ok);
   }
 
   // Charger logo business ET logo LocalReply
@@ -1042,7 +1042,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
       if (!preview) preview = '—';
       items.push({
         icon:'💬', color:'#00D4FF',
-        text:`Conversation ${langFlag}`,
+        text:((_dht||DASH_HOME_T.fr).conv_label + ' ' + langFlag).trim(),
         sub: preview.length > 55 ? preview.slice(0,55)+'…' : preview,
         time: c.updated_at || c.created_at
       });
@@ -1055,7 +1055,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
     .forEach(a => {
       items.push({
         icon: '📅', color: '#10B981',
-        text: `RDV confirmé${a.client_name ? ' — ' + a.client_name : ''}`,
+        text: ((_dht||DASH_HOME_T.fr).rdv_confirmed) + (a.client_name ? ' — ' + a.client_name : ''),
         sub: a.service_name || a.summary || '',
         time: a.start_time || a.created_at
       });
@@ -1069,7 +1069,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
     .forEach(a => {
       items.push({
         icon: '⏳', color: '#F59E0B',
-        text: `RDV en attente${a.client_name ? ' — ' + a.client_name : ''}`,
+        text: ((_dht||DASH_HOME_T.fr).rdv_pending) + (a.client_name ? ' — ' + a.client_name : ''),
         sub: a.service_name || a.summary || '',
         time: a.created_at
       });
@@ -1083,7 +1083,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
       .forEach(q => {
         items.push({
           icon: '❓', color: '#F59E0B',
-          text: 'Question sans réponse',
+          text: (_dht||DASH_HOME_T.fr).unknown_q,
           sub: (q.raw_message || q.question || '').slice(0,55),
           time: q.created_at
         });
@@ -1094,7 +1094,7 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   items.sort((a,b) => new Date(b.time) - new Date(a.time));
 
   if (!items.length) {
-    el.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.25);"><div style="font-size:36px;opacity:0.3;margin-bottom:10px;">🕐</div><div style="font-size:13px;">Aucune activité récente</div></div>`;
+    el.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.25);"><div style="font-size:36px;opacity:0.3;margin-bottom:10px;">🕐</div><div style="font-size:13px;" id="no-activity">Aucune activité récente</div></div>`;
     return;
   }
 
@@ -1122,7 +1122,7 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   const tipEl = document.getElementById('tipText');
   if (tipEl) {
     if (!hasServices) {
-      tipEl.textContent = '⚙️ Ajoutez vos services et tarifs dans Configuration — l\'IA pourra répondre aux questions de prix.';
+      tipEl.textContent = (_dht||DASH_HOME_T.fr).tip_services;
     } else if (!hasHours) {
       tipEl.textContent = '⏰ Configurez vos horaires d\'ouverture pour que l\'IA indique correctement quand vous êtes disponible.';
     } else if (!hasFaq) {
@@ -1144,7 +1144,7 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   el.innerHTML = [
     sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} service${servicesCount>1?'s':''} configuré${servicesCount>1?'s':''}` : 'À configurer dans Configuration', hasServices?'#10B981':'#F59E0B'),
     sRow(hasHours,    'Horaires',             hasHours    ? 'Définis' : 'À configurer dans Configuration', hasHours?'#10B981':'#F59E0B'),
-    sRow(hasFaq,      'FAQ',                  hasFaq      ? `${faqCount} question${faqCount>1?'s':''}` : 'À enrichir dans Configuration', hasFaq?'#10B981':'#F59E0B'),
+    sRow(hasFaq,      'FAQ',                  hasFaq      ? `${faqCount} question${faqCount>1?'s':''}` : (_dht||DASH_HOME_T.fr).cfg_faq_missing, hasFaq?'#10B981':'#F59E0B'),
     sRow(calConnected,'Google Calendar',      calConnected? 'Connecté · RDV automatiques actifs' : '⚠️ Déconnecté — <a href="/dashboard-rendez-vous" style="color:#EF4444;">Reconnecter</a>', calConnected?'#10B981':'#EF4444'),
     sRow(true,        'Assistant IA 24/7',   'Actif · 8 langues', '#10B981'),
     sRow(true,        'Abonnement',           isPro ? (isTrial ? 'Essai Pro gratuit 🎁' : 'Pro ⭐') : 'Standard 📦', isPro ? '#F59E0B' : '#00D4FF'),
@@ -1204,7 +1204,7 @@ function toggleMobileMenu() {
   if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
-function logout(){if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+function logout(){if(confirm((_dht||DASH_HOME_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
 
 // ─ INIT ─
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1230,9 +1230,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.getElementById('mainContent').innerHTML = `
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:40px;">
           <div style="font-size:56px;margin-bottom:20px;">${isNew ? '🚀' : '🔒'}</div>
-          <h2 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">${isNew ? 'Démarrer votre essai' : 'Abonnement inactif'}</h2>
+          <h2 style="font-size:26px;font-weight:800;color:#fff;margin:0 0 12px;letter-spacing:-0.5px;">${isNew ? (_dht||DASH_HOME_T.fr).start_trial : 'Abonnement inactif'}</h2>
           <p style="font-size:15px;color:rgba(255,255,255,0.55);max-width:420px;line-height:1.7;margin:0 auto 28px;">
-            ${isNew ? 'Choisissez votre plan et démarrez votre essai gratuit de 14 jours. Aucun prélèvement pendant l\'essai.' : 'Votre abonnement a expiré ou été annulé. Choisissez un plan pour continuer.'}
+            ${isNew ? 'Choisissez votre plan et démarrez votre essai gratuit de 14 jours. Aucun prélèvement pendant l\'essai.' : (_dht||DASH_HOME_T.fr).subscription_expired}
           </p>
           <a href="/choisir-plan" style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(0,82,204,0.35);">
             ${isNew ? '🎁 Choisir mon plan — Essai 14j gratuit' : '⭐ Choisir un abonnement'}
@@ -1398,6 +1398,342 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </div>
 
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+// ── Dashboard Home i18n ──
+const DASH_HOME_T = {
+  fr: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Conversations', kpi_rdv: 'RDV confirmés', kpi_pending: 'À traiter',
+    kpi_sub_days30: '30 derniers jours', kpi_sub_pending: 'RDV + questions en attente',
+    stat_rate_label: 'Taux de conversion', stat_rate_sub: 'des conversations → RDV confirmé',
+    stat_lang_sub: 'des conversations',
+    stat_pending_sub: 'À confirmer →', stat_score_label: 'Score IA',
+    link_desc: 'Partagez avec vos clients pour accéder à votre assistant 24/7',
+    activity_title: '🕐 Activité récente', activity_sub: '— 30 derniers jours',
+    activity_see_all: 'Voir tout →', no_activity: 'Aucune activité récente',
+    conv_label: 'Conversation', rdv_confirmed: 'RDV confirmé', rdv_pending: 'RDV en attente',
+    unknown_q: 'Question sans réponse',
+    checklist_title: 'Complétez ces étapes pour tirer le meilleur de LocalReply',
+    configure_btn: 'Configurer →',
+    services_step: 'Configurer vos services & tarifs', services_sub: "L'IA connaîtra vos prestations",
+    hours_step: "Définir vos horaires d'ouverture", hours_sub: 'Pour répondre correctement aux clients',
+    faq_step: 'Ajouter une FAQ de base', faq_sub: 'Réponses auto aux questions fréquentes',
+    guide_title: '8 actions pour attirer plus de clients',
+    guide_subtitle: '8 actions concrètes pour attirer plus de clients',
+    guide_intro: "Votre assistant IA est prêt. Voici 8 actions concrètes pour que vos clients le découvrent — chacune prend moins de 5 minutes.",
+    score_great: '✅ Votre IA est parfaitement configurée et répondra à toutes les questions.',
+    score_ok: '🟡 Quelques points à compléter pour améliorer la qualité des réponses.',
+    score_bad: '🔴 Complétez la configuration pour activer pleinement votre IA.',
+    cal_connected: 'Connecté · RDV automatiques actifs', cal_none: 'Non connecté',
+    copy_ok: '✅ Lien copié !', print_ok: '✅ Affiche téléchargée — imprimez en A5',
+    greeting_morning: 'Bonjour', greeting_afternoon: 'Bon après-midi', greeting_evening: 'Bonsoir',
+    health_great: '🟢 Excellent', health_ok: '🟡 À améliorer', health_bad: '🔴 À compléter',
+    cfg_link: 'À ajouter dans Configuration', cfg_missing: 'À configurer dans Configuration',
+    cfg_faq_missing: 'À enrichir dans Configuration', cfg_defined: 'Définis', cfg_connected: 'Connecté · RDV automatiques actifs',
+    tip_services: "⚙️ Ajoutez vos services et tarifs dans Configuration — l'IA pourra répondre aux questions de prix.",
+    tip_hours: "⏰ Configurez vos horaires d'ouverture pour que l'IA indique correctement quand vous êtes disponible.",
+    tip_faq: "📚 Enrichissez votre FAQ — plus elle est complète, plus l'IA est précise.",
+    tip_instagram: "📲 Ajoutez votre lien dans votre bio Instagram pour générer du trafic en continu.",
+    tip_multilang: '🌍 Votre assistant répond en 8 langues — mentionnez-le à vos clients étrangers.',
+    tip_reviews: '⭐ Demandez à vos clients satisfaits de laisser un avis Google.',
+  },
+  en: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Conversations', kpi_rdv: 'Confirmed appointments', kpi_pending: 'To handle',
+    kpi_sub_days30: 'Last 30 days', kpi_sub_pending: 'Appointments + questions pending',
+    stat_rate_label: 'Conversion rate', stat_rate_sub: 'conversations → confirmed appointment',
+    stat_lang_sub: 'of conversations',
+    stat_pending_sub: 'To confirm →', stat_score_label: 'AI Score',
+    link_desc: 'Share with your customers to access your 24/7 assistant',
+    activity_title: '🕐 Recent activity', activity_sub: '— Last 30 days',
+    activity_see_all: 'See all →', no_activity: 'No recent activity',
+    conv_label: 'Conversation', rdv_confirmed: 'Confirmed appointment', rdv_pending: 'Pending appointment',
+    unknown_q: 'Unanswered question',
+    checklist_title: 'Complete these steps to get the most out of LocalReply',
+    configure_btn: 'Configure →',
+    services_step: 'Configure your services & prices', services_sub: 'The AI will know your offerings',
+    hours_step: 'Set your opening hours', hours_sub: 'To respond correctly to customers',
+    faq_step: 'Add a basic FAQ', faq_sub: 'Auto-answers to frequent questions',
+    guide_title: '8 actions to attract more customers',
+    guide_subtitle: '8 concrete actions to attract more customers',
+    guide_intro: 'Your AI assistant is ready. Here are 8 concrete actions to help your customers discover it — each takes less than 5 minutes.',
+    score_great: '✅ Your AI is perfectly configured and will answer all questions.',
+    score_ok: '🟡 A few points to complete to improve response quality.',
+    score_bad: '🔴 Complete the configuration to fully activate your AI.',
+    cal_connected: 'Connected · Automatic appointments active', cal_none: 'Not connected',
+    copy_ok: '✅ Link copied!', print_ok: '✅ Poster downloaded — print in A5',
+    greeting_morning: 'Good morning', greeting_afternoon: 'Good afternoon', greeting_evening: 'Good evening',
+    health_great: '🟢 Excellent', health_ok: '🟡 To improve', health_bad: '🔴 To complete',
+    cfg_link: 'To add in Configuration', cfg_missing: 'To configure in Configuration',
+    cfg_faq_missing: 'To enrich in Configuration', cfg_defined: 'Defined', cfg_connected: 'Connected · Automatic appointments active',
+    tip_services: '⚙️ Add your services and prices in Configuration — the AI can answer pricing questions.',
+    tip_hours: "⏰ Configure your opening hours so the AI knows when you're available.",
+    tip_faq: '📚 Enrich your FAQ — the more complete it is, the more accurate the AI.',
+    tip_instagram: '📲 Add your link to your Instagram bio to generate continuous traffic.',
+    tip_multilang: '🌍 Your assistant speaks 8 languages — mention it to your foreign customers.',
+    tip_reviews: '⭐ Ask satisfied customers to leave a Google review.',
+  },
+  de: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Gespräche', kpi_rdv: 'Bestätigte Termine', kpi_pending: 'Zu bearbeiten',
+    kpi_sub_days30: 'Letzte 30 Tage', kpi_sub_pending: 'Termine + Fragen ausstehend',
+    stat_rate_label: 'Konversionsrate', stat_rate_sub: 'Gespräche → bestätigter Termin',
+    stat_lang_sub: 'der Gespräche',
+    stat_pending_sub: 'Zu bestätigen →', stat_score_label: 'KI-Score',
+    link_desc: 'Mit Ihren Kunden teilen, um auf Ihren 24/7-Assistenten zuzugreifen',
+    activity_title: '🕐 Letzte Aktivität', activity_sub: '— Letzte 30 Tage',
+    activity_see_all: 'Alle anzeigen →', no_activity: 'Keine letzte Aktivität',
+    conv_label: 'Gespräch', rdv_confirmed: 'Bestätigter Termin', rdv_pending: 'Ausstehender Termin',
+    unknown_q: 'Unbeantwortete Frage',
+    checklist_title: 'Schließen Sie diese Schritte ab, um das Beste aus LocalReply herauszuholen',
+    configure_btn: 'Konfigurieren →',
+    services_step: 'Dienste & Preise konfigurieren', services_sub: 'Die KI kennt Ihre Angebote',
+    hours_step: 'Öffnungszeiten festlegen', hours_sub: 'Um Kunden korrekt zu antworten',
+    faq_step: 'Basis-FAQ hinzufügen', faq_sub: 'Automatische Antworten auf häufige Fragen',
+    guide_title: '8 Aktionen für mehr Kunden',
+    guide_subtitle: '8 konkrete Aktionen für mehr Kunden',
+    guide_intro: 'Ihr KI-Assistent ist bereit. Hier sind 8 konkrete Aktionen, damit Ihre Kunden ihn entdecken — jede dauert weniger als 5 Minuten.',
+    score_great: '✅ Ihre KI ist perfekt konfiguriert.',
+    score_ok: '🟡 Einige Punkte zu vervollständigen.',
+    score_bad: '🔴 Konfiguration abschließen.',
+    cal_connected: 'Verbunden · Automatische Termine aktiv', cal_none: 'Nicht verbunden',
+    copy_ok: '✅ Link kopiert!', print_ok: '✅ Plakat heruntergeladen',
+    greeting_morning: 'Guten Morgen', greeting_afternoon: 'Guten Nachmittag', greeting_evening: 'Guten Abend',
+    health_great: '🟢 Ausgezeichnet', health_ok: '🟡 Zu verbessern', health_bad: '🔴 Zu vervollständigen',
+    cfg_link: 'In Konfiguration hinzufügen', cfg_missing: 'In Konfiguration einrichten',
+    cfg_faq_missing: 'In Konfiguration anreichern', cfg_defined: 'Definiert', cfg_connected: 'Verbunden · Automatische Termine aktiv',
+    tip_services: '⚙️ Fügen Sie Dienste und Preise in Konfiguration hinzu.',
+    tip_hours: '⏰ Konfigurieren Sie Ihre Öffnungszeiten.',
+    tip_faq: '📚 Bereichern Sie Ihre FAQ.',
+    tip_instagram: '📲 Fügen Sie Ihren Link in Ihre Instagram-Bio ein.',
+    tip_multilang: '🌍 Ihr Assistent spricht 8 Sprachen.',
+    tip_reviews: '⭐ Bitten Sie zufriedene Kunden, eine Google-Bewertung abzugeben.',
+  },
+  it: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Conversazioni', kpi_rdv: 'Appuntamenti confermati', kpi_pending: 'Da gestire',
+    kpi_sub_days30: 'Ultimi 30 giorni', kpi_sub_pending: 'Appuntamenti + domande in attesa',
+    stat_rate_label: 'Tasso di conversione', stat_rate_sub: 'conversazioni → appuntamento confermato',
+    stat_lang_sub: 'delle conversazioni',
+    stat_pending_sub: 'Da confermare →', stat_score_label: 'Punteggio IA',
+    link_desc: 'Condividi con i tuoi clienti per accedere al tuo assistente 24/7',
+    activity_title: '🕐 Attività recente', activity_sub: '— Ultimi 30 giorni',
+    activity_see_all: 'Vedi tutto →', no_activity: 'Nessuna attività recente',
+    conv_label: 'Conversazione', rdv_confirmed: 'Appuntamento confermato', rdv_pending: 'Appuntamento in attesa',
+    unknown_q: 'Domanda senza risposta',
+    checklist_title: 'Completa questi passaggi per ottenere il massimo da LocalReply',
+    configure_btn: 'Configura →',
+    services_step: 'Configura i tuoi servizi e prezzi', services_sub: "L'IA conoscerà le tue offerte",
+    hours_step: "Definisci gli orari di apertura", hours_sub: 'Per rispondere correttamente ai clienti',
+    faq_step: 'Aggiungi un FAQ di base', faq_sub: 'Risposte automatiche alle domande frequenti',
+    guide_title: '8 azioni per attirare più clienti',
+    guide_subtitle: '8 azioni concrete per attirare più clienti',
+    guide_intro: "Il tuo assistente IA è pronto. Ecco 8 azioni concrete per farlo scoprire ai tuoi clienti — ognuna richiede meno di 5 minuti.",
+    score_great: "✅ La tua IA è perfettamente configurata.",
+    score_ok: '🟡 Alcuni punti da completare.',
+    score_bad: '🔴 Completa la configurazione.',
+    cal_connected: 'Connesso · Appuntamenti automatici attivi', cal_none: 'Non connesso',
+    copy_ok: '✅ Link copiato!', print_ok: '✅ Poster scaricato',
+    greeting_morning: 'Buongiorno', greeting_afternoon: 'Buon pomeriggio', greeting_evening: 'Buonasera',
+    health_great: '🟢 Eccellente', health_ok: '🟡 Da migliorare', health_bad: '🔴 Da completare',
+    cfg_link: 'Da aggiungere in Configurazione', cfg_missing: 'Da configurare in Configurazione',
+    cfg_faq_missing: 'Da arricchire in Configurazione', cfg_defined: 'Definiti', cfg_connected: 'Connesso · Appuntamenti automatici attivi',
+    tip_services: "⚙️ Aggiungi servizi e prezzi in Configurazione.",
+    tip_hours: "⏰ Configura i tuoi orari di apertura.",
+    tip_faq: "📚 Arricchisci il tuo FAQ.",
+    tip_instagram: "📲 Aggiungi il tuo link alla bio di Instagram.",
+    tip_multilang: '🌍 Il tuo assistente parla 8 lingue.',
+    tip_reviews: '⭐ Chiedi ai clienti soddisfatti di lasciare una recensione Google.',
+  },
+  es: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Conversaciones', kpi_rdv: 'Citas confirmadas', kpi_pending: 'Por gestionar',
+    kpi_sub_days30: 'Últimos 30 días', kpi_sub_pending: 'Citas + preguntas pendientes',
+    stat_rate_label: 'Tasa de conversión', stat_rate_sub: 'conversaciones → cita confirmada',
+    stat_lang_sub: 'de las conversaciones',
+    stat_pending_sub: 'Por confirmar →', stat_score_label: 'Puntuación IA',
+    link_desc: 'Comparte con tus clientes para acceder a tu asistente 24/7',
+    activity_title: '🕐 Actividad reciente', activity_sub: '— Últimos 30 días',
+    activity_see_all: 'Ver todo →', no_activity: 'Sin actividad reciente',
+    conv_label: 'Conversación', rdv_confirmed: 'Cita confirmada', rdv_pending: 'Cita pendiente',
+    unknown_q: 'Pregunta sin respuesta',
+    checklist_title: 'Completa estos pasos para sacar el máximo partido de LocalReply',
+    configure_btn: 'Configurar →',
+    services_step: 'Configurar servicios y precios', services_sub: 'La IA conocerá tus ofertas',
+    hours_step: 'Definir horario de apertura', hours_sub: 'Para responder correctamente a los clientes',
+    faq_step: 'Añadir un FAQ básico', faq_sub: 'Respuestas automáticas a preguntas frecuentes',
+    guide_title: '8 acciones para atraer más clientes',
+    guide_subtitle: '8 acciones concretas para atraer más clientes',
+    guide_intro: 'Tu asistente IA está listo. Aquí tienes 8 acciones concretas para que tus clientes lo descubran — cada una lleva menos de 5 minutos.',
+    score_great: '✅ Tu IA está perfectamente configurada.',
+    score_ok: '🟡 Algunos puntos por completar.',
+    score_bad: '🔴 Completa la configuración.',
+    cal_connected: 'Conectado · Citas automáticas activas', cal_none: 'No conectado',
+    copy_ok: '✅ ¡Enlace copiado!', print_ok: '✅ Cartel descargado',
+    greeting_morning: 'Buenos días', greeting_afternoon: 'Buenas tardes', greeting_evening: 'Buenas noches',
+    health_great: '🟢 Excelente', health_ok: '🟡 A mejorar', health_bad: '🔴 A completar',
+    cfg_link: 'Por añadir en Configuración', cfg_missing: 'Por configurar en Configuración',
+    cfg_faq_missing: 'Por enriquecer en Configuración', cfg_defined: 'Definidos', cfg_connected: 'Conectado · Citas automáticas activas',
+    tip_services: '⚙️ Añade servicios y precios en Configuración.',
+    tip_hours: '⏰ Configura tu horario de apertura.',
+    tip_faq: '📚 Enriquece tu FAQ.',
+    tip_instagram: '📲 Añade tu enlace a tu bio de Instagram.',
+    tip_multilang: '🌍 Tu asistente habla 8 idiomas.',
+    tip_reviews: '⭐ Pide a los clientes satisfechos que dejen una reseña en Google.',
+  },
+  pt: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Conversas', kpi_rdv: 'Marcações confirmadas', kpi_pending: 'A tratar',
+    kpi_sub_days30: 'Últimos 30 dias', kpi_sub_pending: 'Marcações + perguntas pendentes',
+    stat_rate_label: 'Taxa de conversão', stat_rate_sub: 'conversas → marcação confirmada',
+    stat_lang_sub: 'das conversas',
+    stat_pending_sub: 'A confirmar →', stat_score_label: 'Score IA',
+    link_desc: 'Partilhe com os seus clientes para aceder ao seu assistente 24/7',
+    activity_title: '🕐 Atividade recente', activity_sub: '— Últimos 30 dias',
+    activity_see_all: 'Ver tudo →', no_activity: 'Sem atividade recente',
+    conv_label: 'Conversa', rdv_confirmed: 'Marcação confirmada', rdv_pending: 'Marcação pendente',
+    unknown_q: 'Pergunta sem resposta',
+    checklist_title: 'Complete estes passos para tirar o máximo proveito do LocalReply',
+    configure_btn: 'Configurar →',
+    services_step: 'Configurar serviços e preços', services_sub: 'A IA conhecerá as suas ofertas',
+    hours_step: 'Definir horário de abertura', hours_sub: 'Para responder corretamente aos clientes',
+    faq_step: 'Adicionar um FAQ básico', faq_sub: 'Respostas automáticas a perguntas frequentes',
+    guide_title: '8 ações para atrair mais clientes',
+    guide_subtitle: '8 ações concretas para atrair mais clientes',
+    guide_intro: 'O seu assistente IA está pronto. Aqui estão 8 ações concretas para que os seus clientes o descubram — cada uma leva menos de 5 minutos.',
+    score_great: '✅ A sua IA está perfeitamente configurada.',
+    score_ok: '🟡 Alguns pontos a completar.',
+    score_bad: '🔴 Complete a configuração.',
+    cal_connected: 'Ligado · Marcações automáticas ativas', cal_none: 'Não ligado',
+    copy_ok: '✅ Link copiado!', print_ok: '✅ Cartaz descarregado',
+    greeting_morning: 'Bom dia', greeting_afternoon: 'Boa tarde', greeting_evening: 'Boa noite',
+    health_great: '🟢 Excelente', health_ok: '🟡 A melhorar', health_bad: '🔴 A completar',
+    cfg_link: 'A adicionar na Configuração', cfg_missing: 'A configurar na Configuração',
+    cfg_faq_missing: 'A enriquecer na Configuração', cfg_defined: 'Definidos', cfg_connected: 'Ligado · Marcações automáticas ativas',
+    tip_services: '⚙️ Adicione serviços e preços na Configuração.',
+    tip_hours: '⏰ Configure o seu horário de abertura.',
+    tip_faq: '📚 Enriqueça o seu FAQ.',
+    tip_instagram: '📲 Adicione o seu link à bio do Instagram.',
+    tip_multilang: '🌍 O seu assistente fala 8 línguas.',
+    tip_reviews: '⭐ Peça aos clientes satisfeitos que deixem uma avaliação no Google.',
+  },
+  nl: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Gesprekken', kpi_rdv: 'Bevestigde afspraken', kpi_pending: 'Te verwerken',
+    kpi_sub_days30: 'Laatste 30 dagen', kpi_sub_pending: 'Afspraken + vragen in behandeling',
+    stat_rate_label: 'Conversieratio', stat_rate_sub: 'gesprekken → bevestigde afspraak',
+    stat_lang_sub: 'van de gesprekken',
+    stat_pending_sub: 'Te bevestigen →', stat_score_label: 'AI-score',
+    link_desc: 'Deel met uw klanten om toegang te krijgen tot uw 24/7-assistent',
+    activity_title: '🕐 Recente activiteit', activity_sub: '— Laatste 30 dagen',
+    activity_see_all: 'Alles zien →', no_activity: 'Geen recente activiteit',
+    conv_label: 'Gesprek', rdv_confirmed: 'Bevestigde afspraak', rdv_pending: 'Openstaande afspraak',
+    unknown_q: 'Onbeantwoorde vraag',
+    checklist_title: 'Voltooi deze stappen om het meeste uit LocalReply te halen',
+    configure_btn: 'Configureren →',
+    services_step: 'Diensten en prijzen configureren', services_sub: 'De AI kent uw aanbod',
+    hours_step: 'Openingstijden instellen', hours_sub: 'Om correct te antwoorden',
+    faq_step: 'Basis FAQ toevoegen', faq_sub: 'Automatische antwoorden op veelgestelde vragen',
+    guide_title: '8 acties voor meer klanten',
+    guide_subtitle: '8 concrete acties voor meer klanten',
+    guide_intro: 'Uw AI-assistent is klaar. Hier zijn 8 concrete acties zodat uw klanten hem ontdekken — elk duurt minder dan 5 minuten.',
+    score_great: '✅ Uw AI is perfect geconfigureerd.',
+    score_ok: '🟡 Enkele punten te voltooien.',
+    score_bad: '🔴 Voltooi de configuratie.',
+    cal_connected: 'Verbonden · Automatische afspraken actief', cal_none: 'Niet verbonden',
+    copy_ok: '✅ Link gekopieerd!', print_ok: '✅ Poster gedownload',
+    greeting_morning: 'Goedemorgen', greeting_afternoon: 'Goedemiddag', greeting_evening: 'Goedenavond',
+    health_great: '🟢 Uitstekend', health_ok: '🟡 Te verbeteren', health_bad: '🔴 Te voltooien',
+    cfg_link: 'Toe te voegen in Configuratie', cfg_missing: 'In te stellen in Configuratie',
+    cfg_faq_missing: 'Te verrijken in Configuratie', cfg_defined: 'Ingesteld', cfg_connected: 'Verbonden · Automatische afspraken actief',
+    tip_services: '⚙️ Voeg diensten en prijzen toe in Configuratie.',
+    tip_hours: '⏰ Stel uw openingstijden in.',
+    tip_faq: '📚 Verrijk uw FAQ.',
+    tip_instagram: '📲 Voeg uw link toe aan uw Instagram-bio.',
+    tip_multilang: '🌍 Uw assistent spreekt 8 talen.',
+    tip_reviews: '⭐ Vraag tevreden klanten een Google-recensie te geven.',
+  },
+  pl: {
+    page_title: 'Dashboard — LocalReply',
+    kpi_conv: 'Rozmowy', kpi_rdv: 'Potwierdzone wizyty', kpi_pending: 'Do obsługi',
+    kpi_sub_days30: 'Ostatnie 30 dni', kpi_sub_pending: 'Wizyty + pytania oczekujące',
+    stat_rate_label: 'Współczynnik konwersji', stat_rate_sub: 'rozmowy → potwierdzona wizyta',
+    stat_lang_sub: 'rozmów',
+    stat_pending_sub: 'Do potwierdzenia →', stat_score_label: 'Wynik AI',
+    link_desc: 'Udostępnij klientom, aby uzyskali dostęp do Twojego asystenta 24/7',
+    activity_title: '🕐 Ostatnia aktywność', activity_sub: '— Ostatnie 30 dni',
+    activity_see_all: 'Zobacz wszystko →', no_activity: 'Brak ostatniej aktywności',
+    conv_label: 'Rozmowa', rdv_confirmed: 'Potwierdzona wizyta', rdv_pending: 'Oczekująca wizyta',
+    unknown_q: 'Pytanie bez odpowiedzi',
+    checklist_title: 'Wykonaj te kroki, aby w pełni korzystać z LocalReply',
+    configure_btn: 'Konfiguruj →',
+    services_step: 'Skonfiguruj usługi i ceny', services_sub: 'AI pozna Twoją ofertę',
+    hours_step: 'Ustaw godziny otwarcia', hours_sub: 'Aby poprawnie odpowiadać klientom',
+    faq_step: 'Dodaj podstawowe FAQ', faq_sub: 'Automatyczne odpowiedzi na częste pytania',
+    guide_title: '8 działań dla więcej klientów',
+    guide_subtitle: '8 konkretnych działań dla więcej klientów',
+    guide_intro: 'Twój asystent AI jest gotowy. Oto 8 konkretnych działań, dzięki którym klienci go odkryją — każde zajmuje mniej niż 5 minut.',
+    score_great: '✅ Twoja AI jest idealnie skonfigurowana.',
+    score_ok: '🟡 Kilka punktów do uzupełnienia.',
+    score_bad: '🔴 Uzupełnij konfigurację.',
+    cal_connected: 'Połączony · Automatyczne wizyty aktywne', cal_none: 'Niepołączony',
+    copy_ok: '✅ Link skopiowany!', print_ok: '✅ Plakat pobrany',
+    greeting_morning: 'Dzień dobry', greeting_afternoon: 'Dzień dobry', greeting_evening: 'Dobry wieczór',
+    health_great: '🟢 Doskonały', health_ok: '🟡 Do poprawy', health_bad: '🔴 Do uzupełnienia',
+    cfg_link: 'Do dodania w Konfiguracji', cfg_missing: 'Do skonfigurowania w Konfiguracji',
+    cfg_faq_missing: 'Do wzbogacenia w Konfiguracji', cfg_defined: 'Zdefiniowane', cfg_connected: 'Połączony · Automatyczne wizyty aktywne',
+    tip_services: '⚙️ Dodaj usługi i ceny w Konfiguracji.',
+    tip_hours: '⏰ Skonfiguruj godziny otwarcia.',
+    tip_faq: '📚 Wzbogać swoje FAQ.',
+    tip_instagram: '📲 Dodaj swój link do bio na Instagramie.',
+    tip_multilang: '🌍 Twój asystent mówi w 8 językach.',
+    tip_reviews: '⭐ Poproś zadowolonych klientów o wystawienie recenzji Google.',
+  },
+};
+
+(function() {
+  const lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const t = DASH_HOME_T[DASH_HOME_T.hasOwnProperty(lang) ? lang : 'fr'];
+  window._dht = t;
+  document.title = t.page_title;
+
+  function applyHomeLang() {
+    // Static IDs
+    const ids = {
+      'kpi-conv-label': t.kpi_conv, 'kpi-rdv-label': t.kpi_rdv,
+      'kpi-pending-label': t.kpi_pending,
+      'kpi-sub-conv': t.kpi_sub_days30, 'kpi-sub-rdv': t.kpi_sub_days30,
+      'kpi-sub-pending': t.kpi_sub_pending,
+      'stat-rate-label': t.stat_rate_label, 'stat-rate-sub': t.stat_rate_sub,
+      'stat-pending-sub': t.stat_pending_sub, 'stat-score-label': t.stat_score_label,
+      'link-share-desc': t.link_desc,
+      'activity-sub': t.activity_sub, 'activity-see-all': t.activity_see_all,
+      'no-activity': t.no_activity,
+      'checklist-title': t.checklist_title,
+      'guide-subtitle': t.guide_subtitle, 'guide-intro': t.guide_intro,
+    };
+    Object.entries(ids).forEach(([id, txt]) => {
+      const el = document.getElementById(id);
+      if (el && txt) el.textContent = txt;
+    });
+    // Activity title (keeps emoji)
+    const at = document.getElementById('activity-title');
+    if (at) at.textContent = t.activity_title;
+    // Checklist configure links
+    document.querySelectorAll('a[href="/dashboard-configuration"][id^="cfg-btn"]').forEach(el => {
+      el.textContent = t.configure_btn;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyHomeLang);
+  } else {
+    applyHomeLang();
+  }
+})();
+</script>
 <script src="/nav.js"></script>
 <script src="/footer.js"></script>
 </body>

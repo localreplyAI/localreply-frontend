@@ -54,41 +54,41 @@
     </div>
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
-      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
-      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
-      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-rendez-vous" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:600;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span id="dn-config" style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span id="dn-messages" style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">📅</span><span id="dn-rdv" style="font-size:14px;font-weight:600;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span id="dn-analytics" style="font-size:14px;font-weight:500;">Analytics</span><span id="dn-pro" style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
-      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
-      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;"><span id="dn-section-account">Compte</span></div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span id="dn-account" style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span id="dn-billing" style="font-size:14px;font-weight:500;">Abonnement</span></a>
     </nav>
     <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
             <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
-        <span>🌐</span><span>Retour au site</span>
+        <span>🌐</span><span id="dn-back">Retour au site</span>
       </a>
-<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span id="dn-logout">Déconnexion</span></button>
     </div>
   </div>
   
   
   <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
-      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
-      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
-      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
-      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;font-weight:700;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
-      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;">Config</span></a>
+      <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span id="dn-mob-messages" style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);position:relative;"><span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;font-weight:700;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;">Plus</span></button>
     </div>
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
   <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
-    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
-    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
-    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span><span id="dn-mob-analytics">Analytics</span></a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span><span id="dn-mob-account">Mon compte</span></a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span><span id="dn-mob-billing">Abonnement</span></a>
     <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
-    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span><span id="dn-mob-logout">Déconnexion</span></button>
   </div>
 
   <!-- MAIN CONTENT -->
@@ -97,8 +97,8 @@
     <!-- HEADER -->
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;margin-bottom:24px;">
       <div>
-        <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">📅 Rendez-vous</h1>
-        <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez vos demandes de RDV et confirmez vos créneaux</p>
+        <h1 id="rdv-h1" style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">📅 Rendez-vous</h1>
+        <p id="rdv-subtitle" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez vos demandes de RDV et confirmez vos créneaux</p>
       </div>
       <button onclick="loadAppointments()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">🔄 Actualiser</button>
     </div>
@@ -108,7 +108,7 @@
       <div style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
         <div style="font-size:32px;font-weight:800;color:#F59E0B;line-height:1;margin-bottom:4px;" id="statPending">—</div>
         <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">En attente</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">À confirmer</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;" id="rdv-kpi-pending-label">À confirmer</div>
       </div>
       <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
         <div style="font-size:32px;font-weight:800;color:#10B981;line-height:1;margin-bottom:4px;" id="statConfirmed">—</div>
@@ -137,8 +137,8 @@
       <div style="display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
         <button id="filterAll" onclick="setFilter('all')" style="padding: 8px 16px; background: linear-gradient(135deg,#0052CC,#00D4FF); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Tous</button>
         <button id="filterPending" onclick="setFilter('pending')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">En attente</button>
-        <button id="filterConfirmed" onclick="setFilter('confirmed')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Confirmés</button>
-        <button id="filterAll2" onclick="setFilter('past')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Passés</button>
+        <button id="filterConfirmed" onclick="setFilter('confirmed')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filter-confirmed">Confirmés</span></button>
+        <button id="filterAll2" onclick="setFilter('past')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filter-past">Passés</span></button>
       </div>
       <button onclick="loadAppointments()" style="padding: 12px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: rgba(255,255,255,0.7); font-size:13px; cursor:pointer; transition:all 0.2s;" title="Actualiser">🔄</button>
     </div>
@@ -290,11 +290,11 @@ function renderFilteredAppointments() {
       if (confirmedSection) confirmedSection.style.display = 'none';
       
       if (!filtered.length) {
-        unified.innerHTML = emptyState('Aucun rendez-vous trouvé', 'Essayez une autre recherche ou un autre filtre.');
+        unified.innerHTML = emptyState((_drt||DASH_RDV_T.fr).empty_apts, 'Essayez une autre recherche ou un autre filtre.');
         return;
       }
       unified.innerHTML = '<h2 style="font-size:24px;font-weight:700;color:#FFFFFF;margin:0 0 20px 0;">' +
-        (currentFilter==='pending'?'⏳ En attente':currentFilter==='confirmed'?'✅ Confirmés':'📋 RDV passés') +
+        (currentFilter==='pending'?(_drt||DASH_RDV_T.fr).filter_pending:currentFilter==='confirmed'?(_drt||DASH_RDV_T.fr).filter_confirmed:(_drt||DASH_RDV_T.fr).filter_past) +
         ` <span style="font-size:16px;opacity:0.5;">(${filtered.length})</span></h2>`;
       filtered.sort((a,b) => new Date(a.start_time) - new Date(b.start_time))
         .forEach(apt => {
@@ -662,13 +662,13 @@ async function switchRdvMode(mode) {
 
 async function saveRdvLink() {
   const url = document.getElementById('rdvExternalUrl')?.value || '';
-  if (!url) { showNotification('❌ Entrez un lien de réservation', 'error'); return; }
+  if (!url) { showNotification((_drt||DASH_RDV_T.fr).err_no_link, 'error'); return; }
   try {
     await apiRequest(`/api/business/${businessId}/config`, 'POST', {
       rdv_mode: 'link',
       external_rdv_url: url
     });
-    showNotification('✅ Lien de réservation enregistré');
+    showNotification((_drt||DASH_RDV_T.fr).save_link_ok);
     // Rafraîchir
     await renderModeContent('link', url);
   } catch(e) {
@@ -687,10 +687,10 @@ async function connectCalendar() {
 }
 
 async function disconnectCalendar() {
-  if (!confirm('Déconnecter Google Calendar ? Les RDV existants ne seront pas supprimés.')) return;
+  if (!confirm((_drt||DASH_RDV_T.fr).disconnect_confirm)) return;
   try {
     await apiRequest(`/api/calendar/disconnect?business_id=${businessId}`, 'DELETE');
-    showNotification('✅ Google Calendar déconnecté');
+    showNotification((_drt||DASH_RDV_T.fr).disconnect_ok);
     checkCalendarStatus();
   } catch (error) {
     showNotification('❌ Erreur : ' + error.message, 'error');
@@ -901,7 +901,7 @@ function createPendingCard(apt, isUrgent) {
         <div>
           <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
           <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">
-            📧 ${apt.client_email || 'Non renseigné'} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+            📧 ${apt.client_email || (_drt||DASH_RDV_T.fr).not_provided} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
           </div>
         </div>
         <div style="padding: 8px 14px; background: rgba(251, 191, 36, 0.2); border: 1px solid rgba(251, 191, 36, 0.5); border-radius: 12px; font-size: 13px; font-weight: 600; color: #F59E0B;">
@@ -917,7 +917,7 @@ function createPendingCard(apt, isUrgent) {
           </div>
           <div>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">💇 SERVICE</div>
-            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
+            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || (_drt||DASH_RDV_T.fr).not_specified}</div>
           </div>
           ${apt.description ? `
           <div>
@@ -997,7 +997,7 @@ function createConfirmedCard(apt) {
         </div>
       </div>
       <div style="padding: 6px 12px; background: ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
-        ${isPast ? '🕐 Passé' : '✅ Confirmé'}
+        ${isPast ? (_drt||DASH_RDV_T.fr).status_past : (_drt||DASH_RDV_T.fr).status_confirmed}
       </div>
     </div>
     
@@ -1052,7 +1052,7 @@ async function acceptAppointment(appointmentId) {
       loadAppointments();
     }, 300);
     
-    showNotification('✅ Rendez-vous confirmé ! Email envoyé au client.');
+    showNotification((_drt||DASH_RDV_T.fr).confirm_ok);
     
   } catch (error) {
     showNotification('❌ Erreur : ' + error.message, 'error');
@@ -1076,7 +1076,7 @@ async function refuseAppointment(appointmentId) {
       loadAppointments();
     }, 300);
     
-    showNotification('❌ Rendez-vous refusé. Créneau libéré et email envoyé au client.');
+    showNotification((_drt||DASH_RDV_T.fr).refuse_ok);
     
   } catch (error) {
     showNotification('❌ Erreur : ' + error.message, 'error');
@@ -1085,7 +1085,7 @@ async function refuseAppointment(appointmentId) {
 
 // Annuler un RDV confirmé
 async function cancelAppointment(appointmentId) {
-  if (!confirm('Annuler ce rendez-vous ? Un email sera envoyé au client.')) {
+  if (!confirm((_drt||DASH_RDV_T.fr).cancel_confirm)) {
     return;
   }
   
@@ -1100,7 +1100,7 @@ async function cancelAppointment(appointmentId) {
       loadAppointments();
     }, 300);
     
-    showNotification('❌ Rendez-vous annulé. Email envoyé au client.');
+    showNotification((_drt||DASH_RDV_T.fr).cancel_ok);
     
   } catch (error) {
     showNotification('❌ Erreur : ' + error.message, 'error');
@@ -1208,7 +1208,7 @@ function toggleMobileMenu() {
 }
 
 function logout() {
-  if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+  if (confirm((_drt||DASH_RDV_T.fr).logout_confirm)) {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('business_id');
     window.location.href = '/auth';
@@ -1220,7 +1220,7 @@ function logout() {
 // ============================================
 document.addEventListener('DOMContentLoaded', async function() {
   if (!token || !businessId) {
-    alert('Session expirée. Veuillez vous reconnecter.');
+    alert((_drt||DASH_RDV_T.fr).session_expired);
     window.location.href = '/login';
     return;
   }
@@ -1229,15 +1229,15 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Vérifier si on revient de l'OAuth Google ou d'une confirmation email
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('calendar_connected') === 'true') {
-    showNotification('✅ Google Calendar connecté avec succès !');
+    showNotification((_drt||DASH_RDV_T.fr).cal_connected_ok);
     window.history.replaceState({}, document.title, window.location.pathname);
   }
   if (urlParams.get('confirmed')) {
-    showNotification('✅ Rendez-vous confirmé ! Le client a été notifié et le RDV ajouté au Calendar.');
+    showNotification((_drt||DASH_RDV_T.fr).cal_confirm_ok);
     window.history.replaceState({}, document.title, window.location.pathname);
   }
   if (urlParams.get('refused')) {
-    showNotification('❌ Rendez-vous refusé. Le client a été informé.', 'error');
+    showNotification((_drt||DASH_RDV_T.fr).cal_refuse_ok, 'error');
     window.history.replaceState({}, document.title, window.location.pathname);
   }
   
@@ -1270,6 +1270,354 @@ animStyle.textContent = `
   div[style*="opacity: 0"] { transition: all 0.3s ease; }
 `;
 document.head.appendChild(animStyle);
+</script>
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+const DASH_RDV_T = {
+  fr: {
+    page_title: 'Rendez-vous — LocalReply',
+    h1: '📅 Rendez-vous', subtitle: 'Gérez vos demandes de RDV et confirmez vos créneaux',
+    kpi_pending_label: 'À confirmer', kpi_confirmed_label: 'Confirmés',
+    kpi_confirmed_sub: '30 derniers jours', kpi_past_sub: '30 derniers jours', kpi_past_label: 'Passés',
+    search_placeholder: '🔍 Rechercher un client, service...',
+    filter_pending: '⏳ En attente', filter_confirmed: '✅ Confirmés', filter_past: '📋 RDV passés',
+    tab_pending: 'À confirmer', tab_confirmed: 'Confirmés', tab_past: 'Passés',
+    section_upcoming: '📋 Prochains rendez-vous confirmés',
+    loading: 'Chargement...', cal_checking: 'Vérification Google Calendar...',
+    cal_connected: '✅ Google Calendar connecté', cal_disconnect: 'Déconnecter',
+    cal_events: 'Prochains événements — 7 jours',
+    cal_redirect: 'Redirection sécurisée vers Google',
+    cal_connect_btn: '🔗 Connecter Google Calendar',
+    cal_tip: '💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes',
+    mode_ext_title: 'Lien de réservation externe', save_btn: '💾 Enregistrer',
+    mode_ext_warning: '⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus',
+    mode_manual_text: '[votre téléphone]',
+    mode_none_text: "L'IA répond aux questions sans proposer de RDV",
+    empty_apts: 'Aucun rendez-vous', empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici",
+    empty_confirmed: 'Aucun rendez-vous confirmé', empty_confirmed_sub: 'Les rendez-vous confirmés apparaîtront ici',
+    not_specified: 'Non spécifié', not_provided: 'Non renseigné',
+    status_past: '🕐 Passé', status_confirmed: '✅ Confirmé',
+    btn_confirm: '✅ Confirmer', btn_refuse: '❌ Refuser', btn_cancel: '❌ Annuler le RDV',
+    confirm_ok: '✅ Rendez-vous confirmé ! Email envoyé au client.',
+    refuse_ok: '❌ Rendez-vous refusé. Créneau libéré et email envoyé au client.',
+    cancel_confirm: 'Annuler ce rendez-vous ? Un email sera envoyé au client.',
+    cancel_ok: '❌ Rendez-vous annulé. Email envoyé au client.',
+    disconnect_confirm: 'Déconnecter Google Calendar ? Les RDV existants ne seront pas supprimés.',
+    disconnect_ok: '✅ Google Calendar déconnecté',
+    cal_connected_ok: '✅ Google Calendar connecté avec succès !',
+    cal_confirm_ok: '✅ Rendez-vous confirmé ! Le client a été notifié et le RDV ajouté au Calendar.',
+    cal_refuse_ok: '❌ Rendez-vous refusé. Le client a été informé.',
+    save_link_ok: '✅ Lien de réservation enregistré',
+    err_no_link: '❌ Entrez un lien de réservation',
+    session_expired: 'Session expirée. Veuillez vous reconnecter.',
+    logout_confirm: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+  },
+  en: {
+    page_title: 'Appointments — LocalReply',
+    h1: '📅 Appointments', subtitle: 'Manage your appointment requests and confirm your slots',
+    kpi_pending_label: 'To confirm', kpi_confirmed_label: 'Confirmed',
+    kpi_confirmed_sub: 'Last 30 days', kpi_past_sub: 'Last 30 days', kpi_past_label: 'Past',
+    search_placeholder: '🔍 Search a customer, service...',
+    filter_pending: '⏳ Pending', filter_confirmed: '✅ Confirmed', filter_past: '📋 Past appointments',
+    tab_pending: 'To confirm', tab_confirmed: 'Confirmed', tab_past: 'Past',
+    section_upcoming: '📋 Upcoming confirmed appointments',
+    loading: 'Loading...', cal_checking: 'Checking Google Calendar...',
+    cal_connected: '✅ Google Calendar connected', cal_disconnect: 'Disconnect',
+    cal_events: 'Upcoming events — 7 days',
+    cal_redirect: 'Secure redirect to Google',
+    cal_connect_btn: '🔗 Connect Google Calendar',
+    cal_tip: '💡 Confirmed appointments are added automatically · Busy slots block new requests',
+    mode_ext_title: 'External booking link', save_btn: '💾 Save',
+    mode_ext_warning: '⚠️ No link configured — add your booking link above',
+    mode_manual_text: '[your phone number]',
+    mode_none_text: 'The AI answers questions without booking appointments',
+    empty_apts: 'No appointments', empty_apts_sub: 'Appointments created by the AI will appear here',
+    empty_confirmed: 'No confirmed appointments', empty_confirmed_sub: 'Confirmed appointments will appear here',
+    not_specified: 'Not specified', not_provided: 'Not provided',
+    status_past: '🕐 Past', status_confirmed: '✅ Confirmed',
+    btn_confirm: '✅ Confirm', btn_refuse: '❌ Refuse', btn_cancel: '❌ Cancel appointment',
+    confirm_ok: '✅ Appointment confirmed! Email sent to customer.',
+    refuse_ok: '❌ Appointment refused. Slot freed and email sent to customer.',
+    cancel_confirm: 'Cancel this appointment? An email will be sent to the customer.',
+    cancel_ok: '❌ Appointment cancelled. Email sent to customer.',
+    disconnect_confirm: 'Disconnect Google Calendar? Existing appointments will not be deleted.',
+    disconnect_ok: '✅ Google Calendar disconnected',
+    cal_connected_ok: '✅ Google Calendar connected successfully!',
+    cal_confirm_ok: '✅ Appointment confirmed! Customer notified and appointment added to Calendar.',
+    cal_refuse_ok: '❌ Appointment refused. Customer has been informed.',
+    save_link_ok: '✅ Booking link saved',
+    err_no_link: '❌ Enter a booking link',
+    session_expired: 'Session expired. Please sign in again.',
+    logout_confirm: 'Are you sure you want to sign out?',
+  },
+  de: {
+    page_title: 'Termine — LocalReply',
+    h1: '📅 Termine', subtitle: 'Verwalten Sie Terminanfragen und bestätigen Sie Ihre Slots',
+    kpi_pending_label: 'Zu bestätigen', kpi_confirmed_label: 'Bestätigt',
+    kpi_confirmed_sub: 'Letzte 30 Tage', kpi_past_sub: 'Letzte 30 Tage', kpi_past_label: 'Vergangene',
+    search_placeholder: '🔍 Kunden, Dienst suchen...',
+    filter_pending: '⏳ Ausstehend', filter_confirmed: '✅ Bestätigt', filter_past: '📋 Vergangene Termine',
+    tab_pending: 'Zu bestätigen', tab_confirmed: 'Bestätigt', tab_past: 'Vergangene',
+    section_upcoming: '📋 Bevorstehende bestätigte Termine',
+    loading: 'Laden...', cal_checking: 'Google Kalender wird geprüft...',
+    cal_connected: '✅ Google Kalender verbunden', cal_disconnect: 'Trennen',
+    cal_events: 'Bevorstehende Ereignisse — 7 Tage',
+    cal_redirect: 'Sichere Weiterleitung zu Google',
+    cal_connect_btn: '🔗 Google Kalender verbinden',
+    cal_tip: '💡 Bestätigte Termine werden automatisch hinzugefügt · Belegte Slots blockieren neue Anfragen',
+    mode_ext_title: 'Externer Buchungslink', save_btn: '💾 Speichern',
+    mode_ext_warning: '⚠️ Kein Link konfiguriert — fügen Sie oben Ihren Buchungslink hinzu',
+    mode_manual_text: '[Ihre Telefonnummer]',
+    mode_none_text: 'Die KI beantwortet Fragen ohne Terminbuchungen',
+    empty_apts: 'Keine Termine', empty_apts_sub: 'Von der KI erstellte Termine erscheinen hier',
+    empty_confirmed: 'Keine bestätigten Termine', empty_confirmed_sub: 'Bestätigte Termine erscheinen hier',
+    not_specified: 'Nicht angegeben', not_provided: 'Nicht angegeben',
+    status_past: '🕐 Vergangen', status_confirmed: '✅ Bestätigt',
+    btn_confirm: '✅ Bestätigen', btn_refuse: '❌ Ablehnen', btn_cancel: '❌ Termin stornieren',
+    confirm_ok: '✅ Termin bestätigt! E-Mail an Kunden gesendet.',
+    refuse_ok: '❌ Termin abgelehnt. Slot freigegeben und E-Mail gesendet.',
+    cancel_confirm: 'Diesen Termin stornieren? Eine E-Mail wird an den Kunden gesendet.',
+    cancel_ok: '❌ Termin storniert. E-Mail an Kunden gesendet.',
+    disconnect_confirm: 'Google Kalender trennen? Bestehende Termine werden nicht gelöscht.',
+    disconnect_ok: '✅ Google Kalender getrennt',
+    cal_connected_ok: '✅ Google Kalender erfolgreich verbunden!',
+    cal_confirm_ok: '✅ Termin bestätigt! Kunde benachrichtigt und Termin zum Kalender hinzugefügt.',
+    cal_refuse_ok: '❌ Termin abgelehnt. Kunde wurde informiert.',
+    save_link_ok: '✅ Buchungslink gespeichert',
+    err_no_link: '❌ Buchungslink eingeben',
+    session_expired: 'Sitzung abgelaufen. Bitte erneut anmelden.',
+    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+  },
+  it: {
+    page_title: 'Appuntamenti — LocalReply',
+    h1: '📅 Appuntamenti', subtitle: 'Gestisci le richieste di appuntamento e conferma i tuoi slot',
+    kpi_pending_label: 'Da confermare', kpi_confirmed_label: 'Confermati',
+    kpi_confirmed_sub: 'Ultimi 30 giorni', kpi_past_sub: 'Ultimi 30 giorni', kpi_past_label: 'Passati',
+    search_placeholder: '🔍 Cerca cliente, servizio...',
+    filter_pending: '⏳ In attesa', filter_confirmed: '✅ Confermati', filter_past: '📋 Appuntamenti passati',
+    tab_pending: 'Da confermare', tab_confirmed: 'Confermati', tab_past: 'Passati',
+    section_upcoming: '📋 Prossimi appuntamenti confermati',
+    loading: 'Caricamento...', cal_checking: 'Verifica Google Calendar...',
+    cal_connected: '✅ Google Calendar connesso', cal_disconnect: 'Disconnetti',
+    cal_events: 'Prossimi eventi — 7 giorni',
+    cal_redirect: 'Reindirizzamento sicuro verso Google',
+    cal_connect_btn: '🔗 Connetti Google Calendar',
+    cal_tip: '💡 Gli appuntamenti confermati vengono aggiunti automaticamente · Gli slot occupati bloccano le nuove richieste',
+    mode_ext_title: 'Link di prenotazione esterno', save_btn: '💾 Salva',
+    mode_ext_warning: '⚠️ Nessun link configurato — aggiungi il tuo link di prenotazione qui sopra',
+    mode_manual_text: '[il tuo numero di telefono]',
+    mode_none_text: "L'IA risponde alle domande senza proporre appuntamenti",
+    empty_apts: 'Nessun appuntamento', empty_apts_sub: "Gli appuntamenti creati dall'IA appariranno qui",
+    empty_confirmed: 'Nessun appuntamento confermato', empty_confirmed_sub: 'Gli appuntamenti confermati appariranno qui',
+    not_specified: 'Non specificato', not_provided: 'Non fornito',
+    status_past: '🕐 Passato', status_confirmed: '✅ Confermato',
+    btn_confirm: '✅ Conferma', btn_refuse: '❌ Rifiuta', btn_cancel: '❌ Annulla appuntamento',
+    confirm_ok: '✅ Appuntamento confermato! Email inviata al cliente.',
+    refuse_ok: '❌ Appuntamento rifiutato. Slot liberato ed email inviata al cliente.',
+    cancel_confirm: 'Annullare questo appuntamento? Una email sarà inviata al cliente.',
+    cancel_ok: '❌ Appuntamento annullato. Email inviata al cliente.',
+    disconnect_confirm: 'Disconnettere Google Calendar? Gli appuntamenti esistenti non verranno eliminati.',
+    disconnect_ok: '✅ Google Calendar disconnesso',
+    cal_connected_ok: '✅ Google Calendar connesso con successo!',
+    cal_confirm_ok: '✅ Appuntamento confermato! Cliente notificato e appuntamento aggiunto al Calendar.',
+    cal_refuse_ok: '❌ Appuntamento rifiutato. Il cliente è stato informato.',
+    save_link_ok: '✅ Link di prenotazione salvato',
+    err_no_link: '❌ Inserisci un link di prenotazione',
+    session_expired: 'Sessione scaduta. Accedi di nuovo.',
+    logout_confirm: 'Sei sicuro di voler uscire?',
+  },
+  es: {
+    page_title: 'Citas — LocalReply',
+    h1: '📅 Citas', subtitle: 'Gestiona las solicitudes de cita y confirma tus franjas',
+    kpi_pending_label: 'Por confirmar', kpi_confirmed_label: 'Confirmadas',
+    kpi_confirmed_sub: 'Últimos 30 días', kpi_past_sub: 'Últimos 30 días', kpi_past_label: 'Pasadas',
+    search_placeholder: '🔍 Buscar cliente, servicio...',
+    filter_pending: '⏳ En espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Citas pasadas',
+    tab_pending: 'Por confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Pasadas',
+    section_upcoming: '📋 Próximas citas confirmadas',
+    loading: 'Cargando...', cal_checking: 'Verificando Google Calendar...',
+    cal_connected: '✅ Google Calendar conectado', cal_disconnect: 'Desconectar',
+    cal_events: 'Próximos eventos — 7 días',
+    cal_redirect: 'Redirección segura a Google',
+    cal_connect_btn: '🔗 Conectar Google Calendar',
+    cal_tip: '💡 Las citas confirmadas se añaden automáticamente · Las franjas ocupadas bloquean nuevas solicitudes',
+    mode_ext_title: 'Enlace de reserva externo', save_btn: '💾 Guardar',
+    mode_ext_warning: '⚠️ Sin enlace configurado — añade tu enlace de reserva arriba',
+    mode_manual_text: '[tu número de teléfono]',
+    mode_none_text: 'La IA responde preguntas sin proponer citas',
+    empty_apts: 'Sin citas', empty_apts_sub: 'Las citas creadas por la IA aparecerán aquí',
+    empty_confirmed: 'Sin citas confirmadas', empty_confirmed_sub: 'Las citas confirmadas aparecerán aquí',
+    not_specified: 'No especificado', not_provided: 'No indicado',
+    status_past: '🕐 Pasada', status_confirmed: '✅ Confirmada',
+    btn_confirm: '✅ Confirmar', btn_refuse: '❌ Rechazar', btn_cancel: '❌ Cancelar cita',
+    confirm_ok: '✅ ¡Cita confirmada! Email enviado al cliente.',
+    refuse_ok: '❌ Cita rechazada. Franja liberada y email enviado al cliente.',
+    cancel_confirm: '¿Cancelar esta cita? Se enviará un email al cliente.',
+    cancel_ok: '❌ Cita cancelada. Email enviado al cliente.',
+    disconnect_confirm: '¿Desconectar Google Calendar? Las citas existentes no se eliminarán.',
+    disconnect_ok: '✅ Google Calendar desconectado',
+    cal_connected_ok: '✅ ¡Google Calendar conectado con éxito!',
+    cal_confirm_ok: '✅ ¡Cita confirmada! Cliente notificado y cita añadida al Calendar.',
+    cal_refuse_ok: '❌ Cita rechazada. El cliente ha sido informado.',
+    save_link_ok: '✅ Enlace de reserva guardado',
+    err_no_link: '❌ Introduce un enlace de reserva',
+    session_expired: 'Sesión expirada. Por favor inicia sesión de nuevo.',
+    logout_confirm: '¿Seguro que quieres cerrar sesión?',
+  },
+  pt: {
+    page_title: 'Marcações — LocalReply',
+    h1: '📅 Marcações', subtitle: 'Gira os pedidos de marcação e confirme os seus horários',
+    kpi_pending_label: 'A confirmar', kpi_confirmed_label: 'Confirmadas',
+    kpi_confirmed_sub: 'Últimos 30 dias', kpi_past_sub: 'Últimos 30 dias', kpi_past_label: 'Passadas',
+    search_placeholder: '🔍 Pesquisar cliente, serviço...',
+    filter_pending: '⏳ Em espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Marcações passadas',
+    tab_pending: 'A confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Passadas',
+    section_upcoming: '📋 Próximas marcações confirmadas',
+    loading: 'A carregar...', cal_checking: 'A verificar Google Calendar...',
+    cal_connected: '✅ Google Calendar ligado', cal_disconnect: 'Desligar',
+    cal_events: 'Próximos eventos — 7 dias',
+    cal_redirect: 'Redirecionamento seguro para o Google',
+    cal_connect_btn: '🔗 Ligar Google Calendar',
+    cal_tip: '💡 As marcações confirmadas são adicionadas automaticamente · Os horários ocupados bloqueiam novos pedidos',
+    mode_ext_title: 'Link de marcação externo', save_btn: '💾 Guardar',
+    mode_ext_warning: '⚠️ Sem link configurado — adicione o seu link de marcação acima',
+    mode_manual_text: '[o seu número de telefone]',
+    mode_none_text: 'A IA responde a perguntas sem propor marcações',
+    empty_apts: 'Sem marcações', empty_apts_sub: 'As marcações criadas pela IA aparecerão aqui',
+    empty_confirmed: 'Sem marcações confirmadas', empty_confirmed_sub: 'As marcações confirmadas aparecerão aqui',
+    not_specified: 'Não especificado', not_provided: 'Não fornecido',
+    status_past: '🕐 Passada', status_confirmed: '✅ Confirmada',
+    btn_confirm: '✅ Confirmar', btn_refuse: '❌ Recusar', btn_cancel: '❌ Cancelar marcação',
+    confirm_ok: '✅ Marcação confirmada! Email enviado ao cliente.',
+    refuse_ok: '❌ Marcação recusada. Horário libertado e email enviado ao cliente.',
+    cancel_confirm: 'Cancelar esta marcação? Um email será enviado ao cliente.',
+    cancel_ok: '❌ Marcação cancelada. Email enviado ao cliente.',
+    disconnect_confirm: 'Desligar Google Calendar? As marcações existentes não serão eliminadas.',
+    disconnect_ok: '✅ Google Calendar desligado',
+    cal_connected_ok: '✅ Google Calendar ligado com sucesso!',
+    cal_confirm_ok: '✅ Marcação confirmada! Cliente notificado e marcação adicionada ao Calendar.',
+    cal_refuse_ok: '❌ Marcação recusada. O cliente foi informado.',
+    save_link_ok: '✅ Link de marcação guardado',
+    err_no_link: '❌ Introduza um link de marcação',
+    session_expired: 'Sessão expirada. Por favor inicie sessão novamente.',
+    logout_confirm: 'Tem a certeza que quer sair?',
+  },
+  nl: {
+    page_title: 'Afspraken — LocalReply',
+    h1: '📅 Afspraken', subtitle: 'Beheer afspraakverzoeken en bevestig uw tijdsloten',
+    kpi_pending_label: 'Te bevestigen', kpi_confirmed_label: 'Bevestigd',
+    kpi_confirmed_sub: 'Laatste 30 dagen', kpi_past_sub: 'Laatste 30 dagen', kpi_past_label: 'Verstreken',
+    search_placeholder: '🔍 Klant, dienst zoeken...',
+    filter_pending: '⏳ In behandeling', filter_confirmed: '✅ Bevestigd', filter_past: '📋 Verstreken afspraken',
+    tab_pending: 'Te bevestigen', tab_confirmed: 'Bevestigd', tab_past: 'Verstreken',
+    section_upcoming: '📋 Aankomende bevestigde afspraken',
+    loading: 'Laden...', cal_checking: 'Google Agenda controleren...',
+    cal_connected: '✅ Google Agenda verbonden', cal_disconnect: 'Verbinding verbreken',
+    cal_events: 'Aankomende evenementen — 7 dagen',
+    cal_redirect: 'Beveiligde doorverwijzing naar Google',
+    cal_connect_btn: '🔗 Google Agenda verbinden',
+    cal_tip: '💡 Bevestigde afspraken worden automatisch toegevoegd · Bezette slots blokkeren nieuwe verzoeken',
+    mode_ext_title: 'Externe boekingslink', save_btn: '💾 Opslaan',
+    mode_ext_warning: '⚠️ Geen link geconfigureerd — voeg hierboven uw boekingslink toe',
+    mode_manual_text: '[uw telefoonnummer]',
+    mode_none_text: 'De AI beantwoordt vragen zonder afspraken voor te stellen',
+    empty_apts: 'Geen afspraken', empty_apts_sub: 'Afspraken gemaakt door de AI verschijnen hier',
+    empty_confirmed: 'Geen bevestigde afspraken', empty_confirmed_sub: 'Bevestigde afspraken verschijnen hier',
+    not_specified: 'Niet opgegeven', not_provided: 'Niet opgegeven',
+    status_past: '🕐 Verstreken', status_confirmed: '✅ Bevestigd',
+    btn_confirm: '✅ Bevestigen', btn_refuse: '❌ Weigeren', btn_cancel: '❌ Afspraak annuleren',
+    confirm_ok: '✅ Afspraak bevestigd! E-mail verzonden naar klant.',
+    refuse_ok: '❌ Afspraak geweigerd. Slot vrijgegeven en e-mail verzonden naar klant.',
+    cancel_confirm: 'Deze afspraak annuleren? Er wordt een e-mail naar de klant gestuurd.',
+    cancel_ok: '❌ Afspraak geannuleerd. E-mail verzonden naar klant.',
+    disconnect_confirm: 'Google Agenda loskoppelen? Bestaande afspraken worden niet verwijderd.',
+    disconnect_ok: '✅ Google Agenda losgekoppeld',
+    cal_connected_ok: '✅ Google Agenda succesvol verbonden!',
+    cal_confirm_ok: '✅ Afspraak bevestigd! Klant geïnformeerd en afspraak toegevoegd aan Agenda.',
+    cal_refuse_ok: '❌ Afspraak geweigerd. De klant is geïnformeerd.',
+    save_link_ok: '✅ Boekingslink opgeslagen',
+    err_no_link: '❌ Voer een boekingslink in',
+    session_expired: 'Sessie verlopen. Log opnieuw in.',
+    logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+  },
+  pl: {
+    page_title: 'Wizyty — LocalReply',
+    h1: '📅 Wizyty', subtitle: 'Zarządzaj prośbami o wizytę i potwierdzaj swoje terminy',
+    kpi_pending_label: 'Do potwierdzenia', kpi_confirmed_label: 'Potwierdzone',
+    kpi_confirmed_sub: 'Ostatnie 30 dni', kpi_past_sub: 'Ostatnie 30 dni', kpi_past_label: 'Minione',
+    search_placeholder: '🔍 Szukaj klienta, usługi...',
+    filter_pending: '⏳ Oczekujące', filter_confirmed: '✅ Potwierdzone', filter_past: '📋 Minione wizyty',
+    tab_pending: 'Do potwierdzenia', tab_confirmed: 'Potwierdzone', tab_past: 'Minione',
+    section_upcoming: '📋 Nadchodzące potwierdzone wizyty',
+    loading: 'Ładowanie...', cal_checking: 'Sprawdzanie Kalendarza Google...',
+    cal_connected: '✅ Kalendarz Google połączony', cal_disconnect: 'Rozłącz',
+    cal_events: 'Nadchodzące wydarzenia — 7 dni',
+    cal_redirect: 'Bezpieczne przekierowanie do Google',
+    cal_connect_btn: '🔗 Połącz Kalendarz Google',
+    cal_tip: '💡 Potwierdzone wizyty są dodawane automatycznie · Zajęte terminy blokują nowe żądania',
+    mode_ext_title: 'Zewnętrzny link do rezerwacji', save_btn: '💾 Zapisz',
+    mode_ext_warning: '⚠️ Brak skonfigurowanego linku — dodaj link do rezerwacji powyżej',
+    mode_manual_text: '[twój numer telefonu]',
+    mode_none_text: 'AI odpowiada na pytania bez proponowania wizyt',
+    empty_apts: 'Brak wizyt', empty_apts_sub: 'Wizyty utworzone przez AI pojawią się tutaj',
+    empty_confirmed: 'Brak potwierdzonych wizyt', empty_confirmed_sub: 'Potwierdzone wizyty pojawią się tutaj',
+    not_specified: 'Nie określono', not_provided: 'Nie podano',
+    status_past: '🕐 Miniona', status_confirmed: '✅ Potwierdzona',
+    btn_confirm: '✅ Potwierdź', btn_refuse: '❌ Odrzuć', btn_cancel: '❌ Anuluj wizytę',
+    confirm_ok: '✅ Wizyta potwierdzona! Email wysłany do klienta.',
+    refuse_ok: '❌ Wizyta odrzucona. Termin zwolniony i email wysłany do klienta.',
+    cancel_confirm: 'Anulować tę wizytę? Email zostanie wysłany do klienta.',
+    cancel_ok: '❌ Wizyta anulowana. Email wysłany do klienta.',
+    disconnect_confirm: 'Odłączyć Kalendarz Google? Istniejące wizyty nie zostaną usunięte.',
+    disconnect_ok: '✅ Kalendarz Google odłączony',
+    cal_connected_ok: '✅ Kalendarz Google połączony pomyślnie!',
+    cal_confirm_ok: '✅ Wizyta potwierdzona! Klient powiadomiony i wizyta dodana do Kalendarza.',
+    cal_refuse_ok: '❌ Wizyta odrzucona. Klient został poinformowany.',
+    save_link_ok: '✅ Link do rezerwacji zapisany',
+    err_no_link: '❌ Wprowadź link do rezerwacji',
+    session_expired: 'Sesja wygasła. Zaloguj się ponownie.',
+    logout_confirm: 'Czy na pewno chcesz się wylogować?',
+  },
+};
+
+(function() {
+  const lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const t = DASH_RDV_T[DASH_RDV_T.hasOwnProperty(lang) ? lang : 'fr'];
+  window._drt = t;
+  document.title = t.page_title;
+
+  function applyRdvLang() {
+    const ids = {
+      'rdv-h1': t.h1, 'rdv-subtitle': t.subtitle,
+      'rdv-kpi-pending-label': t.kpi_pending_label,
+      'rdv-kpi-confirmed-label': t.kpi_confirmed_label,
+      'rdv-kpi-confirmed-sub': t.kpi_confirmed_sub,
+      'rdv-kpi-past-sub': t.kpi_past_sub,
+      'rdv-kpi-past-label': t.kpi_past_label,
+      'rdv-filter-pending': t.tab_pending,
+      'rdv-filter-confirmed': t.tab_confirmed,
+      'rdv-filter-past': t.tab_past,
+      'rdv-section-upcoming': t.section_upcoming,
+      'rdv-cal-connect-btn': t.cal_connect_btn,
+      'rdv-mode-ext-title': t.mode_ext_title,
+      'rdv-save-btn': t.save_btn,
+    };
+    Object.entries(ids).forEach(([id, txt]) => {
+      const el = document.getElementById(id);
+      if (el && txt) el.textContent = txt;
+    });
+    // Search placeholder
+    const si = document.getElementById('searchInput');
+    if (si) si.placeholder = t.search_placeholder;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyRdvLang);
+  } else {
+    applyRdvLang();
+  }
+})();
 </script>
 
 </body>

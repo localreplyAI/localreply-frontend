@@ -57,59 +57,59 @@
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
       <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span>
+        <span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:500;">Accueil</span>
       </a>
       <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span>
+        <span style="font-size:17px;">⚙️</span><span id="dn-config" style="font-size:14px;font-weight:500;">Configuration</span>
       </a>
       <a href="/dashboard-conversations" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;position:relative;">
-        <span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:600;">Messages</span>
+        <span style="font-size:17px;">💬</span><span id="dn-messages" style="font-size:14px;font-weight:600;">Messages</span>
         <span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;"></span>
       </a>
       <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);position:relative;">
-        <span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span>
+        <span style="font-size:17px;">📅</span><span id="dn-rdv" style="font-size:14px;font-weight:500;">Rendez-vous</span>
         <span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;"></span>
       </a>
       <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);">
-        <span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span>
-        <span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
+        <span style="font-size:17px;">📈</span><span id="dn-analytics" style="font-size:14px;font-weight:500;">Analytics</span>
+        <span id="dn-pro" style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span>
       </a>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
-      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:500;">Mon compte</span></a>
-      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;"><span id="dn-section-account">Compte</span></div>
+      <a href="/mon-compte" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">👤</span><span id="dn-account" style="font-size:14px;font-weight:500;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span id="dn-billing" style="font-size:14px;font-weight:500;">Abonnement</span></a>
     </nav>
     <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
             <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
-        <span>🌐</span><span>Retour au site</span>
+        <span>🌐</span><span id="dn-back">Retour au site</span>
       </a>
-<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span id="dn-logout">Déconnexion</span></button>
     </div>
   </div>
 
   <!-- BOTTOM NAV MOBILE -->
   <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
-      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
-      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;">Config</span></a>
       <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);position:relative;">
-        <span style="font-size:20px;">💬</span><span style="font-size:10px;font-weight:700;">Messages</span>
+        <span style="font-size:20px;">💬</span><span id="dn-mob-messages" style="font-size:10px;font-weight:700;">Messages</span>
         <span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;"></span>
       </a>
       <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;">
-        <span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span>
+        <span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;">RDV</span>
         <span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;"></span>
       </a>
-      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span style="font-size:10px;">Plus</span></button>
+      <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 12px;cursor:pointer;font-family:inherit;"><span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;">Plus</span></button>
     </div>
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
   <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
-    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span>Analytics</a>
-    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span>Mon compte</a>
-    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span>Abonnement</a>
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span><span id="dn-mob-analytics">Analytics</span></a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span><span id="dn-mob-account">Mon compte</span></a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span><span id="dn-mob-billing">Abonnement</span></a>
     <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
-    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span>Déconnexion</button>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span style="font-size:18px;">🚪</span><span id="dn-mob-logout">Déconnexion</span></button>
   </div>
 
   <!-- ═══ MAIN ═══ -->
@@ -118,8 +118,8 @@
     <!-- HEADER -->
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
       <div>
-        <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💬 Messages</h1>
-        <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Questions transmises par l'IA — répondez pour enrichir sa base de connaissances</p>
+        <h1 id="msg-h1" style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💬 Messages</h1>
+        <p id="msg-subtitle" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Questions transmises par l'IA — répondez pour enrichir sa base de connaissances</p>
       </div>
       <button onclick="loadQuestions()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(0,212,255,0.3)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)'">
         🔄 Actualiser
@@ -130,25 +130,25 @@
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
       <div class="mstat" style="border-color:rgba(239,68,68,0.25);background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(220,38,38,0.04));">
         <div class="mstat-val" style="color:#EF4444;" id="statPending">—</div>
-        <div class="mstat-lbl">En attente</div>
-        <div class="mstat-sub">À traiter en priorité</div>
+        <div id="stat-pending-cnt-label" class="mstat-lbl">En attente</div>
+        <div class="mstat-sub" id="stat-pending-label">À traiter en priorité</div>
       </div>
       <div class="mstat" style="border-color:rgba(16,185,129,0.25);background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(5,150,105,0.04));">
         <div class="mstat-val" style="color:#10B981;" id="statAnswered">—</div>
-        <div class="mstat-lbl">Répondues</div>
-        <div class="mstat-sub">Client notifié par email</div>
+        <div id="stat-answered-label" class="mstat-lbl">Répondues</div>
+        <div id="stat-answered-sub" class="mstat-sub">Client notifié par email</div>
       </div>
       <div class="mstat" style="border-color:rgba(0,212,255,0.2);background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,82,204,0.04));">
         <div class="mstat-val" style="color:#00D4FF;" id="statFaqAdded">—</div>
-        <div class="mstat-lbl">Ajoutées à la FAQ</div>
-        <div class="mstat-sub">L'IA sait maintenant répondre</div>
+        <div id="stat-faq-label" class="mstat-lbl">Ajoutées à la FAQ</div>
+        <div id="stat-faq-sub" class="mstat-sub">L'IA sait maintenant répondre</div>
       </div>
     </div>
 
     <!-- INFO BANNER -->
     <div style="padding:12px 16px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:12px;">
       <span style="font-size:18px;flex-shrink:0;">💡</span>
-      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin:0;line-height:1.5;">Quand un client pose une question que votre IA ne connaît pas, elle vous la transmet ici. Répondez pour que l'IA apprenne et réponde automatiquement la prochaine fois. Cochez <strong style="color:#fff;">"Ajouter à la FAQ"</strong> pour que la réponse soit permanente.</p>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin:0;line-height:1.5;">Quand un client pose une question que votre IA ne connaît pas, elle vous la transmet ici. Répondez pour que l'IA apprenne et réponde automatiquement la prochaine fois. Cochez <strong style="color:#fff;" id="msg-tip-faq">"Ajouter à la FAQ"</strong> pour que la réponse soit permanente.</p>
     </div>
 
     <!-- ONGLETS -->
@@ -382,7 +382,7 @@ function renderQuestion(q, tab) {
       <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px;max-height:180px;overflow-y:auto;padding-right:4px;">
         ${Array.isArray(q.context) ? q.context.map(msg => `
           <div style="padding:8px 12px;border-radius:8px;font-size:12px;line-height:1.5;${msg.role==='user'?'background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.65);':'background:rgba(0,212,255,0.06);border-left:2px solid rgba(0,212,255,0.25);color:rgba(255,255,255,0.55);'}">
-            <span style="font-size:10px;font-weight:700;color:${msg.role==='user'?'rgba(255,255,255,0.3)':'rgba(0,212,255,0.5)'};text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">${msg.role==='user'?'👤 Client':'🤖 IA'}</span>
+            <span style="font-size:10px;font-weight:700;color:${msg.role==='user'?'rgba(255,255,255,0.3)':'rgba(0,212,255,0.5)'};text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:2px;">${msg.role==='user'?(_dmt||DASH_MSG_T.fr).role_client:(_dmt||DASH_MSG_T.fr).role_ai}</span>
             ${msg.content||msg.text||''}
           </div>`).join('') : `<div style="padding:8px;background:rgba(255,255,255,0.03);border-radius:7px;font-size:12px;color:rgba(255,255,255,0.4);">${typeof q.context==='string'?q.context:JSON.stringify(q.context)}</div>`}
       </div>
@@ -402,10 +402,11 @@ function renderQuestion(q, tab) {
 }
 
 function renderEmpty(tab) {
+  const _t = (_dmt||DASH_MSG_T.fr);
   const msgs = {
-    pending: { icon:'✅', title:'Aucune question en attente', sub:'Votre IA répond à toutes les questions — ou aucun client ne s\'est manifesté récemment.' },
-    answered: { icon:'💬', title:'Aucune question traitée', sub:'Les questions auxquelles vous répondez apparaissent ici.' },
-    ignored:  { icon:'🗑️', title:'Aucune question ignorée', sub:'' },
+    pending: { icon:'✅', title:_t.empty_pending, sub:_t.empty_pending_sub },
+    answered: { icon:'💬', title:_t.empty_answered, sub:_t.empty_answered_sub },
+    ignored:  { icon:'🗑️', title:_t.empty_ignored, sub:'' },
   };
   const m = msgs[tab] || msgs.pending;
   return `<div style="text-align:center;padding:60px 20px;">
@@ -550,7 +551,7 @@ function closeReplyModal() {
 
 async function submitReply() {
   const answer = document.getElementById('modalAnswer').value.trim();
-  if (!answer) { showToast('Rédigez une réponse avant d\'envoyer', 'error'); return; }
+  if (!answer) { showToast((_dmt||DASH_MSG_T.fr).err_empty_answer, 'error'); return; }
   const btn = document.querySelector('#replyModal button[onclick="submitReply()"]');
   btn.disabled = true; btn.textContent = '⏳ Envoi...';
   try {
@@ -561,7 +562,7 @@ async function submitReply() {
     });
     closeReplyModal();
     const faq = document.getElementById('optAddFaq').checked;
-    showToast(faq ? '✅ Répondu et ajouté à la FAQ !' : '✅ Réponse envoyée !');
+    showToast(faq ? (_dmt||DASH_MSG_T.fr).success_faq : (_dmt||DASH_MSG_T.fr).success_reply);
     await loadQuestions();
   } catch(e) {
     showToast('Erreur lors de l\'envoi', 'error');
@@ -574,7 +575,7 @@ async function quickIgnore(id) {
   if (!confirm('Ignorer cette question ?')) return;
   try {
     await apiRequest(`/api/business/${businessId}/unknown-questions/${id}/ignore`, 'POST', {});
-    showToast('Question ignorée');
+    showToast((_dmt||DASH_MSG_T.fr).success_ignored);
     await loadQuestions();
   } catch { showToast('Erreur', 'error'); }
 }
@@ -630,6 +631,324 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSidebarInfo();
   loadQuestions();
 });
+</script>
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+const DASH_MSG_T = {
+  fr: {
+    page_title: 'Messages — LocalReply',
+    h1: '💬 Messages',
+    subtitle: "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances",
+    tab_pending: 'À traiter', tab_answered: 'Répondues', tab_ignored: 'Ignorées',
+    stat_pending_label: 'À traiter en priorité',
+    stat_answered_label: 'Répondues', stat_answered_sub: 'Client notifié par email',
+    stat_faq_label: 'Ajoutées à la FAQ', stat_faq_sub: "L'IA sait maintenant répondre",
+    tip_faq: 'Cliquez sur "Ajouter à la FAQ" pour que la réponse soit permanente.',
+    modal_title: '💬 Répondre au client',
+    modal_question: 'Question du client',
+    modal_answer_label: 'Votre réponse',
+    modal_faq_check: '📚 Ajouter à la FAQ',
+    modal_faq_sub: "L'IA répondra automatiquement à cette question pour tous les clients suivants",
+    modal_email_check: 'Envoyer votre réponse par email au client (si adresse disponible)',
+    modal_send: '✅ Envoyer la réponse',
+    modal_context: '💬 Contexte de la conversation',
+    role_client: '👤 Client', role_ai: '🤖 IA',
+    btn_reply: (_dmt||DASH_MSG_T.fr).btn_reply, btn_edit: (_dmt||DASH_MSG_T.fr).btn_edit, btn_reply_anyway: (_dmt||DASH_MSG_T.fr).btn_reply_anyway,
+    btn_ignore: 'Ignorer',
+    status_answered: (_dmt||DASH_MSG_T.fr).status_answered, status_ignored: (_dmt||DASH_MSG_T.fr).status_ignored,
+    anon_client: 'Client anonyme',
+    answer_placeholder: 'Votre réponse (en français)',
+    empty_pending: 'Aucune question en attente',
+    empty_pending_sub: "Votre IA répond à toutes les questions — ou aucun client ne s'est manifesté récemment.",
+    empty_answered: 'Aucune question traitée',
+    empty_answered_sub: 'Les questions auxquelles vous répondez apparaissent ici.',
+    empty_ignored: 'Aucune question ignorée',
+    err_empty_answer: "Rédigez une réponse avant d'envoyer",
+    success_faq: '✅ Répondu et ajouté à la FAQ !',
+    success_reply: '✅ Réponse envoyée !',
+    success_ignored: 'Question ignorée',
+    email_to: 'La réponse sera envoyée à',
+    logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
+  },
+  en: {
+    page_title: 'Messages — LocalReply',
+    h1: '💬 Messages',
+    subtitle: "Questions forwarded by the AI — answer them to enrich its knowledge base",
+    tab_pending: 'To handle', tab_answered: 'Answered', tab_ignored: 'Ignored',
+    stat_pending_label: 'Priority to handle',
+    stat_answered_label: 'Answered', stat_answered_sub: 'Customer notified by email',
+    stat_faq_label: 'Added to FAQ', stat_faq_sub: 'The AI now knows how to answer',
+    tip_faq: 'Click "Add to FAQ" to make the answer permanent.',
+    modal_title: '💬 Reply to customer',
+    modal_question: 'Customer question',
+    modal_answer_label: 'Your reply',
+    modal_faq_check: '📚 Add to FAQ',
+    modal_faq_sub: 'The AI will automatically answer this question for all future customers',
+    modal_email_check: 'Send your reply by email to the customer (if address available)',
+    modal_send: '✅ Send reply',
+    modal_context: '💬 Conversation context',
+    role_client: '👤 Customer', role_ai: '🤖 AI',
+    btn_reply: '💬 Reply', btn_edit: '✏️ Edit reply', btn_reply_anyway: '💬 Reply anyway',
+    btn_ignore: 'Ignore',
+    status_answered: '✅ Answered', status_ignored: '— Ignored',
+    anon_client: 'Anonymous customer',
+    answer_placeholder: 'Your reply (in English)',
+    empty_pending: 'No pending questions',
+    empty_pending_sub: "Your AI handles all questions — or no customers have reached out recently.",
+    empty_answered: 'No answered questions',
+    empty_answered_sub: 'Questions you reply to appear here.',
+    empty_ignored: 'No ignored questions',
+    err_empty_answer: 'Write a reply before sending',
+    success_faq: '✅ Replied and added to FAQ!',
+    success_reply: '✅ Reply sent!',
+    success_ignored: 'Question ignored',
+    email_to: 'The reply will be sent to',
+    logout_confirm: 'Are you sure you want to sign out?',
+  },
+  de: {
+    page_title: 'Nachrichten — LocalReply',
+    h1: '💬 Nachrichten',
+    subtitle: 'Von der KI weitergeleitete Fragen — antworten Sie, um die Wissensbasis anzureichern',
+    tab_pending: 'Zu bearbeiten', tab_answered: 'Beantwortet', tab_ignored: 'Ignoriert',
+    stat_pending_label: 'Vorrangig zu bearbeiten',
+    stat_answered_label: 'Beantwortet', stat_answered_sub: 'Kunde per E-Mail benachrichtigt',
+    stat_faq_label: 'Zur FAQ hinzugefügt', stat_faq_sub: 'Die KI kann jetzt antworten',
+    tip_faq: 'Klicken Sie auf "Zur FAQ hinzufügen", um die Antwort dauerhaft zu speichern.',
+    modal_title: '💬 Auf Kunden antworten',
+    modal_question: 'Kundenfrage',
+    modal_answer_label: 'Ihre Antwort',
+    modal_faq_check: '📚 Zur FAQ hinzufügen',
+    modal_faq_sub: 'Die KI beantwortet diese Frage automatisch für alle zukünftigen Kunden',
+    modal_email_check: 'Antwort per E-Mail an den Kunden senden (falls Adresse verfügbar)',
+    modal_send: '✅ Antwort senden',
+    modal_context: '💬 Gesprächskontext',
+    role_client: '👤 Kunde', role_ai: '🤖 KI',
+    btn_reply: '💬 Antworten', btn_edit: '✏️ Antwort bearbeiten', btn_reply_anyway: '💬 Trotzdem antworten',
+    btn_ignore: 'Ignorieren',
+    status_answered: '✅ Beantwortet', status_ignored: '— Ignoriert',
+    anon_client: 'Anonymer Kunde',
+    answer_placeholder: 'Ihre Antwort (auf Deutsch)',
+    empty_pending: 'Keine ausstehenden Fragen',
+    empty_pending_sub: 'Ihre KI beantwortet alle Fragen — oder kein Kunde hat sich kürzlich gemeldet.',
+    empty_answered: 'Keine beantworteten Fragen',
+    empty_answered_sub: 'Fragen, auf die Sie antworten, erscheinen hier.',
+    empty_ignored: 'Keine ignorierten Fragen',
+    err_empty_answer: 'Schreiben Sie eine Antwort, bevor Sie senden',
+    success_faq: '✅ Beantwortet und zur FAQ hinzugefügt!',
+    success_reply: '✅ Antwort gesendet!',
+    success_ignored: 'Frage ignoriert',
+    email_to: 'Die Antwort wird gesendet an',
+    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+  },
+  it: {
+    page_title: 'Messaggi — LocalReply',
+    h1: '💬 Messaggi',
+    subtitle: "Domande inoltrate dall'IA — rispondi per arricchire la sua base di conoscenza",
+    tab_pending: 'Da gestire', tab_answered: 'Risposte', tab_ignored: 'Ignorate',
+    stat_pending_label: 'Da gestire in priorità',
+    stat_answered_label: 'Risposte', stat_answered_sub: 'Cliente notificato via email',
+    stat_faq_label: 'Aggiunte al FAQ', stat_faq_sub: "L'IA sa ora rispondere",
+    tip_faq: 'Clicca su "Aggiungi al FAQ" per rendere la risposta permanente.',
+    modal_title: '💬 Rispondi al cliente',
+    modal_question: 'Domanda del cliente',
+    modal_answer_label: 'La tua risposta',
+    modal_faq_check: '📚 Aggiungi al FAQ',
+    modal_faq_sub: "L'IA risponderà automaticamente a questa domanda per tutti i futuri clienti",
+    modal_email_check: 'Invia la tua risposta via email al cliente (se indirizzo disponibile)',
+    modal_send: '✅ Invia risposta',
+    modal_context: '💬 Contesto della conversazione',
+    role_client: '👤 Cliente', role_ai: '🤖 IA',
+    btn_reply: '💬 Rispondi', btn_edit: '✏️ Modifica risposta', btn_reply_anyway: '💬 Rispondi comunque',
+    btn_ignore: 'Ignora',
+    status_answered: '✅ Risposta inviata', status_ignored: '— Ignorata',
+    anon_client: 'Cliente anonimo',
+    answer_placeholder: 'La tua risposta (in italiano)',
+    empty_pending: 'Nessuna domanda in attesa',
+    empty_pending_sub: "La tua IA risponde a tutte le domande — o nessun cliente si è fatto vivo di recente.",
+    empty_answered: 'Nessuna domanda risposta',
+    empty_answered_sub: 'Le domande a cui rispondi appaiono qui.',
+    empty_ignored: 'Nessuna domanda ignorata',
+    err_empty_answer: "Scrivi una risposta prima di inviare",
+    success_faq: '✅ Risposto e aggiunto al FAQ!',
+    success_reply: '✅ Risposta inviata!',
+    success_ignored: 'Domanda ignorata',
+    email_to: 'La risposta sarà inviata a',
+    logout_confirm: 'Sei sicuro di voler uscire?',
+  },
+  es: {
+    page_title: 'Mensajes — LocalReply',
+    h1: '💬 Mensajes',
+    subtitle: "Preguntas reenviadas por la IA — respóndelas para enriquecer su base de conocimiento",
+    tab_pending: 'Por gestionar', tab_answered: 'Respondidas', tab_ignored: 'Ignoradas',
+    stat_pending_label: 'A tratar con prioridad',
+    stat_answered_label: 'Respondidas', stat_answered_sub: 'Cliente notificado por email',
+    stat_faq_label: 'Añadidas al FAQ', stat_faq_sub: 'La IA ahora sabe responder',
+    tip_faq: 'Haz clic en "Añadir al FAQ" para que la respuesta sea permanente.',
+    modal_title: '💬 Responder al cliente',
+    modal_question: 'Pregunta del cliente',
+    modal_answer_label: 'Tu respuesta',
+    modal_faq_check: '📚 Añadir al FAQ',
+    modal_faq_sub: 'La IA responderá automáticamente a esta pregunta para todos los futuros clientes',
+    modal_email_check: 'Enviar tu respuesta por email al cliente (si hay dirección disponible)',
+    modal_send: '✅ Enviar respuesta',
+    modal_context: '💬 Contexto de la conversación',
+    role_client: '👤 Cliente', role_ai: '🤖 IA',
+    btn_reply: '💬 Responder', btn_edit: '✏️ Editar respuesta', btn_reply_anyway: '💬 Responder de todos modos',
+    btn_ignore: 'Ignorar',
+    status_answered: '✅ Respondida', status_ignored: '— Ignorada',
+    anon_client: 'Cliente anónimo',
+    answer_placeholder: 'Tu respuesta (en español)',
+    empty_pending: 'Sin preguntas pendientes',
+    empty_pending_sub: 'Tu IA gestiona todas las preguntas — o ningún cliente se ha puesto en contacto recientemente.',
+    empty_answered: 'Sin preguntas respondidas',
+    empty_answered_sub: 'Las preguntas a las que respondes aparecen aquí.',
+    empty_ignored: 'Sin preguntas ignoradas',
+    err_empty_answer: 'Escribe una respuesta antes de enviar',
+    success_faq: '✅ ¡Respondido y añadido al FAQ!',
+    success_reply: '✅ ¡Respuesta enviada!',
+    success_ignored: 'Pregunta ignorada',
+    email_to: 'La respuesta se enviará a',
+    logout_confirm: '¿Seguro que quieres cerrar sesión?',
+  },
+  pt: {
+    page_title: 'Mensagens — LocalReply',
+    h1: '💬 Mensagens',
+    subtitle: "Perguntas encaminhadas pela IA — responda para enriquecer a sua base de conhecimento",
+    tab_pending: 'A tratar', tab_answered: 'Respondidas', tab_ignored: 'Ignoradas',
+    stat_pending_label: 'A tratar com prioridade',
+    stat_answered_label: 'Respondidas', stat_answered_sub: 'Cliente notificado por email',
+    stat_faq_label: 'Adicionadas ao FAQ', stat_faq_sub: 'A IA já sabe responder',
+    tip_faq: 'Clique em "Adicionar ao FAQ" para tornar a resposta permanente.',
+    modal_title: '💬 Responder ao cliente',
+    modal_question: 'Pergunta do cliente',
+    modal_answer_label: 'A sua resposta',
+    modal_faq_check: '📚 Adicionar ao FAQ',
+    modal_faq_sub: 'A IA responderá automaticamente a esta pergunta para todos os futuros clientes',
+    modal_email_check: 'Enviar a sua resposta por email ao cliente (se endereço disponível)',
+    modal_send: '✅ Enviar resposta',
+    modal_context: '💬 Contexto da conversa',
+    role_client: '👤 Cliente', role_ai: '🤖 IA',
+    btn_reply: '💬 Responder', btn_edit: '✏️ Editar resposta', btn_reply_anyway: '💬 Responder mesmo assim',
+    btn_ignore: 'Ignorar',
+    status_answered: '✅ Respondida', status_ignored: '— Ignorada',
+    anon_client: 'Cliente anónimo',
+    answer_placeholder: 'A sua resposta (em português)',
+    empty_pending: 'Sem perguntas pendentes',
+    empty_pending_sub: 'A sua IA responde a todas as perguntas — ou nenhum cliente se manifestou recentemente.',
+    empty_answered: 'Sem perguntas respondidas',
+    empty_answered_sub: 'As perguntas a que responde aparecem aqui.',
+    empty_ignored: 'Sem perguntas ignoradas',
+    err_empty_answer: 'Escreva uma resposta antes de enviar',
+    success_faq: '✅ Respondido e adicionado ao FAQ!',
+    success_reply: '✅ Resposta enviada!',
+    success_ignored: 'Pergunta ignorada',
+    email_to: 'A resposta será enviada para',
+    logout_confirm: 'Tem a certeza que quer sair?',
+  },
+  nl: {
+    page_title: 'Berichten — LocalReply',
+    h1: '💬 Berichten',
+    subtitle: 'Door de AI doorgestuurde vragen — beantwoord ze om de kennisbasis te verrijken',
+    tab_pending: 'Te verwerken', tab_answered: 'Beantwoord', tab_ignored: 'Genegeerd',
+    stat_pending_label: 'Prioriteit te verwerken',
+    stat_answered_label: 'Beantwoord', stat_answered_sub: 'Klant per e-mail geïnformeerd',
+    stat_faq_label: 'Toegevoegd aan FAQ', stat_faq_sub: 'De AI kan nu antwoorden',
+    tip_faq: 'Klik op "Toevoegen aan FAQ" om het antwoord permanent te maken.',
+    modal_title: '💬 Antwoord aan klant',
+    modal_question: 'Klantvraag',
+    modal_answer_label: 'Uw antwoord',
+    modal_faq_check: '📚 Toevoegen aan FAQ',
+    modal_faq_sub: 'De AI beantwoordt deze vraag automatisch voor alle toekomstige klanten',
+    modal_email_check: 'Antwoord per e-mail naar de klant sturen (indien adres beschikbaar)',
+    modal_send: '✅ Antwoord versturen',
+    modal_context: '💬 Gesprekscontext',
+    role_client: '👤 Klant', role_ai: '🤖 AI',
+    btn_reply: '💬 Antwoorden', btn_edit: '✏️ Antwoord bewerken', btn_reply_anyway: '💬 Toch antwoorden',
+    btn_ignore: 'Negeren',
+    status_answered: '✅ Beantwoord', status_ignored: '— Genegeerd',
+    anon_client: 'Anonieme klant',
+    answer_placeholder: 'Uw antwoord (in het Nederlands)',
+    empty_pending: 'Geen openstaande vragen',
+    empty_pending_sub: 'Uw AI beantwoordt alle vragen — of geen klanten hebben zich recentelijk gemeld.',
+    empty_answered: 'Geen beantwoorde vragen',
+    empty_answered_sub: 'Vragen waarop u antwoordt verschijnen hier.',
+    empty_ignored: 'Geen genegeerde vragen',
+    err_empty_answer: 'Schrijf een antwoord voor het verzenden',
+    success_faq: '✅ Beantwoord en toegevoegd aan FAQ!',
+    success_reply: '✅ Antwoord verzonden!',
+    success_ignored: 'Vraag genegeerd',
+    email_to: 'Het antwoord wordt verzonden naar',
+    logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+  },
+  pl: {
+    page_title: 'Wiadomości — LocalReply',
+    h1: '💬 Wiadomości',
+    subtitle: 'Pytania przekazane przez AI — odpowiedz, aby wzbogacić bazę wiedzy',
+    tab_pending: 'Do obsługi', tab_answered: 'Odpowiedziane', tab_ignored: 'Zignorowane',
+    stat_pending_label: 'Priorytetowo do obsługi',
+    stat_answered_label: 'Odpowiedziane', stat_answered_sub: 'Klient powiadomiony emailem',
+    stat_faq_label: 'Dodane do FAQ', stat_faq_sub: 'AI teraz potrafi odpowiedzieć',
+    tip_faq: 'Kliknij "Dodaj do FAQ", aby odpowiedź była trwała.',
+    modal_title: '💬 Odpowiedź do klienta',
+    modal_question: 'Pytanie klienta',
+    modal_answer_label: 'Twoja odpowiedź',
+    modal_faq_check: '📚 Dodaj do FAQ',
+    modal_faq_sub: 'AI automatycznie odpowie na to pytanie wszystkim przyszłym klientom',
+    modal_email_check: 'Wyślij odpowiedź emailem do klienta (jeśli adres jest dostępny)',
+    modal_send: '✅ Wyślij odpowiedź',
+    modal_context: '💬 Kontekst rozmowy',
+    role_client: '👤 Klient', role_ai: '🤖 AI',
+    btn_reply: '💬 Odpowiedz', btn_edit: '✏️ Edytuj odpowiedź', btn_reply_anyway: '💬 Odpowiedz mimo to',
+    btn_ignore: 'Ignoruj',
+    status_answered: '✅ Odpowiedziane', status_ignored: '— Zignorowane',
+    anon_client: 'Anonimowy klient',
+    answer_placeholder: 'Twoja odpowiedź (po polsku)',
+    empty_pending: 'Brak oczekujących pytań',
+    empty_pending_sub: 'Twoja AI odpowiada na wszystkie pytania — lub żaden klient nie odezwał się ostatnio.',
+    empty_answered: 'Brak odpowiedzianych pytań',
+    empty_answered_sub: 'Pytania, na które odpowiadasz, pojawiają się tutaj.',
+    empty_ignored: 'Brak ignorowanych pytań',
+    err_empty_answer: 'Napisz odpowiedź przed wysłaniem',
+    success_faq: '✅ Odpowiedziano i dodano do FAQ!',
+    success_reply: '✅ Odpowiedź wysłana!',
+    success_ignored: 'Pytanie zignorowane',
+    email_to: 'Odpowiedź zostanie wysłana do',
+    logout_confirm: 'Czy na pewno chcesz się wylogować?',
+  },
+};
+
+(function() {
+  const lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const t = DASH_MSG_T[DASH_MSG_T.hasOwnProperty(lang) ? lang : 'fr'];
+  window._dmt = t;
+  document.title = t.page_title;
+
+  function applyMsgLang() {
+    const ids = {
+      'msg-h1': t.h1, 'msg-subtitle': t.subtitle,
+      'tab-pending-label': t.tab_pending,
+      'tab-answered-label': t.tab_answered,
+      'tab-ignored-label': t.tab_ignored,
+      'stat-pending-label': t.stat_pending_label,
+      'stat-answered-label': t.stat_answered_label,
+      'stat-answered-sub': t.stat_answered_sub,
+      'stat-faq-label': t.stat_faq_label,
+      'stat-faq-sub': t.stat_faq_sub,
+      'msg-tip-faq': t.tip_faq,
+    };
+    Object.entries(ids).forEach(([id, txt]) => {
+      const el = document.getElementById(id);
+      if (el && txt) el.textContent = txt;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyMsgLang);
+  } else {
+    applyMsgLang();
+  }
+})();
 </script>
 
 </body>
