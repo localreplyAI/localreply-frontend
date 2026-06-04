@@ -99,7 +99,7 @@
     <div style="display:flex;align-items:center;gap:20px;margin-bottom:28px;flex-wrap:wrap;">
       <div id="avatarCircle" style="width:64px;height:64px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;flex-shrink:0;box-shadow:0 6px 20px rgba(0,212,255,0.3);">?</div>
       <div>
-        <h1 id="headerName" style="font-size:clamp(22px,3vw,32px);font-weight:800;color:#fff;margin:0 0 3px;letter-spacing:-0.5px;">Mon compte</h1>
+        <h1 id="headerName" style="font-size:clamp(22px,3vw,32px);font-weight:800;color:#fff;margin:0 0 3px;letter-spacing:-0.5px;"><span id="mc-h1">Mon compte</span></h1>
         <p id="headerEmail" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;"></p>
       </div>
       <div style="margin-left:auto;">
@@ -115,34 +115,34 @@
         <div class="ac-card-header">
           <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">👤</div>
           <div>
-            <div class="ac-card-title">Informations personnelles</div>
-            <div class="ac-card-sub">Vos coordonnées de compte</div>
+            <div id="mc-title-info" class="ac-card-title">Informations personnelles</div>
+            <div class="ac-card-sub" id="mc-sub-info">Vos coordonnées de compte</div>
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:14px;">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="ac-field">
-              <label class="ac-label">Prénom</label>
+              <label id="mc-lbl-firstname" class="ac-label">Prénom</label>
               <input id="accountFirstName" type="text" placeholder="Prénom" class="ac-input">
             </div>
             <div class="ac-field">
-              <label class="ac-label">Nom</label>
+              <label id="mc-lbl-lastname" class="ac-label">Nom</label>
               <input id="accountLastName" type="text" placeholder="Nom" class="ac-input">
             </div>
           </div>
           <div class="ac-field">
-            <label class="ac-label">Email <span style="font-size:10px;color:rgba(255,255,255,0.3);font-weight:400;">(non modifiable)</span></label>
+            <label class="ac-label"><span id="mc-lbl-email">Email</span> <span id="mc-lbl-email-sub" style="font-size:10px;color:rgba(255,255,255,0.3);font-weight:400;">(non modifiable)</span></label>
             <div style="position:relative;">
               <input id="accountEmail" type="email" readonly class="ac-input" style="padding-right:40px;opacity:0.6;cursor:default;">
               <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.4;">🔒</span>
             </div>
           </div>
           <div class="ac-field">
-            <label class="ac-label">Téléphone</label>
+            <label id="mc-lbl-phone" class="ac-label">Téléphone</label>
             <input id="accountPhone" type="tel" placeholder="+41 79 123 45 67" class="ac-input">
           </div>
         </div>
-        <button onclick="saveAccountInfo()" class="ac-btn-save" style="margin-top:18px;">💾 Enregistrer</button>
+        <button onclick="saveAccountInfo()" class="ac-btn-save" style="margin-top:18px;" id="mc-save-info">💾 Enregistrer</button>
       </div>
 
       <!-- COLONNE DROITE -->
@@ -153,13 +153,13 @@
           <div class="ac-card-header">
             <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🔒</div>
             <div>
-              <div class="ac-card-title">Mot de passe</div>
-              <div class="ac-card-sub">Sécurisez votre accès</div>
+              <div class="ac-card-title" id="mc-title-pwd">Mot de passe</div>
+              <div id="mc-sub-pwd" class="ac-card-sub">Sécurisez votre accès</div>
             </div>
           </div>
           <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 0 14px;line-height:1.6;">Pour modifier votre mot de passe, cliquez ci-dessous. Un email de réinitialisation vous sera envoyé.</p>
           <a href="/forgot-password" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(0,82,204,0.3);">
-            🔒 Changer le mot de passe
+            <span id="mc-change-pwd">🔒 Changer le mot de passe</span>
           </a>
         </div>
       </div>
@@ -170,35 +170,35 @@
       <div class="ac-card-header">
         <div class="ac-card-icon" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🔔</div>
         <div>
-          <div class="ac-card-title">Préférences de notifications</div>
-          <div class="ac-card-sub">Choisissez comment être alerté pour chaque événement</div>
+          <div class="ac-card-title" id="mc-title-notif">Préférences de notifications</div>
+          <div id="mc-sub-notif" class="ac-card-sub">Choisissez comment être alerté pour chaque événement</div>
         </div>
       </div>
 
       <!-- Email destination -->
       <div style="margin-bottom:20px;">
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">📧 Envoyer les notifications email à</div>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;" id="mc-notif-email-to">📧 Envoyer les notifications email à</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <label class="notif-radio" id="labelNotifAccount">
             <input type="radio" name="notifEmailTarget" id="notifEmailAccount" value="account" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:#fff;">Email du compte</div>
+              <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-notif-account">Email du compte</div>
               <div id="accountEmailPreview" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">—</div>
             </div>
-            <span style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:2px 8px;border-radius:6px;font-weight:600;flex-shrink:0;">Recommandé</span>
+            <span style="font-size:11px;background:rgba(0,212,255,0.1);color:#00D4FF;padding:2px 8px;border-radius:6px;font-weight:600;flex-shrink:0;" id="mc-notif-recommended">Recommandé</span>
           </label>
           <label class="notif-radio" id="labelNotifContact">
             <input type="radio" name="notifEmailTarget" id="notifEmailContact" value="contact" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:#fff;">Email du commerce</div>
-              <div id="contactEmailPreview" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Défini dans Configuration</div>
+              <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-notif-contact">Email du commerce</div>
+              <div id="contactEmailPreview" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;" id="mc-notif-contact-sub">Défini dans Configuration</div>
             </div>
           </label>
           <label class="notif-radio" id="labelNotifBoth">
             <input type="radio" name="notifEmailTarget" id="notifEmailBoth" value="both" onchange="updateEmailPreview()" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;">
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:#fff;">Les deux</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;">Compte + commerce</div>
+              <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-notif-both">Les deux</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;" id="mc-notif-both-sub">Compte + commerce</div>
             </div>
           </label>
         </div>
@@ -206,7 +206,7 @@
 
       <!-- Tableau granulaire -->
       <div style="margin-bottom:16px;">
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">Canal de notification par événement</div>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;" id="mc-notif-channel">Canal de notification par événement</div>
 
         <!-- Header colonnes -->
         <div style="display:grid;grid-template-columns:1fr 72px 72px;padding:0 14px 8px;gap:8px;">
@@ -221,8 +221,8 @@
         <!-- Ligne 1 : Nouvelle demande RDV -->
         <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
           <div>
-            <div style="font-size:13px;font-weight:600;color:#fff;">📅 Nouvelle demande RDV</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Quand un client soumet une demande</div>
+            <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-event-rdv">📅 Nouvelle demande RDV</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;" id="mc-event-rdv-sub">Quand un client soumet une demande</div>
           </div>
           <div style="display:flex;justify-content:center;">
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
@@ -245,8 +245,8 @@
         <!-- Ligne 2 : Demande urgente -->
         <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
           <div>
-            <div style="font-size:13px;font-weight:600;color:#fff;">🔴 Demande urgente</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Client avec une urgence détectée par l'IA</div>
+            <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-event-urgent">🔴 Demande urgente</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;" id="mc-event-urgent-sub">Client avec une urgence détectée par l'IA</div>
           </div>
           <div style="display:flex;justify-content:center;">
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
@@ -269,8 +269,8 @@
         <!-- Ligne 3 : Question sans réponse -->
         <div class="notif-row-grid" style="display:grid;grid-template-columns:1fr 72px 72px;align-items:center;padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);gap:8px;">
           <div>
-            <div style="font-size:13px;font-weight:600;color:#fff;">❓ Question sans réponse</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">L'IA ne sait pas répondre à un client</div>
+            <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-event-unknown">❓ Question sans réponse</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;" id="mc-event-unknown-sub">L'IA ne sait pas répondre à un client</div>
           </div>
           <div style="display:flex;justify-content:center;">
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;">
@@ -294,13 +294,13 @@
         <div id="smsStandardNote" style="display:none;margin-top:12px;padding:10px 14px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;display:none;align-items:center;gap:10px;">
           <span style="font-size:16px;">⭐</span>
           <div style="font-size:12px;color:rgba(255,255,255,0.6);">Les notifications SMS sont réservées au plan Pro.
-            <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;margin-left:4px;">Passer au Pro →</a>
+            <a href="/abonnement" style="color:#F59E0B;font-weight:600;text-decoration:none;margin-left:4px;" id="mc-pro-link">Passer au Pro →</a>
           </div>
         </div>
 
         <!-- Résumés IA -->
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
-          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">📊 Résumés IA par email</div>
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;" id="mc-title-summary">📊 Résumés IA par email</div>
           <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6;">Recevez un résumé de l'activité de votre assistant : conversations, questions fréquentes, opportunités détectées.</div>
 
           <div style="display:flex;flex-direction:column;gap:8px;" id="summaryFreqOptions">
@@ -310,7 +310,7 @@
               <input type="radio" name="summaryFreq" id="summaryFreq_none" value="none" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
               <div>
                 <div style="font-size:13px;font-weight:600;color:#fff;">Aucun</div>
-                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Pas de résumé envoyé par email</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);" id="mc-sum-none">Pas de résumé envoyé par email</div>
               </div>
             </label>
 
@@ -318,8 +318,8 @@
             <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;cursor:pointer;transition:all .2s;" id="summaryOpt_weekly">
               <input type="radio" name="summaryFreq" id="summaryFreq_weekly" value="weekly" style="accent-color:#00D4FF;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
               <div>
-                <div style="font-size:13px;font-weight:600;color:#fff;">Hebdomadaire</div>
-                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);">Tous les lundis matin — résumé de la semaine écoulée</div>
+                <div style="font-size:13px;font-weight:600;color:#fff;" id="mc-sum-weekly">Hebdomadaire</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);" id="mc-sum-weekly-sub">Tous les lundis matin — résumé de la semaine écoulée</div>
               </div>
             </label>
 
@@ -329,10 +329,10 @@
               <input type="radio" name="summaryFreq" id="summaryFreq_daily" value="daily" style="accent-color:#F59E0B;width:15px;height:15px;flex-shrink:0;" onchange="updateSummaryPreview()">
               <div style="flex:1;">
                 <div style="display:flex;align-items:center;gap:7px;">
-                  <span style="font-size:13px;font-weight:600;" id="summaryDailyLabel">Quotidien</span>
+                  <span style="font-size:13px;font-weight:600;" id="summaryDailyLabel"><span id="mc-sum-daily">Quotidien</span></span>
                   <span style="font-size:10px;font-weight:700;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:2px 7px;border-radius:5px;">PRO</span>
                 </div>
-                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);" id="summaryDailySub">Chaque matin — résumé de la veille</div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.4);" id="summaryDailySub" id="mc-sum-daily-sub">Chaque matin — résumé de la veille</div>
               </div>
             </label>
 
@@ -349,7 +349,7 @@
 
       </div>
 
-      <button onclick="saveNotifications()" class="ac-btn-save">💾 Enregistrer les préférences</button>
+      <button onclick="saveNotifications()" class="ac-btn-save" id="mc-save-notif">💾 Enregistrer les préférences</button>
     </div>
 
     <!-- ZONE DANGER -->
@@ -554,7 +554,7 @@ async function saveAccountInfo() {
       document.getElementById('headerName').textContent = [fn,ln].filter(Boolean).join(' ');
       document.getElementById('avatarCircle').textContent = (fn?fn[0]:'?').toUpperCase();
     }
-    showNotification('✅ Informations enregistrées !');
+    showNotification((_mct||DASH_MC_T.fr).save_info_ok);
   } catch(e) { showNotification('❌ '+e.message,'error'); }
 }
 
@@ -586,7 +586,7 @@ async function saveNotifications() {
         summary_frequency: summaryFreq
       });
     }
-    showNotification('✅ Préférences enregistrées !');
+    showNotification((_mct||DASH_MC_T.fr).save_notif_ok);
   } catch(e) { showNotification('❌ '+e.message,'error'); }
 }
 
@@ -649,7 +649,7 @@ async function loadNotificationPrefs() {
   try {
     const ce = config?.business?.email||'';
     const el = document.getElementById('contactEmailPreview');
-    if (el) el.textContent = ce||'Non défini dans Configuration';
+    if (el) el.textContent = ce||(_mct||DASH_MC_T.fr).notif_missing;
     if (!ce) { const l=document.getElementById('labelNotifContact'); if(l){l.style.opacity='0.4';l.style.pointerEvents='none';} }
   } catch {}
 }
@@ -671,7 +671,7 @@ function toggleMobileMenu() {
   if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
-function logout() { if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';} }
+function logout() { if(confirm((_mct||DASH_MC_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';} }
 
 async function loadSidebarInfo() {
   try {
@@ -757,6 +757,356 @@ document.addEventListener('DOMContentLoaded', async () => {
     _sb(_mc,'sbBadgeMsg','bnBadgeMsg');_sb(_rc,'sbBadgeRdv','bnBadgeRdv');
   } catch {}
 });
+</script>
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+const DASH_MC_T = {
+  fr:{
+    page_title:'Mon compte — LocalReply',
+    h1:'Mon compte',
+    subtitle:'Gérez vos informations et préférences',
+    title_info:'Informations personnelles',
+    sub_info:'Vos coordonnées de compte',
+    lbl_firstname:'Prénom', lbl_lastname:'Nom',
+    lbl_email:'Email', lbl_email_sub:'(non modifiable)',
+    lbl_phone:'Téléphone',
+    save_info:'💾 Enregistrer',
+    title_pwd:'Mot de passe', sub_pwd:'Sécurisez votre accès',
+    change_pwd:'🔒 Changer le mot de passe',
+    title_notif:'Préférences de notifications',
+    sub_notif:'Choisissez comment être alerté pour chaque événement',
+    notif_email_to:'📧 Envoyer les notifications email à',
+    notif_account:'Email du compte', notif_recommended:'Recommandé',
+    notif_contact:'Email du commerce', notif_contact_sub:'Défini dans Configuration',
+    notif_both:'Les deux', notif_both_sub:'Compte + commerce',
+    notif_channel:'Canal de notification par événement',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Nouvelle demande RDV', event_rdv_sub:'Quand un client soumet une demande',
+    event_urgent:'🔴 Demande urgente', event_urgent_sub:"Client avec une urgence détectée par l'IA",
+    event_unknown:'❓ Question sans réponse', event_unknown_sub:"L'IA ne sait pas répondre à un client",
+    pro_link:'Passer au Pro →',
+    title_summary:'📊 Résumés IA par email',
+    sum_none:'Pas de résumé envoyé par email',
+    sum_weekly:'Hebdomadaire', sum_weekly_sub:'Tous les lundis matin — résumé de la semaine écoulée',
+    sum_daily:'Quotidien', sum_daily_sub:'Chaque matin — résumé de la veille',
+    sum_pro_note:'⭐ Les résumés quotidiens sont disponibles avec le Plan Pro.',
+    save_notif:'💾 Enregistrer les préférences',
+    title_danger:'Zone dangereuse',
+    delete_account:'🗑️ Supprimer mon compte',
+    delete_confirm_placeholder:'Tapez SUPPRIMER pour confirmer',
+    save_info_ok:'✅ Informations enregistrées !',
+    save_notif_ok:'✅ Préférences enregistrées !',
+    notif_missing:'Non défini dans Configuration',
+    logout_confirm:"Êtes-vous sûr de vouloir vous déconnecter ?",
+  },
+  en:{
+    page_title:'My account — LocalReply',
+    h1:'My account',
+    subtitle:'Manage your information and preferences',
+    title_info:'Account information',
+    sub_info:'Your account details',
+    lbl_firstname:'First name', lbl_lastname:'Last name',
+    lbl_email:'Email', lbl_email_sub:'(cannot be changed)',
+    lbl_phone:'Phone',
+    save_info:'💾 Save',
+    title_pwd:'Password', sub_pwd:'Secure your access',
+    change_pwd:'🔒 Change password',
+    title_notif:'Notification preferences',
+    sub_notif:'Choose how to be alerted for each event',
+    notif_email_to:'📧 Send email notifications to',
+    notif_account:'Account email', notif_recommended:'Recommended',
+    notif_contact:'Business email', notif_contact_sub:'Set in Configuration',
+    notif_both:'Both', notif_both_sub:'Account + business email',
+    notif_channel:'Notification channel by event type',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 New appointment request', event_rdv_sub:'When a customer submits a request',
+    event_urgent:'🔴 Detected urgency', event_urgent_sub:'Customer with an urgency detected by the AI',
+    event_unknown:'❓ Unanswered question', event_unknown_sub:"The AI can't answer a customer",
+    pro_link:'Upgrade to Pro →',
+    title_summary:'📊 AI summaries by email',
+    sum_none:'No summary sent by email',
+    sum_weekly:'Weekly', sum_weekly_sub:'Every Monday morning — last week\'s summary',
+    sum_daily:'Daily', sum_daily_sub:'Every morning — yesterday\'s summary',
+    sum_pro_note:'⭐ Daily summaries are available with the Pro Plan.',
+    save_notif:'💾 Save preferences',
+    title_danger:'Danger zone',
+    delete_account:'🗑️ Delete my account',
+    delete_confirm_placeholder:'Type DELETE to confirm',
+    save_info_ok:'✅ Information saved!',
+    save_notif_ok:'✅ Preferences saved!',
+    notif_missing:'Not set in Configuration',
+    logout_confirm:'Are you sure you want to sign out?',
+  },
+  de:{
+    page_title:'Mein Konto — LocalReply',
+    h1:'Mein Konto',
+    subtitle:'Verwalten Sie Ihre Informationen und Präferenzen',
+    title_info:'Kontoinformationen',
+    sub_info:'Ihre Kontodaten',
+    lbl_firstname:'Vorname', lbl_lastname:'Nachname',
+    lbl_email:'E-Mail', lbl_email_sub:'(nicht änderbar)',
+    lbl_phone:'Telefon',
+    save_info:'💾 Speichern',
+    title_pwd:'Passwort', sub_pwd:'Sichern Sie Ihren Zugang',
+    change_pwd:'🔒 Passwort ändern',
+    title_notif:'Benachrichtigungseinstellungen',
+    sub_notif:'Wählen Sie, wie Sie für jedes Ereignis benachrichtigt werden',
+    notif_email_to:'📧 E-Mail-Benachrichtigungen senden an',
+    notif_account:'Konto-E-Mail', notif_recommended:'Empfohlen',
+    notif_contact:'Unternehmens-E-Mail', notif_contact_sub:'In Konfiguration festgelegt',
+    notif_both:'Beide', notif_both_sub:'Konto + Unternehmens-E-Mail',
+    notif_channel:'Benachrichtigungskanal nach Ereignistyp',
+    notif_col_email:'📧 E-Mail', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Neue Terminanfrage', event_rdv_sub:'Wenn ein Kunde eine Anfrage sendet',
+    event_urgent:'🔴 Erkannte Dringlichkeit', event_urgent_sub:'Kunde mit von KI erkannter Dringlichkeit',
+    event_unknown:'❓ Unbeantwortete Frage', event_unknown_sub:'Die KI kann einem Kunden nicht antworten',
+    pro_link:'Auf Pro upgraden →',
+    title_summary:'📊 KI-Zusammenfassungen per E-Mail',
+    sum_none:'Keine Zusammenfassung per E-Mail',
+    sum_weekly:'Wöchentlich', sum_weekly_sub:'Jeden Montagmorgen — Zusammenfassung der letzten Woche',
+    sum_daily:'Täglich', sum_daily_sub:'Jeden Morgen — Zusammenfassung von gestern',
+    sum_pro_note:'⭐ Tägliche Zusammenfassungen sind mit dem Pro-Plan verfügbar.',
+    save_notif:'💾 Einstellungen speichern',
+    title_danger:'Gefahrenzone',
+    delete_account:'🗑️ Mein Konto löschen',
+    delete_confirm_placeholder:'Geben Sie LÖSCHEN ein zur Bestätigung',
+    save_info_ok:'✅ Informationen gespeichert!',
+    save_notif_ok:'✅ Einstellungen gespeichert!',
+    notif_missing:'Nicht in Konfiguration festgelegt',
+    logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
+  },
+  it:{
+    page_title:'Il mio account — LocalReply',
+    h1:'Il mio account',
+    subtitle:'Gestisci le tue informazioni e preferenze',
+    title_info:"Informazioni dell'account",
+    sub_info:'I tuoi dati account',
+    lbl_firstname:'Nome', lbl_lastname:'Cognome',
+    lbl_email:'Email', lbl_email_sub:'(non modificabile)',
+    lbl_phone:'Telefono',
+    save_info:'💾 Salva',
+    title_pwd:'Password', sub_pwd:'Proteggi il tuo accesso',
+    change_pwd:'🔒 Cambia password',
+    title_notif:'Preferenze notifiche',
+    sub_notif:'Scegli come essere avvisato per ogni evento',
+    notif_email_to:'📧 Invia notifiche email a',
+    notif_account:"Email dell'account", notif_recommended:'Consigliato',
+    notif_contact:'Email del business', notif_contact_sub:'Impostato in Configurazione',
+    notif_both:'Entrambe', notif_both_sub:'Account + email business',
+    notif_channel:'Canale di notifica per tipo di evento',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Nuova richiesta di appuntamento', event_rdv_sub:'Quando un cliente invia una richiesta',
+    event_urgent:'🔴 Urgenza rilevata', event_urgent_sub:"Cliente con urgenza rilevata dall'IA",
+    event_unknown:'❓ Domanda senza risposta', event_unknown_sub:"L'IA non sa rispondere a un cliente",
+    pro_link:'Passa a Pro →',
+    title_summary:'📊 Riepiloghi IA via email',
+    sum_none:'Nessun riepilogo inviato via email',
+    sum_weekly:'Settimanale', sum_weekly_sub:'Ogni lunedì mattina — riepilogo della settimana scorsa',
+    sum_daily:'Quotidiano', sum_daily_sub:'Ogni mattina — riepilogo di ieri',
+    sum_pro_note:'⭐ I riepiloghi quotidiani sono disponibili con il Piano Pro.',
+    save_notif:'💾 Salva preferenze',
+    title_danger:'Zona pericolosa',
+    delete_account:'🗑️ Elimina il mio account',
+    delete_confirm_placeholder:'Digita ELIMINA per confermare',
+    save_info_ok:'✅ Informazioni salvate!',
+    save_notif_ok:'✅ Preferenze salvate!',
+    notif_missing:'Non impostato in Configurazione',
+    logout_confirm:'Sei sicuro di voler uscire?',
+  },
+  es:{
+    page_title:'Mi cuenta — LocalReply',
+    h1:'Mi cuenta',
+    subtitle:'Gestiona tu información y preferencias',
+    title_info:'Información de la cuenta',
+    sub_info:'Tus datos de cuenta',
+    lbl_firstname:'Nombre', lbl_lastname:'Apellido',
+    lbl_email:'Email', lbl_email_sub:'(no modificable)',
+    lbl_phone:'Teléfono',
+    save_info:'💾 Guardar',
+    title_pwd:'Contraseña', sub_pwd:'Protege tu acceso',
+    change_pwd:'🔒 Cambiar contraseña',
+    title_notif:'Preferencias de notificaciones',
+    sub_notif:'Elige cómo ser alertado para cada evento',
+    notif_email_to:'📧 Enviar notificaciones por email a',
+    notif_account:'Email de la cuenta', notif_recommended:'Recomendado',
+    notif_contact:'Email del negocio', notif_contact_sub:'Definido en Configuración',
+    notif_both:'Ambos', notif_both_sub:'Cuenta + email negocio',
+    notif_channel:'Canal de notificación por tipo de evento',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Nueva solicitud de cita', event_rdv_sub:'Cuando un cliente envía una solicitud',
+    event_urgent:'🔴 Urgencia detectada', event_urgent_sub:'Cliente con urgencia detectada por la IA',
+    event_unknown:'❓ Pregunta sin respuesta', event_unknown_sub:'La IA no sabe responder a un cliente',
+    pro_link:'Pasar a Pro →',
+    title_summary:'📊 Resúmenes IA por email',
+    sum_none:'Sin resumen enviado por email',
+    sum_weekly:'Semanal', sum_weekly_sub:'Cada lunes por la mañana — resumen de la semana pasada',
+    sum_daily:'Diario', sum_daily_sub:'Cada mañana — resumen de ayer',
+    sum_pro_note:'⭐ Los resúmenes diarios están disponibles con el Plan Pro.',
+    save_notif:'💾 Guardar preferencias',
+    title_danger:'Zona peligrosa',
+    delete_account:'🗑️ Eliminar mi cuenta',
+    delete_confirm_placeholder:'Escribe ELIMINAR para confirmar',
+    save_info_ok:'✅ ¡Información guardada!',
+    save_notif_ok:'✅ ¡Preferencias guardadas!',
+    notif_missing:'No definido en Configuración',
+    logout_confirm:'¿Seguro que quieres cerrar sesión?',
+  },
+  pt:{
+    page_title:'A minha conta — LocalReply',
+    h1:'A minha conta',
+    subtitle:'Gira as suas informações e preferências',
+    title_info:'Informações da conta',
+    sub_info:'Os seus dados de conta',
+    lbl_firstname:'Nome próprio', lbl_lastname:'Apelido',
+    lbl_email:'Email', lbl_email_sub:'(não modificável)',
+    lbl_phone:'Telefone',
+    save_info:'💾 Guardar',
+    title_pwd:'Palavra-passe', sub_pwd:'Proteja o seu acesso',
+    change_pwd:'🔒 Alterar palavra-passe',
+    title_notif:'Preferências de notificações',
+    sub_notif:'Escolha como ser alertado para cada evento',
+    notif_email_to:'📧 Enviar notificações por email para',
+    notif_account:'Email da conta', notif_recommended:'Recomendado',
+    notif_contact:'Email do negócio', notif_contact_sub:'Definido na Configuração',
+    notif_both:'Ambos', notif_both_sub:'Conta + email negócio',
+    notif_channel:'Canal de notificação por tipo de evento',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Novo pedido de marcação', event_rdv_sub:'Quando um cliente envia um pedido',
+    event_urgent:'🔴 Urgência detetada', event_urgent_sub:'Cliente com urgência detetada pela IA',
+    event_unknown:'❓ Pergunta sem resposta', event_unknown_sub:'A IA não sabe responder a um cliente',
+    pro_link:'Passar para Pro →',
+    title_summary:'📊 Resumos IA por email',
+    sum_none:'Sem resumo enviado por email',
+    sum_weekly:'Semanal', sum_weekly_sub:'Todas as segundas de manhã — resumo da semana passada',
+    sum_daily:'Diário', sum_daily_sub:'Todas as manhãs — resumo de ontem',
+    sum_pro_note:'⭐ Os resumos diários estão disponíveis com o Plano Pro.',
+    save_notif:'💾 Guardar preferências',
+    title_danger:'Zona de perigo',
+    delete_account:'🗑️ Eliminar a minha conta',
+    delete_confirm_placeholder:'Escreva ELIMINAR para confirmar',
+    save_info_ok:'✅ Informações guardadas!',
+    save_notif_ok:'✅ Preferências guardadas!',
+    notif_missing:'Não definido na Configuração',
+    logout_confirm:'Tem a certeza que quer sair?',
+  },
+  nl:{
+    page_title:'Mijn account — LocalReply',
+    h1:'Mijn account',
+    subtitle:'Beheer uw informatie en voorkeuren',
+    title_info:'Accountinformatie',
+    sub_info:'Uw accountgegevens',
+    lbl_firstname:'Voornaam', lbl_lastname:'Achternaam',
+    lbl_email:'E-mail', lbl_email_sub:'(niet wijzigbaar)',
+    lbl_phone:'Telefoon',
+    save_info:'💾 Opslaan',
+    title_pwd:'Wachtwoord', sub_pwd:'Beveilig uw toegang',
+    change_pwd:'🔒 Wachtwoord wijzigen',
+    title_notif:'Meldingsvoorkeuren',
+    sub_notif:'Kies hoe u voor elk evenement gewaarschuwd wilt worden',
+    notif_email_to:'📧 E-mailmeldingen sturen naar',
+    notif_account:'Account-e-mail', notif_recommended:'Aanbevolen',
+    notif_contact:'Bedrijfs-e-mail', notif_contact_sub:'Ingesteld in Configuratie',
+    notif_both:'Beide', notif_both_sub:'Account + bedrijfs-e-mail',
+    notif_channel:'Meldingskanaal per gebeurtenistype',
+    notif_col_email:'📧 E-mail', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Nieuw afspraakverzoek', event_rdv_sub:'Wanneer een klant een verzoek indient',
+    event_urgent:'🔴 Urgentie gedetecteerd', event_urgent_sub:'Klant met door AI gedetecteerde urgentie',
+    event_unknown:'❓ Onbeantwoorde vraag', event_unknown_sub:'De AI kan een klant niet antwoorden',
+    pro_link:'Upgraden naar Pro →',
+    title_summary:'📊 AI-samenvattingen per e-mail',
+    sum_none:'Geen samenvatting per e-mail verzonden',
+    sum_weekly:'Wekelijks', sum_weekly_sub:'Elke maandagochtend — samenvatting van de afgelopen week',
+    sum_daily:'Dagelijks', sum_daily_sub:'Elke ochtend — samenvatting van gisteren',
+    sum_pro_note:'⭐ Dagelijkse samenvattingen zijn beschikbaar met het Pro-plan.',
+    save_notif:'💾 Voorkeuren opslaan',
+    title_danger:'Gevaarlijke zone',
+    delete_account:'🗑️ Mijn account verwijderen',
+    delete_confirm_placeholder:'Typ VERWIJDEREN ter bevestiging',
+    save_info_ok:'✅ Informatie opgeslagen!',
+    save_notif_ok:'✅ Voorkeuren opgeslagen!',
+    notif_missing:'Niet ingesteld in Configuratie',
+    logout_confirm:'Weet u zeker dat u wilt uitloggen?',
+  },
+  pl:{
+    page_title:'Moje konto — LocalReply',
+    h1:'Moje konto',
+    subtitle:'Zarządzaj swoimi informacjami i preferencjami',
+    title_info:'Informacje o koncie',
+    sub_info:'Twoje dane konta',
+    lbl_firstname:'Imię', lbl_lastname:'Nazwisko',
+    lbl_email:'Email', lbl_email_sub:'(nie można zmienić)',
+    lbl_phone:'Telefon',
+    save_info:'💾 Zapisz',
+    title_pwd:'Hasło', sub_pwd:'Zabezpiecz swój dostęp',
+    change_pwd:'🔒 Zmień hasło',
+    title_notif:'Preferencje powiadomień',
+    sub_notif:'Wybierz, jak chcesz być powiadamiany o każdym zdarzeniu',
+    notif_email_to:'📧 Wyślij powiadomienia email do',
+    notif_account:'Email konta', notif_recommended:'Zalecane',
+    notif_contact:'Email firmy', notif_contact_sub:'Ustawione w Konfiguracji',
+    notif_both:'Oba', notif_both_sub:'Konto + email firmy',
+    notif_channel:'Kanał powiadomień według rodzaju zdarzenia',
+    notif_col_email:'📧 Email', notif_col_sms:'📱 SMS',
+    event_rdv:'📅 Nowe żądanie wizyty', event_rdv_sub:'Gdy klient składa żądanie',
+    event_urgent:'🔴 Wykryta pilność', event_urgent_sub:'Klient z pilnością wykrytą przez AI',
+    event_unknown:'❓ Pytanie bez odpowiedzi', event_unknown_sub:'AI nie może odpowiedzieć klientowi',
+    pro_link:'Przejdź na Pro →',
+    title_summary:'📊 Podsumowania AI emailem',
+    sum_none:'Brak podsumowania wysyłanego emailem',
+    sum_weekly:'Tygodniowe', sum_weekly_sub:'Co poniedziałek rano — podsumowanie ostatniego tygodnia',
+    sum_daily:'Codzienne', sum_daily_sub:'Co rano — podsumowanie wczoraj',
+    sum_pro_note:'⭐ Codzienne podsumowania są dostępne z Planem Pro.',
+    save_notif:'💾 Zapisz preferencje',
+    title_danger:'Strefa niebezpieczna',
+    delete_account:'🗑️ Usuń moje konto',
+    delete_confirm_placeholder:'Wpisz USUŃ aby potwierdzić',
+    save_info_ok:'✅ Informacje zapisane!',
+    save_notif_ok:'✅ Preferencje zapisane!',
+    notif_missing:'Nieskonfigurowane w Konfiguracji',
+    logout_confirm:'Czy na pewno chcesz się wylogować?',
+  },
+};
+
+(function(){
+  const lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+  const t=DASH_MC_T[DASH_MC_T.hasOwnProperty(lang)?lang:'fr'];
+  window._mct=t;
+  document.title=t.page_title;
+  function apply(){
+    const ids={
+      'mc-h1':t.h1,'mc-subtitle':t.subtitle,
+      'mc-title-info':t.title_info,'mc-sub-info':t.sub_info,
+      'mc-lbl-firstname':t.lbl_firstname,'mc-lbl-lastname':t.lbl_lastname,
+      'mc-lbl-email':t.lbl_email,'mc-lbl-email-sub':t.lbl_email_sub,
+      'mc-lbl-phone':t.lbl_phone,'mc-save-info':t.save_info,
+      'mc-title-pwd':t.title_pwd,'mc-sub-pwd':t.sub_pwd,'mc-change-pwd':t.change_pwd,
+      'mc-title-notif':t.title_notif,'mc-sub-notif':t.sub_notif,
+      'mc-notif-email-to':t.notif_email_to,
+      'mc-notif-account':t.notif_account,'mc-notif-recommended':t.notif_recommended,
+      'mc-notif-contact':t.notif_contact,'mc-notif-contact-sub':t.notif_contact_sub,
+      'mc-notif-both':t.notif_both,'mc-notif-both-sub':t.notif_both_sub,
+      'mc-notif-channel':t.notif_channel,
+      'mc-notif-col-email':t.notif_col_email,'mc-notif-col-sms':t.notif_col_sms,
+      'mc-event-rdv':t.event_rdv,'mc-event-rdv-sub':t.event_rdv_sub,
+      'mc-event-urgent':t.event_urgent,'mc-event-urgent-sub':t.event_urgent_sub,
+      'mc-event-unknown':t.event_unknown,'mc-event-unknown-sub':t.event_unknown_sub,
+      'mc-pro-link':t.pro_link,
+      'mc-title-summary':t.title_summary,
+      'mc-sum-none':t.sum_none,
+      'mc-sum-weekly':t.sum_weekly,'mc-sum-weekly-sub':t.sum_weekly_sub,
+      'mc-sum-daily':t.sum_daily,'mc-sum-daily-sub':t.sum_daily_sub,
+      'mc-sum-pro-note':t.sum_pro_note,
+      'mc-save-notif':t.save_notif,
+      'mc-title-danger':t.title_danger,
+      'mc-delete-account':t.delete_account,
+    };
+    Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
+    const dci=document.getElementById('deleteConfirmInput');
+    if(dci)dci.placeholder=t.delete_confirm_placeholder;
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}
+})();
 </script>
 
 </body>

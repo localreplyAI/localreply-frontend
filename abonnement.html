@@ -78,8 +78,8 @@
 
     <!-- HEADER -->
     <div style="margin-bottom:24px;">
-      <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-1px;">💳 Abonnement</h1>
-      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Gérez votre plan et votre facturation</p>
+      <h1 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-1px;" id="ab-h1">💳 Abonnement</h1>
+      <p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;" id="ab-subtitle">Gérez votre plan et votre facturation</p>
     </div>
 
     <!-- ALERTES URL -->
@@ -117,7 +117,7 @@
             <span id="abPriceStd" style="font-size:44px;font-weight:800;color:#fff;line-height:1;">39€</span>
             <span id="abPeriodStd" style="font-size:14px;color:rgba(255,255,255,0.45);">/mois</span>
           </div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.4);">Idéal pour démarrer</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);" id="ab-std-ideal">Idéal pour démarrer</div>
         </div>
         <ul class="plan-features">
           <li><span class="feat-check" style="color:#10B981;">✓</span> IA 8 langues européennes</li>
@@ -130,22 +130,22 @@
           <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Alertes SMS urgences</span></li>
           <li><span class="feat-check" style="color:rgba(255,255,255,0.2);">✗</span> <span style="color:rgba(255,255,255,0.4);">Analytics avancés</span></li>
         </ul>
-        <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std">🎁 Essayer 14j gratuit</button>
+        <button id="btnStandard" onclick="subscribe('standard')" class="plan-btn plan-btn-std"><span id="ab-try-std">🎁 Essayer 14j gratuit</span></button>
       </div>
 
       <!-- PRO -->
       <div id="cardPro" class="plan-card plan-card-pro">
-        <div style="position:absolute;top:-13px;right:20px;background:linear-gradient(135deg,#F59E0B,#D97706);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(245,158,11,0.35);">⭐ Recommandé</div>
+        <div style="position:absolute;top:-13px;right:20px;background:linear-gradient(135deg,#F59E0B,#D97706);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;color:#fff;box-shadow:0 4px 12px rgba(245,158,11,0.35);" id="ab-recommended">⭐ Recommandé</div>
         <div style="margin-bottom:20px;">
           <div style="font-size:14px;font-weight:700;color:#00D4FF;margin-bottom:10px;">🌟 Pro</div>
           <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px;">
             <span id="abPricePro" style="font-size:44px;font-weight:800;color:#fff;line-height:1;">49€</span>
             <span id="abPeriodPro" style="font-size:14px;color:rgba(255,255,255,0.45);">/mois</span>
           </div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.4);">Pour maximiser vos résultats</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);" id="ab-pro-ideal">Pour maximiser vos résultats</div>
         </div>
         <ul class="plan-features">
-          <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Tout le plan Standard</strong></li>
+          <li><span class="feat-check" style="color:#00D4FF;">✓</span><strong id="ab-all-standard">Tout le plan Standard</strong></li>
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Notifications SMS clients</strong></li>
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Analytics complets (90 jours)</strong></li>
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> <strong>Résumés IA quotidiens</strong></li>
@@ -153,43 +153,43 @@
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> Alertes urgences temps réel</li>
           <li><span class="feat-check" style="color:#00D4FF;">✓</span> Nouvelles features en avant-première</li>
         </ul>
-        <button id="btnPro" onclick="subscribe('pro')" class="plan-btn plan-btn-pro">🎁 Essayer 14j gratuit</button>
+        <button id="btnPro" onclick="subscribe('pro')" class="plan-btn plan-btn-pro"><span id="ab-try-pro">🎁 Essayer 14j gratuit</span></button>
       </div>
 
     </div>
 
     <!-- GARANTIES -->
     <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding:16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🔒 Paiements sécurisés Stripe</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🛡️ Certifié PCI DSS</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">❌ Sans engagement</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);">🇪🇺 Données en Europe</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);" id="ab-secure-stripe">🔒 Paiements sécurisés Stripe</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);" id="ab-pci">🛡️ Certifié PCI DSS</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);" id="ab-no-commitment">❌ Sans engagement</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.4);" id="ab-eu-data">🇪🇺 Données en Europe</div>
     </div>
 
     <!-- FAQ -->
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;">
-      <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0 0 16px;">❓ Questions fréquentes</h2>
+      <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0 0 16px;" id="ab-faq-title">❓ Questions fréquentes</h2>
       <div class="faq-item">
         <button onclick="toggleFaq(this)" class="faq-btn">
-          <span>Puis-je annuler à tout moment ?</span><span class="faq-icon">+</span>
+          <span id="ab-faq-q1">Puis-je annuler à tout moment ?</span><span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">Oui, sans engagement. Annulez depuis le portail de facturation. Vous gardez l'accès jusqu'à la fin de la période en cours.</div>
       </div>
       <div class="faq-item">
         <button onclick="toggleFaq(this)" class="faq-btn">
-          <span>Comment changer de plan ?</span><span class="faq-icon">+</span>
+          <span id="ab-faq-q2">Comment changer de plan ?</span><span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">Cliquez sur le plan souhaité ci-dessus. Le changement est immédiat avec proratisation automatique via Stripe.</div>
       </div>
       <div class="faq-item">
         <button onclick="toggleFaq(this)" class="faq-btn">
-          <span>Mes données de paiement sont-elles sécurisées ?</span><span class="faq-icon">+</span>
+          <span id="ab-faq-q3">Mes données de paiement sont-elles sécurisées ?</span><span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">Oui. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte.</div>
       </div>
       <div class="faq-item" style="border-bottom:none;">
         <button onclick="toggleFaq(this)" class="faq-btn" style="border-bottom:none;">
-          <span>Que se passe-t-il après le trial ?</span><span class="faq-icon">+</span>
+          <span id="ab-faq-q4">Que se passe-t-il après le trial ?</span><span class="faq-icon">+</span>
         </button>
         <div class="faq-answer">Vous choisissez un plan payant ou votre compte passe en mode limité. Aucun prélèvement automatique sans votre accord.</div>
       </div>
@@ -382,8 +382,8 @@ async function loadCurrentPlan(){
     const sub=await apiRequest(`/api/billing/subscription/${userId}`);
     const plan=sub.plan||'trial';
     const status=sub.status||'active';
-    const pc={trial:{label:'Essai gratuit',color:'#F59E0B',icon:'🎁',bg:'rgba(245,158,11,0.1)',border:'rgba(245,158,11,0.25)'},standard:{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'},pro:{label:'Pro',color:'#10B981',icon:'⭐',bg:'rgba(16,185,129,0.1)',border:'rgba(16,185,129,0.25)'}}[plan]||{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'};
-    const sl={active:{l:'Actif',c:'#10B981'},cancelled:{l:'Annulé',c:'#EF4444'},past_due:{l:'Paiement en retard',c:'#F59E0B'}}[status]||{l:'Actif',c:'#10B981'};
+    const pc={trial:{label:(_abt||DASH_AB_T.fr).status_trial,color:'#F59E0B',icon:'🎁',bg:'rgba(245,158,11,0.1)',border:'rgba(245,158,11,0.25)'},standard:{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'},pro:{label:'Pro',color:'#10B981',icon:'⭐',bg:'rgba(16,185,129,0.1)',border:'rgba(16,185,129,0.25)'}}[plan]||{label:'Standard',color:'#00D4FF',icon:'📦',bg:'rgba(0,212,255,0.08)',border:'rgba(0,212,255,0.2)'};
+    const sl={active:{l:(_abt||DASH_AB_T.fr).status_active,c:'#10B981'},cancelled:{l:(_abt||DASH_AB_T.fr).status_cancelled,c:'#EF4444'},past_due:{l:'Paiement en retard',c:'#F59E0B'}}[status]||{l:'Actif',c:'#10B981'};
     const renewDate=sub.current_period_end?new Date(sub.current_period_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
     const trialEnd=sub.trial_end?new Date(sub.trial_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
     container.innerHTML=`<div style="background:${pc.bg};border:1px solid ${pc.border};border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="display:flex;align-items:center;gap:14px;"><div style="width:48px;height:48px;background:${pc.bg};border:2px solid ${pc.border};border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;">${pc.icon}</div><div><div style="font-size:20px;font-weight:800;color:${pc.color};margin-bottom:3px;">Plan ${pc.label}</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:12px;color:${sl.c};font-weight:600;">● ${sl.l}</span>${renewDate&&plan!=='trial'?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Renouvellement le ${renewDate}</span>`:''}${trialEnd?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Essai jusqu'au ${trialEnd}</span>`:''}${plan==='trial'&&!trialEnd?'<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Fonctionnalités Pro incluses</span>':''}</div></div></div>${sub.stripe_subscription_id?`<button onclick="openPortal()" style="padding:10px 18px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;">⚙️ Gérer / Annuler</button>`:''}</div>${status==='past_due'?`<div style="margin-top:14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-left:4px solid #EF4444;border-radius:10px;padding:14px;display:flex;align-items:center;gap:10px;"><span>⚠️</span><div><div style="font-size:14px;font-weight:700;color:#EF4444;margin-bottom:2px;">Paiement en retard</div><div style="font-size:12px;color:rgba(255,255,255,0.65);">Mettez à jour votre moyen de paiement.</div></div><button onclick="openPortal()" style="margin-left:auto;padding:9px 16px;background:#EF4444;border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">Mettre à jour</button></div>`:''}`;
@@ -395,7 +395,7 @@ async function loadCurrentPlan(){
 
 function updatePlanButtons(plan){
   const bs=document.getElementById('btnStandard'),bp=document.getElementById('btnPro');
-  if(plan==='standard'){bs.textContent='✅ Plan actuel';bs.disabled=true;bs.style.opacity='0.6';bs.style.cursor='not-allowed';bp.textContent='⬆️ Passer au Pro';}
+  if(plan==='standard'){bs.textContent=(_abt||DASH_AB_T.fr).current_badge;bs.disabled=true;bs.style.opacity='0.6';bs.style.cursor='not-allowed';bp.textContent='⬆️ Passer au Pro';}
   else if(plan==='pro'){bp.textContent='✅ Plan actuel';bp.disabled=true;bp.style.opacity='0.6';bp.style.cursor='not-allowed';bs.textContent='⬇️ Passer au Standard';}
   else{bs.textContent='🚀 Choisir Standard';bp.textContent='⭐ Choisir Pro';}
 }
@@ -423,7 +423,7 @@ async function subscribe(plan){
     const data=await apiRequest('/api/billing/create-checkout-session','POST',{user_id:parseInt(userId),plan,billing:abCurrentBilling,is_new_account:isNewSignup});
     if(data.checkout_url){const a=document.createElement('a');a.href=data.checkout_url;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();document.body.removeChild(a);}
     else throw new Error('Pas de checkout_url');
-  } catch(e){showToast('❌ Erreur lors de la redirection','error');btn.disabled=false;btn.textContent=orig;}
+  } catch(e){showToast((_abt||DASH_AB_T.fr).err_redirect,'error');btn.disabled=false;btn.textContent=orig;}
 }
 
 async function openPortal(){
@@ -449,7 +449,7 @@ function toggleMobileMenu(){
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
 
-function logout(){if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+function logout(){if(confirm((_abt||DASH_AB_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
 
 document.addEventListener('DOMContentLoaded', async () => {
   checkURLAlerts();
@@ -467,6 +467,235 @@ document.addEventListener('DOMContentLoaded', async () => {
     _sb(_mc,'sbBadgeMsg','bnBadgeMsg');_sb(_rc,'sbBadgeRdv','bnBadgeRdv');
   } catch {}
 });
+</script>
+
+<script src="/dashboard-i18n.js"></script>
+<script>
+const DASH_AB_T = {
+  fr:{
+    page_title:'Abonnement — LocalReply',
+    h1:'💳 Abonnement', subtitle:'Gérez votre plan et votre facturation',
+    current_plan:'Votre plan actuel',
+    std_ideal:'Idéal pour démarrer', pro_ideal:'Pour maximiser vos résultats',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/mois', per_year:'/an',
+    try_14:'🎁 Essayer 14j gratuit',
+    recommended:'⭐ Recommandé',
+    all_standard:'✓ Tout le plan Standard',
+    secure_stripe:'🔒 Paiements sécurisés Stripe',
+    no_commitment:'❌ Sans engagement',
+    pci:'🛡️ Certifié PCI DSS',
+    eu_data:'🇪🇺 Données en Europe',
+    faq_title:'❓ Questions fréquentes',
+    faq_q1:'Puis-je annuler à tout moment ?',
+    faq_q2:'Comment changer de plan ?',
+    faq_q3:'Mes données de paiement sont-elles sécurisées ?',
+    faq_q4:'Que se passe-t-il après le trial ?',
+    status_trial:'Essai gratuit', status_active:'Actif', status_cancelled:'Annulé',
+    current_badge:'✅ Plan actuel',
+    loading:'Chargement...',
+    err_redirect:'❌ Erreur lors de la redirection',
+    logout_confirm:"Êtes-vous sûr de vouloir vous déconnecter ?",
+  },
+  en:{
+    page_title:'Subscription — LocalReply',
+    h1:'💳 Subscription', subtitle:'Manage your plan and billing',
+    current_plan:'Your current plan',
+    std_ideal:'Ideal to get started', pro_ideal:'To maximize your results',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/month', per_year:'/year',
+    try_14:'🎁 Try 14 days free',
+    recommended:'⭐ Recommended',
+    all_standard:'✓ Everything in Standard',
+    secure_stripe:'🔒 Secure payments by Stripe',
+    no_commitment:'❌ No commitment',
+    pci:'🛡️ PCI DSS certified',
+    eu_data:'🇪🇺 Data in Europe',
+    faq_title:'❓ Frequently asked questions',
+    faq_q1:'Can I cancel at any time?',
+    faq_q2:'How do I change my plan?',
+    faq_q3:'Is my payment data secure?',
+    faq_q4:'What happens after the trial?',
+    status_trial:'Free trial', status_active:'Active', status_cancelled:'Cancelled',
+    current_badge:'✅ Current plan',
+    loading:'Loading...',
+    err_redirect:'❌ Redirect error',
+    logout_confirm:'Are you sure you want to sign out?',
+  },
+  de:{
+    page_title:'Abonnement — LocalReply',
+    h1:'💳 Abonnement', subtitle:'Verwalten Sie Ihren Plan und Ihre Abrechnung',
+    current_plan:'Ihr aktueller Plan',
+    std_ideal:'Ideal für den Einstieg', pro_ideal:'Um Ihre Ergebnisse zu maximieren',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/Monat', per_year:'/Jahr',
+    try_14:'🎁 14 Tage kostenlos testen',
+    recommended:'⭐ Empfohlen',
+    all_standard:'✓ Alles aus Standard',
+    secure_stripe:'🔒 Sichere Zahlungen über Stripe',
+    no_commitment:'❌ Keine Bindung',
+    pci:'🛡️ PCI DSS zertifiziert',
+    eu_data:'🇪🇺 Daten in Europa',
+    faq_title:'❓ Häufig gestellte Fragen',
+    faq_q1:'Kann ich jederzeit kündigen?',
+    faq_q2:'Wie wechsle ich den Plan?',
+    faq_q3:'Sind meine Zahlungsdaten sicher?',
+    faq_q4:'Was passiert nach dem Trial?',
+    status_trial:'Kostenlose Testphase', status_active:'Aktiv', status_cancelled:'Gekündigt',
+    current_badge:'✅ Aktueller Plan',
+    loading:'Laden...',
+    err_redirect:'❌ Weiterleitungsfehler',
+    logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
+  },
+  it:{
+    page_title:'Abbonamento — LocalReply',
+    h1:'💳 Abbonamento', subtitle:'Gestisci il tuo piano e la fatturazione',
+    current_plan:'Il tuo piano attuale',
+    std_ideal:'Ideale per iniziare', pro_ideal:'Per massimizzare i tuoi risultati',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/mese', per_year:'/anno',
+    try_14:'🎁 Prova 14 giorni gratis',
+    recommended:'⭐ Consigliato',
+    all_standard:'✓ Tutto il piano Standard',
+    secure_stripe:'🔒 Pagamenti sicuri con Stripe',
+    no_commitment:'❌ Senza impegno',
+    pci:'🛡️ Certificato PCI DSS',
+    eu_data:'🇪🇺 Dati in Europa',
+    faq_title:'❓ Domande frequenti',
+    faq_q1:'Posso annullare in qualsiasi momento?',
+    faq_q2:'Come cambio piano?',
+    faq_q3:'I miei dati di pagamento sono sicuri?',
+    faq_q4:'Cosa succede dopo il trial?',
+    status_trial:'Prova gratuita', status_active:'Attivo', status_cancelled:'Annullato',
+    current_badge:'✅ Piano attuale',
+    loading:'Caricamento...',
+    err_redirect:'❌ Errore di reindirizzamento',
+    logout_confirm:'Sei sicuro di voler uscire?',
+  },
+  es:{
+    page_title:'Suscripción — LocalReply',
+    h1:'💳 Suscripción', subtitle:'Gestiona tu plan y facturación',
+    current_plan:'Tu plan actual',
+    std_ideal:'Ideal para empezar', pro_ideal:'Para maximizar tus resultados',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/mes', per_year:'/año',
+    try_14:'🎁 Probar 14 días gratis',
+    recommended:'⭐ Recomendado',
+    all_standard:'✓ Todo el plan Standard',
+    secure_stripe:'🔒 Pagos seguros con Stripe',
+    no_commitment:'❌ Sin compromiso',
+    pci:'🛡️ Certificado PCI DSS',
+    eu_data:'🇪🇺 Datos en Europa',
+    faq_title:'❓ Preguntas frecuentes',
+    faq_q1:'¿Puedo cancelar en cualquier momento?',
+    faq_q2:'¿Cómo cambio de plan?',
+    faq_q3:'¿Son seguros mis datos de pago?',
+    faq_q4:'¿Qué pasa después del trial?',
+    status_trial:'Prueba gratuita', status_active:'Activo', status_cancelled:'Cancelado',
+    current_badge:'✅ Plan actual',
+    loading:'Cargando...',
+    err_redirect:'❌ Error de redirección',
+    logout_confirm:'¿Seguro que quieres cerrar sesión?',
+  },
+  pt:{
+    page_title:'Subscrição — LocalReply',
+    h1:'💳 Subscrição', subtitle:'Gira o seu plano e faturação',
+    current_plan:'O seu plano atual',
+    std_ideal:'Ideal para começar', pro_ideal:'Para maximizar os seus resultados',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/mês', per_year:'/ano',
+    try_14:'🎁 Experimentar 14 dias grátis',
+    recommended:'⭐ Recomendado',
+    all_standard:'✓ Tudo o plano Standard',
+    secure_stripe:'🔒 Pagamentos seguros com Stripe',
+    no_commitment:'❌ Sem compromisso',
+    pci:'🛡️ Certificado PCI DSS',
+    eu_data:'🇪🇺 Dados na Europa',
+    faq_title:'❓ Perguntas frequentes',
+    faq_q1:'Posso cancelar a qualquer momento?',
+    faq_q2:'Como mudo de plano?',
+    faq_q3:'Os meus dados de pagamento estão seguros?',
+    faq_q4:'O que acontece após o trial?',
+    status_trial:'Teste gratuito', status_active:'Ativo', status_cancelled:'Cancelado',
+    current_badge:'✅ Plano atual',
+    loading:'A carregar...',
+    err_redirect:'❌ Erro de redirecionamento',
+    logout_confirm:'Tem a certeza que quer sair?',
+  },
+  nl:{
+    page_title:'Abonnement — LocalReply',
+    h1:'💳 Abonnement', subtitle:'Beheer uw plan en facturering',
+    current_plan:'Uw huidige plan',
+    std_ideal:'Ideaal om te beginnen', pro_ideal:'Om uw resultaten te maximaliseren',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/maand', per_year:'/jaar',
+    try_14:'🎁 14 dagen gratis proberen',
+    recommended:'⭐ Aanbevolen',
+    all_standard:'✓ Alles uit Standard',
+    secure_stripe:'🔒 Veilige betalingen via Stripe',
+    no_commitment:'❌ Geen binding',
+    pci:'🛡️ PCI DSS gecertificeerd',
+    eu_data:'🇪🇺 Gegevens in Europa',
+    faq_title:'❓ Veelgestelde vragen',
+    faq_q1:'Kan ik altijd opzeggen?',
+    faq_q2:'Hoe verander ik van plan?',
+    faq_q3:'Zijn mijn betalingsgegevens veilig?',
+    faq_q4:'Wat gebeurt er na de trial?',
+    status_trial:'Gratis proefperiode', status_active:'Actief', status_cancelled:'Opgezegd',
+    current_badge:'✅ Huidig plan',
+    loading:'Laden...',
+    err_redirect:'❌ Doorstuursfout',
+    logout_confirm:'Weet u zeker dat u wilt uitloggen?',
+  },
+  pl:{
+    page_title:'Subskrypcja — LocalReply',
+    h1:'💳 Subskrypcja', subtitle:'Zarządzaj swoim planem i rozliczeniami',
+    current_plan:'Twój aktualny plan',
+    std_ideal:'Idealne na początek', pro_ideal:'Aby zmaksymalizować wyniki',
+    std_name:'Standard', pro_name:'Pro',
+    per_month:'/mies.', per_year:'/rok',
+    try_14:'🎁 Wypróbuj 14 dni za darmo',
+    recommended:'⭐ Rekomendowane',
+    all_standard:'✓ Wszystko ze Standard',
+    secure_stripe:'🔒 Bezpieczne płatności przez Stripe',
+    no_commitment:'❌ Bez zobowiązań',
+    pci:'🛡️ Certyfikat PCI DSS',
+    eu_data:'🇪🇺 Dane w Europie',
+    faq_title:'❓ Często zadawane pytania',
+    faq_q1:'Czy mogę anulować w dowolnym momencie?',
+    faq_q2:'Jak zmienić plan?',
+    faq_q3:'Czy moje dane płatnicze są bezpieczne?',
+    faq_q4:'Co się dzieje po zakończeniu trialu?',
+    status_trial:'Bezpłatny okres próbny', status_active:'Aktywny', status_cancelled:'Anulowany',
+    current_badge:'✅ Aktualny plan',
+    loading:'Ładowanie...',
+    err_redirect:'❌ Błąd przekierowania',
+    logout_confirm:'Czy na pewno chcesz się wylogować?',
+  },
+};
+
+(function(){
+  const lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+  const t=DASH_AB_T[DASH_AB_T.hasOwnProperty(lang)?lang:'fr'];
+  window._abt=t;
+  document.title=t.page_title;
+  function apply(){
+    const ids={
+      'ab-h1':t.h1,'ab-subtitle':t.subtitle,
+      'ab-std-ideal':t.std_ideal,'ab-pro-ideal':t.pro_ideal,
+      'ab-recommended':t.recommended,
+      'ab-try-std':t.try_14,'ab-try-pro':t.try_14,
+      'ab-all-standard':t.all_standard,
+      'ab-secure-stripe':t.secure_stripe,'ab-no-commitment':t.no_commitment,
+      'ab-pci':t.pci,'ab-eu-data':t.eu_data,
+      'ab-faq-title':t.faq_title,
+      'ab-faq-q1':t.faq_q1,'ab-faq-q2':t.faq_q2,
+      'ab-faq-q3':t.faq_q3,'ab-faq-q4':t.faq_q4,
+    };
+    Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}
+})();
 </script>
 
 </body>
