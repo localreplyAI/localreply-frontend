@@ -108,7 +108,7 @@
       <div style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
         <div style="font-size:32px;font-weight:800;color:#F59E0B;line-height:1;margin-bottom:4px;" id="statPending">—</div>
         <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">En attente</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;" id="rdv-kpi-pending-label">À confirmer</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;" id="rdv-kpi-pending-label" id="rdv-kpi-pending-label">À confirmer</div>
       </div>
       <div style="background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(5,150,105,0.06));border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
         <div style="font-size:32px;font-weight:800;color:#10B981;line-height:1;margin-bottom:4px;" id="statConfirmed">—</div>
@@ -157,7 +157,7 @@
     
     
     <div id="confirmedSection">
-      <h2 style="font-size: 28px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;">📋 Prochains rendez-vous confirmés</h2>
+      <h2 style="font-size: 28px; font-weight: 700; color: #FFFFFF; margin: 0 0 20px 0;" id="rdv-section-upcoming">📋 Prochains rendez-vous confirmés</h2>
       <div id="confirmedList"></div>
     </div>
     </div><!-- fin appointmentsSection -->
@@ -520,7 +520,7 @@ async function renderModeContent(mode, externalUrl) {
 
   if (mode === 'google') {
     // Vérifier connexion Calendar
-    zone.innerHTML = '<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">Vérification Google Calendar...</div>';
+    zone.innerHTML = '<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;" id="rdv-cal-checking">Vérification Google Calendar...</div>';
     try {
       const status = await apiRequest(`/api/calendar/status?business_id=${businessId}`).catch(() => ({connected:false}));
       if (status.connected) {
@@ -531,16 +531,16 @@ async function renderModeContent(mode, externalUrl) {
               <div style="display:flex;align-items:center;gap:10px;">
                 <div style="width:36px;height:36px;background:rgba(16,185,129,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📅</div>
                 <div>
-                  <div style="font-size:13px;font-weight:700;color:#10B981;">✅ Google Calendar connecté</div>
+                  <div style="font-size:13px;font-weight:700;color:#10B981;" id="rdv-cal-connected">✅ Google Calendar connecté</div>
                   <div style="font-size:12px;color:rgba(255,255,255,0.55);">${status.email || ''}${date ? ' · depuis le '+date : ''}</div>
                 </div>
               </div>
               <div style="display:flex;gap:8px;">
                 <a href="https://calendar.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">📅 Ouvrir</a>
-                <button onclick="disconnectCalendar()" style="padding:8px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:9px;color:#EF4444;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;">Déconnecter</button>
+                <button onclick="disconnectCalendar()" style="padding:8px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:9px;color:#EF4444;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;" id="rdv-cal-disconnect-btn">Déconnecter</button>
               </div>
             </div>
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Prochains événements — 7 jours</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;" id="rdv-cal-events">Prochains événements — 7 jours</div>
             <div id="eventsList" style="display:flex;flex-direction:column;gap:6px;"><div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">Chargement...</div></div>
             <div style="margin-top:12px;padding:10px 12px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.5);">
               💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes
@@ -562,7 +562,7 @@ async function renderModeContent(mode, externalUrl) {
             <button onclick="connectCalendar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,82,204,0.3);">
               🔗 Connecter Google Calendar
             </button>
-            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);">Redirection sécurisée vers Google</div>
+            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);" id="rdv-cal-redirect">Redirection sécurisée vers Google</div>
           </div>`;
       }
     } catch {
@@ -575,7 +575,7 @@ async function renderModeContent(mode, externalUrl) {
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
           <div style="width:36px;height:36px;background:rgba(0,212,255,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">🔗</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#00D4FF;">Lien de réservation externe</div>
+            <div style="font-size:13px;font-weight:700;color:#00D4FF;" id="rdv-mode-ext-title">Lien de réservation externe</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA envoie vos clients directement sur ce lien</div>
           </div>
         </div>
@@ -583,9 +583,9 @@ async function renderModeContent(mode, externalUrl) {
           <input type="url" id="rdvExternalUrl" value="${externalUrl}" placeholder="https://www.planity.com/votre-salon ou https://www.doctolib.fr/..." 
             style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;font-size:13px;color:#fff;outline:none;font-family:inherit;"
             onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-          <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">💾 Enregistrer</button>
+          <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;" id="rdv-save-btn">💾 Enregistrer</button>
         </div>
-        ${externalUrl ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">Lien actuel : <a href="${externalUrl}" target="_blank" style="color:#00D4FF;">${externalUrl}</a></div>` : '<div style="font-size:12px;color:rgba(245,158,11,0.8);">⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus</div>'}
+        ${externalUrl ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">Lien actuel : <a href="${externalUrl}" target="_blank" style="color:#00D4FF;">${externalUrl}</a></div>` : '<div style="font-size:12px;color:rgba(245,158,11,0.8);" id="rdv-ext-warning">⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus</div>'}
         <div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">
           💡 Compatible avec : Planity, Doctolib, TheFork, Booking.com, Calendly, et tout autre système de réservation en ligne.
         </div>
@@ -606,7 +606,7 @@ async function renderModeContent(mode, externalUrl) {
           <em style="color:rgba(255,255,255,0.85);">"Pour prendre rendez-vous, appelez-nous au <strong>[votre téléphone]</strong> ou envoyez-nous un message."</em>
         </div>
         <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4);">
-          ℹ️ Votre numéro de téléphone est configuré dans <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;">Configuration → Commerce</a>
+          ℹ️ Votre numéro de téléphone est configuré dans <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;" id="rdv-config-link">Configuration → Commerce</a>
         </div>
       </div>`;
 
@@ -899,7 +899,7 @@ function createPendingCard(apt, isUrgent) {
     <div style="margin-top: ${isUrgent ? '15px' : '0'};">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
         <div>
-          <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
+          <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || (_drt||DASH_RDV_T.fr).not_provided}</h3>
           <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">
             📧 ${apt.client_email || (_drt||DASH_RDV_T.fr).not_provided} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
           </div>
@@ -1009,7 +1009,7 @@ function createConfirmedCard(apt) {
         </div>
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">💇 SERVICE</div>
-          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${apt.service_name || apt.summary || 'Non spécifié'}</div>
+          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${apt.service_name || apt.summary || (_drt||DASH_RDV_T.fr).not_specified}</div>
         </div>
         ${apt.description ? `
         <div>
@@ -1277,25 +1277,25 @@ document.head.appendChild(animStyle);
 const DASH_RDV_T = {
   fr: {
     page_title: 'Rendez-vous — LocalReply',
-    h1: '📅 Rendez-vous', subtitle: 'Gérez vos demandes de RDV et confirmez vos créneaux',
+    h1: '📅 Rendez-vous', subtitle: (_drt||DASH_RDV_T.fr).subtitle,
     kpi_pending_label: 'À confirmer', kpi_confirmed_label: 'Confirmés',
-    kpi_confirmed_sub: '30 derniers jours', kpi_past_sub: '30 derniers jours', kpi_past_label: 'Passés',
+    kpi_confirmed_sub: (_drt||DASH_RDV_T.fr).kpi_confirmed_sub, kpi_past_sub: '30 derniers jours', kpi_past_label: 'Passés',
     search_placeholder: '🔍 Rechercher un client, service...',
     filter_pending: '⏳ En attente', filter_confirmed: '✅ Confirmés', filter_past: '📋 RDV passés',
     tab_pending: 'À confirmer', tab_confirmed: 'Confirmés', tab_past: 'Passés',
     section_upcoming: '📋 Prochains rendez-vous confirmés',
-    loading: 'Chargement...', cal_checking: 'Vérification Google Calendar...',
-    cal_connected: '✅ Google Calendar connecté', cal_disconnect: 'Déconnecter',
-    cal_events: 'Prochains événements — 7 jours',
-    cal_redirect: 'Redirection sécurisée vers Google',
+    loading: 'Chargement...', cal_checking: (_drt||DASH_RDV_T.fr).cal_checking,
+    cal_connected: (_drt||DASH_RDV_T.fr).cal_connected, cal_disconnect: 'Déconnecter',
+    cal_events: (_drt||DASH_RDV_T.fr).cal_events,
+    cal_redirect: (_drt||DASH_RDV_T.fr).cal_redirect,
     cal_connect_btn: '🔗 Connecter Google Calendar',
     cal_tip: '💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes',
     mode_ext_title: 'Lien de réservation externe', save_btn: '💾 Enregistrer',
-    mode_ext_warning: '⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus',
-    mode_manual_text: '[votre téléphone]',
+    mode_ext_warning: (_drt||DASH_RDV_T.fr).mode_ext_warning,
+    mode_manual_text: (_drt||DASH_RDV_T.fr).mode_manual_text,
     mode_none_text: "L'IA répond aux questions sans proposer de RDV",
-    empty_apts: 'Aucun rendez-vous', empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici",
-    empty_confirmed: 'Aucun rendez-vous confirmé', empty_confirmed_sub: 'Les rendez-vous confirmés apparaîtront ici',
+    empty_apts: (_drt||DASH_RDV_T.fr).empty_apts, empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici",
+    empty_confirmed: (_drt||DASH_RDV_T.fr).empty_confirmed, empty_confirmed_sub: (_drt||DASH_RDV_T.fr).empty_confirmed_sub,
     not_specified: 'Non spécifié', not_provided: 'Non renseigné',
     status_past: '🕐 Passé', status_confirmed: '✅ Confirmé',
     btn_confirm: '✅ Confirmer', btn_refuse: '❌ Refuser', btn_cancel: '❌ Annuler le RDV',
@@ -1602,6 +1602,18 @@ const DASH_RDV_T = {
       'rdv-cal-connect-btn': t.cal_connect_btn,
       'rdv-mode-ext-title': t.mode_ext_title,
       'rdv-save-btn': t.save_btn,
+      'rdv-kpi-confirmed-label': t.kpi_confirmed_label,
+      'rdv-kpi-past-label': t.kpi_past_label,
+      'rdv-cal-checking': t.cal_checking,
+      'rdv-cal-connected': t.cal_connected,
+      'rdv-cal-disconnect-btn': t.cal_disconnect,
+      'rdv-cal-events': t.cal_events,
+      'rdv-cal-redirect': t.cal_redirect,
+      'rdv-mode-ext-title': t.mode_ext_title,
+      'rdv-ext-warning': t.mode_ext_warning,
+      'rdv-manual-phone': t.mode_manual_text,
+      'rdv-none-text': t.mode_none_text,
+      'rdv-config-link': 'Configuration',
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);

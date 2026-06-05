@@ -205,13 +205,13 @@
             <input id="businessAddress" type="text" class="cfg-input" placeholder="14 Rue de Rive, 1204 Genève">
           </div>
           <div class="cfg-field" style="margin-top:16px;">
-            <label class="cfg-label">Description <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(vue par l'IA pour comprendre votre commerce)</span></label>
+            <label class="cfg-label"><span id="cfg-lbl-desc">Description</span> <span id="cfg-lbl-desc-sub" style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(vue par l'IA pour comprendre votre commerce)</span></label>
             <textarea id="businessDescription" rows="3" class="cfg-input" style="resize:vertical;" placeholder="Ex: Salon de coiffure homme moderne, ambiance détendue, café offert..."></textarea>
           </div>
 
           <!-- LOGO UPLOAD -->
           <div class="cfg-field" style="margin-top:16px;">
-            <label class="cfg-label">Logo du commerce <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(affiché dans le chat client)</span></label>
+            <label class="cfg-label"><span id="cfg-lbl-logo">Logo du commerce</span> <span id="cfg-lbl-logo-sub" style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">(affiché dans le chat client)</span></label>
             <div style="display:flex;align-items:center;gap:16px;margin-top:8px;">
               <!-- Preview -->
               <div id="logoPreview" style="width:64px;height:64px;border-radius:14px;background:rgba(255,255,255,0.08);border:2px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;font-size:28px;transition:all 0.2s;">
@@ -268,7 +268,7 @@
               </select>
             </div>
           </div>
-          <button onclick="saveBusinessInfo()" class="cfg-btn-save" style="margin-top:24px;">💾 Enregistrer les informations</button>
+          <button onclick="saveBusinessInfo()" class="cfg-btn-save" style="margin-top:24px;" id="cfg-save-info-btn">💾 Enregistrer les informations</button>
         </div>
       </div>
 
@@ -291,49 +291,49 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:6px;">
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Lundi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-lun">Lundi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="18:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Mardi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-mar">Mardi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="18:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Mercredi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-mer">Mercredi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="18:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Jeudi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-jeu">Jeudi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="18:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Vendredi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-ven">Vendredi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="18:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Samedi</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-sam">Samedi</div>
               <input type="time" value="09:00" class="time-input cfg-time">
               <input type="time" value="17:00" class="time-input cfg-time">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
             <div class="hours-row" style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;align-items:center;padding:10px 4px;border-radius:10px;transition:background 0.2s;">
-              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;">Dimanche</div>
+              <div class="day-label" style="font-weight:600;color:#FFFFFF;font-size:14px;" id="cfg-day-dim">Dimanche</div>
               <input type="time" disabled class="time-input cfg-time" style="opacity:0.35;">
               <input type="time" disabled class="time-input cfg-time" style="opacity:0.35;">
               <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" checked class="closed-checkbox" onchange="toggleHours(this)" style="width:16px;height:16px;accent-color:#EF4444;cursor:pointer;"><span class="closed-text" style="font-size:13px;color:rgba(255,255,255,0.6);">Fermé</span></label>
             </div>
           </div>
-          <button onclick="saveHours()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer les horaires</button>
+          <button onclick="saveHours()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-hours-btn">💾 Enregistrer les horaires</button>
         </div>
 
         <!-- Fermetures exceptionnelles -->
@@ -361,10 +361,10 @@
               <div id="serviceIcon" class="cfg-card-icon">💼</div>
               <div>
                 <h2 id="serviceTitle" class="cfg-card-title">Services &amp; Tarifs</h2>
-                <p class="cfg-card-sub">L'IA connaîtra vos prestations et pourra les recommander</p>
+                <p id="cfg-services-sub" class="cfg-card-sub">L'IA connaîtra vos prestations et pourra les recommander</p>
               </div>
             </div>
-            <button onclick="addService()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+            <button onclick="addService()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);" id="cfg-add-service-btn">➕ Ajouter</button>
           </div>
 
           <!-- Recherche services -->
@@ -376,9 +376,9 @@
           <div id="servicesList" style="display:flex;flex-direction:column;gap:10px;"></div>
           <div id="servicesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
             <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">💼</div>
-            <div style="font-size:14px;">Aucun service trouvé — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+            <div style="font-size:14px;" id="cfg-no-services">Aucun service trouvé — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
           </div>
-          <button onclick="saveServices()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer les services</button>
+          <button onclick="saveServices()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-services-btn">💾 Enregistrer les services</button>
         </div>
       </div>
 
@@ -393,7 +393,7 @@
                 <p class="cfg-card-sub">L'IA répondra automatiquement à ces questions</p>
               </div>
             </div>
-            <button onclick="addFAQ()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+            <button onclick="addFAQ()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);" id="cfg-add-faq-btn">➕ Ajouter</button>
           </div>
 
           <!-- Recherche FAQ -->
@@ -404,9 +404,9 @@
           <div id="faqList" style="display:flex;flex-direction:column;gap:12px;"></div>
           <div id="faqEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
             <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">❓</div>
-            <div style="font-size:14px;">Aucune question trouvée — <button onclick="document.getElementById('faqSearch').value='';filterFAQ();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+            <div style="font-size:14px;" id="cfg-no-faq">Aucune question trouvée — <button onclick="document.getElementById('faqSearch').value='';filterFAQ();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
           </div>
-          <button onclick="saveFAQ()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer la FAQ</button>
+          <button onclick="saveFAQ()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-faq-btn">💾 Enregistrer la FAQ</button>
         </div>
       </div>
 
@@ -423,7 +423,7 @@
                 <p class="cfg-card-sub">Ce que l'IA peut suggérer après chaque service</p>
               </div>
             </div>
-            <button onclick="addComplementaryRule()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;">+ Règle</button>
+            <button onclick="addComplementaryRule()" style="padding:10px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;" id="cfg-add-closure-btn">+ Règle</button>
           </div>
           <div style="padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.12);border-radius:8px;font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:16px;line-height:1.6;">
             💡 Exemple : Si le client choisit <strong style="color:#fff;">"Coupe homme"</strong> → l'IA suggère <strong style="color:#fff;">"Taille de barbe"</strong>
@@ -450,7 +450,7 @@
               <select id="aiTone" class="cfg-select">
                 <option value="professional">👔 Professionnel</option>
                 <option value="friendly" selected>😊 Amical</option>
-                <option value="casual">😎 Décontracté</option>
+                <option value="casual" id="cfg-tone-casual">😎 Décontracté</option>
               </select>
             </div>
             <div class="cfg-field">
@@ -464,7 +464,7 @@
               <label id="cfg-lbl-emojis" class="cfg-label">Emojis</label>
               <select id="aiEmojis" class="cfg-select">
                 <option value="yes" selected>✅ Activés</option>
-                <option value="no">❌ Désactivés</option>
+                <option value="no" id="cfg-emojis-off">❌ Désactivés</option>
               </select>
             </div>
           </div>
@@ -474,7 +474,7 @@
               <select id="aiLength" class="cfg-select">
                 <option value="concise">📝 Concise (1-2 phrases)</option>
                 <option value="normal" selected>💬 Normale</option>
-                <option value="detailed">📖 Détaillée</option>
+                <option value="detailed" id="cfg-length-detailed">📖 Détaillée</option>
               </select>
             </div>
             <div class="cfg-field">
@@ -509,11 +509,11 @@
               <select id="aiEmailCollection" class="cfg-select">
                 <option value="off">❌ Désactivée</option>
                 <option value="end" selected>📧 En fin de conversation</option>
-                <option value="after">✅ Après RDV confirmé</option>
+                <option value="after" id="cfg-proactivity-rdv">✅ Après RDV confirmé</option>
               </select>
             </div>
           </div>
-          <button onclick="saveAICustomization()" class="cfg-btn-save" style="margin-top:24px;">💾 Enregistrer la personnalité</button>
+          <button onclick="saveAICustomization()" class="cfg-btn-save" style="margin-top:24px;" id="cfg-save-personality-btn">💾 Enregistrer la personnalité</button>
         </div>
       </div>
 
@@ -848,13 +848,13 @@ function addFAQ(question='', answer='') {
   card.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;">
       <div style="flex:1;">
-        <label class="cfg-label" style="margin-bottom:6px;display:block;">Question</label>
+        <label class="cfg-label" style="margin-bottom:6px;display:block;" id="cfg-lbl-question">Question</label>
         <input type="text" value="${question.replace(/"/g,'&quot;')}" placeholder="Votre question..." class="cfg-input" style="padding:11px 14px;font-weight:600;">
       </div>
       <button onclick="this.closest('.faq-card-wrapper').remove();updateBadges();" style="padding:9px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:15px;margin-top:22px;flex-shrink:0;">🗑️</button>
     </div>
     <div>
-      <label class="cfg-label" style="margin-bottom:6px;display:block;">Réponse</label>
+      <label class="cfg-label" style="margin-bottom:6px;display:block;" id="cfg-lbl-reponse">Réponse</label>
       <textarea placeholder="Votre réponse..." class="cfg-input" style="resize:vertical;min-height:72px;padding:11px 14px;">${answer}</textarea>
     </div>`;
   faqList.appendChild(card);
@@ -989,7 +989,7 @@ async function saveServices() {
       const cfg = businessConfigs[document.getElementById('businessType').value] || { type: 'service' };
       return { name, price: parseFloat(price), duration_minutes: cfg.type==='service' ? (parseInt(third)||60) : 60, is_active: true };
     }).filter(Boolean);
-    if (!services.length) { showNotification('Ajoutez au moins un service', 'error'); return; }
+    if (!services.length) { showNotification((_dct||DASH_CFG_T.fr).err_add_service, 'error'); return; }
     await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
     showNotification((_dct||DASH_CFG_T.fr).save_services_ok);
     loadComplementaryOptions();
@@ -1044,7 +1044,7 @@ async function saveClosures() {
     const closures = [...document.querySelectorAll('.closure-item')].map(item => {
       const date = item.querySelector('.closure-date').value;
       const reason = item.querySelector('.closure-reason').value;
-      return date ? { date, reason: reason||'Fermé' } : null;
+      return date ? { date, reason: reason||(_dct||DASH_CFG_T.fr).closed } : null;
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/special-closures`, 'POST', { closures });
     showNotification((_dct||DASH_CFG_T.fr).save_closures_ok);
@@ -1087,7 +1087,7 @@ function addComplementaryRule(mainService='', suggestions=[]) {
     <span style="font-size:13px;color:rgba(255,255,255,0.5);white-space:nowrap;">Si client choisit</span>
     <div class="comp-main-wrap" style="flex:1;min-width:140px;"></div>
     <span style="font-size:13px;color:rgba(255,255,255,0.5);">→ suggérer</span>
-    <button onclick="addSuggestionToRule(this)" style="padding:5px 10px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.25);border-radius:6px;color:#00D4FF;font-size:12px;cursor:pointer;">+ Service</button>
+    <button onclick="addSuggestionToRule(this)" style="padding:5px 10px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.25);border-radius:6px;color:#00D4FF;font-size:12px;cursor:pointer;" id="cfg-add-comp-btn">+ Service</button>
     <button onclick="this.closest('.comp-rule').remove()" style="padding:5px 10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:6px;color:#EF4444;font-size:12px;cursor:pointer;">🗑️</button>
   </div>
   <div class="comp-suggestions-wrap" style="display:flex;flex-wrap:wrap;gap:8px;"></div>`;
@@ -1217,6 +1217,19 @@ async function loadBusinessConfig() {
 }
 
 // ── INIT ──
+
+function renderBusinessTypes() {
+  const t = (_dct || DASH_CFG_T.fr);
+  const sel = document.getElementById('businessType');
+  if (!sel || !t.biz_types) return;
+  const current = sel.value;
+  sel.innerHTML = `<option value="">${t.biz_select || '— Sélectionner —'}</option>` +
+    Object.entries(t.biz_types).map(([v, label]) => 
+      `<option value="${v}">${label}</option>`
+    ).join('');
+  if (current) sel.value = current;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   setTimeout(checkTabScroll, 300);
   loadSidebarInfo();
@@ -1298,6 +1311,7 @@ const DASH_CFG_T = {
     pro_required: 'Plan Pro requis pour la personnalité IA',
     err_generic: '❌ Erreur de chargement',
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
+    lbl_desc: "Description", lbl_desc_sub: "(vue par l'IA pour comprendre votre commerce)",lbl_logo: "Logo du commerce",lbl_logo_sub: "(affiché dans le chat client)",save_info_btn: "💾 Enregistrer les informations",save_hours_btn: "💾 Enregistrer les horaires",save_services_btn: "💾 Enregistrer les services",save_faq_btn: "💾 Enregistrer la FAQ",save_personality_btn: "💾 Enregistrer la personnalité",add_service_btn: "➕ Ajouter",add_faq_btn: "➕ Ajouter",add_closure_btn: "+ Ajouter",add_comp_btn: "+ Service",services_sub:"L\'IA connaîtra vos prestations et pourra les recommander",no_services: "Aucun service trouvé",no_faq: "Aucune question trouvée",lbl_question: "Question",lbl_reponse: "Réponse",tone_casual: "😎 Décontracté",emojis_off: "❌ Désactivés",length_detailed: "📖 Détaillée",proactivity_rdv: "✅ Après RDV confirmé",comp_arrow:"→ l\'IA suggère",biz_select: "— Sélectionner —",biz_types:{'salon_coiffure': "💇 Salon de coiffure",'institut_beaute': "💅 Institut de beauté / Spa",'massage': "💆 Massage / Kiné",'dentiste': "🦷 Dentiste",'restaurant': "🍽️ Restaurant",'cafe_bar': "☕ Café / Bar",'boulangerie': "🥐 Boulangerie / Pâtisserie",'pharmacie': "💊 Pharmacie",'agence_immo': "🏡 Agence immobilière",'auto': "🚗 Garage / Auto",'cinema': "🎬 Cinéma / Théâtre",'sport': "🏋️ Salle de sport / Yoga",'plombier': "🔨 Plombier / Électricien",'menage': "🧹 Ménage / Nettoyage",'medecin': "🏥 Cabinet médical",'veterinaire': "🐾 Vétérinaire",'juridique': "⚖️ Cabinet juridique",'retail': "🛍️ Commerce de détail",'hotel': "🏨 Hôtel",'autre': "🏢 Autre"},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Jeu',
     day_ven: 'Ven', day_sam: 'Sam', day_dim: 'Dim',
     day_full_lun: 'Lundi', day_full_mar: 'Mardi', day_full_mer: 'Mercredi',
@@ -1334,6 +1348,7 @@ const DASH_CFG_T = {
     pro_required: 'Pro plan required for AI personality',
     err_generic: '❌ Loading error',
     logout_confirm: 'Are you sure you want to sign out?',
+    lbl_desc:'Description',lbl_desc_sub:'(seen by the AI to understand your business)',lbl_logo:'Business logo',lbl_logo_sub:'(displayed in the chat)',save_info_btn:'💾 Save information',save_hours_btn:'💾 Save hours',save_services_btn:'💾 Save services',save_faq_btn:'💾 Save FAQ',save_personality_btn:'💾 Save personality',add_service_btn:'➕ Add',add_faq_btn:'➕ Add',add_closure_btn:'+ Add',add_comp_btn:'+ Service',services_sub:'The AI will know your services and can recommend them',no_services:'No service found',no_faq:'No question found',lbl_question:'Question',lbl_reponse:'Answer',tone_casual:'😎 Casual',emojis_off:'❌ Disabled',length_detailed:'📖 Detailed',proactivity_rdv:'✅ After confirmed appointment',comp_arrow:'→ AI suggests',biz_select:'— Select —',biz_types:{'salon_coiffure':'💇 Hair salon','institut_beaute':'💅 Beauty / Spa','massage':'💆 Massage / Physio','dentiste':'🦷 Dentist','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Cafe / Bar','boulangerie':'🥐 Bakery','pharmacie':'💊 Pharmacy','agence_immo':'🏡 Real estate','auto':'🚗 Garage / Auto','cinema':'🎬 Cinema / Theatre','sport':'🏋️ Gym / Yoga','plombier':'🔨 Plumber / Electrician','menage':'🧹 Cleaning','medecin':'🏥 Medical practice','veterinaire':'🐾 Vet','juridique':'⚖️ Law firm','retail':'🛍️ Retail','hotel':'🏨 Hotel','autre':'🏢 Other'},
     day_lun: 'Mon', day_mar: 'Tue', day_mer: 'Wed', day_jeu: 'Thu',
     day_ven: 'Fri', day_sam: 'Sat', day_dim: 'Sun',
     day_full_lun: 'Monday', day_full_mar: 'Tuesday', day_full_mer: 'Wednesday',
@@ -1370,6 +1385,7 @@ const DASH_CFG_T = {
     pro_required: 'Pro-Plan für KI-Persönlichkeit erforderlich',
     err_generic: '❌ Ladefehler',
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    lbl_desc:'Beschreibung',lbl_desc_sub:'(von der KI gesehen)',lbl_logo:'Unternehmenslogo',lbl_logo_sub:'(im Chat angezeigt)',save_info_btn:'💾 Informationen speichern',save_hours_btn:'💾 Öffnungszeiten speichern',save_services_btn:'💾 Dienste speichern',save_faq_btn:'💾 FAQ speichern',save_personality_btn:'💾 Persönlichkeit speichern',add_service_btn:'➕ Hinzufügen',add_faq_btn:'➕ Hinzufügen',add_closure_btn:'+ Hinzufügen',add_comp_btn:'+ Dienst',services_sub:'Die KI kennt Ihre Angebote',no_services:'Kein Dienst gefunden',no_faq:'Keine Frage gefunden',lbl_question:'Frage',lbl_reponse:'Antwort',tone_casual:'😎 Locker',emojis_off:'❌ Deaktiviert',length_detailed:'📖 Detailliert',proactivity_rdv:'✅ Nach bestätigtem Termin',comp_arrow:'→ KI schlägt vor',biz_select:'— Auswählen —',biz_types:{'salon_coiffure':'💇 Friseursalon','institut_beaute':'💅 Beauty / Spa','massage':'💆 Massage / Physio','dentiste':'🦷 Zahnarzt','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Bäckerei','pharmacie':'💊 Apotheke','agence_immo':'🏡 Immobilien','auto':'🚗 Werkstatt','cinema':'🎬 Kino / Theater','sport':'🏋️ Fitnessstudio','plombier':'🔨 Klempner / Elektriker','menage':'🧹 Reinigung','medecin':'🏥 Arztpraxis','veterinaire':'🐾 Tierarzt','juridique':'⚖️ Anwaltskanzlei','retail':'🛍️ Einzelhandel','hotel':'🏨 Hotel','autre':'🏢 Sonstiges'},
     day_lun: 'Mo', day_mar: 'Di', day_mer: 'Mi', day_jeu: 'Do',
     day_ven: 'Fr', day_sam: 'Sa', day_dim: 'So',
     day_full_lun: 'Montag', day_full_mar: 'Dienstag', day_full_mer: 'Mittwoch',
@@ -1406,6 +1422,7 @@ const DASH_CFG_T = {
     pro_required: 'Piano Pro richiesto per la personalità IA',
     err_generic: '❌ Errore di caricamento',
     logout_confirm: 'Sei sicuro di voler uscire?',
+    lbl_desc:'Descrizione',lbl_desc_sub:"(vista dall'IA)",lbl_logo:'Logo',lbl_logo_sub:'(nella chat)',save_info_btn:'💾 Salva informazioni',save_hours_btn:'💾 Salva orari',save_services_btn:'💾 Salva servizi',save_faq_btn:'💾 Salva FAQ',save_personality_btn:'💾 Salva personalità',add_service_btn:'➕ Aggiungi',add_faq_btn:'➕ Aggiungi',add_closure_btn:'+ Aggiungi',add_comp_btn:'+ Servizio',services_sub:"L'IA conoscerà i tuoi servizi",no_services:'Nessun servizio trovato',no_faq:'Nessuna domanda trovata',lbl_question:'Domanda',lbl_reponse:'Risposta',tone_casual:'😎 Informale',emojis_off:'❌ Disattivati',length_detailed:'📖 Dettagliata',proactivity_rdv:'✅ Dopo appuntamento',comp_arrow:"→ l'IA suggerisce",biz_select:'— Seleziona —',biz_types:{'salon_coiffure':'💇 Parrucchiere','institut_beaute':'💅 Bellezza / Spa','massage':'💆 Massaggio','dentiste':'🦷 Dentista','restaurant':'🍽️ Ristorante','cafe_bar':'☕ Caffè / Bar','boulangerie':'🥐 Panetteria','pharmacie':'💊 Farmacia','agence_immo':'🏡 Immobiliare','auto':'🚗 Officina','cinema':'🎬 Cinema','sport':'🏋️ Palestra','plombier':'🔨 Idraulico','menage':'🧹 Pulizie','medecin':'🏥 Studio medico','veterinaire':'🐾 Veterinario','juridique':'⚖️ Studio legale','retail':'🛍️ Dettaglio','hotel':'🏨 Hotel','autre':'🏢 Altro'},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Gio',
     day_ven: 'Ven', day_sam: 'Sab', day_dim: 'Dom',
     day_full_lun: 'Lunedì', day_full_mar: 'Martedì', day_full_mer: 'Mercoledì',
@@ -1442,6 +1459,7 @@ const DASH_CFG_T = {
     pro_required: 'Plan Pro requerido para la personalidad IA',
     err_generic: '❌ Error de carga',
     logout_confirm: '¿Seguro que quieres cerrar sesión?',
+    lbl_desc:'Descripción',lbl_desc_sub:'(vista por la IA)',lbl_logo:'Logo',lbl_logo_sub:'(en el chat)',save_info_btn:'💾 Guardar información',save_hours_btn:'💾 Guardar horarios',save_services_btn:'💾 Guardar servicios',save_faq_btn:'💾 Guardar FAQ',save_personality_btn:'💾 Guardar personalidad',add_service_btn:'➕ Añadir',add_faq_btn:'➕ Añadir',add_closure_btn:'+ Añadir',add_comp_btn:'+ Servicio',services_sub:'La IA conocerá tus servicios',no_services:'Ningún servicio encontrado',no_faq:'Ninguna pregunta encontrada',lbl_question:'Pregunta',lbl_reponse:'Respuesta',tone_casual:'😎 Informal',emojis_off:'❌ Desactivados',length_detailed:'📖 Detallada',proactivity_rdv:'✅ Tras cita confirmada',comp_arrow:'→ la IA sugiere',biz_select:'— Seleccionar —',biz_types:{'salon_coiffure':'💇 Peluquería','institut_beaute':'💅 Belleza / Spa','massage':'💆 Masaje','dentiste':'🦷 Dentista','restaurant':'🍽️ Restaurante','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Panadería','pharmacie':'💊 Farmacia','agence_immo':'🏡 Inmobiliaria','auto':'🚗 Taller','cinema':'🎬 Cine','sport':'🏋️ Gimnasio','plombier':'🔨 Fontanero','menage':'🧹 Limpieza','medecin':'🏥 Consulta médica','veterinaire':'🐾 Veterinario','juridique':'⚖️ Despacho','retail':'🛍️ Comercio','hotel':'🏨 Hotel','autre':'🏢 Otro'},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mié', day_jeu: 'Jue',
     day_ven: 'Vie', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Lunes', day_full_mar: 'Martes', day_full_mer: 'Miércoles',
@@ -1478,6 +1496,7 @@ const DASH_CFG_T = {
     pro_required: 'Plano Pro necessário para a personalidade IA',
     err_generic: '❌ Erro de carregamento',
     logout_confirm: 'Tem a certeza que quer sair?',
+    lbl_desc:'Descrição',lbl_desc_sub:'(vista pela IA)',lbl_logo:'Logótipo',lbl_logo_sub:'(no chat)',save_info_btn:'💾 Guardar informações',save_hours_btn:'💾 Guardar horários',save_services_btn:'💾 Guardar serviços',save_faq_btn:'💾 Guardar FAQ',save_personality_btn:'💾 Guardar personalidade',add_service_btn:'➕ Adicionar',add_faq_btn:'➕ Adicionar',add_closure_btn:'+ Adicionar',add_comp_btn:'+ Serviço',services_sub:'A IA conhecerá os seus serviços',no_services:'Nenhum serviço encontrado',no_faq:'Nenhuma pergunta encontrada',lbl_question:'Pergunta',lbl_reponse:'Resposta',tone_casual:'😎 Informal',emojis_off:'❌ Desativados',length_detailed:'📖 Detalhada',proactivity_rdv:'✅ Após marcação confirmada',comp_arrow:'→ a IA sugere',biz_select:'— Selecionar —',biz_types:{'salon_coiffure':'💇 Cabeleireiro','institut_beaute':'💅 Beleza / Spa','massage':'💆 Massagem','dentiste':'🦷 Dentista','restaurant':'🍽️ Restaurante','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Padaria','pharmacie':'💊 Farmácia','agence_immo':'🏡 Imobiliária','auto':'🚗 Oficina','cinema':'🎬 Cinema','sport':'🏋️ Ginásio','plombier':'🔨 Canalizador','menage':'🧹 Limpeza','medecin':'🏥 Consultório','veterinaire':'🐾 Veterinário','juridique':'⚖️ Escritório','retail':'🛍️ Retalho','hotel':'🏨 Hotel','autre':'🏢 Outro'},
     day_lun: 'Seg', day_mar: 'Ter', day_mer: 'Qua', day_jeu: 'Qui',
     day_ven: 'Sex', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Segunda', day_full_mar: 'Terça', day_full_mer: 'Quarta',
@@ -1514,6 +1533,7 @@ const DASH_CFG_T = {
     pro_required: 'Pro-plan vereist voor AI-persoonlijkheid',
     err_generic: '❌ Laaderfout',
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+    lbl_desc:'Beschrijving',lbl_desc_sub:'(gezien door de AI)',lbl_logo:'Logo',lbl_logo_sub:'(in de chat)',save_info_btn:'💾 Informatie opslaan',save_hours_btn:'💾 Openingstijden opslaan',save_services_btn:'💾 Diensten opslaan',save_faq_btn:'💾 FAQ opslaan',save_personality_btn:'💾 Persoonlijkheid opslaan',add_service_btn:'➕ Toevoegen',add_faq_btn:'➕ Toevoegen',add_closure_btn:'+ Toevoegen',add_comp_btn:'+ Dienst',services_sub:'De AI kent uw diensten',no_services:'Geen dienst gevonden',no_faq:'Geen vraag gevonden',lbl_question:'Vraag',lbl_reponse:'Antwoord',tone_casual:'😎 Informeel',emojis_off:'❌ Uitgeschakeld',length_detailed:'📖 Gedetailleerd',proactivity_rdv:'✅ Na bevestigde afspraak',comp_arrow:'→ AI stelt voor',biz_select:'— Selecteren —',biz_types:{'salon_coiffure':'💇 Kapsalon','institut_beaute':'💅 Schoonheid / Spa','massage':'💆 Massage','dentiste':'🦷 Tandarts','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Bakkerij','pharmacie':'💊 Apotheek','agence_immo':'🏡 Makelaardij','auto':'🚗 Garage','cinema':'🎬 Bioscoop','sport':'🏋️ Sportschool','plombier':'🔨 Loodgieter','menage':'🧹 Schoonmaak','medecin':'🏥 Medische praktijk','veterinaire':'🐾 Dierenarts','juridique':'⚖️ Advocatenkantoor','retail':'🛍️ Detailhandel','hotel':'🏨 Hotel','autre':'🏢 Overig'},
     day_lun: 'Ma', day_mar: 'Di', day_mer: 'Wo', day_jeu: 'Do',
     day_ven: 'Vr', day_sam: 'Za', day_dim: 'Zo',
     day_full_lun: 'Maandag', day_full_mar: 'Dinsdag', day_full_mer: 'Woensdag',
@@ -1550,6 +1570,7 @@ const DASH_CFG_T = {
     pro_required: 'Plan Pro wymagany dla osobowości AI',
     err_generic: '❌ Błąd ładowania',
     logout_confirm: 'Czy na pewno chcesz się wylogować?',
+    lbl_desc:'Opis',lbl_desc_sub:'(widoczny przez AI)',lbl_logo:'Logo',lbl_logo_sub:'(w czacie)',save_info_btn:'💾 Zapisz informacje',save_hours_btn:'💾 Zapisz godziny',save_services_btn:'💾 Zapisz usługi',save_faq_btn:'💾 Zapisz FAQ',save_personality_btn:'💾 Zapisz osobowość',add_service_btn:'➕ Dodaj',add_faq_btn:'➕ Dodaj',add_closure_btn:'+ Dodaj',add_comp_btn:'+ Usługa',services_sub:'AI pozna Twoje usługi',no_services:'Nie znaleziono usługi',no_faq:'Nie znaleziono pytania',lbl_question:'Pytanie',lbl_reponse:'Odpowiedź',tone_casual:'😎 Swobodny',emojis_off:'❌ Wyłączone',length_detailed:'📖 Szczegółowa',proactivity_rdv:'✅ Po wizycie',comp_arrow:'→ AI sugeruje',biz_select:'— Wybierz —',biz_types:{'salon_coiffure':'💇 Salon fryzjerski','institut_beaute':'💅 Salon piękności','massage':'💆 Masaż','dentiste':'🦷 Dentysta','restaurant':'🍽️ Restauracja','cafe_bar':'☕ Kawiarnia / Bar','boulangerie':'🥐 Piekarnia','pharmacie':'💊 Apteka','agence_immo':'🏡 Nieruchomości','auto':'🚗 Warsztat','cinema':'🎬 Kino','sport':'🏋️ Siłownia','plombier':'🔨 Hydraulik','menage':'🧹 Sprzątanie','medecin':'🏥 Gabinet medyczny','veterinaire':'🐾 Weterynarz','juridique':'⚖️ Kancelaria','retail':'🛍️ Handel','hotel':'🏨 Hotel','autre':'🏢 Inne'},
     day_lun: 'Pon', day_mar: 'Wt', day_mer: 'Śr', day_jeu: 'Czw',
     day_ven: 'Pt', day_sam: 'Sob', day_dim: 'Nd',
     day_full_lun: 'Poniedziałek', day_full_mar: 'Wtorek', day_full_mer: 'Środa',
@@ -1578,6 +1599,19 @@ const DASH_CFG_T = {
       'cfg-lbl-email': t.lbl_email, 'cfg-lbl-phone': t.lbl_phone,
       'cfg-lbl-address': t.lbl_address, 'cfg-lbl-timezone': t.lbl_timezone,
       'cfg-lbl-lang': t.lbl_lang,
+      'cfg-lbl-desc': t.lbl_desc, 'cfg-lbl-desc-sub': t.lbl_desc_sub,
+      'cfg-lbl-logo': t.lbl_logo, 'cfg-lbl-logo-sub': t.lbl_logo_sub,
+      'cfg-save-info-btn': t.save_info_btn, 'cfg-save-hours-btn': t.save_hours_btn,
+      'cfg-save-services-btn': t.save_services_btn, 'cfg-save-faq-btn': t.save_faq_btn,
+      'cfg-save-personality-btn': t.save_personality_btn,
+      'cfg-add-service-btn': t.add_service_btn, 'cfg-add-faq-btn': t.add_faq_btn,
+      'cfg-add-closure-btn': t.add_closure_btn, 'cfg-add-comp-btn': t.add_comp_btn,
+      'cfg-services-sub': t.services_sub, 'cfg-no-services': t.no_services,
+      'cfg-no-faq': t.no_faq, 'cfg-lbl-question': t.lbl_question,
+      'cfg-lbl-reponse': t.lbl_reponse,
+      'cfg-tone-casual': t.tone_casual, 'cfg-emojis-off': t.emojis_off,
+      'cfg-length-detailed': t.length_detailed, 'cfg-proactivity-rdv': t.proactivity_rdv,
+      'cfg-comp-arrow': t.comp_arrow,
       'cfg-lbl-tone': t.lbl_tone, 'cfg-lbl-tutoyer': t.lbl_tutoyer,
       'cfg-lbl-emojis': t.lbl_emojis, 'cfg-lbl-length': t.lbl_length,
       'cfg-lbl-assistant': t.lbl_assistant, 'cfg-lbl-greeting': t.lbl_greeting,
@@ -1587,11 +1621,16 @@ const DASH_CFG_T = {
       'cfg-remove-logo': t.remove_logo,
       'cfg-save-closures': t.save_closures,
       'cfg-save-complementary': t.save_complementary,
+      'cfg-day-lun': t.day_full_lun, 'cfg-day-mar': t.day_full_mar,
+      'cfg-day-mer': t.day_full_mer, 'cfg-day-jeu': t.day_full_jeu,
+      'cfg-day-ven': t.day_full_ven, 'cfg-day-sam': t.day_full_sam,
+      'cfg-day-dim': t.day_full_dim,
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);
       if (el && txt) el.textContent = txt;
     });
+    renderBusinessTypes();
   }
 
   if (document.readyState === 'loading') {

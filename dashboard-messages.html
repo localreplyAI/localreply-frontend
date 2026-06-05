@@ -179,13 +179,13 @@
 <div id="replyOverlay" onclick="closeReplyModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:10000;opacity:0;transition:opacity 0.25s;backdrop-filter:blur(6px);"></div>
 <div id="replyModal" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.95);z-index:10001;background:rgba(8,16,35,0.99);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.12);border-radius:22px;padding:32px;width:min(560px,95vw);max-height:90vh;overflow-y:auto;opacity:0;transition:all 0.25s;">
   <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:20px;">
-    <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0;">💬 Répondre au client</h2>
+    <h2 style="font-size:20px;font-weight:700;color:#fff;margin:0;" id="msg-modal-title">💬 Répondre au client</h2>
     <button onclick="closeReplyModal()" style="background:rgba(255,255,255,0.07);border:none;color:rgba(255,255,255,0.5);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-family:inherit;">✕</button>
   </div>
 
   <!-- Question -->
   <div style="margin-bottom:18px;">
-    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Question du client</div>
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;" id="msg-modal-question-lbl">Question du client</div>
     <p id="modalQuestion" style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;margin:0;padding:14px 16px;background:rgba(0,212,255,0.06);border-radius:10px;border-left:3px solid #00D4FF;line-height:1.6;"></p>
   </div>
 
@@ -199,7 +199,7 @@
 
   <!-- Réponse -->
   <div style="margin-bottom:18px;">
-    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Votre réponse</div>
+    <div id="msg-modal-answer-lbl" style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Votre réponse</div>
     <div id="modalLangNote" style="display:none;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:10px;margin-bottom:10px;">
       <span style="font-size:18px;">🌍</span>
       <span style="font-size:12.5px;color:rgba(0,212,255,0.85);"></span>
@@ -213,21 +213,21 @@
     <label style="display:flex;align-items:start;gap:10px;cursor:pointer;margin-bottom:10px;">
       <input type="checkbox" id="optAddFaq" checked style="width:16px;height:16px;accent-color:#0052CC;margin-top:2px;flex-shrink:0;">
       <div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.88);font-weight:600;">📚 Ajouter à la FAQ</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">L'IA répondra automatiquement à cette question pour tous les clients suivants</div>
+        <div id="msg-modal-faq-lbl" style="font-size:13px;color:rgba(255,255,255,0.88);font-weight:600;">📚 Ajouter à la FAQ</div>
+        <div id="msg-modal-faq-sub" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">L'IA répondra automatiquement à cette question pour tous les clients suivants</div>
       </div>
     </label>
     <label style="display:flex;align-items:start;gap:10px;cursor:pointer;">
       <input type="checkbox" id="optNotifyClient" checked style="width:16px;height:16px;accent-color:#0052CC;margin-top:2px;flex-shrink:0;">
       <div>
         <div style="font-size:13px;color:rgba(255,255,255,0.88);font-weight:600;">📧 Notifier le client</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Envoyer votre réponse par email au client (si adresse disponible)</div>
+        <div id="msg-modal-email-lbl" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">Envoyer votre réponse par email au client (si adresse disponible)</div>
       </div>
     </label>
   </div>
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <button onclick="submitReply()" style="flex:1;min-width:140px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,82,204,0.3);font-family:inherit;">✅ Envoyer la réponse</button>
+    <button onclick="submitReply()" style="flex:1;min-width:140px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,82,204,0.3);font-family:inherit;" id="msg-modal-send-btn">✅ Envoyer la réponse</button>
     <button onclick="ignoreQuestion()" style="padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Ignorer</button>
   </div>
 </div>
@@ -347,9 +347,9 @@ function renderQuestion(q, tab) {
 
   const clientInfo = [q.client_name, q.client_email, q.client_phone].filter(Boolean).join(' · ');
   const statusBadge = tab==='answered'
-    ? `<span style="font-size:11px;font-weight:700;color:#10B981;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:100px;">✅ Répondue</span>`
+    ? `<span style="font-size:11px;font-weight:700;color:#10B981;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.25);padding:3px 10px;border-radius:100px;" id="msg-status-answered">✅ Répondue</span>`
     : tab==='ignored'
-    ? `<span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:100px;">— Ignorée</span>`
+    ? `<span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.06);padding:3px 10px;border-radius:100px;" id="msg-status-ignored">— Ignorée</span>`
     : urgencyBadge(q.urgency_level || 'normal');
 
   return `<div class="q-card ${tab}" id="qcard-${q.id}">
@@ -369,7 +369,7 @@ function renderQuestion(q, tab) {
 
     ${q.business_answer ? `
     <div style="padding:12px 14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;margin-bottom:12px;">
-      <div style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse (en français)</div>
+      <div id="msg-answered-label" style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse (en français)</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;">${q.business_answer}</div>
       ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' ? `<div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:8px;">✓ Traduite automatiquement en ${langName(q.detected_language)} pour le client</div>` : ''}
     </div>` : ''}
@@ -511,7 +511,7 @@ function openReplyModal(id, question, clientEmail) {
   const langNote = document.getElementById('modalLangNote');
   if (langNote && q && q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown') {
     langNote.style.display = 'flex';
-    langNote.querySelector('span').textContent = `Votre réponse sera automatiquement traduite en ${langName(q.detected_language)} pour le client.`;
+    langNote.querySelector('span').textContent = `${(_dmt||DASH_MSG_T.fr).lang_note_prefix||'Votre réponse sera traduite en'} ${langName(q.detected_language)} ${(_dmt||DASH_MSG_T.fr).lang_note_suffix||'pour le client.'}`;
   } else if (langNote) {
     langNote.style.display = 'none';
   }
@@ -567,7 +567,7 @@ async function submitReply() {
   } catch(e) {
     showToast('Erreur lors de l\'envoi', 'error');
   } finally {
-    btn.disabled = false; btn.textContent = '✅ Envoyer la réponse';
+    btn.disabled = false; btn.textContent = (_dmt||DASH_MSG_T.fr).modal_send;
   }
 }
 
@@ -645,20 +645,20 @@ const DASH_MSG_T = {
     stat_answered_label: 'Répondues', stat_answered_sub: 'Client notifié par email',
     stat_faq_label: 'Ajoutées à la FAQ', stat_faq_sub: "L'IA sait maintenant répondre",
     tip_faq: 'Cliquez sur "Ajouter à la FAQ" pour que la réponse soit permanente.',
-    modal_title: '💬 Répondre au client',
-    modal_question: 'Question du client',
-    modal_answer_label: 'Votre réponse',
-    modal_faq_check: '📚 Ajouter à la FAQ',
-    modal_faq_sub: "L'IA répondra automatiquement à cette question pour tous les clients suivants",
-    modal_email_check: 'Envoyer votre réponse par email au client (si adresse disponible)',
+    modal_title: (_dmt||DASH_MSG_T.fr).modal_title,
+    modal_question: (_dmt||DASH_MSG_T.fr).modal_question,
+    modal_answer_label: (_dmt||DASH_MSG_T.fr).modal_answer_label,
+    modal_faq_check: (_dmt||DASH_MSG_T.fr).modal_faq_check,
+    modal_faq_sub: (_dmt||DASH_MSG_T.fr).modal_faq_sub,
+    modal_email_check: (_dmt||DASH_MSG_T.fr).modal_email_check,
     modal_send: '✅ Envoyer la réponse',
-    modal_context: '💬 Contexte de la conversation',
+    modal_context: (_dmt||DASH_MSG_T.fr).modal_context,
     role_client: '👤 Client', role_ai: '🤖 IA',
     btn_reply: (_dmt||DASH_MSG_T.fr).btn_reply, btn_edit: (_dmt||DASH_MSG_T.fr).btn_edit, btn_reply_anyway: (_dmt||DASH_MSG_T.fr).btn_reply_anyway,
     btn_ignore: 'Ignorer',
     status_answered: (_dmt||DASH_MSG_T.fr).status_answered, status_ignored: (_dmt||DASH_MSG_T.fr).status_ignored,
     anon_client: 'Client anonyme',
-    answer_placeholder: 'Votre réponse (en français)',
+    answer_placeholder: (_dmt||DASH_MSG_T.fr).answer_placeholder,
     empty_pending: 'Aucune question en attente',
     empty_pending_sub: "Votre IA répond à toutes les questions — ou aucun client ne s'est manifesté récemment.",
     empty_answered: 'Aucune question traitée',
@@ -668,8 +668,9 @@ const DASH_MSG_T = {
     success_faq: '✅ Répondu et ajouté à la FAQ !',
     success_reply: '✅ Réponse envoyée !',
     success_ignored: 'Question ignorée',
-    email_to: 'La réponse sera envoyée à',
+    email_to: (_dmt||DASH_MSG_T.fr).email_to,
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
+    lang_note_prefix:'Votre réponse sera traduite en',lang_note_suffix:'pour le client.',
   },
   en: {
     page_title: 'Messages — LocalReply',
@@ -704,7 +705,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Reply sent!',
     success_ignored: 'Question ignored',
     email_to: 'The reply will be sent to',
-    logout_confirm: 'Are you sure you want to sign out?',
+    logout_confirm: 'Are you sure you want to sign out?', lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
   },
   de: {
     page_title: 'Nachrichten — LocalReply',
@@ -739,7 +740,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Antwort gesendet!',
     success_ignored: 'Frage ignoriert',
     email_to: 'Die Antwort wird gesendet an',
-    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?', lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
   },
   it: {
     page_title: 'Messaggi — LocalReply',
@@ -774,7 +775,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Risposta inviata!',
     success_ignored: 'Domanda ignorata',
     email_to: 'La risposta sarà inviata a',
-    logout_confirm: 'Sei sicuro di voler uscire?',
+    logout_confirm: 'Sei sicuro di voler uscire?', lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
   },
   es: {
     page_title: 'Mensajes — LocalReply',
@@ -809,7 +810,7 @@ const DASH_MSG_T = {
     success_reply: '✅ ¡Respuesta enviada!',
     success_ignored: 'Pregunta ignorada',
     email_to: 'La respuesta se enviará a',
-    logout_confirm: '¿Seguro que quieres cerrar sesión?',
+    logout_confirm: '¿Seguro que quieres cerrar sesión?', lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
   },
   pt: {
     page_title: 'Mensagens — LocalReply',
@@ -844,7 +845,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Resposta enviada!',
     success_ignored: 'Pergunta ignorada',
     email_to: 'A resposta será enviada para',
-    logout_confirm: 'Tem a certeza que quer sair?',
+    logout_confirm: 'Tem a certeza que quer sair?', lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
   },
   nl: {
     page_title: 'Berichten — LocalReply',
@@ -879,7 +880,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Antwoord verzonden!',
     success_ignored: 'Vraag genegeerd',
     email_to: 'Het antwoord wordt verzonden naar',
-    logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+    logout_confirm: 'Weet u zeker dat u wilt uitloggen?', lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
   },
   pl: {
     page_title: 'Wiadomości — LocalReply',
@@ -914,7 +915,7 @@ const DASH_MSG_T = {
     success_reply: '✅ Odpowiedź wysłana!',
     success_ignored: 'Pytanie zignorowane',
     email_to: 'Odpowiedź zostanie wysłana do',
-    logout_confirm: 'Czy na pewno chcesz się wylogować?',
+    logout_confirm: 'Czy na pewno chcesz się wylogować?', lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
   },
 };
 
@@ -936,6 +937,16 @@ const DASH_MSG_T = {
       'stat-faq-label': t.stat_faq_label,
       'stat-faq-sub': t.stat_faq_sub,
       'msg-tip-faq': t.tip_faq,
+      'msg-modal-title': t.modal_title,
+      'msg-modal-faq-sub': t.modal_faq_sub,
+      'msg-modal-email-lbl': t.modal_email_check,
+      'msg-modal-send-btn': t.modal_send,
+      'msg-modal-question-lbl': t.modal_question,
+      'msg-modal-answer-lbl': t.modal_answer_label,
+      'msg-modal-faq-lbl': t.modal_faq_check,
+      'msg-modal-faq-sub': t.modal_faq_sub,
+      'msg-modal-email-lbl': t.modal_email_check,
+      'msg-modal-send-btn': t.modal_send,
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);

@@ -173,7 +173,7 @@
         <button onclick="toggleFaq(this)" class="faq-btn">
           <span id="ab-faq-q1">Puis-je annuler à tout moment ?</span><span class="faq-icon">+</span>
         </button>
-        <div class="faq-answer">Oui, sans engagement. Annulez depuis le portail de facturation. Vous gardez l'accès jusqu'à la fin de la période en cours.</div>
+        <div id="ab-faq-a1" class="faq-answer">Oui, sans engagement. Annulez depuis le portail de facturation.</div>
       </div>
       <div class="faq-item">
         <button onclick="toggleFaq(this)" class="faq-btn">
@@ -348,8 +348,8 @@ function checkURLAlerts(){
     banner.innerHTML=`<div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.25);border-left:4px solid #00D4FF;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
       <span style="font-size:28px;">👋</span>
       <div>
-        <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:3px;">Bienvenue sur LocalReply !</div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.75);">Choisissez votre plan et démarrez votre essai gratuit de 14 jours. Votre carte ne sera débitée qu'après l'essai, annulable à tout moment.</div>
+        <div style="font-size:15px;font-weight:700;color:#00D4FF;margin-bottom:3px;">${(_abt||DASH_AB_T.fr).welcome_title}</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);">${(_abt||DASH_AB_T.fr).welcome_desc} Votre carte ne sera débitée qu'après l'essai, annulable à tout moment.</div>
       </div>
     </div>`;
     banner.style.display='block';
@@ -358,7 +358,7 @@ function checkURLAlerts(){
   if(params.get('success')==='true'){
     const plan=params.get('plan')||'';
     const isNewAccount=params.get('new')==='true';
-    banner.innerHTML=`<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-left:4px solid #10B981;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">🎉</span><div><div style="font-size:15px;font-weight:700;color:#10B981;margin-bottom:3px;">Abonnement activé !</div><div style="font-size:13px;color:rgba(255,255,255,0.75);">Bienvenue sur le plan ${plan==='pro'?'⭐ Pro':'📦 Standard'}. Toutes vos fonctionnalités sont actives.</div></div></div>`;
+    banner.innerHTML=`<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-left:4px solid #10B981;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">🎉</span><div><div style="font-size:15px;font-weight:700;color:#10B981;margin-bottom:3px;">${(_abt||DASH_AB_T.fr).activated_title}</div><div style="font-size:13px;color:rgba(255,255,255,0.75);">${(_abt||DASH_AB_T.fr).activated_desc} ${plan==='pro'?'⭐ Pro':'📦 Standard'}. Toutes vos fonctionnalités sont actives.</div></div></div>`;
     banner.style.display='block';
     // Nouveau compte → rediriger vers onboarding après 2s
     if(isNewAccount){
@@ -367,7 +367,7 @@ function checkURLAlerts(){
       window.history.replaceState({},'','/abonnement');
     }
   } else if(params.get('cancelled')==='true'){
-    banner.innerHTML=`<div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.25);border-left:4px solid #6B7280;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">↩️</span><div><div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:3px;">Paiement annulé</div><div style="font-size:13px;color:rgba(255,255,255,0.6);">Aucun prélèvement effectué. Vous pouvez réessayer quand vous voulez.</div></div></div>`;
+    banner.innerHTML=`<div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.25);border-left:4px solid #6B7280;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">↩️</span><div><div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:3px;">${(_abt||DASH_AB_T.fr).cancelled_title}</div><div style="font-size:13px;color:rgba(255,255,255,0.6);">${(_abt||DASH_AB_T.fr).cancelled_desc}</div></div></div>`;
     banner.style.display='block';window.history.replaceState({},'','/abonnement');
   }
 }
@@ -375,7 +375,7 @@ function checkURLAlerts(){
 async function loadCurrentPlan(){
   const container=document.getElementById('currentPlanContent');
   if (!userId) {
-    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">Session expirée — <a href="/auth" style="color:#00D4FF;font-weight:600;">reconnectez-vous</a>.</div>`;
+    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">${(_abt||DASH_AB_T.fr).session_expired_msg} <a href="/auth" style="color:#00D4FF;font-weight:600;">${(_abt||DASH_AB_T.fr).reconnect}</a>.</div>`;
     return;
   }
   try {
@@ -386,10 +386,10 @@ async function loadCurrentPlan(){
     const sl={active:{l:(_abt||DASH_AB_T.fr).status_active,c:'#10B981'},cancelled:{l:(_abt||DASH_AB_T.fr).status_cancelled,c:'#EF4444'},past_due:{l:'Paiement en retard',c:'#F59E0B'}}[status]||{l:'Actif',c:'#10B981'};
     const renewDate=sub.current_period_end?new Date(sub.current_period_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
     const trialEnd=sub.trial_end?new Date(sub.trial_end).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}):null;
-    container.innerHTML=`<div style="background:${pc.bg};border:1px solid ${pc.border};border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="display:flex;align-items:center;gap:14px;"><div style="width:48px;height:48px;background:${pc.bg};border:2px solid ${pc.border};border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;">${pc.icon}</div><div><div style="font-size:20px;font-weight:800;color:${pc.color};margin-bottom:3px;">Plan ${pc.label}</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:12px;color:${sl.c};font-weight:600;">● ${sl.l}</span>${renewDate&&plan!=='trial'?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Renouvellement le ${renewDate}</span>`:''}${trialEnd?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Essai jusqu'au ${trialEnd}</span>`:''}${plan==='trial'&&!trialEnd?'<span style="font-size:12px;color:rgba(255,255,255,0.4);">· Fonctionnalités Pro incluses</span>':''}</div></div></div>${sub.stripe_subscription_id?`<button onclick="openPortal()" style="padding:10px 18px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;">⚙️ Gérer / Annuler</button>`:''}</div>${status==='past_due'?`<div style="margin-top:14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-left:4px solid #EF4444;border-radius:10px;padding:14px;display:flex;align-items:center;gap:10px;"><span>⚠️</span><div><div style="font-size:14px;font-weight:700;color:#EF4444;margin-bottom:2px;">Paiement en retard</div><div style="font-size:12px;color:rgba(255,255,255,0.65);">Mettez à jour votre moyen de paiement.</div></div><button onclick="openPortal()" style="margin-left:auto;padding:9px 16px;background:#EF4444;border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">Mettre à jour</button></div>`:''}`;
+    container.innerHTML=`<div style="background:${pc.bg};border:1px solid ${pc.border};border-radius:12px;padding:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;"><div style="display:flex;align-items:center;gap:14px;"><div style="width:48px;height:48px;background:${pc.bg};border:2px solid ${pc.border};border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;">${pc.icon}</div><div><div style="font-size:20px;font-weight:800;color:${pc.color};margin-bottom:3px;">${(_abt||DASH_AB_T.fr).plan_label} ${pc.label}</div><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span style="font-size:12px;color:${sl.c};font-weight:600;">● ${sl.l}</span>${renewDate&&plan!=='trial'?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· ${(_abt||DASH_AB_T.fr).renew_label} ${renewDate}</span>`:''}${trialEnd?`<span style="font-size:12px;color:rgba(255,255,255,0.4);">· ${(_abt||DASH_AB_T.fr).trial_until} ${trialEnd}</span>`:''}${plan==='trial'&&!trialEnd?'<span style="font-size:12px;color:rgba(255,255,255,0.4);">· ${(_abt||DASH_AB_T.fr).pro_features}</span>':''}</div></div></div>${sub.stripe_subscription_id?`<button onclick="openPortal()" style="padding:10px 18px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:rgba(255,255,255,0.8);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;">${(_abt||DASH_AB_T.fr).manage_btn}</button>`:''}</div>${status==='past_due'?`<div style="margin-top:14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-left:4px solid #EF4444;border-radius:10px;padding:14px;display:flex;align-items:center;gap:10px;"><span>⚠️</span><div><div style="font-size:14px;font-weight:700;color:#EF4444;margin-bottom:2px;">${(_abt||DASH_AB_T.fr).payment_late_title}</div><div style="font-size:12px;color:rgba(255,255,255,0.65);">${(_abt||DASH_AB_T.fr).payment_late_desc}</div></div><button onclick="openPortal()" style="margin-left:auto;padding:9px 16px;background:#EF4444;border:none;border-radius:9px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">${(_abt||DASH_AB_T.fr).update_btn}</button></div>`:''}`;
     updatePlanButtons(plan);
   } catch(e) {
-    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">Impossible de charger les informations d'abonnement.</div>`;
+    container.innerHTML=`<div style="color:rgba(255,255,255,0.45);font-size:14px;padding:16px;">${(_abt||DASH_AB_T.fr).load_error}</div>`;
   }
 }
 
@@ -451,6 +451,23 @@ function toggleMobileMenu(){
 
 function logout(){if(confirm((_abt||DASH_AB_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
 
+
+function renderPlanFeatures() {
+  const t = (_abt || DASH_AB_T.fr);
+  const stdEl = document.getElementById('stdFeatures');
+  const proEl = document.getElementById('proFeatures');
+  if (stdEl && t.std_features) {
+    stdEl.innerHTML = t.std_features.map(f => 
+      `<li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,0.75);"><span style="color:#00D4FF;font-weight:700;flex-shrink:0;">✓</span>${f}</li>`
+    ).join('');
+  }
+  if (proEl && t.pro_features_list) {
+    proEl.innerHTML = t.pro_features_list.map((f, i) => 
+      `<li style="display:flex;align-items:flex-start;gap:8px;font-size:13px;color:rgba(255,255,255,0.75);${i===0?'font-weight:600;':''}"><span style="color:#F59E0B;font-weight:700;flex-shrink:0;">${i===0?'✦':'✓'}</span>${f}</li>`
+    ).join('');
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   checkURLAlerts();
   loadSidebarInfo();
@@ -492,7 +509,30 @@ const DASH_AB_T = {
     faq_q3:'Mes données de paiement sont-elles sécurisées ?',
     faq_q4:'Que se passe-t-il après le trial ?',
     status_trial:'Essai gratuit', status_active:'Actif', status_cancelled:'Annulé',
-    current_badge:'✅ Plan actuel',
+    current_badge:'✅ Plan actuel', period_monthly:'Mensuel',period_annual:'Annuel',
+    welcome_title:'Bienvenue sur LocalReply !',
+    welcome_desc:'Choisissez votre plan et démarrez votre essai gratuit de 14 jours.',
+    activated_title:'Abonnement activé !',
+    activated_desc:'Bienvenue sur le plan',
+    cancelled_title:'Paiement annulé',
+    cancelled_desc:'Aucun prélèvement effectué. Vous pouvez réessayer quand vous voulez.',
+    session_expired_msg:'Session expirée —',
+    reconnect:'reconnectez-vous',
+    load_error:'Impossible de charger les informations d\'abonnement.',
+    renew_label:'Renouvellement le',
+    trial_until:'Essai jusqu\'au',
+    pro_features:'Fonctionnalités Pro incluses',
+    manage_btn:'⚙️ Gérer / Annuler',
+    payment_late_title:'Paiement en retard',
+    payment_late_desc:'Mettez à jour votre moyen de paiement.',
+    update_btn:'Mettre à jour',
+    plan_label:'Plan',
+    faq_a1:'Oui, sans engagement. Annulez depuis le portail de facturation.',
+    faq_a2:'Depuis votre espace Abonnement → Gérer / Annuler → Changer de plan.',
+    faq_a3:'Oui. Paiements traités via Stripe, certifié PCI DSS.',
+    faq_a4:'À la fin des 14 jours, votre abonnement s\'active automatiquement. Pas de surprise.',
+    std_features:['IA conversationnelle 8 langues européennes','FAQ illimitée','Google Calendar intégré','Prise de RDV + confirmations email','Conversations illimitées','Dashboard basique','Lien public + QR code','Support email'],
+    pro_features_list:['Tout le plan Standard','50 SMS inclus / mois','Alertes urgences temps réel','Résumés IA quotidiens','Analytics complets (90 jours)','Personnalité IA ajustable','Nouvelles features en avant-première','Support prioritaire'],
     loading:'Chargement...',
     err_redirect:'❌ Erreur lors de la redirection',
     logout_confirm:"Êtes-vous sûr de vouloir vous déconnecter ?",
@@ -517,7 +557,30 @@ const DASH_AB_T = {
     faq_q3:'Is my payment data secure?',
     faq_q4:'What happens after the trial?',
     status_trial:'Free trial', status_active:'Active', status_cancelled:'Cancelled',
-    current_badge:'✅ Current plan',
+    current_badge:'✅ Current plan', period_monthly:'Monthly',period_annual:'Annual',
+    welcome_title:'Welcome to LocalReply!',
+    welcome_desc:'Choose your plan and start your 14-day free trial.',
+    activated_title:'Subscription activated!',
+    activated_desc:'Welcome to the',
+    cancelled_title:'Payment cancelled',
+    cancelled_desc:'No charge made. You can try again whenever you want.',
+    session_expired_msg:'Session expired —',
+    reconnect:'sign in again',
+    load_error:'Unable to load subscription information.',
+    renew_label:'Renewal on',
+    trial_until:'Trial until',
+    pro_features:'Pro features included',
+    manage_btn:'⚙️ Manage / Cancel',
+    payment_late_title:'Payment overdue',
+    payment_late_desc:'Update your payment method.',
+    update_btn:'Update',
+    plan_label:'Plan',
+    faq_a1:'Yes, no commitment. Cancel from the billing portal.',
+    faq_a2:'From your Subscription space → Manage / Cancel → Change plan.',
+    faq_a3:'Yes. Payments processed via Stripe, PCI DSS certified.',
+    faq_a4:'After 14 days, your subscription activates automatically. No surprises.',
+    std_features:['AI in 8 European languages','Unlimited FAQ','Google Calendar integrated','Booking + email confirmations','Unlimited conversations','Basic dashboard','Public link + QR code','Email support'],
+    pro_features_list:['Everything in Standard','50 SMS included / month','Real-time urgency alerts','Daily AI summaries','Full analytics (90 days)','Adjustable AI personality','New features early access','Priority support'],
     loading:'Loading...',
     err_redirect:'❌ Redirect error',
     logout_confirm:'Are you sure you want to sign out?',
@@ -542,7 +605,7 @@ const DASH_AB_T = {
     faq_q3:'Sind meine Zahlungsdaten sicher?',
     faq_q4:'Was passiert nach dem Trial?',
     status_trial:'Kostenlose Testphase', status_active:'Aktiv', status_cancelled:'Gekündigt',
-    current_badge:'✅ Aktueller Plan',
+    current_badge: "✅ Aktueller Plan", std_features:['KI auf 8 Sprachen','Unbegrenzte FAQ','Google Kalender integriert','Terminbuchung + E-Mail-Bestätigungen','Unbegrenzte Gespräche','Basis-Dashboard','Öffentlicher Link + QR-Code','E-Mail-Support'],pro_features_list:['Alles aus Standard','50 SMS inklusive / Monat','Echtzeit-Dringlichkeitswarnungen','Tägliche KI-Zusammenfassungen','Vollständige Analytics (90 Tage)','Anpassbare KI-Persönlichkeit','Neue Funktionen zuerst','Prioritätssupport'], period_monthly: "Monatlich",period_annual: "Jährlich",
     loading:'Laden...',
     err_redirect:'❌ Weiterleitungsfehler',
     logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
@@ -567,7 +630,7 @@ const DASH_AB_T = {
     faq_q3:'I miei dati di pagamento sono sicuri?',
     faq_q4:'Cosa succede dopo il trial?',
     status_trial:'Prova gratuita', status_active:'Attivo', status_cancelled:'Annullato',
-    current_badge:'✅ Piano attuale',
+    current_badge:'✅ Piano attuale', std_features:['IA in italiano + 7 lingue europee','FAQ illimitata','Google Calendar integrato','Prenotazioni + conferme email','Conversazioni illimitate','Dashboard base','Link pubblico + QR code','Supporto email'],pro_features_list:['Tutto il piano Standard','50 SMS inclusi / mese','Avvisi urgenza in tempo reale','Riepiloghi IA quotidiani','Analytics completi (90 giorni)','Personalità IA regolabile','Nuove funzionalità in anteprima','Supporto prioritario'], period_monthly:'Mensile',period_annual:'Annuale',
     loading:'Caricamento...',
     err_redirect:'❌ Errore di reindirizzamento',
     logout_confirm:'Sei sicuro di voler uscire?',
@@ -592,7 +655,7 @@ const DASH_AB_T = {
     faq_q3:'¿Son seguros mis datos de pago?',
     faq_q4:'¿Qué pasa después del trial?',
     status_trial:'Prueba gratuita', status_active:'Activo', status_cancelled:'Cancelado',
-    current_badge:'✅ Plan actual',
+    current_badge:'✅ Plan actual', std_features:['IA en español + 7 idiomas europeos','FAQ ilimitada','Google Calendar integrado','Reservas + confirmaciones email','Conversaciones ilimitadas','Dashboard básico','Enlace público + QR code','Soporte email'],pro_features_list:['Todo el plan Standard','50 SMS incluidos / mes','Alertas urgencia en tiempo real','Resúmenes IA diarios','Analytics completos (90 días)','Personalidad IA ajustable','Nuevas funciones en primicia','Soporte prioritario'], period_monthly:'Mensual',period_annual:'Anual',
     loading:'Cargando...',
     err_redirect:'❌ Error de redirección',
     logout_confirm:'¿Seguro que quieres cerrar sesión?',
@@ -617,7 +680,7 @@ const DASH_AB_T = {
     faq_q3:'Os meus dados de pagamento estão seguros?',
     faq_q4:'O que acontece após o trial?',
     status_trial:'Teste gratuito', status_active:'Ativo', status_cancelled:'Cancelado',
-    current_badge:'✅ Plano atual',
+    current_badge:'✅ Plano atual', std_features:['IA em português + 7 línguas europeias','FAQ ilimitado','Google Calendar integrado','Marcações + confirmações email','Conversas ilimitadas','Dashboard básico','Link público + QR code','Suporte email'],pro_features_list:['Tudo o plano Standard','50 SMS incluídos / mês','Alertas urgência em tempo real','Resumos IA diários','Analytics completos (90 dias)','Personalidade IA ajustável','Novas funcionalidades em estreia','Suporte prioritário'], period_monthly:'Mensal',period_annual:'Anual',
     loading:'A carregar...',
     err_redirect:'❌ Erro de redirecionamento',
     logout_confirm:'Tem a certeza que quer sair?',
@@ -642,7 +705,7 @@ const DASH_AB_T = {
     faq_q3:'Zijn mijn betalingsgegevens veilig?',
     faq_q4:'Wat gebeurt er na de trial?',
     status_trial:'Gratis proefperiode', status_active:'Actief', status_cancelled:'Opgezegd',
-    current_badge:'✅ Huidig plan',
+    current_badge:'✅ Huidig plan', std_features:['AI in het Nederlands + 7 Europese talen','Onbeperkte FAQ','Google Agenda geïntegreerd','Afspraken + e-mailbevestigingen','Onbeperkte gesprekken','Basis dashboard','Publieke link + QR-code','E-mailondersteuning'],pro_features_list:['Alles uit Standard','50 SMS inbegrepen / maand','Real-time urgentiemeldingen','Dagelijkse AI-samenvattingen','Volledige analytics (90 dagen)','Aanpasbare AI-persoonlijkheid','Nieuwe functies als eerste','Prioriteitsondersteuning'], period_monthly:'Maandelijks',period_annual:'Jaarlijks',
     loading:'Laden...',
     err_redirect:'❌ Doorstuursfout',
     logout_confirm:'Weet u zeker dat u wilt uitloggen?',
@@ -667,7 +730,7 @@ const DASH_AB_T = {
     faq_q3:'Czy moje dane płatnicze są bezpieczne?',
     faq_q4:'Co się dzieje po zakończeniu trialu?',
     status_trial:'Bezpłatny okres próbny', status_active:'Aktywny', status_cancelled:'Anulowany',
-    current_badge:'✅ Aktualny plan',
+    current_badge:'✅ Aktualny plan', std_features:['AI po polsku + 7 europejskich języków','Nieograniczone FAQ','Integracja z Kalendarzem Google','Rezerwacje + potwierdzenia email','Nieograniczone rozmowy','Podstawowy dashboard','Publiczny link + kod QR','Wsparcie email'],pro_features_list:['Wszystko ze Standard','50 SMS w cenie / miesiąc','Powiadomienia o pilnych sprawach','Codzienne podsumowania AI','Pełna analityka (90 dni)','Regulowana osobowość AI','Nowe funkcje jako pierwsi','Wsparcie priorytetowe'], period_monthly:'Miesięcznie',period_annual:'Rocznie',
     loading:'Ładowanie...',
     err_redirect:'❌ Błąd przekierowania',
     logout_confirm:'Czy na pewno chcesz się wylogować?',
@@ -693,6 +756,7 @@ const DASH_AB_T = {
       'ab-faq-q3':t.faq_q3,'ab-faq-q4':t.faq_q4,
     };
     Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
+    renderPlanFeatures();
   }
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}
 })();

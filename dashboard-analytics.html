@@ -321,7 +321,7 @@ async function loadSidebarInfo() {
     if (sp) {
       const plan = sub?.plan || 'standard';
       const status = sub?.status || '';
-      if (status === 'trialing') sp.textContent = '🎁 Essai gratuit — ' + (plan === 'pro' ? 'Pro' : 'Standard');
+      if (status === 'trialing') sp.textContent = '🎁 ' + (_dat||DASH_ANA_T.fr).status_trial + ' — ' + (plan === 'pro' ? 'Pro' : 'Standard');
       else if (plan === 'pro') sp.textContent = '⭐ Plan Pro';
       else sp.textContent = '📦 Plan Standard';
     }
@@ -514,7 +514,7 @@ async function loadPeakHours() {
       const max2 = Math.max(...counts) || 1;
       const peakIdx2 = counts.indexOf(max2);
       if (counts.every(v=>v===0)) {
-        container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore assez de données</div>`;
+        container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">${(_dat||DASH_ANA_T.fr).no_data_yet}</div>`;
         return;
       }
       const barsHtml2 = counts.map((val,h) => {
@@ -529,10 +529,10 @@ async function loadPeakHours() {
       }).join('');
       container.innerHTML = `
         <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;">
-          <div style="font-size:13px;font-weight:700;color:#fff;">Pic d'activité : <span style="color:#00D4FF;">${peakIdx2}h – ${peakIdx2+1}h</span></div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">' + (_dat||DASH_ANA_T.fr).peak_label + ' <span style="color:#00D4FF;">${peakIdx2}h – ${peakIdx2+1}h</span></div>
         </div>
         <div style="display:flex;align-items:flex-end;gap:2px;margin-bottom:8px;">${barsHtml2}</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;">heure de la journée (0h – 23h)</div>`;
+        <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;">' + (_dat||DASH_ANA_T.fr).peak_axis + '</div>`;
     } catch {
       container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">' + (_dat||DASH_ANA_T.fr).no_data + '</div>`;
     }
@@ -568,7 +568,7 @@ async function loadTrafficSources() {
     }).join('');
     // Animer les barres
     setTimeout(() => container.querySelectorAll('[data-width]').forEach(b => b.style.width = b.dataset.width + '%'), 100);
-  } catch { document.getElementById('trafficSources').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
+  } catch { document.getElementById('trafficSources').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">${(_dat||DASH_ANA_T.fr).no_data}</div>`; }
 }
 
 async function loadUnansweredQuestions() {
@@ -590,7 +590,7 @@ async function loadUnansweredQuestions() {
         </div>
         <a href="/dashboard-conversations" style="padding:7px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;flex-shrink:0;">' + (_dat||DASH_ANA_T.fr).btn_answer + '</a>
       </div>`).join('')}</div>`;
-  } catch { document.getElementById('unansweredQuestions').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">Données non disponibles</div>`; }
+  } catch { document.getElementById('unansweredQuestions').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">${(_dat||DASH_ANA_T.fr).no_data}</div>`; }
 }
 
 
@@ -604,7 +604,7 @@ function buildLocalSummary(container, label) {
         <span style="font-size:13px;color:rgba(255,255,255,0.35);">
           Le résumé est généré automatiquement ${proFlag ? (_dat||DASH_ANA_T.fr).summary_auto_pro : (_dat||DASH_ANA_T.fr).summary_auto_std}, 
           à condition qu'il y ait eu des conversations sur la période.<br><br>
-          Il sera ensuite affiché ici <strong style="color:rgba(255,255,255,0.5);">et envoyé par email</strong> — c'est le même contenu.
+          Il sera ensuite affiché ici <strong style="color:rgba(255,255,255,0.5);">' + (_dat||DASH_ANA_T.fr).summary_email + '</strong> — c'est le même contenu.
         </span>
       </div>
     </div>`;
@@ -638,7 +638,7 @@ async function loadLastSummary() {
       <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${data.summary_text}</div>
       ${data.missing_faqs && data.missing_faqs.length ? `
       <div style="margin-top:20px;padding:16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
-        <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;">💡 FAQ à compléter</div>
+        <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;" id="ana-summary-faq-label">💡 FAQ à compléter</div>
         ${data.missing_faqs.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.times}x)</div>`).join('')}
       </div>` : ''}`;
 
@@ -660,7 +660,7 @@ async function loadLanguageDistrib() {
     const total = Object.values(langs).reduce((a,b) => a+b, 0) || 1;
     const sorted = Object.entries(langs).sort((a,b) => b[1]-a[1]);
     if (!sorted.length) {
-      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">Pas encore de données</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">${(_dat||DASH_ANA_T.fr).no_data_yet}</div>`;
       return;
     }
     container.innerHTML = sorted.map(([lang, count]) => {
@@ -767,14 +767,15 @@ const DASH_ANA_T = {
     slot_morning: '🌅 Matin', slot_afternoon: '☀️ Après-midi', slot_evening: '🌆 Soir',
     peak_label: "Pic d'activité :", peak_axis: 'heure de la journée (0h – 23h)',
     peak_convs: 'sur la période',
-    no_data: 'Données non disponibles', no_data_yet: 'Pas encore assez de données',
-    loading: 'Chargement...',
+    no_data: (_dat||DASH_ANA_T.fr).no_data, no_data_yet: (_dat||DASH_ANA_T.fr).no_data_yet,
+    loading: (_dat||DASH_ANA_T.fr).loading,
     no_questions: "Aucune question sans réponse — l'IA gère tout !",
     btn_answer: 'Répondre',
     no_summary: 'Aucun résumé IA généré pour le moment.',
+    status_trial: 'Essai gratuit',
     summary_auto_pro: 'selon la fréquence choisie dans Mon compte',
     summary_auto_std: 'chaque lundi matin',
-    summary_email: 'et envoyé par email',
+    summary_email: (_dat||DASH_ANA_T.fr).summary_email,
     summary_none_label: 'Aucun résumé',
     summary_daily: 'Résumé quotidien', summary_weekly: 'Résumé hebdomadaire',
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
@@ -815,6 +816,7 @@ const DASH_ANA_T = {
     no_questions: 'No unanswered questions — the AI handles everything!',
     btn_answer: 'Reply',
     no_summary: 'No AI summary generated yet.',
+    status_trial: 'Free trial',
     summary_auto_pro: 'at the frequency chosen in My account',
     summary_auto_std: 'every Monday morning',
     summary_email: 'and sent by email',
@@ -858,6 +860,7 @@ const DASH_ANA_T = {
     no_questions: 'Keine unbeantworteten Fragen — die KI regelt alles!',
     btn_answer: 'Antworten',
     no_summary: 'Noch keine KI-Zusammenfassung erstellt.',
+    status_trial: 'Kostenlose Testphase',
     summary_auto_pro: 'in der in Mein Konto gewählten Häufigkeit',
     summary_auto_std: 'jeden Montagmorgen',
     summary_email: 'und per E-Mail gesendet',
@@ -901,6 +904,7 @@ const DASH_ANA_T = {
     no_questions: "Nessuna domanda senza risposta — l'IA gestisce tutto!",
     btn_answer: 'Rispondere',
     no_summary: 'Nessun riepilogo IA generato per ora.',
+    status_trial: 'Prova gratuita',
     summary_auto_pro: 'alla frequenza scelta in Il mio account',
     summary_auto_std: 'ogni lunedì mattina',
     summary_email: 'e inviato via email',
@@ -944,6 +948,7 @@ const DASH_ANA_T = {
     no_questions: '¡Sin preguntas sin respuesta — la IA lo gestiona todo!',
     btn_answer: 'Responder',
     no_summary: 'Aún no se ha generado ningún resumen IA.',
+    status_trial: 'Prueba gratuita',
     summary_auto_pro: 'a la frecuencia elegida en Mi cuenta',
     summary_auto_std: 'cada lunes por la mañana',
     summary_email: 'y enviado por email',
@@ -987,6 +992,7 @@ const DASH_ANA_T = {
     no_questions: 'Sem perguntas sem resposta — a IA trata de tudo!',
     btn_answer: 'Responder',
     no_summary: 'Ainda não foi gerado nenhum resumo IA.',
+    status_trial: 'Teste gratuito',
     summary_auto_pro: 'na frequência escolhida em A minha conta',
     summary_auto_std: 'todas as segundas-feiras de manhã',
     summary_email: 'e enviado por email',
@@ -1030,6 +1036,7 @@ const DASH_ANA_T = {
     no_questions: 'Geen onbeantwoorde vragen — de AI regelt alles!',
     btn_answer: 'Antwoorden',
     no_summary: 'Nog geen AI-samenvatting gegenereerd.',
+    status_trial: 'Gratis proef',
     summary_auto_pro: 'op de frequentie gekozen in Mijn account',
     summary_auto_std: 'elke maandagochtend',
     summary_email: 'en per e-mail verzonden',
@@ -1073,6 +1080,7 @@ const DASH_ANA_T = {
     no_questions: 'Brak pytań bez odpowiedzi — AI radzi sobie ze wszystkim!',
     btn_answer: 'Odpowiedz',
     no_summary: 'Nie wygenerowano jeszcze podsumowania AI.',
+    status_trial: 'Bezpłatny okres próbny',
     summary_auto_pro: 'z częstotliwością wybraną w Moim koncie',
     summary_auto_std: 'każdy poniedziałek rano',
     summary_email: 'i wysłane emailem',
@@ -1111,6 +1119,7 @@ const DASH_ANA_T = {
       'ana-traffic-title': t.traffic_title,
       'ana-peak-title': t.peak_title, 'ana-peak-sub': t.peak_sub,
       'ana-summary-title': t.summary_title,
+      'ana-summary-faq-label': t.summary_faq,
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);
