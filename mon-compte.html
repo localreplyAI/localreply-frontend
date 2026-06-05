@@ -55,28 +55,28 @@
     </div>
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
-      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span style="font-size:14px;font-weight:500;">Accueil</span></a>
-      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span style="font-size:14px;font-weight:500;">Configuration</span></a>
-      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
-      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span style="font-size:14px;font-weight:500;">Analytics</span><span style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
+      <a href="/dashboard" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:500;">Accueil</span></a>
+      <a href="/dashboard-configuration" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">⚙️</span><span id="dn-config" style="font-size:14px;font-weight:500;">Configuration</span></a>
+      <a href="/dashboard-conversations" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💬</span><span id="dn-messages" style="font-size:14px;font-weight:500;">Messages</span><span id="sbBadgeMsg" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-rendez-vous" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📅</span><span id="dn-rdv" style="font-size:14px;font-weight:500;">Rendez-vous</span><span id="sbBadgeRdv" style="display:none;margin-left:auto;background:#EF4444;color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;align-items:center;justify-content:center;padding:0 4px;line-height:1;"></span></a>
+      <a href="/dashboard-analytics" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:16px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">📈</span><span id="dn-analytics" style="font-size:14px;font-weight:500;">Analytics</span><span id="dn-pro" style="margin-left:auto;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9px;padding:2px 6px;border-radius:6px;font-weight:700;">PRO</span></a>
       <div style="height:1px;background:rgba(255,255,255,0.06);margin:0 4px 12px;"></div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Compte</div>
-      <a href="/mon-compte" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">👤</span><span style="font-size:14px;font-weight:600;">Mon compte</span></a>
-      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span style="font-size:14px;font-weight:500;">Abonnement</span></a>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;"><span id="dn-section-account">Compte</span></div>
+      <a href="/mon-compte" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;"><span style="font-size:17px;">👤</span><span id="dn-account" style="font-size:14px;font-weight:600;">Mon compte</span></a>
+      <a href="/abonnement" class="sbnav" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;color:rgba(255,255,255,0.65);"><span style="font-size:17px;">💳</span><span id="dn-billing" style="font-size:14px;font-weight:500;">Abonnement</span></a>
     </nav>
     <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.07);">
             <a href="/" style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;color:rgba(255,255,255,0.4);text-decoration:none;font-size:13px;font-weight:500;transition:all 0.2s;margin-bottom:8px;" onmouseenter="this.style.color='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.05)'" onmouseleave="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
-        <span>🌐</span><span>Retour au site</span>
+        <span>🌐</span><span id="dn-back">Retour au site</span>
       </a>
-<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span>Déconnexion</span></button>
+<button onclick="logout()" style="width:100%;padding:12px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit;"><span>🚪</span><span id="dn-logout">Déconnexion</span></button>
     </div>
   </div>
 
   <!-- BOTTOM NAV -->
   <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
-      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span style="font-size:10px;">Accueil</span></a>
+      <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;">Accueil</span></a>
       <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">⚙️</span><span style="font-size:10px;">Config</span></a>
       <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">💬</span><span style="font-size:10px;">Messages</span><span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
       <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;position:relative;"><span style="font-size:20px;">📅</span><span style="font-size:10px;">RDV</span><span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:6px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span></a>
@@ -85,11 +85,11 @@
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
   <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
-    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>📈</span>Analytics</a>
-    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.3),rgba(0,212,255,0.15));color:#fff;font-size:14px;"><span>👤</span>Mon compte</a>
-    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>💳</span>Abonnement</a>
+    <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>📈</span><span id="dn-mob-analytics">Analytics</span></a>
+    <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.3),rgba(0,212,255,0.15));color:#fff;font-size:14px;"><span>👤</span><span id="dn-mob-account">Mon compte</span></a>
+    <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span>💳</span><span id="dn-mob-billing">Abonnement</span></a>
     <div style="height:1px;background:rgba(255,255,255,0.08);margin:6px 0;"></div>
-    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span>🚪</span>Déconnexion</button>
+    <button onclick="logout()" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);color:#EF4444;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;"><span>🚪</span><span id="dn-mob-logout">Déconnexion</span></button>
   </div>
 
   <!-- MAIN -->
@@ -364,7 +364,7 @@
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:16px;background:rgba(239,68,68,0.06);border-radius:12px;border:1px solid rgba(239,68,68,0.15);">
         <div>
           <div id="mc-delete-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Supprimer mon compte</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-delete-word2">irréversible</strong>.</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-delete-word2" id="mc-irreversible">irréversible</strong>.</div>
         </div>
         <button onclick="confirmDeleteAccount()" style="padding:11px 20px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.25)'" onmouseleave="this.style.background='rgba(239,68,68,0.15)'">
           🗑️ Supprimer le compte
@@ -835,7 +835,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Type DELETE to confirm',
     save_info_ok:'✅ Information saved!',
     save_notif_ok:'✅ Preferences saved!',
-    notif_missing:'Not set in Configuration', delete_full_desc:'This action will permanently delete your account and all your data. This operation is irreversible.', pwd_desc:'To change your password, click below. A reset email will be sent to you.',danger_sub:'These actions are irreversible',delete_title:'Delete my account',delete_desc:'your account and all your data.',delete_confirm_lbl:'Are you sure?',cancel:'Cancel',notif_none:'None', plan_std:'Standard Plan', plan_pro:'Pro Plan', status_trial:'Free trial', none:'None', loading:'Loading...',
+    notif_missing:'Not set in Configuration', notif_none_option:'None', irreversible:'irreversible', delete_btn:'🗑️ Delete account', delete_full_desc:'This action will permanently delete your account and all your data. This operation is irreversible.', pwd_desc:'To change your password, click below. A reset email will be sent to you.',danger_sub:'These actions are irreversible',delete_title:'Delete my account',delete_desc:'your account and all your data.',delete_confirm_lbl:'Are you sure?',cancel:'Cancel',notif_none:'None', plan_std:'Standard Plan', plan_pro:'Pro Plan', status_trial:'Free trial', none:'None', loading:'Loading...',
     logout_confirm:'Are you sure you want to sign out?',
   },
   de:{
@@ -873,7 +873,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Geben Sie LÖSCHEN ein zur Bestätigung',
     save_info_ok:'✅ Informationen gespeichert!',
     save_notif_ok:'✅ Einstellungen gespeichert!',
-    notif_missing:'Nicht in Konfiguration festgelegt', delete_full_desc:'Diese Aktion löscht dauerhaft Ihr Konto und alle Ihre Daten. Dieser Vorgang ist nicht rückgängig zu machen.', pwd_desc:'Um Ihr Passwort zu ändern, klicken Sie unten. Eine Zurücksetzen-E-Mail wird gesendet.',danger_sub:'Diese Aktionen sind nicht rückgängig zu machen',delete_title:'Mein Konto löschen',delete_desc:'Ihr Konto und alle Ihre Daten.',delete_confirm_lbl:'Sind Sie sicher?',cancel:'Abbrechen',notif_none:'Keine', plan_std:'Standard-Plan', plan_pro:'Pro-Plan', status_trial:'Kostenlose Testphase', none:'Keine', loading:'Laden...',
+    notif_missing:'Nicht in Konfiguration festgelegt', notif_none_option:'Keine', irreversible:'unwiderruflich', delete_btn:'🗑️ Konto löschen', delete_full_desc:'Diese Aktion löscht dauerhaft Ihr Konto und alle Ihre Daten. Dieser Vorgang ist nicht rückgängig zu machen.', pwd_desc:'Um Ihr Passwort zu ändern, klicken Sie unten. Eine Zurücksetzen-E-Mail wird gesendet.',danger_sub:'Diese Aktionen sind nicht rückgängig zu machen',delete_title:'Mein Konto löschen',delete_desc:'Ihr Konto und alle Ihre Daten.',delete_confirm_lbl:'Sind Sie sicher?',cancel:'Abbrechen',notif_none:'Keine', plan_std:'Standard-Plan', plan_pro:'Pro-Plan', status_trial:'Kostenlose Testphase', none:'Keine', loading:'Laden...',
     logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
   },
   it:{
@@ -911,7 +911,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Digita ELIMINA per confermare',
     save_info_ok:'✅ Informazioni salvate!',
     save_notif_ok:'✅ Preferenze salvate!',
-    notif_missing:'Non impostato in Configurazione', delete_full_desc:'Questa azione eliminerà definitivamente il tuo account e tutti i tuoi dati. Questa operazione è irreversibile.', pwd_desc:'Per modificare la password, clicca qui sotto. Verrà inviata un email di reimpostazione.',danger_sub:'Queste azioni sono irreversibili',delete_title:'Elimina il mio account',delete_desc:'il tuo account e tutti i tuoi dati.',delete_confirm_lbl:'Sei sicuro?',cancel:'Annulla',notif_none:'Nessuno', plan_std:'Piano Standard', plan_pro:'Piano Pro', status_trial:'Prova gratuita', none:'Nessuno', loading:'Caricamento...',
+    notif_missing:'Non impostato in Configurazione', notif_none_option:'Nessuno', irreversible:'irreversibile', delete_btn:'🗑️ Elimina account', delete_full_desc:'Questa azione eliminerà definitivamente il tuo account e tutti i tuoi dati. Questa operazione è irreversibile.', pwd_desc:'Per modificare la password, clicca qui sotto. Verrà inviata un email di reimpostazione.',danger_sub:'Queste azioni sono irreversibili',delete_title:'Elimina il mio account',delete_desc:'il tuo account e tutti i tuoi dati.',delete_confirm_lbl:'Sei sicuro?',cancel:'Annulla',notif_none:'Nessuno', plan_std:'Piano Standard', plan_pro:'Piano Pro', status_trial:'Prova gratuita', none:'Nessuno', loading:'Caricamento...',
     logout_confirm:'Sei sicuro di voler uscire?',
   },
   es:{
@@ -949,7 +949,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Escribe ELIMINAR para confirmar',
     save_info_ok:'✅ ¡Información guardada!',
     save_notif_ok:'✅ ¡Preferencias guardadas!',
-    notif_missing:'No definido en Configuración', delete_full_desc:'Esta acción eliminará permanentemente tu cuenta y todos tus datos. Esta operación es irreversible.', pwd_desc:'Para cambiar tu contraseña, haz clic abajo. Se enviará un email de restablecimiento.',danger_sub:'Estas acciones son irreversibles',delete_title:'Eliminar mi cuenta',delete_desc:'tu cuenta y todos tus datos.',delete_confirm_lbl:'¿Estás seguro?',cancel:'Cancelar',notif_none:'Ninguno', status_trial:'Prueba gratuita', none:'Ninguno', loading:'Cargando...',
+    notif_missing:'No definido en Configuración', notif_none_option:'Ninguno', irreversible:'irreversible', delete_btn:'🗑️ Eliminar cuenta', delete_full_desc:'Esta acción eliminará permanentemente tu cuenta y todos tus datos. Esta operación es irreversible.', pwd_desc:'Para cambiar tu contraseña, haz clic abajo. Se enviará un email de restablecimiento.',danger_sub:'Estas acciones son irreversibles',delete_title:'Eliminar mi cuenta',delete_desc:'tu cuenta y todos tus datos.',delete_confirm_lbl:'¿Estás seguro?',cancel:'Cancelar',notif_none:'Ninguno', status_trial:'Prueba gratuita', none:'Ninguno', loading:'Cargando...',
     logout_confirm:'¿Seguro que quieres cerrar sesión?',
   },
   pt:{
@@ -987,7 +987,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Escreva ELIMINAR para confirmar',
     save_info_ok:'✅ Informações guardadas!',
     save_notif_ok:'✅ Preferências guardadas!',
-    notif_missing:'Não definido na Configuração', delete_full_desc:'Esta ação eliminará permanentemente a sua conta e todos os seus dados. Esta operação é irreversível.', pwd_desc:'Para alterar a sua palavra-passe, clique abaixo. Será enviado um email de redefinição.',danger_sub:'Estas ações são irreversíveis',delete_title:'Eliminar a minha conta',delete_desc:'a sua conta e todos os seus dados.',delete_confirm_lbl:'Tem a certeza?',cancel:'Cancelar',notif_none:'Nenhum', plan_std:'Plano Standard', plan_pro:'Plano Pro', status_trial:'Teste gratuito', none:'Nenhum', loading:'A carregar...',
+    notif_missing:'Não definido na Configuração', notif_none_option:'Nenhum', irreversible:'irreversível', delete_btn:'🗑️ Eliminar conta', delete_full_desc:'Esta ação eliminará permanentemente a sua conta e todos os seus dados. Esta operação é irreversível.', pwd_desc:'Para alterar a sua palavra-passe, clique abaixo. Será enviado um email de redefinição.',danger_sub:'Estas ações são irreversíveis',delete_title:'Eliminar a minha conta',delete_desc:'a sua conta e todos os seus dados.',delete_confirm_lbl:'Tem a certeza?',cancel:'Cancelar',notif_none:'Nenhum', plan_std:'Plano Standard', plan_pro:'Plano Pro', status_trial:'Teste gratuito', none:'Nenhum', loading:'A carregar...',
     logout_confirm:'Tem a certeza que quer sair?',
   },
   nl:{
@@ -1025,7 +1025,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Typ VERWIJDEREN ter bevestiging',
     save_info_ok:'✅ Informatie opgeslagen!',
     save_notif_ok:'✅ Voorkeuren opgeslagen!',
-    notif_missing:'Niet ingesteld in Configuratie', delete_full_desc:'Deze actie verwijdert permanent uw account en al uw gegevens. Deze bewerking is onomkeerbaar.', pwd_desc:'Om uw wachtwoord te wijzigen, klik hieronder. Er wordt een reset-e-mail gestuurd.',danger_sub:'Deze acties zijn onomkeerbaar',delete_title:'Mijn account verwijderen',delete_desc:'uw account en alle uw gegevens.',delete_confirm_lbl:'Weet u het zeker?',cancel:'Annuleren',notif_none:'Geen', plan_std:'Standard-plan', plan_pro:'Pro-plan', status_trial:'Gratis proef', none:'Geen',
+    notif_missing:'Niet ingesteld in Configuratie', notif_none_option:'Geen', irreversible:'onomkeerbaar', delete_btn:'🗑️ Account verwijderen', delete_full_desc:'Deze actie verwijdert permanent uw account en al uw gegevens. Deze bewerking is onomkeerbaar.', pwd_desc:'Om uw wachtwoord te wijzigen, klik hieronder. Er wordt een reset-e-mail gestuurd.',danger_sub:'Deze acties zijn onomkeerbaar',delete_title:'Mijn account verwijderen',delete_desc:'uw account en alle uw gegevens.',delete_confirm_lbl:'Weet u het zeker?',cancel:'Annuleren',notif_none:'Geen', plan_std:'Standard-plan', plan_pro:'Pro-plan', status_trial:'Gratis proef', none:'Geen',
     logout_confirm:'Weet u zeker dat u wilt uitloggen?',
   },
   pl:{
@@ -1063,7 +1063,7 @@ const DASH_MC_T = {
     delete_confirm_placeholder:'Wpisz USUŃ aby potwierdzić',
     save_info_ok:'✅ Informacje zapisane!',
     save_notif_ok:'✅ Preferencje zapisane!',
-    notif_missing:'Nieskonfigurowane w Konfiguracji', delete_full_desc:'Ta akcja trwale usunie Twoje konto i wszystkie Twoje dane. Tej operacji nie można cofnąć.', pwd_desc:'Aby zmienić hasło, kliknij poniżej. Zostanie wysłany email resetujący.',danger_sub:'Te działania są nieodwracalne',delete_title:'Usuń moje konto',delete_desc:'twoje konto i wszystkie twoje dane.',delete_confirm_lbl:'Jesteś pewny?',cancel:'Anuluj',notif_none:'Brak', status_trial:'Bezpłatny okres próbny', none:'Brak', loading:'Ładowanie...',
+    notif_missing:'Nieskonfigurowane w Konfiguracji', notif_none_option:'Brak', irreversible:'nieodwracalne', delete_btn:'🗑️ Usuń konto', delete_full_desc:'Ta akcja trwale usunie Twoje konto i wszystkie Twoje dane. Tej operacji nie można cofnąć.', pwd_desc:'Aby zmienić hasło, kliknij poniżej. Zostanie wysłany email resetujący.',danger_sub:'Te działania są nieodwracalne',delete_title:'Usuń moje konto',delete_desc:'twoje konto i wszystkie twoje dane.',delete_confirm_lbl:'Jesteś pewny?',cancel:'Anuluj',notif_none:'Brak', status_trial:'Bezpłatny okres próbny', none:'Brak', loading:'Ładowanie...',
     logout_confirm:'Czy na pewno chcesz się wylogować?',
   },
 };

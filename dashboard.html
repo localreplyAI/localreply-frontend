@@ -1387,7 +1387,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   <!-- Étape 2 : Langue (cachée au départ) -->
   <div id="printStep2" style="display:none;">
     <div style="display:flex;align-items:center;gap:6px;padding:4px 10px 8px;">
-      <button onclick="printBackToStep1()" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:11px;padding:0;">← Retour</button>
+      <button onclick="printBackToStep1()" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:11px;padding:0;" id="dash-back-btn">← Retour</button>
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;">Langue</div>
     </div>
     <button onclick="printQR('fr')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">&#127467;&#127479; Fran&#231;ais</button>
@@ -1411,7 +1411,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Conversations', kpi_rdv: 'RDV confirmés', kpi_pending: 'À traiter',
     kpi_sub_days30: '30 derniers jours', kpi_sub_pending: 'RDV + questions en attente',
-    stat_lang_label: '🌍 Langue principale', activity_faq_tip: 'Répondez pour enrichir la FAQ automatiquement', stat_rate_label: 'Taux de conversion', stat_rate_sub: 'des conversations → RDV confirmé',
+    stat_lang_label: '🌍 Langue principale', stat_lang_title:'Langue', back_btn:'← Retour', qrdv_title:'📅 Questions + Rendez-vous', activity_faq_tip: 'Répondez pour enrichir la FAQ automatiquement', stat_rate_label: 'Taux de conversion', stat_rate_sub: 'des conversations → RDV confirmé',
     stat_lang_sub: 'des conversations',
     stat_pending_sub: 'À confirmer →', stat_score_label: 'Score IA',
     link_desc: 'Partagez avec vos clients pour accéder à votre assistant 24/7',
@@ -1448,7 +1448,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Conversations', kpi_rdv: 'Confirmed appointments', kpi_pending: 'To handle',
     kpi_sub_days30: 'Last 30 days', kpi_sub_pending: 'Appointments + questions pending',
-    stat_lang_label: '🌍 Top language', activity_faq_tip: 'Reply to enrich the FAQ automatically', stat_rate_label: 'Conversion rate', stat_rate_sub: 'conversations → confirmed appointment',
+    stat_lang_label: '🌍 Top language', stat_lang_title:'Language', back_btn:'← Back', qrdv_title:'📅 Questions + Appointments', activity_faq_tip: 'Reply to enrich the FAQ automatically', stat_rate_label: 'Conversion rate', stat_rate_sub: 'conversations → confirmed appointment',
     stat_lang_sub: 'of conversations',
     stat_pending_sub: 'To confirm →', stat_score_label: 'AI Score',
     link_desc: 'Share with your customers to access your 24/7 assistant',
@@ -1485,7 +1485,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Gespräche', kpi_rdv: 'Bestätigte Termine', kpi_pending: 'Zu bearbeiten',
     kpi_sub_days30: 'Letzte 30 Tage', kpi_sub_pending: 'Termine + Fragen ausstehend',
-    stat_lang_label: '🌍 Hauptsprache', activity_faq_tip: 'Antworten Sie, um die FAQ anzureichern', stat_rate_label: 'Konversionsrate', stat_rate_sub: 'Gespräche → bestätigter Termin',
+    stat_lang_label: '🌍 Hauptsprache', stat_lang_title:'Sprache', back_btn:'← Zurück', qrdv_title:'📅 Fragen + Termine', activity_faq_tip: 'Antworten Sie, um die FAQ anzureichern', stat_rate_label: 'Konversionsrate', stat_rate_sub: 'Gespräche → bestätigter Termin',
     stat_lang_sub: 'der Gespräche',
     stat_pending_sub: 'Zu bestätigen →', stat_score_label: 'KI-Score',
     link_desc: 'Mit Ihren Kunden teilen, um auf Ihren 24/7-Assistenten zuzugreifen',
@@ -1522,7 +1522,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Conversazioni', kpi_rdv: 'Appuntamenti confermati', kpi_pending: 'Da gestire',
     kpi_sub_days30: 'Ultimi 30 giorni', kpi_sub_pending: 'Appuntamenti + domande in attesa',
-    stat_lang_label: '🌍 Lingua principale', activity_faq_tip: 'Rispondi per arricchire il FAQ', stat_rate_label: 'Tasso di conversione', stat_rate_sub: 'conversazioni → appuntamento confermato',
+    stat_lang_label: '🌍 Lingua principale', stat_lang_title:'Lingua', back_btn:'← Indietro', qrdv_title:'📅 Domande + Appuntamenti', activity_faq_tip: 'Rispondi per arricchire il FAQ', stat_rate_label: 'Tasso di conversione', stat_rate_sub: 'conversazioni → appuntamento confermato',
     stat_lang_sub: 'delle conversazioni',
     stat_pending_sub: 'Da confermare →', stat_score_label: 'Punteggio IA',
     link_desc: 'Condividi con i tuoi clienti per accedere al tuo assistente 24/7',
@@ -1559,7 +1559,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Conversaciones', kpi_rdv: 'Citas confirmadas', kpi_pending: 'Por gestionar',
     kpi_sub_days30: 'Últimos 30 días', kpi_sub_pending: 'Citas + preguntas pendientes',
-    stat_lang_label: '🌍 Idioma principal', activity_faq_tip: 'Responde para enriquecer el FAQ', stat_rate_label: 'Tasa de conversión', stat_rate_sub: 'conversaciones → cita confirmada',
+    stat_lang_label: '🌍 Idioma principal', stat_lang_title:'Idioma', back_btn:'← Voltar', qrdv_title:'📅 Perguntas + Marcações', stat_lang_title:'Idioma', back_btn:'← Volver', qrdv_title:'📅 Preguntas + Citas', activity_faq_tip: 'Responde para enriquecer el FAQ', stat_rate_label: 'Tasa de conversión', stat_rate_sub: 'conversaciones → cita confirmada',
     stat_lang_sub: 'de las conversaciones',
     stat_pending_sub: 'Por confirmar →', stat_score_label: 'Puntuación IA',
     link_desc: 'Comparte con tus clientes para acceder a tu asistente 24/7',
@@ -1633,7 +1633,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Gesprekken', kpi_rdv: 'Bevestigde afspraken', kpi_pending: 'Te verwerken',
     kpi_sub_days30: 'Laatste 30 dagen', kpi_sub_pending: 'Afspraken + vragen in behandeling',
-    stat_lang_label: '🌍 Hoofdtaal', activity_faq_tip: 'Antwoord om de FAQ te verrijken', stat_rate_label: 'Conversieratio', stat_rate_sub: 'gesprekken → bevestigde afspraak',
+    stat_lang_label: '🌍 Hoofdtaal', stat_lang_title:'Taal', back_btn:'← Terug', qrdv_title:'📅 Vragen + Afspraken', activity_faq_tip: 'Antwoord om de FAQ te verrijken', stat_rate_label: 'Conversieratio', stat_rate_sub: 'gesprekken → bevestigde afspraak',
     stat_lang_sub: 'van de gesprekken',
     stat_pending_sub: 'Te bevestigen →', stat_score_label: 'AI-score',
     link_desc: 'Deel met uw klanten om toegang te krijgen tot uw 24/7-assistent',
@@ -1670,7 +1670,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Rozmowy', kpi_rdv: 'Potwierdzone wizyty', kpi_pending: 'Do obsługi',
     kpi_sub_days30: 'Ostatnie 30 dni', kpi_sub_pending: 'Wizyty + pytania oczekujące',
-    stat_lang_label: '🌍 Główny język', activity_faq_tip: 'Odpowiedz, aby wzbogacić FAQ', stat_rate_label: 'Współczynnik konwersji', stat_rate_sub: 'rozmowy → potwierdzona wizyta',
+    stat_lang_label: '🌍 Główny język', stat_lang_title:'Język', back_btn:'← Powrót', qrdv_title:'📅 Pytania + Wizyty', activity_faq_tip: 'Odpowiedz, aby wzbogacić FAQ', stat_rate_label: 'Współczynnik konwersji', stat_rate_sub: 'rozmowy → potwierdzona wizyta',
     stat_lang_sub: 'rozmów',
     stat_pending_sub: 'Do potwierdzenia →', stat_score_label: 'Wynik AI',
     link_desc: 'Udostępnij klientom, aby uzyskali dostęp do Twojego asystenta 24/7',
@@ -1734,6 +1734,12 @@ const DASH_HOME_T = {
     const at = document.getElementById('activity-title');
     if (at) at.textContent = t.activity_title;
     const sll = document.getElementById('stat-lang-label'); if(sll) sll.textContent = t.stat_lang_label||'🌍 Langue principale';
+    const slt = document.getElementById('stat-lang-title'); if(slt) slt.textContent = t.stat_lang_title||'Langue';
+    const backBtn = document.getElementById('dash-back-btn'); if(backBtn) backBtn.textContent = t.back_btn||'← Retour';
+    const qrdvTitle = document.getElementById('dash-qrdv-title'); if(qrdvTitle) qrdvTitle.textContent = t.qrdv_title||'📅 Questions + Rendez-vous';
+    // Business name loading state
+    const bnSpan = document.getElementById('businessNameSpan'); if(bnSpan && bnSpan.textContent==='Chargement...') bnSpan.textContent = t.loading||'Chargement...';
+    const bnMob = document.getElementById('businessNameMob'); if(bnMob && bnMob.textContent==='Chargement...') bnMob.textContent = t.loading||'Chargement...';
     const faqtip = document.getElementById('activity-faq-tip'); if(faqtip) faqtip.textContent = t.activity_faq_tip||'Répondez pour enrichir la FAQ automatiquement';
     // Render guide and checklist from T
     renderGuideCards();

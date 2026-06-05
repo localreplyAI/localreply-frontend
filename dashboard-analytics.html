@@ -1132,6 +1132,11 @@ const DASH_ANA_T = {
   } else {
     applyAnaLang();
   }
+  // Translate business name loading state after data loads
+  document.addEventListener('DOMContentLoaded', function() {
+    const bnSpan = document.getElementById('businessNameSpan');
+    if (bnSpan && bnSpan.textContent === 'Chargement...') bnSpan.textContent = (_dat||DASH_ANA_T.fr).loading;
+  });
 })();
 </script>
 

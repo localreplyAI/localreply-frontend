@@ -191,3 +191,144 @@ if (document.readyState === 'loading') {
 } else {
   lrDashApplyNav();
 }
+
+// ═══════════════════════════════════════════════════════
+// Universal text translator - replaces ALL visible French text
+// Call: lrTranslateAll(lang) after DOM ready
+// ═══════════════════════════════════════════════════════
+const LR_TEXT_MAP = {
+  // Sidebar common
+  'Accueil': {en:'Home',de:'Startseite',it:'Home',es:'Inicio',pt:'Início',nl:'Home',pl:'Strona główna'},
+  'Configuration': {en:'Configuration',de:'Konfiguration',it:'Configurazione',es:'Configuración',pt:'Configuração',nl:'Configuratie',pl:'Konfiguracja'},
+  'Messages': {en:'Messages',de:'Nachrichten',it:'Messaggi',es:'Mensajes',pt:'Mensagens',nl:'Berichten',pl:'Wiadomości'},
+  'Rendez-vous': {en:'Appointments',de:'Termine',it:'Appuntamenti',es:'Citas',pt:'Marcações',nl:'Afspraken',pl:'Wizyty'},
+  'Analytics': {en:'Analytics',de:'Analytics',it:'Analytics',es:'Analytics',pt:'Analytics',nl:'Analytics',pl:'Analytics'},
+  'Mon compte': {en:'My account',de:'Mein Konto',it:'Il mio account',es:'Mi cuenta',pt:'A minha conta',nl:'Mijn account',pl:'Moje konto'},
+  'Abonnement': {en:'Subscription',de:'Abonnement',it:'Abbonamento',es:'Suscripción',pt:'Subscrição',nl:'Abonnement',pl:'Subskrypcja'},
+  'Retour au site': {en:'Back to site',de:'Zurück zur Website',it:'Torna al sito',es:'Volver al sitio',pt:'Voltar ao site',nl:'Terug naar site',pl:'Powrót do strony'},
+  'Déconnexion': {en:'Sign out',de:'Abmelden',it:'Esci',es:'Cerrar sesión',pt:'Sair',nl:'Uitloggen',pl:'Wyloguj się'},
+  'Compte': {en:'Account',de:'Konto',it:'Account',es:'Cuenta',pt:'Conta',nl:'Account',pl:'Konto'},
+  'Chargement...': {en:'Loading...',de:'Laden...',it:'Caricamento...',es:'Cargando...',pt:'A carregar...',nl:'Laden...',pl:'Ładowanie...'},
+  // Days
+  'Lundi': {en:'Monday',de:'Montag',it:'Lunedì',es:'Lunes',pt:'Segunda',nl:'Maandag',pl:'Poniedziałek'},
+  'Mardi': {en:'Tuesday',de:'Dienstag',it:'Martedì',es:'Martes',pt:'Terça',nl:'Dinsdag',pl:'Wtorek'},
+  'Mercredi': {en:'Wednesday',de:'Mittwoch',it:'Mercoledì',es:'Miércoles',pt:'Quarta',nl:'Woensdag',pl:'Środa'},
+  'Jeudi': {en:'Thursday',de:'Donnerstag',it:'Giovedì',es:'Jueves',pt:'Quinta',nl:'Donderdag',pl:'Czwartek'},
+  'Vendredi': {en:'Friday',de:'Freitag',it:'Venerdì',es:'Viernes',pt:'Sexta',nl:'Vrijdag',pl:'Piątek'},
+  'Samedi': {en:'Saturday',de:'Samstag',it:'Sabato',es:'Sábado',pt:'Sábado',nl:'Zaterdag',pl:'Sobota'},
+  'Dimanche': {en:'Sunday',de:'Sonntag',it:'Domenica',es:'Domingo',pt:'Domingo',nl:'Zondag',pl:'Niedziela'},
+  'Fermé': {en:'Closed',de:'Geschlossen',it:'Chiuso',es:'Cerrado',pt:'Fechado',nl:'Gesloten',pl:'Zamknięte'},
+  // Common UI
+  'Enregistrer': {en:'Save',de:'Speichern',it:'Salva',es:'Guardar',pt:'Guardar',nl:'Opslaan',pl:'Zapisz'},
+  'Annuler': {en:'Cancel',de:'Abbrechen',it:'Annulla',es:'Cancelar',pt:'Cancelar',nl:'Annuleren',pl:'Anuluj'},
+  'Ajouter': {en:'Add',de:'Hinzufügen',it:'Aggiungi',es:'Añadir',pt:'Adicionar',nl:'Toevoegen',pl:'Dodaj'},
+  'Modifier': {en:'Edit',de:'Bearbeiten',it:'Modifica',es:'Editar',pt:'Editar',nl:'Bewerken',pl:'Edytuj'},
+  'Supprimer': {en:'Delete',de:'Löschen',it:'Elimina',es:'Eliminar',pt:'Eliminar',nl:'Verwijderen',pl:'Usuń'},
+  'Ignorer': {en:'Ignore',de:'Ignorieren',it:'Ignora',es:'Ignorar',pt:'Ignorar',nl:'Negeren',pl:'Ignoruj'},
+  'Confirmer': {en:'Confirm',de:'Bestätigen',it:'Conferma',es:'Confirmar',pt:'Confirmar',nl:'Bevestigen',pl:'Potwierdź'},
+  'Déconnecter': {en:'Disconnect',de:'Trennen',it:'Disconnetti',es:'Desconectar',pt:'Desligar',nl:'Verbinding verbreken',pl:'Rozłącz'},
+  'Rechercher...': {en:'Search...',de:'Suchen...',it:'Cerca...',es:'Buscar...',pt:'Pesquisar...',nl:'Zoeken...',pl:'Szukaj...'},
+  '← Retour': {en:'← Back',de:'← Zurück',it:'← Indietro',es:'← Volver',pt:'← Voltar',nl:'← Terug',pl:'← Powrót'},
+  'Voir tout →': {en:'See all →',de:'Alle anzeigen →',it:'Vedi tutto →',es:'Ver todo →',pt:'Ver tudo →',nl:'Alles zien →',pl:'Zobacz wszystko →'},
+  // Forms & labels
+  'Nom': {en:'Name',de:'Name',it:'Nome',es:'Nombre',pt:'Nome',nl:'Naam',pl:'Nazwa'},
+  'Email': {en:'Email',de:'E-Mail',it:'Email',es:'Email',pt:'Email',nl:'E-mail',pl:'Email'},
+  'Téléphone': {en:'Phone',de:'Telefon',it:'Telefono',es:'Teléfono',pt:'Telefone',nl:'Telefoon',pl:'Telefon'},
+  'Description': {en:'Description',de:'Beschreibung',it:'Descrizione',es:'Descripción',pt:'Descrição',nl:'Beschrijving',pl:'Opis'},
+  'Adresse': {en:'Address',de:'Adresse',it:'Indirizzo',es:'Dirección',pt:'Endereço',nl:'Adres',pl:'Adres'},
+  'Adresse complète': {en:'Full address',de:'Vollständige Adresse',it:'Indirizzo completo',es:'Dirección completa',pt:'Endereço completo',nl:'Volledig adres',pl:'Pełny adres'},
+  'Question': {en:'Question',de:'Frage',it:'Domanda',es:'Pregunta',pt:'Pergunta',nl:'Vraag',pl:'Pytanie'},
+  'Réponse': {en:'Answer',de:'Antwort',it:'Risposta',es:'Respuesta',pt:'Resposta',nl:'Antwoord',pl:'Odpowiedź'},
+  'Langue': {en:'Language',de:'Sprache',it:'Lingua',es:'Idioma',pt:'Idioma',nl:'Taal',pl:'Język'},
+  'Fuseau horaire': {en:'Time zone',de:'Zeitzone',it:'Fuso orario',es:'Zona horaria',pt:'Fuso horário',nl:'Tijdzone',pl:'Strefa czasowa'},
+  'Aucun': {en:'None',de:'Keine',it:'Nessuno',es:'Ninguno',pt:'Nenhum',nl:'Geen',pl:'Brak'},
+  // Stats & dashboard
+  'RDV confirmés': {en:'Confirmed appts',de:'Bestätigte Termine',it:'App. confermati',es:'Citas confirmadas',pt:'Marcações confirmadas',nl:'Bevestigde afspraken',pl:'Potwierdzone wizyty'},
+  'À traiter': {en:'To handle',de:'Zu bearbeiten',it:'Da gestire',es:'Por gestionar',pt:'A tratar',nl:'Te verwerken',pl:'Do obsługi'},
+  'Conversations': {en:'Conversations',de:'Gespräche',it:'Conversazioni',es:'Conversaciones',pt:'Conversas',nl:'Gesprekken',pl:'Rozmowy'},
+  '30 derniers jours': {en:'Last 30 days',de:'Letzte 30 Tage',it:'Ultimi 30 giorni',es:'Últimos 30 días',pt:'Últimos 30 dias',nl:'Laatste 30 dagen',pl:'Ostatnie 30 dni'},
+  '— 30 derniers jours': {en:'— Last 30 days',de:'— Letzte 30 Tage',it:'— Ultimi 30 giorni',es:'— Últimos 30 días',pt:'— Últimos 30 dias',nl:'— Laatste 30 dagen',pl:'— Ostatnie 30 dni'},
+  'Voir tout →': {en:'See all →',de:'Alle anzeigen →',it:'Vedi tutto →',es:'Ver todo →',pt:'Ver tudo →',nl:'Alles zien →',pl:'Zobacz wszystko →'},
+  'Aucune activité récente': {en:'No recent activity',de:'Keine letzte Aktivität',it:'Nessuna attività recente',es:'Sin actividad reciente',pt:'Sem atividade recente',nl:'Geen recente activiteit',pl:'Brak ostatniej aktywności'},
+  // Config
+  '+ Ajouter': {en:'+ Add',de:'+ Hinzufügen',it:'+ Aggiungi',es:'+ Añadir',pt:'+ Adicionar',nl:'+ Toevoegen',pl:'+ Dodaj'},
+  '+ Règle': {en:'+ Rule',de:'+ Regel',it:'+ Regola',es:'+ Regla',pt:'+ Regra',nl:'+ Regel',pl:'+ Reguła'},
+  '+ Service': {en:'+ Service',de:'+ Dienst',it:'+ Servizio',es:'+ Servicio',pt:'+ Serviço',nl:'+ Dienst',pl:'+ Usługa'},
+  'Aucun service trouvé': {en:'No service found',de:'Kein Dienst gefunden',it:'Nessun servizio trovato',es:'Ningún servicio encontrado',pt:'Nenhum serviço encontrado',nl:'Geen dienst gevonden',pl:'Nie znaleziono usługi'},
+  'Aucune question trouvée': {en:'No question found',de:'Keine Frage gefunden',it:'Nessuna domanda trovata',es:'Ninguna pregunta encontrada',pt:'Nenhuma pergunta encontrada',nl:'Geen vraag gevonden',pl:'Nie znaleziono pytania'},
+  // Messages
+  'À traiter en priorité': {en:'Priority to handle',de:'Vorrangig zu bearbeiten',it:'Da gestire con priorità',es:'Tratar con prioridad',pt:'A tratar com prioridade',nl:'Prioriteit te verwerken',pl:'Priorytetowo do obsługi'},
+  'Répondues': {en:'Answered',de:'Beantwortet',it:'Risposte',es:'Respondidas',pt:'Respondidas',nl:'Beantwoord',pl:'Odpowiedziane'},
+  'Ignorées': {en:'Ignored',de:'Ignoriert',it:'Ignorate',es:'Ignoradas',pt:'Ignoradas',nl:'Genegeerd',pl:'Zignorowane'},
+  'Client notifié par email': {en:'Customer notified by email',de:'Kunde per E-Mail benachrichtigt',it:'Cliente notificato via email',es:'Cliente notificado por email',pt:'Cliente notificado por email',nl:'Klant per e-mail geïnformeerd',pl:'Klient powiadomiony emailem'},
+  'Ajoutées à la FAQ': {en:'Added to FAQ',de:'Zur FAQ hinzugefügt',it:'Aggiunte al FAQ',es:'Añadidas al FAQ',pt:'Adicionadas ao FAQ',nl:'Toegevoegd aan FAQ',pl:'Dodane do FAQ'},
+  // Rendez-vous
+  'Confirmés': {en:'Confirmed',de:'Bestätigt',it:'Confermati',es:'Confirmadas',pt:'Confirmadas',nl:'Bevestigd',pl:'Potwierdzone'},
+  'Passés': {en:'Past',de:'Vergangene',it:'Passati',es:'Pasadas',pt:'Passadas',nl:'Verstreken',pl:'Minione'},
+  'À confirmer': {en:'To confirm',de:'Zu bestätigen',it:'Da confermare',es:'Por confirmar',pt:'A confirmar',nl:'Te bevestigen',pl:'Do potwierdzenia'},
+  // Mon compte
+  'Mot de passe': {en:'Password',de:'Passwort',it:'Password',es:'Contraseña',pt:'Palavra-passe',nl:'Wachtwoord',pl:'Hasło'},
+  'Prénom': {en:'First name',de:'Vorname',it:'Nome',es:'Nombre',pt:'Nome próprio',nl:'Voornaam',pl:'Imię'},
+  'Nom': {en:'Last name',de:'Nachname',it:'Cognome',es:'Apellido',pt:'Apelido',nl:'Achternaam',pl:'Nazwisko'},
+  'Ces actions sont irréversibles': {en:'These actions are irreversible',de:'Diese Aktionen sind unwiderruflich',it:'Queste azioni sono irreversibili',es:'Estas acciones son irreversibles',pt:'Estas ações são irreversíveis',nl:'Deze acties zijn onomkeerbaar',pl:'Te działania są nieodwracalne'},
+  'Canal de notification par événement': {en:'Notification channel by event',de:'Benachrichtigungskanal nach Ereignis',it:'Canale di notifica per evento',es:'Canal de notificación por evento',pt:'Canal de notificação por evento',nl:'Meldingskanaal per gebeurtenis',pl:'Kanał powiadomień według zdarzenia'},
+  // Abonnement
+  'Mensuel': {en:'Monthly',de:'Monatlich',it:'Mensile',es:'Mensual',pt:'Mensal',nl:'Maandelijks',pl:'Miesięcznie'},
+  'Annuel': {en:'Annual',de:'Jährlich',it:'Annuale',es:'Anual',pt:'Anual',nl:'Jaarlijks',pl:'Rocznie'},
+  'Conversations illimitées': {en:'Unlimited conversations',de:'Unbegrenzte Gespräche',it:'Conversazioni illimitate',es:'Conversaciones ilimitadas',pt:'Conversas ilimitadas',nl:'Onbeperkte gesprekken',pl:'Nieograniczone rozmowy'},
+  'Analytics avancés': {en:'Advanced analytics',de:'Erweiterte Analytics',it:'Analytics avanzati',es:'Analytics avanzados',pt:'Analytics avançados',nl:'Uitgebreide analytics',pl:'Zaawansowana analityka'},
+  'Résumés IA quotidiens': {en:'Daily AI summaries',de:'Tägliche KI-Zusammenfassungen',it:'Riepiloghi IA quotidiani',es:'Resúmenes IA diarios',pt:'Resumos IA diários',nl:'Dagelijkse AI-samenvattingen',pl:'Codzienne podsumowania AI'},
+  'Alertes urgences temps réel': {en:'Real-time urgency alerts',de:'Echtzeit-Dringlichkeitswarnungen',it:'Avvisi urgenza in tempo reale',es:'Alertas urgencia en tiempo real',pt:'Alertas urgência em tempo real',nl:'Real-time urgentiemeldingen',pl:'Powiadomienia o pilnych sprawach'},
+  'Personnalité IA ajustable': {en:'Adjustable AI personality',de:'Anpassbare KI-Persönlichkeit',it:'Personalità IA regolabile',es:'Personalidad IA ajustable',pt:'Personalidade IA ajustável',nl:'Aanpasbare AI-persoonlijkheid',pl:'Regulowana osobowość AI'},
+  'Nouvelles features en avant-première': {en:'New features early access',de:'Neue Funktionen zuerst',it:'Nuove funzionalità in anteprima',es:'Nuevas funciones en primicia',pt:'Novas funcionalidades em estreia',nl:'Nieuwe functies als eerste',pl:'Nowe funkcje jako pierwsi'},
+  // Analytics
+  'Questions les plus posées': {en:'Most asked questions',de:'Häufigste Fragen',it:'Domande più poste',es:'Preguntas más frecuentes',pt:'Perguntas mais frequentes',nl:'Meest gestelde vragen',pl:'Najczęstsze pytania'},
+  "RDV créés par l'IA": {en:'Appointments created by AI',de:'Von KI erstellte Termine',it:"App. creati dall'IA",es:'Citas creadas por la IA',pt:'Marcações criadas pela IA',nl:'Afspraken gemaakt door AI',pl:'Wizyty utworzone przez AI'},
+};
+
+// Apply universal translations to all text nodes on the page
+function lrTranslateAll(lang) {
+  if (!lang || lang === 'fr') return; // French is the source, no translation needed
+  const map = LR_TEXT_MAP;
+  
+  // Walk all text nodes
+  const walker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode: function(node) {
+        // Skip script, style, input values
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        const tag = parent.tagName;
+        if (['SCRIPT','STYLE','INPUT','TEXTAREA','SELECT'].includes(tag)) return NodeFilter.FILTER_REJECT;
+        if (node.textContent.trim().length < 2) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    }
+  );
+  
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  
+  nodes.forEach(node => {
+    const text = node.textContent.trim();
+    if (map[text] && map[text][lang]) {
+      node.textContent = node.textContent.replace(text, map[text][lang]);
+    }
+  });
+}
+
+// Auto-apply on load
+(function() {
+  const lang = lrDashGetLang();
+  if (lang && lang !== 'fr') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() { 
+        setTimeout(function() { lrTranslateAll(lang); }, 100);
+      });
+    } else {
+      setTimeout(function() { lrTranslateAll(lang); }, 100);
+    }
+  }
+})();
