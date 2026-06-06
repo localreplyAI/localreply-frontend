@@ -495,7 +495,7 @@ const DASH_AB_T = {
     current_plan:'Votre plan actuel',
     std_ideal:'Idéal pour démarrer', pro_ideal:'Pour maximiser vos résultats',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/mois', per_year:'/an',
+    per_month:'/mois', per_month_372:'/mois · 372€/an', per_month_468:'/mois · 468€/an', per_year:'/an',
     try_14:'🎁 Essayer 14j gratuit',
     recommended:'⭐ Recommandé',
     all_standard:'✓ Tout le plan Standard',
@@ -546,7 +546,7 @@ const DASH_AB_T = {
     current_plan:'Your current plan',
     std_ideal:'Ideal to get started', pro_ideal:'To maximize your results',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/month', per_year:'/year',
+    per_month:'/month', per_month_372:'/mo · €372/yr', per_month_468:'/mo · €468/yr', per_year:'/year',
     try_14:'🎁 Try 14 days free',
     recommended:'⭐ Recommended',
     all_standard:'✓ Everything in Standard',
@@ -597,7 +597,7 @@ const DASH_AB_T = {
     current_plan:'Ihr aktueller Plan',
     std_ideal:'Ideal für den Einstieg', pro_ideal:'Um Ihre Ergebnisse zu maximieren',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/Monat', per_year:'/Jahr',
+    per_month:'/Monat', per_month_372:'/Monat · 372€/Jahr', per_month_468:'/Monat · 468€/Jahr', per_year:'/Jahr',
     try_14:'🎁 14 Tage kostenlos testen',
     recommended:'⭐ Empfohlen',
     all_standard:'✓ Alles aus Standard',
@@ -625,7 +625,7 @@ const DASH_AB_T = {
     current_plan:'Il tuo piano attuale',
     std_ideal:'Ideale per iniziare', pro_ideal:'Per massimizzare i tuoi risultati',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/mese', per_year:'/anno',
+    per_month:'/mese', per_month_372:'/mese · 372€/anno', per_month_468:'/mese · 468€/anno', per_year:'/anno',
     try_14:'🎁 Prova 14 giorni gratis',
     recommended:'⭐ Consigliato',
     all_standard:'✓ Tutto il piano Standard',
@@ -653,7 +653,7 @@ const DASH_AB_T = {
     current_plan:'Tu plan actual',
     std_ideal:'Ideal para empezar', pro_ideal:'Para maximizar tus resultados',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/mes', per_year:'/año',
+    per_month:'/mes', per_month_372:'/mes · 372€/año', per_month_468:'/mes · 468€/año', per_year:'/año',
     try_14:'🎁 Probar 14 días gratis',
     recommended:'⭐ Recomendado',
     all_standard:'✓ Todo el plan Standard',
@@ -681,7 +681,7 @@ const DASH_AB_T = {
     current_plan:'O seu plano atual',
     std_ideal:'Ideal para começar', pro_ideal:'Para maximizar os seus resultados',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/mês', per_year:'/ano',
+    per_month:'/mês', per_month_372:'/mês · 372€/ano', per_month_468:'/mês · 468€/ano', per_year:'/ano',
     try_14:'🎁 Experimentar 14 dias grátis',
     recommended:'⭐ Recomendado',
     all_standard:'✓ Tudo o plano Standard',
@@ -709,7 +709,7 @@ const DASH_AB_T = {
     current_plan:'Uw huidige plan',
     std_ideal:'Ideaal om te beginnen', pro_ideal:'Om uw resultaten te maximaliseren',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/maand', per_year:'/jaar',
+    per_month:'/maand', per_month_372:'/maand · 372€/jaar', per_month_468:'/maand · 468€/jaar', per_year:'/jaar',
     try_14:'🎁 14 dagen gratis proberen',
     recommended:'⭐ Aanbevolen',
     all_standard:'✓ Alles uit Standard',
@@ -737,7 +737,7 @@ const DASH_AB_T = {
     current_plan:'Twój aktualny plan',
     std_ideal:'Idealne na początek', pro_ideal:'Aby zmaksymalizować wyniki',
     std_name:'Standard', pro_name:'Pro',
-    per_month:'/mies.', per_year:'/rok',
+    per_month:'/mies.', per_month_372:'/mies. · 372€/rok', per_month_468:'/mies. · 468€/rok', per_year:'/rok',
     try_14:'🎁 Wypróbuj 14 dni za darmo',
     recommended:'⭐ Rekomendowane',
     all_standard:'✓ Wszystko ze Standard',
@@ -785,7 +785,7 @@ const DASH_AB_T = {
     Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
     renderPlanFeatures();
   }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){apply();setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);});}else{apply();setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);}
 })();
 </script>
 

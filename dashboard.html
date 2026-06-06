@@ -1099,7 +1099,7 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   }
   if(!el) return;
   el.innerHTML = [
-    sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} ` + ((_dht||DASH_HOME_T.fr).services_configured||'services configurés') : (_dht||DASH_HOME_T.fr).cfg_missing, hasServices?'#10B981':'#F59E0B'),
+    sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} ${(_dht||DASH_HOME_T.fr).services_configured||'service(s) configuré(s)'}` : (_dht||DASH_HOME_T.fr).cfg_missing, hasServices?'#10B981':'#F59E0B'),
     sRow(hasHours,    'Horaires',             hasHours    ? 'Définis' : 'À configurer dans Configuration', hasHours?'#10B981':'#F59E0B'),
     sRow(hasFaq,      'FAQ',                  hasFaq      ? `${faqCount} question${faqCount>1?'s':''}` : (_dht||DASH_HOME_T.fr).cfg_faq_missing, hasFaq?'#10B981':'#F59E0B'),
     sRow(calConnected,'Google Calendar',      calConnected ? (_dht||DASH_HOME_T.fr).cal_connected : '⚠️ <a href="/dashboard-rendez-vous" style="color:#EF4444;">' + ((_dht||DASH_HOME_T.fr).cal_reconnect||'Reconnecter') + '</a>', calConnected?'#10B981':'#EF4444'),
@@ -1745,6 +1745,7 @@ const DASH_HOME_T = {
     renderGuideCards();
     renderGuideChecklist();
     renderGuideHeader();
+    if(window.lrRetranslate) setTimeout(window.lrRetranslate, 50);
   }
 
   if (document.readyState === 'loading') {

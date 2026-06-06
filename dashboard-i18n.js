@@ -392,16 +392,26 @@ function lrTranslateAll(lang) {
   });
 }
 
-// Auto-apply on load
+// Auto-apply on load — runs multiple times to catch dynamic content
 (function() {
   const lang = lrDashGetLang();
-  if (lang && lang !== 'fr') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() { 
-        setTimeout(function() { lrTranslateAll(lang); }, 100);
-      });
-    } else {
-      setTimeout(function() { lrTranslateAll(lang); }, 100);
-    }
+  if (!lang || lang === 'fr') return;
+  
+  function runTranslate() { lrTranslateAll(lang); }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Run at 3 intervals to catch content loaded at different times
+      setTimeout(runTranslate, 50);   // static HTML
+      setTimeout(runTranslate, 600);  // after fast API responses
+      setTimeout(runTranslate, 2000); // after slow API responses
+    });
+  } else {
+    setTimeout(runTranslate, 50);
+    setTimeout(runTranslate, 600);
+    setTimeout(runTranslate, 2000);
   }
+  
+  // Global helper: call window.lrRetranslate() after rendering dynamic content
+  window.lrRetranslate = runTranslate;
 })();

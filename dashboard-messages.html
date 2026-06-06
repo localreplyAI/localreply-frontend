@@ -657,7 +657,7 @@ const DASH_MSG_T = {
     btn_reply: (_dmt||DASH_MSG_T.fr).btn_reply, btn_edit: (_dmt||DASH_MSG_T.fr).btn_edit, btn_reply_anyway: (_dmt||DASH_MSG_T.fr).btn_reply_anyway,
     btn_ignore: 'Ignorer',
     status_answered: (_dmt||DASH_MSG_T.fr).status_answered, status_ignored: (_dmt||DASH_MSG_T.fr).status_ignored,
-    anon_client: 'Client anonyme',
+    anon_client: ((_dmt||DASH_MSG_T.fr).anonymous||'Client anonyme'),
     answer_placeholder: (_dmt||DASH_MSG_T.fr).answer_placeholder,
     empty_pending: 'Aucune question en attente',
     empty_pending_sub: "Votre IA répond à toutes les questions — ou aucun client ne s'est manifesté récemment.",
@@ -670,6 +670,7 @@ const DASH_MSG_T = {
     success_ignored: 'Question ignorée',
     email_to: (_dmt||DASH_MSG_T.fr).email_to,
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
+    email_send_to:'La réponse sera envoyée à ',
     no_email_warning:"⚠️ Pas d'email client — le client ne sera pas notifié.",
     lang_note_prefix:'Votre réponse sera traduite en',lang_note_suffix:'pour le client.',
     msg_main_subtitle: "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances",
@@ -708,7 +709,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Reply sent!',
     success_ignored: 'Question ignored',
     email_to: 'The reply will be sent to',
-    logout_confirm: 'Are you sure you want to sign out?', lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
+    logout_confirm: 'Are you sure you want to sign out?',
+    email_send_to:'The reply will be sent to ', lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
     msg_main_subtitle: 'Questions forwarded by the AI — answer them to enrich its knowledge base',
     msg_faq_knows: 'The AI now knows how to answer',
   },
@@ -745,7 +747,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Antwort gesendet!',
     success_ignored: 'Frage ignoriert',
     email_to: 'Die Antwort wird gesendet an',
-    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?', lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
+    logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    email_send_to:'Die Antwort wird gesendet an ', lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
     msg_main_subtitle: 'Von der KI weitergeleitete Fragen — antworten Sie, um die Wissensbasis anzureichern',
     msg_faq_knows: 'Die KI kann jetzt antworten',
   },
@@ -782,7 +785,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Risposta inviata!',
     success_ignored: 'Domanda ignorata',
     email_to: 'La risposta sarà inviata a',
-    logout_confirm: 'Sei sicuro di voler uscire?', lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
+    logout_confirm: 'Sei sicuro di voler uscire?',
+    email_send_to:'La risposta sarà inviata a ', lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
     msg_main_subtitle: "Domande inoltrate dall'IA — rispondi per arricchire la sua base di conoscenza",
     msg_faq_knows: "L'IA sa ora rispondere",
   },
@@ -819,7 +823,8 @@ const DASH_MSG_T = {
     success_reply: '✅ ¡Respuesta enviada!',
     success_ignored: 'Pregunta ignorada',
     email_to: 'La respuesta se enviará a',
-    logout_confirm: '¿Seguro que quieres cerrar sesión?', lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
+    logout_confirm: '¿Seguro que quieres cerrar sesión?',
+    email_send_to:'La respuesta se enviará a ', lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
     msg_main_subtitle: 'Preguntas reenviadas por la IA — respóndelas para enriquecer su base de conocimiento',
     msg_faq_knows: 'La IA ahora sabe responder',
   },
@@ -856,7 +861,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Resposta enviada!',
     success_ignored: 'Pergunta ignorada',
     email_to: 'A resposta será enviada para',
-    logout_confirm: 'Tem a certeza que quer sair?', lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
+    logout_confirm: 'Tem a certeza que quer sair?',
+    email_send_to:'A resposta será enviada para ', lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
     msg_main_subtitle: 'Perguntas encaminhadas pela IA — responda para enriquecer a sua base de conhecimento',
     msg_faq_knows: 'A IA já sabe responder',
   },
@@ -893,7 +899,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Antwoord verzonden!',
     success_ignored: 'Vraag genegeerd',
     email_to: 'Het antwoord wordt verzonden naar',
-    logout_confirm: 'Weet u zeker dat u wilt uitloggen?', lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
+    logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
+    email_send_to:'Het antwoord wordt gestuurd naar ', lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
     msg_main_subtitle: 'Door de AI doorgestuurde vragen — beantwoord ze om de kennisbasis te verrijken',
     msg_faq_knows: 'De AI kan nu antwoorden',
   },
@@ -930,7 +937,8 @@ const DASH_MSG_T = {
     success_reply: '✅ Odpowiedź wysłana!',
     success_ignored: 'Pytanie zignorowane',
     email_to: 'Odpowiedź zostanie wysłana do',
-    logout_confirm: 'Czy na pewno chcesz się wylogować?', lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
+    logout_confirm: 'Czy na pewno chcesz się wylogować?',
+    email_send_to:'Odpowiedź zostanie wysłana do ', lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
     msg_main_subtitle: 'Pytania przekazane przez AI — odpowiedz, aby wzbogacić bazę wiedzy',
     msg_faq_knows: 'AI teraz potrafi odpowiedzieć',
   },
@@ -978,7 +986,9 @@ const DASH_MSG_T = {
     document.addEventListener('DOMContentLoaded', applyMsgLang);
   } else {
     applyMsgLang();
-  }
+  
+  setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);
+}
 })();
 </script>
 

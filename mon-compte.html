@@ -1119,7 +1119,7 @@ const DASH_MC_T = {
       'mc-notif-none':t.notif_none};
     Object.entries(extra_ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
   }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',apply);}else{apply();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){apply();setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);});}else{apply();setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);}
 })();
 </script>
 

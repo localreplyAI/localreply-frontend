@@ -1137,9 +1137,9 @@ const DASH_ANA_T = {
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyAnaLang);
+    document.addEventListener('DOMContentLoaded', function(){ applyAnaLang(); setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100); });
   } else {
-    applyAnaLang();
+    applyAnaLang(); setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);
   }
   // Translate business name loading state after data loads
   document.addEventListener('DOMContentLoaded', function() {

@@ -1629,7 +1629,9 @@ const DASH_RDV_T = {
     document.addEventListener('DOMContentLoaded', applyRdvLang);
   } else {
     applyRdvLang();
-  }
+  
+  setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);
+}
 })();
 </script>
 

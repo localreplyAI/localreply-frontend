@@ -1631,6 +1631,7 @@ const DASH_CFG_T = {
       if (el && txt) el.textContent = txt;
     });
     renderBusinessTypes();
+    setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);
     const bnSpan = document.getElementById('businessNameSpan');
     if (bnSpan && bnSpan.textContent === 'Chargement...') bnSpan.textContent = t.loading||'Chargement...';
   }
