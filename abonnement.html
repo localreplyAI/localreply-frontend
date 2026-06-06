@@ -179,19 +179,19 @@
         <button onclick="toggleFaq(this)" class="faq-btn">
           <span id="ab-faq-q2">Comment changer de plan ?</span><span class="faq-icon">+</span>
         </button>
-        <div class="faq-answer">Cliquez sur le plan souhaité ci-dessus. Le changement est immédiat avec proratisation automatique via Stripe.</div>
+        <div class="faq-answer" id="ab-faq-change-plan">Cliquez sur le plan souhaité ci-dessus. Le changement est immédiat avec proratisation automatique via Stripe.</div>
       </div>
       <div class="faq-item">
         <button onclick="toggleFaq(this)" class="faq-btn">
           <span id="ab-faq-q3">Mes données de paiement sont-elles sécurisées ?</span><span class="faq-icon">+</span>
         </button>
-        <div class="faq-answer">Oui. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte.</div>
+        <div class="faq-answer" id="ab-faq-pci">Oui. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte.</div>
       </div>
       <div class="faq-item" style="border-bottom:none;">
         <button onclick="toggleFaq(this)" class="faq-btn" style="border-bottom:none;">
           <span id="ab-faq-q4">Que se passe-t-il après le trial ?</span><span class="faq-icon">+</span>
         </button>
-        <div class="faq-answer">Vous choisissez un plan payant ou votre compte passe en mode limité. Aucun prélèvement automatique sans votre accord.</div>
+        <div class="faq-answer" id="ab-faq-after-trial">Vous choisissez un plan payant ou votre compte passe en mode limité. Aucun prélèvement automatique sans votre accord.</div>
       </div>
     </div>
 
@@ -536,6 +536,9 @@ const DASH_AB_T = {
     loading:'Chargement...',
     err_redirect:'❌ Erreur lors de la redirection',
     logout_confirm:"Êtes-vous sûr de vouloir vous déconnecter ?",
+    ab_faq_change_plan: 'Cliquez sur le plan souhaité ci-dessus. Le changement est immédiat avec proratisation automatique via Stripe.',
+    ab_faq_pci: 'Oui. Les paiements sont gérés par Stripe, certifié PCI DSS niveau 1. LocalReply ne stocke jamais vos données de carte.',
+    ab_faq_after_trial: 'Vous choisissez un plan payant ou votre compte passe en mode limité. Aucun prélèvement automatique sans votre accord.',
   },
   en:{
     page_title:'Subscription — LocalReply',
@@ -584,6 +587,9 @@ const DASH_AB_T = {
     loading:'Loading...',
     err_redirect:'❌ Redirect error',
     logout_confirm:'Are you sure you want to sign out?',
+    ab_faq_change_plan: 'Click the desired plan above. The change is immediate with automatic prorating via Stripe.',
+    ab_faq_pci: 'Yes. Payments are handled by Stripe, PCI DSS level 1 certified. LocalReply never stores your card data.',
+    ab_faq_after_trial: 'You choose a paid plan or your account goes into limited mode. No automatic charge without your agreement.',
   },
   de:{
     page_title:'Abonnement — LocalReply',
@@ -609,6 +615,9 @@ const DASH_AB_T = {
     loading:'Laden...',
     err_redirect:'❌ Weiterleitungsfehler',
     logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    ab_faq_change_plan: 'Klicken Sie oben auf den gewünschten Plan. Die Änderung erfolgt sofort mit automatischer Abrechnung über Stripe.',
+    ab_faq_pci: 'Ja. Zahlungen werden über Stripe, PCI DSS Level 1 zertifiziert, abgewickelt. LocalReply speichert niemals Ihre Kartendaten.',
+    ab_faq_after_trial: 'Sie wählen einen kostenpflichtigen Plan oder Ihr Konto wechselt in den eingeschränkten Modus. Keine automatische Abbuchung ohne Ihre Zustimmung.',
   },
   it:{
     page_title:'Abbonamento — LocalReply',
@@ -634,6 +643,9 @@ const DASH_AB_T = {
     loading:'Caricamento...',
     err_redirect:'❌ Errore di reindirizzamento',
     logout_confirm:'Sei sicuro di voler uscire?',
+    ab_faq_change_plan: 'Clicca sul piano desiderato sopra. Il cambiamento è immediato con proratizzazione automatica via Stripe.',
+    ab_faq_pci: 'Sì. I pagamenti sono gestiti da Stripe, certificato PCI DSS livello 1. LocalReply non memorizza mai i dati della carta.',
+    ab_faq_after_trial: 'Scegli un piano a pagamento o il tuo account passa in modalità limitata. Nessun addebito automatico senza il tuo consenso.',
   },
   es:{
     page_title:'Suscripción — LocalReply',
@@ -659,6 +671,9 @@ const DASH_AB_T = {
     loading:'Cargando...',
     err_redirect:'❌ Error de redirección',
     logout_confirm:'¿Seguro que quieres cerrar sesión?',
+    ab_faq_change_plan: 'Haz clic en el plan deseado arriba. El cambio es inmediato con prorrateo automático vía Stripe.',
+    ab_faq_pci: 'Sí. Los pagos son gestionados por Stripe, certificado PCI DSS nivel 1. LocalReply nunca almacena los datos de tu tarjeta.',
+    ab_faq_after_trial: 'Eliges un plan de pago o tu cuenta pasa a modo limitado. Sin cargo automático sin tu acuerdo.',
   },
   pt:{
     page_title:'Subscrição — LocalReply',
@@ -684,6 +699,9 @@ const DASH_AB_T = {
     loading:'A carregar...',
     err_redirect:'❌ Erro de redirecionamento',
     logout_confirm:'Tem a certeza que quer sair?',
+    ab_faq_change_plan: 'Clique no plano desejado acima. A mudança é imediata com proporcionalidade automática via Stripe.',
+    ab_faq_pci: 'Sim. Os pagamentos são geridos pela Stripe, certificada PCI DSS nível 1. LocalReply nunca armazena os dados do cartão.',
+    ab_faq_after_trial: 'Escolhe um plano pago ou a sua conta passa para o modo limitado. Sem débito automático sem o seu acordo.',
   },
   nl:{
     page_title:'Abonnement — LocalReply',
@@ -709,6 +727,9 @@ const DASH_AB_T = {
     loading:'Laden...',
     err_redirect:'❌ Doorstuursfout',
     logout_confirm:'Weet u zeker dat u wilt uitloggen?',
+    ab_faq_change_plan: 'Klik op het gewenste plan hierboven. De wijziging is onmiddellijk met automatische verrekening via Stripe.',
+    ab_faq_pci: 'Ja. Betalingen worden verwerkt door Stripe, PCI DSS niveau 1 gecertificeerd. LocalReply slaat nooit uw kaartgegevens op.',
+    ab_faq_after_trial: 'U kiest een betaald plan of uw account gaat naar beperkte modus. Geen automatische afschrijving zonder uw akkoord.',
   },
   pl:{
     page_title:'Subskrypcja — LocalReply',
@@ -734,6 +755,9 @@ const DASH_AB_T = {
     loading:'Ładowanie...',
     err_redirect:'❌ Błąd przekierowania',
     logout_confirm:'Czy na pewno chcesz się wylogować?',
+    ab_faq_change_plan: 'Kliknij żądany plan powyżej. Zmiana jest natychmiastowa z automatycznym rozliczeniem przez Stripe.',
+    ab_faq_pci: 'Tak. Płatności są obsługiwane przez Stripe, certyfikat PCI DSS poziom 1. LocalReply nigdy nie przechowuje danych karty.',
+    ab_faq_after_trial: 'Wybierasz płatny plan lub Twoje konto przechodzi w tryb ograniczony. Żadnych automatycznych opłat bez Twojej zgody.',
   },
 };
 
@@ -744,6 +768,9 @@ const DASH_AB_T = {
   document.title=t.page_title;
   function apply(){
     const ids={
+      'ab-faq-change-plan': t.ab_faq_change_plan,
+      'ab-faq-pci': t.ab_faq_pci,
+      'ab-faq-after-trial': t.ab_faq_after_trial,
       'ab-h1':t.h1,'ab-subtitle':t.subtitle,
       'ab-std-ideal':t.std_ideal,'ab-pro-ideal':t.pro_ideal,
       'ab-recommended':t.recommended,

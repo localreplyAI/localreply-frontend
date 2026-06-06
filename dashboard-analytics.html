@@ -129,7 +129,7 @@
         <div style="background: linear-gradient(145deg, rgba(10,26,56,0.98), rgba(5,15,35,0.98)); border: 1px solid rgba(245,158,11,0.3); border-radius: 24px; padding: 48px 40px; text-align: center; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
           <div style="font-size: 56px; margin-bottom: 16px;">📊</div>
           <div style="font-family: sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;" id="ana-pro-title">Analytics avancés</div>
-          <p id="ana-pro-desc" style="font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 28px;">
+          <p id="ana-pro-desc" style="font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 28px;" id="ana-pro-desc-main">
             Débloquez les graphiques détaillés, les questions fréquentes, les taux de conversion et 90 jours d'historique avec le <strong style="color: #F59E0B;">Plan Pro</strong>.
           </p>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left;">
@@ -783,6 +783,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Dernière fois',
     period_cond: "à condition qu'il y ait eu des conversations sur la période.",
     period_after: 'Il sera ensuite affiché ici',
+    ana_pro_desc_main: "Débloquez les graphiques détaillés, les questions fréquentes, les taux de conversion et 90 jours d'historique avec le",
   },
   en: {
     page_title: 'Analytics — LocalReply',
@@ -827,6 +828,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Last asked',
     period_cond: 'provided there were conversations in the period.',
     period_after: 'It will then be displayed here',
+    ana_pro_desc_main: 'Unlock detailed charts, top questions, conversion rates and 90 days of history with the',
   },
   de: {
     page_title: 'Analytics — LocalReply',
@@ -871,6 +873,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Zuletzt gefragt',
     period_cond: 'sofern in diesem Zeitraum Gespräche stattgefunden haben.',
     period_after: 'Es wird dann hier angezeigt',
+    ana_pro_desc_main: 'Schalten Sie detaillierte Diagramme, häufige Fragen, Konversionsraten und 90 Tage Verlauf frei mit dem',
   },
   it: {
     page_title: 'Analytics — LocalReply',
@@ -915,6 +918,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Ultima volta',
     period_cond: 'a condizione che ci siano state conversazioni nel periodo.',
     period_after: 'Verrà poi visualizzato qui',
+    ana_pro_desc_main: 'Sblocca grafici dettagliati, domande frequenti, tassi di conversione e 90 giorni di storico con il',
   },
   es: {
     page_title: 'Analytics — LocalReply',
@@ -959,6 +963,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Última vez',
     period_cond: 'siempre que haya habido conversaciones en el período.',
     period_after: 'Luego se mostrará aquí',
+    ana_pro_desc_main: 'Desbloquea gráficos detallados, preguntas frecuentes, tasas de conversión y 90 días de historial con el',
   },
   pt: {
     page_title: 'Analytics — LocalReply',
@@ -1003,6 +1008,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Última vez',
     period_cond: 'desde que tenha havido conversas no período.',
     period_after: 'Será então exibido aqui',
+    ana_pro_desc_main: 'Desbloqueie gráficos detalhados, perguntas frequentes, taxas de conversão e 90 dias de histórico com o',
   },
   nl: {
     page_title: 'Analytics — LocalReply',
@@ -1047,6 +1053,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Laatste keer',
     period_cond: 'mits er gesprekken waren in de periode.',
     period_after: 'Het wordt dan hier weergegeven',
+    ana_pro_desc_main: "Ontgrendel gedetailleerde grafieken, veelgestelde vragen, conversieratio's en 90 dagen geschiedenis met het",
   },
   pl: {
     page_title: 'Analytics — LocalReply',
@@ -1091,6 +1098,7 @@ const DASH_ANA_T = {
     asked_times: 'x', last_asked: 'Ostatnio zapytano',
     period_cond: 'pod warunkiem, że w tym okresie były rozmowy.',
     period_after: 'Zostanie wtedy wyświetlone tutaj',
+    ana_pro_desc_main: 'Odblokuj szczegółowe wykresy, najczęstsze pytania, współczynniki konwersji i 90 dni historii z',
   },
 };
 
@@ -1108,6 +1116,7 @@ const DASH_ANA_T = {
       'ana-pro-f1': t.pro_f1, 'ana-pro-f2': t.pro_f2,
       'ana-pro-f3': t.pro_f3, 'ana-pro-f4': t.pro_f4,
       'ana-pro-cta': t.pro_cta, 'ana-pro-sub': t.pro_sub,
+      'ana-pro-desc-main': t.ana_pro_desc_main,
       'ana-metric-conv': t.metric_conv, 'ana-metric-conv-sub': t.metric_conv_sub,
       'ana-metric-rdv': t.metric_rdv, 'ana-metric-rdv-sub': t.metric_rdv_sub,
       'ana-metric-rate': t.metric_conv_rate, 'ana-metric-rate-sub': t.metric_conv_rate_sub,

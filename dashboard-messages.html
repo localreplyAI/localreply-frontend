@@ -119,7 +119,7 @@
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
       <div>
         <h1 id="msg-h1" style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;margin:0 0 4px;letter-spacing:-0.8px;">💬 Messages</h1>
-        <p id="msg-subtitle" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;">Questions transmises par l'IA — répondez pour enrichir sa base de connaissances</p>
+        <p id="msg-subtitle" style="font-size:13px;color:rgba(255,255,255,0.4);margin:0;" id="msg-main-subtitle">Questions transmises par l'IA — répondez pour enrichir sa base de connaissances</p>
       </div>
       <button onclick="loadQuestions()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;" onmouseenter="this.style.borderColor='rgba(0,212,255,0.3)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)'">
         🔄 Actualiser
@@ -141,7 +141,7 @@
       <div class="mstat" style="border-color:rgba(0,212,255,0.2);background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,82,204,0.04));">
         <div class="mstat-val" style="color:#00D4FF;" id="statFaqAdded">—</div>
         <div id="stat-faq-label" class="mstat-lbl">Ajoutées à la FAQ</div>
-        <div id="stat-faq-sub" class="mstat-sub">L'IA sait maintenant répondre</div>
+        <div id="stat-faq-sub" class="mstat-sub" id="msg-faq-knows">L'IA sait maintenant répondre</div>
       </div>
     </div>
 
@@ -672,6 +672,8 @@ const DASH_MSG_T = {
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
     no_email_warning:"⚠️ Pas d'email client — le client ne sera pas notifié.",
     lang_note_prefix:'Votre réponse sera traduite en',lang_note_suffix:'pour le client.',
+    msg_main_subtitle: "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances",
+    msg_faq_knows: "L'IA sait maintenant répondre",
   },
   en: {
     page_title: 'Messages — LocalReply',
@@ -707,6 +709,8 @@ const DASH_MSG_T = {
     success_ignored: 'Question ignored',
     email_to: 'The reply will be sent to',
     logout_confirm: 'Are you sure you want to sign out?', lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
+    msg_main_subtitle: 'Questions forwarded by the AI — answer them to enrich its knowledge base',
+    msg_faq_knows: 'The AI now knows how to answer',
   },
   de: {
     page_title: 'Nachrichten — LocalReply',
@@ -742,6 +746,8 @@ const DASH_MSG_T = {
     success_ignored: 'Frage ignoriert',
     email_to: 'Die Antwort wird gesendet an',
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?', lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
+    msg_main_subtitle: 'Von der KI weitergeleitete Fragen — antworten Sie, um die Wissensbasis anzureichern',
+    msg_faq_knows: 'Die KI kann jetzt antworten',
   },
   it: {
     page_title: 'Messaggi — LocalReply',
@@ -777,6 +783,8 @@ const DASH_MSG_T = {
     success_ignored: 'Domanda ignorata',
     email_to: 'La risposta sarà inviata a',
     logout_confirm: 'Sei sicuro di voler uscire?', lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
+    msg_main_subtitle: "Domande inoltrate dall'IA — rispondi per arricchire la sua base di conoscenza",
+    msg_faq_knows: "L'IA sa ora rispondere",
   },
   es: {
     page_title: 'Mensajes — LocalReply',
@@ -812,6 +820,8 @@ const DASH_MSG_T = {
     success_ignored: 'Pregunta ignorada',
     email_to: 'La respuesta se enviará a',
     logout_confirm: '¿Seguro que quieres cerrar sesión?', lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
+    msg_main_subtitle: 'Preguntas reenviadas por la IA — respóndelas para enriquecer su base de conocimiento',
+    msg_faq_knows: 'La IA ahora sabe responder',
   },
   pt: {
     page_title: 'Mensagens — LocalReply',
@@ -847,6 +857,8 @@ const DASH_MSG_T = {
     success_ignored: 'Pergunta ignorada',
     email_to: 'A resposta será enviada para',
     logout_confirm: 'Tem a certeza que quer sair?', lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
+    msg_main_subtitle: 'Perguntas encaminhadas pela IA — responda para enriquecer a sua base de conhecimento',
+    msg_faq_knows: 'A IA já sabe responder',
   },
   nl: {
     page_title: 'Berichten — LocalReply',
@@ -882,6 +894,8 @@ const DASH_MSG_T = {
     success_ignored: 'Vraag genegeerd',
     email_to: 'Het antwoord wordt verzonden naar',
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?', lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
+    msg_main_subtitle: 'Door de AI doorgestuurde vragen — beantwoord ze om de kennisbasis te verrijken',
+    msg_faq_knows: 'De AI kan nu antwoorden',
   },
   pl: {
     page_title: 'Wiadomości — LocalReply',
@@ -917,6 +931,8 @@ const DASH_MSG_T = {
     success_ignored: 'Pytanie zignorowane',
     email_to: 'Odpowiedź zostanie wysłana do',
     logout_confirm: 'Czy na pewno chcesz się wylogować?', lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
+    msg_main_subtitle: 'Pytania przekazane przez AI — odpowiedz, aby wzbogacić bazę wiedzy',
+    msg_faq_knows: 'AI teraz potrafi odpowiedzieć',
   },
 };
 
@@ -928,6 +944,8 @@ const DASH_MSG_T = {
 
   function applyMsgLang() {
     const ids = {
+      'msg-faq-knows': t.msg_faq_knows,
+      'msg-main-subtitle': t.msg_main_subtitle,
       'msg-h1': t.h1, 'msg-subtitle': t.subtitle,
       'tab-pending-label': t.tab_pending,
       'tab-answered-label': t.tab_answered,

@@ -157,6 +157,26 @@ const LR_DASH_NAV_IDS = {
   'dn-mob-messages':'mob_messages',
   'dn-mob-rdv':     'mob_rdv',
   'dn-mob-more':    'mob_more',
+  "\"Ajouter \u00e0 la FAQ\"": {en:"\"Add to FAQ\"", de:"\"Zur FAQ hinzuf\u00fcgen\"", it:"\"Aggiungi al FAQ\"", es:"\"A\u00f1adir al FAQ\"", pt:"\"Adicionar ao FAQ\"", nl:"\"Toevoegen aan FAQ\"", pl:"\"Dodaj do FAQ\""},
+  "Aucun service trouv\u00e9 \u2014": {en:"No service found \u2014", de:"Kein Dienst gefunden \u2014", it:"Nessun servizio trovato \u2014", es:"Ning\u00fan servicio encontrado \u2014", pt:"Nenhum servi\u00e7o encontrado \u2014", nl:"Geen dienst gevonden \u2014", pl:"Nie znaleziono us\u0142ugi \u2014"},
+  "Aucune question trouv\u00e9e \u2014": {en:"No question found \u2014", de:"Keine Frage gefunden \u2014", it:"Nessuna domanda trovata \u2014", es:"Ninguna pregunta encontrada \u2014", pt:"Nenhuma pergunta encontrada \u2014", nl:"Geen vraag gevonden \u2014", pl:"Nie znaleziono pytania \u2014"},
+  "irr\u00e9versible": {en:"irreversible", de:"unwiderruflich", it:"irreversibile", es:"irreversible", pt:"irrevers\u00edvel", nl:"onomkeerbaar", pl:"nieodwracalne"},
+  "\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais": {en:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", de:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", it:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", es:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", pt:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", nl:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais", pl:"\ud83c\uddeb\ud83c\uddf7 Fran\u00e7ais"},
+  "\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas": {en:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", de:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", it:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", es:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", pt:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", nl:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas", pl:"\ud83c\uddf5\ud83c\uddf9 Portugu\u00eas"}
+,
+  "Toutes vos donn\u00e9es seront d\u00e9finitivement supprim\u00e9es : configuration, conversations, RDV, FAQ. Action": {en:"All your data will be permanently deleted: configuration, conversations, appointments, FAQ. Action", de:"Alle Ihre Daten werden dauerhaft gel\u00f6scht: Konfiguration, Gespr\u00e4che, Termine, FAQ. Aktion", it:"Tutti i tuoi dati saranno definitivamente eliminati: configurazione, conversazioni, appuntamenti, FAQ. Azione", es:"Todos tus datos ser\u00e1n eliminados permanentemente: configuraci\u00f3n, conversaciones, citas, FAQ. Acci\u00f3n", pt:"Todos os seus dados ser\u00e3o eliminados permanentemente: configura\u00e7\u00e3o, conversas, marca\u00e7\u00f5es, FAQ. A\u00e7\u00e3o", nl:"Al uw gegevens worden permanent verwijderd: configuratie, gesprekken, afspraken, FAQ. Actie", pl:"Wszystkie Twoje dane zostan\u0105 trwale usuni\u0119te: konfiguracja, rozmowy, wizyty, FAQ. Akcja"}
+,
+  "❓ Question sans réponse": {"en":"❓ Unanswered question","de":"❓ Unbeantwortete Frage","it":"❓ Domanda senza risposta","es":"❓ Pregunta sin respuesta","pt":"❓ Pergunta sem resposta","nl":"❓ Onbeantwoorde vraag","pl":"❓ Pytanie bez odpowiedzi"}
+,
+  '🇫🇷 Français': {en:'🇫🇷 Français',de:'🇫🇷 Français',it:'🇫🇷 Français',es:'🇫🇷 Français',pt:'🇫🇷 Français',nl:'🇫🇷 Français',pl:'🇫🇷 Français'},
+  '🇩🇪 Deutsch': {en:'🇩🇪 Deutsch',de:'🇩🇪 Deutsch',it:'🇩🇪 Deutsch',es:'🇩🇪 Deutsch',pt:'🇩🇪 Deutsch',nl:'🇩🇪 Deutsch',pl:'🇩🇪 Deutsch'},
+  '🇮🇹 Italiano': {en:'🇮🇹 Italiano',de:'🇮🇹 Italiano',it:'🇮🇹 Italiano',es:'🇮🇹 Italiano',pt:'🇮🇹 Italiano',nl:'🇮🇹 Italiano',pl:'🇮🇹 Italiano'},
+  '🇪🇸 Español': {en:'🇪🇸 Español',de:'🇪🇸 Español',it:'🇪🇸 Español',es:'🇪🇸 Español',pt:'🇪🇸 Español',nl:'🇪🇸 Español',pl:'🇪🇸 Español'},
+  '🇬🇧 English': {en:'🇬🇧 English',de:'🇬🇧 English',it:'🇬🇧 English',es:'🇬🇧 English',pt:'🇬🇧 English',nl:'🇬🇧 English',pl:'🇬🇧 English'},
+  '🇵🇹 Português': {en:'🇵🇹 Português',de:'🇵🇹 Português',it:'🇵🇹 Português',es:'🇵🇹 Português',pt:'🇵🇹 Português',nl:'🇵🇹 Português',pl:'🇵🇹 Português'},
+  '🇳🇱 Nederlands': {en:'🇳🇱 Nederlands',de:'🇳🇱 Nederlands',it:'🇳🇱 Nederlands',es:'🇳🇱 Nederlands',pt:'🇳🇱 Nederlands',nl:'🇳🇱 Nederlands',pl:'🇳🇱 Nederlands'},
+  '🇵🇱 Polski': {en:'🇵🇱 Polski',de:'🇵🇱 Polski',it:'🇵🇱 Polski',es:'🇵🇱 Polski',pt:'🇵🇱 Polski',nl:'🇵🇱 Polski',pl:'🇵🇱 Polski'}
+
 };
 
 function lrDashGetLang() {
@@ -284,6 +304,59 @@ const LR_TEXT_MAP = {
   // Analytics
   'Questions les plus posées': {en:'Most asked questions',de:'Häufigste Fragen',it:'Domande più poste',es:'Preguntas más frecuentes',pt:'Perguntas mais frequentes',nl:'Meest gestelde vragen',pl:'Najczęstsze pytania'},
   "RDV créés par l'IA": {en:'Appointments created by AI',de:'Von KI erstellte Termine',it:"App. creati dall'IA",es:'Citas creadas por la IA',pt:'Marcações criadas pela IA',nl:'Afspraken gemaakt door AI',pl:'Wizyty utworzone przez AI'},
+// Brand / nav
+  'Dashboard': {en:'Dashboard',de:'Dashboard',it:'Dashboard',es:'Dashboard',pt:'Dashboard',nl:'Dashboard',pl:'Dashboard'},
+  // Analytics
+  "90 jours d'historique": {en:'90 days of history',de:'90 Tage Verlauf',it:'90 giorni di storico',es:'90 días de historial',pt:'90 dias de histórico',nl:'90 dagen geschiedenis',pl:'90 dni historii'},
+  "RDV créés par l'IA": {en:'Appointments created by AI',de:'Von KI erstellte Termine',it:"App. creati dall'IA",es:'Citas creadas por IA',pt:'Marcações pela IA',nl:'Afspraken door AI',pl:'Wizyty przez AI'},
+  'Plan Pro': {en:'Pro Plan',de:'Pro-Plan',it:'Piano Pro',es:'Plan Pro',pt:'Plano Pro',nl:'Pro-plan',pl:'Plan Pro'},
+  // Config
+  "Ce que l'IA peut suggérer après chaque service": {en:'What the AI can suggest after each service',de:'Was die KI nach jedem Dienst vorschlagen kann',it:"Cosa può suggerire l'IA dopo ogni servizio",es:'Qué puede sugerir la IA después de cada servicio',pt:'O que a IA pode sugerir após cada serviço',nl:'Wat de AI na elke dienst kan voorstellen',pl:'Co AI może sugerować po każdej usłudze'},
+  "Ces informations sont utilisées par l'IA pour répondre à vos clients": {en:'This information is used by the AI to respond to your customers',de:'Diese Informationen werden von der KI verwendet, um Ihren Kunden zu antworten',it:"Queste informazioni sono usate dall'IA per rispondere ai clienti",es:'Esta información es utilizada por la IA para responder a sus clientes',pt:'Esta informação é usada pela IA para responder aos seus clientes',nl:'Deze informatie wordt gebruikt door de AI om uw klanten te antwoorden',pl:'Te informacje są używane przez AI do odpowiadania klientom'},
+  "Créez une expérience unique pour vos clients": {en:'Create a unique experience for your customers',de:'Schaffen Sie ein einzigartiges Erlebnis für Ihre Kunden',it:"Crea un'esperienza unica per i tuoi clienti",es:'Crea una experiencia única para tus clientes',pt:'Crie uma experiência única para os seus clientes',nl:'Creëer een unieke ervaring voor uw klanten',pl:'Stwórz wyjątkowe doświadczenie dla swoich klientów'},
+  "Jours fériés, congés, fermetures ponctuelles": {en:'Public holidays, vacations, temporary closures',de:'Feiertage, Urlaub, vorübergehende Schließungen',it:'Festività, ferie, chiusure temporanee',es:'Festivos, vacaciones, cierres puntuales',pt:'Feriados, férias, encerramentos pontuais',nl:'Feestdagen, vakantie, tijdelijke sluitingen',pl:'Święta, urlopy, tymczasowe zamknięcia'},
+  "L'IA connaîtra vos prestations et pourra les recommander": {en:'The AI will know your services and can recommend them',de:'Die KI kennt Ihre Dienste und kann sie empfehlen',it:"L'IA conoscerà i tuoi servizi e potrà consigliarli",es:'La IA conocerá tus servicios y podrá recomendarlos',pt:'A IA conhecerá os seus serviços e poderá recomendá-los',nl:'De AI kent uw diensten en kan ze aanbevelen',pl:'AI pozna Twoje usługi i będzie mogła je polecać'},
+  "L'IA répondra automatiquement à ces questions": {en:'The AI will automatically answer these questions',de:'Die KI beantwortet diese Fragen automatisch',it:"L'IA risponderà automaticamente a queste domande",es:'La IA responderá automáticamente a estas preguntas',pt:'A IA responderá automaticamente a estas perguntas',nl:'De AI beantwoordt deze vragen automatisch',pl:'AI automatycznie odpowie na te pytania'},
+  "L'IA utilisera ces horaires pour répondre aux clients": {en:'The AI will use these hours to respond to customers',de:'Die KI verwendet diese Zeiten, um Kunden zu antworten',it:"L'IA utilizzerà questi orari per rispondere ai clienti",es:'La IA usará estos horarios para responder a los clientes',pt:'A IA usará estes horários para responder aos clientes',nl:'De AI gebruikt deze tijden om klanten te antwoorden',pl:'AI użyje tych godzin do odpowiadania klientom'},
+  "Langue de l'interface": {en:'Interface language',de:'Oberflächensprache',it:"Lingua dell'interfaccia",es:'Idioma de interfaz',pt:'Idioma da interface',nl:'Interfacetaal',pl:'Język interfejsu'},
+  "Nom de l'assistant": {en:'Assistant name',de:'Assistentenname',it:"Nome dell'assistente",es:'Nombre del asistente',pt:'Nome do assistente',nl:'Assistentnaam',pl:'Nazwa asystenta'},
+  "Personnalité de l'IA": {en:'AI Personality',de:'KI-Persönlichkeit',it:"Personalità dell'IA",es:'Personalidad de la IA',pt:'Personalidade da IA',nl:'AI-persoonlijkheid',pl:'Osobowość AI'},
+  "Phrase d'accueil personnalisée": {en:'Custom greeting',de:'Benutzerdefinierte Begrüßung',it:'Saluto personalizzato',es:'Saludo personalizado',pt:'Saudação personalizada',nl:'Aangepaste begroeting',pl:'Spersonalizowane powitanie'},
+  "→ l'IA suggère": {en:'→ AI suggests',de:'→ KI schlägt vor',it:"→ l'IA suggerisce",es:'→ la IA sugiere',pt:'→ a IA sugere',nl:'→ AI stelt voor',pl:'→ AI sugeruje'},
+  '✅ Activés': {en:'✅ Enabled',de:'✅ Aktiviert',it:'✅ Attivati',es:'✅ Activados',pt:'✅ Ativados',nl:'✅ Ingeschakeld',pl:'✅ Włączone'},
+  '❌ Désactivée': {en:'❌ Disabled',de:'❌ Deaktiviert',it:'❌ Disattivata',es:'❌ Desactivada',pt:'❌ Desativada',nl:'❌ Uitgeschakeld',pl:'❌ Wyłączona'},
+  '🙋 Réactive': {en:'🙋 Proactive',de:'🙋 Reaktiv',it:'🙋 Reattiva',es:'🙋 Reactiva',pt:'🙋 Reativa',nl:'🙋 Reactief',pl:'🙋 Reaktywna'},
+  '🚫 Désactivées': {en:'🚫 Disabled',de:'🚫 Deaktiviert',it:'🚫 Disattivate',es:'🚫 Desactivadas',pt:'🚫 Desativadas',nl:'🚫 Uitgeschakeld',pl:'🚫 Wyłączone'},
+  // Messages
+  '"Ajouter à la FAQ"': {en:'"Add to FAQ"',de:'"Zur FAQ hinzufügen"',it:'"Aggiungi al FAQ"',es:'"Añadir al FAQ"',pt:'"Adicionar ao FAQ"',nl:'"Toevoegen aan FAQ"',pl:'"Dodaj do FAQ"'},
+  'Question du client': {en:'Customer question',de:'Kundenfrage',it:'Domanda del cliente',es:'Pregunta del cliente',pt:'Pergunta do cliente',nl:'Klantvraag',pl:'Pytanie klienta'},
+  'Votre réponse': {en:'Your answer',de:'Ihre Antwort',it:'La tua risposta',es:'Tu respuesta',pt:'A sua resposta',nl:'Uw antwoord',pl:'Twoja odpowiedź'},
+  'Traitées': {en:'Handled',de:'Bearbeitet',it:'Gestite',es:'Gestionadas',pt:'Tratadas',nl:'Verwerkt',pl:'Obsłużone'},
+  '💬 Répondre au client': {en:'💬 Reply to customer',de:'💬 Auf Kunden antworten',it:'💬 Rispondere al cliente',es:'💬 Responder al cliente',pt:'💬 Responder ao cliente',nl:'💬 Antwoord aan klant',pl:'💬 Odpowiedź do klienta'},
+  '📚 Ajouter à la FAQ': {en:'📚 Add to FAQ',de:'📚 Zur FAQ hinzufügen',it:'📚 Aggiungi al FAQ',es:'📚 Añadir al FAQ',pt:'📚 Adicionar ao FAQ',nl:'📚 Toevoegen aan FAQ',pl:'📚 Dodaj do FAQ'},
+  'pour que la réponse soit permanente.': {en:'to make the answer permanent.',de:'um die Antwort dauerhaft zu speichern.',it:'per rendere la risposta permanente.',es:'para que la respuesta sea permanente.',pt:'para tornar a resposta permanente.',nl:'om het antwoord permanent te maken.',pl:'aby odpowiedź była trwała.'},
+  // Rendez-vous
+  "Gérez vos demandes de RDV et confirmez vos créneaux": {en:'Manage your appointment requests and confirm your slots',de:'Verwalten Sie Terminanfragen und bestätigen Sie Ihre Slots',it:'Gestisci le richieste di appuntamento e conferma i tuoi slot',es:'Gestiona las solicitudes de cita y confirma tus franjas',pt:'Gira os pedidos de marcação e confirme os seus horários',nl:'Beheer afspraakverzoeken en bevestig uw tijdsloten',pl:'Zarządzaj prośbami o wizytę i potwierdzaj swoje terminy'},
+  // Mon compte
+  "Client avec une urgence détectée par l'IA": {en:'Customer with urgency detected by AI',de:'Kunde mit von KI erkannter Dringlichkeit',it:"Cliente con urgenza rilevata dall'IA",es:'Cliente con urgencia detectada por la IA',pt:'Cliente com urgência detetada pela IA',nl:'Klant met door AI gedetecteerde urgentie',pl:'Klient z pilnością wykrytą przez AI'},
+  "L'IA ne sait pas répondre à un client": {en:"The AI can't answer a customer",de:'Die KI kann einem Kunden nicht antworten',it:"L'IA non sa rispondere a un cliente",es:'La IA no sabe responder a un cliente',pt:'A IA não sabe responder a um cliente',nl:'De AI kan een klant niet antwoorden',pl:'AI nie może odpowiedzieć klientowi'},
+  "Les notifications SMS sont réservées au plan Pro.": {en:'SMS notifications are reserved for the Pro plan.',de:'SMS-Benachrichtigungen sind dem Pro-Plan vorbehalten.',it:'Le notifiche SMS sono riservate al piano Pro.',es:'Las notificaciones SMS son para el plan Pro.',pt:'As notificações SMS são reservadas ao Plano Pro.',nl:'SMS-meldingen zijn voorbehouden aan het Pro-plan.',pl:'Powiadomienia SMS są zarezerwowane dla planu Pro.'},
+  "Les résumés quotidiens sont réservés au plan Pro.": {en:'Daily summaries are reserved for the Pro plan.',de:'Tägliche Zusammenfassungen sind dem Pro-Plan vorbehalten.',it:'I riepiloghi quotidiani sono riservati al piano Pro.',es:'Los resúmenes diarios son para el plan Pro.',pt:'Os resumos diários são reservados ao Plano Pro.',nl:'Dagelijkse samenvattingen zijn voorbehouden aan het Pro-plan.',pl:'Codzienne podsumowania są zarezerwowane dla planu Pro.'},
+  "⭐ Plan Pro": {en:'⭐ Pro Plan',de:'⭐ Pro-Plan',it:'⭐ Piano Pro',es:'⭐ Plan Pro',pt:'⭐ Plano Pro',nl:'⭐ Pro-plan',pl:'⭐ Plan Pro'},
+  '🗑️ Confirmer': {en:'🗑️ Confirm',de:'🗑️ Bestätigen',it:'🗑️ Conferma',es:'🗑️ Confirmar',pt:'🗑️ Confirmar',nl:'🗑️ Bevestigen',pl:'🗑️ Potwierdź'},
+  '🗑️ Supprimer le compte': {en:'🗑️ Delete account',de:'🗑️ Konto löschen',it:'🗑️ Elimina account',es:'🗑️ Eliminar cuenta',pt:'🗑️ Eliminar conta',nl:'🗑️ Account verwijderen',pl:'🗑️ Usuń konto'},
+  'définitivement': {en:'permanently',de:'dauerhaft',it:'definitivamente',es:'permanentemente',pt:'permanentemente',nl:'permanent',pl:'trwale'},
+  // Abonnement
+  'Analytics complets (90 jours)': {en:'Full analytics (90 days)',de:'Vollständige Analytics (90 Tage)',it:'Analytics completi (90 giorni)',es:'Analytics completos (90 días)',pt:'Analytics completos (90 dias)',nl:'Volledige analytics (90 dagen)',pl:'Pełna analityka (90 dni)'},
+  "Détection urgences dans dashboard": {en:'Urgency detection in dashboard',de:'Dringlichkeitserkennung im Dashboard',it:'Rilevamento urgenze nel dashboard',es:'Detección urgencias en dashboard',pt:'Deteção urgências no dashboard',nl:'Urgentiedetectie in dashboard',pl:'Wykrywanie pilności w dashboardzie'},
+  "IA 8 langues européennes": {en:'AI in 8 European languages',de:'KI auf 8 europäischen Sprachen',it:'IA in 8 lingue europee',es:'IA en 8 idiomas europeos',pt:'IA em 8 línguas europeias',nl:'AI in 8 Europese talen',pl:'AI w 8 europejskich językach'},
+  "Résumés IA hebdomadaires": {en:'Weekly AI summaries',de:'Wöchentliche KI-Zusammenfassungen',it:'Riepiloghi IA settimanali',es:'Resúmenes IA semanales',pt:'Resumos IA semanais',nl:'Wekelijkse AI-samenvattingen',pl:'Tygodniowe podsumowania AI'},
+  "Type d'affiche": {en:"Poster type",de:'Plakattyp',it:'Tipo di poster',es:'Tipo de cartel',pt:'Tipo de cartaz',nl:'Postertype',pl:'Typ plakatu'},
+  "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances": {en:"Questions forwarded by the AI — answer to enrich its knowledge",de:"Von der KI weitergeleitete Fragen — antworten Sie",it:"Domande inoltrate dall'IA — rispondi per arricchire",es:"Preguntas reenviadas por la IA — respóndelas",pt:"Perguntas encaminhadas pela IA — responda",nl:"Door de AI doorgestuurde vragen — beantwoord ze",pl:"Pytania przekazane przez AI — odpowiedz"},
+  "L'IA sait maintenant répondre": {en:"The AI now knows how to answer",de:"Die KI kann jetzt antworten",it:"L'IA sa ora rispondere",es:"La IA ahora sabe responder",pt:"A IA já sabe responder",nl:"De AI kan nu antwoorden",pl:"AI teraz potrafi odpowiedzieć"},
+  "Envoyer votre réponse par email au client (si adresse disponible)": {en:"Send your reply by email to the customer (if address available)",de:"Antwort per E-Mail senden (falls Adresse verfügbar)",it:"Invia la risposta via email (se indirizzo disponibile)",es:"Enviar respuesta por email al cliente (si hay dirección)",pt:"Enviar resposta por email ao cliente (se endereço disponível)",nl:"Antwoord per e-mail sturen (indien adres beschikbaar)",pl:"Wyślij odpowiedź emailem do klienta (jeśli adres dostępny)"},
+  "L'IA répondra automatiquement à cette question pour tous les clients suivants": {en:"The AI will automatically answer this question for all future customers",de:"Die KI beantwortet diese Frage automatisch für alle zukünftigen Kunden",it:"L'IA risponderà automaticamente a questa domanda",es:"La IA responderá automáticamente a esta pregunta",pt:"A IA responderá automaticamente a esta pergunta",nl:"De AI beantwoordt deze vraag automatisch",pl:"AI automatycznie odpowie na to pytanie"},
+
 };
 
 // Apply universal translations to all text nodes on the page

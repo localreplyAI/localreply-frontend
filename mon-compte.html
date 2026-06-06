@@ -301,7 +301,7 @@
         <!-- Résumés IA -->
         <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
           <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;" id="mc-title-summary">📊 Résumés IA par email</div>
-          <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6;">Recevez un résumé de l'activité de votre assistant : conversations, questions fréquentes, opportunités détectées.</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:14px;line-height:1.6;" id="mc-summary-intro">Recevez un résumé de l'activité de votre assistant : conversations, questions fréquentes, opportunités détectées.</div>
 
           <div style="display:flex;flex-direction:column;gap:8px;" id="summaryFreqOptions">
 
@@ -364,7 +364,7 @@
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:16px;background:rgba(239,68,68,0.06);border-radius:12px;border:1px solid rgba(239,68,68,0.15);">
         <div>
           <div id="mc-delete-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Supprimer mon compte</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-delete-word2" id="mc-irreversible">irréversible</strong>.</div>
+          <div id="mc-delete-warning" style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-delete-word2" id="mc-irreversible">irréversible</strong>.</div>
         </div>
         <button onclick="confirmDeleteAccount()" style="padding:11px 20px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.25)'" onmouseleave="this.style.background='rgba(239,68,68,0.15)'">
           🗑️ Supprimer le compte
@@ -799,6 +799,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Préférences enregistrées !',
     notif_missing: "Non défini dans Configuration", delete_full_desc: "Compte et données supprimés définitivement.", pwd_desc: "Pour modifier votre mot de passe, cliquez ci-dessous. Un email de réinitialisation vous sera envoyé.",danger_sub: "Ces actions sont irréversibles",delete_title: "Supprimer mon compte",delete_desc: "votre compte et toutes vos données.",delete_confirm_lbl: "Êtes-vous sûr ?",cancel: "Annuler",notif_none: "Aucun", plan_std: "Plan Standard", plan_pro: "Plan Pro", status_trial: "Essai gratuit", none: "Aucun", loading: "Chargement...",
     logout_confirm:"Êtes-vous sûr de vouloir vous déconnecter ?",
+    mc_summary_intro: "Recevez un résumé de l'activité de votre assistant : conversations, questions fréquentes, opportunités détectées.",
   },
   en:{
     page_title:'My account — LocalReply',
@@ -837,6 +838,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Preferences saved!',
     notif_missing:'Not set in Configuration', notif_none_option:'None', irreversible:'irreversible', delete_btn:'🗑️ Delete account', delete_full_desc:'This action will permanently delete your account and all your data. This operation is irreversible.', pwd_desc:'To change your password, click below. A reset email will be sent to you.',danger_sub:'These actions are irreversible',delete_title:'Delete my account',delete_desc:'your account and all your data.',delete_confirm_lbl:'Are you sure?',cancel:'Cancel',notif_none:'None', plan_std:'Standard Plan', plan_pro:'Pro Plan', status_trial:'Free trial', none:'None', loading:'Loading...',
     logout_confirm:'Are you sure you want to sign out?',
+    mc_summary_intro: "Receive a summary of your assistant's activity: conversations, frequent questions, detected opportunities.",
   },
   de:{
     page_title:'Mein Konto — LocalReply',
@@ -875,6 +877,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Einstellungen gespeichert!',
     notif_missing:'Nicht in Konfiguration festgelegt', notif_none_option:'Keine', irreversible:'unwiderruflich', delete_btn:'🗑️ Konto löschen', delete_full_desc:'Diese Aktion löscht dauerhaft Ihr Konto und alle Ihre Daten. Dieser Vorgang ist nicht rückgängig zu machen.', pwd_desc:'Um Ihr Passwort zu ändern, klicken Sie unten. Eine Zurücksetzen-E-Mail wird gesendet.',danger_sub:'Diese Aktionen sind nicht rückgängig zu machen',delete_title:'Mein Konto löschen',delete_desc:'Ihr Konto und alle Ihre Daten.',delete_confirm_lbl:'Sind Sie sicher?',cancel:'Abbrechen',notif_none:'Keine', plan_std:'Standard-Plan', plan_pro:'Pro-Plan', status_trial:'Kostenlose Testphase', none:'Keine', loading:'Laden...',
     logout_confirm:'Sind Sie sicher, dass Sie sich abmelden möchten?',
+    mc_summary_intro: 'Erhalten Sie eine Zusammenfassung der Aktivität Ihres Assistenten: Gespräche, häufige Fragen, erkannte Chancen.',
   },
   it:{
     page_title:'Il mio account — LocalReply',
@@ -913,6 +916,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Preferenze salvate!',
     notif_missing:'Non impostato in Configurazione', notif_none_option:'Nessuno', irreversible:'irreversibile', delete_btn:'🗑️ Elimina account', delete_full_desc:'Questa azione eliminerà definitivamente il tuo account e tutti i tuoi dati. Questa operazione è irreversibile.', pwd_desc:'Per modificare la password, clicca qui sotto. Verrà inviata un email di reimpostazione.',danger_sub:'Queste azioni sono irreversibili',delete_title:'Elimina il mio account',delete_desc:'il tuo account e tutti i tuoi dati.',delete_confirm_lbl:'Sei sicuro?',cancel:'Annulla',notif_none:'Nessuno', plan_std:'Piano Standard', plan_pro:'Piano Pro', status_trial:'Prova gratuita', none:'Nessuno', loading:'Caricamento...',
     logout_confirm:'Sei sicuro di voler uscire?',
+    mc_summary_intro: "Ricevi un riepilogo dell'attività del tuo assistente: conversazioni, domande frequenti, opportunità rilevate.",
   },
   es:{
     page_title:'Mi cuenta — LocalReply',
@@ -951,6 +955,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ ¡Preferencias guardadas!',
     notif_missing:'No definido en Configuración', notif_none_option:'Ninguno', irreversible:'irreversible', delete_btn:'🗑️ Eliminar cuenta', delete_full_desc:'Esta acción eliminará permanentemente tu cuenta y todos tus datos. Esta operación es irreversible.', pwd_desc:'Para cambiar tu contraseña, haz clic abajo. Se enviará un email de restablecimiento.',danger_sub:'Estas acciones son irreversibles',delete_title:'Eliminar mi cuenta',delete_desc:'tu cuenta y todos tus datos.',delete_confirm_lbl:'¿Estás seguro?',cancel:'Cancelar',notif_none:'Ninguno', status_trial:'Prueba gratuita', none:'Ninguno', loading:'Cargando...',
     logout_confirm:'¿Seguro que quieres cerrar sesión?',
+    mc_summary_intro: 'Recibe un resumen de la actividad de tu asistente: conversaciones, preguntas frecuentes, oportunidades detectadas.',
   },
   pt:{
     page_title:'A minha conta — LocalReply',
@@ -989,6 +994,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Preferências guardadas!',
     notif_missing:'Não definido na Configuração', notif_none_option:'Nenhum', irreversible:'irreversível', delete_btn:'🗑️ Eliminar conta', delete_full_desc:'Esta ação eliminará permanentemente a sua conta e todos os seus dados. Esta operação é irreversível.', pwd_desc:'Para alterar a sua palavra-passe, clique abaixo. Será enviado um email de redefinição.',danger_sub:'Estas ações são irreversíveis',delete_title:'Eliminar a minha conta',delete_desc:'a sua conta e todos os seus dados.',delete_confirm_lbl:'Tem a certeza?',cancel:'Cancelar',notif_none:'Nenhum', plan_std:'Plano Standard', plan_pro:'Plano Pro', status_trial:'Teste gratuito', none:'Nenhum', loading:'A carregar...',
     logout_confirm:'Tem a certeza que quer sair?',
+    mc_summary_intro: 'Receba um resumo da atividade do seu assistente: conversas, perguntas frequentes, oportunidades detetadas.',
   },
   nl:{
     page_title:'Mijn account — LocalReply',
@@ -1027,6 +1033,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Voorkeuren opgeslagen!',
     notif_missing:'Niet ingesteld in Configuratie', notif_none_option:'Geen', irreversible:'onomkeerbaar', delete_btn:'🗑️ Account verwijderen', delete_full_desc:'Deze actie verwijdert permanent uw account en al uw gegevens. Deze bewerking is onomkeerbaar.', pwd_desc:'Om uw wachtwoord te wijzigen, klik hieronder. Er wordt een reset-e-mail gestuurd.',danger_sub:'Deze acties zijn onomkeerbaar',delete_title:'Mijn account verwijderen',delete_desc:'uw account en alle uw gegevens.',delete_confirm_lbl:'Weet u het zeker?',cancel:'Annuleren',notif_none:'Geen', plan_std:'Standard-plan', plan_pro:'Pro-plan', status_trial:'Gratis proef', none:'Geen',
     logout_confirm:'Weet u zeker dat u wilt uitloggen?',
+    mc_summary_intro: 'Ontvang een samenvatting van de activiteit van uw assistent: gesprekken, veelgestelde vragen, gedetecteerde kansen.',
   },
   pl:{
     page_title:'Moje konto — LocalReply',
@@ -1065,6 +1072,7 @@ const DASH_MC_T = {
     save_notif_ok:'✅ Preferencje zapisane!',
     notif_missing:'Nieskonfigurowane w Konfiguracji', notif_none_option:'Brak', irreversible:'nieodwracalne', delete_btn:'🗑️ Usuń konto', delete_full_desc:'Ta akcja trwale usunie Twoje konto i wszystkie Twoje dane. Tej operacji nie można cofnąć.', pwd_desc:'Aby zmienić hasło, kliknij poniżej. Zostanie wysłany email resetujący.',danger_sub:'Te działania są nieodwracalne',delete_title:'Usuń moje konto',delete_desc:'twoje konto i wszystkie twoje dane.',delete_confirm_lbl:'Jesteś pewny?',cancel:'Anuluj',notif_none:'Brak', status_trial:'Bezpłatny okres próbny', none:'Brak', loading:'Ładowanie...',
     logout_confirm:'Czy na pewno chcesz się wylogować?',
+    mc_summary_intro: 'Otrzymuj podsumowanie aktywności asystenta: rozmowy, częste pytania, wykryte możliwości.',
   },
 };
 
@@ -1076,6 +1084,7 @@ const DASH_MC_T = {
   function apply(){
     const ids={
       'mc-h1':t.h1,'mc-subtitle':t.subtitle,
+      'mc-summary-intro': t.mc_summary_intro,
       'mc-title-info':t.title_info,'mc-sub-info':t.sub_info,
       'mc-lbl-firstname':t.lbl_firstname,'mc-lbl-lastname':t.lbl_lastname,
       'mc-lbl-email':t.lbl_email,'mc-lbl-email-sub':t.lbl_email_sub,
