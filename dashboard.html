@@ -915,8 +915,8 @@ function renderAlerts(pendingApts, pendingReqs) {
   const urgent = pendingApts.filter(a=>a.urgency==='high');
   if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} RDV urgent${urgent.length>1?'s':''} en attente</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||'Client'}</strong>`).join(' · ')} — Cliquez pour traiter</div></div></a>`;
   const normal = pendingApts.filter(a=>a.urgency!=='high');
-  if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} ${(_dht||DASH_HOME_T.fr).rdv_pending_count||'RDV en attente de confirmation'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">${_dht||DASH_HOME_T.fr}.rdv_click_confirm||(_dht||DASH_HOME_T.fr).rdv_click_confirm||'Cliquez pour confirmer ou refuser'</div></div></a>`;
-  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} question${pr>1?'s':''} sans réponse</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
+  if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} ${(_dht||DASH_HOME_T.fr).rdv_pending_count||'RDV en attente de confirmation'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">${(_dht||DASH_HOME_T.fr).rdv_click_confirm||'Cliquez pour confirmer ou refuser'}</div></div></a>`;
+  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} ${(_dht||DASH_HOME_T.fr).unknown_q_count_prefix||'question'}${pr>1?'s':''} ${(_dht||DASH_HOME_T.fr).unknown_q_suffix||'sans réponse'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
   s.innerHTML = html;
 }
 
@@ -1474,6 +1474,8 @@ const DASH_HOME_T = {
     mob_rdv: "RDV",
     mob_more: "Plus",
     mob_config: "Config",
+    unknown_q_suffix: "sans r\u00e9ponse",
+    unknown_q_count_prefix: "question",
   },
   en: {
     page_title: 'Dashboard — LocalReply',
@@ -1541,6 +1543,8 @@ const DASH_HOME_T = {
     mob_rdv: "Appts",
     mob_more: "More",
     mob_config: "Config",
+    unknown_q_suffix: "unanswered",
+    unknown_q_count_prefix: "question",
   },
   de: {
     page_title: 'Dashboard — LocalReply',
@@ -1608,6 +1612,8 @@ const DASH_HOME_T = {
     mob_rdv: "Termine",
     mob_more: "Mehr",
     mob_config: "Konfig",
+    unknown_q_suffix: "unbeantwortet",
+    unknown_q_count_prefix: "Frage",
   },
   it: {
     page_title: 'Dashboard — LocalReply',
@@ -1675,6 +1681,8 @@ const DASH_HOME_T = {
     mob_rdv: "App.",
     mob_more: "Altro",
     mob_config: "Config",
+    unknown_q_suffix: "senza risposta",
+    unknown_q_count_prefix: "domanda",
   },
   es: {
     page_title: 'Dashboard — LocalReply',
@@ -1742,6 +1750,8 @@ const DASH_HOME_T = {
     mob_rdv: "Citas",
     mob_more: "M\u00e1s",
     mob_config: "Config",
+    unknown_q_suffix: "sin respuesta",
+    unknown_q_count_prefix: "pregunta",
   },
   pt: {
     page_title: 'Dashboard — LocalReply',
@@ -1809,6 +1819,8 @@ const DASH_HOME_T = {
     mob_rdv: "Marca\u00e7\u00f5es",
     mob_more: "Mais",
     mob_config: "Config",
+    unknown_q_suffix: "sem resposta",
+    unknown_q_count_prefix: "pergunta",
   },
   nl: {
     page_title: 'Dashboard — LocalReply',
@@ -1876,6 +1888,8 @@ const DASH_HOME_T = {
     mob_rdv: "Afspraken",
     mob_more: "Meer",
     mob_config: "Config",
+    unknown_q_suffix: "onbeantwoord",
+    unknown_q_count_prefix: "vraag",
   },
   pl: {
     page_title: 'Dashboard — LocalReply',
@@ -1943,6 +1957,8 @@ const DASH_HOME_T = {
     mob_rdv: "Wizyty",
     mob_more: "Wi\u0119cej",
     mob_config: "Konfig",
+    unknown_q_suffix: "bez odpowiedzi",
+    unknown_q_count_prefix: "pytanie",
   },
 };
 
