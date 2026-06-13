@@ -42,7 +42,7 @@
     </div>
     <!-- Nav -->
     <nav style="flex:1;padding:16px 12px;overflow-y:auto;scrollbar-width:none;">
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;">Navigation</div>
+      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1.2px;padding:0 8px;margin-bottom:8px;" id="dash-nav-section">Navigation</div>
       <a href="/dashboard" class="sbnav active" style="display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;margin-bottom:4px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.5),rgba(0,212,255,0.2));border:1px solid rgba(0,212,255,0.2);color:#fff;position:relative;">
         <span style="font-size:17px;">🏠</span><span id="dn-home" style="font-size:14px;font-weight:600;">Accueil</span>
       </a>
@@ -81,18 +81,18 @@
         <span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;font-weight:700;">Accueil</span>
       </a>
       <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;">
-        <span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;">Config</span>
+        <span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;" id="dn-mob-config">Config</span>
       </a>
       <a href="/dashboard-conversations" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
         <span style="font-size:20px;">💬</span><span id="dn-mob-messages" style="font-size:10px;">Messages</span>
         <span id="bnBadgeMsg" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
       </a>
       <a href="/dashboard-rendez-vous" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;position:relative;">
-        <span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;">RDV</span>
+        <span style="font-size:20px;">📅</span><span id="dn-mob-rdv" style="font-size:10px;" id="dn-mob-rdv">RDV</span>
         <span id="bnBadgeRdv" style="display:none;position:absolute;top:2px;right:8px;background:#EF4444;color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;align-items:center;justify-content:center;padding:0 3px;line-height:1;"></span>
       </a>
       <button onclick="toggleMobileMenu()" style="display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;color:rgba(255,255,255,0.55);padding:7px 14px;border-radius:10px;cursor:pointer;font-family:inherit;">
-        <span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;">Plus</span>
+        <span style="font-size:20px;">☰</span><span id="dn-mob-more" style="font-size:10px;" id="dn-mob-more">Plus</span>
       </button>
     </div>
   </div>
@@ -115,7 +115,7 @@
         <p style="font-size:14px;color:rgba(255,255,255,0.45);margin:0;"><span id="currentDate"></span></p>
       </div>
       <a id="testIABtn" href="#" target="_blank" style="display:flex;align-items:center;gap:8px;padding:11px 18px;background:linear-gradient(135deg,rgba(0,82,204,0.35),rgba(0,212,255,0.15));border:1px solid rgba(0,212,255,0.3);border-radius:11px;color:#00D4FF;text-decoration:none;font-size:13px;font-weight:700;transition:all 0.2s;white-space:nowrap;">
-        <span style="font-size:16px;">🤖</span> Tester mon IA →
+        <span style="font-size:16px;">🤖</span> <span id="dash-test-ia-short">Tester mon IA →</span>
       </a>
     </div>
 
@@ -172,7 +172,7 @@
             <div id="statLangSub" style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;">des conversations</div>
           </div>
           <div id="urgencyCard" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;cursor:pointer;" onclick="window.location.href='/dashboard-rendez-vous'">
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">📅 RDV en attente</div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;" id="kpi-rdv-pending-label">📅 RDV en attente</div>
             <div id="statPendingRdv" style="font-size:20px;font-weight:800;color:#F59E0B;">—</div>
             <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;" id="stat-pending-sub">À confirmer →</div>
           </div>
@@ -196,10 +196,10 @@
           </div>
           <div style="flex:1;min-width:0;">
             <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;" id="stat-score-label">Score IA</div>
-            <div id="healthLabel" style="font-size:14px;font-weight:700;color:#00D4FF;">Calcul...</div>
+            <div id="healthLabel" style="font-size:14px;font-weight:700;color:#00D4FF;" id="healthLabel">...</div>
             <div id="healthDesc" style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;line-height:1.4;"></div>
           </div>
-          <a href="/dashboard-configuration" style="font-size:11px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;">Configurer →</a>
+          <a href="/dashboard-configuration" style="font-size:11px;color:#00D4FF;text-decoration:none;font-weight:600;flex-shrink:0;" id="dash-configure-link">Configurer →</a>
         </div>
         <!-- Séparateur -->
         <div style="height:1px;background:rgba(255,255,255,0.06);"></div>
@@ -207,7 +207,7 @@
         <div style="display:flex;flex-direction:column;gap:6px;" id="healthItems"></div>
         <!-- Astuce contextuelle -->
         <div style="padding:10px 13px;background:rgba(0,212,255,0.06);border-radius:10px;border-left:3px solid rgba(0,212,255,0.4);">
-          <div style="font-size:10px;color:#00D4FF;font-weight:700;margin-bottom:4px;">💡 Conseil</div>
+          <div style="font-size:10px;color:#00D4FF;font-weight:700;margin-bottom:4px;" id="dash-tip-label">💡 Conseil</div>
           <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.55;" id="tipText">Chargement...</div>
         </div>
       </div>
@@ -218,7 +218,7 @@
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
         <div style="width:40px;height:40px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
         <div>
-          <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0;">Votre lien & QR Code</h2>
+          <h2 style="font-size:17px;font-weight:700;color:#fff;margin:0;" id="dash-qr-title">Votre lien & QR Code</h2>
           <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:3px 0 0;" id="link-share-desc">Partagez avec vos clients pour accéder à votre assistant 24/7</p>
         </div>
       </div>
@@ -229,9 +229,9 @@
             <button onclick="copyLink()" style="padding:12px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:16px;cursor:pointer;flex-shrink:0;transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">📋</button>
           </div>
           <a id="testIABtn2" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;background:linear-gradient(135deg,#0052CC 0%,#0080FF 50%,#00D4FF 100%);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,120,255,0.25);">
-            <span style="font-size:18px;">🤖</span><span>Tester mon assistant IA</span><span style="font-size:10px;background:rgba(255,255,255,0.18);padding:2px 7px;border-radius:20px;">Vue client →</span>
+            <span style="font-size:18px;">🤖</span><span id="dash-test-ia-full">Tester mon assistant IA</span><span id="dash-vue-client" style="font-size:10px;background:rgba(255,255,255,0.18);padding:2px 7px;border-radius:20px;">Vue client →</span>
           </a>
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Liens de tracking par source</div>
+          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;" id="dash-tracking-title">Liens de tracking par source</div>
           <div style="display:grid;gap:7px;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
               <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">📸 Instagram</span><div id="linkInstagram" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
@@ -242,7 +242,7 @@
               <button onclick="copySourceLink('website')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
-              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">📱 QR Vitrine</span><div id="linkQR" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;" id="dash-qr-vitrine-lbl">📱 QR Vitrine</span><div id="linkQR" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
               <button onclick="copySourceLink('qr')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
           </div>
@@ -252,8 +252,8 @@
           <div style="display:inline-block;background:#fff;padding:12px;border-radius:14px;box-shadow:0 8px 28px rgba(0,212,255,0.2);margin-bottom:8px;"><div id="qrcode"></div></div>
           <p style="font-size:11px;color:rgba(255,255,255,0.35);margin:0 0 8px;">localreply.ai/<span id="qrSlug">...</span></p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-            <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">⬇️ QR</button>
-            <button onclick="togglePrintMenu(event)" id="btnPrintMenu" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;">🖼️ QR Affiche ▾</button>
+            <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;" id="dash-qr-download-btn">⬇️ QR</button>
+            <button onclick="togglePrintMenu(event)" id="btnPrintMenu" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;" id="dash-qr-print-btn">🖼️ QR Affiche ▾</button>
           </div>
         </div>
       </div>
@@ -273,7 +273,7 @@
     <div id="onboardingSection" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:22px 24px;margin-bottom:20px;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
         <div>
-          <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 3px;">🚀 Mise en route</h2>
+          <h2 style="font-size:16px;font-weight:700;color:#fff;margin:0 0 3px;" id="dash-setup-title">🚀 Mise en route</h2>
           <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;" id="checklist-title">Complétez ces étapes pour tirer le meilleur de LocalReply</p>
         </div>
         <div id="onboardingProgress" style="font-size:12px;font-weight:700;color:#00D4FF;background:rgba(0,212,255,0.1);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,212,255,0.2);">0/4</div>
@@ -293,7 +293,7 @@
           <div style="width:36px;height:36px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">📖</div>
           <div style="text-align:left;">
             <div id="guide-header-text" style="font-size:15px;font-weight:700;color:#fff;">Guide — Tirer le maximum de LocalReply</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;" id="guide-subtitle">8 actions concrètes pour attirer plus de clients</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:1px;" id="guide-subtitle" id="dash-guide-subtitle">8 actions concrètes pour attirer plus de clients</div>
           </div>
         </div>
         <span id="guideArrow" style="font-size:16px;color:#00D4FF;transition:transform 0.3s;">▼</span>
@@ -468,6 +468,7 @@ function computeHealthScore(config, calConnected) {
   const ring = document.getElementById('healthRing');
   const scoreEl = document.getElementById('healthScore');
   const labelEl = document.getElementById('healthLabel');
+  if (labelEl && labelEl.textContent === '...') labelEl.textContent = (_dht||DASH_HOME_T.fr).loading||'...';
   const itemsEl = document.getElementById('healthItems');
   if (ring) { const dash = 264; ring.style.strokeDashoffset = dash - (dash * score / 100); }
   if (scoreEl) scoreEl.textContent = score;
@@ -483,7 +484,7 @@ function computeHealthScore(config, calConnected) {
       ? (_dht||DASH_HOME_T.fr).score_great
       : score >= 50
       ? (_dht||DASH_HOME_T.fr).score_ok
-      : 'Complétez la configuration pour que l\'IA réponde correctement.';
+      : (_dht||DASH_HOME_T.fr).score_bad_text||'Complétez la configuration.';
     healthDesc.style.color = score >= 80 ? 'rgba(16,185,129,0.7)' : score >= 50 ? 'rgba(245,158,11,0.7)' : 'rgba(239,68,68,0.7)';
   }
   // Items avec détails (fusionné avec statut système)
@@ -540,7 +541,7 @@ function setupLinks(slug) {
   if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
 }
 function copyLink() { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug).then(()=>toast((_dht||DASH_HOME_T.fr).copy_ok)); }
-function copySourceLink(s) { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug+'?src='+s).then(()=>toast('✅ Lien copié !')); }
+function copySourceLink(s) { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug+'?src='+s).then(()=>toast((_dht||DASH_HOME_T.fr).copy_ok||'✅ Lien copié !')); }
 function downloadQRPng() {
   setTimeout(()=>{ const c=document.querySelector('#qrcode canvas'); if(!c){toast((_dht||DASH_HOME_T.fr).qr_unavailable);return;} const a=document.createElement('a');a.download='qr-'+currentSlug+'.png';a.href=c.toDataURL();a.click();toast((_dht||DASH_HOME_T.fr).qr_downloaded); },100);
 }
@@ -584,7 +585,7 @@ function printQR(lang) {
   if (m) m.style.display = 'none';
 
   const qrCanvas = document.querySelector('#qrcode canvas');
-  if (!qrCanvas) { toast('❌ QR code non disponible'); return; }
+  if (!qrCanvas) { toast((_dht||DASH_HOME_T.fr).qr_unavailable||'❌ QR non disponible'); return; }
 
   const cfg     = window.configData || {};
   const biz     = cfg.business || cfg;
@@ -914,7 +915,7 @@ function renderAlerts(pendingApts, pendingReqs) {
   const urgent = pendingApts.filter(a=>a.urgency==='high');
   if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} RDV urgent${urgent.length>1?'s':''} en attente</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||'Client'}</strong>`).join(' · ')} — Cliquez pour traiter</div></div></a>`;
   const normal = pendingApts.filter(a=>a.urgency!=='high');
-  if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} RDV en attente de confirmation</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Cliquez pour confirmer ou refuser</div></div></a>`;
+  if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} ${(_dht||DASH_HOME_T.fr).rdv_pending_count||'RDV en attente de confirmation'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">${_dht||DASH_HOME_T.fr}.rdv_click_confirm||(_dht||DASH_HOME_T.fr).rdv_click_confirm||'Cliquez pour confirmer ou refuser'</div></div></a>`;
   if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} question${pr>1?'s':''} sans réponse</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
   s.innerHTML = html;
 }
@@ -1099,12 +1100,12 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
   }
   if(!el) return;
   el.innerHTML = [
-    sRow(hasServices, 'Services & tarifs',    hasServices ? `${servicesCount} ${(_dht||DASH_HOME_T.fr).services_configured||'service(s) configuré(s)'}` : (_dht||DASH_HOME_T.fr).cfg_missing, hasServices?'#10B981':'#F59E0B'),
-    sRow(hasHours,    'Horaires',             hasHours    ? 'Définis' : 'À configurer dans Configuration', hasHours?'#10B981':'#F59E0B'),
+    sRow(hasServices, (_dht||DASH_HOME_T.fr).srow_services||'Services & tarifs',    hasServices ? `${servicesCount} ${(_dht||DASH_HOME_T.fr).services_configured||'service(s) configuré(s)'}` : (_dht||DASH_HOME_T.fr).cfg_missing, hasServices?'#10B981':'#F59E0B'),
+    sRow(hasHours,    (_dht||DASH_HOME_T.fr).srow_hours||'Horaires',             hasHours    ? (_dht||DASH_HOME_T.fr).cfg_defined||'Définis' : (_dht||DASH_HOME_T.fr).cfg_missing||'À configurer dans Configuration', hasHours?'#10B981':'#F59E0B'),
     sRow(hasFaq,      'FAQ',                  hasFaq      ? `${faqCount} question${faqCount>1?'s':''}` : (_dht||DASH_HOME_T.fr).cfg_faq_missing, hasFaq?'#10B981':'#F59E0B'),
     sRow(calConnected,'Google Calendar',      calConnected ? (_dht||DASH_HOME_T.fr).cal_connected : '⚠️ <a href="/dashboard-rendez-vous" style="color:#EF4444;">' + ((_dht||DASH_HOME_T.fr).cal_reconnect||'Reconnecter') + '</a>', calConnected?'#10B981':'#EF4444'),
-    sRow(true,        'Assistant IA 24/7',   'Actif · 8 langues', '#10B981'),
-    sRow(true,        'Abonnement',           isPro ? (isTrial ? 'Essai Pro gratuit 🎁' : 'Pro ⭐') : 'Standard 📦', isPro ? '#F59E0B' : '#00D4FF'),
+    sRow(true,        (_dht||DASH_HOME_T.fr).srow_ia||'Assistant IA 24/7',   (_dht||DASH_HOME_T.fr).ai_active||'Actif · 8 langues', '#10B981'),
+    sRow(true,        (_dht||DASH_HOME_T.fr).srow_plan||'Abonnement',           isPro ? (isTrial ? (_dht||DASH_HOME_T.fr).plan_trial_pro||'Essai Pro 🎁' : (_dht||DASH_HOME_T.fr).plan_pro+' ⭐') : (_dht||DASH_HOME_T.fr).plan_std+' 📦', isPro ? '#F59E0B' : '#00D4FF'),
   ].join('');
 }
 function sRow(ok, lbl, val, color) {
@@ -1140,7 +1141,7 @@ function timeAgo(ts) {
   const diff = Math.floor((new Date()-new Date(ts))/60000);
   if(diff<1) return "À l'instant"; if(diff<60) return `Il y a ${diff}min`;
   const h=Math.floor(diff/60); if(h<24) return `Il y a ${h}h`;
-  const d=Math.floor(h/24); return d===1?'Hier':d<7?`Il y a ${d}j`:new Date(ts).toLocaleDateString('fr-FR');
+  const d=Math.floor(h/24); return d===1?(_dht||DASH_HOME_T.fr).yesterday||'Hier':d<7?`${(_dht||DASH_HOME_T.fr).days_ago_prefix||'Il y a '}${d}${(_dht||DASH_HOME_T.fr).days_ago_suffix||'j'}`:new Date(ts).toLocaleDateString('fr-FR');
 }
 function toast(msg, type='success') {
   const el=document.createElement('div'); el.textContent=msg;
@@ -1375,7 +1376,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   <!-- Étape 1 : Type d'affiche -->
   <div id="printStep1">
-    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:4px 10px 8px;">Type d'affiche</div>
+    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:4px 10px 8px;" id="dash-poster-type">Type d'affiche</div>
     <button onclick="printSelectType('questions')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">
       💬 Questions seulement
     </button>
@@ -1434,8 +1435,8 @@ const DASH_HOME_T = {
     copy_ok: '✅ Lien copié !', print_ok: '✅ Affiche téléchargée — imprimez en A5',
     greeting_morning: 'Bonjour', greeting_afternoon: 'Bon après-midi', greeting_evening: 'Bonsoir',
     health_great: '🟢 Excellent', health_ok: '🟡 À améliorer', health_bad: '🔴 À compléter',
-    cfg_link: 'À ajouter dans Configuration', cfg_missing: 'À configurer dans Configuration',
-    cfg_faq_missing: 'À enrichir dans Configuration', cfg_defined: 'Définis', cfg_connected: 'Connecté · RDV automatiques actifs',
+    cfg_link: (_dht||DASH_HOME_T.fr).cfg_link||'À ajouter dans Configuration', cfg_missing: 'À configurer dans Configuration',
+    cfg_faq_missing: (_dht||DASH_HOME_T.fr).cfg_faq_missing||'À enrichir dans Configuration', cfg_defined: 'Définis', cfg_connected: 'Connecté · RDV automatiques actifs',
     tip_services: "⚙️ Ajoutez vos services et tarifs dans Configuration — l'IA pourra répondre aux questions de prix.",
     tip_hours: "⏰ Configurez vos horaires d'ouverture pour que l'IA indique correctement quand vous êtes disponible.",
     tip_faq: "📚 Enrichissez votre FAQ — plus elle est complète, plus l'IA est précise.",
@@ -1443,6 +1444,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Votre assistant répond en 8 langues — mentionnez-le à vos clients étrangers.',
     tip_reviews: '⭐ Demandez à vos clients satisfaits de laisser un avis Google.',
     tip_calendar:"📅 Reconnectez Google Calendar pour la prise de RDV automatique.",no_data_yet:"Pas encore de données",entries:"entrées",min_recommended:"minimum recommandé",services_configured:"services configurés",plan_pro:"Plan Pro",plan_std:"Plan Standard",status_trial:"Essai gratuit",qr_downloaded:"✅ QR téléchargé !",qr_unavailable:"❌ QR non disponible",payment_late:"Paiement en retard — Mettez à jour votre moyen de paiement.",payment_fix:"Régulariser →",cal_disconnected:"Google Calendar déconnecté",cal_disconnected_desc:"Les prises de RDV ne fonctionnent plus.",cal_reconnect:"Reconnecter →",guide_header:"Guide — Tirer le maximum de LocalReply",guide_checklist_title:"✅ À faire une seule fois",guide_checks:["QR code imprimé & affiché", "Lien bio réseaux sociaux", "Lien Google My Business", "Lien signature email", "Bouton sur site web", "SMS aux clients habituels", "20+ FAQ configurées", "Lien WhatsApp partagé", "Questions sans réponse traitées"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR Code en vitrine", "time": "Impact immédiat · 2 min", "text": "Imprimez votre QR code et affichez-le à l'entrée ou au comptoir.", "tip": "Plastifiez-le et collez-le sur la caisse."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Bio réseaux sociaux", "time": "Trafic permanent · 1 min", "text": "Ajoutez votre lien LocalReply dans votre bio Instagram, TikTok ou Facebook.", "tip": "Réservez ou posez vos questions 24h/24"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Visibilité locale · 3 min", "text": "Ajoutez votre lien dans Réserver sur votre fiche Google.", "tip": "Utilisez ?src=google pour tracker ce trafic."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "En caisse, à voix haute", "time": "Bouche à oreille · 0 min", "text": "Mentionnez que vos clients peuvent réserver 24h/24 en ligne.", "tip": "Vous pouvez réserver en scannant ce code !"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Signature email", "time": "Visibilité passive · 2 min", "text": "Ajoutez votre lien dans votre signature email.", "tip": "Réservez 24h/24 → localreply.ai/votre-commerce"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS clients habituels", "time": "Réactivation · 5 min", "text": "Envoyez un SMS à vos clients réguliers. Taux SMS : 98%.", "tip": "Bonjour ! Réservez maintenant 24h/24 → [votre lien]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Votre site web", "time": "Conversion max · 5 min", "text": "Ajoutez un bouton Prendre RDV pointant vers LocalReply.", "tip": "Utilisez ?src=website pour tracker ce trafic."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Enrichissez votre FAQ", "time": "Qualité · continu", "text": "Plus votre FAQ est complète, plus l'IA répond précisément.", "tip": "Objectif : 20+ entrées sur prix, horaires, services."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "WhatsApp locaux", "time": "Communauté · 5 min", "text": "Partagez votre lien dans vos groupes WhatsApp.", "tip": "Vous pouvez maintenant réserver 24h/24 → [votre lien]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Traduction automatique", "time": "Clients étrangers · immédiat", "text": "Votre IA répond en 8 langues.", "tip": "Répondez en français — retraduit automatiquement pour le client."}],
+    dash_nav_section: "Navigation",
+    kpi_rdv_pending_label: "\ud83d\udcc5 RDV en attente",
+    dash_configure_link: "Configurer \u2192",
+    dash_qr_title: "Votre lien & QR Code",
+    dash_test_ia_short: "Tester mon IA \u2192",
+    dash_test_ia_full: "Tester mon assistant IA",
+    dash_vue_client: "Vue client \u2192",
+    dash_tracking_title: "Liens de tracking par source",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Vitrine",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Affiche \u25be",
+    dash_setup_title: "\ud83d\ude80 Mise en route",
+    dash_poster_type: "Type d'affiche",
+    dash_guide_subtitle: "8 actions concr\u00e8tes pour attirer plus de clients",
+    dash_tip_label: "\ud83d\udca1 Conseil",
+    srow_services: "Services",
+    srow_hours: "Horaires",
+    srow_ia: "Assistant IA 24/7",
+    srow_plan: "Abonnement",
+    ai_active: "Actif \u00b7 8 langues",
+    plan_trial_pro: "Essai Pro \ud83c\udf81",
+    score_bad_text: "Compl\u00e9tez la configuration pour que l'IA r\u00e9ponde correctement.",
+    yesterday: "Hier",
+    days_ago_prefix: "Il y a ",
+    days_ago_suffix: "j",
+    rdv_pending_count: "RDV en attente de confirmation",
+    rdv_click_confirm: "Cliquez pour confirmer ou refuser",
+    mob_rdv: "RDV",
+    mob_more: "Plus",
+    mob_config: "Config",
   },
   en: {
     page_title: 'Dashboard — LocalReply',
@@ -1480,6 +1511,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Your assistant speaks 8 languages — mention it to your foreign customers.',
     tip_reviews: '⭐ Ask satisfied customers to leave a Google review.',
     tip_calendar:"📅 Reconnect Google Calendar for automatic bookings.",no_data_yet:"No data yet",entries:"entries",min_recommended:"minimum recommended",services_configured:"services configured",plan_pro:"Pro Plan",plan_std:"Standard Plan",status_trial:"Free trial",qr_downloaded:"✅ QR downloaded!",qr_unavailable:"❌ QR not available",payment_late:"Payment overdue — Update your payment method.",payment_fix:"Fix now →",cal_disconnected:"Google Calendar disconnected",cal_disconnected_desc:"Automatic bookings no longer work.",cal_reconnect:"Reconnect →",guide_header:"Guide — Get the most from LocalReply",guide_checklist_title:"✅ One-time tasks",guide_checks:["QR code printed & displayed", "Link in social bio", "Link on Google My Business", "Link in email signature", "Button on website", "SMS to regulars", "20+ FAQ configured", "Link shared on WhatsApp", "Unanswered questions handled"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR Code on display", "time": "Immediate · 2 min", "text": "Print your QR code and display it at the entrance or counter.", "tip": "Laminate it and stick it on the register."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Social media bio", "time": "Permanent traffic · 1 min", "text": "Add your LocalReply link to your Instagram, TikTok or Facebook bio.", "tip": "Book or ask questions 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Local visibility · 3 min", "text": "Add your link in Book on your Google listing.", "tip": "Use ?src=google to track traffic."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "At checkout, out loud", "time": "Word of mouth · 0 min", "text": "Mention customers can book 24/7 online.", "tip": "You can book directly by scanning this code!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Email signature", "time": "Passive visibility · 2 min", "text": "Add your link to your email signature.", "tip": "Book 24/7 → localreply.ai/your-business"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS to regulars", "time": "Reactivation · 5 min", "text": "Send an SMS to your regulars. SMS open rate: 98%.", "tip": "Hi! Book now 24/7 → [your link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Your website", "time": "Max conversion · 5 min", "text": "Add a Book appointment button pointing to LocalReply.", "tip": "Use ?src=website to track traffic."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Enrich your FAQ", "time": "Quality · ongoing", "text": "The more complete your FAQ, the more precisely the AI responds.", "tip": "Goal: 20+ entries on prices, hours, services."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "WhatsApp groups", "time": "Community · 5 min", "text": "Share your link in your local WhatsApp groups.", "tip": "You can now book 24/7 → [your link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Automatic translation", "time": "Foreign customers · instant", "text": "Your AI already responds in 8 languages.", "tip": "Reply in your language — auto-translated for the customer."}],
+    dash_nav_section: "Navigation",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Pending appointments",
+    dash_configure_link: "Configure \u2192",
+    dash_qr_title: "Your link & QR Code",
+    dash_test_ia_short: "Test my AI \u2192",
+    dash_test_ia_full: "Test my AI assistant",
+    dash_vue_client: "Customer view \u2192",
+    dash_tracking_title: "Tracking links by source",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Display",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Poster \u25be",
+    dash_setup_title: "\ud83d\ude80 Getting started",
+    dash_poster_type: "Poster type",
+    dash_guide_subtitle: "8 concrete actions to attract more customers",
+    dash_tip_label: "\ud83d\udca1 Tip",
+    srow_services: "Services",
+    srow_hours: "Hours",
+    srow_ia: "AI Assistant 24/7",
+    srow_plan: "Subscription",
+    ai_active: "Active \u00b7 8 languages",
+    plan_trial_pro: "Pro Trial \ud83c\udf81",
+    score_bad_text: "Complete the configuration for the AI to respond correctly.",
+    yesterday: "Yesterday",
+    days_ago_prefix: "",
+    days_ago_suffix: "d ago",
+    rdv_pending_count: "appointments pending confirmation",
+    rdv_click_confirm: "Click to confirm or decline",
+    mob_rdv: "Appts",
+    mob_more: "More",
+    mob_config: "Config",
   },
   de: {
     page_title: 'Dashboard — LocalReply',
@@ -1517,6 +1578,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Ihr Assistent spricht 8 Sprachen.',
     tip_reviews: '⭐ Bitten Sie zufriedene Kunden, eine Google-Bewertung abzugeben.',
     tip_calendar:"📅 Google Kalender erneut verbinden.",no_data_yet:"Noch keine Daten",entries:"Einträge",min_recommended:"empfohlenes Minimum",services_configured:"Dienste konfiguriert",plan_pro:"Pro-Plan",plan_std:"Standard-Plan",status_trial:"Kostenlose Testphase",qr_downloaded:"✅ QR heruntergeladen!",qr_unavailable:"❌ QR nicht verfügbar",payment_late:"Zahlung überfällig — Zahlungsmethode aktualisieren.",payment_fix:"Jetzt beheben →",cal_disconnected:"Google Kalender getrennt",cal_disconnected_desc:"Automatische Buchung funktioniert nicht mehr.",cal_reconnect:"Erneut verbinden →",guide_header:"Leitfaden — LocalReply optimal nutzen",guide_checklist_title:"✅ Einmalige Aufgaben",guide_checks:["QR-Code gedruckt & angezeigt", "Link in Social-Bio", "Link auf Google My Business", "Link in E-Mail-Signatur", "Button auf Website", "SMS an Stammkunden", "20+ FAQ konfiguriert", "Link auf WhatsApp geteilt", "Unbeantwortete Fragen bearbeitet"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR-Code im Schaufenster", "time": "Sofortige Wirkung · 2 Min", "text": "QR-Code drucken und am Eingang anzeigen.", "tip": "Laminieren und an die Kasse kleben."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Social-Media-Bio", "time": "Dauerhafter Traffic · 1 Min", "text": "Link in Instagram-, TikTok- oder Facebook-Bio einfügen.", "tip": "Buchen oder Fragen stellen 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Lokale Sichtbarkeit · 3 Min", "text": "Link in Buchen im Google-Eintrag einfügen.", "tip": "?src=google zur Traffic-Verfolgung verwenden."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "An der Kasse, laut sagen", "time": "Mundpropaganda · 0 Min", "text": "Kunden können 24/7 online buchen.", "tip": "Direkt mit diesem Code buchen!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "E-Mail-Signatur", "time": "Passive Sichtbarkeit · 2 Min", "text": "Link in E-Mail-Signatur einfügen.", "tip": "24/7 buchen → localreply.ai/ihr-betrieb"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS an Stammkunden", "time": "Reaktivierung · 5 Min", "text": "SMS an Stammkunden senden. SMS-Rate: 98%.", "tip": "Hallo! Jetzt 24/7 buchen → [Ihr Link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Ihre Website", "time": "Max. Konversion · 5 Min", "text": "Termin buchen-Button zu LocalReply hinzufügen.", "tip": "?src=website zur Traffic-Verfolgung verwenden."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "FAQ erweitern", "time": "Qualität · laufend", "text": "Je vollständiger die FAQ, desto präziser die KI.", "tip": "Ziel: 20+ Einträge zu Preisen, Zeiten, Diensten."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "WhatsApp-Gruppen", "time": "Community · 5 Min", "text": "Link in WhatsApp-Gruppen teilen.", "tip": "Jetzt 24/7 buchen → [Ihr Link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Automatische Übersetzung", "time": "Ausländische Kunden · sofort", "text": "KI antwortet in 8 Sprachen.", "tip": "Auf Deutsch antworten — automatisch übersetzt."}],
+    dash_nav_section: "Navigation",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Ausstehende Termine",
+    dash_configure_link: "Konfigurieren \u2192",
+    dash_qr_title: "Ihr Link & QR-Code",
+    dash_test_ia_short: "KI testen \u2192",
+    dash_test_ia_full: "Meinen KI-Assistenten testen",
+    dash_vue_client: "Kundenansicht \u2192",
+    dash_tracking_title: "Tracking-Links nach Quelle",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Schaufenster",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Plakat \u25be",
+    dash_setup_title: "\ud83d\ude80 Erste Schritte",
+    dash_poster_type: "Plakattyp",
+    dash_guide_subtitle: "8 konkrete Aktionen f\u00fcr mehr Kunden",
+    dash_tip_label: "\ud83d\udca1 Tipp",
+    srow_services: "Dienste",
+    srow_hours: "\u00d6ffnungszeiten",
+    srow_ia: "KI-Assistent 24/7",
+    srow_plan: "Abonnement",
+    ai_active: "Aktiv \u00b7 8 Sprachen",
+    plan_trial_pro: "Pro-Test \ud83c\udf81",
+    score_bad_text: "Vervollst\u00e4ndigen Sie die Konfiguration f\u00fcr korrekte KI-Antworten.",
+    yesterday: "Gestern",
+    days_ago_prefix: "Vor ",
+    days_ago_suffix: "T",
+    rdv_pending_count: "Termine ausstehend",
+    rdv_click_confirm: "Klicken zum Best\u00e4tigen oder Ablehnen",
+    mob_rdv: "Termine",
+    mob_more: "Mehr",
+    mob_config: "Konfig",
   },
   it: {
     page_title: 'Dashboard — LocalReply',
@@ -1554,6 +1645,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Il tuo assistente parla 8 lingue.',
     tip_reviews: '⭐ Chiedi ai clienti soddisfatti di lasciare una recensione Google.',
     tip_calendar:"📅 Riconnetti Google Calendar.",no_data_yet:"Ancora nessun dato",entries:"voci",min_recommended:"minimo raccomandato",services_configured:"servizi configurati",plan_pro:"Piano Pro",plan_std:"Piano Standard",status_trial:"Prova gratuita",qr_downloaded:"✅ QR scaricato!",qr_unavailable:"❌ QR non disponibile",payment_late:"Pagamento scaduto — Aggiorna il metodo di pagamento.",payment_fix:"Regolarizza →",cal_disconnected:"Google Calendar disconnesso",cal_disconnected_desc:"Le prenotazioni automatiche non funzionano.",cal_reconnect:"Riconnetti →",guide_header:"Guida — Ottieni il massimo da LocalReply",guide_checklist_title:"✅ Da fare una volta",guide_checks:["QR code stampato e visualizzato", "Link nella bio social", "Link su Google My Business", "Link nella firma email", "Pulsante sul sito", "SMS ai clienti abituali", "20+ FAQ configurate", "Link condiviso su WhatsApp", "Domande senza risposta gestite"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR Code in vetrina", "time": "Impatto immediato · 2 min", "text": "Stampa il QR code e mostralo all'ingresso.", "tip": "Plastificalo e incollalo alla cassa."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Bio social media", "time": "Traffico permanente · 1 min", "text": "Aggiungi il link LocalReply alla bio Instagram.", "tip": "Prenota o fai domande 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Visibilità locale · 3 min", "text": "Aggiungi il link in Prenota nella scheda Google.", "tip": "Usa ?src=google per tracciare il traffico."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "Alla cassa, ad alta voce", "time": "Passaparola · 0 min", "text": "I clienti possono prenotare 24/7 online.", "tip": "Prenotare scansionando il codice!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Firma email", "time": "Visibilità passiva · 2 min", "text": "Aggiungi il link alla firma email.", "tip": "Prenota 24/7 → localreply.ai/tua-attivita"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS ai clienti abituali", "time": "Riattivazione · 5 min", "text": "Invia un SMS. Tasso SMS: 98%.", "tip": "Ciao! Prenota ora 24/7 → [link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Il tuo sito web", "time": "Massima conversione · 5 min", "text": "Aggiungi un pulsante Prenota verso LocalReply.", "tip": "Usa ?src=website per tracciare il traffico."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Arricchisci il FAQ", "time": "Qualità · continuo", "text": "Più il FAQ è completo, più l'IA risponde bene.", "tip": "Obiettivo: 20+ voci su prezzi, orari, servizi."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "Gruppi WhatsApp", "time": "Community · 5 min", "text": "Condividi il link nei gruppi WhatsApp.", "tip": "Ora puoi prenotare 24/7 → [link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Traduzione automatica", "time": "Clienti stranieri · immediato", "text": "L'IA risponde in 8 lingue.", "tip": "Rispondi in italiano — tradotto automaticamente."}],
+    dash_nav_section: "Navigazione",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Appuntamenti in attesa",
+    dash_configure_link: "Configura \u2192",
+    dash_qr_title: "Il tuo link & Codice QR",
+    dash_test_ia_short: "Testa la mia IA \u2192",
+    dash_test_ia_full: "Testa il mio assistente IA",
+    dash_vue_client: "Vista cliente \u2192",
+    dash_tracking_title: "Link di tracciamento per fonte",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Vetrina",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Poster \u25be",
+    dash_setup_title: "\ud83d\ude80 Per iniziare",
+    dash_poster_type: "Tipo di poster",
+    dash_guide_subtitle: "8 azioni concrete per attirare pi\u00f9 clienti",
+    dash_tip_label: "\ud83d\udca1 Consiglio",
+    srow_services: "Servizi",
+    srow_hours: "Orari",
+    srow_ia: "Assistente IA 24/7",
+    srow_plan: "Abbonamento",
+    ai_active: "Attivo \u00b7 8 lingue",
+    plan_trial_pro: "Trial Pro \ud83c\udf81",
+    score_bad_text: "Completa la configurazione per l'IA corretta.",
+    yesterday: "Ieri",
+    days_ago_prefix: "",
+    days_ago_suffix: "g fa",
+    rdv_pending_count: "appuntamenti in attesa",
+    rdv_click_confirm: "Clicca per confermare o rifiutare",
+    mob_rdv: "App.",
+    mob_more: "Altro",
+    mob_config: "Config",
   },
   es: {
     page_title: 'Dashboard — LocalReply',
@@ -1591,6 +1712,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Tu asistente habla 8 idiomas.',
     tip_reviews: '⭐ Pide a los clientes satisfechos que dejen una reseña en Google.',
     tip_calendar:"📅 Reconecta Google Calendar.",no_data_yet:"Sin datos aún",entries:"entradas",min_recommended:"mínimo recomendado",services_configured:"servicios configurados",plan_pro:"Plan Pro",plan_std:"Plan Standard",status_trial:"Prueba gratuita",qr_downloaded:"✅ QR descargado!",qr_unavailable:"❌ QR no disponible",payment_late:"Pago vencido — Actualiza tu método de pago.",payment_fix:"Regularizar →",cal_disconnected:"Google Calendar desconectado",cal_disconnected_desc:"Las reservas automáticas no funcionan.",cal_reconnect:"Reconectar →",guide_header:"Guía — Saca el máximo de LocalReply",guide_checklist_title:"✅ Tareas de una vez",guide_checks:["QR code impreso y mostrado", "Link en bio social", "Link en Google My Business", "Link en firma email", "Botón en sitio web", "SMS a clientes habituales", "20+ FAQ configuradas", "Link compartido en WhatsApp", "Preguntas sin respuesta gestionadas"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR Code en escaparate", "time": "Impacto inmediato · 2 min", "text": "Imprime el QR code y muéstralo en la entrada.", "tip": "Plastifícalo y pégalo en la caja."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Bio redes sociales", "time": "Tráfico permanente · 1 min", "text": "Añade el link en tu bio de Instagram.", "tip": "Reserva o haz preguntas 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Visibilidad local · 3 min", "text": "Añade el link en Reservar en tu ficha Google.", "tip": "Usa ?src=google para rastrear."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "En caja, en voz alta", "time": "Boca a boca · 0 min", "text": "Los clientes pueden reservar 24/7 online.", "tip": "Reserva escaneando este código!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Firma de email", "time": "Visibilidad pasiva · 2 min", "text": "Añade el link en tu firma de email.", "tip": "Reserva 24/7 → localreply.ai/tu-negocio"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS a clientes habituales", "time": "Reactivación · 5 min", "text": "Envía un SMS. Tasa SMS: 98%.", "tip": "Hola! Reserva ahora 24/7 → [link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Tu sitio web", "time": "Máxima conversión · 5 min", "text": "Añade un botón Tomar cita hacia LocalReply.", "tip": "Usa ?src=website para rastrear."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Enriquece tu FAQ", "time": "Calidad · continuo", "text": "Cuanto más completo el FAQ, más precisa la IA.", "tip": "Objetivo: 20+ entradas sobre precios, horarios."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "Grupos WhatsApp", "time": "Comunidad · 5 min", "text": "Comparte el link en tus grupos WhatsApp.", "tip": "Ya puedes reservar 24/7 → [link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Traducción automática", "time": "Clientes extranjeros · inmediato", "text": "La IA responde en 8 idiomas.", "tip": "Responde en tu idioma — traducido automáticamente."}],
+    dash_nav_section: "Navegaci\u00f3n",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Citas pendientes",
+    dash_configure_link: "Configurar \u2192",
+    dash_qr_title: "Tu enlace & C\u00f3digo QR",
+    dash_test_ia_short: "Probar mi IA \u2192",
+    dash_test_ia_full: "Probar mi asistente IA",
+    dash_vue_client: "Vista cliente \u2192",
+    dash_tracking_title: "Enlaces de seguimiento por fuente",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Escaparate",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Cartel \u25be",
+    dash_setup_title: "\ud83d\ude80 Primeros pasos",
+    dash_poster_type: "Tipo de cartel",
+    dash_guide_subtitle: "8 acciones concretas para atraer m\u00e1s clientes",
+    dash_tip_label: "\ud83d\udca1 Consejo",
+    srow_services: "Servicios",
+    srow_hours: "Horarios",
+    srow_ia: "Asistente IA 24/7",
+    srow_plan: "Suscripci\u00f3n",
+    ai_active: "Activo \u00b7 8 idiomas",
+    plan_trial_pro: "Trial Pro \ud83c\udf81",
+    score_bad_text: "Completa la configuraci\u00f3n para que la IA responda correctamente.",
+    yesterday: "Ayer",
+    days_ago_prefix: "Hace ",
+    days_ago_suffix: "d",
+    rdv_pending_count: "citas pendientes de confirmaci\u00f3n",
+    rdv_click_confirm: "Haz clic para confirmar o rechazar",
+    mob_rdv: "Citas",
+    mob_more: "M\u00e1s",
+    mob_config: "Config",
   },
   pt: {
     page_title: 'Dashboard — LocalReply',
@@ -1628,6 +1779,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 O seu assistente fala 8 línguas.',
     tip_reviews: '⭐ Peça aos clientes satisfeitos que deixem uma avaliação no Google.',
     tip_calendar:"📅 Reconecta o Google Calendar.",no_data_yet:"Ainda sem dados",entries:"entradas",min_recommended:"mínimo recomendado",services_configured:"serviços configurados",plan_pro:"Plano Pro",plan_std:"Plano Standard",status_trial:"Teste gratuito",qr_downloaded:"✅ QR descarregado!",qr_unavailable:"❌ QR não disponível",payment_late:"Pagamento em atraso — Atualiza o método de pagamento.",payment_fix:"Regularizar →",cal_disconnected:"Google Calendar desligado",cal_disconnected_desc:"As marcações automáticas não funcionam.",cal_reconnect:"Reconectar →",guide_header:"Guia — Tira o máximo do LocalReply",guide_checklist_title:"✅ Tarefas únicas",guide_checks:["QR code impresso e exibido", "Link na bio social", "Link no Google My Business", "Link na assinatura email", "Botão no site", "SMS a clientes habituais", "20+ FAQ configuradas", "Link partilhado no WhatsApp", "Perguntas sem resposta tratadas"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR Code na montra", "time": "Impacto imediato · 2 min", "text": "Imprime o QR code e exibe-o na entrada.", "tip": "Plastifica-o e cola-o na caixa."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Bio redes sociais", "time": "Tráfego permanente · 1 min", "text": "Adiciona o link LocalReply à bio do Instagram.", "tip": "Reserva ou faz perguntas 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Visibilidade local · 3 min", "text": "Adiciona o link em Reservar na ficha Google.", "tip": "Usa ?src=google para rastrear."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "Na caixa, em voz alta", "time": "Passa a palavra · 0 min", "text": "Os clientes podem reservar 24/7 online.", "tip": "Reserva digitalizando este código!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Assinatura email", "time": "Visibilidade passiva · 2 min", "text": "Adiciona o link à assinatura email.", "tip": "Reserva 24/7 → localreply.ai/o-seu-negocio"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS a clientes habituais", "time": "Reativação · 5 min", "text": "Envia um SMS. Taxa SMS: 98%.", "tip": "Ola! Reserva agora 24/7 → [link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "O teu site", "time": "Máxima conversão · 5 min", "text": "Adiciona um botão Marcar apontando para LocalReply.", "tip": "Usa ?src=website para rastrear."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Enriqueça o FAQ", "time": "Qualidade · contínuo", "text": "Quanto mais completo o FAQ, mais precisa a IA.", "tip": "Objetivo: 20+ entradas sobre preços, horários."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "Grupos WhatsApp", "time": "Comunidade · 5 min", "text": "Partilha o link nos grupos WhatsApp.", "tip": "Já podes reservar 24/7 → [link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Tradução automática", "time": "Clientes estrangeiros · imediato", "text": "A IA responde em 8 línguas.", "tip": "Responde no teu idioma — traduzido automaticamente."}],
+    dash_nav_section: "Navega\u00e7\u00e3o",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Marca\u00e7\u00f5es pendentes",
+    dash_configure_link: "Configurar \u2192",
+    dash_qr_title: "O seu link & C\u00f3digo QR",
+    dash_test_ia_short: "Testar a minha IA \u2192",
+    dash_test_ia_full: "Testar o meu assistente IA",
+    dash_vue_client: "Vista do cliente \u2192",
+    dash_tracking_title: "Links de rastreamento por fonte",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Montra",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Cartaz \u25be",
+    dash_setup_title: "\ud83d\ude80 Primeiros passos",
+    dash_poster_type: "Tipo de cartaz",
+    dash_guide_subtitle: "8 a\u00e7\u00f5es concretas para atrair mais clientes",
+    dash_tip_label: "\ud83d\udca1 Dica",
+    srow_services: "Servi\u00e7os",
+    srow_hours: "Hor\u00e1rios",
+    srow_ia: "Assistente IA 24/7",
+    srow_plan: "Subscri\u00e7\u00e3o",
+    ai_active: "Ativo \u00b7 8 l\u00ednguas",
+    plan_trial_pro: "Trial Pro \ud83c\udf81",
+    score_bad_text: "Complete a configura\u00e7\u00e3o para que a IA responda corretamente.",
+    yesterday: "Ontem",
+    days_ago_prefix: "H\u00e1 ",
+    days_ago_suffix: "d",
+    rdv_pending_count: "marca\u00e7\u00f5es pendentes",
+    rdv_click_confirm: "Clique para confirmar ou recusar",
+    mob_rdv: "Marca\u00e7\u00f5es",
+    mob_more: "Mais",
+    mob_config: "Config",
   },
   nl: {
     page_title: 'Dashboard — LocalReply',
@@ -1665,6 +1846,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Uw assistent spreekt 8 talen.',
     tip_reviews: '⭐ Vraag tevreden klanten een Google-recensie te geven.',
     tip_calendar:"📅 Verbind Google Agenda opnieuw.",no_data_yet:"Nog geen gegevens",entries:"vermeldingen",min_recommended:"aanbevolen minimum",services_configured:"diensten geconfigureerd",plan_pro:"Pro-plan",plan_std:"Standard-plan",status_trial:"Gratis proef",qr_downloaded:"✅ QR gedownload!",qr_unavailable:"❌ QR niet beschikbaar",payment_late:"Betaling achterstallig — Betalingsmethode bijwerken.",payment_fix:"Regulariseren →",cal_disconnected:"Google Agenda losgekoppeld",cal_disconnected_desc:"Automatische afspraken werken niet meer.",cal_reconnect:"Opnieuw verbinden →",guide_header:"Gids — Haal het meeste uit LocalReply",guide_checklist_title:"✅ Eenmalige taken",guide_checks:["QR-code afgedrukt en weergegeven", "Link in social bio", "Link op Google My Business", "Link in e-mailhandtekening", "Knop op website", "SMS naar vaste klanten", "20+ FAQ geconfigureerd", "Link gedeeld op WhatsApp", "Onbeantwoorde vragen verwerkt"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "QR-code in etalage", "time": "Direct effect · 2 min", "text": "QR-code afdrukken en bij de ingang tonen.", "tip": "Lamineer hem en plak hem op de kassa."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Social media bio", "time": "Permanent verkeer · 1 min", "text": "Link in Instagram-, TikTok- of Facebook-bio.", "tip": "Boek of stel vragen 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Lokale zichtbaarheid · 3 min", "text": "Link in Boeken in de Google-vermelding.", "tip": "Gebruik ?src=google om verkeer bij te houden."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "Aan de kassa, hardop", "time": "Mond-tot-mond · 0 min", "text": "Klanten kunnen 24/7 online boeken.", "tip": "Boek direct door deze code te scannen!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "E-mailhandtekening", "time": "Passieve zichtbaarheid · 2 min", "text": "Link in e-mailhandtekening plaatsen.", "tip": "24/7 boeken → localreply.ai/uw-bedrijf"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS naar vaste klanten", "time": "Reactivering · 5 min", "text": "SMS sturen. SMS-openingsratio: 98%.", "tip": "Hallo! Nu 24/7 boeken → [link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Uw website", "time": "Max. conversie · 5 min", "text": "Afspraak boeken-knop naar LocalReply.", "tip": "Gebruik ?src=website om te tracken."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "FAQ uitbreiden", "time": "Kwaliteit · doorlopend", "text": "Hoe vollediger de FAQ, hoe preciezer de AI.", "tip": "Doel: 20+ vermeldingen over prijzen, tijden."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "WhatsApp-groepen", "time": "Community · 5 min", "text": "Link in WhatsApp-groepen delen.", "tip": "Nu 24/7 boeken → [link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Automatische vertaling", "time": "Buitenlandse klanten · direct", "text": "AI antwoordt in 8 talen.", "tip": "In uw taal antwoorden — automatisch vertaald."}],
+    dash_nav_section: "Navigatie",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Afspraken in behandeling",
+    dash_configure_link: "Configureren \u2192",
+    dash_qr_title: "Uw link & QR-code",
+    dash_test_ia_short: "Mijn AI testen \u2192",
+    dash_test_ia_full: "Mijn AI-assistent testen",
+    dash_vue_client: "Klantweergave \u2192",
+    dash_tracking_title: "Trackinglinks per bron",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Etalage",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Poster \u25be",
+    dash_setup_title: "\ud83d\ude80 Aan de slag",
+    dash_poster_type: "Postertype",
+    dash_guide_subtitle: "8 concrete acties om meer klanten te trekken",
+    dash_tip_label: "\ud83d\udca1 Tip",
+    srow_services: "Diensten",
+    srow_hours: "Openingstijden",
+    srow_ia: "AI-assistent 24/7",
+    srow_plan: "Abonnement",
+    ai_active: "Actief \u00b7 8 talen",
+    plan_trial_pro: "Pro-proef \ud83c\udf81",
+    score_bad_text: "Voltooi de configuratie voor correcte AI-antwoorden.",
+    yesterday: "Gisteren",
+    days_ago_prefix: "",
+    days_ago_suffix: "d geleden",
+    rdv_pending_count: "afspraken wachten op bevestiging",
+    rdv_click_confirm: "Klik om te bevestigen of af te wijzen",
+    mob_rdv: "Afspraken",
+    mob_more: "Meer",
+    mob_config: "Config",
   },
   pl: {
     page_title: 'Dashboard — LocalReply',
@@ -1702,6 +1913,36 @@ const DASH_HOME_T = {
     tip_multilang: '🌍 Twój asystent mówi w 8 językach.',
     tip_reviews: '⭐ Poproś zadowolonych klientów o wystawienie recenzji Google.',
     tip_calendar:"📅 Ponownie połącz Kalendarz Google.",no_data_yet:"Brak danych",entries:"wpisów",min_recommended:"zalecane minimum",services_configured:"usług skonfigurowanych",plan_pro:"Plan Pro",plan_std:"Plan Standard",status_trial:"Bezpłatny okres próbny",qr_downloaded:"✅ QR pobrany!",qr_unavailable:"❌ QR niedostępny",payment_late:"Płatność przeterminowana — Zaktualizuj metodę płatności.",payment_fix:"Ureguluj →",cal_disconnected:"Kalendarz Google odłączony",cal_disconnected_desc:"Automatyczne rezerwacje nie działają.",cal_reconnect:"Ponownie połącz →",guide_header:"Przewodnik — Wyciągnij maximum z LocalReply",guide_checklist_title:"✅ Jednorazowe zadania",guide_checks:["Kod QR wydrukowany i wyświetlony", "Link w bio social", "Link na Google My Business", "Link w stopce email", "Przycisk na stronie", "SMS do stałych klientów", "20+ FAQ skonfigurowane", "Link na WhatsApp", "Pytania bez odpowiedzi obsłużone"],guide_cards:[{"icon": "📱", "bg": "linear-gradient(135deg,#0052CC,#00D4FF)", "title": "Kod QR w witrynie", "time": "Natychmiastowy efekt · 2 min", "text": "Wydrukuj kod QR i umieść przy wejściu.", "tip": "Zalaminuj i naklejaj na kasę."}, {"icon": "📸", "bg": "linear-gradient(135deg,#E1306C,#F77737)", "title": "Bio social media", "time": "Stały ruch · 1 min", "text": "Dodaj link LocalReply do bio na Instagramie.", "tip": "Rezerwuj lub zadawaj pytania 24/7"}, {"icon": "🔍", "bg": "linear-gradient(135deg,#4285F4,#34A853)", "title": "Google My Business", "time": "Lokalna widoczność · 3 min", "text": "Dodaj link w Zarezerwuj w swoim wpisie Google.", "tip": "Użyj ?src=google do śledzenia."}, {"icon": "🗣️", "bg": "linear-gradient(135deg,#10B981,#059669)", "title": "Przy kasie, na głos", "time": "Poczta pantoflowa · 0 min", "text": "Klienci mogą rezerwować 24/7 online.", "tip": "Zarezerwuj skanując ten kod!"}, {"icon": "✉️", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Stopka email", "time": "Pasywna widoczność · 2 min", "text": "Dodaj link do stopki email.", "tip": "Zarezerwuj 24/7 → localreply.ai/twoja-firma"}, {"icon": "💬", "bg": "linear-gradient(135deg,#8B5CF6,#6D28D9)", "title": "SMS do stałych klientów", "time": "Reaktywacja · 5 min", "text": "Wyślij SMS. Wskaźnik otwarcia: 98%.", "tip": "Cześć! Zarezerwuj 24/7 → [link]"}, {"icon": "🌐", "bg": "linear-gradient(135deg,#EF4444,#DC2626)", "title": "Twoja strona www", "time": "Maks. konwersja · 5 min", "text": "Dodaj przycisk Umów wizytę do LocalReply.", "tip": "Użyj ?src=website do śledzenia."}, {"icon": "⚙️", "bg": "linear-gradient(135deg,#00D4FF,#0052CC)", "title": "Wzbogać FAQ", "time": "Jakość · ciągłe", "text": "Im bardziej kompletne FAQ, tym precyzyjniejsza AI.", "tip": "Cel: 20+ wpisów o cenach, godzinach."}, {"icon": "💬", "bg": "linear-gradient(135deg,#25D366,#128C7E)", "title": "Grupy WhatsApp", "time": "Społeczność · 5 min", "text": "Udostępnij link w grupach WhatsApp.", "tip": "Teraz możesz rezerwować 24/7 → [link]"}, {"icon": "🌍", "bg": "linear-gradient(135deg,#F59E0B,#D97706)", "title": "Automatyczne tłumaczenie", "time": "Zagraniczni klienci · natychmiast", "text": "AI odpowiada w 8 językach.", "tip": "Odpowiedz po polsku — automatycznie przetłumaczone."}],
+    dash_nav_section: "Nawigacja",
+    kpi_rdv_pending_label: "\ud83d\udcc5 Wizyty oczekuj\u0105ce",
+    dash_configure_link: "Skonfiguruj \u2192",
+    dash_qr_title: "Tw\u00f3j link & Kod QR",
+    dash_test_ia_short: "Testuj moj\u0105 AI \u2192",
+    dash_test_ia_full: "Testuj mojego asystenta AI",
+    dash_vue_client: "Widok klienta \u2192",
+    dash_tracking_title: "Linki \u015bledzenia wg \u017ar\u00f3d\u0142a",
+    dash_qr_vitrine_lbl: "\ud83d\udcf1 QR Witryna",
+    dash_qr_download_btn: "\u2b07\ufe0f QR",
+    dash_qr_print_btn: "\ud83d\uddbc\ufe0f QR Plakat \u25be",
+    dash_setup_title: "\ud83d\ude80 Pierwsze kroki",
+    dash_poster_type: "Typ plakatu",
+    dash_guide_subtitle: "8 konkretnych dzia\u0142a\u0144 dla wi\u0119cej klient\u00f3w",
+    dash_tip_label: "\ud83d\udca1 Wskaz\u00f3wka",
+    srow_services: "Us\u0142ugi",
+    srow_hours: "Godziny",
+    srow_ia: "Asystent AI 24/7",
+    srow_plan: "Subskrypcja",
+    ai_active: "Aktywny \u00b7 8 j\u0119zyk\u00f3w",
+    plan_trial_pro: "Pr\u00f3bny Pro \ud83c\udf81",
+    score_bad_text: "Uzupe\u0142nij konfiguracj\u0119, aby AI odpowiada\u0142a poprawnie.",
+    yesterday: "Wczoraj",
+    days_ago_prefix: "",
+    days_ago_suffix: "d temu",
+    rdv_pending_count: "wizyt oczekuje na potwierdzenie",
+    rdv_click_confirm: "Kliknij aby potwierdzi\u0107 lub odrzuci\u0107",
+    mob_rdv: "Wizyty",
+    mob_more: "Wi\u0119cej",
+    mob_config: "Konfig",
   },
 };
 
@@ -1725,6 +1966,26 @@ const DASH_HOME_T = {
       'no-activity': t.no_activity,
       'checklist-title': t.checklist_title,
       'guide-subtitle': t.guide_subtitle, 'guide-intro': t.guide_intro,
+
+      // New IDs added in full translation pass
+      'dash-nav-section': t.dash_nav_section,
+      'kpi-rdv-pending-label': t.kpi_rdv_pending_label,
+      'dash-configure-link': t.dash_configure_link,
+      'dash-qr-title': t.dash_qr_title,
+      'dash-test-ia-short': t.dash_test_ia_short,
+      'dash-test-ia-full': t.dash_test_ia_full,
+      'dash-vue-client': t.dash_vue_client,
+      'dash-tracking-title': t.dash_tracking_title,
+      'dash-qr-vitrine-lbl': t.dash_qr_vitrine_lbl,
+      'dash-qr-download-btn': t.dash_qr_download_btn,
+      'dash-qr-print-btn': t.dash_qr_print_btn,
+      'dash-setup-title': t.dash_setup_title,
+      'dash-poster-type': t.dash_poster_type,
+      'dash-guide-subtitle': t.dash_guide_subtitle,
+      'dash-tip-label': t.dash_tip_label,
+      'dn-mob-config': t.mob_config,
+      'dn-mob-rdv': t.mob_rdv,
+      'dn-mob-more': t.mob_more,
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);
