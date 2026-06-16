@@ -238,7 +238,7 @@
               <button onclick="copySourceLink('instagram')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
-              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;">🌐 Site web</span><div id="linkWebsite" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
+              <div style="min-width:0;flex:1;"><span style="color:#fff;font-size:13px;font-weight:600;"><span id="dash-site-web-label">🌐 Site web</span><div id="linkWebsite" style="color:rgba(255,255,255,0.3);font-size:11px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">—</div></div>
               <button onclick="copySourceLink('website')" style="padding:4px 9px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#00D4FF;font-size:11px;font-weight:600;cursor:pointer;flex-shrink:0;">📋</button>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;gap:8px;">
@@ -459,9 +459,9 @@ function setBadge(count, ...ids) {
 // ─ Score santé IA ─
 function computeHealthScore(config, calConnected) {
   const checks = [
-    { key:'services', done:(config?.services?.length||0)>=3, label:'Services (3+)', points:25 },
-    { key:'hours',    done:(config?.hours?.length||0)>0,     label:'Horaires',      points:20 },
-    { key:'faq',      done:(config?.faq?.length||0)>=5,      label:'FAQ (5+)',       points:30 },
+    { key:'services', done:(config?.services?.length||0)>=3, label:(_dht||DASH_HOME_T.fr).check_services||'Services (3+)', points:25 },
+    { key:'hours',    done:(config?.hours?.length||0)>0,     label:(_dht||DASH_HOME_T.fr).srow_hours||'Horaires',      points:20 },
+    { key:'faq',      done:(config?.faq?.length||0)>=5,      label:(_dht||DASH_HOME_T.fr).check_faq||'FAQ (5+)',       points:30 },
     { key:'calendar', done:calConnected,                      label:'Calendar',       points:25 },
   ];
   const score = checks.filter(c=>c.done).reduce((s,c)=>s+c.points, 0);
@@ -488,7 +488,7 @@ function computeHealthScore(config, calConnected) {
   }
   // Items avec détails (fusionné avec statut système)
   const details = {
-    services: { desc: v => v >= 3 ? `${v} service${v>1?'s':''} configuré${v>1?'s':''}` : (_dht||DASH_HOME_T.fr).cfg_link },
+    services: { desc: v => v >= 3 ? `${v} ${(_dht||DASH_HOME_T.fr).services_word||'service(s)'} ${(_dht||DASH_HOME_T.fr).configured_word||'configuré(s)'}` : (_dht||DASH_HOME_T.fr).cfg_link },
     hours:    { desc: v => v ? (_dht||DASH_HOME_T.fr).cfg_defined : (_dht||DASH_HOME_T.fr).cfg_missing },
     faq: { desc: v => v >= 5 ? `${v} ` + (_dht||DASH_HOME_T.fr).entries : `${v}/5 ` + (_dht||DASH_HOME_T.fr).min_recommended },
     calendar: { desc: v => v ? (_dht||DASH_HOME_T.fr).cal_connected : (_dht||DASH_HOME_T.fr).cal_none },
@@ -915,7 +915,7 @@ function renderAlerts(pendingApts, pendingReqs) {
   if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} RDV urgent${urgent.length>1?'s':''} en attente</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||'Client'}</strong>`).join(' · ')} — Cliquez pour traiter</div></div></a>`;
   const normal = pendingApts.filter(a=>a.urgency!=='high');
   if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} RDV en attente de confirmation</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Cliquez pour confirmer ou refuser</div></div></a>`;
-  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} question${pr>1?'s':''} sans réponse</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
+  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} ${(_dht||DASH_HOME_T.fr).question_word||'question'}${pr>1?'s':''} ${(_dht||DASH_HOME_T.fr).unknown_q_suffix||'sans réponse'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
   s.innerHTML = html;
 }
 
@@ -937,7 +937,7 @@ function buildNarrative(convs, confirmedApts, reqs, pendingApts) {
   const langCount = {};
   convs.forEach(c => { if(c.detected_language) langCount[c.detected_language] = (langCount[c.detected_language]||0)+1; });
   const langFlags = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'};
-  const langNames = {fr:'Français',en:'Anglais',de:'Allemand',it:'Italien',es:'Espagnol',pt:'Portugais',nl:'Néerlandais',pl:'Polonais'};
+  const langNames = (_dht||DASH_HOME_T.fr).lang_names || {fr:'Français',en:'Anglais',de:'Allemand',it:'Italien',es:'Espagnol',pt:'Portugais',nl:'Néerlandais',pl:'Polonais'};
   const topLang = Object.entries(langCount).sort((a,b)=>b[1]-a[1])[0];
   const langEl = document.getElementById('statLang');
   const langSubEl = document.getElementById('statLangSub');
@@ -945,7 +945,7 @@ function buildNarrative(convs, confirmedApts, reqs, pendingApts) {
     if (topLang) {
       const pct = Math.round((topLang[1]/total)*100);
       langEl.textContent = (langFlags[topLang[0]]||'🌍') + ' ' + (langNames[topLang[0]]||topLang[0]);
-      if (langSubEl) langSubEl.textContent = pct+'% des conversations';
+      if (langSubEl) langSubEl.textContent = pct+'% '+( (_dht||DASH_HOME_T.fr).of_conversations||'des conversations');
     } else {
       langEl.textContent = '—';
       if (langSubEl) langSubEl.textContent = (_dht||DASH_HOME_T.fr).no_data_yet;
@@ -1087,7 +1087,7 @@ async function loadSystemStatus(config, calConnected, isPro, isTrial) {
     } else if (!calConnected && config?.rdv_mode === 'google') {
       tipEl.textContent = (_dht||DASH_HOME_T.fr).tip_calendar;
     } else {
-      const growthTips = [
+      const growthTips = (_dht||DASH_HOME_T.fr).growth_tips || [
         '📲 Ajoutez votre lien dans votre bio Instagram pour générer du trafic en continu.',
         '🖨️ Imprimez votre QR code et affichez-le en vitrine — vos clients peuvent vous contacter même fermé.',
         '💬 Répondez aux questions sans réponse — elles enrichissent votre FAQ automatiquement.',
@@ -1475,6 +1475,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "sans r\u00e9ponse",
     unknown_q_count_prefix: "question",
+    check_services: "Services (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "service(s)",
+    configured_word: "configuré(s)",
+    of_conversations: "des conversations",
+    question_word: "question",
+    lang_names: {"fr": "Français", "en": "Anglais", "de": "Allemand", "it": "Italien", "es": "Espagnol", "pt": "Portugais", "nl": "Néerlandais", "pl": "Polonais"},
+    growth_tips: ["📲 Ajoutez votre lien dans votre bio Instagram pour générer du trafic en continu.", "🖨️ Imprimez votre QR code et affichez-le en vitrine — vos clients peuvent vous contacter même fermé.", "💬 Répondez aux questions sans réponse — elles enrichissent votre FAQ automatiquement.", "🌍 Votre assistant répond en 8 langues — mentionnez-le à vos clients étrangers.", "⭐ Demandez à vos clients satisfaits de laisser un avis Google."],
+    site_web_label: "🌐 Site web",
+    activity_faq_tip: "Répondez pour enrichir la FAQ automatiquement",
   },
   en: {
     page_title: 'Dashboard — LocalReply',
@@ -1544,6 +1554,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "unanswered",
     unknown_q_count_prefix: "question",
+    check_services: "Services (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "service(s)",
+    configured_word: "configured",
+    of_conversations: "of conversations",
+    question_word: "question",
+    lang_names: {"fr": "French", "en": "English", "de": "German", "it": "Italian", "es": "Spanish", "pt": "Portuguese", "nl": "Dutch", "pl": "Polish"},
+    growth_tips: ["📲 Add your link to your Instagram bio to generate continuous traffic.", "🖨️ Print your QR code and display it in your window — customers can contact you even when closed.", "💬 Answer unanswered questions — they automatically enrich your FAQ.", "🌍 Your assistant responds in 8 languages — mention it to your foreign customers.", "⭐ Ask satisfied customers to leave a Google review."],
+    site_web_label: "🌐 Website",
+    activity_faq_tip: "Reply to automatically enrich the FAQ",
   },
   de: {
     page_title: 'Dashboard — LocalReply',
@@ -1613,6 +1633,16 @@ const DASH_HOME_T = {
     mob_config: "Konfig",
     unknown_q_suffix: "unbeantwortet",
     unknown_q_count_prefix: "Frage",
+    check_services: "Services (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "Dienst/Dienste",
+    configured_word: "konfiguriert",
+    of_conversations: "der Gespräche",
+    question_word: "Frage",
+    lang_names: {"fr": "Französisch", "en": "Englisch", "de": "Deutsch", "it": "Italienisch", "es": "Spanisch", "pt": "Portugiesisch", "nl": "Niederländisch", "pl": "Polnisch"},
+    growth_tips: ["📲 Fügen Sie Ihren Link in Ihre Instagram-Bio ein für kontinuierlichen Traffic.", "🖨️ Drucken Sie Ihren QR-Code und stellen Sie ihn im Schaufenster aus — Kunden können Sie auch geschlossen kontaktieren.", "💬 Beantworten Sie unbeantwortete Fragen — sie reichern Ihre FAQ automatisch an.", "🌍 Ihr Assistent antwortet in 8 Sprachen — erwähnen Sie es Ihren ausländischen Kunden.", "⭐ Bitten Sie zufriedene Kunden, eine Google-Bewertung zu hinterlassen."],
+    site_web_label: "🌐 Website",
+    activity_faq_tip: "Antworten Sie, um die FAQ automatisch anzureichern",
   },
   it: {
     page_title: 'Dashboard — LocalReply',
@@ -1682,6 +1712,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "senza risposta",
     unknown_q_count_prefix: "domanda",
+    check_services: "Servizi (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "servizio/servizi",
+    configured_word: "configurato/i",
+    of_conversations: "delle conversazioni",
+    question_word: "domanda",
+    lang_names: {"fr": "Francese", "en": "Inglese", "de": "Tedesco", "it": "Italiano", "es": "Spagnolo", "pt": "Portoghese", "nl": "Olandese", "pl": "Polacco"},
+    growth_tips: ["📲 Aggiungi il tuo link alla bio di Instagram per generare traffico continuo.", "🖨️ Stampa il tuo QR code e mostralo in vetrina — i clienti possono contattarti anche chiuso.", "💬 Rispondi alle domande senza risposta — arricchiscono automaticamente il tuo FAQ.", "🌍 Il tuo assistente risponde in 8 lingue — menzionalo ai tuoi clienti stranieri.", "⭐ Chiedi ai clienti soddisfatti di lasciare una recensione Google."],
+    site_web_label: "🌐 Sito web",
+    activity_faq_tip: "Rispondi per arricchire automaticamente il FAQ",
   },
   es: {
     page_title: 'Dashboard — LocalReply',
@@ -1751,6 +1791,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "sin respuesta",
     unknown_q_count_prefix: "pregunta",
+    check_services: "Servicios (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "servicio(s)",
+    configured_word: "configurado(s)",
+    of_conversations: "de las conversaciones",
+    question_word: "pregunta",
+    lang_names: {"fr": "Francés", "en": "Inglés", "de": "Alemán", "it": "Italiano", "es": "Español", "pt": "Portugués", "nl": "Neerlandés", "pl": "Polaco"},
+    growth_tips: ["📲 Añade tu enlace a tu bio de Instagram para generar tráfico continuo.", "🖨️ Imprime tu código QR y muéstralo en tu escaparate — los clientes pueden contactarte incluso cerrado.", "💬 Responde las preguntas sin respuesta — enriquecen tu FAQ automáticamente.", "🌍 Tu asistente responde en 8 idiomas — menciónalo a tus clientes extranjeros.", "⭐ Pide a los clientes satisfechos que dejen una reseña en Google."],
+    site_web_label: "🌐 Sitio web",
+    activity_faq_tip: "Responde para enriquecer automáticamente el FAQ",
   },
   pt: {
     page_title: 'Dashboard — LocalReply',
@@ -1820,6 +1870,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "sem resposta",
     unknown_q_count_prefix: "pergunta",
+    check_services: "Serviços (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "serviço(s)",
+    configured_word: "configurado(s)",
+    of_conversations: "das conversas",
+    question_word: "pergunta",
+    lang_names: {"fr": "Francês", "en": "Inglês", "de": "Alemão", "it": "Italiano", "es": "Espanhol", "pt": "Português", "nl": "Neerlandês", "pl": "Polaco"},
+    growth_tips: ["📲 Adiciona o teu link à bio do Instagram para gerar tráfego contínuo.", "🖨️ Imprime o teu código QR e mostra-o na montra — os clientes podem contactar-te mesmo fechado.", "💬 Responde às perguntas sem resposta — enriquecem automaticamente o teu FAQ.", "🌍 O teu assistente responde em 8 línguas — menciona-o aos teus clientes estrangeiros.", "⭐ Pede aos clientes satisfeitos que deixem uma avaliação no Google."],
+    site_web_label: "🌐 Site web",
+    activity_faq_tip: "Responde para enriquecer automaticamente o FAQ",
   },
   nl: {
     page_title: 'Dashboard — LocalReply',
@@ -1889,6 +1949,16 @@ const DASH_HOME_T = {
     mob_config: "Config",
     unknown_q_suffix: "onbeantwoord",
     unknown_q_count_prefix: "vraag",
+    check_services: "Diensten (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "dienst(en)",
+    configured_word: "geconfigureerd",
+    of_conversations: "van de gesprekken",
+    question_word: "vraag",
+    lang_names: {"fr": "Frans", "en": "Engels", "de": "Duits", "it": "Italiaans", "es": "Spaans", "pt": "Portugees", "nl": "Nederlands", "pl": "Pools"},
+    growth_tips: ["📲 Voeg je link toe aan je Instagram-bio voor continue traffic.", "🖨️ Print je QR-code en toon hem in je etalage — klanten kunnen je ook buiten openingstijden contacteren.", "💬 Beantwoord onbeantwoorde vragen — ze verrijken je FAQ automatisch.", "🌍 Je assistent antwoordt in 8 talen — vertel het aan je buitenlandse klanten.", "⭐ Vraag tevreden klanten een Google-recensie te geven."],
+    site_web_label: "🌐 Website",
+    activity_faq_tip: "Antwoord om de FAQ automatisch te verrijken",
   },
   pl: {
     page_title: 'Dashboard — LocalReply',
@@ -1958,6 +2028,16 @@ const DASH_HOME_T = {
     mob_config: "Konfig",
     unknown_q_suffix: "bez odpowiedzi",
     unknown_q_count_prefix: "pytanie",
+    check_services: "Usługi (3+)",
+    check_faq: "FAQ (5+)",
+    services_word: "usługa/usługi",
+    configured_word: "skonfigurowanych",
+    of_conversations: "rozmów",
+    question_word: "pytanie",
+    lang_names: {"fr": "Francuski", "en": "Angielski", "de": "Niemiecki", "it": "Włoski", "es": "Hiszpański", "pt": "Portugalski", "nl": "Niderlandzki", "pl": "Polski"},
+    growth_tips: ["📲 Dodaj swój link do bio na Instagramie dla ciągłego ruchu.", "🖨️ Wydrukuj kod QR i umieść go w witrynie — klienci mogą się z tobą kontaktować nawet gdy jesteś zamknięty.", "💬 Odpowiadaj na pytania bez odpowiedzi — automatycznie wzbogacają Twoje FAQ.", "🌍 Twój asystent odpowiada w 8 językach — wspomnij o tym zagranicznym klientom.", "⭐ Poproś zadowolonych klientów o wystawienie opinii Google."],
+    site_web_label: "🌐 Strona internetowa",
+    activity_faq_tip: "Odpowiedz, aby automatycznie wzbogacić FAQ",
   },
 };
 
@@ -1984,6 +2064,8 @@ const DASH_HOME_T = {
 
       // New IDs added in full translation pass
       'dash-nav-section': t.dash_nav_section,
+      'dash-site-web-label': t.site_web_label||'🌐 Site web',
+      'activity-faq-tip': t.activity_faq_tip,
       'kpi-rdv-pending-label': t.kpi_rdv_pending_label,
       'dash-configure-link': t.dash_configure_link,
       'dash-qr-title': t.dash_qr_title,

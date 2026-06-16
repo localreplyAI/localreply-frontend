@@ -210,6 +210,16 @@ const LR_DASH_NAV_IDS = {
   "Compl\u00e9tez ces \u00e9tapes pour tirer le meilleur de LocalReply": {en:"Complete these steps to get the most from LocalReply", de:"Vervollst\u00e4ndigen Sie diese Schritte f\u00fcr das Beste aus LocalReply", it:"Completa questi passaggi per sfruttare al meglio LocalReply", es:"Completa estos pasos para sacar el m\u00e1ximo de LocalReply", pt:"Completa estes passos para tirar o m\u00e1ximo do LocalReply", nl:"Voltooi deze stappen voor het meeste uit LocalReply", pl:"Wykonaj te kroki, aby w pe\u0142ni korzysta\u0107 z LocalReply"},
   "8 actions concr\u00e8tes pour attirer plus de clients": {en:"8 concrete actions to attract more customers", de:"8 konkrete Aktionen f\u00fcr mehr Kunden", it:"8 azioni concrete per attirare pi\u00f9 clienti", es:"8 acciones concretas para atraer m\u00e1s clientes", pt:"8 a\u00e7\u00f5es concretas para atrair mais clientes", nl:"8 concrete acties om meer klanten te trekken", pl:"8 konkretnych dzia\u0142a\u0144 dla wi\u0119cej klient\u00f3w"},
   "\ud83d\udcc5 RDV en attente": {en:"\ud83d\udcc5 Pending appointments", de:"\ud83d\udcc5 Ausstehende Termine", it:"\ud83d\udcc5 Appuntamenti in attesa", es:"\ud83d\udcc5 Citas pendientes", pt:"\ud83d\udcc5 Marca\u00e7\u00f5es pendentes", nl:"\ud83d\udcc5 Afspraken in behandeling", pl:"\ud83d\udcc5 Wizyty oczekuj\u0105ce"}
+,
+  "R\u00e9pondez pour enrichir la FAQ automatiquement": {en:"Reply to automatically enrich the FAQ", de:"Antworten Sie, um die FAQ automatisch anzureichern", it:"Rispondi per arricchire automaticamente il FAQ", es:"Responde para enriquecer autom\u00e1ticamente el FAQ", pt:"Responde para enriquecer automaticamente o FAQ", nl:"Antwoord om de FAQ automatisch te verrijken", pl:"Odpowiedz, aby automatycznie wzbogaci\u0107 FAQ"},
+  "\ud83c\udf10 Site web": {en:"\ud83c\udf10 Website", de:"\ud83c\udf10 Website", it:"\ud83c\udf10 Sito web", es:"\ud83c\udf10 Sitio web", pt:"\ud83c\udf10 Site web", nl:"\ud83c\udf10 Website", pl:"\ud83c\udf10 Strona internetowa"},
+  "German": {en:"German", de:"Deutsch", it:"Tedesco", es:"Alem\u00e1n", pt:"Alem\u00e3o", nl:"Duits", pl:"Niemiecki"},
+  "Spanish": {en:"Spanish", de:"Spanisch", it:"Spagnolo", es:"Espa\u00f1ol", pt:"Espanhol", nl:"Spaans", pl:"Hiszpa\u0144ski"},
+  "Portuguese": {en:"Portuguese", de:"Portugiesisch", it:"Portoghese", es:"Portugu\u00e9s", pt:"Portugu\u00eas", nl:"Portugees", pl:"Portuga\u0142ski"},
+  "Dutch": {en:"Dutch", de:"Niederl\u00e4ndisch", it:"Olandese", es:"Neerland\u00e9s", pt:"Neerland\u00eas", nl:"Nederlands", pl:"Niderlandzki"},
+  "Polish": {en:"Polish", de:"Polnisch", it:"Polacco", es:"Polaco", pt:"Polaco", nl:"Pools", pl:"Polski"},
+  "To confirm \u2192": {en:"To confirm \u2192", de:"Zu best\u00e4tigen \u2192", it:"Da confermare \u2192", es:"A confirmar \u2192", pt:"A confirmar \u2192", nl:"Te bevestigen \u2192", pl:"Do potwierdzenia \u2192"},
+  "100% des conversations": {en:"100% of conversations", de:"100% der Gespr\u00e4che", it:"100% delle conversazioni", es:"100% de las conversaciones", pt:"100% das conversas", nl:"100% van de gesprekken", pl:"100% rozm\u00f3w"}
 
 };
 
