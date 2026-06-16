@@ -2153,7 +2153,11 @@ const DASH_HOME_T = {
   window._dashApplyLang = function(lang) {
     window._dht = DASH_HOME_T[DASH_HOME_T.hasOwnProperty(lang) ? lang : 'fr'];
     applyHomeLang();
-    if (typeof lrRetranslate === 'function') setTimeout(lrRetranslate, 100);
+    // DO NOT call lrRetranslate - it uses the initial page language and would
+    // overwrite our fresh translations. Call lrTranslateAll with the NEW lang instead.
+    if (typeof lrTranslateAll === 'function') {
+      setTimeout(function() { lrTranslateAll(lang); }, 150);
+    }
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applyHomeLang);
