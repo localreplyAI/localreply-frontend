@@ -253,7 +253,7 @@
           <p style="font-size:11px;color:rgba(255,255,255,0.35);margin:0 0 8px;">localreply.ai/<span id="qrSlug">...</span></p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
             <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;" id="dash-qr-download-btn">⬇️ QR</button>
-            <button onclick="togglePrintMenu(event)" id="btnPrintMenu" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;" id="dash-qr-print-btn">🖼️ QR Affiche ▾</button>
+            <button onclick="togglePrintMenu(event)" id="btnPrintMenu" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;"><span id="dash-qr-print-btn">🖼️ QR Affiche ▾</span></button>
           </div>
         </div>
       </div>
@@ -1208,7 +1208,7 @@ function renderGuideChecklist() {
 function renderGuideHeader() {
   const t = (_dht || DASH_HOME_T.fr);
   const headerEl = document.getElementById('guide-header-text');
-  if (headerEl && t.guide_header) headerEl.textContent = t.guide_header;
+  if (headerEl) headerEl.textContent = t.guide_header||'Guide — Tirer le maximum de LocalReply';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -1377,10 +1377,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   <div id="printStep1">
     <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:1px;padding:4px 10px 8px;" id="dash-poster-type">Type d'affiche</div>
     <button onclick="printSelectType('questions')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">
-      💬 Questions seulement
+      💬 <span id="print-type-q">Questions seulement</span>
     </button>
     <button onclick="printSelectType('rdv')" style="width:100%;padding:9px 12px;background:none;border:none;color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;text-align:left;border-radius:8px;" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='none'">
-      📅 Questions + Rendez-vous
+      📅 <span id="print-type-qrdv">Questions + Rendez-vous</span>
     </button>
   </div>
 
@@ -1411,7 +1411,7 @@ const DASH_HOME_T = {
     page_title: 'Dashboard — LocalReply',
     kpi_conv: 'Conversations', kpi_rdv: 'RDV confirmés', kpi_pending: 'À traiter',
     kpi_sub_days30: '30 derniers jours', kpi_sub_pending: 'RDV + questions en attente',
-    stat_lang_label: '🌍 Langue principale', stat_lang_title:'Langue', back_btn:'← Retour', qrdv_title:'📅 Questions + Rendez-vous', activity_faq_tip: 'Répondez pour enrichir la FAQ automatiquement', stat_rate_label: 'Taux de conversion', stat_rate_sub: 'des conversations → RDV confirmé',
+    stat_lang_label: '🌍 Langue principale', stat_lang_title:'Langue', back_btn:'← Retour', qrdv_title:'📅 <span id="print-type-qrdv">Questions + Rendez-vous</span>', activity_faq_tip: 'Répondez pour enrichir la FAQ automatiquement', stat_rate_label: 'Taux de conversion', stat_rate_sub: 'des conversations → RDV confirmé',
     stat_lang_sub: 'des conversations',
     stat_pending_sub: 'À confirmer →', stat_score_label: 'Score IA',
     link_desc: 'Partagez avec vos clients pour accéder à votre assistant 24/7',
@@ -1488,6 +1488,8 @@ const DASH_HOME_T = {
     greeting_night: "Bonne nuit",
     greeting_evening: "Bonsoir",
     date_locale: "fr-FR",
+    print_type_q: "Questions seulement",
+    print_type_qrdv: "Questions + Rendez-vous",
   },
   en: {
     page_title: 'Dashboard — LocalReply',
@@ -1570,6 +1572,8 @@ const DASH_HOME_T = {
     greeting_night: "Good night",
     greeting_evening: "Good evening",
     date_locale: "en-GB",
+    print_type_q: "Questions only",
+    print_type_qrdv: "Questions + Appointments",
   },
   de: {
     page_title: 'Dashboard — LocalReply',
@@ -1652,6 +1656,8 @@ const DASH_HOME_T = {
     greeting_night: "Gute Nacht",
     greeting_evening: "Guten Abend",
     date_locale: "de-DE",
+    print_type_q: "Nur Fragen",
+    print_type_qrdv: "Fragen + Termine",
   },
   it: {
     page_title: 'Dashboard — LocalReply',
@@ -1734,6 +1740,8 @@ const DASH_HOME_T = {
     greeting_night: "Buonanotte",
     greeting_evening: "Buonasera",
     date_locale: "it-IT",
+    print_type_q: "Solo domande",
+    print_type_qrdv: "Domande + Appuntamenti",
   },
   es: {
     page_title: 'Dashboard — LocalReply',
@@ -1816,6 +1824,8 @@ const DASH_HOME_T = {
     greeting_night: "Buenas noches",
     greeting_evening: "Buenas tardes",
     date_locale: "es-ES",
+    print_type_q: "Solo preguntas",
+    print_type_qrdv: "Preguntas + Citas",
   },
   pt: {
     page_title: 'Dashboard — LocalReply',
@@ -1898,6 +1908,8 @@ const DASH_HOME_T = {
     greeting_night: "Boa noite",
     greeting_evening: "Boa tarde",
     date_locale: "pt-PT",
+    print_type_q: "S\u00f3 perguntas",
+    print_type_qrdv: "Perguntas + Marca\u00e7\u00f5es",
   },
   nl: {
     page_title: 'Dashboard — LocalReply',
@@ -1980,6 +1992,8 @@ const DASH_HOME_T = {
     greeting_night: "Goedenacht",
     greeting_evening: "Goedenavond",
     date_locale: "nl-NL",
+    print_type_q: "Alleen vragen",
+    print_type_qrdv: "Vragen + Afspraken",
   },
   pl: {
     page_title: 'Dashboard — LocalReply',
@@ -2062,6 +2076,8 @@ const DASH_HOME_T = {
     greeting_night: "Dobranoc",
     greeting_evening: "Dobry wieczór",
     date_locale: "pl-PL",
+    print_type_q: "Tylko pytania",
+    print_type_qrdv: "Pytania + Wizyty",
   },
 };
 
@@ -2100,6 +2116,8 @@ const DASH_HOME_T = {
       'dash-qr-vitrine-lbl': t.dash_qr_vitrine_lbl,
       'dash-qr-download-btn': t.dash_qr_download_btn,
       'dash-qr-print-btn': t.dash_qr_print_btn,
+      'print-type-q': t.print_type_q,
+      'print-type-qrdv': t.print_type_qrdv,
       'dash-setup-title': t.dash_setup_title,
       'dash-poster-type': t.dash_poster_type,
       'dash-guide-subtitle': t.dash_guide_subtitle,
@@ -2118,7 +2136,7 @@ const DASH_HOME_T = {
     const sll = document.getElementById('stat-lang-label'); if(sll) sll.textContent = t.stat_lang_label||'🌍 Langue principale';
     const slt = document.getElementById('stat-lang-title'); if(slt) slt.textContent = t.stat_lang_title||'Langue';
     const backBtn = document.getElementById('dash-back-btn'); if(backBtn) backBtn.textContent = t.back_btn||'← Retour';
-    const qrdvTitle = document.getElementById('dash-qrdv-title'); if(qrdvTitle) qrdvTitle.textContent = t.qrdv_title||'📅 Questions + Rendez-vous';
+    const qrdvTitle = document.getElementById('dash-qrdv-title'); if(qrdvTitle) qrdvTitle.textContent = t.qrdv_title||'📅 <span id="print-type-qrdv">Questions + Rendez-vous</span>';
     // Business name loading state
     const bnSpan = document.getElementById('businessNameSpan'); if(bnSpan && bnSpan.textContent==='Chargement...') bnSpan.textContent = t.loading||'Chargement...';
     const bnMob = document.getElementById('businessNameMob'); if(bnMob && bnMob.textContent==='Chargement...') bnMob.textContent = t.loading||'Chargement...';
@@ -2129,6 +2147,18 @@ const DASH_HOME_T = {
     renderGuideHeader();
     if(window.lrRetranslate) setTimeout(window.lrRetranslate, 50);
   }
+
+
+// ── Re-apply translations when language changes (no refresh needed) ──
+window.addEventListener('storage', function(e) {
+  if (e.key === 'lr_lang' || e.key === 'localreply_lang') {
+    const newLang = e.newValue || 'fr';
+    window._dht = DASH_HOME_T[DASH_HOME_T.hasOwnProperty(newLang) ? newLang : 'fr'];
+    applyHomeLang();
+    if (typeof lrDashApplyNav === 'function') lrDashApplyNav();
+    if (typeof lrTranslateAll === 'function') setTimeout(function(){ lrTranslateAll(newLang); }, 100);
+  }
+});
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applyHomeLang);
