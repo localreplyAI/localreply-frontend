@@ -436,8 +436,8 @@ async function api(ep) {
 // ─ Header ─
 function initHeader() {
   const h = new Date().getHours();
-  document.getElementById('greeting').textContent = h<6?'Bonne nuit':h<12?(_dht||DASH_HOME_T.fr).greeting_morning:h<18?(_dht||DASH_HOME_T.fr).greeting_afternoon:'Bonsoir';
-  const d = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('greeting').textContent = h<6?(_dht||DASH_HOME_T.fr).greeting_night||'Bonne nuit':h<12?(_dht||DASH_HOME_T.fr).greeting_morning:h<18?(_dht||DASH_HOME_T.fr).greeting_afternoon:(_dht||DASH_HOME_T.fr).greeting_evening||'Bonsoir';
+  const d = new Date().toLocaleDateString((_dht||DASH_HOME_T.fr).date_locale||'fr-FR',{weekday:'long',day:'numeric',month:'long'});
   document.getElementById('currentDate').textContent = d.charAt(0).toUpperCase()+d.slice(1);
 }
 
@@ -915,7 +915,7 @@ function renderAlerts(pendingApts, pendingReqs) {
   if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} RDV urgent${urgent.length>1?'s':''} en attente</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||'Client'}</strong>`).join(' · ')} — Cliquez pour traiter</div></div></a>`;
   const normal = pendingApts.filter(a=>a.urgency!=='high');
   if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} RDV en attente de confirmation</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">Cliquez pour confirmer ou refuser</div></div></a>`;
-  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} ${(_dht||DASH_HOME_T.fr).question_word||'question'}${pr>1?'s':''} ${(_dht||DASH_HOME_T.fr).unknown_q_suffix||'sans réponse'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">Répondez pour enrichir la FAQ automatiquement</div></div></a>`;
+  if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} ${(_dht||DASH_HOME_T.fr).question_word||'question'}${pr>1?'s':''} ${(_dht||DASH_HOME_T.fr).unknown_q_suffix||'sans réponse'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">${(_dht||DASH_HOME_T.fr).activity_faq_tip||'Répondez pour enrichir la FAQ automatiquement'}</div></div></a>`;
   s.innerHTML = html;
 }
 
@@ -1140,7 +1140,7 @@ function timeAgo(ts) {
   const diff = Math.floor((new Date()-new Date(ts))/60000);
   if(diff<1) return "À l'instant"; if(diff<60) return `Il y a ${diff}min`;
   const h=Math.floor(diff/60); if(h<24) return `Il y a ${h}h`;
-  const d=Math.floor(h/24); return d===1?'Hier':d<7?`Il y a ${d}j`:new Date(ts).toLocaleDateString('fr-FR');
+  const d=Math.floor(h/24); return d===1?'Hier':d<7?`Il y a ${d}j`:new Date(ts).toLocaleDateString((_dht||DASH_HOME_T.fr).date_locale||'fr-FR');
 }
 function toast(msg, type='success') {
   const el=document.createElement('div'); el.textContent=msg;
@@ -1485,6 +1485,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Ajoutez votre lien dans votre bio Instagram pour générer du trafic en continu.", "🖨️ Imprimez votre QR code et affichez-le en vitrine — vos clients peuvent vous contacter même fermé.", "💬 Répondez aux questions sans réponse — elles enrichissent votre FAQ automatiquement.", "🌍 Votre assistant répond en 8 langues — mentionnez-le à vos clients étrangers.", "⭐ Demandez à vos clients satisfaits de laisser un avis Google."],
     site_web_label: "🌐 Site web",
     activity_faq_tip: "Répondez pour enrichir la FAQ automatiquement",
+    greeting_night: "Bonne nuit",
+    greeting_evening: "Bonsoir",
+    date_locale: "fr-FR",
   },
   en: {
     page_title: 'Dashboard — LocalReply',
@@ -1564,6 +1567,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Add your link to your Instagram bio to generate continuous traffic.", "🖨️ Print your QR code and display it in your window — customers can contact you even when closed.", "💬 Answer unanswered questions — they automatically enrich your FAQ.", "🌍 Your assistant responds in 8 languages — mention it to your foreign customers.", "⭐ Ask satisfied customers to leave a Google review."],
     site_web_label: "🌐 Website",
     activity_faq_tip: "Reply to automatically enrich the FAQ",
+    greeting_night: "Good night",
+    greeting_evening: "Good evening",
+    date_locale: "en-GB",
   },
   de: {
     page_title: 'Dashboard — LocalReply',
@@ -1643,6 +1649,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Fügen Sie Ihren Link in Ihre Instagram-Bio ein für kontinuierlichen Traffic.", "🖨️ Drucken Sie Ihren QR-Code und stellen Sie ihn im Schaufenster aus — Kunden können Sie auch geschlossen kontaktieren.", "💬 Beantworten Sie unbeantwortete Fragen — sie reichern Ihre FAQ automatisch an.", "🌍 Ihr Assistent antwortet in 8 Sprachen — erwähnen Sie es Ihren ausländischen Kunden.", "⭐ Bitten Sie zufriedene Kunden, eine Google-Bewertung zu hinterlassen."],
     site_web_label: "🌐 Website",
     activity_faq_tip: "Antworten Sie, um die FAQ automatisch anzureichern",
+    greeting_night: "Gute Nacht",
+    greeting_evening: "Guten Abend",
+    date_locale: "de-DE",
   },
   it: {
     page_title: 'Dashboard — LocalReply',
@@ -1722,6 +1731,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Aggiungi il tuo link alla bio di Instagram per generare traffico continuo.", "🖨️ Stampa il tuo QR code e mostralo in vetrina — i clienti possono contattarti anche chiuso.", "💬 Rispondi alle domande senza risposta — arricchiscono automaticamente il tuo FAQ.", "🌍 Il tuo assistente risponde in 8 lingue — menzionalo ai tuoi clienti stranieri.", "⭐ Chiedi ai clienti soddisfatti di lasciare una recensione Google."],
     site_web_label: "🌐 Sito web",
     activity_faq_tip: "Rispondi per arricchire automaticamente il FAQ",
+    greeting_night: "Buonanotte",
+    greeting_evening: "Buonasera",
+    date_locale: "it-IT",
   },
   es: {
     page_title: 'Dashboard — LocalReply',
@@ -1801,6 +1813,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Añade tu enlace a tu bio de Instagram para generar tráfico continuo.", "🖨️ Imprime tu código QR y muéstralo en tu escaparate — los clientes pueden contactarte incluso cerrado.", "💬 Responde las preguntas sin respuesta — enriquecen tu FAQ automáticamente.", "🌍 Tu asistente responde en 8 idiomas — menciónalo a tus clientes extranjeros.", "⭐ Pide a los clientes satisfechos que dejen una reseña en Google."],
     site_web_label: "🌐 Sitio web",
     activity_faq_tip: "Responde para enriquecer automáticamente el FAQ",
+    greeting_night: "Buenas noches",
+    greeting_evening: "Buenas tardes",
+    date_locale: "es-ES",
   },
   pt: {
     page_title: 'Dashboard — LocalReply',
@@ -1880,6 +1895,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Adiciona o teu link à bio do Instagram para gerar tráfego contínuo.", "🖨️ Imprime o teu código QR e mostra-o na montra — os clientes podem contactar-te mesmo fechado.", "💬 Responde às perguntas sem resposta — enriquecem automaticamente o teu FAQ.", "🌍 O teu assistente responde em 8 línguas — menciona-o aos teus clientes estrangeiros.", "⭐ Pede aos clientes satisfeitos que deixem uma avaliação no Google."],
     site_web_label: "🌐 Site web",
     activity_faq_tip: "Responde para enriquecer automaticamente o FAQ",
+    greeting_night: "Boa noite",
+    greeting_evening: "Boa tarde",
+    date_locale: "pt-PT",
   },
   nl: {
     page_title: 'Dashboard — LocalReply',
@@ -1959,6 +1977,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Voeg je link toe aan je Instagram-bio voor continue traffic.", "🖨️ Print je QR-code en toon hem in je etalage — klanten kunnen je ook buiten openingstijden contacteren.", "💬 Beantwoord onbeantwoorde vragen — ze verrijken je FAQ automatisch.", "🌍 Je assistent antwoordt in 8 talen — vertel het aan je buitenlandse klanten.", "⭐ Vraag tevreden klanten een Google-recensie te geven."],
     site_web_label: "🌐 Website",
     activity_faq_tip: "Antwoord om de FAQ automatisch te verrijken",
+    greeting_night: "Goedenacht",
+    greeting_evening: "Goedenavond",
+    date_locale: "nl-NL",
   },
   pl: {
     page_title: 'Dashboard — LocalReply',
@@ -2038,6 +2059,9 @@ const DASH_HOME_T = {
     growth_tips: ["📲 Dodaj swój link do bio na Instagramie dla ciągłego ruchu.", "🖨️ Wydrukuj kod QR i umieść go w witrynie — klienci mogą się z tobą kontaktować nawet gdy jesteś zamknięty.", "💬 Odpowiadaj na pytania bez odpowiedzi — automatycznie wzbogacają Twoje FAQ.", "🌍 Twój asystent odpowiada w 8 językach — wspomnij o tym zagranicznym klientom.", "⭐ Poproś zadowolonych klientów o wystawienie opinii Google."],
     site_web_label: "🌐 Strona internetowa",
     activity_faq_tip: "Odpowiedz, aby automatycznie wzbogacić FAQ",
+    greeting_night: "Dobranoc",
+    greeting_evening: "Dobry wieczór",
+    date_locale: "pl-PL",
   },
 };
 

@@ -220,6 +220,8 @@ const LR_DASH_NAV_IDS = {
   "Polish": {en:"Polish", de:"Polnisch", it:"Polacco", es:"Polaco", pt:"Polaco", nl:"Pools", pl:"Polski"},
   "To confirm \u2192": {en:"To confirm \u2192", de:"Zu best\u00e4tigen \u2192", it:"Da confermare \u2192", es:"A confirmar \u2192", pt:"A confirmar \u2192", nl:"Te bevestigen \u2192", pl:"Do potwierdzenia \u2192"},
   "100% des conversations": {en:"100% of conversations", de:"100% der Gespr\u00e4che", it:"100% delle conversazioni", es:"100% de las conversaciones", pt:"100% das conversas", nl:"100% van de gesprekken", pl:"100% rozm\u00f3w"}
+,
+  "Répondez pour enrichir la FAQ automatiquement": {"en":"Reply to automatically enrich the FAQ","de":"Antworten Sie, um die FAQ anzureichern","it":"Rispondi per arricchire automaticamente il FAQ","es":"Responde para enriquecer automáticamente el FAQ","pt":"Responde para enriquecer automaticamente o FAQ","nl":"Antwoord om de FAQ automatisch te verrijken","pl":"Odpowiedz, aby automatycznie wzbogacić FAQ"}
 
 };
 
