@@ -2149,17 +2149,12 @@ const DASH_HOME_T = {
   }
 
 
-// ── Re-apply translations when language changes (no refresh needed) ──
-window.addEventListener('storage', function(e) {
-  if (e.key === 'lr_lang' || e.key === 'localreply_lang') {
-    const newLang = e.newValue || 'fr';
-    window._dht = DASH_HOME_T[DASH_HOME_T.hasOwnProperty(newLang) ? newLang : 'fr'];
+  // Expose hook for lrApplyLang wrapper (after nav.js loads)
+  window._dashApplyLang = function(lang) {
+    window._dht = DASH_HOME_T[DASH_HOME_T.hasOwnProperty(lang) ? lang : 'fr'];
     applyHomeLang();
-    if (typeof lrDashApplyNav === 'function') lrDashApplyNav();
-    if (typeof lrTranslateAll === 'function') setTimeout(function(){ lrTranslateAll(newLang); }, 100);
-  }
-});
-
+    if (typeof lrRetranslate === 'function') setTimeout(lrRetranslate, 100);
+  };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', applyHomeLang);
   } else {
@@ -2168,6 +2163,26 @@ window.addEventListener('storage', function(e) {
 })();
 </script>
 <script src="/nav.js"></script>
+<script>
+// Intercept lrApplyLang to also re-apply dashboard translations instantly
+(function() {
+  function patchLrApplyLang() {
+    if (typeof lrApplyLang !== 'function') return;
+    var _orig = lrApplyLang;
+    lrApplyLang = function(lang) {
+      _orig(lang);
+      if (typeof window._dashApplyLang === 'function') {
+        window._dashApplyLang(lang);
+      }
+    };
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', patchLrApplyLang);
+  } else {
+    patchLrApplyLang();
+  }
+})();
+</script>
 <script src="/footer.js"></script>
 </body>
 </html>
