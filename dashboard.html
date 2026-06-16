@@ -1190,7 +1190,7 @@ function renderGuideChecklist() {
   const container = document.getElementById('guideChecklistContainer');
   if (!container || !t.guide_checks) return;
   const checkKeys = ['qr','ig','gmb','email_sig','web','sms','faq','whatsapp','questions'];
-  const saved = JSON.parse(localStorage.getItem('guideChecks_' + (currentBusinessId||'')) || '{}');
+  const saved = JSON.parse(localStorage.getItem('guideChecks_' + (typeof currentBusinessId !== 'undefined' ? currentBusinessId : '')) || '{}');
   container.innerHTML = `
     <div style="padding:18px 20px;background:linear-gradient(135deg,rgba(0,82,204,0.1),rgba(0,212,255,0.05));border:1px solid rgba(0,212,255,0.15);border-radius:12px;">
       <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;">${t.guide_checklist_title}</div>
@@ -2142,9 +2142,9 @@ const DASH_HOME_T = {
     const bnMob = document.getElementById('businessNameMob'); if(bnMob && bnMob.textContent==='Chargement...') bnMob.textContent = t.loading||'Chargement...';
     const faqtip = document.getElementById('activity-faq-tip'); if(faqtip) faqtip.textContent = t.activity_faq_tip||'Répondez pour enrichir la FAQ automatiquement';
     // Render guide and checklist from T
-    renderGuideCards();
-    renderGuideChecklist();
-    renderGuideHeader();
+    try { renderGuideCards(); } catch(e) {}
+    try { renderGuideChecklist(); } catch(e) {}
+    try { renderGuideHeader(); } catch(e) {}
     if(window.lrRetranslate) setTimeout(window.lrRetranslate, 50);
   }
 
