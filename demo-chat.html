@@ -1569,7 +1569,7 @@ async function openRdvForm(prefill={}) {
   const services = window._bizServices || [];
   const serviceOptions = services
     .map(s => {
-      const price = s.price ? ` — ${s.price}${s.currency||'CHF'} (${s.duration_minutes||'?'}min)` : '';
+      const price = s.price ? ` — ${parseFloat(s.price)}${s.currency||'CHF'} (${s.duration_minutes||'?'}min)` : '';
       const sel = (prefill.service === s.name) ? ' selected' : '';
       return `<option value="${s.name}"${sel}>${s.name}${price}</option>`;
     })
