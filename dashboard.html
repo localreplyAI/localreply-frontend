@@ -971,13 +971,6 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   const items = [];
   const cutoff30 = new Date(Date.now() - 30*24*60*60*1000);
 
-  // DEBUG : log les champs réels du premier objet conversation (à supprimer après diagnostic)
-  if (convs && convs.length && !window._convFieldsLogged) {
-    console.log('[LocalReply] Conversation keys:', Object.keys(convs[0]));
-    console.log('[LocalReply] Sample:', JSON.stringify(convs[0]).slice(0, 500));
-    window._convFieldsLogged = true;
-  }
-
   // Conversations — 6 max, triées par date décroissante
   [...convs]
     .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))

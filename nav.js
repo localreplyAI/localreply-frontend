@@ -43,6 +43,18 @@
 (function() {
   const currentPath = window.location.pathname;
 
+  // Bug fix: this navbar was originally built for public marketing pages only,
+  // but it was rendering unconditionally -- including on dashboard/app pages,
+  // stacked on top of the dashboard's own sidebar nav. The dashboard has no nav
+  // links of its own to show here, but it DOES rely on this bar for its only
+  // language switcher, so we keep that and just drop the public-only parts
+  // (nav links, "Dashboard /Connexion/Essai gratuit" CTAs) in app context.
+  const _isAppPage = currentPath.startsWith('/dashboard') ||
+                      currentPath === '/mon-compte' ||
+                      currentPath === '/abonnement' ||
+                      currentPath === '/onboarding' ||
+                      currentPath === '/choisir-plan';
+
   const links = [
     { href: '/',          label: 'Accueil',         i18n: 'nav_home'     },
     { href: '/features',  label: 'Fonctionnalités', i18n: 'nav_features' },
@@ -79,7 +91,7 @@
 
         <!-- Links desktop -->
         <div id="lr-nav-links" style="display:flex;align-items:center;gap:4px;">
-          ${links.map(l => `
+          ${_isAppPage ? '' : links.map(l => `
             <a href="${l.href}" style="
               padding:8px 14px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:600;
               transition:all 0.2s;
@@ -96,7 +108,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
 
         <!-- CTA -->
         <div style="display:flex;align-items:center;gap:10px;">
-          ${isLoggedIn ? `
+          ${_isAppPage ? '' : (isLoggedIn ? `
             <a href="/dashboard" style="
               padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);
               border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;
@@ -125,7 +137,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             onmouseleave="this.style.transform='none'">
               <span data-i18n="nav_cta">Essai gratuit →</span>
             </a>
-          `}
+          `)}
 
           <!-- Sélecteur de langue -->
           <div id="lr-lang-wrap" style="position:relative;">
@@ -159,15 +171,16 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             </div>
           </div>
 
-          <!-- Burger mobile -->
-          <button id="lr-burger" onclick="lrToggleMenu()" style="
+          <!-- Burger mobile (dashboard has its own mobile nav, so skip this there) -->
+          ${_isAppPage ? '' : `<button id="lr-burger" onclick="lrToggleMenu()" style="
             display:none;background:transparent;border:none;cursor:pointer;
             padding:8px;color:#fff;font-size:22px;line-height:1;
-          ">☰</button>
+          ">☰</button>`}
         </div>
       </div>
 
-      <!-- Menu mobile -->
+      <!-- Menu mobile (dashboard has its own mobile nav, so skip this there) -->
+      ${_isAppPage ? '' : `
       <div id="lr-mobile-menu" style="
         display:none;background:rgba(10,22,40,0.98);
         border-top:1px solid rgba(255,255,255,0.08);
@@ -189,6 +202,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
           <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;"><span data-i18n="nav_cta">Essai gratuit →</span></a>
         `}
       </div>
+      `}
     </nav>
     <div style="height:64px;"></div>
   `;
