@@ -1141,7 +1141,8 @@ async function loadSidebarInfo() {
     const biz = config.business || {};
     const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
     const sl = document.getElementById('sidebarLogo');
-    const slWrap = window._bizName = configData?.business?.name || ''; document.getElementById('sidebarLogoWrap');
+    window._bizName = biz.name || '';
+    const slWrap = document.getElementById('sidebarLogoWrap');
     const logoUrl = biz.logo_url || config?.business?.logo_url;
     if (logoUrl && slWrap) {
       slWrap.style.background = 'none';
@@ -1208,9 +1209,10 @@ async function loadBusinessConfig() {
     const p = config.ai_personality;
     if (p) { set('aiTone', p.tone); set('aiGreeting', p.greeting_message); }
 
-    // Sidebar
+    // Sidebar (le plan réel est géré par checkPlanAndInit(), pas ici --
+    // cette ligne écrivait en dur "Plan Standard" sans vérifier le vrai plan,
+    // ce qui pouvait écraser le bon badge "Plan Pro" selon l'ordre d'arrivée des requêtes)
     const sn = document.getElementById('sidebarBusinessName'); if (sn && bc.name) sn.textContent = bc.name;
-    const sp = document.getElementById('sidebarPlan'); if (sp) sp.textContent = 'Plan Standard';
 
     updateBadges();
   } catch(e) { console.error('Config:', e); showNotification((_dct||DASH_CFG_T.fr).err_generic, 'error'); }
