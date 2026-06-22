@@ -9,6 +9,23 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0A1628; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
+    /* Skeleton loading placeholder -- replaces plain "Loading..." / "-" text
+       while data is in flight, so the page feels like it's actively loading
+       rather than stuck or broken. */
+    .lr-skeleton {
+      display: inline-block;
+      min-width: 48px;
+      height: 1em;
+      border-radius: 6px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.14) 37%, rgba(255,255,255,0.07) 63%);
+      background-size: 400% 100%;
+      animation: lrSkeletonPulse 1.4s ease-in-out infinite;
+      color: transparent !important;
+    }
+    @keyframes lrSkeletonPulse {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
   </style>
 </head>
 <body>
@@ -45,7 +62,7 @@
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
         <div id="sidebarLogoWrap" style="width:44px;height:44px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden;"><span id="sidebarLogo"></span></div>
         <div style="flex:1;min-width:0;">
-          <div id="sidebarBusinessName" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chargement...</div>
+          <div id="sidebarBusinessName" class="lr-skeleton" style="font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:90px;">Chargement...</div>
           <div id="sidebarPlan" style="font-size:10px;color:rgba(255,255,255,0.45);margin-top:1px;">—</div>
         </div>
       </div>
@@ -129,13 +146,13 @@
         <div style="background: linear-gradient(145deg, rgba(10,26,56,0.98), rgba(5,15,35,0.98)); border: 1px solid rgba(245,158,11,0.3); border-radius: 24px; padding: 48px 40px; text-align: center; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
           <div style="font-size: 56px; margin-bottom: 16px;">📊</div>
           <div style="font-family: sans-serif; font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 12px;" id="ana-pro-title">Analytics avancés</div>
-          <p id="ana-pro-desc" style="font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 28px;" id="ana-pro-desc-main">
+          <p id="ana-pro-desc" style="font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 28px;">
             Débloquez les graphiques détaillés, les questions fréquentes, les taux de conversion et 90 jours d'historique avec le <strong style="color: #F59E0B;">Plan Pro</strong>.
           </p>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left;">
             <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> <span id="ana-pro-f1">Graphiques conversations & RDV</span></div>
             <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> <span id="ana-pro-f2">Questions les plus posées</span></div>
-            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> Taux de conversion en RDV</div>
+            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> <span id="ana-pro-f3">Taux de conversion en RDV</span></div>
             <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.8);"><span style="color: #F59E0B;">✓</span> <span id="ana-pro-f4">90 jours d'historique</span></div>
           </div>
           <a href="/abonnement" style="display: block; padding: 16px 32px; background: linear-gradient(135deg, #0052CC, #00D4FF); border-radius: 14px; color: #FFFFFF; font-size: 16px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 24px rgba(245,158,11,0.4); transition: all 0.3s;">
@@ -149,22 +166,22 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px;">
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-conv">💬 Conversations</span></div>
-          <div style="font-size: 36px; font-weight: 700; color: #00D4FF; margin-bottom: 8px;" id="metricConversations">-</div>
+          <div style="font-size: 36px; font-weight: 700; color: #00D4FF; margin-bottom: 8px;" id="metricConversations" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-conv-sub">Total conversations IA</div>
         </div>
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-rdv">📅 Rendez-vous</span></div>
-          <div style="font-size: 36px; font-weight: 700; color: #10B981; margin-bottom: 8px;" id="metricAppointments">-</div>
+          <div style="font-size: 36px; font-weight: 700; color: #10B981; margin-bottom: 8px;" id="metricAppointments" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-rdv-sub">RDV créés par l'IA</div>
         </div>
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-rate">📈 Conversion</span></div>
-          <div style="font-size: 36px; font-weight: 700; color: #F59E0B; margin-bottom: 8px;" id="metricConversion">-</div>
-          <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-pro-f3" id="ana-metric-rate-sub">Taux de conversion en RDV</div>
+          <div style="font-size: 36px; font-weight: 700; color: #F59E0B; margin-bottom: 8px;" id="metricConversion" class="lr-skeleton">-</div>
+          <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-rate-sub">Taux de conversion en RDV</div>
         </div>
         <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-ai">⚡ Performance IA</span></div>
-          <div style="font-size: 36px; font-weight: 700; color: #8B5CF6; margin-bottom: 8px;" id="metricAI">-</div>
+          <div style="font-size: 36px; font-weight: 700; color: #8B5CF6; margin-bottom: 8px;" id="metricAI" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-ai-sub">Résolution automatique</div>
         </div>
       </div>
@@ -173,6 +190,11 @@
       <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 30px; margin-bottom: 35px;">
         <h2 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 25px 0;" id="ana-chart-title">📈 Évolution</h2>
         <canvas id="analyticsChart" style="max-height: 300px;"></canvas>
+        <div id="analyticsChartEmpty" style="display:none;text-align:center;padding:50px 20px;color:rgba(255,255,255,0.4);">
+          <div style="font-size:36px;margin-bottom:10px;">📭</div>
+          <div style="font-size:15px;font-weight:600;color:rgba(255,255,255,0.6);" id="ana-empty-title">Pas encore de données sur cette période</div>
+          <div style="font-size:13px;margin-top:6px;" id="ana-empty-sub">Revenez plus tard, ou essayez une période plus longue (30 ou 90 jours)</div>
+        </div>
       </div>
 
       <!-- PERFORMANCE -->
@@ -315,7 +337,7 @@ async function loadSidebarInfo() {
     const biz = config?.business || config || {};
 
     const sn = document.getElementById('sidebarBusinessName');
-    if (sn && biz.name) sn.textContent = biz.name;
+    if (sn && biz.name) { sn.textContent = biz.name; sn.classList.remove('lr-skeleton'); }
 
     const sp = document.getElementById('sidebarPlan');
     if (sp) {
@@ -345,6 +367,8 @@ async function loadSidebarInfo() {
     }
   } catch(e) {
     console.error('Sidebar error:', e);
+    const sn = document.getElementById('sidebarBusinessName');
+    if (sn) { sn.classList.remove('lr-skeleton'); sn.textContent = '—'; }
   }
 }
 
@@ -357,6 +381,9 @@ async function loadOverview() {
     else if (currentPeriod === 30) period = data.last_30_days;
     else period = data.last_90_days || data.last_30_days; // fallback si pas encore dispo
     period = period || {};
+    ['metricConversations','metricAppointments','metricConversion','metricAI'].forEach(id => {
+      document.getElementById(id).classList.remove('lr-skeleton');
+    });
     document.getElementById('metricConversations').textContent = period.total_conversations || 0;
     document.getElementById('metricAppointments').textContent = period.total_appointments || 0;
     document.getElementById('metricConversion').textContent = period.conversion_rate ? period.conversion_rate.toFixed(1) + '%' : '0%';
@@ -369,14 +396,29 @@ async function loadOverview() {
       document.getElementById('barAuto').style.width = autoRate + '%';
       document.getElementById('barEscalated').style.width = escalatedRate + '%';
     }, 100);
-  } catch (e) { console.error('Erreur overview:', e); }
+  } catch (e) {
+    console.error('Erreur overview:', e);
+    ['metricConversations','metricAppointments','metricConversion','metricAI'].forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.remove('lr-skeleton');
+      el.textContent = '—';
+    });
+  }
 }
 
 async function loadTimeline() {
   if (!isPro) return;
+  const canvas = document.getElementById('analyticsChart');
+  const emptyState = document.getElementById('analyticsChartEmpty');
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/timeline?days=${currentPeriod}`);
-    if (!data.timeline || data.timeline.length === 0) return;
+    if (!data.timeline || data.timeline.length === 0) {
+      canvas.style.display = 'none';
+      emptyState.style.display = 'block';
+      return;
+    }
+    canvas.style.display = 'block';
+    emptyState.style.display = 'none';
     const labels = data.timeline.map(item => new Date(item.date).toLocaleDateString('fr-FR', { day:'numeric', month:'short' }));
     const conversationsData = data.timeline.map(item => item.conversations || 0);
     const appointmentsData = data.timeline.map(item => item.appointments || 0);
@@ -403,7 +445,11 @@ async function loadTimeline() {
         }
       }
     });
-  } catch (e) { console.error('Erreur timeline:', e); }
+  } catch (e) {
+    console.error('Erreur timeline:', e);
+    canvas.style.display = 'none';
+    emptyState.style.display = 'block';
+  }
 }
 
 function switchPeriod(days) {
