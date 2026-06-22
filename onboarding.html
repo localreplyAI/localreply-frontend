@@ -96,7 +96,7 @@
           <label id="ob-lbl-slug" class="ob-label">Votre lien public LocalReply <span style="color:#EF4444;">*</span></label>
           <div style="display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;transition:border 0.2s;" id="slugWrap">
             <span style="padding:0 8px 0 14px;font-size:13px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">localreply.ai/</span>
-            <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)">
+            <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)" onfocus="this.select()">
           </div>
           <div id="slugPreview" style="font-size:11px;color:rgba(0,212,255,0.7);margin-top:4px;"></div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-top:8px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;">
@@ -216,7 +216,7 @@
         <div style="padding:12px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);border-radius:12px;margin-bottom:16px;display:flex;gap:12px;align-items:start;">
           <span style="font-size:18px;flex-shrink:0;">💡</span>
           <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">
-            <span id="ob-sms-note"><strong style="color:#00D4FF;">Les SMS vous sont envoyés à vous</strong></span> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.
+            <span id="ob-sms-note"><strong style="color:#00D4FF;">Les SMS vous sont envoyés à vous</strong> — pas à vos clients. Vos clients reçoivent des emails de confirmation avec un bouton pour ajouter le RDV à leur calendrier.</span>
           </div>
         </div>
 
@@ -1324,6 +1324,11 @@ function showStep(n) {
   currentStep = n;
   updateProgress(n);
   localStorage.setItem('ob_step', n);
+  // Bug fix: without this, the page kept whatever scroll position the user
+  // was at on the previous step -- on a long step (hours/services,
+  // notifications), clicking "Continue" at the bottom landed the user at the
+  // bottom of the NEXT step too, skipping its title and instructions entirely.
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function goToStep(n) {
