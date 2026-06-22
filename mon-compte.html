@@ -671,7 +671,7 @@ function toggleMobileMenu() {
   if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
-function logout() { if(confirm((_mct||DASH_MC_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';} }
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 async function loadSidebarInfo() {
   try {

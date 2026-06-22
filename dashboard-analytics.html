@@ -433,13 +433,7 @@ function toggleMobileMenu() {
   }
 }
 
-function logout() {
-  if (confirm((_dat||DASH_ANA_T.fr).logout_confirm)) {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('business_id');
-    window.location.href = '/auth';
-  }
-}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 async function loadPeakHours() {
   if (!isPro) return;

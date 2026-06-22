@@ -862,9 +862,7 @@ function addFAQ(question='', answer='') {
   // Ne pas switcher automatiquement
 }
 
-function logout() {
-  if (confirm((_dct||DASH_CFG_T.fr).logout_confirm)) { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); window.location.href = '/auth'; }
-}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 // ── SAUVEGARDES ──
 // ── LOGO UPLOAD ──

@@ -1154,7 +1154,7 @@ function toggleMobileMenu() {
   if(open){pp.style.opacity='0';pp.style.transform='translateY(16px)';ov.style.opacity='0';setTimeout(()=>{pp.style.display='none';ov.style.display='none';},250);}
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
-function logout(){if(confirm((_dht||DASH_HOME_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 // ─ INIT ─
 
@@ -1208,7 +1208,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   initHeader();
   loadGuideChecks();
 
-  // Tout en parallèle dès le départ
+  // Perf fix: kick off every independent request in the SAME tick (not in two
+  // sequential waves like before) -- none of these actually need each other's
+  // result to be *fired*, only to be *rendered*. This alone removed one full
+  // serialized round-trip from the dashboard's load time.
+  const _dashDataPromise = api(`/api/business/${businessId}/dashboard-data`).catch(()=>null);
+  const _convPromise = api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]}));
+  const _aptPromise  = api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]);
+  const _reqPromise  = api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}));
+
   const [configData, subData, calData] = await Promise.all([
     api(`/api/business/${businessId}/config/full`).catch(()=>null),
     api(`/api/billing/subscription/${uid}`).catch(()=>null),
@@ -1300,10 +1308,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderOnboarding(configData, calConnected);
   loadSystemStatus(configData, calConnected, effectivePro, isTrial);
 
-  // ── Tentative endpoint dashboard-data (1 appel au lieu de 3) ──
+  // dashboard-data was already in flight since the top of this function — just await it now.
   let dashData = null;
   try {
-    dashData = await api(`/api/business/${businessId}/dashboard-data`);
+    dashData = await _dashDataPromise;
   } catch(e) { /* fallback ci-dessous */ }
 
   let convs = [], apts = [], reqs = [];
@@ -1317,22 +1325,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     setBadge(counts.questions_pending || 0, 'sbBadgeMsg', 'bnBadgeMsg');
     setBadge(counts.appointments_pending || 0, 'sbBadgeRdv', 'bnBadgeRdv');
 
-    // Charger les listes complètes en arrière-plan pour narrative + activité
-    const [convData, aptData, reqData] = await Promise.all([
-      api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
-      api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
-      api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
-    ]);
+    // Ces requêtes étaient déjà en vol depuis le tout début — on les attend simplement ici.
+    const [convData, aptData, reqData] = await Promise.all([_convPromise, _aptPromise, _reqPromise]);
     convs = convData.conversations || [];
     apts  = Array.isArray(aptData) ? aptData : [];
     reqs  = reqData?.questions || (Array.isArray(reqData) ? reqData : []);
   } else {
-    // Fallback — ancien comportement
-    const [convData, aptData, reqData] = await Promise.all([
-      api(`/api/business/${businessId}/messages/conversations`).catch(()=>({conversations:[]})),
-      api(`/api/appointments/?business_id=${businessId}`).catch(()=>[]),
-      api(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]}))
-    ]);
+    // Fallback — même requêtes déjà en vol, pas de second appel
+    const [convData, aptData, reqData] = await Promise.all([_convPromise, _aptPromise, _reqPromise]);
     convs = convData.conversations || [];
     apts  = Array.isArray(aptData) ? aptData : [];
     reqs  = reqData?.questions || (Array.isArray(reqData) ? reqData : []);

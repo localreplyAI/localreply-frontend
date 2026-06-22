@@ -511,3 +511,87 @@ if (typeof renderSidebarLogo !== 'function') {
     }
   }
 }
+
+// ── Shared confirm/alert modal (replaces native confirm()/alert()) ──
+// Native dialogs can't be styled, break visual consistency with the rest of
+// the app, and can behave inconsistently in some embedded contexts (mobile
+// webviews, PWAs). This gives every dashboard page the same Promise-based API
+// (customConfirm/customAlert) with a styled modal matching the app's design.
+(function() {
+  function ensureModalRoot() {
+    let root = document.getElementById('lrConfirmModalRoot');
+    if (root) return root;
+    root = document.createElement('div');
+    root.id = 'lrConfirmModalRoot';
+    root.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;';
+    root.innerHTML = `
+      <div style="background:rgba(8,16,35,0.99);border:1px solid rgba(0,212,255,0.25);border-radius:20px;padding:32px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;">
+        <div id="lrConfirmIcon" style="font-size:40px;margin-bottom:14px;">⚠️</div>
+        <p id="lrConfirmMessage" style="color:#fff;font-size:15px;line-height:1.6;margin:0 0 24px;"></p>
+        <div id="lrConfirmButtons" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <button id="lrConfirmCancelBtn" style="padding:13px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Annuler</button>
+          <button id="lrConfirmOkBtn" style="padding:13px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">OK</button>
+        </div>
+      </div>`;
+    document.body.appendChild(root);
+    return root;
+  }
+
+  window.customConfirm = function(message, opts) {
+    opts = opts || {};
+    return new Promise(function(resolve) {
+      const root = ensureModalRoot();
+      document.getElementById('lrConfirmMessage').textContent = message;
+      document.getElementById('lrConfirmIcon').textContent = opts.icon || '⚠️';
+      const okBtn = document.getElementById('lrConfirmOkBtn');
+      const cancelBtn = document.getElementById('lrConfirmCancelBtn');
+      okBtn.textContent = opts.okLabel || 'OK';
+      cancelBtn.textContent = opts.cancelLabel || 'Annuler';
+      okBtn.style.background = opts.danger ? 'linear-gradient(135deg,#EF4444,#DC2626)' : 'linear-gradient(135deg,#0052CC,#00D4FF)';
+      document.getElementById('lrConfirmButtons').style.display = 'grid';
+      cancelBtn.style.display = 'block';
+      function cleanup(result) {
+        root.style.display = 'none';
+        okBtn.onclick = null; cancelBtn.onclick = null;
+        resolve(result);
+      }
+      okBtn.onclick = function() { cleanup(true); };
+      cancelBtn.onclick = function() { cleanup(false); };
+      root.style.display = 'flex';
+    });
+  };
+
+  window.customAlert = function(message, opts) {
+    opts = opts || {};
+    return new Promise(function(resolve) {
+      const root = ensureModalRoot();
+      document.getElementById('lrConfirmMessage').textContent = message;
+      document.getElementById('lrConfirmIcon').textContent = opts.icon || 'ℹ️';
+      const okBtn = document.getElementById('lrConfirmOkBtn');
+      const cancelBtn = document.getElementById('lrConfirmCancelBtn');
+      okBtn.textContent = opts.okLabel || 'OK';
+      okBtn.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+      cancelBtn.style.display = 'none';
+      function cleanup() {
+        root.style.display = 'none';
+        okBtn.onclick = null;
+        resolve();
+      }
+      okBtn.onclick = cleanup;
+      root.style.display = 'flex';
+    });
+  };
+
+  // Shared logout(), replacing the 8 nearly-identical local copies across
+  // dashboard pages. Each page's onclick="logout()" resolves to this one.
+  if (typeof window.logout !== 'function') {
+    window.logout = async function() {
+      const ok = await window.customConfirm('Êtes-vous sûr de vouloir vous déconnecter ?', { icon: '👋' });
+      if (ok) {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('business_id');
+        window.location.href = '/auth';
+      }
+    };
+  }
+})();

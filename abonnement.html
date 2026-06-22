@@ -449,7 +449,7 @@ function toggleMobileMenu(){
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
 
-function logout(){if(confirm((_abt||DASH_AB_T.fr).logout_confirm)){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 
 function renderPlanFeatures() {

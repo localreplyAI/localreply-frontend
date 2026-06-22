@@ -687,7 +687,7 @@ async function connectCalendar() {
 }
 
 async function disconnectCalendar() {
-  if (!confirm((_drt||DASH_RDV_T.fr).disconnect_confirm)) return;
+  if (!(await customConfirm((_drt||DASH_RDV_T.fr).disconnect_confirm))) return;
   try {
     await apiRequest(`/api/calendar/disconnect?business_id=${businessId}`, 'DELETE');
     showNotification((_drt||DASH_RDV_T.fr).disconnect_ok);
@@ -1035,7 +1035,7 @@ function createConfirmedCard(apt) {
 
 // Accepter un RDV
 async function acceptAppointment(appointmentId) {
-  if (!confirm('Confirmer ce rendez-vous ?')) {
+  if (!(await customConfirm('Confirmer ce rendez-vous ?'))) {
     return;
   }
   
@@ -1061,7 +1061,7 @@ async function acceptAppointment(appointmentId) {
 
 // Refuser un RDV
 async function refuseAppointment(appointmentId) {
-  if (!confirm('Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.')) {
+  if (!(await customConfirm('Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.', { danger: true }))) {
     return;
   }
   
@@ -1085,7 +1085,7 @@ async function refuseAppointment(appointmentId) {
 
 // Annuler un RDV confirmé
 async function cancelAppointment(appointmentId) {
-  if (!confirm((_drt||DASH_RDV_T.fr).cancel_confirm)) {
+  if (!(await customConfirm((_drt||DASH_RDV_T.fr).cancel_confirm, { danger: true }))) {
     return;
   }
   
@@ -1207,20 +1207,14 @@ function toggleMobileMenu() {
   }
 }
 
-function logout() {
-  if (confirm((_drt||DASH_RDV_T.fr).logout_confirm)) {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('business_id');
-    window.location.href = '/auth';
-  }
-}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 // ============================================
 // CHARGEMENT INITIAL
 // ============================================
 document.addEventListener('DOMContentLoaded', async function() {
   if (!token || !businessId) {
-    alert((_drt||DASH_RDV_T.fr).session_expired);
+    await customAlert((_drt||DASH_RDV_T.fr).session_expired);
     window.location.href = '/login';
     return;
   }

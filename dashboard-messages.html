@@ -572,7 +572,7 @@ async function submitReply() {
 }
 
 async function quickIgnore(id) {
-  if (!confirm('Ignorer cette question ?')) return;
+  if (!(await customConfirm('Ignorer cette question ?'))) return;
   try {
     await apiRequest(`/api/business/${businessId}/unknown-questions/${id}/ignore`, 'POST', {});
     showToast((_dmt||DASH_MSG_T.fr).success_ignored);
@@ -623,9 +623,7 @@ function toggleMobileMenu() {
   else{ov.style.display='block';pp.style.display='block';setTimeout(()=>{ov.style.opacity='1';pp.style.opacity='1';pp.style.transform='translateY(0)';},10);}
 }
 
-function logout() {
-  if(confirm('Déconnexion ?')){localStorage.removeItem('auth_token');localStorage.removeItem('business_id');window.location.href='/auth';}
-}
+// logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
 
 document.addEventListener('DOMContentLoaded', () => {
   loadSidebarInfo();
