@@ -461,3 +461,53 @@ function lrTranslateAll(lang) {
   // Global helper: call window.lrRetranslate() after rendering dynamic content
   window.lrRetranslate = runTranslate;
 })();
+
+// ── Shared sidebar logo renderer ──
+// Used by every dashboard page's loadSidebarInfo(). Previously only defined
+// locally inside dashboard.html / abonnement.html / onboarding.html -- the
+// other 5 dashboard pages called it without ever defining it, throwing an
+// uncaught ReferenceError on every load (and leaving the sidebar stuck on
+// "Loading..." since the rest of loadSidebarInfo() never got to run).
+if (typeof renderSidebarLogo !== 'function') {
+  function renderSidebarLogo(name, logoUrl, type) {
+    const wrap = document.getElementById('sidebarLogoWrap');
+    const span = document.getElementById('sidebarLogo');
+    if (!wrap && !span) return;
+
+    const initials = (name||'')
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map(w => w[0].toUpperCase())
+      .join('');
+    const display = initials || '?';
+
+    if (logoUrl) {
+      const img = new Image();
+      img.onload = function() {
+        if (wrap) {
+          wrap.style.background = 'none';
+          wrap.style.padding = '0';
+          wrap.innerHTML = '<img src="' + logoUrl + '" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">';
+        }
+      };
+      img.onerror = function() {
+        // Fallback initiales si logo broken
+        if (wrap) {
+          wrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+          wrap.innerHTML = '<span style="color:#fff;font-weight:700;font-size:15px;letter-spacing:-0.5px;">' + display + '</span>';
+        } else if (span) { span.textContent = display; }
+      };
+      img.src = logoUrl;
+    } else {
+      // Initiales sur fond gradient
+      if (wrap) {
+        wrap.style.background = 'linear-gradient(135deg,#0052CC,#00D4FF)';
+        wrap.style.display = 'flex';
+        wrap.style.alignItems = 'center';
+        wrap.style.justifyContent = 'center';
+        wrap.innerHTML = '<span style="color:#fff;font-weight:700;font-size:15px;letter-spacing:-0.5px;">' + display + '</span>';
+      } else if (span) { span.textContent = display; }
+    }
+  }
+}
