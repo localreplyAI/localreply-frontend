@@ -1393,7 +1393,7 @@ async function saveStep(step) {
       // Services
       const services = [...document.querySelectorAll('.service-row')].map(row => {
         const inputs = row.querySelectorAll('input');
-        return inputs[0].value ? {name:inputs[0].value, price:parseFloat(inputs[1].value)||0, duration_minutes:parseInt(inputs[2].value)||60, is_active:true} : null;
+        return inputs[0].value ? {name:inputs[0].value, price:parseFloat(inputs[1].value)||0, duration_minutes:parseInt(inputs[2]?.value)||60, is_active:true} : null;
       }).filter(Boolean);
       if (services.length) await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
     }
