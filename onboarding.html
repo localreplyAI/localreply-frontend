@@ -708,20 +708,21 @@ const RDV_MODE_DEFAULT = {
   pool: 'none', retail: 'none', bakery: 'none',
   butcher: 'none', fishmonger: 'none', florist: 'none',
   laundry: 'none', photographer: 'none',
+  phonerepair: 'none', pharmacy: 'none',
 };
 
 // Types où la durée n'est pas pertinente
 const HIDE_DURATION = new Set([
   'restaurant','cafe','pizzeria','hotel','bakery',
   'butcher','fishmonger','florist','retail','laundry',
-  'pool','cinema','escapegame',
+  'pool','cinema','escapegame','pharmacy',
 ]);
 
 // Types de commerce
 const BIZ_TYPE_GROUPS = [
   { label: '💇 Beauté & Soins', options: [
     {id:'salon',icon:'💇',label:'Salon de coiffure'},{id:'spa',icon:'💅',label:'Institut de beauté / Spa'},
-    {id:'massage',icon:'💆',label:'Massage / Kiné'},{id:'dentist',icon:'🦷',label:'Dentiste'},{id:'opticien',icon:'👓',label:'Opticien'},
+    {id:'massage',icon:'💆',label:'Massage / Kiné'},{id:'dentist',icon:'🦷',label:'Dentiste'},{id:'opticien',icon:'👓',label:'Opticien'},{id:'nailsalon',icon:'✨',label:'Salon d\'ongles'},{id:'tattoo',icon:'🖋️',label:'Tatoueur'},
   ]},
   { label: '🍽️ Restauration', options: [
     {id:'restaurant',icon:'🍽️',label:'Restaurant'},{id:'cafe',icon:'☕',label:'Café / Bar'},{id:'pizzeria',icon:'🍕',label:'Pizzeria / Fast-food'},
@@ -731,16 +732,16 @@ const BIZ_TYPE_GROUPS = [
   ]},
   { label: '⚖️ Services professionnels', options: [
     {id:'law',icon:'⚖️',label:'Avocat'},{id:'architect',icon:'📐',label:'Architecte'},{id:'accountant',icon:'📊',label:'Expert-comptable'},
-    {id:'realtor',icon:'🏡',label:'Agence immobilière'},{id:'training',icon:'🎓',label:'Centre de formation'},
+    {id:'realtor',icon:'🏡',label:'Agence immobilière'},{id:'training',icon:'🎓',label:'Centre de formation'},{id:'drivingschool',icon:'🚗',label:'Auto-école'},
   ]},
   { label: '🏋️ Sport & Loisirs', options: [
     {id:'gym',icon:'🏋️',label:'Salle de sport'},{id:'cinema',icon:'🎬',label:'Cinéma / Théâtre'},{id:'escapegame',icon:'🎮',label:'Escape Game'},{id:'pool',icon:'🏊',label:'Piscine'},
   ]},
   { label: '🔧 Services techniques', options: [
-    {id:'garage',icon:'🔧',label:'Garage / Atelier'},{id:'plumber',icon:'🔨',label:'Plombier / Électricien'},{id:'cleaning',icon:'🧹',label:'Ménage / Nettoyage'},{id:'gardener',icon:'🌳',label:'Jardinier'},
+    {id:'garage',icon:'🔧',label:'Garage / Atelier'},{id:'plumber',icon:'🔨',label:'Plombier / Électricien'},{id:'cleaning',icon:'🧹',label:'Ménage / Nettoyage'},{id:'gardener',icon:'🌳',label:'Jardinier'},{id:'phonerepair',icon:'📱',label:'Réparation téléphone / ordinateur'},{id:'locksmith',icon:'🔑',label:'Serrurier'},
   ]},
   { label: '🏥 Santé & Animaux', options: [
-    {id:'medical',icon:'🏥',label:'Cabinet médical'},{id:'vet',icon:'🐾',label:'Vétérinaire'},{id:'grooming',icon:'✂️',label:'Toilettage animaux'},
+    {id:'medical',icon:'🏥',label:'Cabinet médical'},{id:'vet',icon:'🐾',label:'Vétérinaire'},{id:'grooming',icon:'✂️',label:'Toilettage animaux'},{id:'pharmacy',icon:'💊',label:'Pharmacie'},
   ]},
   { label: '🏨 Commerce & Hébergement', options: [
     {id:'retail',icon:'🛍️',label:'Commerce de détail'},{id:'hotel',icon:'🏨',label:'Hôtel'},
@@ -888,6 +889,30 @@ const TEMPLATES = {
   laundry: {
     hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[9,18],dim:null},
     services: [{name:'Nettoyage costume',price:15,duration:0},{name:'Nettoyage robe',price:20,duration:0},{name:'Repassage chemise',price:5,duration:0},{name:'Pressing express',price:25,duration:0}]
+  },
+  tattoo: {
+    hours: {lun:null,mar:[11,19],mer:[11,19],jeu:[11,19],ven:[11,19],sam:[11,19],dim:null},
+    services: [{name:'Petit tatouage',price:60,duration:60},{name:'Tatouage moyen',price:150,duration:120},{name:'Grand tatouage / pièce',price:300,duration:240},{name:'Retouche',price:40,duration:30}]
+  },
+  drivingschool: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[8,12],dim:null},
+    services: [{name:'Leçon de conduite',price:45,duration:60},{name:'Leçon de perfectionnement',price:50,duration:60},{name:'Forfait 20h de conduite',price:850,duration:0},{name:'Forfait code de la route',price:150,duration:0}]
+  },
+  phonerepair: {
+    hours: {lun:[10,19],mar:[10,19],mer:[10,19],jeu:[10,19],ven:[10,19],sam:[10,18],dim:null},
+    services: [{name:'Remplacement écran',price:89,duration:45},{name:'Changement batterie',price:49,duration:30},{name:'Diagnostic gratuit',price:0,duration:15},{name:'Récupération de données',price:60,duration:90}]
+  },
+  pharmacy: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[9,18],dim:null},
+    services: [{name:'Conseil pharmaceutique',price:0,duration:15},{name:'Test antigénique',price:15,duration:15},{name:'Vaccination grippe',price:0,duration:15}]
+  },
+  locksmith: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,18],sam:[9,13],dim:null},
+    services: [{name:'Ouverture de porte',price:90,duration:30},{name:'Changement de serrure',price:120,duration:60},{name:'Double de clés',price:15,duration:10},{name:'Dépannage urgence',price:150,duration:45}]
+  },
+  nailsalon: {
+    hours: {lun:null,mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,19],sam:[9,18],dim:null},
+    services: [{name:'Manucure classique',price:25,duration:30},{name:'Pose gel',price:45,duration:60},{name:'Pédicure',price:35,duration:45},{name:'Nail art (par ongle)',price:5,duration:10}]
   },
   default: {
     hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:null,dim:null},
