@@ -225,7 +225,7 @@
       <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;">
         <div>
           <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
-            <div style="flex:1;padding:12px 16px;background:rgba(0,212,255,0.08);border:1.5px solid rgba(0,212,255,0.3);border-radius:11px;font-size:14px;color:#00D4FF;font-weight:600;word-break:break-all;min-width:0;">localreply.ai/<span id="slugDisplay">...</span></div>
+            <div style="flex:1;padding:12px 16px;background:rgba(0,212,255,0.08);border:1.5px solid rgba(0,212,255,0.3);border-radius:11px;font-size:14px;color:#00D4FF;font-weight:600;word-break:break-all;min-width:0;">https://localreply-frontend.vercel.app/chat?slug=<span id="slugDisplay">...</span></div>
             <button onclick="copyLink()" style="padding:12px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:16px;cursor:pointer;flex-shrink:0;transition:transform 0.15s;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">📋</button>
           </div>
           <a id="testIABtn2" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;background:linear-gradient(135deg,#0052CC 0%,#0080FF 50%,#00D4FF 100%);border-radius:12px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,120,255,0.25);">
@@ -250,7 +250,7 @@
         <!-- QR Code -->
         <div style="text-align:center;flex-shrink:0;">
           <div style="display:inline-block;background:#fff;padding:12px;border-radius:14px;box-shadow:0 8px 28px rgba(0,212,255,0.2);margin-bottom:8px;"><div id="qrcode"></div></div>
-          <p style="font-size:11px;color:rgba(255,255,255,0.35);margin:0 0 8px;">localreply.ai/<span id="qrSlug">...</span></p>
+          <p style="font-size:11px;color:rgba(255,255,255,0.35);margin:0 0 8px;">https://localreply-frontend.vercel.app/chat?slug=<span id="qrSlug">...</span></p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
             <button onclick="downloadQRPng()" style="padding:9px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;" id="dash-qr-download-btn">⬇️ QR</button>
             <button onclick="togglePrintMenu(event)" id="btnPrintMenu" style="width:100%;padding:9px;background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.3);color:#00D4FF;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;"><span id="dash-qr-print-btn">🖼️ QR Affiche ▾</span></button>
@@ -517,9 +517,9 @@ function computeHealthScore(config, calConnected) {
 function setupLinks(slug) {
   currentSlug = slug;
   ['slugDisplay','qrSlug'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=slug; });
-  document.getElementById('linkInstagram').textContent = 'localreply.ai/'+slug+'?src=instagram';
-  document.getElementById('linkWebsite').textContent   = 'localreply.ai/'+slug+'?src=website';
-  document.getElementById('linkQR').textContent        = 'localreply.ai/'+slug+'?src=qr';
+  document.getElementById('linkInstagram').textContent = 'https://localreply-frontend.vercel.app/chat?slug='+slug+'&src=instagram';
+  document.getElementById('linkWebsite').textContent   = 'https://localreply-frontend.vercel.app/chat?slug='+slug+'&src=website';
+  document.getElementById('linkQR').textContent        = 'https://localreply-frontend.vercel.app/chat?slug='+slug+'&src=qr';
   ['testIABtn','testIABtn2'].forEach(id=>{
     const el=document.getElementById(id);
     if(!el) return;
@@ -537,10 +537,10 @@ function setupLinks(slug) {
   // Sauvegarder le slug pour accès rapide
   if(slug) localStorage.setItem('business_slug', slug);
   const qrEl = document.getElementById('qrcode');
-  if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply.ai/'+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
+  if (qrEl) { qrEl.innerHTML = ''; new QRCode(qrEl, { text:'https://localreply-frontend.vercel.app/chat?slug='+slug, width:140, height:140, colorDark:'#0052CC', colorLight:'#FFFFFF', correctLevel:QRCode.CorrectLevel.M }); }
 }
-function copyLink() { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug).then(()=>toast((_dht||DASH_HOME_T.fr).copy_ok)); }
-function copySourceLink(s) { navigator.clipboard.writeText('https://localreply.ai/'+currentSlug+'?src='+s).then(()=>toast('✅ Lien copié !')); }
+function copyLink() { navigator.clipboard.writeText('https://localreply-frontend.vercel.app/chat?slug='+currentSlug).then(()=>toast((_dht||DASH_HOME_T.fr).copy_ok)); }
+function copySourceLink(s) { navigator.clipboard.writeText('https://localreply-frontend.vercel.app/chat?slug='+currentSlug+'&src='+s).then(()=>toast('✅ Lien copié !')); }
 function downloadQRPng() {
   setTimeout(()=>{ const c=document.querySelector('#qrcode canvas'); if(!c){toast((_dht||DASH_HOME_T.fr).qr_unavailable);return;} const a=document.createElement('a');a.download='qr-'+currentSlug+'.png';a.href=c.toDataURL();a.click();toast((_dht||DASH_HOME_T.fr).qr_downloaded); },100);
 }
@@ -592,7 +592,7 @@ function printQR(lang) {
   const slug    = window.currentSlug || '';
   const logoUrl = biz.logo_url || '';
   const printLang = lang || 'fr';
-  const url     = 'localreply.ai/' + slug;
+  const url     = 'https://localreply-frontend.vercel.app/chat?slug=' + slug;
 
   const T = {
     fr: { tagline:'Posez-nous vos questions', avail:'24h/24 · 7j/7', noApp:'Sans application', langs:'8 langues', instant:'Réponse instantanée', powered:'Propulsé par', rdvLine:'Prise de rendez-vous disponible' },
