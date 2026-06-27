@@ -314,14 +314,14 @@
       .price-amount { font-size: 40px; }
     }
   </style>
-<script>
-// Rediriger si déjà connecté
-(function(){
-  var t = localStorage.getItem('auth_token');
-  var b = localStorage.getItem('business_id');
-  if (t && b) { window.location.href = '/dashboard'; }
-})();
-</script>
+<!-- Bug fix: this used to unconditionally redirect to /dashboard whenever
+     auth_token + business_id were present, regardless of subscription status.
+     For a logged-in user whose subscription became inactive/cancelled, that
+     created an infinite loop: blocked dashboard -> "choose a plan" button ->
+     this page -> bounced straight back to the blocked dashboard. The
+     checkExistingPlan() function further down already does this correctly
+     (it actually checks subscription status before redirecting), so this
+     naive duplicate guard was removed entirely. -->
 </head>
 <body>
 
