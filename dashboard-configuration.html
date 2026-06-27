@@ -1227,15 +1227,16 @@ async function loadBusinessConfig() {
 // ── INIT ──
 
 function renderBusinessTypes() {
-  const t = (_dct || DASH_CFG_T.fr);
-  const sel = document.getElementById('businessType');
-  if (!sel || !t.biz_types) return;
-  const current = sel.value;
-  sel.innerHTML = `<option value="">${t.biz_select || '— Sélectionner —'}</option>` +
-    Object.entries(t.biz_types).map(([v, label]) => 
-      `<option value="${v}">${label}</option>`
-    ).join('');
-  if (current) sel.value = current;
+  // Disabled: this used to rebuild the dropdown from t.biz_types, an older
+  // 20-entry, ungrouped translation dictionary that was never updated when
+  // the dropdown was expanded to 39 business types across categorized
+  // optgroups. It was unconditionally overwriting the correct, richer static
+  // HTML on every page load (in every language, including French) -- so
+  // business types added since then (and their templates/icons) never
+  // actually appeared. The static <select> already has the full, correct
+  // list; translating it per-language is deferred along with the rest of
+  // the dashboard's i18n rework.
+  return;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
