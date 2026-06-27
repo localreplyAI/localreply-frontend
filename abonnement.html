@@ -421,7 +421,7 @@ async function subscribe(plan){
   const orig=btn.textContent;btn.disabled=true;btn.textContent='⏳ Redirection...';
   try {
     const data=await apiRequest('/api/billing/create-checkout-session','POST',{user_id:parseInt(userId),plan,billing:abCurrentBilling,is_new_account:isNewSignup});
-    if(data.checkout_url){const a=document.createElement('a');a.href=data.checkout_url;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+    if(data.checkout_url){ window.location.href = data.checkout_url; }
     else throw new Error('Pas de checkout_url');
   } catch(e){showToast((_abt||DASH_AB_T.fr).err_redirect,'error');btn.disabled=false;btn.textContent=orig;}
 }
