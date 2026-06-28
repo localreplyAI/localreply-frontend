@@ -16,8 +16,7 @@
 // Guard abonnement global — bloque l'accès si pas d'abonnement actif
 (async function() {
   const token = localStorage.getItem('auth_token');
-  let userId = null;
-  try { userId = token ? JSON.parse(atob(token.split('.')[1])).sub : null; } catch(e) {}
+  const userId = localStorage.getItem('user_id');
   if (!token || !userId) return; // laisse le guard principal gérer
   try {
     const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
@@ -28,7 +27,7 @@
     const plan = sub.plan || 'none';
     const status = sub.status || 'inactive';
     const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
-    if (blocked) window.location.href = '/choisir-plan';
+    if (blocked) window.location.href = '/choisir-plan?new=true';
   } catch(e) {}
 })();
 </script>
@@ -643,7 +642,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'À traiter en priorité',
     stat_answered_label: 'Répondues', stat_answered_sub: 'Client notifié par email',
     stat_faq_label: 'Ajoutées à la FAQ', stat_faq_sub: "L'IA sait maintenant répondre",
-    tip_faq: 'Cliquez sur "Ajouter à la FAQ" pour que la réponse soit permanente.',
+    tip_faq: '"Ajouter à la FAQ"',
     modal_title: '💬 Répondre au client',
     modal_question: 'Question du client',
     modal_answer_label: 'Votre réponse',
@@ -683,7 +682,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'Priority to handle',
     stat_answered_label: 'Answered', stat_answered_sub: 'Customer notified by email',
     stat_faq_label: 'Added to FAQ', stat_faq_sub: 'The AI now knows how to answer',
-    tip_faq: 'Click "Add to FAQ" to make the answer permanent.',
+    tip_faq: '"Add to FAQ"',
     modal_title: '💬 Reply to customer',
     modal_question: 'Customer question',
     modal_answer_label: 'Your reply',
@@ -721,7 +720,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'Vorrangig zu bearbeiten',
     stat_answered_label: 'Beantwortet', stat_answered_sub: 'Kunde per E-Mail benachrichtigt',
     stat_faq_label: 'Zur FAQ hinzugefügt', stat_faq_sub: 'Die KI kann jetzt antworten',
-    tip_faq: 'Klicken Sie auf "Zur FAQ hinzufügen", um die Antwort dauerhaft zu speichern.',
+    tip_faq: '"Zur FAQ hinzufügen"',
     modal_title: '💬 Auf Kunden antworten',
     modal_question: 'Kundenfrage',
     modal_answer_label: 'Ihre Antwort',
@@ -759,7 +758,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'Da gestire in priorità',
     stat_answered_label: 'Risposte', stat_answered_sub: 'Cliente notificato via email',
     stat_faq_label: 'Aggiunte al FAQ', stat_faq_sub: "L'IA sa ora rispondere",
-    tip_faq: 'Clicca su "Aggiungi al FAQ" per rendere la risposta permanente.',
+    tip_faq: '"Aggiungi al FAQ"',
     modal_title: '💬 Rispondi al cliente',
     modal_question: 'Domanda del cliente',
     modal_answer_label: 'La tua risposta',
@@ -797,7 +796,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'A tratar con prioridad',
     stat_answered_label: 'Respondidas', stat_answered_sub: 'Cliente notificado por email',
     stat_faq_label: 'Añadidas al FAQ', stat_faq_sub: 'La IA ahora sabe responder',
-    tip_faq: 'Haz clic en "Añadir al FAQ" para que la respuesta sea permanente.',
+    tip_faq: '"Añadir al FAQ"',
     modal_title: '💬 Responder al cliente',
     modal_question: 'Pregunta del cliente',
     modal_answer_label: 'Tu respuesta',
@@ -835,7 +834,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'A tratar com prioridade',
     stat_answered_label: 'Respondidas', stat_answered_sub: 'Cliente notificado por email',
     stat_faq_label: 'Adicionadas ao FAQ', stat_faq_sub: 'A IA já sabe responder',
-    tip_faq: 'Clique em "Adicionar ao FAQ" para tornar a resposta permanente.',
+    tip_faq: '"Adicionar ao FAQ"',
     modal_title: '💬 Responder ao cliente',
     modal_question: 'Pergunta do cliente',
     modal_answer_label: 'A sua resposta',
@@ -873,7 +872,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'Prioriteit te verwerken',
     stat_answered_label: 'Beantwoord', stat_answered_sub: 'Klant per e-mail geïnformeerd',
     stat_faq_label: 'Toegevoegd aan FAQ', stat_faq_sub: 'De AI kan nu antwoorden',
-    tip_faq: 'Klik op "Toevoegen aan FAQ" om het antwoord permanent te maken.',
+    tip_faq: '"Toevoegen aan FAQ"',
     modal_title: '💬 Antwoord aan klant',
     modal_question: 'Klantvraag',
     modal_answer_label: 'Uw antwoord',
@@ -911,7 +910,7 @@ const DASH_MSG_T = {
     stat_pending_label: 'Priorytetowo do obsługi',
     stat_answered_label: 'Odpowiedziane', stat_answered_sub: 'Klient powiadomiony emailem',
     stat_faq_label: 'Dodane do FAQ', stat_faq_sub: 'AI teraz potrafi odpowiedzieć',
-    tip_faq: 'Kliknij "Dodaj do FAQ", aby odpowiedź była trwała.',
+    tip_faq: '"Dodaj do FAQ"',
     modal_title: '💬 Odpowiedź do klienta',
     modal_question: 'Pytanie klienta',
     modal_answer_label: 'Twoja odpowiedź',

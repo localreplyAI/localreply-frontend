@@ -16,8 +16,7 @@
 // Guard abonnement global — bloque l'accès si pas d'abonnement actif
 (async function() {
   const token = localStorage.getItem('auth_token');
-  let userId = null;
-  try { userId = token ? JSON.parse(atob(token.split('.')[1])).sub : null; } catch(e) {}
+  const userId = localStorage.getItem('user_id');
   if (!token || !userId) return; // laisse le guard principal gérer
   try {
     const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
@@ -28,7 +27,7 @@
     const plan = sub.plan || 'none';
     const status = sub.status || 'inactive';
     const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
-    if (blocked) window.location.href = '/choisir-plan';
+    if (blocked) window.location.href = '/choisir-plan?new=true';
   } catch(e) {}
 })();
 </script>
@@ -239,8 +238,8 @@
             <div class="cfg-field">
               <label class="cfg-label">Lien public <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">— permanent</span></label>
               <div style="display:flex;align-items:center;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;cursor:default;" id="slugWrap">
-                <span style="padding:0 8px 0 14px;font-size:11px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">https://localreply-frontend.vercel.app/chat?slug=</span>
-                <input id="businessSlug" type="text" readonly style="flex:1;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:rgba(255,255,255,0.7);outline:none;cursor:default;pointer-events:none;" placeholder="mon-commerce">
+                <span style="padding:0 8px 0 14px;font-size:11px;color:rgba(255,255,255,0.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;">https://localreply-frontend.vercel.app/chat?slug=</span>
+                <input id="businessSlug" type="text" readonly style="flex:1;min-width:0;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:rgba(255,255,255,0.7);outline:none;cursor:default;pointer-events:none;" placeholder="mon-commerce">
                 <span style="padding:0 14px;font-size:14px;color:rgba(255,255,255,0.25);" title="Le lien public ne peut pas être modifié">🔒</span>
               </div>
               <div id="cfg-slug-warning" style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:6px;">Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.</div>
