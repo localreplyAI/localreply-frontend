@@ -33,7 +33,8 @@
 // Guard abonnement global — bloque l'accès si pas d'abonnement actif
 (async function() {
   const token = localStorage.getItem('auth_token');
-  const userId = localStorage.getItem('user_id');
+  let userId = null;
+  try { userId = token ? JSON.parse(atob(token.split('.')[1])).sub : null; } catch(e) {}
   if (!token || !userId) return; // laisse le guard principal gérer
   try {
     const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
@@ -44,7 +45,7 @@
     const plan = sub.plan || 'none';
     const status = sub.status || 'inactive';
     const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
-    if (blocked) window.location.href = '/choisir-plan?new=true';
+    if (blocked) window.location.href = '/choisir-plan';
   } catch(e) {}
 })();
 </script>

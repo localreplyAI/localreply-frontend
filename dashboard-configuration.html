@@ -28,7 +28,7 @@
     const plan = sub.plan || 'none';
     const status = sub.status || 'inactive';
     const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
-    if (blocked) window.location.href = '/choisir-plan?new=true';
+    if (blocked) window.location.href = '/choisir-plan';
   } catch(e) {}
 })();
 </script>
