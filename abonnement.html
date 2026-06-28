@@ -293,6 +293,7 @@ const userId = getUserIdFromToken();
 if (!userId) {
   console.error('userId introuvable dans le token JWT');
 }
+const isNewSignup = new URLSearchParams(window.location.search).get('new')==='true';
 
 async function apiRequest(endpoint, method='GET', data=null) {
   const opts={method,headers:{'Content-Type':'application/json','Authorization':'Bearer '+token}};
@@ -341,7 +342,6 @@ async function loadSidebarInfo() {
 function checkURLAlerts(){
   const params=new URLSearchParams(window.location.search);
   const banner=document.getElementById('alertBanner');
-  const isNewSignup=params.get('new')==='true';
 
   // Nouveau compte → afficher message d'accueil invitant à choisir un plan
   if(isNewSignup && params.get('success')!=='true'){
