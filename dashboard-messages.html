@@ -16,7 +16,8 @@
 // Guard abonnement global — bloque l'accès si pas d'abonnement actif
 (async function() {
   const token = localStorage.getItem('auth_token');
-  const userId = localStorage.getItem('user_id');
+  let userId = null;
+  try { userId = token ? JSON.parse(atob(token.split('.')[1])).sub : null; } catch(e) {}
   if (!token || !userId) return; // laisse le guard principal gérer
   try {
     const r = await fetch('https://localreply-api.onrender.com/api/billing/subscription/' + userId, {
