@@ -635,6 +635,12 @@ async function loadUnansweredQuestions() {
 }
 
 
+// Convertit le markdown basique (**gras**) du résumé IA en HTML, en échappant le reste pour éviter toute injection
+function lrFormatSummaryText(text) {
+  const esc = String(text||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return esc.replace(/\*\*(.+?)\*\*/g, '<strong style="color:#00D4FF;">$1</strong>');
+}
+
 function buildLocalSummary(container, label) {
   const proFlag = typeof isPro !== 'undefined' ? isPro : false;
   container.innerHTML = `
@@ -676,7 +682,7 @@ async function loadLastSummary() {
     if (label) label.textContent = `${periodLabel}${dateLabel ? ' · ' + dateLabel : ''}`;
 
     container.innerHTML = `
-      <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${item.summary_text}</div>
+      <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${lrFormatSummaryText(item.summary_text)}</div>
       ${item.top_questions && item.top_questions.length ? `
       <div style="margin-top:20px;padding:16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
         <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;" id="ana-summary-faq-label">💡 FAQ à compléter</div>
