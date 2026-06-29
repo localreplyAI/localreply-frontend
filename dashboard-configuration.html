@@ -399,7 +399,10 @@
                 <p class="cfg-card-sub">L'IA répondra automatiquement à ces questions</p>
               </div>
             </div>
-            <button onclick="addFAQ()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);" id="cfg-add-faq-btn">➕ Ajouter</button>
+            <div style="display:flex;gap:10px;flex-shrink:0;">
+              <button onclick="loadFAQTemplate()" style="padding:10px 18px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;" id="cfg-tpl-faq-btn">📋 Utiliser un template</button>
+              <button onclick="addFAQ()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);" id="cfg-add-faq-btn">➕ Ajouter</button>
+            </div>
           </div>
 
           <!-- Recherche FAQ -->
@@ -710,6 +713,145 @@ const businessConfigs = {
   'nailsalon':{'type':'service','icon':'✨'},'tattoo':{'type':'service','icon':'🖋️'},'drivingschool':{'type':'service','icon':'🚗'},
   'phonerepair':{'type':'service','icon':'📱'},'locksmith':{'type':'service','icon':'🔑'},'pharmacy':{'type':'product','icon':'💊'}
 };
+
+// ── TEMPLATES FAQ PAR GROUPE DE MÉTIER ──
+const FAQ_GROUPS = {
+  salon:'beaute', spa:'beaute', massage:'beaute', grooming:'beaute', nailsalon:'beaute', tattoo:'beaute',
+  dentist:'medical', medical:'medical', vet:'medical',
+  opticien:'optique',
+  restaurant:'resto', cafe:'resto', pizzeria:'resto',
+  bakery:'alimentation', butcher:'alimentation', fishmonger:'alimentation', florist:'alimentation',
+  law:'pro', architect:'pro', accountant:'pro', realtor:'pro', training:'pro',
+  gym:'sport', cinema:'sport', escapegame:'sport', pool:'sport',
+  garage:'technique', plumber:'technique', cleaning:'technique', gardener:'technique', locksmith:'technique', phonerepair:'technique', drivingschool:'technique',
+  retail:'commerce', hotel:'commerce',
+  pharmacy:'pharmacy',
+  photographer:'autres', laundry:'autres', other:'autres'
+};
+
+const FAQ_TEMPLATES = {
+  beaute: [
+    ["Faut-il prendre rendez-vous ou acceptez-vous les clients sans rendez-vous ?","Nous recommandons de prendre rendez-vous pour garantir votre créneau, mais nous accueillons aussi les clients sans rendez-vous selon les disponibilités."],
+    ["Quels moyens de paiement acceptez-vous ?","Nous acceptons les espèces, la carte bancaire et le paiement sans contact."],
+    ["Puis-je annuler ou modifier mon rendez-vous ?","Oui, merci de nous prévenir au moins 24h à l'avance pour annuler ou modifier votre rendez-vous sans frais."],
+    ["Proposez-vous des cartes cadeaux ?","Oui, nous proposons des cartes cadeaux valables sur l'ensemble de nos prestations."],
+    ["Les produits utilisés sont-ils adaptés aux peaux ou cheveux sensibles ?","Nous travaillons avec des produits de qualité adaptés à tous types de peau et de cheveux. N'hésitez pas à nous signaler toute sensibilité particulière."],
+    ["Y a-t-il un parking à proximité ?","Oui, un parking est disponible à proximité de notre établissement."],
+    ["Proposez-vous des forfaits ou abonnements ?","Oui, nous proposons plusieurs forfaits avantageux. Contactez-nous pour en savoir plus."],
+    ["Acceptez-vous les enfants ?","Oui, nous accueillons les enfants, avec des tarifs adaptés selon l'âge."]
+  ],
+  medical: [
+    ["Acceptez-vous les nouveaux patients ?","Oui, nous accueillons de nouveaux patients. Contactez-nous pour planifier une première consultation."],
+    ["Les frais sont-ils remboursés par l'assurance ou la mutuelle ?","Une partie des soins peut être prise en charge selon votre assurance. Nous vous remettons toujours une facture détaillée pour vos démarches de remboursement."],
+    ["Que faire en cas d'urgence ?","En cas d'urgence pendant nos heures d'ouverture, contactez-nous directement. Hors horaires, merci de contacter le service d'urgence compétent."],
+    ["Faut-il une référence pour consulter ?","Non, vous pouvez prendre rendez-vous directement sans référence préalable."],
+    ["Quel est le délai d'attente pour un rendez-vous ?","Le délai varie selon le type de consultation. Contactez-nous pour connaître les prochaines disponibilités."],
+    ["Acceptez-vous les paiements par carte ?","Oui, nous acceptons les paiements en espèces et par carte bancaire."],
+    ["Puis-je annuler mon rendez-vous ?","Oui, merci de nous prévenir au moins 24h à l'avance afin de libérer le créneau pour un autre patient."],
+    ["Le cabinet est-il accessible aux personnes à mobilité réduite ?","Oui, notre cabinet est accessible aux personnes à mobilité réduite."]
+  ],
+  optique: [
+    ["Faut-il une ordonnance pour commander des lunettes ou des lentilles ?","Oui, une ordonnance en cours de validité est nécessaire. Nous pouvons aussi réaliser un examen de vue sur place."],
+    ["Combien de temps faut-il pour recevoir mes lunettes ?","Le délai de fabrication est généralement de quelques jours à une semaine selon les verres choisis."],
+    ["Mes lunettes sont-elles remboursées par l'assurance ?","Une partie peut être prise en charge selon votre assurance ou mutuelle. Nous vous fournissons une facture détaillée."],
+    ["L'ajustement des montures est-il gratuit ?","Oui, l'ajustement de vos montures est gratuit, même après l'achat."],
+    ["Réparez-vous les lunettes achetées ailleurs ?","Oui, nous proposons un service de réparation et d'ajustement pour toutes les montures."],
+    ["Proposez-vous des lentilles de contact ?","Oui, nous proposons une large gamme de lentilles journalières et mensuelles."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et les facilités de paiement selon le montant."],
+    ["Faites-vous l'examen de la vue ?","Oui, un examen de vue complet est proposé sur rendez-vous."]
+  ],
+  resto: [
+    ["Faut-il réserver une table ?","La réservation est recommandée, surtout le soir et le week-end, mais nous accueillons aussi les clients sans réservation selon les disponibilités."],
+    ["Proposez-vous des options végétariennes, véganes ou sans gluten ?","Oui, plusieurs plats de notre carte sont végétariens et nous pouvons adapter certaines recettes. N'hésitez pas à nous signaler vos allergies ou intolérances."],
+    ["Faites-vous la livraison ou le click & collect ?","Oui, contactez-nous pour connaître les zones et horaires couverts."],
+    ["Avez-vous une terrasse ?","Oui, nous disposons d'une terrasse extérieure, ouverte selon la météo."],
+    ["Accueillez-vous les groupes ou organisez-vous des événements privés ?","Oui, nous accueillons les groupes et pouvons organiser des événements privés sur demande."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, les cartes bancaires et les paiements sans contact."],
+    ["Avez-vous un menu enfant ?","Oui, un menu enfant est disponible."],
+    ["Les animaux sont-ils acceptés ?","Oui, les animaux de compagnie sont les bienvenus, notamment en terrasse."]
+  ],
+  alimentation: [
+    ["Puis-je passer une commande à l'avance ?","Oui, vous pouvez commander à l'avance, notamment pour les commandes spéciales ou en grande quantité."],
+    ["Proposez-vous la livraison ?","Oui, la livraison est possible selon votre zone. Contactez-nous pour vérifier la disponibilité."],
+    ["Vos produits sont-ils frais et locaux ?","Oui, nous travaillons avec des produits frais, sélectionnés auprès de producteurs de qualité."],
+    ["Proposez-vous des produits pour des occasions spéciales ?","Oui, nous réalisons des commandes personnalisées pour vos événements. Contactez-nous à l'avance pour en discuter."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le paiement sans contact."],
+    ["Avez-vous des produits adaptés aux allergies ou intolérances ?","Nous proposons certains produits adaptés (sans gluten, sans lactose, etc.). N'hésitez pas à nous demander."],
+    ["Faites-vous le click & collect ?","Oui, vous pouvez commander et venir récupérer votre commande directement en boutique."],
+    ["Quel est le délai pour une commande spéciale ?","Comptez généralement 24 à 48h à l'avance, selon la complexité de la commande."]
+  ],
+  pro: [
+    ["La première consultation est-elle gratuite ?","Nous proposons un premier échange pour évaluer votre besoin. Contactez-nous pour connaître les modalités."],
+    ["Comment se déroule un rendez-vous ?","Le rendez-vous peut se faire en personne, par téléphone ou en visioconférence selon votre préférence."],
+    ["Quels sont vos tarifs ?","Nos tarifs dépendent de la nature de votre demande. Nous établissons toujours un devis clair avant toute intervention."],
+    ["Mes informations restent-elles confidentielles ?","Oui, toutes les informations partagées sont traitées de manière strictement confidentielle."],
+    ["Combien de temps faut-il pour traiter ma demande ?","Le délai varie selon la complexité du dossier. Nous vous donnons une estimation dès le premier échange."],
+    ["Acceptez-vous les nouveaux clients ?","Oui, nous sommes disponibles pour accompagner de nouveaux clients."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les virements bancaires, les cartes et, selon le cas, des paiements échelonnés."],
+    ["Puis-je annuler ou reporter un rendez-vous ?","Oui, merci de nous prévenir au moins 24h à l'avance."]
+  ],
+  sport: [
+    ["Faut-il réserver à l'avance ?","La réservation est recommandée pour garantir votre créneau, surtout les week-ends et en soirée."],
+    ["Proposez-vous des abonnements ou des tarifs réduits ?","Oui, nous proposons plusieurs formules d'abonnement ainsi que des tarifs réduits (étudiants, familles, etc.)."],
+    ["Y a-t-il un âge minimum requis ?","Cela dépend de l'activité. Contactez-nous pour connaître les conditions précises."],
+    ["Puis-je annuler ou me faire rembourser ma réservation ?","Les annulations sont possibles avant le créneau réservé, selon nos conditions. Contactez-nous pour les détails."],
+    ["Proposez-vous des activités pour les groupes ou anniversaires ?","Oui, nous accueillons les groupes et organisons des événements pour anniversaires et occasions spéciales."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le paiement en ligne."],
+    ["Le matériel est-il fourni ?","Oui, le matériel nécessaire est fourni sur place."],
+    ["Y a-t-il un parking ?","Oui, un parking est disponible à proximité."]
+  ],
+  technique: [
+    ["Le devis est-il gratuit ?","Oui, nous établissons un devis gratuit et sans engagement avant toute intervention."],
+    ["Intervenez-vous en urgence ?","Oui, nous proposons un service d'intervention rapide en cas d'urgence. Contactez-nous directement."],
+    ["Quel est votre délai d'intervention ?","Le délai dépend de votre demande et de nos disponibilités. Nous vous donnons une estimation dès le premier contact."],
+    ["Vos interventions sont-elles garanties ?","Oui, nos interventions sont garanties. N'hésitez pas à nous contacter en cas de souci après notre passage."],
+    ["Quelle est votre zone d'intervention ?","Contactez-nous avec votre adresse pour vérifier si elle est couverte par notre zone d'intervention."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le virement."],
+    ["Travaillez-vous le week-end ?","Selon les disponibilités, des interventions le week-end sont possibles, notamment pour les urgences."],
+    ["Dois-je être présent pendant l'intervention ?","Cela dépend du type d'intervention. Nous vous indiquerons si votre présence est nécessaire."]
+  ],
+  commerce: [
+    ["Quelle est votre politique de retour ou d'échange ?","Les articles peuvent être retournés ou échangés sous quelques jours, avec ticket de caisse et dans leur état d'origine."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le paiement sans contact."],
+    ["Proposez-vous la livraison ou le click & collect ?","Oui, selon les produits, la livraison et/ou le retrait en magasin sont disponibles."],
+    ["Quels sont vos horaires d'ouverture ?","Consultez nos horaires détaillés directement via cet assistant."],
+    ["À quelle heure puis-je faire le check-in ou le check-out ?","Le check-in est généralement possible à partir de 14h et le check-out avant 11h. Contactez-nous pour des horaires flexibles."],
+    ["Les animaux sont-ils acceptés ?","Contactez-nous pour vérifier notre politique d'accueil des animaux."],
+    ["Proposez-vous des cartes cadeaux ?","Oui, des cartes cadeaux sont disponibles à l'achat."],
+    ["Y a-t-il un parking ?","Oui, un parking est disponible à proximité."]
+  ],
+  pharmacy: [
+    ["Êtes-vous une pharmacie de garde ?","Contactez-nous ou consultez l'affichage en vitrine pour connaître les pharmacies de garde de votre secteur."],
+    ["Faut-il une ordonnance pour tous les médicaments ?","Non, certains médicaments sont disponibles sans ordonnance. Notre équipe peut vous conseiller selon vos besoins."],
+    ["Proposez-vous la vaccination en pharmacie ?","Oui, certains vaccins peuvent être réalisés directement en pharmacie. Contactez-nous pour vérifier votre éligibilité."],
+    ["Faites-vous le tiers payant ?","Oui, nous appliquons le tiers payant pour les assurés disposant d'une carte valide."],
+    ["Proposez-vous la livraison de médicaments ?","Selon votre situation, une livraison peut être organisée. Contactez-nous pour en discuter."],
+    ["Avez-vous un espace de conseil confidentiel ?","Oui, un espace dédié est disponible pour les conseils personnalisés et confidentiels."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le paiement sans contact."],
+    ["Proposez-vous des tests rapides (antigéniques, etc.) ?","Oui, des tests rapides sont disponibles sur place."]
+  ],
+  autres: [
+    ["Faut-il prendre rendez-vous ?","La prise de rendez-vous est recommandée pour garantir votre créneau, mais nous restons disponibles selon nos horaires d'ouverture."],
+    ["Quels sont vos moyens de paiement ?","Nous acceptons les espèces, la carte bancaire et le paiement sans contact."],
+    ["Quels sont vos délais habituels ?","Le délai dépend de votre demande. Contactez-nous pour une estimation précise."],
+    ["Proposez-vous un service à domicile ou une livraison ?","Selon votre demande, un service à domicile ou une livraison peut être proposé. Contactez-nous pour vérifier."],
+    ["Puis-je annuler ou modifier ma demande ?","Oui, merci de nous prévenir le plus tôt possible pour toute annulation ou modification."],
+    ["Proposez-vous des conseils personnalisés ?","Oui, nous sommes à votre disposition pour vous conseiller selon vos besoins."],
+    ["Y a-t-il un parking à proximité ?","Oui, un parking est disponible à proximité."],
+    ["Comment vous contacter en dehors des horaires d'ouverture ?","Vous pouvez nous laisser un message via cet assistant, nous vous répondrons dès la reprise de nos horaires."]
+  ]
+};
+
+function loadFAQTemplate() {
+  const val = document.getElementById('businessType').value;
+  const group = FAQ_GROUPS[val] || 'autres';
+  const tpl = FAQ_TEMPLATES[group] || [];
+  if (!tpl.length) { showNotification('Aucun template disponible pour ce type de commerce', 'error'); return; }
+  const existingCount = document.querySelectorAll('#faqList .faq-card-wrapper').length;
+  if (existingCount > 0 && !confirm(`Ajouter ${tpl.length} questions du template à votre FAQ ? Vos ${existingCount} question(s) existante(s) seront conservées.`)) return;
+  tpl.forEach(([q, a]) => addFAQ(q, a));
+  showNotification(`✅ ${tpl.length} questions ajoutées depuis le template — pensez à les adapter à votre commerce`, 'success');
+}
 
 
 function showNotification(message, type='success') {
