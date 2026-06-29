@@ -659,28 +659,28 @@ async function loadLastSummary() {
 
   try {
     const data = await apiRequest(`/api/business/${businessId}/analytics/summary/latest`);
+    const item = data?.summaries?.[0];
 
     // Tous les cas où il n'y a pas de contenu à afficher
-    if (!data
-      || typeof data !== 'object'
-      || !data.summary_text
-      || data.summary_text.trim() === '') {
+    if (!item
+      || !item.summary_text
+      || item.summary_text.trim() === '') {
       buildLocalSummary(container, label);
       return;
     }
 
-    const periodLabel = data.period_type === 'daily' ? (_dat||DASH_ANA_T.fr).summary_daily : (_dat||DASH_ANA_T.fr).summary_weekly;
-    const dateLabel = data.period_end
-      ? new Date(data.period_end).toLocaleDateString('fr-FR', {day:'numeric', month:'long'})
+    const periodLabel = item.period_type === 'daily' ? (_dat||DASH_ANA_T.fr).summary_daily : (_dat||DASH_ANA_T.fr).summary_weekly;
+    const dateLabel = item.period_end
+      ? new Date(item.period_end).toLocaleDateString('fr-FR', {day:'numeric', month:'long'})
       : '';
     if (label) label.textContent = `${periodLabel}${dateLabel ? ' · ' + dateLabel : ''}`;
 
     container.innerHTML = `
-      <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${data.summary_text}</div>
-      ${data.missing_faqs && data.missing_faqs.length ? `
+      <div style="font-size:15px;color:rgba(255,255,255,0.88);line-height:1.75;white-space:pre-wrap;">${item.summary_text}</div>
+      ${item.top_questions && item.top_questions.length ? `
       <div style="margin-top:20px;padding:16px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);border-radius:12px;">
         <div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:10px;" id="ana-summary-faq-label">💡 FAQ à compléter</div>
-        ${data.missing_faqs.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.times}x)</div>`).join('')}
+        ${item.top_questions.map(f => `<div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:6px;">• "${f.question}" (${f.count || f.unanswered_count || 1}x)</div>`).join('')}
       </div>` : ''}`;
 
   } catch(err) {
