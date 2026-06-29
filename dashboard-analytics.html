@@ -491,7 +491,7 @@ async function loadPeakHours() {
     const arr = Array.isArray(hours) ? hours : Object.values(hours);
 
     if (!arr.length || arr.every(v => v === 0)) {
-      container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">' + (_dat||DASH_ANA_T.fr).no_data_yet + '</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:30px;color:rgba(255,255,255,0.3);font-size:13px;">${(_dat||DASH_ANA_T.fr).no_data_yet}</div>`;
       return;
     }
 
@@ -534,12 +534,12 @@ async function loadPeakHours() {
       <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;">
         <span style="font-size:18px;">📍</span>
         <div>
-          <div style="font-size:13px;font-weight:700;color:#fff;">' + (_dat||DASH_ANA_T.fr).peak_label + ' <span style="color:#00D4FF;">${peakLabel}</span></div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.4);">${max} conversation${max>1?'s':''} ' + (_dat||DASH_ANA_T.fr).peak_convs</div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">${(_dat||DASH_ANA_T.fr).peak_label} <span style="color:#00D4FF;">${peakLabel}</span></div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">${max} conversation${max>1?'s':''} ${(_dat||DASH_ANA_T.fr).peak_convs}</div>
         </div>
       </div>
       <div style="display:flex;align-items:flex-end;gap:2px;margin-bottom:8px;">${barsHtml}</div>
-      <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;margin-bottom:14px;">' + (_dat||DASH_ANA_T.fr).peak_axis + '</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;margin-bottom:14px;">${(_dat||DASH_ANA_T.fr).peak_axis}</div>
       <div>${slotSummary}</div>`;
 
   } catch {
@@ -570,12 +570,12 @@ async function loadPeakHours() {
       }).join('');
       container.innerHTML = `
         <div style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;margin-bottom:16px;">
-          <div style="font-size:13px;font-weight:700;color:#fff;">' + (_dat||DASH_ANA_T.fr).peak_label + ' <span style="color:#00D4FF;">${peakIdx2}h – ${peakIdx2+1}h</span></div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">${(_dat||DASH_ANA_T.fr).peak_label} <span style="color:#00D4FF;">${peakIdx2}h – ${peakIdx2+1}h</span></div>
         </div>
         <div style="display:flex;align-items:flex-end;gap:2px;margin-bottom:8px;">${barsHtml2}</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;">' + (_dat||DASH_ANA_T.fr).peak_axis + '</div>`;
+        <div style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;">${(_dat||DASH_ANA_T.fr).peak_axis}</div>`;
     } catch {
-      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">' + (_dat||DASH_ANA_T.fr).no_data + '</div>`;
+      container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">${(_dat||DASH_ANA_T.fr).no_data}</div>`;
     }
   }
 }
@@ -586,7 +586,7 @@ async function loadTrafficSources() {
     const data = await apiRequest(`/api/business/${businessId}/analytics/sources?days=${currentPeriod}`);
     const container = document.getElementById('trafficSources');
     const sources = data.sources || {};
-    const total = Object.values(sources).reduce((a,b) => a+b, 0) || 1;
+    const total = Object.values(sources).reduce((a,b) => a + (Number(b)||0), 0);
     const items = [
       { key:'qr', label:'📱 QR Code', color:'#00D4FF' },
       { key:'instagram', label:'📸 Instagram', color:'#F59E0B' },
@@ -595,8 +595,8 @@ async function loadTrafficSources() {
       { key:'direct', label:'🔗 Direct', color:'rgba(255,255,255,0.4)' },
     ];
     container.innerHTML = items.map(s => {
-      const count = sources[s.key] || 0;
-      const pct = Math.round((count/total)*100);
+      const count = Number(sources[s.key]) || 0;
+      const pct = total > 0 ? Math.round((count/total)*100) : 0;
       return `<div style="margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
           <span style="font-size:13px;color:rgba(255,255,255,0.8);">${s.label}</span>
@@ -619,7 +619,7 @@ async function loadUnansweredQuestions() {
     const container = document.getElementById('unansweredQuestions');
     const questions = data.top_questions || data.unanswered || [];
     if (!questions.length) {
-      container.innerHTML = `<div style="text-align:center;padding:30px;"><div style="font-size:40px;margin-bottom:12px;">✅</div><div style="color:rgba(255,255,255,0.6);font-size:14px;">' + (_dat||DASH_ANA_T.fr).no_questions</div></div>`;
+      container.innerHTML = `<div style="text-align:center;padding:30px;"><div style="font-size:40px;margin-bottom:12px;">✅</div><div style="color:rgba(255,255,255,0.6);font-size:14px;">${(_dat||DASH_ANA_T.fr).no_questions}</div></div>`;
       return;
     }
     container.innerHTML = `<div style="display:grid;gap:10px;">${questions.map(q => `
@@ -629,7 +629,7 @@ async function loadUnansweredQuestions() {
           <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;margin-bottom:3px;">${q.question || q.original_text}</div>
           <div style="font-size:11px;color:rgba(255,255,255,0.4);">Posée ${q.count || q.unanswered_count || 1}x · Dernière fois ${q.last_asked ? new Date(q.last_asked).toLocaleDateString('fr-FR') : 'récemment'}</div>
         </div>
-        <a href="/dashboard-conversations" style="padding:7px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;flex-shrink:0;">' + (_dat||DASH_ANA_T.fr).btn_answer + '</a>
+        <a href="/dashboard-conversations" style="padding:7px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;flex-shrink:0;">${(_dat||DASH_ANA_T.fr).btn_answer}</a>
       </div>`).join('')}</div>`;
   } catch { document.getElementById('unansweredQuestions').innerHTML = `<div style="color:rgba(255,255,255,0.3);font-size:13px;text-align:center;padding:20px;">${(_dat||DASH_ANA_T.fr).no_data}</div>`; }
 }
@@ -641,11 +641,11 @@ function buildLocalSummary(container, label) {
     <div style="text-align:center;padding:32px 20px;">
       <div style="font-size:40px;margin-bottom:14px;opacity:0.4;">📋</div>
       <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:460px;margin:0 auto;">
-        ' + (_dat||DASH_ANA_T.fr).no_summary<br><br>
+        ${(_dat||DASH_ANA_T.fr).no_summary}<br><br>
         <span style="font-size:13px;color:rgba(255,255,255,0.35);">
           Le résumé est généré automatiquement ${proFlag ? (_dat||DASH_ANA_T.fr).summary_auto_pro : (_dat||DASH_ANA_T.fr).summary_auto_std}, 
           à condition qu'il y ait eu des conversations sur la période.<br><br>
-          Il sera ensuite affiché ici <strong style="color:rgba(255,255,255,0.5);">' + (_dat||DASH_ANA_T.fr).summary_email + '</strong> — c'est le même contenu.
+          Il sera ensuite affiché ici <strong style="color:rgba(255,255,255,0.5);">${(_dat||DASH_ANA_T.fr).summary_email}</strong> — c'est le même contenu.
         </span>
       </div>
     </div>`;
@@ -698,14 +698,14 @@ async function loadLanguageDistrib() {
     const container = document.getElementById('languageDistrib');
     const flags = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
     const names = { fr:'Français',en:'Anglais',de:'Allemand',it:'Italien',es:'Espagnol',pt:'Portugais' };
-    const total = Object.values(langs).reduce((a,b) => a+b, 0) || 1;
+    const total = Object.values(langs).reduce((a,b) => a + (Number(b)||0), 0);
     const sorted = Object.entries(langs).sort((a,b) => b[1]-a[1]);
     if (!sorted.length) {
       container.innerHTML = `<div style="text-align:center;padding:20px;color:rgba(255,255,255,0.3);font-size:13px;">${(_dat||DASH_ANA_T.fr).no_data_yet}</div>`;
       return;
     }
     container.innerHTML = sorted.map(([lang, count]) => {
-      const pct = Math.round((count/total)*100);
+      const pct = total > 0 ? Math.round((count/total)*100) : 0;
       return `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
         <span style="font-size:20px;">${flags[lang]||'🌍'}</span>
         <div style="flex:1;">
@@ -734,10 +734,10 @@ async function loadUrgencyDistrib() {
       { key:'medium', label:'🟡 Urgences moyennes', color:'#F59E0B', bg:'rgba(245,158,11,0.15)' },
       { key:'normal', label:'🟢 Demandes normales', color:'#10B981', bg:'rgba(16,185,129,0.15)' },
     ];
-    const total = Object.values(urgency).reduce((a,b) => a+b, 0) || 1;
+    const total = Object.values(urgency).reduce((a,b) => a + (Number(b)||0), 0);
     container.innerHTML = levels.map(l => {
-      const count = urgency[l.key] || 0;
-      const pct = Math.round((count/total)*100);
+      const count = Number(urgency[l.key]) || 0;
+      const pct = total > 0 ? Math.round((count/total)*100) : 0;
       return `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:${l.bg};border-radius:10px;margin-bottom:10px;">
         <span style="font-size:14px;color:rgba(255,255,255,0.9);">${l.label}</span>
         <span style="font-size:16px;font-weight:800;color:${l.color};">${count} <span style="font-size:11px;opacity:0.7;">(${pct}%)</span></span>

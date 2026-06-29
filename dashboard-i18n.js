@@ -595,3 +595,23 @@ if (typeof renderSidebarLogo !== 'function') {
     };
   }
 })();
+
+// ── CONFIGURATION ADAPTATIVE : masquer le lien "Rendez-vous" si le commerce n'utilise pas la prise de RDV ──
+async function lrDashApplyRdvVisibility() {
+  if (location.pathname.includes('dashboard-rendez-vous')) return; // toujours visible sur sa propre page (pour pouvoir réactiver le mode)
+  try {
+    const token = localStorage.getItem('auth_token');
+    const businessId = localStorage.getItem('business_id');
+    if (!token || !businessId) return;
+    const res = await fetch(`https://localreply-api.onrender.com/api/business/${businessId}/config`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const rdvMode = data?.business?.rdv_mode || 'google';
+    if (rdvMode === 'none') {
+      document.querySelectorAll('a[href="/dashboard-rendez-vous"]').forEach(el => { el.style.display = 'none'; });
+    }
+  } catch (e) { /* silencieux — la nav reste visible par défaut en cas d'erreur */ }
+}
+document.addEventListener('DOMContentLoaded', lrDashApplyRdvVisibility);
