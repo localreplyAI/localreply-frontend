@@ -973,14 +973,12 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
   const items = [];
   const cutoff30 = new Date(Date.now() - 30*24*60*60*1000);
 
-  // Conversations — 6 max, triées par date décroissante
+  // Conversations — 8 max, triées par date décroissante
   [...convs]
     .sort((a,b) => new Date(b.updated_at||b.created_at) - new Date(a.updated_at||a.created_at))
-    .slice(0, 6)
+    .slice(0, 8)
     .forEach(c => {
-      // detected_language est le bon champ (session_language n'existe pas en DB)
       const langFlag = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'}[c.detected_language] || '';
-      // Aperçu du message client — plusieurs fallbacks selon ce que l'API retourne
       let preview = null;
       if (c.messages && Array.isArray(c.messages) && c.messages.length) {
         const userMsgs = c.messages.filter(m => m.role === 'user');
@@ -997,33 +995,6 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
         text:((_dht||DASH_HOME_T.fr).conv_label + ' ' + langFlag).trim(),
         sub: preview.length > 55 ? preview.slice(0,55)+'…' : preview,
         time: c.updated_at || c.created_at
-      });
-    });
-
-  // RDV confirmés (déjà filtrés sur 30j par l'appelant)
-  [...confirmedApts]
-    .sort((a,b) => new Date(b.start_time||b.created_at) - new Date(a.start_time||a.created_at))
-    .slice(0, 4)
-    .forEach(a => {
-      items.push({
-        icon: '📅', color: '#10B981',
-        text: ((_dht||DASH_HOME_T.fr).rdv_confirmed) + (a.client_name ? ' — ' + a.client_name : ''),
-        sub: a.service_name || a.summary || '',
-        time: a.start_time || a.created_at
-      });
-    });
-
-  // RDV en attente — filtrés sur 30j pour l'affichage (les plus anciens restent dans les alertes)
-  [...pendingApts]
-    .filter(a => new Date(a.created_at) >= cutoff30)
-    .sort((a,b) => new Date(b.created_at) - new Date(a.created_at))
-    .slice(0, 2)
-    .forEach(a => {
-      items.push({
-        icon: '⏳', color: '#F59E0B',
-        text: ((_dht||DASH_HOME_T.fr).rdv_pending) + (a.client_name ? ' — ' + a.client_name : ''),
-        sub: a.service_name || a.summary || '',
-        time: a.created_at
       });
     });
 
