@@ -572,7 +572,8 @@
 #tabScrollContainer::-webkit-scrollbar{display:none;}
 @media(max-width:900px){
   #tabBar{padding:0 12px!important;}
-  #tabScrollHint{display:flex!important;}
+  #tabBar #tabScrollContainer{flex-wrap:wrap!important;overflow-x:visible!important;}
+  #tabScrollHint{display:none!important;}
 }
 
 /* HOURS */
