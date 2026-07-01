@@ -57,7 +57,7 @@
     <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
     <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;" loading="lazy">
+        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
         <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
@@ -170,12 +170,12 @@
           <div style="font-size: 36px; font-weight: 700; color: #00D4FF; margin-bottom: 8px;" id="metricConversations" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-conv-sub">Total conversations IA</div>
         </div>
-        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+        <div id="anaCardRdv" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-rdv">📅 Rendez-vous</span></div>
           <div style="font-size: 36px; font-weight: 700; color: #10B981; margin-bottom: 8px;" id="metricAppointments" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-rdv-sub">RDV créés par l'IA</div>
         </div>
-        <div style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
+        <div id="anaCardConversion" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 25px;">
           <div style="font-size: 14px; color: rgba(255,255,255,0.7); font-weight: 600; margin-bottom: 15px;"><span id="ana-metric-rate">📈 Conversion</span></div>
           <div style="font-size: 36px; font-weight: 700; color: #F59E0B; margin-bottom: 8px;" id="metricConversion" class="lr-skeleton">-</div>
           <div style="font-size: 12px; color: rgba(255,255,255,0.5);" id="ana-metric-rate-sub">Taux de conversion en RDV</div>
@@ -336,6 +336,14 @@ async function loadSidebarInfo() {
     ]);
 
     const biz = config?.business || config || {};
+
+    // Masquer les cartes RDV + Conversion si mode != google
+    const rdvMode = biz.rdv_mode || 'google';
+    const hideRdv = rdvMode !== 'google';
+    ['anaCardRdv', 'anaCardConversion'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = hideRdv ? 'none' : '';
+    });
 
     const sn = document.getElementById('sidebarBusinessName');
     if (sn && biz.name) { sn.textContent = biz.name; sn.classList.remove('lr-skeleton'); }
