@@ -667,12 +667,12 @@ async function switchRdvMode(mode) {
     await apiRequest(`/api/business/${businessId}/config`, 'POST', { rdv_mode: mode });
   } catch(e) { console.error('Erreur save rdv_mode:', e); }
 
-  // Recharger le contenu
+  // Recharger le contenu et mettre à jour l'affichage via applyRdvMode
   const config = await apiRequest(`/api/business/${businessId}/config`).catch(()=>null);
   const externalUrl = config?.business?.external_rdv_url || '';
-  await renderModeContent(mode, externalUrl);
-
-  // Afficher/masquer selon le mode — géré par applyRdvMode
+  const section = document.getElementById('rdvModeSection');
+  const aptsSection = document.getElementById('appointmentsSection');
+  if (section && aptsSection) await applyRdvMode(section, aptsSection, mode, externalUrl);
 }
 
 async function saveRdvLink() {
