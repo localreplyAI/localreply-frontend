@@ -523,10 +523,12 @@ async function applyRdvMode(section, aptsSection, mode, externalUrl) {
   // Remplir le contenu selon le mode
   await renderModeContent(mode, externalUrl);
 
-  // Afficher/masquer la section appointments
-  if (aptsSection) {
-    aptsSection.style.display = mode === 'none' ? 'none' : 'block';
-  }
+  // Afficher/masquer stats + liste appointments selon le mode
+  const aptsNotice = document.getElementById('appointmentsNotice');
+  const statsGrid = document.getElementById('rdvStatsGrid');
+  if (aptsSection) aptsSection.style.display = mode === 'google' ? 'block' : 'none';
+  if (aptsNotice) aptsNotice.style.display = mode === 'google' ? 'none' : 'block';
+  if (statsGrid) statsGrid.style.display = mode === 'google' ? 'grid' : 'none';
 }
 
 async function renderModeContent(mode, externalUrl) {
@@ -670,13 +672,7 @@ async function switchRdvMode(mode) {
   const externalUrl = config?.business?.external_rdv_url || '';
   await renderModeContent(mode, externalUrl);
 
-  // Afficher/masquer appointments selon le mode
-  const aptsSection = document.getElementById('appointmentsSection');
-  const aptsNotice = document.getElementById('appointmentsNotice');
-  const statsGrid = document.getElementById('rdvStatsGrid');
-  if (aptsSection) aptsSection.style.display = mode === 'google' ? 'block' : 'none';
-  if (aptsNotice) aptsNotice.style.display = mode === 'google' ? 'none' : 'block';
-  if (statsGrid) statsGrid.style.display = mode === 'google' ? 'grid' : 'none';
+  // Afficher/masquer selon le mode — géré par applyRdvMode
 }
 
 async function saveRdvLink() {
