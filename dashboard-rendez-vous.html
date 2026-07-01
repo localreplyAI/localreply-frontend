@@ -127,6 +127,20 @@
     <div id="rdvModeSection" style="margin-bottom:20px;"></div>
 
     <!-- RECHERCHE ET FILTRES (masqué si mode none) -->
+    <!-- Message info — visible uniquement si mode != google -->
+    <div id="appointmentsNotice" style="display:none;margin-bottom:20px;background:rgba(0,82,204,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:16px;padding:28px 24px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:14px;">📊</div>
+      <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Données de RDV disponibles uniquement avec Google Calendar</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:440px;margin:0 auto 20px;line-height:1.7;">
+        L'historique des rendez-vous, les confirmations et les statistiques de conversion 
+        s'alimentent automatiquement quand le mode <strong style="color:#00D4FF;">Google Calendar</strong> est activé.<br>
+        Avec votre mode actuel, la prise de RDV se fait en dehors de LocalReply — ces données ne sont donc pas disponibles ici.
+      </p>
+      <button onclick="selectMode('google')" style="padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">
+        📅 Passer en mode Google Calendar
+      </button>
+    </div>
+
     <div id="appointmentsSection">
     <div style="display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; align-items: center;">
       <div style="flex: 1; min-width: 200px; position: relative;">
@@ -656,9 +670,11 @@ async function switchRdvMode(mode) {
   const externalUrl = config?.business?.external_rdv_url || '';
   await renderModeContent(mode, externalUrl);
 
-  // Afficher/masquer appointments
+  // Afficher/masquer appointments selon le mode
   const aptsSection = document.getElementById('appointmentsSection');
-  if (aptsSection) aptsSection.style.display = mode === 'none' ? 'none' : 'block';
+  const aptsNotice = document.getElementById('appointmentsNotice');
+  if (aptsSection) aptsSection.style.display = mode === 'google' ? 'block' : 'none';
+  if (aptsNotice) aptsNotice.style.display = mode === 'google' ? 'none' : 'block';
 }
 
 async function saveRdvLink() {
