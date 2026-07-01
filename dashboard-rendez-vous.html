@@ -104,8 +104,8 @@
       <button onclick="loadAppointments()" style="display:flex;align-items:center;gap:7px;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">🔄 Actualiser</button>
     </div>
 
-    <!-- STATS -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+    <!-- STATS — masquées si mode != google -->
+    <div id="rdvStatsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
       <div style="background:linear-gradient(135deg,rgba(245,158,11,0.1),rgba(217,119,6,0.06));border:1px solid rgba(245,158,11,0.2);border-radius:14px;padding:18px 20px;text-align:center;">
         <div style="font-size:32px;font-weight:800;color:#F59E0B;line-height:1;margin-bottom:4px;" id="statPending">—</div>
         <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.6);">En attente</div>
@@ -673,8 +673,10 @@ async function switchRdvMode(mode) {
   // Afficher/masquer appointments selon le mode
   const aptsSection = document.getElementById('appointmentsSection');
   const aptsNotice = document.getElementById('appointmentsNotice');
+  const statsGrid = document.getElementById('rdvStatsGrid');
   if (aptsSection) aptsSection.style.display = mode === 'google' ? 'block' : 'none';
   if (aptsNotice) aptsNotice.style.display = mode === 'google' ? 'none' : 'block';
+  if (statsGrid) statsGrid.style.display = mode === 'google' ? 'grid' : 'none';
 }
 
 async function saveRdvLink() {
