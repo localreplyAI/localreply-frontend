@@ -613,161 +613,157 @@
         <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;" data-i18n="f_db_sub">Conversations en cours, RDV en attente, questions sans réponse — tout ce dont vous avez besoin pour gérer votre commerce à distance.</p>
       </div>
 
-      <!-- Mock Dashboard — fidèle au vrai dashboard -->
-      <!-- Badge fictif -->
-      <div style="text-align:center;margin-bottom:10px;">
+      <!-- Mock Dashboard mobile — mis à jour -->
+      <div style="text-align:center;margin-bottom:14px;">
         <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:4px 14px;border-radius:100px;letter-spacing:.5px;" data-i18n="f_db_fictive">✦ Données fictives — à titre d'illustration</span>
       </div>
 
-      <div class="lrf-dash sr">
-        <div class="lrf-dash-bar">
-          <div class="lrf-dash-dot" style="background:#EF4444;"></div>
-          <div class="lrf-dash-dot" style="background:#F59E0B;"></div>
-          <div class="lrf-dash-dot" style="background:#10B981;"></div>
-          <span style="font-size:12px;color:rgba(255,255,255,.3);margin-left:8px;" data-i18n="f_db_windowtitle">LocalReply — Tableau de bord</span>
-        </div>
-        <div class="lrf-dash-inner">
-          <!-- Sidebar fidèle -->
-          <div class="lrf-dash-sidebar">
-            <div style="padding:12px 16px 14px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:8px;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:7px;font-size:13px;display:flex;align-items:center;justify-content:center;">💇</div>
-                <div>
-                  <div style="font-size:12px;font-weight:600;color:#fff;">Salon Belle Époque</div>
-                  <div style="font-size:10px;color:rgba(255,255,255,.35);" data-i18n="f_db_plan">⭐ Plan Pro</div>
-                </div>
-              </div>
-            </div>
-            <div class="lrf-dash-nav-item active" data-i18n="f_db_nav_home">🏠 Accueil</div>
-            <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:1px;padding:6px 16px 2px;" data-i18n="f_db_nav_section">Navigation</div>
-            <div class="lrf-dash-nav-item" data-i18n="f_db_nav_config">⚙️ Configuration</div>
-            <div class="lrf-dash-nav-item" style="position:relative;" data-i18n="f_db_nav_msgs">💬 Messages <span style="margin-left:auto;background:#EF4444;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;">9+</span></div>
-            <div class="lrf-dash-nav-item" data-i18n="f_db_nav_rdv">📅 Rendez-vous <span style="margin-left:auto;background:#F59E0B;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;">4</span></div>
-            <div class="lrf-dash-nav-item" data-i18n="f_db_nav_analytics">📈 Analytics <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:1px 5px;border-radius:4px;font-weight:700;">PRO</span></div>
-            <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:1px;padding:10px 16px 2px;" data-i18n="f_db_account_section">Compte</div>
-            <div class="lrf-dash-nav-item" data-i18n="f_db_nav_account">👤 Mon compte</div>
-            <div class="lrf-dash-nav-item" data-i18n="f_db_nav_billing">💳 Abonnement</div>
+      <!-- Cadre téléphone -->
+      <div style="display:flex;justify-content:center;">
+        <div style="width:300px;background:#0a0f1a;border-radius:38px;border:2px solid rgba(255,255,255,.12);box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;position:relative;">
+
+          <!-- Dynamic island -->
+          <div style="height:42px;background:#050a14;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.05);">
+            <div style="width:90px;height:22px;background:#000;border-radius:20px;"></div>
           </div>
 
-          <!-- Contenu principal -->
-          <div class="lrf-dash-content">
-            <div style="margin-bottom:10px;">
-              <div style="font-size:13px;font-weight:800;color:#fff;margin-bottom:1px;" data-i18n="f_db_greeting">Bonjour <span style="color:#00D4FF;">Salon Belle Époque</span> 👋</div>
-              <div style="font-size:10px;color:rgba(255,255,255,.35);" data-i18n="f_db_date">Lundi 12 mai · 142 clients servis ce mois</div>
+          <!-- Contenu dashboard -->
+          <div style="background:linear-gradient(180deg,#0a1628 0%,#060d1f 100%);padding:14px 14px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden;">
+
+            <!-- Topbar -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <img src="/assets/logo.png" style="width:26px;height:26px;border-radius:7px;" onerror="this.style.display='none'">
+                <span style="font-size:13px;font-weight:700;color:#fff;">LocalReply</span>
+              </div>
+              <div style="font-size:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 9px;color:rgba(255,255,255,.6);">🇫🇷 FR</div>
             </div>
-            <div style="background:rgba(0,212,255,.07);border-left:3px solid #00D4FF;border-radius:8px;padding:7px 10px;margin-bottom:10px;display:flex;align-items:center;gap:7px;">
-              <span style="font-size:13px;">🤖</span>
+
+            <!-- Greeting -->
+            <div style="margin-bottom:10px;">
+              <div style="font-size:14px;font-weight:800;color:#fff;" data-i18n="f_db_greeting">Bonjour <span style="color:#00D4FF;">Salon Belle Époque</span> 👋</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;">Mercredi 5 juillet · Plan Pro ⭐</div>
+            </div>
+
+            <!-- Alerte questions -->
+            <div style="background:rgba(0,212,255,.08);border-left:3px solid #00D4FF;border-radius:0 10px 10px 0;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:14px;">🤖</span>
               <div>
                 <div style="font-size:11px;font-weight:700;color:#00D4FF;" data-i18n="f_db_unanswered">11 questions sans réponse</div>
-                <div style="font-size:10px;color:rgba(255,255,255,.4);" data-i18n="f_db_faq_hint">Répondez pour enrichir la FAQ automatiquement</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.4);" data-i18n="f_db_faq_hint">Répondez pour enrichir la FAQ automatiquement</div>
               </div>
             </div>
-            <div class="lrf-dash-kpis" style="margin-bottom:8px;">
-              <div class="lrf-dash-kpi">
-                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;" data-i18n="f_db_kpi_conv">Conversations</div>
-                <div class="lrf-dash-kpi-val" style="color:#00D4FF;">312</div>
-                <div class="lrf-dash-kpi-label" data-i18n="f_db_30days">30 derniers jours</div>
+
+            <!-- 3 KPIs -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;">
+              <div style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_conv">Conversations</div>
+                <div style="font-size:20px;font-weight:800;color:#00D4FF;line-height:1;">312</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_30days">30 derniers jours</div>
               </div>
-              <div class="lrf-dash-kpi">
-                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;" data-i18n="f_db_kpi_rdv">RDV confirmés</div>
-                <div class="lrf-dash-kpi-val" style="color:#10B981;">87</div>
-                <div class="lrf-dash-kpi-label" data-i18n="f_db_30days">30 derniers jours</div>
+              <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_rdv">RDV confirmés</div>
+                <div style="font-size:20px;font-weight:800;color:#10B981;line-height:1;">87</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_30days">30 derniers jours</div>
               </div>
-              <div class="lrf-dash-kpi">
-                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;" data-i18n="f_db_kpi_todo">À traiter</div>
-                <div class="lrf-dash-kpi-val" style="color:#F59E0B;">15</div>
-                <div class="lrf-dash-kpi-label" data-i18n="f_db_kpi_todo_sub">RDV + questions</div>
+              <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_todo">À traiter</div>
+                <div style="font-size:20px;font-weight:800;color:#F59E0B;line-height:1;">15</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_kpi_todo_sub">Questions en attente</div>
               </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 130px;gap:8px;">
+
+            <!-- Score IA -->
+            <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:12px;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <!-- Ring -->
+                <div style="position:relative;width:52px;height:52px;flex-shrink:0;">
+                  <svg width="52" height="52" viewBox="0 0 52 52">
+                    <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="5"/>
+                    <circle cx="26" cy="26" r="21" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="26" transform="rotate(-90 26 26)"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;">80</div>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;" data-i18n="f_db_ai_score">Score IA</div>
+                  <div style="font-size:13px;font-weight:700;color:#10B981;">🟢 Excellent</div>
+                  <div style="font-size:9px;color:rgba(16,185,129,.6);">L'IA est bien configurée ✓</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;">
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);" data-i18n="f_db_services">✅ Services</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+15</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);" data-i18n="f_db_hours">✅ Horaires</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+15</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);">✅ FAQ (20+)</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+30</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);">✅ Calendar</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+20</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activité récente -->
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;margin-bottom:0;">
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Activité récente</div>
               <div style="display:flex;flex-direction:column;gap:6px;">
-                <div style="background:linear-gradient(135deg,rgba(0,82,204,.12),rgba(0,212,255,.05));border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:9px;">
-                  <div style="width:28px;height:28px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">🎯</div>
-                  <div>
-                    <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;" data-i18n="f_db_conversion">Taux de conversion</div>
-                    <div style="font-size:16px;font-weight:800;color:#10B981;">28% <span style="font-size:10px;color:rgba(255,255,255,.4);font-weight:400;" data-i18n="f_db_conv_rdv">conversations → RDV</span></div>
+                <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.08);border-radius:8px;">
+                  <span style="font-size:13px;">💬</span>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇩🇪</div>
+                    <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Wann haben Sie morgen geöffnet?</div>
                   </div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 2h</div>
                 </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:9px 11px;">
-                    <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;" data-i18n="f_db_main_lang">🌍 Langue principale</div>
-                    <div style="font-size:13px;font-weight:800;color:#fff;" data-i18n="f_db_main_lang_val">🇩🇪 Allemand</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,.35);margin-top:1px;" data-i18n="f_db_main_lang_sub">Langue principale</div>
+                <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.08);border-radius:8px;">
+                  <span style="font-size:13px;">💬</span>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇫🇷</div>
+                    <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Vous acceptez les chèques-vacances ?</div>
                   </div>
-                  <div style="background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:9px 11px;">
-                    <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;" data-i18n="f_db_rdv_pending">📅 RDV en attente</div>
-                    <div style="font-size:14px;font-weight:800;color:#F59E0B;">4</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,.35);margin-top:1px;" data-i18n="f_db_to_confirm">À confirmer →</div>
-                  </div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 5h</div>
                 </div>
               </div>
-              <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:7px;">
-                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;text-align:center;" data-i18n="f_db_ai_score">Score IA</div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="position:relative;width:44px;height:44px;flex-shrink:0;">
-                    <svg width="44" height="44" viewBox="0 0 44 44">
-                      <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="5"/>
-                      <circle cx="22" cy="22" r="18" fill="none" stroke="#00D4FF" stroke-width="5" stroke-linecap="round" stroke-dasharray="113" stroke-dashoffset="28" transform="rotate(-90 22 22)"/>
-                    </svg>
-                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                      <div style="font-size:11px;font-weight:800;color:#fff;">75</div>
-                    </div>
-                  </div>
-                  <div>
-                    <div style="font-size:11px;font-weight:700;color:#F59E0B;" data-i18n="f_db_to_improve">🟡 À améliorer</div>
-                    <div style="font-size:9px;color:rgba(255,255,255,.35);line-height:1.4;" data-i18n="f_db_calendar_missing">Calendar manquant</div>
-                  </div>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:4px;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;">
-                    <span style="font-size:10px;color:rgba(255,255,255,.7);" data-i18n="f_db_services">✅ Services</span>
-                    <span style="font-size:10px;font-weight:700;color:#10B981;">+25</span>
-                  </div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;">
-                    <span style="font-size:10px;color:rgba(255,255,255,.7);" data-i18n="f_db_hours">✅ Horaires</span>
-                    <span style="font-size:10px;font-weight:700;color:#10B981;">+20</span>
-                  </div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;">
-                    <span style="font-size:10px;color:rgba(255,255,255,.7);" data-i18n="f_db_faq_done">✅ FAQ (5+)</span>
-                    <span style="font-size:10px;font-weight:700;color:#10B981;">+30</span>
-                  </div>
-                  <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,158,11,.05);border:1px solid rgba(245,158,11,.15);border-radius:6px;padding:4px 7px;">
-                    <span style="font-size:10px;color:rgba(255,255,255,.5);" data-i18n="f_db_calendar_item">⬜ Calendar</span>
-                    <span style="font-size:10px;font-weight:700;color:rgba(255,255,255,.25);">+25</span>
-                  </div>
-                </div>
-                <div style="padding:5px 7px;background:rgba(245,158,11,.07);border-radius:7px;border-left:2px solid rgba(245,158,11,.4);">
-                  <div style="font-size:9px;color:#F59E0B;font-weight:700;margin-bottom:1px;" data-i18n="f_db_tip_label">💡 Conseil</div>
-                  <div style="font-size:9px;color:rgba(255,255,255,.5);line-height:1.4;" data-i18n="f_db_tip_text">Connectez Google Calendar pour les RDV auto.</div>
-                </div>
-              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom nav -->
+          <div style="background:#060d1f;border-top:1px solid rgba(255,255,255,.07);display:grid;grid-template-columns:repeat(5,1fr);padding:10px 0 14px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <span style="font-size:17px;">🏠</span>
+              <span style="font-size:8px;font-weight:700;color:#00D4FF;">Accueil</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">⚙️</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Config</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;">
+              <span style="font-size:17px;">💬</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Messages</span>
+              <div style="position:absolute;top:-2px;right:22px;width:14px;height:14px;background:#EF4444;border-radius:10px;font-size:7px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;">9+</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">📅</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">RDV</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">☰</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Plus</span>
             </div>
           </div>
+
         </div>
       </div>
 
-
-      <!-- Points clés dashboard -->
-      <div class="lrf-grid lrf-grid-3" style="margin-top:32px;">
-        <div class="lrf-card sr" style="padding:24px;">
-          <div style="font-size:24px;margin-bottom:10px;">🔴</div>
-          <h3 style="font-size:15px;margin-bottom:6px;" data-i18n="f_dash1_title">Urgences en priorité</h3>
-          <p style="font-size:13px;" data-i18n="f_dash1_desc">Visible dans le dashboard pour tous les plans. Alerte SMS instantanée <span style="color:#F59E0B;font-size:11px;font-weight:600;">PRO</span></p>
-        </div>
-        <div class="lrf-card sr d1" style="padding:24px;">
-          <div style="font-size:24px;margin-bottom:10px;">❓</div>
-          <h3 style="font-size:15px;margin-bottom:6px;" data-i18n="f_dash2_title">Questions sans réponse</h3>
-          <p style="font-size:13px;" data-i18n="f_dash2_desc">Répondez en 1 clic — la réponse est ajoutée à la FAQ automatiquement.</p>
-        </div>
-        <div class="lrf-card sr d2" style="padding:24px;">
-          <div style="font-size:24px;margin-bottom:10px;">📊</div>
-          <h3 style="font-size:15px;margin-bottom:6px;" data-i18n="f_dash3_title">Analytics en temps réel</h3>
-          <p style="font-size:13px;" data-i18n="f_dash3_desc">Conversations, RDV, langues, sources de trafic — tout en un coup d'œil. <span style="color:#F59E0B;font-size:11px;font-weight:600;">PRO</span></p>
-        </div>
-      </div>
-  </section>
-
-  <!-- ONBOARDING — 4 étapes -->
+    <!-- ONBOARDING — 4 étapes -->
   <section class="lrf-section">
     <div class="lrf-container">
       <div class="lrf-header" style="text-align:center;margin-bottom:48px;">
