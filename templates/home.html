@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="{{_lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_title}}">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; background-image: radial-gradient(ellipse 80% 60% at 15% 0%, rgba(0,82,204,0.55) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 85% 100%, rgba(0,180,220,0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 30%, rgba(0,212,255,0.15) 0%, transparent 55%); background-attachment: fixed; font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --dark: #0A1628;
+  --green: #10B981;
+  --gold: #F59E0B;
+  --white: #FFFFFF;
+  --gray: #F5F7FA;
+  --text: #1A2340;
+  --muted: #6B7280;
+  --border: rgba(0,82,204,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.lrh {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  color: var(--text);
+  max-width: 100%;
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.lrh-hero {
+  background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%);
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 24px 60px;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* Orbes */
+.lrh-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: lrhFloat 20s ease-in-out infinite;
+}
+.lrh-orb-1 { width:500px;height:500px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(0,212,255,0.18) 0%,transparent 70%); }
+.lrh-orb-2 { width:400px;height:400px;bottom:-100px;left:-80px;background:radial-gradient(circle,rgba(0,82,204,0.25) 0%,transparent 70%);animation-delay:-8s; }
+.lrh-orb-3 { width:200px;height:200px;top:30%;left:40%;background:radial-gradient(circle,rgba(0,212,255,0.1) 0%,transparent 70%);animation-delay:-4s; }
+@keyframes lrhFloat { 0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-24px) scale(1.04);} }
+
+/* Grille de fond */
+.lrh-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+
+.lrh-hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Contenu hero gauche */
+.lrh-hero-left { display: flex; flex-direction: column; gap: 0; }
+
+.lrh-lang-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  width: fit-content;
+  animation: lrhUp 0.6s ease 0.1s both;
+}
+
+.lrh-h1 {
+  font-size: clamp(36px, 4.5vw, 62px) !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin-bottom: 22px;
+  animation: lrhUp 0.6s ease 0.2s both;
+}
+.lrh-h1 .lrh-grad {
+  background: linear-gradient(135deg, #fff 0%, #00D4FF 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+.lrh-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.65;
+  margin-bottom: 36px;
+  max-width: 500px;
+  animation: lrhUp 0.6s ease 0.3s both;
+}
+.lrh-sub-en {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  font-style: italic;
+  margin-top: -28px;
+  margin-bottom: 36px;
+  animation: lrhUp 0.6s ease 0.35s both;
+}
+
+.lrh-ctas {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 48px;
+  animation: lrhUp 0.6s ease 0.4s both;
+}
+.lrh-cta-primary {
+  padding: 16px 32px;
+  background: #fff;
+  border-radius: 14px;
+  color: var(--blue);
+  font-size: 15px; font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+.lrh-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.lrh-cta-secondary {
+  padding: 16px 28px;
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 14px;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 15px; font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.lrh-cta-secondary:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+.lrh-trust {
+  display: flex; gap: 20px; flex-wrap: wrap;
+  animation: lrhUp 0.6s ease 0.5s both;
+}
+.lrh-trust-item {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 13px; color: rgba(255,255,255,0.6);
+}
+.lrh-trust-item span:first-child { font-size: 15px; }
+
+@keyframes lrhUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;} }
+
+/* Logo flottant hero droite */
+.lrh-hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: lrhUp 0.7s ease 0.3s both;
+  min-height: 360px;
+}
+
+
+/* Cercles orbitaux */
+.lrh-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,0.18);
+  box-shadow: 0 0 30px rgba(0,212,255,0.06);
+}
+.lrh-orbit-1 { width: 260px; height: 260px; animation: lrhSpin 20s linear infinite; }
+.lrh-orbit-2 { width: 200px; height: 200px; animation: lrhSpin 14s linear infinite reverse; }
+@keyframes lrhSpin { to { transform: rotate(360deg); } }
+
+/* Points sur les orbites */
+.lrh-orbit-1::before {
+  content: '';
+  position: absolute; top: -4px; left: 50%;
+  width: 8px; height: 8px; margin-left: -4px;
+  background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 12px var(--cyan);
+}
+.lrh-orbit-2::before {
+  content: '';
+  position: absolute; bottom: -4px; right: 20%;
+  width: 6px; height: 6px;
+  background: #fff; border-radius: 50%;
+  box-shadow: 0 0 8px #fff;
+}
+
+/* Glow derrière le logo */
+.lrh-logo-glow {
+  position: absolute;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,0.22) 0%, rgba(0,82,204,0.08) 50%, transparent 70%);
+  animation: lrhPulse 3s ease-in-out infinite;
+}
+@keyframes lrhPulse { 0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.15);opacity:1;} }
+
+.lrh-logo-img {
+  width: 130px; height: 130px;
+  border-radius: 0;
+  background: transparent;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 24px 48px rgba(0,82,204,0.55)) drop-shadow(0 0 40px rgba(0,212,255,0.22));
+  animation: lrhFloat 4s ease-in-out infinite;
+}
+@keyframes lrhFloatImg { 0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);} }
+
+/* Bulles de langues flottantes */
+.lrh-bubble-1 { top: 2%; right: 0; animation-delay: 0s; }
+.lrh-bubble-2 { top: 18%; left: 0; animation-delay: -1s; }
+.lrh-bubble-3 { top: 36%; right: 0; animation-delay: -2s; }
+.lrh-bubble-4 { top: 52%; left: 0; animation-delay: -3s; }
+.lrh-bubble-5 { top: 68%; right: 0; animation-delay: -4s; }
+.lrh-bubble-6 { top: 82%; left: 0; animation-delay: -5s; }
+.lrh-bubble-7 { bottom: 10%; right: 0; animation-delay: -6s; }
+.lrh-bubble-8 { bottom: 2%; left: 0; animation-delay: -7s; }
+@keyframes lrhBubble { 0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);} }
+
+/* ══════════════════════════════
+   STATS
+══════════════════════════════ */
+.lrh-stats {
+  background: rgba(255,255,255,0.03);
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+  margin-top: -2px;
+}
+.lrh-stats-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  transform: translateY(-40px);
+  box-shadow: 0 8px 40px rgba(0,82,204,0.1);
+  overflow: hidden;
+}
+.lrh-stat {
+  padding: 32px 28px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.lrh-stat:last-child { border-right: none; }
+.lrh-stat-num {
+  font-size: 40px; font-weight: 800;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1; margin-bottom: 8px;
+  letter-spacing: -1px;
+}
+.lrh-stat-label { font-size: 14px; color: var(--muted); font-weight: 500; line-height: 1.4; }
+
+/* ══════════════════════════════
+   FEATURES
+══════════════════════════════ */
+.lrh-features {
+  background: var(--gray);
+  padding: 80px 24px;
+}
+.lrh-features-inner { max-width: 1100px; margin: 0 auto; }
+
+.lrh-section-eyebrow {
+  font-size: 12px; font-weight: 700;
+  color: var(--blue); letter-spacing: 1.5px;
+  text-transform: uppercase; text-align: center;
+  margin-bottom: 12px;
+}
+.lrh-section-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700; color: var(--text);
+  text-align: center; margin-bottom: 8px;
+  line-height: 1.15; letter-spacing: -0.5px;
+}
+.lrh-section-sub {
+  font-size: 16px; color: var(--muted);
+  text-align: center; margin-bottom: 56px;
+  line-height: 1.6;
+}
+
+.lrh-feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.lrh-feat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 32px 28px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.lrh-feat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.lrh-feat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,82,204,0.1); }
+.lrh-feat-card:hover::before { transform: scaleX(1); }
+
+.lrh-feat-icon {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1));
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+.lrh-feat-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.lrh-feat-title-en { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+.lrh-feat-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* ══════════════════════════════
+   COMMENT ÇA MARCHE
+══════════════════════════════ */
+.lrh-how {
+  background: transparent;
+  padding: 80px 24px;
+}
+.lrh-how-inner { max-width: 1000px; margin: 0 auto; }
+
+.lrh-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0;
+  position: relative;
+}
+.lrh-steps::before {
+  content: '';
+  position: absolute;
+  top: 40px; left: 16%; right: 16%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  z-index: 0;
+}
+
+.lrh-step {
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+.lrh-step-num {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 800; color: #fff;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 24px rgba(0,82,204,0.3);
+  position: relative;
+  border: 4px solid #fff;
+}
+.lrh-step-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.lrh-step-title-en { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 10px; }
+.lrh-step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ══════════════════════════════
+   SECTEURS
+══════════════════════════════ */
+.lrh-sectors {
+  background: var(--gray);
+  padding: 80px 24px;
+}
+.lrh-sectors-inner { max-width: 1100px; margin: 0 auto; }
+
+.lrh-sector-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+.lrh-sector-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.25s;
+  cursor: default;
+}
+.lrh-sector-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 6px 20px rgba(0,82,204,0.1);
+  transform: translateY(-3px);
+}
+.lrh-sector-icon { font-size: 32px; margin-bottom: 10px; }
+.lrh-sector-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+/* ══════════════════════════════
+   TÉMOIGNAGES
+══════════════════════════════ */
+.lrh-testimonials {
+  background: linear-gradient(135deg, #0A1628 0%, #0052CC 60%, #00D4FF 100%);
+  padding: 80px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.lrh-testimonials::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+.lrh-testimonials-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.lrh-testimonials .lrh-section-title { color: #fff; }
+.lrh-testimonials .lrh-section-sub { color: rgba(255,255,255,0.65); }
+.lrh-testimonials .lrh-section-eyebrow { color: var(--cyan); }
+
+.lrh-testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+.lrh-testi-card {
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 28px;
+  transition: all 0.3s;
+}
+.lrh-testi-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+.lrh-testi-stars { color: var(--gold); font-size: 16px; margin-bottom: 14px; letter-spacing: 2px; }
+.lrh-testi-text { font-size: 15px; color: rgba(255,255,255,0.88); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
+.lrh-testi-author { display: flex; align-items: center; gap: 12px; }
+.lrh-testi-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.lrh-testi-name { font-size: 14px; font-weight: 700; color: #fff; }
+.lrh-testi-role { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+/* ══════════════════════════════
+   CTA FINAL
+══════════════════════════════ */
+.lrh-cta-section {
+  background: transparent;
+  padding: 80px 24px;
+}
+.lrh-cta-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.lrh-cta-title {
+  font-size: clamp(30px, 4vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.lrh-cta-title .lrh-cta-grad {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lrh-cta-sub { font-size: 17px; color: var(--muted); line-height: 1.65; margin-bottom: 40px; }
+.lrh-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+.lrh-cta-btn-main {
+  padding: 18px 40px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-radius: 14px; color: #fff;
+  font-size: 16px; font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,82,204,0.3);
+  transition: all 0.25s;
+}
+.lrh-cta-btn-main:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,82,204,0.4); }
+.lrh-cta-btn-demo {
+  padding: 18px 32px;
+  background: rgba(0,82,204,0.06);
+  border: 1.5px solid var(--border);
+  border-radius: 14px; color: var(--blue);
+  font-size: 16px; font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.lrh-cta-btn-demo:hover { background: rgba(0,82,204,0.1); transform: translateY(-2px); }
+.lrh-cta-note { font-size: 13px; color: var(--muted); }
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 900px) {
+  .lrh-hero-inner { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+  .lrh-hero-left { align-items: center; }
+  .lrh-sub { text-align: center; }
+  .lrh-hero-right { order: -1; }
+    .lrh-logo-img { width: 90px; height: 90px; border-radius: 0; background: transparent; }
+  .lrh-orbit-1 { width: 150px; height: 150px; }
+  .lrh-orbit-2 { width: 120px; height: 120px; }
+  .lrh-logo-glow { width: 100px; height: 100px; }
+  /* Bulles langues : masquer les positionnées absolument */
+  .lrh-steps::before { display: none; }
+  /* Afficher les bulles compactes à la place */
+}
+
+/* Section QR right — stack vertical sur mobile */
+@media(max-width:900px){
+  .lrh-qrsec-right {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .lrh-qrsec-arrow { flex-direction: row; gap: 8px; }
+  .lrh-qrsec-arrowline { width: 30px; height: 1.5px; }
+  .lrh-qrsec-phone, .lrh-qrsec-chat { width: 100%; max-width: 280px; }
+}
+@media (max-width: 600px) {
+  .lrh-hero { padding: 48px 16px 40px; min-height: auto; overflow: hidden; }
+  .lrh-h1 { font-size: 28px !important; letter-spacing: -0.5px; }
+  .lrh-sub { font-size: 15px; }
+  .lrh-ctas { justify-content: center; }
+  .lrh-trust { justify-content: center; }
+  .lrh-stats-inner { border-radius: 14px; }
+  .lrh-stat { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+  .lrh-stat:last-child { border-bottom: none; }
+  .lrh-sector-grid { grid-template-columns: repeat(2, 1fr); }
+  .lrh-sector-card { padding: 18px 10px; }
+  .lrh-sector-name { font-size: 12px; }
+  .lrh-features, .lrh-how, .lrh-sectors, .lrh-testimonials, .lrh-cta-section { padding: 56px 16px; }
+}
+
+/* ══════════════════════════════
+   POURQUOI LOCALREPLY
+══════════════════════════════ */
+.lrh-why {
+  background: transparent;
+  padding: 80px 24px;
+}
+.lrh-why-inner { max-width: 1100px; margin: 0 auto; }
+
+.lrh-why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  margin-top: 56px;
+}
+.lrh-why-left { display: flex; flex-direction: column; gap: 24px; }
+
+.lrh-why-item {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 16px;
+  transition: all 0.25s;
+  cursor: default;
+}
+.lrh-why-item:hover {
+  background: rgba(0,82,204,0.04);
+}
+.lrh-why-item-icon {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0,82,204,0.2);
+}
+.lrh-why-item-title { font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 5px; }
+.lrh-why-item-desc { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+
+.lrh-why-right {
+  background: linear-gradient(135deg, #0A1628 0%, #0052CC 60%, #00D4FF 100%);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,82,204,0.25);
+}
+.lrh-why-right::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+.lrh-why-card-title {
+  font-size: 22px; font-weight: 700; color: #fff;
+  margin-bottom: 6px; position: relative; z-index: 1;
+}
+.lrh-why-card-sub {
+  font-size: 13px; color: rgba(255,255,255,0.6);
+  margin-bottom: 28px; position: relative; z-index: 1;
+}
+.lrh-why-metric {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: relative; z-index: 1;
+}
+.lrh-why-metric:last-child { border-bottom: none; padding-bottom: 0; }
+.lrh-why-metric-icon { font-size: 24px; flex-shrink: 0; }
+.lrh-why-metric-val { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+.lrh-why-metric-label { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+@media (max-width: 900px) {
+  .lrh-why-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+
+
+/* ══════════════════════════════
+   MODE D'EMPLOI RAPIDE
+══════════════════════════════ */
+.lrh-quickstart {
+  background: transparent;
+  padding: 80px 24px;
+}
+.lrh-quickstart-inner { max-width: 1100px; margin: 0 auto; }
+
+.lrh-qs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 48px;
+}
+
+.lrh-qs-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 24px;
+  position: relative;
+  transition: all 0.3s;
+}
+.lrh-qs-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,82,204,0.1);
+  border-color: rgba(0,82,204,0.2);
+}
+
+.lrh-qs-step-num {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 800; color: #fff;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 10px rgba(0,82,204,0.25);
+}
+.lrh-qs-icon { font-size: 28px; margin-bottom: 12px; }
+.lrh-qs-title { font-size: 15px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 8px; line-height: 1.3; }
+.lrh-qs-desc { font-size: 13px; color: #6B7280; line-height: 1.65; }
+.lrh-qs-tag {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 3px 10px;
+  background: rgba(0,82,204,0.07);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 600; color: var(--blue);
+}
+
+.lrh-qs-cta-wrap {
+  text-align: center;
+  margin-top: 40px;
+  padding: 28px;
+  background: linear-gradient(135deg, rgba(0,82,204,0.05), rgba(0,212,255,0.05));
+  border: 1px solid rgba(0,82,204,0.1);
+  border-radius: 16px;
+}
+.lrh-qs-cta-wrap p { font-size: 15px; color: #6B7280; margin-bottom: 16px; }
+.lrh-qs-cta-wrap a {
+  display: inline-block;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  border-radius: 12px; color: #fff;
+  font-size: 14px; font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0,82,204,0.25);
+  transition: all 0.25s;
+}
+.lrh-qs-cta-wrap a:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(0,82,204,0.35); }
+
+@media (max-width: 600px) {
+  .lrh-quickstart { padding: 56px 16px; }
+  .lrh-qs-grid { grid-template-columns: 1fr; }
+}
+
+    
+/* ══ OVERRIDE DARK PREMIUM ══ */
+.lrh-features, .lrh-how, .lrh-sectors, .lrh-quickstart {
+  background: transparent !important;
+}
+.lrh-feat-card {
+  background: rgba(255,255,255,.03) !important;
+  border: 1px solid rgba(255,255,255,.07) !important;
+  box-shadow: none !important;
+}
+.lrh-feat-card:hover {
+  background: rgba(0,212,255,.04) !important;
+  border-color: rgba(0,212,255,.22) !important;
+  transform: translateY(-5px) !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,.35) !important;
+}
+.lrh-feat-title { color: #fff !important; }
+.lrh-feat-title-en { color: rgba(255,255,255,.35) !important; font-size: 12px !important; }
+.lrh-feat-desc { color: rgba(255,255,255,.55) !important; }
+.lrh-feat-icon { 
+  background: rgba(0,212,255,.1) !important;
+  border: 1px solid rgba(0,212,255,.18) !important;
+}
+.lrh-step-title, .lrh-how h2 { color: #fff !important; }
+.lrh-step-desc { color: rgba(255,255,255,.55) !important; }
+.lrh-step-num { 
+  background: linear-gradient(135deg,#0052CC,#00D4FF) !important;
+  color: #fff !important;
+}
+.lrh-sector-card { 
+  background: rgba(255,255,255,.03) !important;
+  border-color: rgba(255,255,255,.07) !important;
+}
+.lrh-sector-card:hover {
+  background: rgba(0,212,255,.05) !important;
+  border-color: rgba(0,212,255,.2) !important;
+}
+.lrh-sector-name { color: rgba(255,255,255,.7) !important; }
+.lrh-section-title { color: #fff !important; font-family: 'Syne', sans-serif !important; }
+.lrh-section-sub { color: rgba(255,255,255,.55) !important; }
+.lrh-section-eyebrow { 
+  color: #00D4FF !important;
+  background: rgba(0,212,255,.08) !important;
+  border-color: rgba(0,212,255,.25) !important;
+}
+.lrh-qs-card {
+  background: rgba(255,255,255,.03) !important;
+  border-color: rgba(255,255,255,.07) !important;
+}
+.lrh-qs-card:hover {
+  border-color: rgba(0,212,255,.2) !important;
+  background: rgba(0,212,255,.04) !important;
+}
+.lrh-qs-step-num { 
+  background: linear-gradient(135deg,#0052CC,#00D4FF) !important;
+  color: #fff !important;
+  border: none !important;
+}
+.lrh-qs-title { color: #fff !important; }
+.lrh-qs-desc { color: rgba(255,255,255,.55) !important; }
+.lrh-why-item-title { color: #fff !important; }
+.lrh-why-item-desc { color: rgba(255,255,255,.55) !important; }
+.lrh-why { background: transparent; }
+.lrh-testi-card {
+  background: rgba(255,255,255,.03) !important;
+  border-color: rgba(255,255,255,.07) !important;
+}
+.lrh-testi-card:hover {
+  border-color: rgba(0,212,255,.2) !important;
+}
+.lrh-testi-text { color: rgba(255,255,255,.7) !important; }
+.lrh-testi-name { color: #fff !important; }
+.lrh-testi-role { color: rgba(255,255,255,.4) !important; }
+.lrh-stats { background: transparent; }
+.lrh-stat-num { font-family: 'Syne', sans-serif !important; }
+
+/* Scroll infini secteurs */
+.lrh-sector-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  width: max-content !important;
+  animation: lrhScrollX 30s linear infinite !important;
+}
+.lrh-sectors-inner { overflow: hidden !important; }
+.lrh-sector-grid:hover { animation-play-state: paused !important; }
+@keyframes lrhScrollX { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+@media (max-width: 600px) {
+  .lrh-sector-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    animation: none !important;
+  }
+  .lrh-sector-duplicate { display: none !important; }
+}
+
+/* SR animations */
+.sr { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr.in { opacity: 1; transform: none; }
+.sr.d1{transition-delay:.09s;}.sr.d2{transition-delay:.18s;}.sr.d3{transition-delay:.27s;}.sr.d4{transition-delay:.36s;}
+
+/* Canvas */
+#lrBgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5; }
+
+/* Floating badges */
+.lrh-fbadge { position: absolute; z-index: 10; background: rgba(10,22,40,.92); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.12); border-radius: 13px; padding: 11px 15px; display: flex; align-items: center; gap: 9px; font-size: 12.5px; font-weight: 500; color: #fff; box-shadow: 0 16px 40px rgba(0,0,0,.45); white-space: nowrap; }
+.lrh-fbadge-sub { font-size: 10.5px; color: rgba(255,255,255,.45); display: block; font-weight: 400; }
+.lrh-fbadge.f1 { top: -18px; left: -36px; animation: lrhFloat 3.6s .5s ease-in-out infinite; }
+.lrh-fbadge.f2 { bottom: 48px; right: -28px; animation: lrhFloat 4.2s 1.1s ease-in-out infinite; }
+
+    
+/* ══ QR SECTION ══ */
+.lrh-qrsec {
+  background: transparent;
+  padding: 110px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.lrh-qrsec::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,.07) 0%, transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.lrh-qrsec-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.lrh-qrsec-tag {
+  display: inline-flex; align-items: center;
+  padding: 5px 14px; border-radius: 100px;
+  border: 1px solid rgba(0,212,255,.25); background: rgba(0,212,255,.06);
+  font-size: 11.5px; font-weight: 600; color: #00D4FF;
+  letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.lrh-qrsec-h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(30px,3.8vw,50px); font-weight: 800;
+  line-height: 1.1; letter-spacing: -.025em; color: #fff;
+  margin-bottom: 18px;
+}
+.lrh-qrsec-p {
+  font-size: 16px; font-weight: 300; color: rgba(255,255,255,.75);
+  line-height: 1.75; margin-bottom: 28px;
+}
+.lrh-qrsec-vs {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 28px;
+}
+.lrh-qrsec-col {
+  border-radius: 14px; padding: 18px;
+}
+.lrh-qrsec-col.bad {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+}
+.lrh-qrsec-col.good {
+  background: rgba(0,212,255,.04);
+  border: 1px solid rgba(0,212,255,.2);
+}
+.lrh-qrsec-col-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.lrh-qrsec-col.bad .lrh-qrsec-col-title { color: rgba(255,255,255,.3); }
+.lrh-qrsec-col.good .lrh-qrsec-col-title { color: #00D4FF; }
+.lrh-qrsec-row {
+  display: flex; align-items: flex-start; gap: 8px;
+  font-size: 12.5px; color: rgba(255,255,255,.8);
+  margin-bottom: 7px; line-height: 1.4;
+}
+.lrh-x { color: rgba(239,68,68,.7); flex-shrink: 0; }
+.lrh-ok { color: #10B981; flex-shrink: 0; }
+.lrh-qrsec-places {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.lrh-place {
+  padding: 5px 12px; border-radius: 100px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  font-size: 12px; color: rgba(255,255,255,.5);
+}
+
+/* Visual QR */
+.lrh-qrsec-right {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+}
+.lrh-qrsec-phone {
+  width: 150px;
+  background: rgba(11,21,37,.98);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 22px; padding: 14px 12px;
+  box-shadow: 0 32px 64px rgba(0,0,0,.6);
+  animation: lrhFloat 4s ease-in-out infinite;
+}
+.lrh-qrsec-notch { display: none; }
+.lrh-qrsec-screen { background: #fff; border-radius: 10px; padding: 8px; text-align: center; }
+.lrh-qrsec-qr { display: grid; grid-template-columns: repeat(23,1fr); gap: 1px; width: 130px; height: 130px; margin: 0 auto 8px; }
+.lrh-qrsec-qr div { border-radius: 1px; }
+.lrh-qrsec-qr .on { background: #fff; }
+.lrh-qrsec-qr .off { background: transparent; }
+.lrh-qrsec-logo { width: 24px; height: 24px; background: transparent; border-radius: 0; margin: -52px auto 8px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
+.lrh-qrsec-url { font-size: 8.5px; color: #0052CC; letter-spacing: .02em; font-weight: 600; }
+.lrh-qrsec-arrow { display: flex; flex-direction: column; align-items: center; gap: 5px; color: rgba(255,255,255,.2); font-size: 10px; }
+.lrh-qrsec-arrowline { width: 40px; height: 1px; background: linear-gradient(90deg,transparent,rgba(0,212,255,.4),transparent); }
+.lrh-qrsec-chat {
+  width: 200px;
+  background: #0D1B2E;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 18px; padding: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.55);
+  animation: lrhFloat 4.5s 1s ease-in-out infinite;
+}
+.lrh-qrsec-chat-head { background: linear-gradient(135deg,#0052CC,#0070E0); border-radius: 10px; padding: 9px 12px; margin-bottom: 10px; font-size: 11px; font-weight: 600; color: #fff; }
+.lrh-qrsec-msg { padding: 8px 10px; border-radius: 10px; font-size: 11px; line-height: 1.45; margin-bottom: 6px; }
+.lrh-qrsec-msg.ai { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85); border-radius: 3px 10px 10px 10px; }
+.lrh-qrsec-msg.me { background: linear-gradient(135deg,#0052CC,#00D4FF); color: #fff; border-radius: 10px 3px 10px 10px; text-align: right; }
+
+@media(max-width:900px){
+  .lrh-qrsec-inner { grid-template-columns: 1fr; gap: 40px; }
+  .lrh-qrsec-vs { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:600px){
+  .lrh-qrsec-vs { grid-template-columns: 1fr; }
+}
+
+  
+.lrh-touch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px; }
+.lrh-touch-item { background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 16px 14px; text-align: center; transition: all .25s; cursor: default; }
+.lrh-touch-item:hover { background: rgba(0,212,255,.15); border-color: rgba(0,212,255,.4); transform: translateY(-2px); }
+.lrh-touch-icon { font-size: 24px; margin-bottom: 8px; }
+.lrh-touch-label { font-size: 13px; font-weight: 600; color: #ffffff; margin-bottom: 4px; }
+.lrh-touch-sub { font-size: 11px; color: rgba(255,255,255,.85); line-height: 1.4; }
+.lrh-qrsec-link { display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 12px 18px; background: rgba(0,212,255,.10); border: 1px solid rgba(0,212,255,.35); border-radius: 12px; margin-top: 4px; }
+.lrh-qrsec-link-prefix { font-size: 15px; color: rgba(255,255,255,.75); font-family: monospace; }
+.lrh-qrsec-link-slug { font-size: 15px; color: #00D4FF; font-weight: 700; font-family: monospace; }
+.lrh-qrsec-link-badge { font-size: 11px; color: rgba(255,255,255,.75); padding: 3px 8px; background: rgba(255,255,255,.1); border-radius: 6px; }
+@media(max-width:600px){ .lrh-touch-grid { grid-template-columns: repeat(2,1fr); } }
+
+.lrh-qrsec-examples { margin-top: 8px; }
+.lrh-qrsec-ex-label { font-size: 11px; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
+.lrh-qrsec-ex-row { display: flex; align-items: center; gap: 16px; padding: 14px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; }
+.lrh-qrsec-ex-qr { width: 72px; height: 72px; background: #fff; border-radius: 8px; padding: 5px; display: grid; grid-template-columns: repeat(23,1fr); gap: 0.5px; flex-shrink: 0; }
+.lrh-qrsec-ex-qr div { border-radius: 1px; }
+.lrh-qrsec-ex-qr .on { background: #0A1628; }
+.lrh-qrsec-ex-qr .off { background: transparent; }
+.lrh-qrsec-ex-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,.9); font-family: monospace; margin-bottom: 4px; }
+.lrh-qrsec-ex-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-bottom: 8px; }
+.lrh-qrsec-ex-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.lrh-qrsec-ex-tags span { font-size: 10.5px; padding: 3px 8px; background: rgba(0,212,255,.1); border: 1px solid rgba(0,212,255,.2); border-radius: 6px; color: rgba(255,255,255,.7); }
+
+
+/* ══ VISUAL STAGE HERO ══ */
+.lrh-visual-stage {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+/* Anneaux pulsants */
+.lrh-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,0.15);
+  animation: lrhRingPulse 3s ease-in-out infinite;
+}
+.lrh-ring-1 { width: 320px; height: 320px; animation-delay: 0s; }
+.lrh-ring-2 { width: 260px; height: 260px; animation-delay: .6s; border-color: rgba(0,82,204,0.2); }
+.lrh-ring-3 { width: 200px; height: 200px; animation-delay: 1.2s; border-color: rgba(0,212,255,0.1); }
+@keyframes lrhRingPulse {
+  0%,100% { transform: scale(1); opacity: .6; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+/* Orbites avec point lumineux */
+.lrh-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,255,0.18);
+}
+.lrh-orbit-1 { width: 280px; height: 280px; animation: lrhSpin 18s linear infinite; }
+.lrh-orbit-2 { width: 220px; height: 220px; animation: lrhSpin 12s linear infinite reverse; }
+
+.lrh-orbit-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #00D4FF;
+  top: -4px; left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 12px 3px rgba(0,212,255,.6);
+}
+
+/* Halo glow */
+.lrh-logo-glow {
+  position: absolute;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,0.3) 0%, rgba(0,82,204,0.15) 40%, transparent 70%);
+  animation: lrhPulse 3s ease-in-out infinite;
+  filter: blur(20px);
+}
+
+/* Logo */
+.lrh-logo-img {
+  width: 120px; height: 120px;
+  border-radius: 30px;
+  position: relative; z-index: 2;
+  filter: drop-shadow(0 20px 40px rgba(0,82,204,0.6)) drop-shadow(0 0 30px rgba(0,212,255,0.3));
+  animation: lrhFloat 4s ease-in-out infinite;
+}
+
+/* Badges flottants */
+.lrh-vis-badge {
+  position: absolute;
+  background: rgba(8,18,35,0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lrh-vis-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16,185,129,.6);
+  animation: lrhPulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+.lrh-vis-badge-title { font-size: 12.5px; font-weight: 600; color: #fff; white-space: nowrap; }
+.lrh-vis-badge-sub { font-size: 10.5px; color: rgba(255,255,255,.45); white-space: nowrap; }
+
+.lrh-vis-badge-1 {
+  bottom: -24px; left: 50%;
+  transform: translateX(-50%);
+  animation: lrhFloat 3.5s .5s ease-in-out infinite;
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .lrh-visual-stage { width: 240px; height: 240px; }
+  .lrh-ring-1 { width: 220px; height: 220px; }
+  .lrh-ring-2 { width: 180px; height: 180px; }
+  .lrh-ring-3 { width: 140px; height: 140px; }
+  .lrh-orbit-1 { width: 200px; height: 200px; }
+  .lrh-orbit-2 { width: 160px; height: 160px; }
+  .lrh-logo-img { width: 90px; height: 90px; border-radius: 0; background: transparent; }
+  .lrh-vis-badge-1 { left: -10px; top: 0; }
+  .lrh-vis-badge-2 { right: -10px; bottom: 10px; }
+}
+
+/* Langs strip */
+.lrh-langs-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.lrh-langs-label {
+  font-size: 11.5px;
+  color: rgba(255,255,255,.4);
+  font-weight: 500;
+  letter-spacing: .04em;
+  margin-right: 4px;
+}
+.lrh-lang-flag {
+  font-size: 20px;
+  transition: transform .2s cubic-bezier(.22,1,.36,1);
+  cursor: default;
+  line-height: 1;
+}
+.lrh-lang-flag:hover { transform: scale(1.35) translateY(-3px); }
+
+/* ── QR CARTE IMPRIMÉE ── */
+.lrh-qr-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px 16px;
+  width: 180px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.lrh-qr-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 2px;
+}
+.lrh-qr-card-logo {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  object-fit: contain;
+}
+.lrh-qr-card-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.9);
+  font-family: 'Syne', sans-serif;
+}
+.lrh-qr-card-code {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lrh-qr-card-code .lrh-qrsec-qr {
+  width: 140px !important;
+  height: 140px !important;
+  margin: 0 !important;
+}
+.lrh-qr-card-code .lrh-qrsec-logo {
+  margin: -54px auto 0 !important;
+  width: 26px !important;
+  height: 26px !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 4px #fff !important;
+  border-radius: 5px !important;
+  padding: 3px !important;
+}
+.lrh-qr-card-url {
+  font-size: 9.5px;
+  color: #444;
+  font-family: monospace;
+  text-align: center;
+  letter-spacing: .02em;
+}
+.lrh-qr-card-url strong { color: #0052CC; }
+.lrh-qr-card-hint {
+  font-size: 8.5px;
+  color: #999;
+  text-align: center;
+  line-height: 1.4;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+  width: 100%;
+}
+
+@media(max-width:900px){
+  .lrh-qr-card { width: 150px; }
+  .lrh-qr-card-code { width: 116px; height: 116px; }
+  .lrh-qr-card-code .lrh-qrsec-qr { width: 116px !important; height: 116px !important; }
+}
+
+.lrh-inuse {
+  padding: 100px 24px;
+  background: transparent;
+}
+.lrh-inuse-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.lrh-inuse-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.lrh-inuse-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+.lrh-inuse-sub {
+  font-size: 18px;
+  color: rgba(255,255,255,0.6);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.lrh-inuse-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.lrh-inuse-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.lrh-inuse-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,0.25);
+}
+.lrh-inuse-img-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.lrh-inuse-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.lrh-inuse-card:hover .lrh-inuse-img-wrap img {
+  transform: scale(1.04);
+}
+.lrh-inuse-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+}
+.lrh-inuse-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.lrh-inuse-caption strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.lrh-inuse-caption span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+}
+@media (max-width: 900px) {
+  .lrh-inuse-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .lrh-inuse-grid { grid-template-columns: 1fr; }
+  .lrh-inuse { padding: 60px 16px; }
+}
+.lrh-inuse-more {
+  text-align: center;
+  margin-top: 40px;
+  padding: 28px 24px;
+  border: 1px dashed rgba(0,212,255,0.2);
+  border-radius: 14px;
+  background: rgba(0,212,255,0.03);
+}
+.lrh-inuse-more-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.lrh-inuse-more-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0,212,255,0.35);
+}
+.lrh-inuse-more p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+}
+.lrh-inuse-more strong {
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+</style>
+
+<body>
+<canvas id="lrBgCanvas"></canvas>
+
+<script src="/nav.js"></script>
+
+<div class="lrh">
+
+  <section class="lrh-hero">
+    <div class="lrh-orb lrh-orb-1"></div>
+    <div class="lrh-orb lrh-orb-2"></div>
+    <div class="lrh-orb lrh-orb-3"></div>
+    <div class="lrh-grid"></div>
+
+    <div class="lrh-hero-inner">
+
+      <!-- Gauche -->
+      <div class="lrh-hero-left">
+
+        <h1 class="lrh-h1 sr">
+          <span data-i18n="hero_title1">{{hero_title1}}</span><br>
+          <span class="lrh-grad"><span data-i18n="hero_title2">{{hero_title2}}</span></span>
+        </h1>
+
+        <!-- Langues disponibles -->
+        <div class="lrh-langs-strip sr d1">
+          <span class="lrh-langs-label"><span data-i18n="hero_title3">{{hero_title3}}</span></span>
+          <span class="lrh-lang-flag" title="Français">🇫🇷</span>
+          <span class="lrh-lang-flag" title="English">🇬🇧</span>
+          <span class="lrh-lang-flag" title="Deutsch">🇩🇪</span>
+          <span class="lrh-lang-flag" title="Italiano">🇮🇹</span>
+          <span class="lrh-lang-flag" title="Español">🇪🇸</span>
+          <span class="lrh-lang-flag" title="Português">🇵🇹</span>
+          <span class="lrh-lang-flag" title="Nederlands">🇳🇱</span>
+          <span class="lrh-lang-flag" title="Polski">🇵🇱</span>
+        </div>
+
+        <p data-i18n="hero_sub" class="lrh-sub sr d2">{{hero_sub}}</p>
+
+        <div class="lrh-ctas sr d3">
+          <a href="/auth" class="lrh-cta-primary"><span data-i18n="hero_cta1">{{hero_cta1}}</span></a>
+          <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrh-cta-secondary"><span data-i18n="hero_cta2">{{hero_cta2}}</span></a>
+        </div>
+
+        <div class="lrh-trust sr d4">
+          <div class="lrh-trust-item"><span>🎁</span><span><span data-i18n="trust1">{{trust1}}</span></span></div>
+          <div class="lrh-trust-item"><span>⚡</span><span><span data-i18n="trust2">{{trust2}}</span></span></div>
+          <div class="lrh-trust-item"><span>🔒</span><span><span data-i18n="trust3">{{trust3}}</span></span></div>
+        </div>
+      </div>
+
+      <!-- Droite — logo flottant -->
+      <div class="lrh-hero-right">
+        <div class="lrh-visual-stage">
+
+          <!-- Anneaux pulsants -->
+          <div class="lrh-ring lrh-ring-1"></div>
+          <div class="lrh-ring lrh-ring-2"></div>
+          <div class="lrh-ring lrh-ring-3"></div>
+
+          <!-- Orbites tournantes avec point lumineux -->
+          <div class="lrh-orbit lrh-orbit-1">
+            <div class="lrh-orbit-dot"></div>
+          </div>
+          <div class="lrh-orbit lrh-orbit-2">
+            <div class="lrh-orbit-dot"></div>
+          </div>
+
+          <!-- Halo glow multi-couche -->
+          <div class="lrh-logo-glow"></div>
+
+          <!-- Logo -->
+          <img src="/assets/logo.png" alt="LocalReply AI" class="lrh-logo-img">
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="lrh-stats">
+    <div class="lrh-stats-inner">
+      <div class="lrh-stat">
+        <div class="lrh-stat-num">5 min</div>
+        <div class="lrh-stat-label"><span data-i18n="stat1_label">{{stat1_label}}</span></div>
+      </div>
+      <div class="lrh-stat">
+        <div class="lrh-stat-num">&lt;3s</div>
+        <div class="lrh-stat-label"><span data-i18n="stat2_label">{{stat2_label}}</span></div>
+      </div>
+      <div class="lrh-stat">
+        <div class="lrh-stat-num">8</div>
+        <div class="lrh-stat-label"><span data-i18n="stat3_label">{{stat3_label}}</span></div>
+      </div>
+      <div class="lrh-stat">
+        <div class="lrh-stat-num">24/7</div>
+        <div class="lrh-stat-label"><span data-i18n="stat4_label">{{stat4_label}}</span></div>
+      </div>
+    </div>
+  </section>
+
+    
+
+
+
+
+  
+<!-- ═══ SECTION : QR EN SITUATION ═══ -->
+<section class="lrh-inuse">
+  <div class="lrh-inuse-inner">
+    <div class="lrh-inuse-header">
+      <div class="lrh-label" style="text-align:center;display:block;margin-bottom:16px;"><span data-i18n="inuse_label">{{inuse_label}}</span></div>
+      <h2 class="lrh-inuse-title"><span data-i18n="inuse_title1">{{inuse_title1}}</span><br><span class="lrh-gradient-text"><span data-i18n="inuse_title2">{{inuse_title2}}</span></span></h2>
+      <p data-i18n="inuse_sub" class="lrh-inuse-sub">{{inuse_sub}}</p>
+    </div>
+    <div class="lrh-inuse-grid">
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-vitrine.jpg" alt="QR code sur vitrine de salon de coiffure à Paris" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🪟</span>
+          <div>
+            <strong><span data-i18n="img1_title">{{img1_title}}</span></strong>
+            <span><span data-i18n="img1_sub">{{img1_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-table.jpg" alt="QR code sur menu de restaurant scanné par un client" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🍽️</span>
+          <div>
+            <strong><span data-i18n="img2_title">{{img2_title}}</span></strong>
+            <span><span data-i18n="img2_sub">{{img2_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-reception.jpg" alt="QR code à l'accueil d'un salon beauté" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">🏢</span>
+          <div>
+            <strong><span data-i18n="img3_title">{{img3_title}}</span></strong>
+            <span><span data-i18n="img3_sub">{{img3_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-carte-visite.jpg" alt="Cartes de visite avec QR code localreply" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">💼</span>
+          <div>
+            <strong><span data-i18n="img4_title">{{img4_title}}</span></strong>
+            <span><span data-i18n="img4_sub">{{img4_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-instagram.jpg" alt="Lien LocalReply dans la bio Instagram d'un salon" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">📱</span>
+          <div>
+            <strong><span data-i18n="img5_title">{{img5_title}}</span></strong>
+            <span><span data-i18n="img5_sub">{{img5_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="lrh-inuse-card">
+        <div class="lrh-inuse-img-wrap">
+          <img src="/assets/qr-menu.jpg" alt="Client scannant un QR code sur un menu de brasserie" loading="lazy">
+        </div>
+        <div class="lrh-inuse-caption">
+          <span class="lrh-inuse-icon">📋</span>
+          <div>
+            <strong><span data-i18n="img6_title">{{img6_title}}</span></strong>
+            <span><span data-i18n="img6_sub">{{img6_sub}}</span></span>
+          </div>
+        </div>
+      </div>
+
+    <div class="lrh-inuse-more">
+      <div class="lrh-inuse-more-dots">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <p data-i18n="more_text">{{more_text}}<br>
+      <strong><span data-i18n="more_bold">{{more_bold}}</span></strong></p>
+    </div>
+    </div>
+  </div>
+</section>
+<section class="lrh-why">
+    <div class="lrh-why-inner">
+      <div class="lrh-section-eyebrow"><span data-i18n="why_label">{{why_label}}</span></div>
+      <h2 class="lrh-section-title"><span data-i18n="why_title">{{why_title}}</span></h2>
+      <p data-i18n="why_sub" class="lrh-section-sub">{{why_sub}}</p>
+
+      <div class="lrh-why-grid">
+
+        <div class="lrh-why-left">
+          <div class="lrh-why-item sr">
+            <div class="lrh-why-item-icon">🏪</div>
+            <div>
+              <div class="lrh-why-item-title"><span data-i18n="why_q1">{{why_q1}}</span></div>
+              <div class="lrh-why-item-desc" data-i18n="why_a1">{{why_a1}}</div>
+            </div>
+          </div>
+          <div class="lrh-why-item sr">
+            <div class="lrh-why-item-icon">🌐</div>
+            <div>
+              <div class="lrh-why-item-title"><span data-i18n="why_q2">{{why_q2}}</span></div>
+              <div class="lrh-why-item-desc" data-i18n="why_a2">{{why_a2}}</div>
+            </div>
+          </div>
+          <div class="lrh-why-item sr">
+            <div class="lrh-why-item-icon">📅</div>
+            <div>
+              <div class="lrh-why-item-title"><span data-i18n="why_q3">{{why_q3}}</span></div>
+              <div class="lrh-why-item-desc" data-i18n="why_a3">{{why_a3}}</div>
+            </div>
+          </div>
+          <div class="lrh-why-item sr">
+            <div class="lrh-why-item-icon">🌍</div>
+            <div>
+              <div class="lrh-why-item-title"><span data-i18n="why_q4">{{why_q4}}</span></div>
+              <div class="lrh-why-item-desc" data-i18n="why_a4">{{why_a4}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lrh-why-right">
+          <div class="lrh-why-card-title"><span data-i18n="stats_before">{{stats_before}}</span></div>
+          <div class="lrh-why-card-sub"><span data-i18n="stats_after">{{stats_after}}</span></div>
+
+          <div class="lrh-why-metric">
+            <div class="lrh-why-metric-icon">📨</div>
+            <div>
+              <div class="lrh-why-metric-val">0 → 24/7</div>
+              <div class="lrh-why-metric-label"><span data-i18n="stat_avail_full">{{stat_avail_full}}</span></div>
+            </div>
+          </div>
+          <div class="lrh-why-metric">
+            <div class="lrh-why-metric-icon">⏱️</div>
+            <div>
+              <div class="lrh-why-metric-val">48h → &lt;3s</div>
+              <div class="lrh-why-metric-label"><span data-i18n="stat_time_full">{{stat_time_full}}</span></div>
+            </div>
+          </div>
+          <div class="lrh-why-metric">
+            <div class="lrh-why-metric-icon">🌍</div>
+            <div>
+              <div class="lrh-why-metric-val">1 → 8</div>
+              <div class="lrh-why-metric-label"><span data-i18n="stat_lang_full">{{stat_lang_full}}</span></div>
+            </div>
+          </div>
+          <div class="lrh-why-metric">
+            <div class="lrh-why-metric-icon">📅</div>
+            <div>
+              <div class="lrh-why-metric-val">+30%</div>
+              <div class="lrh-why-metric-label"><span data-i18n="stat_rdv_full">{{stat_rdv_full}}</span></div>
+            </div>
+          </div>
+          <div class="lrh-why-metric">
+            <div class="lrh-why-metric-icon">⚡</div>
+            <div>
+              <div class="lrh-why-metric-val">5 min</div>
+              <div class="lrh-why-metric-label"><span data-i18n="stat1_label">{{stat1_label}}</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="lrh-features">
+    <div class="lrh-features-inner">
+      <div class="lrh-section-eyebrow"><span data-i18n="features_label">{{features_label}}</span></div>
+      <h2 class="lrh-section-title"><span data-i18n="features_title1">{{features_title1}}</span><br><span data-i18n="features_title2">{{features_title2}}</span></h2>
+      <p data-i18n="features_sub" class="lrh-section-sub">{{features_sub}}</p>
+
+      <div class="lrh-feat-grid">
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">🌍</div>
+          <div class="lrh-feat-title"><span data-i18n="feat1_title">{{feat1_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat1_desc">{{feat1_desc}}</div>
+        </div>
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">💬</div>
+          <div class="lrh-feat-title"><span data-i18n="feat2_title">{{feat2_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat2_desc">{{feat2_desc}}</div>
+        </div>
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">📅</div>
+          <div class="lrh-feat-title"><span data-i18n="feat3_title">{{feat3_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat3_desc">{{feat3_desc}}</div>
+        </div>
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">🧠</div>
+          <div class="lrh-feat-title"><span data-i18n="feat4_title">{{feat4_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat4_desc">{{feat4_desc}}</div>
+        </div>
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">⚡</div>
+          <div class="lrh-feat-title"><span data-i18n="feat5_title">{{feat5_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat5_desc">{{feat5_desc}}<span style="color:#F59E0B;font-size:11px;font-weight:600;"><span data-i18n="pro_badge">{{pro_badge}}</span></span></div>
+        </div>
+        <div class="lrh-feat-card">
+          <div class="lrh-feat-icon">📊</div>
+          <div class="lrh-feat-title"><span data-i18n="feat6_title">{{feat6_title}}</span></div>
+          <div class="lrh-feat-desc" data-i18n="feat6_desc">{{feat6_desc}}<span style="color:#F59E0B;font-size:11px;font-weight:600;">PRO</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <section class="lrh-sectors">
+    <div class="lrh-sectors-inner">
+      <div class="lrh-section-eyebrow"><span data-i18n="sectors_label">{{sectors_label}}</span></div>
+      <h2 class="lrh-section-title"><span data-i18n="sectors_title">{{sectors_title}}</span></h2>
+      <p class="lrh-section-sub"><span data-i18n="sectors_sub">{{sectors_sub}}</span></p>
+
+      <div class="lrh-sector-grid">
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💇</div><div class="lrh-sector-name"><span data-i18n="sec_hair">{{sec_hair}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🍽️</div><div class="lrh-sector-name"><span data-i18n="sec_restaurant">{{sec_restaurant}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔧</div><div class="lrh-sector-name"><span data-i18n="sec_garage">{{sec_garage}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💅</div><div class="lrh-sector-name"><span data-i18n="sec_beauty">{{sec_beauty}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🦷</div><div class="lrh-sector-name"><span data-i18n="sec_dentist">{{sec_dentist}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🏋️</div><div class="lrh-sector-name"><span data-i18n="sec_sport">{{sec_sport}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔨</div><div class="lrh-sector-name"><span data-i18n="sec_plumber">{{sec_plumber}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">☕</div><div class="lrh-sector-name"><span data-i18n="sec_bakery">{{sec_bakery}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🏥</div><div class="lrh-sector-name"><span data-i18n="sec_medical">{{sec_medical}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🌿</div><div class="lrh-sector-name"><span data-i18n="sec_florist">{{sec_florist}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🛍️</div><div class="lrh-sector-name"><span data-i18n="sec_retail">{{sec_retail}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🐾</div><div class="lrh-sector-name"><span data-i18n="sec_vet">{{sec_vet}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💊</div><div class="lrh-sector-name"><span data-i18n="sec_pharmacy">{{sec_pharmacy}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💅</div><div class="lrh-sector-name"><span data-i18n="sec_nailsalon">{{sec_nailsalon}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🚗</div><div class="lrh-sector-name"><span data-i18n="sec_drivingschool">{{sec_drivingschool}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔑</div><div class="lrh-sector-name"><span data-i18n="sec_locksmith">{{sec_locksmith}}</span></div></div>
+        <div class="lrh-sector-card" style="opacity:0.7;"><div class="lrh-sector-icon">➕</div><div class="lrh-sector-name"><span data-i18n="sec_more">{{sec_more}}</span></div></div>
+      
+<span class="lrh-sector-duplicate" style="display:contents;">
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💇</div><div class="lrh-sector-name"><span data-i18n="sec_hair">{{sec_hair}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🍽️</div><div class="lrh-sector-name"><span data-i18n="sec_restaurant">{{sec_restaurant}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔧</div><div class="lrh-sector-name"><span data-i18n="sec_garage">{{sec_garage}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💅</div><div class="lrh-sector-name"><span data-i18n="sec_beauty">{{sec_beauty}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🦷</div><div class="lrh-sector-name"><span data-i18n="sec_dentist">{{sec_dentist}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🏋️</div><div class="lrh-sector-name"><span data-i18n="sec_sport">{{sec_sport}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔨</div><div class="lrh-sector-name"><span data-i18n="sec_plumber">{{sec_plumber}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">☕</div><div class="lrh-sector-name"><span data-i18n="sec_bakery">{{sec_bakery}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🏥</div><div class="lrh-sector-name"><span data-i18n="sec_medical">{{sec_medical}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🌿</div><div class="lrh-sector-name"><span data-i18n="sec_florist">{{sec_florist}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🛍️</div><div class="lrh-sector-name"><span data-i18n="sec_retail">{{sec_retail}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🐾</div><div class="lrh-sector-name"><span data-i18n="sec_vet">{{sec_vet}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💊</div><div class="lrh-sector-name"><span data-i18n="sec_pharmacy">{{sec_pharmacy}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">💅</div><div class="lrh-sector-name"><span data-i18n="sec_nailsalon">{{sec_nailsalon}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🚗</div><div class="lrh-sector-name"><span data-i18n="sec_drivingschool">{{sec_drivingschool}}</span></div></div>
+        <div class="lrh-sector-card"><div class="lrh-sector-icon">🔑</div><div class="lrh-sector-name"><span data-i18n="sec_locksmith">{{sec_locksmith}}</span></div></div>
+        <div class="lrh-sector-card" style="opacity:0.7;"><div class="lrh-sector-icon">➕</div><div class="lrh-sector-name"><span data-i18n="sec_more">{{sec_more}}</span></div></div>
+      </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="lrh-quickstart">
+    <div class="lrh-quickstart-inner">
+      <div class="lrh-section-eyebrow"><span data-i18n="how_label">{{how_label}}</span></div>
+      <h2 class="lrh-section-title"><span data-i18n="how_title">{{how_title}}</span></h2>
+      <p data-i18n="how_sub" class="lrh-section-sub">{{how_sub}}<br></p>
+
+      <div class="lrh-qs-grid">
+
+        <div class="lrh-qs-card">
+          <div class="lrh-qs-step-num">1</div>
+          <div class="lrh-qs-icon">⚙️</div>
+          <div class="lrh-qs-title"><span data-i18n="how_step1_title">{{how_step1_title}}</span></div>
+          <div class="lrh-qs-desc" data-i18n="how_step1_desc">{{how_step1_desc}}</div>
+          <span class="lrh-qs-tag"><span data-i18n="how_step1_link">{{how_step1_link}}</span></span>
+        </div>
+
+        <div class="lrh-qs-card">
+          <div class="lrh-qs-step-num">2</div>
+          <div class="lrh-qs-icon">📅</div>
+          <div class="lrh-qs-title"><span data-i18n="how_step2_title">{{how_step2_title}}</span></div>
+          <div class="lrh-qs-desc" data-i18n="how_step2_desc">{{how_step2_desc}}</div>
+          <span class="lrh-qs-tag"><span data-i18n="how_step2_link">{{how_step2_link}}</span></span>
+        </div>
+
+        <div class="lrh-qs-card">
+          <div class="lrh-qs-step-num">3</div>
+          <div class="lrh-qs-icon">📱</div>
+          <div class="lrh-qs-title"><span data-i18n="how_step3_title">{{how_step3_title}}</span></div>
+          <div class="lrh-qs-desc" data-i18n="how_step3_desc">{{how_step3_desc}}</div>
+          <span class="lrh-qs-tag"><span data-i18n="how_step3_link">{{how_step3_link}}</span></span>
+        </div>
+
+        <div class="lrh-qs-card">
+          <div class="lrh-qs-step-num">4</div>
+          <div class="lrh-qs-icon">🔗</div>
+          <div class="lrh-qs-title"><span data-i18n="how_step4_link2">{{how_step4_link2}}</span></div>
+          <div class="lrh-qs-desc" data-i18n="link_desc">{{link_desc}}<span data-i18n="link_title">{{link_title}}</span> <strong><span data-i18n="link_url">{{link_url}}</span></strong> est prêt. Collez-le dans votre bio Instagram, votre site internet, Google My Business ou vos messages automatiques.</div>
+          <span class="lrh-qs-tag">Dashboard → Accueil</span>
+        </div>
+
+      </div>
+
+      <div class="lrh-qs-cta-wrap">
+        <p><span data-i18n="link_ready">{{link_ready}}</span></p>
+        <a href="/auth"><span data-i18n="link_cta">{{link_cta}}</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lrh-testimonials">
+    <div class="lrh-testimonials-inner">
+      <div class="lrh-section-eyebrow"><span data-i18n="usecase_label">{{usecase_label}}</span></div>
+      <h2 class="lrh-section-title"><span data-i18n="usecase_title">{{usecase_title}}</span></h2>
+      <p data-i18n="usecase_sub" class="lrh-section-sub">{{usecase_sub}}</p>
+
+      <p style="text-align:center;font-size:12px;color:rgba(255,255,255,0.35);margin-top:-24px;margin-bottom:36px;font-style:italic;"><span data-i18n="usecase_note">{{usecase_note}}</span></p>
+      <div class="lrh-testi-grid">
+        <div class="lrh-testi-card">
+          <div class="lrh-testi-stars"><span data-i18n="case1_title">{{case1_title}}</span></div>
+          <div class="lrh-testi-text" data-i18n="case1_quote">{{case1_quote}}</div>
+          <div class="lrh-testi-author">
+            <div class="lrh-testi-avatar" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">💇</div>
+            <div>
+              <div class="lrh-testi-name"><span data-i18n="case1_type">{{case1_type}}</span></div>
+              <div class="lrh-testi-role"><span data-i18n="case1_region">{{case1_region}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="lrh-testi-card">
+          <div class="lrh-testi-stars"><span data-i18n="case2_title">{{case2_title}}</span></div>
+          <div class="lrh-testi-text" data-i18n="case2_quote">{{case2_quote}}</div>
+          <div class="lrh-testi-author">
+            <div class="lrh-testi-avatar" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🔧</div>
+            <div>
+              <div class="lrh-testi-name"><span data-i18n="case2_type">{{case2_type}}</span></div>
+              <div class="lrh-testi-role"><span data-i18n="case2_region">{{case2_region}}</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="lrh-testi-card">
+          <div class="lrh-testi-stars"><span data-i18n="case3_title">{{case3_title}}</span></div>
+          <div class="lrh-testi-text" data-i18n="case3_quote">{{case3_quote}}</div>
+          <div class="lrh-testi-author">
+            <div class="lrh-testi-avatar" style="background:linear-gradient(135deg,#0052CC,#00D4FF);">🍽️</div>
+            <div>
+              <div class="lrh-testi-name"><span data-i18n="sec_restaurant">{{sec_restaurant}}</span></div>
+              <div class="lrh-testi-role"><span data-i18n="case3_region">{{case3_region}}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lrh-cta-section">
+    <div class="lrh-cta-inner">
+      <h2 class="lrh-cta-title">
+        <span data-i18n="cta_title1">{{cta_title1}}</span><br>
+        <span class="lrh-cta-grad"><span data-i18n="cta_title2">{{cta_title2}}</span></span>
+      </h2>
+      <p data-i18n="cta_sub" class="lrh-cta-sub">{{cta_sub}}<br></p>
+      <div class="lrh-cta-btns">
+        <a href="/auth" class="lrh-cta-btn-main"><span data-i18n="cta_btn1">{{cta_btn1}}</span></a>
+        <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrh-cta-btn-demo"><span data-i18n="cta_btn2">{{cta_btn2}}</span></a>
+      </div>
+      <p class="lrh-cta-note">✓ <span data-i18n="cta_trust1">{{cta_trust1}}</span> &nbsp;·&nbsp; ✓ <span data-i18n="cta_trust2">{{cta_trust2}}</span> &nbsp;·&nbsp; ✓ <span data-i18n="cta_trust3">{{cta_trust3}}</span></p>
+    </div>
+  </section>
+
+</div>
+
+
+<script>
+/* CANVAS */
+(function(){
+  var c=document.getElementById('lrBgCanvas');if(!c)return;
+  var ctx=c.getContext('2d'),W,H,pts=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  function mk(){pts=[];var n=Math.floor(W*H/16000);for(var i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.2+.4,a:Math.random()*.3+.07});}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(0,212,255,'+p.a*.25+')';ctx.fill();});
+    for(var i=0;i<pts.length;i++)for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<115){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='rgba(0,82,204,'+(1-d/115)*.06+')';ctx.lineWidth=.5;ctx.stroke();}}
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',function(){resize();mk();});
+  resize();mk();draw();
+})();
+
+/* SCROLL REVEAL */
+var _obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');_obs.unobserve(x.target);}});},{threshold:.1,rootMargin:'0px 0px -28px 0px'});
+document.querySelectorAll('.sr').forEach(function(el){_obs.observe(el);});
+
+/* COUNTER */
+function cUp(el,t,s){var st=null;(function step(ts){if(!st)st=ts;var p=Math.min((ts-st)/1100,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*t)+(s||'');if(p<1)requestAnimationFrame(step);})(performance.now());}
+var _co=new IntersectionObserver(function(e){if(!e[0].isIntersecting)return;document.querySelectorAll('[data-target]').forEach(function(el){cUp(el,parseInt(el.dataset.target),el.dataset.suffix||'');});_co.disconnect();},{threshold:.5});
+var _sb=document.querySelector('.lrh-stats');if(_sb)_co.observe(_sb);
+
+/* QR CODE */
+(function(){
+  // Vraie matrice QR 23x23 avec zones de détection
+  var p=[1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,0,0,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,0,0,1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,1,0,0,1,0,1,1,1,0,1,0,1,1,0,1,0,0,1,0,0,1,0,0,0,1,1,0,1,0,0,0,1,0,1,0,0,1,0,0,1,0,1,0,1,1,1,0,0,0,1,0,1,0,1,0,1,1,0,1,1,0,0,0,1,0,1,0,0,0,1,0,1,1,0,0,1,0,1,0,0,1,0,0,1,0,1,0,0,0,1,0,1,0,1,0,0,1,1,0,1,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,1,0,1,0,1,0,0,0,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1,0,0,1,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,0,1,0,1,0,1,1,0,0,1,0,1,0,1,1,1,0,1,0,0,1,0,0,1,0,0,0,1,0,1,0,1,0,0,1,0,1,1,1,0,1,0,1,1,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,1,1,0,0,0,1,1,0,1,0,0,0,1,1,1,1,1,1,1,0,0,1,0,0,1,1,0,1,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  var cols=23;
+  ['lrQrGrid2','lrQrExample'].forEach(function(id){
+    var g=document.getElementById(id);if(!g)return;
+    g.style.gridTemplateColumns='repeat('+cols+',1fr)';
+    p.forEach(function(b){
+      var d=document.createElement('div');
+      d.style.cssText='border-radius:1px;background:'+(b?'#0A1628':'transparent')+';';
+      g.appendChild(d);
+    });
+  });
+})();
+</script>
+
+
+<script src="/footer.js"></script>
+
+
+
+
+
+  <script>
+  // Keep the language switcher (nav.js) in sync with this statically-baked page.
+  try { localStorage.setItem('lr_lang', '{{_lang}}'); } catch (e) {}
+  </script>
+</body>
+</html>

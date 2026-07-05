@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="{{_lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_title}}">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; background-image: radial-gradient(ellipse 80% 60% at 15% 0%, rgba(0,82,204,0.55) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 85% 100%, rgba(0,180,220,0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 30%, rgba(0,212,255,0.15) 0%, transparent 55%); background-attachment: fixed; font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+  </style>
+
+
+
+
+
+
+
+
+</head>
+<body>
+<style>
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --dark: #060D1A;
+  --green: #10B981;
+  --gold: #F59E0B;
+  --white: #FFFFFF;
+  --gray: rgba(255,255,255,0.04);
+  --text: #fff;
+  --muted: rgba(255,255,255,0.55);
+  --border: rgba(255,255,255,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.lrf { font-family: 'DM Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; color: #fff; background: transparent; min-height: 100vh; }
+
+/* SCROLL REVEAL */
+.sr { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr.in { opacity: 1; transform: none; }
+.sr.d1{transition-delay:.09s;}.sr.d2{transition-delay:.18s;}.sr.d3{transition-delay:.27s;}
+
+/* HERO */
+.lrf-hero { background: linear-gradient(135deg, #0A1628 0%, #0052CC 55%, #00D4FF 100%); padding: 100px 20px 80px; text-align: center; }
+.lrf-hero-badge { display: inline-block; padding: 8px 20px; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.35); border-radius: 30px; font-size: 14px; font-weight: 600; color: #00D4FF; margin-bottom: 28px; letter-spacing: 0.5px; }
+.lrf-hero h1 { font-size: clamp(32px, 5vw, 56px); font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 20px; letter-spacing: -1px; }
+.lrf-hero h1 span { background: linear-gradient(135deg, #00D4FF, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.lrf-hero p { font-size: 18px; color: rgba(255,255,255,0.7); max-width: 580px; margin: 0 auto 40px; line-height: 1.7; }
+.lrf-hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.lrf-btn-primary { padding: 16px 32px; background: linear-gradient(135deg, #0052CC, #00D4FF); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,212,255,0.3); transition: all 0.2s; display: inline-block; }
+.lrf-btn-secondary { padding: 16px 28px; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.2s; display: inline-block; }
+.lrf-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,212,255,0.4); }
+.lrf-btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+/* SECTIONS */
+.lrf-section { padding: 90px 20px; background: transparent; }
+.lrf-section-alt { background: transparent; padding: 90px 20px; }
+.lrf-container { max-width: 1160px; margin: 0 auto; }
+.lrf-label { font-size: 11.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+.lrf-title { font-size: clamp(26px, 3.5vw, 40px); font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.2; font-family: "Syne", sans-serif; }
+.lrf-title span { color: var(--cyan); }
+.lrf-subtitle { font-size: 17px; color: rgba(255,255,255,.6); line-height: 1.7; max-width: 560px; }
+.lrf-header { margin-bottom: 56px; }
+
+/* GRID FEATURES */
+.lrf-grid { display: grid; gap: 24px; }
+.lrf-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.lrf-grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.lrf-card { background: rgba(255,255,255,.03); border-radius: 20px; padding: 36px 32px; border: 1px solid rgba(255,255,255,.07); transition: all 0.25s; }
+.lrf-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.35); border-color: rgba(0,212,255,.22); }
+.lrf-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
+.lrf-card-icon-blue { background: linear-gradient(135deg, rgba(0,82,204,0.1), rgba(0,212,255,0.1)); }
+.lrf-card-icon-green { background: rgba(16,185,129,0.1); }
+.lrf-card-icon-gold { background: rgba(245,158,11,0.1); }
+.lrf-card h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; font-family: "Syne", sans-serif; }
+.lrf-card p { font-size: 15px; color: rgba(255,255,255,.55); line-height: 1.65; }
+.lrf-card ul { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+.lrf-card ul li { font-size: 14px; color: rgba(255,255,255,.6); display: flex; align-items: flex-start; gap: 8px; }
+.lrf-card ul li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* FEATURE HIGHLIGHT (grande feature) */
+.lrf-highlight { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.lrf-highlight-reverse { direction: rtl; }
+.lrf-highlight-reverse > * { direction: ltr; }
+.lrf-highlight-text .lrf-label { margin-bottom: 10px; }
+.lrf-highlight-text h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; line-height: 1.25; font-family: "Syne", sans-serif; }
+.lrf-highlight-text p { font-size: 16px; color: rgba(255,255,255,.6); line-height: 1.75; margin-bottom: 20px; }
+.lrf-highlight-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.lrf-highlight-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: rgba(255,255,255,.8); }
+.lrf-highlight-list li span:first-child { width: 22px; height: 22px; background: linear-gradient(135deg, var(--blue), var(--cyan)); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.lrf-highlight-visual { background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 24px; padding: 36px; min-height: 340px; display: flex; flex-direction: column; justify-content: center; gap: 16px; box-shadow: 0 20px 60px rgba(0,82,204,0.2); }
+
+/* CHAT MOCK */
+.lrf-chat-msg { padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.5; max-width: 85%; }
+.lrf-chat-user { background: rgba(255,255,255,0.12); color: #fff; align-self: flex-end; margin-left: auto; border-bottom-right-radius: 4px; }
+.lrf-chat-ai { background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.25); color: #fff; border-bottom-left-radius: 4px; }
+.lrf-chat-ai-name { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+.lrf-chat-wrap { display: flex; flex-direction: column; gap: 12px; }
+
+/* LANGUES BADGE */
+.lrf-lang-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.lrf-lang-badge { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+/* PLANS COMPARAISON */
+.lrf-plan { background: rgba(255,255,255,.03); border-radius: 20px; padding: 36px 28px; border: 1px solid rgba(255,255,255,.08); transition: all 0.25s; position: relative; }
+.lrf-plan-featured { border-color: rgba(0,212,255,.3); box-shadow: 0 0 0 1px rgba(0,212,255,.1), 0 24px 60px rgba(0,0,0,.4); background: rgba(0,82,204,0.12); }
+.lrf-plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; padding: 5px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.lrf-plan-name { font-size: 14px; font-weight: 700; color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-family: "Syne", sans-serif; }
+.lrf-plan-price { font-size: 44px; font-weight: 800; color: #fff; line-height: 1; margin-bottom: 4px; font-family: "Syne", sans-serif; }
+.lrf-plan-price sup { font-size: 20px; vertical-align: super; }
+.lrf-plan-price span { font-size: 16px; font-weight: 400; color: rgba(255,255,255,.45); }
+.lrf-plan-desc { font-size: 14px; color: rgba(255,255,255,.5); margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.07); }
+.lrf-plan-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.lrf-plan-list li { font-size: 14px; color: rgba(255,255,255,.8); display: flex; align-items: flex-start; gap: 8px; }
+.lrf-plan-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.lrf-plan-list li.dim { color: rgba(255,255,255,.3); }
+.lrf-plan-list li.dim::before { color: #D1D5DB; }
+.lrf-plan-cta { display: block; text-align: center; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; text-decoration: none; transition: all 0.2s; }
+.lrf-plan-cta-featured { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; box-shadow: 0 6px 20px rgba(0,82,204,0.25); }
+.lrf-plan-cta-default { background: rgba(255,255,255,.07); color: rgba(255,255,255,.8); border: 1px solid rgba(255,255,255,.1); }
+.lrf-plan-cta:hover { transform: translateY(-1px); }
+
+/* CTA FINAL */
+.lrf-cta-section { background: linear-gradient(135deg, #0A1628, #0052CC); padding: 90px 20px; text-align: center; }
+.lrf-cta-section h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.5px; }
+.lrf-cta-section p { font-size: 18px; color: rgba(255,255,255,0.65); margin-bottom: 36px; }
+.lrf-trust { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+.lrf-trust span { font-size: 14px; color: rgba(255,255,255,0.55); display: flex; align-items: center; gap: 6px; }
+
+/* RESPONSIVE */
+@media (max-width: 960px) {
+  .lrf-grid-3 { grid-template-columns: 1fr 1fr; }
+  .lrf-highlight { grid-template-columns: 1fr; gap: 40px; }
+  .lrf-highlight-reverse { direction: ltr; }
+}
+@media (max-width: 640px) {
+  .lrf-grid-3, .lrf-grid-2 { grid-template-columns: 1fr; }
+  .lrf-section { padding: 60px 20px; }
+}
+
+/* ── DASHBOARD MOCK ── */
+.lrf-dash {
+  background: #0B1525;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 32px 80px rgba(0,0,0,.5);
+}
+.lrf-dash-bar {
+  background: #060D1A;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.lrf-dash-dot { width: 10px; height: 10px; border-radius: 50%; }
+.lrf-dash-inner {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+.lrf-dash-sidebar {
+  background: #080F1E;
+  border-right: 1px solid rgba(255,255,255,.06);
+  padding: 16px 0;
+}
+.lrf-dash-nav-item {
+  padding: 9px 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,.45);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+.lrf-dash-nav-item.active {
+  background: rgba(0,212,255,.08);
+  color: #fff;
+  border-right: 2px solid #00D4FF;
+}
+.lrf-dash-content { padding: 20px; }
+.lrf-dash-kpis {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.lrf-dash-kpi {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.lrf-dash-kpi-val {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 2px;
+}
+.lrf-dash-kpi-label { font-size: 11px; color: rgba(255,255,255,.4); }
+.lrf-dash-msgs { display: flex; flex-direction: column; gap: 8px; }
+.lrf-dash-msg-row {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lrf-dash-msg-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.lrf-dash-msg-name { font-size: 12.5px; font-weight: 600; color: #fff; }
+.lrf-dash-msg-preview { font-size: 11.5px; color: rgba(255,255,255,.4); margin-top: 1px; }
+.lrf-dash-msg-time { font-size: 10.5px; color: rgba(255,255,255,.25); margin-left: auto; white-space: nowrap; }
+.lrf-dash-msg-badge {
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 5px; white-space: nowrap;
+}
+
+/* ── ONBOARDING STEPS ── */
+.lrf-onboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px;
+  position: relative;
+}
+.lrf-onboard-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,212,255,.3), rgba(0,82,204,.3));
+}
+.lrf-onboard-step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.lrf-onboard-num {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#0052CC,#00D4FF);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  box-shadow: 0 8px 24px rgba(0,212,255,.25);
+}
+.lrf-onboard-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  font-family: 'Syne', sans-serif;
+}
+.lrf-onboard-desc {
+  font-size: 12.5px;
+  color: rgba(255,255,255,.5);
+  line-height: 1.5;
+}
+
+@media(max-width:768px){
+  .lrf-dash-inner { grid-template-columns: 1fr; }
+  .lrf-dash-sidebar { display: none; }
+  .lrf-onboard-grid { grid-template-columns: repeat(2,1fr); }
+  .lrf-onboard-grid::before { display: none; }
+  .lrf-dash-kpis { grid-template-columns: repeat(3,1fr); }
+}
+
+</style>
+
+<div class="lrf">
+
+  <!-- HERO -->
+  <section class="lrf-hero">
+    <div class="lrf-container">
+      <div class="lrf-hero-badge sr" data-i18n="f_badge">{{f_badge}}</div>
+      <h1 class="sr d1"><span data-i18n="f_hero_title">{{f_hero_title}}</span><br><span data-i18n="f_hero_title2">{{f_hero_title2}}</span></h1>
+      <p data-i18n="f_hero_sub">{{f_hero_sub}}</p>
+      <div class="lrf-hero-cta">
+        <a href="/auth" class="lrf-btn-primary" data-i18n="f_cta1">{{f_cta1}}</a>
+        <a href="/demo" class="lrf-btn-secondary" data-i18n="f_cta2">{{f_cta2}}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FONCTIONNALITÉS PRINCIPALES -->
+  <section class="lrf-section">
+    <div class="lrf-container">
+      <div class="lrf-header">
+        <div class="lrf-label" data-i18n="f_section_label">{{f_section_label}}</div>
+        <h2 class="lrf-title"><span data-i18n="f_section_title1">{{f_section_title1}}</span><br><span data-i18n="f_section_title2">{{f_section_title2}}</span></h2>
+        <p class="lrf-subtitle" data-i18n="f_section_sub">{{f_section_sub}}</p>
+      </div>
+      <div class="lrf-grid lrf-grid-3">
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-blue">🌍</div>
+          <h3 data-i18n="f_feat1_title">{{f_feat1_title}}</h3>
+          <p data-i18n="f_feat1_desc">{{f_feat1_desc}}</p>
+        </div>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-blue">📅</div>
+          <h3 data-i18n="f_feat2_title">{{f_feat2_title}}</h3>
+          <p data-i18n="f_feat2_desc">{{f_feat2_desc}}</p>
+        </div>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-blue">⚡</div>
+          <h3 data-i18n="f_feat3_title">{{f_feat3_title}}</h3>
+          <p data-i18n="f_feat3_desc">{{f_feat3_desc}}<span style="color:#F59E0B;font-size:11px;font-weight:600;background:rgba(245,158,11,0.1);padding:2px 7px;border-radius:5px;">PRO</span></p>
+        </div>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-green">🧠</div>
+          <h3 data-i18n="f_feat4_title">{{f_feat4_title}}</h3>
+          <p data-i18n="f_feat4_desc">{{f_feat4_desc}}</p>
+        </div>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-green">📊</div>
+          <h3><span data-i18n="f_feat5_title">{{f_feat5_title}}</span> <span style="font-size:11px;font-weight:600;color:#F59E0B;background:rgba(245,158,11,0.1);padding:2px 8px;border-radius:6px;margin-left:6px;">PRO</span></h3>
+          <p data-i18n="f_feat5_desc">{{f_feat5_desc}}</p>
+        </div>
+        <div class="lrf-card sr">
+          <div class="lrf-card-icon lrf-card-icon-gold">📱</div>
+          <h3 data-i18n="f_feat6_title">{{f_feat6_title}}</h3>
+          <p data-i18n="f_feat6_desc">{{f_feat6_desc}}<strong>localreply.ai/votre-commerce</strong>, QR téléchargeable PNG & PDF.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT 1 — Multilingue -->
+  <section class="lrf-section lrf-section-alt">
+    <div class="lrf-container">
+      <div class="lrf-highlight">
+        <div class="lrf-highlight-text sr">
+          <div class="lrf-label" data-i18n="f_ml_label">{{f_ml_label}}</div>
+          <h2 data-i18n="f_ml_title">{{f_ml_title}}</h2>
+          <p data-i18n="f_ml_desc">{{f_ml_desc}}</p>
+          <ul class="lrf-highlight-list">
+            <li><span>✓</span> <span data-i18n="f_ml_li1">{{f_ml_li1}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_ml_li2">{{f_ml_li2}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_ml_li3">{{f_ml_li3}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_ml_li4">{{f_ml_li4}}</span></li>
+          </ul>
+        </div>        <div class="lrf-highlight-visual">
+          <div style="text-align:right;margin-bottom:8px;"><span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:3px 10px;border-radius:100px;">✦ Illustration fictive</span></div>
+          <div class="lrf-chat-wrap">
+            <div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_client">{{f_mock_client}}</div>
+              <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q1">{{f_mock_ml_q1}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a1">{{f_mock_ml_a1}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_client">{{f_mock_client}}</div>
+              <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q2">{{f_mock_ml_q2}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a2">{{f_mock_ml_a2}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_client">{{f_mock_client}}</div>
+              <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q3">{{f_mock_ml_q3}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a3">{{f_mock_ml_a3}}</div>
+            </div>
+          </div>
+          <div class="lrf-lang-grid">
+            <div class="lrf-lang-badge">🇫🇷 Français</div>
+            <div class="lrf-lang-badge">🇩🇪 Deutsch</div>
+            <div class="lrf-lang-badge">🇮🇹 Italiano</div>
+            <div class="lrf-lang-badge">🇬🇧 English</div>
+            <div class="lrf-lang-badge">🇪🇸 Español</div>
+            <div class="lrf-lang-badge">🇵🇹 Português</div>
+            <div class="lrf-lang-badge">🇳🇱 Nederlands</div>
+            <div class="lrf-lang-badge">🇵🇱 Polski</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT 2 — RDV -->
+  <section class="lrf-section">
+    <div class="lrf-container">
+      <div class="lrf-highlight lrf-highlight-reverse">        <div class="lrf-highlight-visual">
+          <div style="text-align:right;margin-bottom:8px;"><span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:3px 10px;border-radius:100px;">✦ Illustration fictive</span></div>
+          <div class="lrf-chat-wrap">
+            <div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_client">{{f_mock_client}}</div>
+              <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_rdv_q1">{{f_mock_rdv_q1}}</div>
+            </div>
+            <div>
+              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_rdv_a1">{{f_mock_rdv_a1}}</div>
+            </div>
+            <!-- Formulaire style dark cohérent -->
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:14px;padding:14px;">
+              <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;" data-i18n="f_rdv_form_title">{{f_rdv_form_title}}</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);" data-i18n="f_rdv_form_service">{{f_rdv_form_service}}</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.7);">03/05/2026</div>
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.7);">12 : 30</div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);">Thomas Dupont</div>
+                  <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.35);">+41 79 123 45 67</div>
+                </div>
+                <div style="padding:9px 12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:12.5px;color:rgba(255,255,255,0.25);">thomas@email.com <span style="font-size:10px;opacity:.6;" data-i18n="f_rdv_form_optional">{{f_rdv_form_optional}}</span></div>
+                <div style="display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:4px;">
+                  <div style="padding:10px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-align:center;" data-i18n="f_rdv_form_confirm">{{f_rdv_form_confirm}}</div>
+                  <div style="padding:10px 14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.45);font-size:13px;text-align:center;" data-i18n="f_rdv_form_cancel">{{f_rdv_form_cancel}}</div>
+                </div>
+              </div>
+              <div style="font-size:10.5px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;" data-i18n="f_rdv_form_footer">{{f_rdv_form_footer}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="lrf-highlight-text sr">
+          <div class="lrf-label" data-i18n="f_rdv_label">{{f_rdv_label}}</div>
+          <h2 data-i18n="f_rdv_title">{{f_rdv_title}}<br>pas un calendrier compliqué</h2>
+          <p data-i18n="f_rdv_desc">{{f_rdv_desc}}</p>
+          <ul class="lrf-highlight-list">
+            <li><span>✓</span> <span data-i18n="f_rdv_li1">{{f_rdv_li1}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_rdv_li2">{{f_rdv_li2}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_rdv_li3">{{f_rdv_li3}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_rdv_li4">{{f_rdv_li4}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- HIGHLIGHT 3 — QR CODE & LIENS -->
+  <section class="lrf-section">
+    <div class="lrf-container">
+      <div class="lrf-highlight">
+        <div class="lrf-highlight-text sr">
+          <div class="lrf-label" data-i18n="f_qr_label">{{f_qr_label}}</div>
+          <h2 data-i18n="f_qr_title">{{f_qr_title}}</h2>
+          <p data-i18n="f_qr_desc">{{f_qr_desc}}</p>
+          <ul class="lrf-highlight-list">
+            <li><span>✓</span> <span data-i18n="f_qr_li1">{{f_qr_li1}}<strong>localreply.ai/votre-commerce</strong></span></li>
+            <li><span>✓</span> <span data-i18n="f_qr_li2">{{f_qr_li2}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_qr_li3">{{f_qr_li3}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_qr_li4">{{f_qr_li4}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_qr_li5">{{f_qr_li5}}</span></li>
+          </ul>
+        </div>        <div class="lrf-highlight-visual">
+          <div style="text-align:right;margin-bottom:8px;"><span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:3px 10px;border-radius:100px;">✦ Illustration fictive</span></div>
+          <!-- Mock lien + QR -->
+          <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:20px;margin-bottom:14px;">
+            <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;" data-i18n="f_qr_link_label">{{f_qr_link_label}}</div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="flex:1;padding:10px 14px;background:rgba(0,212,255,0.1);border:1.5px solid rgba(0,212,255,0.3);border-radius:10px;font-size:14px;color:#00D4FF;font-weight:600;">localreply.ai/<span style="opacity:0.7;" data-i18n="f_qr_slug">{{f_qr_slug}}</span></div>
+              <div style="padding:10px 12px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;font-size:16px;cursor:pointer;">📋</div>
+            </div>
+          </div>
+          <!-- QR mock -->
+          <div style="display:flex;gap:14px;align-items:center;margin-bottom:14px;">
+            <div style="background:#FFFFFF;padding:12px;border-radius:14px;flex-shrink:0;">
+              <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <rect width="80" height="80" fill="white"/>
+                <rect x="4" y="4" width="30" height="30" rx="3" fill="#0052CC"/>
+                <rect x="8" y="8" width="22" height="22" rx="1" fill="white"/>
+                <rect x="12" y="12" width="14" height="14" rx="1" fill="#0052CC"/>
+                <rect x="46" y="4" width="30" height="30" rx="3" fill="#0052CC"/>
+                <rect x="50" y="8" width="22" height="22" rx="1" fill="white"/>
+                <rect x="54" y="12" width="14" height="14" rx="1" fill="#0052CC"/>
+                <rect x="4" y="46" width="30" height="30" rx="3" fill="#0052CC"/>
+                <rect x="8" y="50" width="22" height="22" rx="1" fill="white"/>
+                <rect x="12" y="54" width="14" height="14" rx="1" fill="#0052CC"/>
+                <rect x="46" y="46" width="8" height="8" fill="#0052CC"/>
+                <rect x="58" y="46" width="8" height="8" fill="#0052CC"/>
+                <rect x="46" y="58" width="8" height="8" fill="#0052CC"/>
+                <rect x="58" y="58" width="8" height="8" fill="#0052CC"/>
+                <rect x="52" y="52" width="4" height="4" fill="#0052CC"/>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#FFFFFF;margin-bottom:6px;" data-i18n="f_qr_ready_title">{{f_qr_ready_title}}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;" data-i18n="f_qr_ready_desc">{{f_qr_ready_desc}}</div>
+            </div>
+          </div>
+          <!-- Sources de trafic -->
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px;">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;" data-i18n="f_qr_sources_title">{{f_qr_sources_title}}</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);" data-i18n="f_qr_src1">{{f_qr_src1}}</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">43%</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);">📸 Instagram</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">31%</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);" data-i18n="f_qr_src3">{{f_qr_src3}}</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">18%</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,0.05);border-radius:8px;">
+                <span style="font-size:13px;color:rgba(255,255,255,0.8);" data-i18n="f_qr_src4">{{f_qr_src4}}</span>
+                <span style="font-size:12px;font-weight:600;color:#10B981;">8%</span>
+              </div>
+            </div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:10px;font-style:italic;" data-i18n="f_qr_analytics_note">{{f_qr_analytics_note}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HIGHLIGHT 4 — IA apprend -->
+  <section class="lrf-section">
+    <div class="lrf-container">
+      <div class="lrf-highlight">
+        <div class="lrf-highlight-text sr">
+          <div class="lrf-label" data-i18n="f_learn_label">{{f_learn_label}}</div>
+          <h2 data-i18n="f_learn_title">{{f_learn_title}}</h2>
+          <p data-i18n="f_learn_desc">{{f_learn_desc}}</p>
+          <ul class="lrf-highlight-list">
+            <li><span>✓</span> <span data-i18n="f_learn_li1">{{f_learn_li1}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_learn_li2">{{f_learn_li2}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_learn_li3">{{f_learn_li3}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_learn_li4">{{f_learn_li4}}</span></li>
+          </ul>
+        </div>        <div class="lrf-highlight-visual">
+          <div style="text-align:right;margin-bottom:8px;"><span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.25);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:3px 10px;border-radius:100px;">✦ Illustration fictive</span></div>
+          <!-- Modale "Répondre au client" — reproduction fidèle -->
+          <div style="background:#0D1B2E;border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,0.5);">
+
+            <!-- Header modale -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:18px;">💬</span>
+                <span style="font-size:16px;font-weight:700;color:#fff;" data-i18n="f_modal_title">{{f_modal_title}}</span>
+              </div>
+              <div style="width:24px;height:24px;background:rgba(255,255,255,0.08);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.4);font-size:12px;">✕</div>
+            </div>
+
+            <!-- Question du client -->
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;" data-i18n="f_modal_q_label">{{f_modal_q_label}}</div>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,212,255,0.2);border-radius:10px;border-left:3px solid #00D4FF;margin-bottom:6px;">
+              <div style="font-size:14px;color:#fff;font-weight:500;margin-bottom:4px;" data-i18n="f_modal_question">{{f_modal_question}}</div>
+              <div style="font-size:11px;color:rgba(0,212,255,0.7);" data-i18n="f_modal_translation">{{f_modal_translation}}</div>
+            </div>
+            <div style="padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:14px;" data-i18n="f_modal_email_note">{{f_modal_email_note}}</div>
+
+            <!-- Votre réponse -->
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;" data-i18n="f_modal_your_reply">{{f_modal_your_reply}}</div>
+            <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(0,212,255,0.35);border-radius:10px;font-size:13px;color:rgba(255,255,255,0.35);height:72px;margin-bottom:14px;" data-i18n="f_modal_placeholder">{{f_modal_placeholder}}</div>
+
+            <!-- Options -->
+            <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+              <div style="font-size:10px;font-weight:700;color:#00D4FF;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;" data-i18n="f_modal_options">{{f_modal_options}}</div>
+              <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;">
+                <div style="width:16px;height:16px;background:#0052CC;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:10px;">✓</span></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#fff;" data-i18n="f_modal_add_faq">{{f_modal_add_faq}}</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="f_modal_add_faq_desc">{{f_modal_add_faq_desc}}</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;">
+                <div style="width:16px;height:16px;background:#0052CC;border-radius:4px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:10px;">✓</span></div>
+                <div>
+                  <div style="font-size:13px;font-weight:600;color:#fff;" data-i18n="f_modal_notify">{{f_modal_notify}}</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.4);" data-i18n="f_modal_notify_desc">{{f_modal_notify_desc}}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons -->
+            <div style="display:grid;grid-template-columns:1fr auto;gap:10px;">
+              <div style="padding:12px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-align:center;" data-i18n="f_modal_send">{{f_modal_send}}</div>
+              <div style="padding:12px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:rgba(255,255,255,0.5);font-size:14px;text-align:center;" data-i18n="f_modal_ignore">{{f_modal_ignore}}</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- DASHBOARD MOCK -->
+  <section class="lrf-section lrf-section-alt">
+    <div class="lrf-container">
+      <div class="lrf-header" style="text-align:center;margin-bottom:48px;">
+        <div class="lrf-label sr" style="text-align:center;" data-i18n="f_db_label">{{f_db_label}}</div>
+        <h2 class="lrf-title sr d1" style="text-align:center;"><span data-i18n="f_db_title1" style="color:inherit">{{f_db_title1}}</span><br><span data-i18n="f_db_title2">{{f_db_title2}}</span></h2>
+        <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;" data-i18n="f_db_sub">{{f_db_sub}}</p>
+      </div>
+
+      <!-- Mock Dashboard mobile — mis à jour -->
+      <div style="text-align:center;margin-bottom:14px;">
+        <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:4px 14px;border-radius:100px;letter-spacing:.5px;" data-i18n="f_db_fictive">{{f_db_fictive}}</span>
+      </div>
+
+      <!-- Cadre téléphone -->
+      <div style="display:flex;justify-content:center;">
+        <div style="width:300px;background:#0a0f1a;border-radius:38px;border:2px solid rgba(255,255,255,.12);box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;position:relative;">
+
+          <!-- Dynamic island -->
+          <div style="height:42px;background:#050a14;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,.05);">
+            <div style="width:90px;height:22px;background:#000;border-radius:20px;"></div>
+          </div>
+
+          <!-- Contenu dashboard -->
+          <div style="background:linear-gradient(180deg,#0a1628 0%,#060d1f 100%);padding:14px 14px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden;">
+
+            <!-- Topbar -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <img src="/assets/logo.png" style="width:26px;height:26px;border-radius:7px;" onerror="this.style.display='none'">
+                <span style="font-size:13px;font-weight:700;color:#fff;">LocalReply</span>
+              </div>
+              <div style="font-size:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 9px;color:rgba(255,255,255,.6);">🇫🇷 FR</div>
+            </div>
+
+            <!-- Greeting -->
+            <div style="margin-bottom:10px;">
+              <div style="font-size:14px;font-weight:800;color:#fff;" data-i18n="f_db_greeting">{{f_db_greeting}}<span style="color:#00D4FF;">Salon Belle Époque</span> 👋</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;">Mercredi 5 juillet · Plan Pro ⭐</div>
+            </div>
+
+            <!-- Alerte questions -->
+            <div style="background:rgba(0,212,255,.08);border-left:3px solid #00D4FF;border-radius:0 10px 10px 0;padding:8px 10px;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:14px;">🤖</span>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:#00D4FF;" data-i18n="f_db_unanswered">{{f_db_unanswered}}</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.4);" data-i18n="f_db_faq_hint">{{f_db_faq_hint}}</div>
+              </div>
+            </div>
+
+            <!-- 3 KPIs -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;">
+              <div style="background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_conv">{{f_db_kpi_conv}}</div>
+                <div style="font-size:20px;font-weight:800;color:#00D4FF;line-height:1;">312</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_30days">{{f_db_30days}}</div>
+              </div>
+              <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_rdv">{{f_db_kpi_rdv}}</div>
+                <div style="font-size:20px;font-weight:800;color:#10B981;line-height:1;">87</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_30days">{{f_db_30days}}</div>
+              </div>
+              <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:10px 8px;">
+                <div style="font-size:8px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;" data-i18n="f_db_kpi_todo">{{f_db_kpi_todo}}</div>
+                <div style="font-size:20px;font-weight:800;color:#F59E0B;line-height:1;">15</div>
+                <div style="font-size:8px;color:rgba(255,255,255,.3);margin-top:2px;" data-i18n="f_db_kpi_todo_sub">{{f_db_kpi_todo_sub}}</div>
+              </div>
+            </div>
+
+            <!-- Score IA -->
+            <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:12px;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <!-- Ring -->
+                <div style="position:relative;width:52px;height:52px;flex-shrink:0;">
+                  <svg width="52" height="52" viewBox="0 0 52 52">
+                    <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="5"/>
+                    <circle cx="26" cy="26" r="21" fill="none" stroke="#10B981" stroke-width="5" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="26" transform="rotate(-90 26 26)"/>
+                  </svg>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;">80</div>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;" data-i18n="f_db_ai_score">{{f_db_ai_score}}</div>
+                  <div style="font-size:13px;font-weight:700;color:#10B981;">🟢 Excellent</div>
+                  <div style="font-size:9px;color:rgba(16,185,129,.6);">L'IA est bien configurée ✓</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;">
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);" data-i18n="f_db_services">{{f_db_services}}</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+15</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);" data-i18n="f_db_hours">{{f_db_hours}}</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+15</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);">✅ FAQ (20+)</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+30</span>
+                </div>
+                <div style="background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.12);border-radius:6px;padding:4px 7px;display:flex;justify-content:space-between;align-items:center;">
+                  <span style="font-size:9px;color:rgba(255,255,255,.6);">✅ Calendar</span>
+                  <span style="font-size:9px;font-weight:700;color:#10B981;">+20</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activité récente -->
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;margin-bottom:0;">
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Activité récente</div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.08);border-radius:8px;">
+                  <span style="font-size:13px;">💬</span>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇩🇪</div>
+                    <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Wann haben Sie morgen geöffnet?</div>
+                  </div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 2h</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.08);border-radius:8px;">
+                  <span style="font-size:13px;">💬</span>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇫🇷</div>
+                    <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Vous acceptez les chèques-vacances ?</div>
+                  </div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 5h</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom nav -->
+          <div style="background:#060d1f;border-top:1px solid rgba(255,255,255,.07);display:grid;grid-template-columns:repeat(5,1fr);padding:10px 0 14px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+              <span style="font-size:17px;">🏠</span>
+              <span style="font-size:8px;font-weight:700;color:#00D4FF;">Accueil</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">⚙️</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Config</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;position:relative;">
+              <span style="font-size:17px;">💬</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Messages</span>
+              <div style="position:absolute;top:-2px;right:22px;width:14px;height:14px;background:#EF4444;border-radius:10px;font-size:7px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;">9+</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">📅</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">RDV</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;opacity:.5;">
+              <span style="font-size:17px;">☰</span>
+              <span style="font-size:8px;color:rgba(255,255,255,.4);">Plus</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    <!-- ONBOARDING — 4 étapes -->
+  <section class="lrf-section">
+    <div class="lrf-container">
+      <div class="lrf-header" style="text-align:center;margin-bottom:48px;">
+        <div class="lrf-label sr" style="text-align:center;" data-i18n="f_onboard_label">{{f_onboard_label}}</div>
+        <h2 class="lrf-title sr d1" style="text-align:center;"><span data-i18n="f_onboard_title">{{f_onboard_title}}</span><br><span data-i18n="f_onboard_title2" style="color:inherit">{{f_onboard_title2}}</span></h2>
+        <p class="lrf-subtitle sr d2" style="margin:0 auto;text-align:center;" data-i18n="f_onboard_sub">{{f_onboard_sub}}</p>
+      </div>
+      <div class="lrf-onboard-grid">
+        <div class="lrf-onboard-step sr">
+          <div class="lrf-onboard-num">1</div>
+          <div class="lrf-onboard-title" data-i18n="f_step1_title">{{f_step1_title}}</div>
+          <div class="lrf-onboard-desc" data-i18n="f_step1_desc">{{f_step1_desc}}</div>
+        </div>
+        <div class="lrf-onboard-step sr d1">
+          <div class="lrf-onboard-num">2</div>
+          <div class="lrf-onboard-title" data-i18n="f_step2_title">{{f_step2_title}}</div>
+          <div class="lrf-onboard-desc" data-i18n="f_step2_desc">{{f_step2_desc}}</div>
+        </div>
+        <div class="lrf-onboard-step sr d2">
+          <div class="lrf-onboard-num">3</div>
+          <div class="lrf-onboard-title" data-i18n="f_step3_title">{{f_step3_title}}</div>
+          <div class="lrf-onboard-desc" data-i18n="f_step3_desc">{{f_step3_desc}}</div>
+        </div>
+        <div class="lrf-onboard-step sr" style="transition-delay:.3s;">
+          <div class="lrf-onboard-num">4</div>
+          <div class="lrf-onboard-title" data-i18n="f_step4_title">{{f_step4_title}}</div>
+          <div class="lrf-onboard-desc" data-i18n="f_step4_desc">{{f_step4_desc}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING CTA allégé -->
+  <section class="lrf-section lrf-section-alt">
+    <div class="lrf-container" style="text-align:center;">
+      <div class="lrf-label sr" style="text-align:center;" data-i18n="f_pricing_label">{{f_pricing_label}}</div>
+      <h2 class="lrf-title sr d1" style="text-align:center;"><span data-i18n="f_pricing_title1" style="color:inherit">{{f_pricing_title1}}</span><br><span data-i18n="f_pricing_title2" style="color:inherit">{{f_pricing_title2}}</span></h2>
+      <p class="lrf-subtitle sr d2" style="margin:0 auto 36px;text-align:center;" data-i18n="f_pricing_sub">{{f_pricing_sub}}</p>
+      <div class="sr d3" style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="/pricing" class="lrf-btn-secondary" style="border-color:rgba(0,212,255,.3);color:#00D4FF;" data-i18n="f_pricing_link">{{f_pricing_link}}</a>
+        <a href="/auth" class="lrf-btn-primary" data-i18n="f_pricing_cta">{{f_pricing_cta}}</a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <script src="/nav.js"></script>
+  <script src="/footer.js"></script>
+  <script>
+    var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target);}});},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.sr').forEach(function(el){obs.observe(el);});
+  </script>
+
+</div>
+</div>
+
+  <script>
+  // Keep the language switcher (nav.js) in sync with this statically-baked page.
+  try { localStorage.setItem('lr_lang', '{{_lang}}'); } catch (e) {}
+  </script>
+</body>
+</html>

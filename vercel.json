@@ -27,7 +27,13 @@
     { "source": "/gdpr", "destination": "/gdpr.html" },
 
     { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/contact", "destination": "/:lang/contact.html" }
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/contact", "destination": "/:lang/contact.html" },
+
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)", "destination": "/:lang/home.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/features", "destination": "/:lang/features.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/pricing", "destination": "/:lang/pricing.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/about", "destination": "/:lang/about.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/blog", "destination": "/:lang/blog.html" }
   ],
   "headers": [
     {

@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="{{_lang}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_title}}">
+  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0A1628; background-image: radial-gradient(ellipse 80% 60% at 15% 0%, rgba(0,82,204,0.55) 0%, transparent 60%), radial-gradient(ellipse 70% 50% at 85% 100%, rgba(0,180,220,0.35) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 30%, rgba(0,212,255,0.15) 0%, transparent 55%); background-attachment: fixed; font-family: 'DM Sans', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
+  </style>
+
+
+<!-- Fix pricing -->
+
+<style>
+/* Fix pricing sections claires */
+.lrp-light { background: transparent; }
+.lrp-sec-label { color: #0052CC !important; }
+.lrp-sec-title { color: #fff !important; }
+.lrp-th { color: rgba(255,255,255,0.5) !important; font-weight: 700; }
+.lrp-row-label { color: rgba(255,255,255,0.85) !important; }
+.lrp-row-sub { color: rgba(255,255,255,0.4) !important; }
+.lrp-faq-q { color: rgba(255,255,255,0.9) !important; }
+.lrp-faq-ans { color: rgba(255,255,255,0.65); }
+.lrp-feature-label { color: rgba(255,255,255,0.85) !important; }
+.lrp-table { background: rgba(255,255,255,0.03) !important; }
+.lrp-thead { background: rgba(255,255,255,0.06) !important; }
+</style>
+
+</head>
+<body>
+<style>
+/* Même palette exacte que le dashboard */
+:root {
+  --blue: #0052CC;
+  --cyan: #00D4FF;
+  --green: #10B981;
+  --gold: #F59E0B;
+  --red: #EF4444;
+}
+
+.lrp {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── HERO — même gradient que le dashboard ── */
+.lrp-hero-bg {
+  background: linear-gradient(135deg, #060D1A 0%, #0A1628 40%, #0052CC 80%, #0099DD 100%);
+  padding: 70px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.lrp-hero-bg::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: lrpFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+.lrp-hero-bg::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(0,82,204,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: lrpFloat 25s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+@keyframes lrpFloat { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-20px) scale(1.05);} }
+
+.lrp-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  font-size: 13px; font-weight: 600;
+  color: #fff; letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+  animation: lrpUp 0.5s ease 0.1s both;
+}
+.lrp-h1 {
+  font-size: clamp(32px, 5vw, 58px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 18px;
+  letter-spacing: -1.5px;
+  font-family: "Syne", sans-serif;
+  position: relative; z-index: 1;
+  animation: lrpUp 0.5s ease 0.2s both;
+  background: linear-gradient(135deg, #FFFFFF 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lrp-sub {
+  font-size: 17px; color: rgba(255,255,255,0.85);
+  max-width: 480px; margin: 0 auto 36px;
+  line-height: 1.6;
+  position: relative; z-index: 1;
+  animation: lrpUp 0.5s ease 0.3s both;
+}
+@keyframes lrpUp { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:none;} }
+
+/* Toggle billing */
+.lrp-toggle {
+  display: inline-flex; align-items: center;
+  padding: 5px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  margin-bottom: 52px;
+  position: relative; z-index: 1;
+  animation: lrpUp 0.5s ease 0.4s both;
+}
+.lrp-tog-opt {
+  padding: 8px 20px; border-radius: 100px;
+  font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  cursor: pointer; transition: all 0.25s;
+  user-select: none; display: flex; align-items: center; gap: 8px;
+}
+.lrp-tog-opt.active {
+  background: rgba(255,255,255,0.2);
+  color: #fff; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.lrp-tog-badge {
+  font-size: 11px; padding: 2px 7px;
+  background: rgba(16,185,129,0.3);
+  color: #4ade80; border-radius: 100px; font-weight: 600;
+}
+
+/* ── CARDS — style glassmorphism comme le dashboard ── */
+.lrp-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 860px; margin: 0 auto;
+  padding: 0 24px 0;
+  position: relative; z-index: 2;
+  transform: translateY(-40px);
+}
+
+.lrp-card {
+  background: rgba(10, 22, 40, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative; overflow: visible;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: lrpUp 0.5s ease both;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.lrp-card:nth-child(1) { animation-delay: 0.1s; }
+.lrp-card:nth-child(2) { animation-delay: 0.2s; }
+.lrp-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+
+.lrp-card-pro {
+  background: linear-gradient(145deg, rgba(0,82,204,0.35), rgba(0,20,60,0.95));
+  border-color: rgba(0,212,255,0.3);
+  box-shadow: 0 8px 32px rgba(0,82,204,0.25), 0 0 0 1px rgba(0,212,255,0.1);
+}
+.lrp-card-pro::before {
+  content: '';
+  position: absolute; top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.6), transparent);
+}
+.lrp-card-pro:hover { box-shadow: 0 20px 56px rgba(0,82,204,0.35), 0 0 0 1px rgba(0,212,255,0.2); }
+
+.lrp-badge {
+  display: block;
+  text-align: center;
+  padding: 6px 18px;
+  background: linear-gradient(135deg, var(--gold), #D97706);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 700; color: #fff;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(245,158,11,0.4);
+  margin: -10px -28px 18px -28px;
+}
+
+.lrp-plan-name {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 16px;
+  font-family: "Syne", sans-serif;
+}
+.lrp-card-pro .lrp-plan-name { color: var(--cyan); }
+
+.lrp-price-row { display: flex; align-items: baseline; gap: 3px; margin-bottom: 4px; }
+.lrp-curr { font-size: 20px; color: rgba(255,255,255,0.4); padding-top: 10px; }
+.lrp-price {
+  font-size: 54px; font-weight: 800; color: #fff; line-height: 1;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: -2px;
+  font-family: "Syne", sans-serif;
+}
+.lrp-card-pro .lrp-price {
+  background: linear-gradient(135deg, #FFFFFF 0%, #00D4FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.lrp-per { font-size: 15px; color: rgba(255,255,255,0.5); }
+.lrp-desc { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 22px; line-height: 1.5; }
+.lrp-hr { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 20px; }
+.lrp-card-pro .lrp-hr { background: rgba(0,212,255,0.15); }
+
+.lrp-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.lrp-feat {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.4;
+}
+.lrp-feat.dim { color: rgba(255,255,255,0.28); }
+.lrp-ck {
+  width: 18px; height: 18px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; flex-shrink: 0; margin-top: 2px;
+}
+.lrp-ck.y  { background: rgba(16,185,129,0.2); color: #4ade80; }
+.lrp-ck.yp { background: rgba(0,212,255,0.15); color: var(--cyan); }
+.lrp-ck.n  { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.2); }
+
+.lrp-cta {
+  display: block; width: 100%; padding: 15px;
+  border-radius: 12px; font-size: 14px; font-weight: 600;
+  text-align: center; text-decoration: none;
+  transition: all 0.25s; border: none; cursor: pointer;
+}
+.lrp-cta-std {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18); color: #fff;
+}
+.lrp-cta-std:hover { background: rgba(255,255,255,0.16); transform: translateY(-1px); }
+.lrp-cta-pro {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: #fff; box-shadow: 0 4px 16px rgba(0,212,255,0.3);
+}
+.lrp-cta-pro:hover { transform: translateY(-2px); box-shadow: 0 7px 24px rgba(0,212,255,0.45); }
+.lrp-note { text-align: center; font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 10px; }
+
+/* ── ZONE TRANSITION ── */
+.lrp-transition {
+  background: linear-gradient(180deg, #0052CC 0%, #1a5fb4 30%, #c8d8f5 70%, #f0f4fb 100%);
+  padding: 60px 24px 48px;
+  margin-top: -40px;
+}
+
+/* Trial banner */
+.lrp-trial {
+  max-width: 860px; margin: 0 auto;
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 18px; padding: 24px 28px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  backdrop-filter: blur(10px);
+}
+.lrp-trial-icon { font-size: 36px; flex-shrink: 0; }
+.lrp-trial-txt { flex: 1; min-width: 200px; }
+.lrp-trial-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+.lrp-trial-sub { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+.lrp-trial-btn {
+  padding: 12px 22px;
+  background: linear-gradient(135deg, var(--green), #059669);
+  border-radius: 11px; color: #fff;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.35);
+  transition: all 0.25s;
+}
+.lrp-trial-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(16,185,129,0.5); }
+
+/* ── ZONE LIGHT ── */
+.lrp-light {
+  background: transparent;
+  padding: 0 24px 72px;
+}
+
+.lrp-sec-label {
+  font-size: 12px; font-weight: 700; color: var(--blue);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-align: center; margin-bottom: 10px; padding-top: 60px;
+}
+.lrp-sec-title {
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700; color: #fff;
+  text-align: center; margin-bottom: 36px;
+  line-height: 1.2; letter-spacing: -0.5px;
+}
+
+/* Comparatif */
+.lrp-table-wrap { max-width: 860px; margin: 0 auto; }
+.lrp-table {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.lrp-thead {
+  display: grid; grid-template-columns: 1fr 110px 110px;
+  background: rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 20px;
+}
+.lrp-th {
+  padding: 16px 10px; font-size: 12px; font-weight: 700;
+  text-align: center; color: rgba(255,255,255,0.4); letter-spacing: 0.3px;
+}
+.lrp-th:first-child { text-align: left; }
+.lrp-th.pro { color: var(--cyan); }
+.lrp-group {
+  padding: 10px 20px 4px; font-size: 11px; font-weight: 700;
+  color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.8px;
+  background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.06);
+}
+.lrp-row {
+  display: grid; grid-template-columns: 1fr 110px 110px;
+  padding: 0 20px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: background 0.15s;
+}
+.lrp-row:last-child { border-bottom: none; }
+.lrp-row:hover { background: rgba(0,212,255,0.04); }
+.lrp-cell {
+  padding: 12px 10px; font-size: 13.5px; color: rgba(255,255,255,0.75);
+  display: flex; align-items: center;
+}
+.lrp-cell:not(:first-child) { justify-content: center; }
+.cy  { color: var(--green); font-size: 16px; }
+.cyp { color: var(--cyan); font-size: 16px; }
+.cn  { color: rgba(255,255,255,0.15); font-size: 16px; }
+.cv  { font-weight: 600; color: rgba(255,255,255,0.75); font-size: 13px; }
+.cvp { font-weight: 700; color: var(--blue); font-size: 13px; }
+
+/* FAQ */
+.lrp-faq-wrap { max-width: 680px; margin: 0 auto; padding-top: 60px; }
+.lrp-faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+.lrp-faq-btn {
+  width: 100%; display: flex; justify-content: space-between;
+  align-items: center; padding: 17px 0;
+  background: none; border: none; cursor: pointer; text-align: left; gap: 14px;
+}
+.lrp-faq-q { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.4; }
+.lrp-faq-ico {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(0,82,204,0.08); border: 1px solid rgba(0,82,204,0.15);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blue); font-size: 18px; flex-shrink: 0;
+  transition: all 0.25s;
+}
+.lrp-faq-btn.open .lrp-faq-ico { transform: rotate(45deg); background: rgba(0,82,204,0.12); }
+.lrp-faq-ans {
+  display: none; padding-bottom: 16px;
+  font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.7;
+}
+.lrp-faq-ans.open { display: block; animation: lrpUp 0.2s ease both; }
+
+/* Footer CTA */
+.lrp-footer { max-width: 860px; margin: 60px auto 0; }
+.lrp-footer-inner {
+  background: linear-gradient(135deg, #0052CC, #0077ee, #00D4FF);
+  border-radius: 20px; padding: 52px 36px;
+  text-align: center; position: relative; overflow: hidden;
+  box-shadow: 0 8px 36px rgba(0,82,204,0.28);
+}
+.lrp-footer-inner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.lrp-footer-title {
+  font-size: clamp(24px, 3.5vw, 36px); font-weight: 700;
+  color: #ffffff !important; margin-bottom: 12px;
+  letter-spacing: -0.5px; position: relative; z-index: 1;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.lrp-footer-sub {
+  font-size: 16px; color: rgba(255,255,255,0.8);
+  margin-bottom: 28px; line-height: 1.6;
+  position: relative; z-index: 1;
+}
+.lrp-footer-btns {
+  display: flex; gap: 12px; justify-content: center;
+  flex-wrap: wrap; position: relative; z-index: 1;
+}
+.lrp-btn-w {
+  padding: 14px 28px; background: #fff; border-radius: 11px;
+  color: var(--blue); font-size: 14px; font-weight: 700;
+  text-decoration: none; transition: all 0.25s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.lrp-btn-w:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+.lrp-btn-o {
+  padding: 14px 28px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 11px; color: #fff; font-size: 14px; font-weight: 600;
+  text-decoration: none; transition: all 0.25s;
+}
+.lrp-btn-o:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+/* Trust */
+.lrp-trust {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; flex-wrap: wrap; padding: 28px 24px 0;
+}
+.lrp-trust-item { display: flex; align-items: center; gap: 7px; font-size: 13px; color: rgba(255,255,255,0.45); }
+
+@media (max-width: 640px) {
+  .lrp-h1 { font-size: 28px; letter-spacing: -0.5px; }
+  .lrp-sub { font-size: 15px; }
+  .lrp-hero-bg { padding: 48px 16px 64px; }
+  .lrp-plans {
+    grid-template-columns: 1fr;
+    transform: translateY(-24px);
+    padding: 0 16px;
+    gap: 40px;
+  }
+  .lrp-card { padding: 28px 20px; }
+  .lrp-card-pro { margin-top: 16px; }
+  .lrp-price { font-size: 44px; }
+  .lrp-transition { padding: 48px 16px 40px; }
+  .lrp-trial { flex-direction: column; text-align: center; padding: 20px 16px; gap: 16px; }
+  .lrp-trial-btn { width: 100%; text-align: center; }
+  .lrp-light { padding: 0 16px 56px; }
+  .lrp-table-wrap { overflow-x: auto; }
+  .lrp-table { min-width: 460px; }
+  .lrp-thead, .lrp-row { grid-template-columns: 1fr 85px 85px; }
+  .lrp-th, .lrp-cell { padding: 10px 7px; font-size: 12.5px; }
+  .lrp-footer-inner { padding: 32px 16px; }
+  .lrp-footer-btns { flex-direction: column; align-items: center; }
+  .lrp-btn-w, .lrp-btn-o { width: 100%; text-align: center; }
+  .lrp-trust { gap: 14px; }
+  .lrp-tog-opt { padding: 7px 14px; font-size: 13px; }
+  .lrp-sec-title { font-size: 24px; }
+  .lrp-faq-q { font-size: 14px; }
+}
+</style>
+
+<div class="lrp">
+
+  <!-- HERO -->
+  <div class="lrp-hero-bg">
+    <div class="lrp-eyebrow" data-i18n="p_eyebrow">{{p_eyebrow}}</div>
+    <h1 class="lrp-h1"><span data-i18n="p_title1">{{p_title1}}</span><br><span data-i18n="p_title2">{{p_title2}}</span></h1>
+    <p class="lrp-sub" data-i18n="p_sub">{{p_sub}}</p>
+    <div class="lrp-toggle">
+      <div class="lrp-tog-opt active" id="togM" onclick="lrpBilling('monthly')" data-i18n="p_monthly">{{p_monthly}}</div>
+      <div class="lrp-tog-opt" id="togY" onclick="lrpBilling('yearly')">
+        <span data-i18n="p_yearly">{{p_yearly}}</span> <span class="lrp-tog-badge" data-i18n="p_yearly_badge">{{p_yearly_badge}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLANS -->
+  <div class="lrp-plans">
+
+    <div class="lrp-card">
+      <div class="lrp-plan-name">Standard</div>
+      <div class="lrp-price-row">
+        <span class="lrp-curr">€</span>
+        <span class="lrp-price" id="pStd">39</span>
+        <span class="lrp-per" data-i18n="p_per_month">{{p_per_month}}</span>
+      </div>
+      <p class="lrp-desc" id="dStd" data-i18n="p_std_desc">{{p_std_desc}}</p>
+      <div class="lrp-hr"></div>
+      <ul class="lrp-feats">
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f1">{{p_f1}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f2">{{p_f2}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f3">{{p_f3}}</span> <span style="font-size:12px;color:rgba(255,255,255,0.45);" data-i18n="p_f3b">{{p_f3b}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f4">{{p_f4}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f5">{{p_f5}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f6">{{p_f6}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f7">{{p_f7}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck y">✓</span> <span data-i18n="p_f8">{{p_f8}}</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f9">{{p_f9}}</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f10">{{p_f10}}</span></li>
+        <li class="lrp-feat dim"><span class="lrp-ck n">✗</span> <span data-i18n="p_f11">{{p_f11}}</span></li>
+      </ul>
+      <a href="/auth?plan=standard&billing=monthly" id="ctaStd" class="lrp-cta lrp-cta-std" data-i18n="p_std_cta">{{p_std_cta}}</a>
+      <p class="lrp-note" data-i18n="p_trial_note">{{p_trial_note}}</p>
+    </div>
+
+    <div class="lrp-card lrp-card-pro">
+      <div class="lrp-badge" data-i18n="p_recommended">{{p_recommended}}</div>
+      <div class="lrp-plan-name">Pro</div>
+      <div class="lrp-price-row">
+        <span class="lrp-curr" style="color:rgba(0,212,255,0.5);">€</span>
+        <span class="lrp-price" id="pPro">49</span>
+        <span class="lrp-per" data-i18n="p_per_month">{{p_per_month}}</span>
+      </div>
+      <p class="lrp-desc" id="dPro" style="color:rgba(255,255,255,0.55);" data-i18n="p_pro_desc">{{p_pro_desc}}</p>
+      <div class="lrp-hr"></div>
+      <ul class="lrp-feats">
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf1">{{p_pf1}}</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf2">{{p_pf2}}</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf3">{{p_pf3}}</strong> <span style="font-size:12px;color:rgba(255,255,255,0.5);" data-i18n="p_pf3b">{{p_pf3b}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf4">{{p_pf4}}</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf5">{{p_pf5}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf6">{{p_pf6}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <strong data-i18n="p_pf7">{{p_pf7}}</strong></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf8">{{p_pf8}}</span></li>
+        <li class="lrp-feat"><span class="lrp-ck yp">✓</span> <span data-i18n="p_pf9">{{p_pf9}}</span></li>
+      </ul>
+      <a href="/auth?plan=pro&billing=monthly" id="ctaPro" class="lrp-cta lrp-cta-pro" data-i18n="p_pro_cta">{{p_pro_cta}}</a>
+      <p class="lrp-note" style="color:rgba(255,255,255,0.2);" data-i18n="p_trial_note">{{p_trial_note}}</p>
+    </div>
+
+  </div>
+
+  <!-- ZONE TRANSITION -->
+  <div class="lrp-transition">
+    <div class="lrp-trial">
+      <div class="lrp-trial-icon">🎁</div>
+      <div class="lrp-trial-txt">
+        <div class="lrp-trial-title" data-i18n="p_trial_title">{{p_trial_title}}</div>
+        <div class="lrp-trial-sub" data-i18n="p_trial_sub">{{p_trial_sub}}</div>
+      </div>
+      <a href="/auth" class="lrp-trial-btn" data-i18n="p_trial_btn">{{p_trial_btn}}</a>
+    </div>
+  </div>
+
+  <!-- ZONE LIGHT -->
+  <div class="lrp-light">
+
+    <!-- Comparatif -->
+    <div class="lrp-table-wrap">
+      <div class="lrp-sec-label" data-i18n="p_comp_label">{{p_comp_label}}</div>
+      <h2 class="lrp-sec-title" data-i18n="p_comp_title">{{p_comp_title}}</h2>
+      <div class="lrp-table">
+        <div class="lrp-thead">
+          <div class="lrp-th">Fonctionnalité</div>
+          <div class="lrp-th">Standard<br><span id="compStdPrice" style="font-weight:400;font-size:11px;color:rgba(255,255,255,0.4);">39€/mois</span></div>
+          <div class="lrp-th pro">Pro<br><span id="compProPrice" style="font-weight:400;font-size:11px;color:rgba(0,82,204,0.6);">49€/mois</span></div>
+        </div>
+        <div class="lrp-group" data-i18n="pt_g1">{{pt_g1}}</div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r1">{{pt_r1}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r2">{{pt_r2}}</div><div class="lrp-cell"><span class="cy" data-i18n="pt_unlimited">{{pt_unlimited}}</span></div><div class="lrp-cell"><span class="cyp" data-i18n="pt_unlimited">{{pt_unlimited}}</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r3">{{pt_r3}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r4">{{pt_r4}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r5">{{pt_r5}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r6">{{pt_r6}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-group" data-i18n="pt_g2">{{pt_g2}}</div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r7">{{pt_r7}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r8">{{pt_r8}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r9">{{pt_r9}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r10">{{pt_r10}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r11">{{pt_r11}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r12">{{pt_r12}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-group" data-i18n="pt_g3">{{pt_g3}}</div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r13">{{pt_r13}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r14">{{pt_r14}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r15">{{pt_r15}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cvp" data-i18n="pt_90days">{{pt_90days}}</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r16">{{pt_r16}}</div><div class="lrp-cell"><span class="cv" data-i18n="pt_weekly">{{pt_weekly}}</span></div><div class="lrp-cell"><span class="cvp" data-i18n="pt_daily">{{pt_daily}}</span></div></div>
+        <div class="lrp-group" data-i18n="pt_g4">{{pt_g4}}</div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r17">{{pt_r17}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-group" data-i18n="pt_g5">{{pt_g5}}</div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r18">{{pt_r18}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r19">{{pt_r19}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r20">{{pt_r20}}</div><div class="lrp-cell"><span class="cn">✗</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r21">{{pt_r21}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+        <div class="lrp-row"><div class="lrp-cell" data-i18n="pt_r22">{{pt_r22}}</div><div class="lrp-cell"><span class="cy">✓</span></div><div class="lrp-cell"><span class="cyp">✓</span></div></div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="lrp-faq-wrap">
+      <div class="lrp-sec-label" data-i18n="p_faq_label">{{p_faq_label}}</div>
+      <h2 class="lrp-sec-title" data-i18n="p_faq_title">{{p_faq_title}}</h2>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq1_q">{{p_faq1_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq1_a">{{p_faq1_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq2_q">{{p_faq2_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq2_a">{{p_faq2_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq3_q">{{p_faq3_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq3_a">{{p_faq3_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq4_q">{{p_faq4_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq4_a">{{p_faq4_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq5_q">{{p_faq5_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq5_a">{{p_faq5_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq6_q">{{p_faq6_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq6_a">{{p_faq6_a}}</div>
+      </div>
+      <div class="lrp-faq-item">
+        <button class="lrp-faq-btn" onclick="lrpFaq(this)"><span class="lrp-faq-q" data-i18n="p_faq7_q">{{p_faq7_q}}</span><div class="lrp-faq-ico">+</div></button>
+        <div class="lrp-faq-ans" data-i18n="p_faq7_a">{{p_faq7_a}}</div>
+      </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="lrp-footer">
+      <div class="lrp-footer-inner">
+        <h2 class="lrp-footer-title" data-i18n="p_footer_title">{{p_footer_title}}</h2>
+        <p class="lrp-footer-sub" data-i18n="p_footer_sub">{{p_footer_sub}}</p>
+        <div class="lrp-footer-btns">
+          <a href="/auth" class="lrp-btn-w" data-i18n="p_footer_cta1">{{p_footer_cta1}}</a>
+          <a href="/chat?slug=salon-marie-demo" target="_blank" class="lrp-btn-o" data-i18n="p_footer_cta2">{{p_footer_cta2}}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust -->
+    <div class="lrp-trust">
+      <div class="lrp-trust-item"><span>🔒</span><span data-i18n="p_trust1">{{p_trust1}}</span></div>
+      <div class="lrp-trust-item"><span>🛡️</span><span data-i18n="p_trust2">{{p_trust2}}</span></div>
+      <div class="lrp-trust-item"><span>🇪🇺</span><span data-i18n="p_trust3">{{p_trust3}}</span></div>
+      <div class="lrp-trust-item"><span>🔄</span><span data-i18n="p_trust4">{{p_trust4}}</span></div>
+      <div class="lrp-trust-item"><span>🎁</span><span data-i18n="p_trust5">{{p_trust5}}</span></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Baked at build time (replaces the old runtime LRP_T lookup for this small set
+// of strings used by the billing toggle, since the page content is now static per language).
+var LR_PAGE_STRINGS = {
+  p_per_month: '{{p_per_month}}',
+  p_std_desc_y: '{{p_std_desc_y}}',
+  p_std_desc: '{{p_std_desc}}',
+  p_pro_desc_y: '{{p_pro_desc_y}}',
+  p_pro_desc: '{{p_pro_desc}}'
+};
+const lrpPrices = { std: { monthly:39, yearly:31 }, pro: { monthly:49, yearly:39 } };
+let lrpCurrentBilling = 'monthly';
+
+function lrpBilling(type) {
+  lrpCurrentBilling = type;
+  document.getElementById('togM').classList.toggle('active', type==='monthly');
+  document.getElementById('togY').classList.toggle('active', type==='yearly');
+  const ps = document.getElementById('pStd'), pp = document.getElementById('pPro');
+  const ds = document.getElementById('dStd'), dp = document.getElementById('dPro');
+  [ps,pp].forEach(el => { el.style.opacity='0'; el.style.transform='translateY(-5px)'; });
+  var t = LR_PAGE_STRINGS;
+  setTimeout(() => {
+    ps.textContent = lrpPrices.std[type];
+    pp.textContent = lrpPrices.pro[type];
+
+    // Bug fix: keep the detailed comparison table in sync with the toggle
+    const compStd = document.getElementById('compStdPrice');
+    const compPro = document.getElementById('compProPrice');
+    const perMonth = t.p_per_month || '/mois';
+    if (compStd) compStd.textContent = lrpPrices.std[type] + '€' + perMonth;
+    if (compPro) compPro.textContent = lrpPrices.pro[type] + '€' + perMonth;
+    ds.textContent = type==='yearly' ? (t.p_std_desc_y||'Facturé 372€/an — économisez 96€ vs mensuel.') : (t.p_std_desc||'Idéal pour démarrer et automatiser votre accueil client.');
+    dp.textContent = type==='yearly' ? (t.p_pro_desc_y||'Facturé 468€/an — économisez 120€ vs mensuel.') : (t.p_pro_desc||'Pour maximiser vos résultats et ne rater aucune opportunité.');
+    [ps,pp].forEach(el => { el.style.transition='all 0.25s'; el.style.opacity='1'; el.style.transform='none'; });
+
+    // Mettre à jour les liens CTA avec le billing
+    const ctaStd = document.getElementById('ctaStd');
+    const ctaPro = document.getElementById('ctaPro');
+    if (ctaStd) ctaStd.href = '/auth?plan=standard&billing=' + type;
+    if (ctaPro) ctaPro.href = '/auth?plan=pro&billing=' + type;
+  }, 130);
+}
+
+function lrpFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const open = btn.classList.contains('open');
+  document.querySelectorAll('.lrp-faq-btn.open').forEach(b => {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('open');
+    b.querySelector('.lrp-faq-ico').textContent = '+';
+  });
+  if (!open) { btn.classList.add('open'); ans.classList.add('open'); }
+}
+</script>
+
+
+  <script src="/nav.js"></script>
+  <script src="/footer.js"></script>
+
+  <script>
+  // Keep the language switcher (nav.js) in sync with this statically-baked page.
+  try { localStorage.setItem('lr_lang', '{{_lang}}'); } catch (e) {}
+  </script>
+</html>

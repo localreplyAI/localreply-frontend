@@ -277,7 +277,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // Pages traduites statiquement au build (Phase 0+) : pour celles-ci, le contenu est figé
   // à la génération -- changer de langue doit RE-NAVIGUER vers l'URL préfixée, pas juste
   // retraduire la navbar en JS. Cette liste grandit au fur et à mesure des migrations.
-  const _staticallyTranslatedPages = ['contact'];
+  const _staticallyTranslatedPages = ['', 'contact', 'features', 'pricing', 'about', 'blog'];
   const _defaultLang = 'en';
   const _langPrefixes = Object.keys(_navTranslations);
 
@@ -294,7 +294,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
       const slug = _currentPageSlug();
       if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
         localStorage.setItem('lr_lang', lang);
-        window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + '/' + slug);
+        window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + (slug ? '/' + slug : ''));
         return;
       }
       lrApplyNavLang(lang);
