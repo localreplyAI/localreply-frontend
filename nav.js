@@ -274,9 +274,29 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     localStorage.setItem('lr_lang', lang);
   }
 
+  // Pages traduites statiquement au build (Phase 0+) : pour celles-ci, le contenu est figé
+  // à la génération -- changer de langue doit RE-NAVIGUER vers l'URL préfixée, pas juste
+  // retraduire la navbar en JS. Cette liste grandit au fur et à mesure des migrations.
+  const _staticallyTranslatedPages = ['contact'];
+  const _defaultLang = 'en';
+  const _langPrefixes = Object.keys(_navTranslations);
+
+  function _currentPageSlug() {
+    let p = currentPath.replace(/^\/+|\/+$/g, '');
+    const parts = p ? p.split('/') : [];
+    if (parts.length && _langPrefixes.indexOf(parts[0]) >= 0) parts.shift();
+    return parts.join('/');
+  }
+
   // Définir lrApplyLang globalement si elle n'existe pas encore (pages sans i18n complet)
   if (typeof window.lrApplyLang === 'undefined') {
     window.lrApplyLang = function(lang) {
+      const slug = _currentPageSlug();
+      if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
+        localStorage.setItem('lr_lang', lang);
+        window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + '/' + slug);
+        return;
+      }
       lrApplyNavLang(lang);
       const dd = document.getElementById('lr-lang-dd');
       if (dd) dd.style.display = 'none';
