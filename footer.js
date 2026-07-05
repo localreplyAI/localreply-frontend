@@ -3,6 +3,25 @@
 // ══════════════════════════════════════════════
 
 (function() {
+  // Same fix as nav.js: without this, every footer link (Features, Pricing,
+  // Blog, About, Contact, the CTA) always pointed to the default-language
+  // URL, so clicking one from e.g. /it/... dropped you back to English.
+  const currentPath = window.location.pathname;
+  const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl'];
+  const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
+  function _curLang() {
+    const first = currentPath.replace(/^\/+/, '').split('/')[0];
+    return _navLangPrefixes.indexOf(first) >= 0 ? first : '';
+  }
+  const _lang = _curLang();
+  function withLang(href) {
+    if (!_lang) return href;
+    const slug = href === '/' ? '' : href.replace(/^\//, '');
+    if (_navLangRoutedSlugs.indexOf(slug) === -1) return href; // e.g. /demo, /terms, /privacy, /gdpr -- no per-language route
+    return slug ? '/' + _lang + '/' + slug : '/' + _lang;
+  }
+
   const FOOTER_T = {
     fr: { brand_desc: "L'assistant IA 24/7 pour les petits commerces en Europe. 8 langues, prise de RDV automatique, FAQ intelligente.", col_product: 'Produit', features: 'Fonctionnalités', pricing: 'Tarifs', demo: 'Démo live', blog: 'Blog', col_company: 'Entreprise', about: 'À propos', contact: 'Contact', col_legal: 'Légal', terms: 'CGU', privacy: 'Confidentialité', gdpr: 'RGPD', rights: 'Tous droits réservés.', cta: 'Essai gratuit 14 jours →' },
     en: { brand_desc: 'The 24/7 AI assistant for local businesses across Europe. 8 languages, automatic bookings, smart FAQ.', col_product: 'Product', features: 'Features', pricing: 'Pricing', demo: 'Live demo', blog: 'Blog', col_company: 'Company', about: 'About', contact: 'Contact', col_legal: 'Legal', terms: 'Terms', privacy: 'Privacy', gdpr: 'GDPR', rights: 'All rights reserved.', cta: 'Free 14-day trial →' },
@@ -41,16 +60,16 @@
 
           <div>
             <div id="lr-footer-col-product" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">${t.col_product}</div>
-            ${link('/features', `<span id="lr-footer-features">${t.features}</span>`)}
-            ${link('/pricing', `<span id="lr-footer-pricing">${t.pricing}</span>`)}
+            ${link(withLang('/features'), `<span id="lr-footer-features">${t.features}</span>`)}
+            ${link(withLang('/pricing'), `<span id="lr-footer-pricing">${t.pricing}</span>`)}
             ${link('/demo', `<span id="lr-footer-demo">${t.demo}</span>`)}
-            ${link('/blog', `<span id="lr-footer-blog">${t.blog}</span>`)}
+            ${link(withLang('/blog'), `<span id="lr-footer-blog">${t.blog}</span>`)}
           </div>
 
           <div>
             <div id="lr-footer-col-company" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">${t.col_company}</div>
-            ${link('/about', `<span id="lr-footer-about">${t.about}</span>`)}
-            ${link('/contact', `<span id="lr-footer-contact">${t.contact}</span>`)}
+            ${link(withLang('/about'), `<span id="lr-footer-about">${t.about}</span>`)}
+            ${link(withLang('/contact'), `<span id="lr-footer-contact">${t.contact}</span>`)}
           </div>
 
           <div>
@@ -63,7 +82,7 @@
 
         <div style="border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
           <div id="lr-footer-rights" style="font-size:13px;color:rgba(255,255,255,0.3);">© ${new Date().getFullYear()} LocalReply. ${t.rights}</div>
-          <a id="lr-footer-cta" href="/auth" style="padding:9px 20px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">${t.cta}</a>
+          <a id="lr-footer-cta" href="${withLang('/auth')}" style="padding:9px 20px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-decoration:none;">${t.cta}</a>
         </div>
       </div>
 
