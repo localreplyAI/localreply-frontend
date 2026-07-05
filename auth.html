@@ -129,6 +129,8 @@ button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0,
 </style>
 
 <script>
+// Sync language from URL prefix (e.g. /de/auth) into localStorage before this page reads it.
+(function(){ var m=location.pathname.match(/^\/(fr|en|de|it|es|pt|nl|pl)(\/|$)/); if(m){ try{localStorage.setItem("lr_lang",m[1]);}catch(e){} } })();
 const AUTH_T = {
   fr: {
     title:'Votre assistant IA pour gérer vos clients',

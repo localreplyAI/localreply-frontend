@@ -488,6 +488,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 <script src="/dashboard-i18n.js"></script>
 <script>
+// Sync language from URL prefix (e.g. /de/auth) into localStorage before this page reads it.
+(function(){ var m=location.pathname.match(/^\/(fr|en|de|it|es|pt|nl|pl)(\/|$)/); if(m){ try{localStorage.setItem("lr_lang",m[1]);}catch(e){} } })();
 const DASH_AB_T = {
   fr:{
     page_title:'Abonnement — LocalReply',

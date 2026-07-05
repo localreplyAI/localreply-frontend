@@ -33,7 +33,15 @@
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/features", "destination": "/:lang/features.html" },
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/pricing", "destination": "/:lang/pricing.html" },
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/about", "destination": "/:lang/about.html" },
-    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/blog", "destination": "/:lang/blog.html" }
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/blog", "destination": "/:lang/blog.html" },
+
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/auth", "destination": "/auth.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/onboarding", "destination": "/onboarding.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/mon-compte", "destination": "/mon-compte.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/abonnement", "destination": "/abonnement.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/choisir-plan", "destination": "/choisir-plan.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/reset-password", "destination": "/reset-password.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/forgot-password", "destination": "/forgot-password.html" }
   ],
   "headers": [
     {
