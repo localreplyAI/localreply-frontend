@@ -43,6 +43,38 @@
 (function() {
   const currentPath = window.location.pathname;
 
+  // ── Language-aware internal links ──
+  // Without this, every link in the navbar (logo, Home/Features/Pricing/About,
+  // Connexion/Essai gratuit) always pointed to the default-language URL, so
+  // navigating away from e.g. /it/pricing dropped you back to English. Any
+  // page slug that has real per-language routes (see vercel.json) gets its
+  // link automatically prefixed with whatever language the visitor is
+  // currently on; anything else (e.g. /demo, /dashboard) is left untouched
+  // since no such route exists for it.
+  const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl']; // 'en' is default, unprefixed
+  const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
+
+  function _navCurrentSlug() {
+    let p = currentPath.replace(/^\/+|\/+$/g, '');
+    const parts = p ? p.split('/') : [];
+    if (parts.length && _navLangPrefixes.indexOf(parts[0]) >= 0) parts.shift();
+    return parts.join('/');
+  }
+  function _navCurrentLang() {
+    const first = currentPath.replace(/^\/+/, '').split('/')[0];
+    return _navLangPrefixes.indexOf(first) >= 0 ? first : '';
+  }
+  const _curSlug = _navCurrentSlug();
+  const _curLang = _navCurrentLang();
+
+  function withLang(href) {
+    if (!_curLang) return href; // default language, no prefix needed
+    const slug = href === '/' ? '' : href.replace(/^\//, '');
+    if (_navLangRoutedSlugs.indexOf(slug) === -1) return href; // no per-language route for this page
+    return slug ? '/' + _curLang + '/' + slug : '/' + _curLang;
+  }
+
   // Bug fix: this navbar was originally built for public marketing pages only,
   // but it was rendering unconditionally -- including on dashboard/app pages,
   // stacked on top of the dashboard's own sidebar nav. The dashboard has no nav
@@ -64,8 +96,8 @@
   ];
 
   const isActive = (href) => {
-    if (href === '/') return currentPath === '/';
-    return currentPath.startsWith(href);
+    const slug = href === '/' ? '' : href.replace(/^\//, '');
+    return slug === _curSlug;
   };
 
   const token = localStorage.getItem('auth_token');
@@ -83,7 +115,7 @@
       <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;">
 
         <!-- Logo -->
-        <a href="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+        <a href="${withLang('/')}" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
           <img src="/assets/logo.png"
             alt="LocalReply" style="width:36px;height:36px;border-radius:0;background:transparent;">
           <span style="font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.3px;">LocalReply</span>
@@ -92,7 +124,7 @@
         <!-- Links desktop -->
         <div id="lr-nav-links" style="display:flex;align-items:center;gap:4px;">
           ${_isAppPage ? '' : links.map(l => `
-            <a href="${l.href}" style="
+            <a href="${withLang(l.href)}" style="
               padding:8px 14px;border-radius:9px;text-decoration:none;font-size:14px;font-weight:600;
               transition:all 0.2s;
               color:${isActive(l.href) ? '#00D4FF' : 'rgba(255,255,255,0.7)'};
@@ -119,7 +151,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
               Dashboard →
             </a>
           ` : `
-            <a href="/auth" style="
+            <a href="${withLang('/auth')}" style="
               padding:9px 16px;background:transparent;border:1px solid rgba(255,255,255,0.2);
               border-radius:10px;color:rgba(255,255,255,0.8);font-size:14px;font-weight:600;
               text-decoration:none;transition:all 0.2s;
@@ -128,7 +160,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             onmouseleave="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.8)'">
               <span data-i18n="nav_login">Connexion</span>
             </a>
-            <a href="/auth" style="
+            <a href="${withLang('/auth')}" style="
               padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);
               border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;
               box-shadow:0 4px 12px rgba(0,82,204,0.35);transition:all 0.2s;white-space:nowrap;
@@ -187,7 +219,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
         padding:16px 24px 24px;flex-direction:column;gap:4px;
       ">
         ${links.map(l => `
-          <a href="${l.href}" style="
+          <a href="${withLang(l.href)}" style="
             display:block;padding:13px 16px;border-radius:10px;text-decoration:none;
             font-size:15px;font-weight:600;transition:all 0.2s;
             color:${isActive(l.href) ? '#00D4FF' : 'rgba(255,255,255,0.8)'};
@@ -198,8 +230,8 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
         ${isLoggedIn ? `
           <a href="/dashboard" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;">Dashboard →</a>
         ` : `
-          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;border:1px solid rgba(255,255,255,0.2);margin-bottom:8px;"><span data-i18n="nav_login">Connexion</span></a>
-          <a href="/auth" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;"><span data-i18n="nav_cta">Essai gratuit →</span></a>
+          <a href="${withLang('/auth')}" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;border:1px solid rgba(255,255,255,0.2);margin-bottom:8px;"><span data-i18n="nav_login">Connexion</span></a>
+          <a href="${withLang('/auth')}" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;"><span data-i18n="nav_cta">Essai gratuit →</span></a>
         `}
       </div>
       `}
@@ -277,7 +309,8 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // Pages traduites statiquement au build (Phase 0+) : pour celles-ci, le contenu est figé
   // à la génération -- changer de langue doit RE-NAVIGUER vers l'URL préfixée, pas juste
   // retraduire la navbar en JS. Cette liste grandit au fur et à mesure des migrations.
-  const _staticallyTranslatedPages = ['', 'contact', 'features', 'pricing', 'about', 'blog'];
+  const _staticallyTranslatedPages = ['', 'contact', 'features', 'pricing', 'about', 'blog',
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
   const _defaultLang = 'en';
   const _langPrefixes = Object.keys(_navTranslations);
 
