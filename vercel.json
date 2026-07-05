@@ -1,4 +1,6 @@
 {
+  "buildCommand": "node build.js",
+  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/", "destination": "/home.html" },
     { "source": "/auth", "destination": "/auth.html" },
@@ -16,14 +18,16 @@
     { "source": "/features", "destination": "/features.html" },
     { "source": "/about", "destination": "/about.html" },
     { "source": "/blog", "destination": "/blog.html" },
-    { "source": "/contact", "destination": "/contact.html" },
     { "source": "/demo", "destination": "/demo-chat.html" },
     { "source": "/chat", "destination": "/chat-client.html" },
     { "source": "/forgot-password", "destination": "/forgot-password.html" },
     { "source": "/reset-password", "destination": "/reset-password.html" },
     { "source": "/terms", "destination": "/terms.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/gdpr", "destination": "/gdpr.html" }
+    { "source": "/gdpr", "destination": "/gdpr.html" },
+
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/contact", "destination": "/:lang/contact.html" }
   ],
   "headers": [
     {
