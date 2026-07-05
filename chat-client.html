@@ -562,12 +562,12 @@
     <!-- LOADING -->
     <div class="lrc-loading" id="lrcLoading">
       <div class="lrc-spinner"></div>
-      <div class="lrc-loading-text">Connexion à l'assistant...</div>
+      <div class="lrc-loading-text" id="lrcLoadingText">Connexion à l'assistant...</div>
     </div>
 
     <!-- MESSAGES -->
     <div class="lrc-messages" id="lrcMessages" style="display:none;">
-      <div class="lrc-date-sep">Aujourd'hui</div>
+      <div class="lrc-date-sep" id="lrcDateSep">Aujourd'hui</div>
     </div>
 
     <!-- SUGGESTIONS -->
@@ -576,13 +576,13 @@
     <!-- FORMULAIRE RDV -->
     <div class="lrc-rdv-form" id="lrcRdvForm" style="display:none;"></div>
     <div class="lrc-rdv-form" id="lrcEmailForm" style="display:none;">
-      <div class="lrc-rdv-title">📧 Recevoir la réponse par email</div>
-      <p style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
+      <div class="lrc-rdv-title" id="lrcEmailFormTitle">📧 Recevoir la réponse par email</div>
+      <p id="lrcEmailFormDesc" style="font-size:13px;color:var(--text-3);margin:0 0 12px;line-height:1.5;">Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.</p>
       <div style="display:flex;gap:8px;margin-bottom:10px;">
         <input id="lrcEmailInput" type="email" placeholder="votre@email.com" style="flex:1;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" onkeydown="if(event.key==='Enter')submitEmailCapture()">
-        <button class="lrc-rdv-submit" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
+        <button class="lrc-rdv-submit" id="lrcEmailFormBtn" onclick="submitEmailCapture()" style="padding:10px 16px;white-space:nowrap;">✉️ M'alerter</button>
       </div>
-      <button class="lrc-rdv-cancel" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
+      <button class="lrc-rdv-cancel" id="lrcEmailFormDecline" onclick="closeEmailCapture()" style="width:100%;">Non merci, continuer sans</button>
     </div>
 
     <!-- INPUT -->
@@ -602,14 +602,14 @@
 
     <!-- FOOTER -->
     <div class="lrc-footer" id="lrcFooter" style="display:none;">
-      Propulsé par <span>LocalReply AI</span>
+      <span id="lrcFooterPowered">Propulsé par</span> <span>LocalReply AI</span>
     </div>
 
     <!-- ERROR -->
     <div class="lrc-error" id="lrcError" style="display:none;">
       <div class="lrc-error-icon">😕</div>
-      <div class="lrc-error-title">Commerce introuvable</div>
-      <div class="lrc-error-desc">Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.</div>
+      <div class="lrc-error-title" id="lrcErrorTitle">Commerce introuvable</div>
+      <div class="lrc-error-desc" id="lrcErrorDesc">Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.</div>
     </div>
 
   </div>
@@ -619,23 +619,76 @@
 const API = 'https://localreply-api.onrender.com';
 
 // Langue nav → flag
-const LANG_FLAGS = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
+const LANG_FLAGS = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱' };
 const BIZ_ICONS  = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'💬' };
 
 const PLACEHOLDERS = {
   fr:'Posez votre question...',en:'Ask your question...',
   de:'Ihre Frage...', it:'La tua domanda...',
-  es:'Su pregunta...',pt:'A sua pergunta...'
+  es:'Su pregunta...',pt:'A sua pergunta...',
+  nl:'Stel uw vraag...', pl:'Zadaj swoje pytanie...'
 };
 
 const GREETINGS = {
-  fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá'
+  fr:'Bonjour', en:'Hello', de:'Hallo', it:'Ciao', es:'Hola', pt:'Olá', nl:'Hallo', pl:'Cześć'
 };
 
 // ── Suggestions intelligentes et contextuelles ──
 let bizConfig = null;
 let conversationContext = [];
 let suggestionsShown = new Set();
+
+const CHAT_UI_T = {
+  fr: { biz_not_found:'Commerce introuvable', biz_not_found_desc:"Ce lien n'est pas valide ou le commerce n'existe plus.<br>Vérifiez l'URL et réessayez.", err_timeout:"Le serveur met trop de temps à répondre. Réessayez dans quelques secondes.", err_notfound_short:"Ce commerce est introuvable. Vérifiez le lien.", loading_text:"Connexion à l'assistant...", date_today:"Aujourd'hui", email_capture_title:"📧 Recevoir la réponse par email", email_capture_desc:"Laissez votre email et nous vous notifierons dès que l'équipe aura répondu.", email_capture_btn:"✉️ M'alerter", email_capture_decline:"Non merci, continuer sans", footer_powered:"Propulsé par",
+    rdv_title:'📅 Demande de rendez-vous', lbl_service:'Service souhaité', lbl_date:'Date', lbl_time:'Heure souhaitée',
+    lbl_name:'Prénom & Nom', lbl_phone:'Téléphone', lbl_email:'Email', lbl_email_opt:'(optionnel — pour la confirmation)',
+    ph_custom_service:'Décrivez votre demande...', opt_choose_service:'-- Choisir un service --', opt_other:'✏️ Autre (saisie libre)',
+    ph_name:'Thomas Dupont', ph_phone:'+41 79 123 45 67', ph_email:'thomas@email.com',
+    btn_confirm:'✅ Confirmer la demande', btn_cancel:'Annuler' },
+  en: { biz_not_found:'Business not found', biz_not_found_desc:'This link is not valid or the business no longer exists.<br>Check the URL and try again.', err_timeout:"The server is taking too long to respond. Please try again in a few seconds.", err_notfound_short:"This business could not be found. Please check the link.", loading_text:"Connecting to assistant...", date_today:"Today", email_capture_title:"📧 Get the answer by email", email_capture_desc:"Leave your email and we'll notify you as soon as the team replies.", email_capture_btn:"✉️ Notify me", email_capture_decline:"No thanks, continue without", footer_powered:"Powered by",
+    rdv_title:'📅 Appointment request', lbl_service:'Requested service', lbl_date:'Date', lbl_time:'Preferred time',
+    lbl_name:'First & last name', lbl_phone:'Phone', lbl_email:'Email', lbl_email_opt:'(optional — for confirmation)',
+    ph_custom_service:'Describe your request...', opt_choose_service:'-- Choose a service --', opt_other:'✏️ Other (free text)',
+    ph_name:'John Smith', ph_phone:'+41 79 123 45 67', ph_email:'john@email.com',
+    btn_confirm:'✅ Confirm request', btn_cancel:'Cancel' },
+  de: { biz_not_found:'Geschäft nicht gefunden', biz_not_found_desc:'Dieser Link ist ungültig oder das Geschäft existiert nicht mehr.<br>Überprüfen Sie die URL und versuchen Sie es erneut.', err_timeout:"Der Server braucht zu lange für eine Antwort. Bitte versuchen Sie es in wenigen Sekunden erneut.", err_notfound_short:"Dieses Geschäft wurde nicht gefunden. Bitte überprüfen Sie den Link.", loading_text:"Verbindung zum Assistenten...", date_today:"Heute", email_capture_title:"📧 Antwort per E-Mail erhalten", email_capture_desc:"Hinterlassen Sie Ihre E-Mail und wir benachrichtigen Sie, sobald das Team geantwortet hat.", email_capture_btn:"✉️ Benachrichtigen", email_capture_decline:"Nein danke, ohne fortfahren", footer_powered:"Bereitgestellt von",
+    rdv_title:'📅 Terminanfrage', lbl_service:'Gewünschte Dienstleistung', lbl_date:'Datum', lbl_time:'Gewünschte Uhrzeit',
+    lbl_name:'Vor- & Nachname', lbl_phone:'Telefon', lbl_email:'E-Mail', lbl_email_opt:'(optional — für die Bestätigung)',
+    ph_custom_service:'Beschreiben Sie Ihre Anfrage...', opt_choose_service:'-- Dienstleistung wählen --', opt_other:'✏️ Andere (Freitext)',
+    ph_name:'Max Mustermann', ph_phone:'+41 79 123 45 67', ph_email:'max@email.com',
+    btn_confirm:'✅ Anfrage bestätigen', btn_cancel:'Abbrechen' },
+  it: { biz_not_found:'Attività non trovata', biz_not_found_desc:"Questo link non è valido o l'attività non esiste più.<br>Controlla l'URL e riprova.", err_timeout:"Il server impiega troppo tempo a rispondere. Riprova tra qualche secondo.", err_notfound_short:"Questa attività non è stata trovata. Controlla il link.", loading_text:"Connessione all'assistente...", date_today:"Oggi", email_capture_title:"📧 Ricevi la risposta via email", email_capture_desc:"Lascia la tua email e ti avviseremo non appena il team avrà risposto.", email_capture_btn:"✉️ Avvisami", email_capture_decline:"No grazie, continua senza", footer_powered:"Offerto da",
+    rdv_title:'📅 Richiesta di appuntamento', lbl_service:'Servizio richiesto', lbl_date:'Data', lbl_time:'Ora preferita',
+    lbl_name:'Nome e cognome', lbl_phone:'Telefono', lbl_email:'Email', lbl_email_opt:'(facoltativo — per la conferma)',
+    ph_custom_service:'Descrivi la tua richiesta...', opt_choose_service:'-- Scegli un servizio --', opt_other:'✏️ Altro (testo libero)',
+    ph_name:'Mario Rossi', ph_phone:'+41 79 123 45 67', ph_email:'mario@email.com',
+    btn_confirm:'✅ Conferma richiesta', btn_cancel:'Annulla' },
+  es: { biz_not_found:'Negocio no encontrado', biz_not_found_desc:'Este enlace no es válido o el negocio ya no existe.<br>Comprueba la URL e inténtalo de nuevo.', err_timeout:"El servidor tarda demasiado en responder. Inténtalo de nuevo en unos segundos.", err_notfound_short:"No se encontró este negocio. Comprueba el enlace.", loading_text:"Conectando con el asistente...", date_today:"Hoy", email_capture_title:"📧 Recibir la respuesta por email", email_capture_desc:"Deja tu email y te avisaremos en cuanto el equipo responda.", email_capture_btn:"✉️ Avisarme", email_capture_decline:"No gracias, continuar sin", footer_powered:"Desarrollado por",
+    rdv_title:'📅 Solicitud de cita', lbl_service:'Servicio solicitado', lbl_date:'Fecha', lbl_time:'Hora preferida',
+    lbl_name:'Nombre y apellido', lbl_phone:'Teléfono', lbl_email:'Email', lbl_email_opt:'(opcional — para la confirmación)',
+    ph_custom_service:'Describe tu solicitud...', opt_choose_service:'-- Elegir un servicio --', opt_other:'✏️ Otro (texto libre)',
+    ph_name:'Juan Pérez', ph_phone:'+41 79 123 45 67', ph_email:'juan@email.com',
+    btn_confirm:'✅ Confirmar solicitud', btn_cancel:'Cancelar' },
+  pt: { biz_not_found:'Negócio não encontrado', biz_not_found_desc:'Este link não é válido ou o negócio já não existe.<br>Verifique o URL e tente novamente.', err_timeout:"O servidor está a demorar demasiado a responder. Tente novamente dentro de alguns segundos.", err_notfound_short:"Este negócio não foi encontrado. Verifique o link.", loading_text:"A ligar ao assistente...", date_today:"Hoje", email_capture_title:"📧 Receber a resposta por email", email_capture_desc:"Deixe o seu email e avisamo-lo assim que a equipa responder.", email_capture_btn:"✉️ Avisar-me", email_capture_decline:"Não, obrigado, continuar sem", footer_powered:"Desenvolvido por",
+    rdv_title:'📅 Pedido de marcação', lbl_service:'Serviço pretendido', lbl_date:'Data', lbl_time:'Hora preferida',
+    lbl_name:'Nome e apelido', lbl_phone:'Telefone', lbl_email:'Email', lbl_email_opt:'(opcional — para a confirmação)',
+    ph_custom_service:'Descreva o seu pedido...', opt_choose_service:'-- Escolher um serviço --', opt_other:'✏️ Outro (texto livre)',
+    ph_name:'João Silva', ph_phone:'+41 79 123 45 67', ph_email:'joao@email.com',
+    btn_confirm:'✅ Confirmar pedido', btn_cancel:'Cancelar' },
+  nl: { biz_not_found:'Bedrijf niet gevonden', biz_not_found_desc:'Deze link is niet geldig of het bedrijf bestaat niet meer.<br>Controleer de URL en probeer het opnieuw.', err_timeout:"De server doet er te lang over om te reageren. Probeer het over een paar seconden opnieuw.", err_notfound_short:"Dit bedrijf werd niet gevonden. Controleer de link.", loading_text:"Verbinden met assistent...", date_today:"Vandaag", email_capture_title:"📧 Antwoord per e-mail ontvangen", email_capture_desc:"Laat uw e-mail achter en wij laten het u weten zodra het team heeft geantwoord.", email_capture_btn:"✉️ Waarschuw mij", email_capture_decline:"Nee bedankt, doorgaan zonder", footer_powered:"Mogelijk gemaakt door",
+    rdv_title:'📅 Afspraakverzoek', lbl_service:'Gewenste dienst', lbl_date:'Datum', lbl_time:'Gewenste tijd',
+    lbl_name:'Voor- & achternaam', lbl_phone:'Telefoon', lbl_email:'Email', lbl_email_opt:'(optioneel — voor bevestiging)',
+    ph_custom_service:'Beschrijf uw verzoek...', opt_choose_service:'-- Kies een dienst --', opt_other:'✏️ Anders (vrije tekst)',
+    ph_name:'Jan Jansen', ph_phone:'+41 79 123 45 67', ph_email:'jan@email.com',
+    btn_confirm:'✅ Verzoek bevestigen', btn_cancel:'Annuleren' },
+  pl: { biz_not_found:'Nie znaleziono firmy', biz_not_found_desc:'Ten link jest nieprawidłowy lub firma już nie istnieje.<br>Sprawdź adres URL i spróbuj ponownie.', err_timeout:"Serwer zbyt długo nie odpowiada. Spróbuj ponownie za kilka sekund.", err_notfound_short:"Nie znaleziono tej firmy. Sprawdź link.", loading_text:"Łączenie z asystentem...", date_today:"Dzisiaj", email_capture_title:"📧 Otrzymaj odpowiedź emailem", email_capture_desc:"Zostaw swój email, a powiadomimy Cię, gdy tylko zespół odpowie.", email_capture_btn:"✉️ Powiadom mnie", email_capture_decline:"Nie, dziękuję, kontynuuj bez", footer_powered:"Obsługiwane przez",
+    rdv_title:'📅 Prośba o wizytę', lbl_service:'Wybrana usługa', lbl_date:'Data', lbl_time:'Preferowana godzina',
+    lbl_name:'Imię i nazwisko', lbl_phone:'Telefon', lbl_email:'Email', lbl_email_opt:'(opcjonalnie — do potwierdzenia)',
+    ph_custom_service:'Opisz swoją prośbę...', opt_choose_service:'-- Wybierz usługę --', opt_other:'✏️ Inne (dowolny tekst)',
+    ph_name:'Jan Kowalski', ph_phone:'+41 79 123 45 67', ph_email:'jan@email.com',
+    btn_confirm:'✅ Potwierdź prośbę', btn_cancel:'Anuluj' },
+};
+function chatUiT() { return CHAT_UI_T[(typeof detectedLang!=='undefined' && CHAT_UI_T[detectedLang]) ? detectedLang : 'fr']; }
 
 const SUGGESTIONS_I18N = {
   fr: {
@@ -1298,6 +1351,8 @@ async function openRdvForm(prefill={}) {
 
   // Construire liste services — toujours un select, avec option "Autre" pour saisie libre
   const services = window._bizServices || [];
+  const uiT = chatUiT();
+
   const serviceOptions = services
     .map(s => {
       const price = s.price ? ` — ${parseFloat(s.price)}${s.currency||'CHF'} (${s.duration_minutes||'?'}min)` : '';
@@ -1307,11 +1362,11 @@ async function openRdvForm(prefill={}) {
     .join('');
   const serviceSelect = `
     <select id="rdvService" onchange="toggleCustomService(this)" style="width:100%;">
-      <option value="">-- Choisir un service --</option>
+      <option value="">${uiT.opt_choose_service}</option>
       ${serviceOptions}
-      <option value="__custom__">✏️ Autre (saisie libre)</option>
+      <option value="__custom__">${uiT.opt_other}</option>
     </select>
-    <input id="rdvServiceCustom" type="text" placeholder="Décrivez votre demande..." 
+    <input id="rdvServiceCustom" type="text" placeholder="${uiT.ph_custom_service}" 
       style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
 
   // Calculer date min (aujourd'hui) et max (30 jours)
@@ -1320,36 +1375,36 @@ async function openRdvForm(prefill={}) {
   const toISO = d => d.toISOString().split('T')[0];
 
   wrap.innerHTML = `
-    <div class="lrc-rdv-title">📅 Demande de rendez-vous</div>
+    <div class="lrc-rdv-title">${uiT.rdv_title}</div>
     <div class="lrc-rdv-grid">
       <div class="lrc-rdv-field full">
-        <label>Service souhaité</label>
+        <label>${uiT.lbl_service}</label>
         ${serviceSelect}
       </div>
       <div class="lrc-rdv-field">
-        <label>Date</label>
+        <label>${uiT.lbl_date}</label>
         <input id="rdvDate" type="date" min="${toISO(today)}" max="${toISO(maxDate)}" value="${prefill.date||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Heure souhaitée</label>
+        <label>${uiT.lbl_time}</label>
         <input id="rdvTime" type="time" value="${prefill.time||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Prénom & Nom</label>
-        <input id="rdvName" type="text" placeholder="Thomas Dupont" value="${prefill.name||''}">
+        <label>${uiT.lbl_name}</label>
+        <input id="rdvName" type="text" placeholder="${uiT.ph_name}" value="${prefill.name||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Téléphone</label>
-        <input id="rdvPhone" type="tel" placeholder="+41 79 123 45 67" value="${prefill.phone||''}">
+        <label>${uiT.lbl_phone}</label>
+        <input id="rdvPhone" type="tel" placeholder="${uiT.ph_phone}" value="${prefill.phone||''}">
       </div>
       <div class="lrc-rdv-field full">
-        <label>Email <span style="font-weight:400;opacity:0.6;">(optionnel — pour la confirmation)</span></label>
-        <input id="rdvEmail" type="email" placeholder="thomas@email.com" value="${prefill.email||''}">
+        <label>${uiT.lbl_email} <span style="font-weight:400;opacity:0.6;">${uiT.lbl_email_opt}</span></label>
+        <input id="rdvEmail" type="email" placeholder="${uiT.ph_email}" value="${prefill.email||''}">
       </div>
     </div>
     <div class="lrc-rdv-btns">
-      <button class="lrc-rdv-submit" onclick="submitRdvForm()">✅ Confirmer la demande</button>
-      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">Annuler</button>
+      <button class="lrc-rdv-submit" onclick="submitRdvForm()">${uiT.btn_confirm}</button>
+      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">${uiT.btn_cancel}</button>
     </div>`;
 
   wrap.style.display = 'block';
@@ -1458,11 +1513,25 @@ async function lrcInit() {
   const flag = LANG_FLAGS[detectedLang] || '🌍';
   const greeting = GREETINGS[detectedLang] || 'Bonjour';
   const placeholder = PLACEHOLDERS[detectedLang] || 'Posez votre question...';
+  const uiT = chatUiT();
 
   document.getElementById('lrcInput').placeholder = placeholder;
+  const setText = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+  setText('lrcLoadingText', uiT.loading_text);
+  setText('lrcDateSep', uiT.date_today);
+  setText('lrcEmailFormTitle', uiT.email_capture_title);
+  setText('lrcEmailFormDesc', uiT.email_capture_desc);
+  setText('lrcEmailFormBtn', uiT.email_capture_btn);
+  setText('lrcEmailFormDecline', uiT.email_capture_decline);
+  setText('lrcFooterPowered', uiT.footer_powered);
+  const emailInput = document.getElementById('lrcEmailInput');
+  if (emailInput) emailInput.placeholder = uiT.ph_email;
 
   if (!slug) {
     document.getElementById('lrcLoading').style.display = 'none';
+    const uiT0 = chatUiT();
+    document.getElementById('lrcErrorTitle').textContent = uiT0.biz_not_found;
+    document.getElementById('lrcErrorDesc').innerHTML = uiT0.biz_not_found_desc;
     document.getElementById('lrcError').style.display = 'flex';
     return;
   }
@@ -1519,13 +1588,13 @@ async function lrcInit() {
     if (loading) loading.style.display = 'none';
     if (error) {
       error.style.display = 'flex';
-      // Message d'erreur plus précis
-      const errMsg = error.querySelector('p');
+      const uiTErr = chatUiT();
+      const errMsg = document.getElementById('lrcErrorDesc');
       if (errMsg) {
         if (err.name === 'AbortError') {
-          errMsg.textContent = 'Le serveur met trop de temps à répondre. Réessayez dans quelques secondes.';
+          errMsg.textContent = uiTErr.err_timeout;
         } else if (err.message.includes('404') || err.message.includes('not found')) {
-          errMsg.textContent = 'Ce commerce est introuvable. Vérifiez le lien.';
+          errMsg.textContent = uiTErr.err_notfound_short;
         }
       }
     }

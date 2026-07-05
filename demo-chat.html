@@ -620,13 +620,14 @@
 const API = 'https://localreply-api.onrender.com';
 
 // Langue nav → flag
-const LANG_FLAGS = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹' };
+const LANG_FLAGS = { fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱' };
 const BIZ_ICONS  = { salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',bakery:'🍞',gym:'🏋️',garage:'🔧',medical:'🏥',hotel:'🏨',retail:'🛍️',other:'💬' };
 
 const PLACEHOLDERS = {
   fr:'Posez votre question...',en:'Ask your question...',
   de:'Ihre Frage...', it:'La tua domanda...',
-  es:'Su pregunta...',pt:'A sua pergunta...'
+  es:'Su pregunta...',pt:'A sua pergunta...',
+  nl:'Stel uw vraag...', pl:'Zadaj swoje pytanie...'
 };
 
 const GREETINGS = {
@@ -1580,7 +1581,7 @@ async function openRdvForm(prefill={}) {
       ${serviceOptions}
       <option value="__custom__">${ui('rdv_other')}</option>
     </select>
-    <input id="rdvServiceCustom" type="text" placeholder="Décrivez votre demande..." 
+    <input id="rdvServiceCustom" type="text"
       placeholder="${ui('rdv_other_ph')}" style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
 
   // Calculer date min (aujourd'hui) et max (30 jours)
@@ -1589,36 +1590,36 @@ async function openRdvForm(prefill={}) {
   const toISO = d => d.toISOString().split('T')[0];
 
   wrap.innerHTML = `
-    <div class="lrc-rdv-title">📅 Demande de rendez-vous</div>
+    <div class="lrc-rdv-title">${ui('rdv_title')}</div>
     <div class="lrc-rdv-grid">
       <div class="lrc-rdv-field full">
-        <label>Service souhaité</label>
+        <label>${ui('rdv_service')}</label>
         ${serviceSelect}
       </div>
       <div class="lrc-rdv-field">
-        <label>Date</label>
+        <label>${ui('rdv_date')}</label>
         <input id="rdvDate" type="date" min="${toISO(today)}" max="${toISO(maxDate)}" value="${prefill.date||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Heure souhaitée</label>
+        <label>${ui('rdv_time')}</label>
         <input id="rdvTime" type="time" value="${prefill.time||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Prénom & Nom</label>
-        <input id="rdvName" type="text" placeholder="Thomas Dupont" value="${prefill.name||''}">
+        <label>${ui('rdv_name')}</label>
+        <input id="rdvName" type="text" placeholder="${ui('rdv_name_ph')}" value="${prefill.name||''}">
       </div>
       <div class="lrc-rdv-field">
-        <label>Téléphone</label>
+        <label>${ui('rdv_phone')}</label>
         <input id="rdvPhone" type="tel" placeholder="+41 79 123 45 67" value="${prefill.phone||''}">
       </div>
       <div class="lrc-rdv-field full">
-        <label>Email <span style="font-weight:400;opacity:0.6;">(optionnel — pour la confirmation)</span></label>
+        <label>${ui('rdv_email')} <span style="font-weight:400;opacity:0.6;">${ui('rdv_optional')}</span></label>
         <input id="rdvEmail" type="email" placeholder="thomas@email.com" value="${prefill.email||''}">
       </div>
     </div>
     <div class="lrc-rdv-btns">
-      <button class="lrc-rdv-submit" onclick="submitRdvForm()">✅ Confirmer la demande</button>
-      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">Annuler</button>
+      <button class="lrc-rdv-submit" onclick="submitRdvForm()">${ui('rdv_confirm')}</button>
+      <button class="lrc-rdv-cancel" onclick="closeRdvForm()">${ui('rdv_cancel')}</button>
     </div>`;
 
   wrap.style.display = 'block';
@@ -1742,6 +1743,10 @@ async function lrcInit() {
   if (emailSkipBtn) emailSkipBtn.textContent = ui('email_skip');
   const emailInput = document.getElementById('lrcEmailInput');
   if (emailInput) emailInput.placeholder = ui('email_ph');
+  const errTitle = document.getElementById('lrcErrorTitle');
+  if (errTitle) errTitle.textContent = ui('error_title');
+  const errDesc = document.getElementById('lrcErrorDesc');
+  if (errDesc) errDesc.innerHTML = ui('error_desc');
 
   try {
     const controller = new AbortController();
@@ -1795,7 +1800,7 @@ async function lrcInit() {
     if (error) {
       error.style.display = 'flex';
       // Message d'erreur plus précis
-      const errMsg = error.querySelector('p');
+      const errMsg = document.getElementById('lrcErrorDesc');
       if (errMsg) {
         if (err.name === 'AbortError') {
           errMsg.textContent = ui('error_timeout');
