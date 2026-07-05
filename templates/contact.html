@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{_lang}}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — LocalReply</title>
-  <meta name="description" content="LocalReply — Assistant IA 24/7 pour petits commerces">
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_title}}">
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,9 +120,9 @@
 <div class="lrc">
 
   <section class="lrc-hero">
-    <div class="lrc-hero-badge" data-i18n="ct_badge">✦ On est là pour vous</div>
-    <h1 data-i18n="ct_title">Contact & Support</h1>
-    <p data-i18n="ct_sub">Une question, un problème ou une suggestion ? On vous répond rapidement.</p>
+    <div class="lrc-hero-badge" data-i18n="ct_badge">{{ct_badge}}</div>
+    <h1 data-i18n="ct_title">{{ct_title}}</h1>
+    <p data-i18n="ct_sub">{{ct_sub}}</p>
   </section>
 
   <div class="lrc-body">
@@ -131,11 +131,11 @@
     <div class="lrc-status">
       <div class="lrc-status-dot"></div>
       <div class="lrc-status-text">
-        <h3 data-i18n="ct_status_ok">Tous les systèmes sont opérationnels</h3>
-        <p data-i18n="ct_status_desc">API LocalReply · Assistant IA · Google Calendar · Emails — Tout fonctionne normalement.</p>
+        <h3 data-i18n="ct_status_ok">{{ct_status_ok}}</h3>
+        <p data-i18n="ct_status_desc">{{ct_status_desc}}</p>
       </div>
       <div class="lrc-status-link">
-        <a href="mailto:support@localreply.ai?subject=Signalement%20de%20probl%C3%A8me" data-i18n="ct_report">Signaler un problème →</a>
+        <a href="mailto:support@localreply.ai?subject=Signalement%20de%20probl%C3%A8me" data-i18n="ct_report">{{ct_report}}</a>
       </div>
     </div>
 
@@ -144,100 +144,100 @@
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-blue">📧</div>
-        <h3 style="color:#fff;">Email</h3>
-        <p data-i18n="ct_email_desc">Pour toute question sur votre compte, votre abonnement ou l'utilisation de la plateforme.</p>
-        <a href="mailto:support@localreply.ai?subject=Question%20g%C3%A9n%C3%A9rale" class="lrc-channel-cta-primary" data-i18n="ct_email_cta">Envoyer un email</a>
+        <h3 style="color:#fff;" data-i18n="ct_email_title">{{ct_email_title}}</h3>
+        <p data-i18n="ct_email_desc">{{ct_email_desc}}</p>
+        <a href="mailto:support@localreply.ai?subject=Question%20g%C3%A9n%C3%A9rale" class="lrc-channel-cta-primary" data-i18n="ct_email_cta">{{ct_email_cta}}</a>
       </div>
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-green">⚡</div>
-        <h3 style="color:#fff;" data-i18n="ct_support_title">Support</h3>
-        <p data-i18n="ct_support_desc">Pour toute question urgente ou problème technique nécessitant une réponse rapide.</p>
-        <a href="mailto:support@localreply.ai?subject=Support%20prioritaire" class="lrc-channel-cta-primary" data-i18n="ct_support_cta">Contacter en priorité</a>
+        <h3 style="color:#fff;" data-i18n="ct_support_title">{{ct_support_title}}</h3>
+        <p data-i18n="ct_support_desc">{{ct_support_desc}}</p>
+        <a href="mailto:support@localreply.ai?subject=Support%20prioritaire" class="lrc-channel-cta-primary" data-i18n="ct_support_cta">{{ct_support_cta}}</a>
       </div>
 
       <div class="lrc-channel">
         <div class="lrc-channel-icon lrc-channel-icon-gold">💡</div>
-        <h3 style="color:#fff;" data-i18n="ct_feedback_title">Feedback & idées</h3>
-        <p data-i18n="ct_feedback_desc">Une idée pour améliorer LocalReply ? On lit tous les retours et on les intègre dans la roadmap.</p>
-        <a href="mailto:support@localreply.ai?subject=Suggestion%20%2F%20Feedback" class="lrc-channel-cta-secondary" data-i18n="ct_feedback_cta">Partager une idée</a>
+        <h3 style="color:#fff;" data-i18n="ct_feedback_title">{{ct_feedback_title}}</h3>
+        <p data-i18n="ct_feedback_desc">{{ct_feedback_desc}}</p>
+        <a href="mailto:support@localreply.ai?subject=Suggestion%20%2F%20Feedback" class="lrc-channel-cta-secondary" data-i18n="ct_feedback_cta">{{ct_feedback_cta}}</a>
       </div>
 
     </div>
 
     <!-- FAQ -->
-    <h2 class="lrc-faq-title" data-i18n="ct_faq_title">Questions fréquentes</h2>
-    <p class="lrc-faq-sub" data-i18n="ct_faq_sub">Les réponses aux questions les plus courantes.</p>
+    <h2 class="lrc-faq-title" data-i18n="ct_faq_title">{{ct_faq_title}}</h2>
+    <p class="lrc-faq-sub" data-i18n="ct_faq_sub">{{ct_faq_sub}}</p>
 
     <div class="lrc-faq">
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q1">Comment annuler mon abonnement ?</span>
+          <span data-i18n="ct_q1">{{ct_q1}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a1">
-          Vous pouvez annuler à tout moment depuis votre espace client → Abonnement → Annuler. La résiliation prend effet à la fin de la période de facturation en cours. Aucun remboursement n'est effectué pour la période déjà facturée. Si vous annulez durant la période d'essai (14 jours), aucun prélèvement n'est effectué.
+          {{ct_a1}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q2">Comment connecter mon Google Calendar ?</span>
+          <span data-i18n="ct_q2">{{ct_q2}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a2">
-          Depuis votre dashboard → Rendez-vous → Connecter Google Calendar. Vous serez redirigé vers Google pour autoriser l'accès. Une fois connecté, l'IA vérifiera automatiquement vos disponibilités lors des demandes de RDV.
+          {{ct_a2}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q3">L'IA peut-elle se tromper dans ses réponses ?</span>
+          <span data-i18n="ct_q3">{{ct_q3}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a3">
-          Oui, comme tout assistant IA, LocalReply peut parfois donner des réponses imprécises, notamment sur des sujets non renseignés dans votre configuration. C'est pourquoi nous vous recommandons de compléter votre FAQ aussi précisément que possible. Pour les questions sans réponse, l'IA vous alerte plutôt que d'inventer.
+          {{ct_a3}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q4">Puis-je changer de plan à tout moment ?</span>
+          <span data-i18n="ct_q4">{{ct_q4}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a4">
-          Oui. Vous pouvez passer de Standard à Pro (ou inversement) à tout moment depuis votre espace client. En cas d'upgrade, la différence est calculée au prorata. En cas de downgrade, le crédit est appliqué sur la prochaine facture.
+          {{ct_a4}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q5">Mes données sont-elles sécurisées ?</span>
+          <span data-i18n="ct_q5">{{ct_q5}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a5">
-          Oui. Toutes les communications sont chiffrées via HTTPS/TLS. Les tokens sensibles (Google Calendar) sont chiffrés en base de données. Nous ne vendons ni ne partageons vos données avec des tiers à des fins commerciales.
+          {{ct_a5}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q6">Combien de langues sont supportées ?</span>
+          <span data-i18n="ct_q6">{{ct_q6}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a6">
-          LocalReply supporte 8 langues nativement : Français, Anglais, Allemand, Italien, Espagnol, Portugais, Néerlandais et Polonais. La détection est automatique dès le premier message du client — aucune configuration nécessaire.
+          {{ct_a6}}
         </div>
       </div>
 
       <div class="lrc-faq-item">
         <button class="lrc-faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="ct_q7">Que se passe-t-il à la fin de l'essai gratuit ?</span>
+          <span data-i18n="ct_q7">{{ct_q7}}</span>
           <span class="lrc-faq-arrow">+</span>
         </button>
         <div class="lrc-faq-a" data-i18n="ct_a7">
-          À la fin des 14 jours d'essai, votre abonnement au plan choisi est activé automatiquement et votre carte bancaire est prélevée. Vous recevrez un email de rappel 3 jours avant la fin de l'essai. Si vous annulez avant, aucun prélèvement n'est effectué.
+          {{ct_a7}}
         </div>
       </div>
 
@@ -245,52 +245,14 @@
 
     <!-- ENCORE UNE QUESTION -->
     <div style="background: linear-gradient(135deg, #0A1628, #0052CC); border-radius: 20px; padding: 48px; text-align: center;">
-      <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;" data-i18n="ct_notfound_title">Vous n'avez pas trouvé votre réponse ?</h3>
-      <p style="font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto;" data-i18n="ct_notfound_desc">On vous répond personnellement. Pas un chatbot — une vraie personne.</p>
-      <a href="mailto:support@localreply.ai?subject=Demande%20de%20support" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,212,255,0.2)); border: 1.5px solid rgba(0,212,255,0.4); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;" data-i18n="ct_write_support">Écrire au support →</a>
-      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 16px;" data-i18n="ct_response_time">Délai de réponse : moins de 48h en semaine.</p>
+      <h3 style="font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 12px;" data-i18n="ct_notfound_title">{{ct_notfound_title}}</h3>
+      <p style="font-size: 16px; color: rgba(255,255,255,0.65); margin-bottom: 28px; max-width: 420px; margin-left: auto; margin-right: auto;" data-i18n="ct_notfound_desc">{{ct_notfound_desc}}</p>
+      <a href="mailto:support@localreply.ai?subject=Demande%20de%20support" style="display: inline-block; padding: 15px 32px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(0,212,255,0.2)); border: 1.5px solid rgba(0,212,255,0.4); border-radius: 12px; color: #fff; text-decoration: none; font-size: 16px; font-weight: 700;" data-i18n="ct_write_support">{{ct_write_support}}</a>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.35); margin-top: 16px;" data-i18n="ct_response_time">{{ct_response_time}}</p>
 
   <script>
-  var LRC_T = {
-    fr:{ct_badge:'✦ On est là pour vous',ct_title:'Contact & Support',ct_sub:'Une question, un problème ou une suggestion ? On vous répond rapidement.',ct_status_ok:'Tous les systèmes sont opérationnels',ct_status_desc:'API LocalReply · Assistant IA · Google Calendar · Emails — Tout fonctionne normalement.',ct_report:'Signaler un problème →',ct_email_desc:"Pour toute question sur votre compte, votre abonnement ou l'utilisation de la plateforme.",ct_email_cta:'Envoyer un email',ct_support_title:'Support',ct_support_desc:'Pour toute question urgente ou problème technique nécessitant une réponse rapide.',ct_support_cta:'Contacter en priorité',ct_feedback_title:'Feedback & idées',ct_feedback_desc:"Une idée pour améliorer LocalReply ? On lit tous les retours et on les intègre dans la roadmap.",ct_feedback_cta:'Partager une idée',ct_faq_title:'Questions fréquentes',ct_faq_sub:'Les réponses aux questions les plus courantes.',ct_q1:'Comment annuler mon abonnement ?',ct_q2:'Comment connecter mon Google Calendar ?',ct_q3:"L'IA peut-elle se tromper dans ses réponses ?",ct_q4:'Puis-je changer de plan à tout moment ?',ct_q5:'Mes données sont-elles sécurisées ?',ct_q6:'Combien de langues sont supportées ?',ct_q7:"Que se passe-t-il à la fin de l'essai gratuit ?",ct_notfound_title:"Vous n'avez pas trouvé votre réponse ?",ct_notfound_desc:"On vous répond personnellement. Pas un chatbot — une vraie personne.",ct_write_support:'Écrire au support →',ct_response_time:'Délai de réponse : moins de 48h en semaine.', ct_a1:'Vous pouvez annuler à tout moment depuis votre espace client → Abonnement → Annuler. La résiliation prend effet à la fin de la période de facturation en cours. Si vous annulez durant la période d\'essai (14 jours), aucun prélèvement n\'est effectué.', ct_a2:'Depuis votre dashboard → Rendez-vous → Connecter Google Calendar. Vous serez redirigé vers Google pour autoriser l\'accès. Une fois connecté, l\'IA vérifiera automatiquement vos disponibilités.', ct_a3:'Oui, comme tout assistant IA, LocalReply peut parfois donner des réponses imprécises sur des sujets non renseignés dans votre configuration. Complétez votre FAQ aussi précisément que possible. Pour les questions sans réponse, l\'IA vous alerte plutôt que d\'inventer.', ct_a4:'Oui. Vous pouvez passer de Standard à Pro (ou inversement) à tout moment depuis votre espace client. En cas d\'upgrade, la différence est calculée au prorata. En cas de downgrade, le crédit est appliqué sur la prochaine facture.', ct_a5:'Oui. Toutes les communications sont chiffrées via HTTPS/TLS. Les tokens sensibles (Google Calendar) sont chiffrés en base de données. Nous ne vendons ni ne partageons vos données avec des tiers à des fins commerciales.', ct_a6:'LocalReply supporte 8 langues nativement : Français, Anglais, Allemand, Italien, Espagnol, Portugais, Néerlandais et Polonais. La détection est automatique dès le premier message du client — aucune configuration nécessaire.', ct_a7:'À la fin des 14 jours d\'essai, votre abonnement au plan choisi est activé automatiquement et votre carte bancaire est prélevée. Vous recevrez un email de rappel 3 jours avant la fin de l\'essai. Si vous annulez avant, aucun prélèvement n\'est effectué.'},
-    en:{ct_badge:'✦ We\'re here for you',ct_title:'Contact & Support',ct_sub:'A question, a problem or a suggestion? We reply quickly.',ct_status_ok:'All systems operational',ct_status_desc:'LocalReply API · AI Assistant · Google Calendar · Emails — Everything working normally.',ct_report:'Report an issue →',ct_email_desc:'For any question about your account, subscription or platform usage.',ct_email_cta:'Send an email',ct_support_title:'Support',ct_support_desc:'For urgent questions or technical issues requiring a quick response.',ct_support_cta:'Contact priority support',ct_feedback_title:'Feedback & ideas',ct_feedback_desc:'An idea to improve LocalReply? We read all feedback and integrate it into the roadmap.',ct_feedback_cta:'Share an idea',ct_faq_title:'Frequently asked questions',ct_faq_sub:'Answers to the most common questions.',ct_q1:'How do I cancel my subscription?',ct_q2:'How do I connect my Google Calendar?',ct_q3:'Can the AI make mistakes in its answers?',ct_q4:'Can I change my plan at any time?',ct_q5:'Is my data secure?',ct_q6:'How many languages are supported?',ct_q7:'What happens at the end of the free trial?',ct_notfound_title:"Didn't find your answer?",ct_notfound_desc:"We reply personally. Not a chatbot — a real person.",ct_write_support:'Write to support →',ct_response_time:'Response time: less than 48h on weekdays.', ct_a1:'You can cancel at any time from your account → Subscription → Cancel. Cancellation takes effect at the end of the current billing period. If you cancel during the 14-day trial, no charge is made.', ct_a2:'From your dashboard → Appointments → Connect Google Calendar. You will be redirected to Google to authorize access. Once connected, the AI will automatically check your availability for appointment requests.', ct_a3:'Yes, like any AI assistant, LocalReply can sometimes give imprecise answers, particularly on topics not configured in your settings. We recommend completing your FAQ as precisely as possible. For unanswered questions, the AI alerts you rather than guessing.', ct_a4:'Yes. You can switch between Standard and Pro (or vice versa) at any time from your account. For upgrades, the difference is prorated. For downgrades, the credit is applied to the next invoice.', ct_a5:'Yes. All communications are encrypted via HTTPS/TLS. Sensitive tokens (Google Calendar) are encrypted in the database. We do not sell or share your data with third parties for commercial purposes.', ct_a6:'LocalReply natively supports 8 languages: French, English, German, Italian, Spanish, Portuguese, Dutch and Polish. Detection is automatic from the customer\'s first message — no configuration needed.', ct_a7:'At the end of the 14-day trial, your subscription to the chosen plan is automatically activated and your card is charged. You will receive a reminder email 3 days before the trial ends. If you cancel before, no charge is made.'},
-    de:{ct_badge:'✦ Wir sind für Sie da',ct_title:'Kontakt & Support',ct_sub:'Eine Frage, ein Problem oder ein Vorschlag? Wir antworten schnell.',ct_status_ok:'Alle Systeme betriebsbereit',ct_status_desc:'LocalReply API · KI-Assistent · Google Kalender · E-Mails — Alles funktioniert normal.',ct_report:'Problem melden →',ct_email_desc:'Für alle Fragen zu Ihrem Konto, Abonnement oder der Plattformnutzung.',ct_email_cta:'E-Mail senden',ct_support_title:'Support',ct_support_desc:'Für dringende Fragen oder technische Probleme, die eine schnelle Antwort erfordern.',ct_support_cta:'Priorität-Support kontaktieren',ct_feedback_title:'Feedback & Ideen',ct_feedback_desc:'Eine Idee zur Verbesserung von LocalReply? Wir lesen alle Rückmeldungen und integrieren sie in die Roadmap.',ct_feedback_cta:'Idee teilen',ct_faq_title:'Häufig gestellte Fragen',ct_faq_sub:'Antworten auf die häufigsten Fragen.',ct_q1:'Wie kündige ich mein Abonnement?',ct_q2:'Wie verbinde ich meinen Google Kalender?',ct_q3:'Kann die KI bei ihren Antworten Fehler machen?',ct_q4:'Kann ich meinen Plan jederzeit ändern?',ct_q5:'Sind meine Daten sicher?',ct_q6:'Wie viele Sprachen werden unterstützt?',ct_q7:'Was passiert am Ende der kostenlosen Testphase?',ct_notfound_title:'Antwort nicht gefunden?',ct_notfound_desc:'Wir antworten persönlich. Kein Chatbot — eine echte Person.',ct_write_support:'An Support schreiben →',ct_response_time:'Antwortzeit: weniger als 48h an Werktagen.', ct_a1:'Sie können jederzeit über Ihr Konto → Abonnement → Kündigen kündigen. Die Kündigung tritt am Ende des laufenden Abrechnungszeitraums in Kraft. Wenn Sie während der 14-tägigen Testphase kündigen, erfolgt keine Abbuchung.', ct_a2:'Über Ihr Dashboard → Termine → Google Kalender verbinden. Sie werden zu Google weitergeleitet, um den Zugriff zu autorisieren. Nach der Verbindung prüft die KI automatisch Ihre Verfügbarkeit.', ct_a3:'Ja, wie jeder KI-Assistent kann LocalReply gelegentlich ungenaue Antworten geben, insbesondere bei Themen, die nicht in Ihrer Konfiguration hinterlegt sind. Wir empfehlen, Ihre FAQ so präzise wie möglich zu vervollständigen. Bei unbeantworteten Fragen warnt die KI Sie, anstatt zu raten.', ct_a4:'Ja. Sie können jederzeit von Standard zu Pro (oder umgekehrt) über Ihr Konto wechseln. Bei Upgrades wird die Differenz anteilig berechnet. Bei Downgrades wird das Guthaben auf die nächste Rechnung angerechnet.', ct_a5:'Ja. Alle Kommunikation ist über HTTPS/TLS verschlüsselt. Sensible Tokens (Google Kalender) sind in der Datenbank verschlüsselt. Wir verkaufen oder teilen Ihre Daten nicht mit Dritten zu kommerziellen Zwecken.', ct_a6:'LocalReply unterstützt nativ 8 Sprachen: Französisch, Englisch, Deutsch, Italienisch, Spanisch, Portugiesisch, Niederländisch und Polnisch. Die Erkennung erfolgt automatisch ab der ersten Nachricht des Kunden — keine Konfiguration erforderlich.', ct_a7:'Am Ende der 14-tägigen Testphase wird Ihr Abonnement für den gewählten Plan automatisch aktiviert und Ihre Karte belastet. Sie erhalten 3 Tage vor Ende der Testphase eine Erinnerungs-E-Mail. Wenn Sie vorher kündigen, erfolgt keine Abbuchung.'},
-    it:{ct_badge:'✦ Siamo qui per te',ct_title:'Contatto & Supporto',ct_sub:'Una domanda, un problema o un suggerimento? Ti rispondiamo rapidamente.',ct_status_ok:'Tutti i sistemi operativi',ct_status_desc:'API LocalReply · Assistente IA · Google Calendar · Email — Tutto funziona normalmente.',ct_report:'Segnala un problema →',ct_email_desc:"Per qualsiasi domanda sul tuo account, abbonamento o utilizzo della piattaforma.",ct_email_cta:"Invia un'email",ct_support_title:'Supporto',ct_support_desc:'Per domande urgenti o problemi tecnici che richiedono una risposta rapida.',ct_support_cta:'Contatta il supporto prioritario',ct_feedback_title:'Feedback & idee',ct_feedback_desc:"Un'idea per migliorare LocalReply? Leggiamo tutti i feedback e li integriamo nella roadmap.",ct_feedback_cta:"Condividi un'idea",ct_faq_title:'Domande frequenti',ct_faq_sub:'Le risposte alle domande più comuni.',ct_q1:'Come annullo il mio abbonamento?',ct_q2:'Come connetto il mio Google Calendar?',ct_q3:"L'IA può sbagliare nelle sue risposte?",ct_q4:'Posso cambiare piano in qualsiasi momento?',ct_q5:'I miei dati sono al sicuro?',ct_q6:'Quante lingue sono supportate?',ct_q7:"Cosa succede alla fine della prova gratuita?",ct_notfound_title:'Non hai trovato la tua risposta?',ct_notfound_desc:'Rispondiamo personalmente. Non un chatbot — una vera persona.',ct_write_support:'Scrivi al supporto →',ct_response_time:'Tempi di risposta: meno di 48h nei giorni feriali.', ct_a1:'Puoi annullare in qualsiasi momento dal tuo account → Abbonamento → Annulla. La cancellazione ha effetto alla fine del periodo di fatturazione in corso. Se annulli durante il periodo di prova (14 giorni), non verrà effettuato alcun addebito.', ct_a2:'Dal tuo dashboard → Appuntamenti → Connetti Google Calendar. Verrai reindirizzato a Google per autorizzare l\'accesso. Una volta connesso, l\'IA verificherà automaticamente le tue disponibilità.', ct_a3:'Sì, come qualsiasi assistente IA, LocalReply può a volte dare risposte imprecise, in particolare su argomenti non configurati nelle tue impostazioni. Ti consigliamo di completare le tue FAQ nel modo più preciso possibile. Per le domande senza risposta, l\'IA ti avvisa invece di inventare.', ct_a4:'Sì. Puoi passare da Standard a Pro (o viceversa) in qualsiasi momento dal tuo account. In caso di upgrade, la differenza è calcolata pro-rata. In caso di downgrade, il credito viene applicato alla fattura successiva.', ct_a5:'Sì. Tutte le comunicazioni sono crittografate via HTTPS/TLS. I token sensibili (Google Calendar) sono crittografati nel database. Non vendiamo né condividiamo i tuoi dati con terze parti a fini commerciali.', ct_a6:'LocalReply supporta nativamente 8 lingue: Francese, Inglese, Tedesco, Italiano, Spagnolo, Portoghese, Olandese e Polacco. Il rilevamento è automatico dal primo messaggio del cliente — nessuna configurazione necessaria.', ct_a7:'Al termine dei 14 giorni di prova, il tuo abbonamento al piano scelto viene attivato automaticamente e la tua carta viene addebitata. Riceverai un\'email di promemoria 3 giorni prima della fine della prova. Se annulli prima, non viene effettuato alcun addebito.'},
-    es:{ct_badge:'✦ Estamos aquí para ti',ct_title:'Contacto & Soporte',ct_sub:'¿Una pregunta, un problema o una sugerencia? Te respondemos rápidamente.',ct_status_ok:'Todos los sistemas operativos',ct_status_desc:'API LocalReply · Asistente IA · Google Calendar · Emails — Todo funciona con normalidad.',ct_report:'Reportar un problema →',ct_email_desc:'Para cualquier pregunta sobre tu cuenta, suscripción o uso de la plataforma.',ct_email_cta:'Enviar un email',ct_support_title:'Soporte',ct_support_desc:'Para preguntas urgentes o problemas técnicos que requieren una respuesta rápida.',ct_support_cta:'Contactar soporte prioritario',ct_feedback_title:'Feedback & ideas',ct_feedback_desc:'¿Una idea para mejorar LocalReply? Leemos todos los comentarios y los integramos en la hoja de ruta.',ct_feedback_cta:'Compartir una idea',ct_faq_title:'Preguntas frecuentes',ct_faq_sub:'Respuestas a las preguntas más comunes.',ct_q1:'¿Cómo cancelo mi suscripción?',ct_q2:'¿Cómo conecto mi Google Calendar?',ct_q3:'¿Puede la IA equivocarse en sus respuestas?',ct_q4:'¿Puedo cambiar de plan en cualquier momento?',ct_q5:'¿Están seguros mis datos?',ct_q6:'¿Cuántos idiomas son compatibles?',ct_q7:'¿Qué pasa al final de la prueba gratuita?',ct_notfound_title:'¿No encontraste tu respuesta?',ct_notfound_desc:'Respondemos personalmente. No un chatbot — una persona real.',ct_write_support:'Escribir al soporte →',ct_response_time:'Tiempo de respuesta: menos de 48h en días laborables.', ct_a1:'Puedes cancelar en cualquier momento desde tu cuenta → Suscripción → Cancelar. La cancelación entra en vigor al final del período de facturación actual. Si cancelas durante el período de prueba (14 días), no se realiza ningún cargo.', ct_a2:'Desde tu panel → Citas → Conectar Google Calendar. Serás redirigido a Google para autorizar el acceso. Una vez conectado, la IA verificará automáticamente tu disponibilidad.', ct_a3:'Sí, como cualquier asistente de IA, LocalReply puede a veces dar respuestas imprecisas, especialmente sobre temas no configurados en tus ajustes. Te recomendamos completar tu FAQ con la mayor precisión posible. Para preguntas sin respuesta, la IA te alerta en lugar de inventar.', ct_a4:'Sí. Puedes cambiar de Standard a Pro (o viceversa) en cualquier momento desde tu cuenta. En caso de mejora, la diferencia se calcula a prorrata. En caso de reducción, el crédito se aplica a la próxima factura.', ct_a5:'Sí. Todas las comunicaciones están cifradas mediante HTTPS/TLS. Los tokens sensibles (Google Calendar) están cifrados en la base de datos. No vendemos ni compartimos tus datos con terceros con fines comerciales.', ct_a6:'LocalReply admite nativamente 8 idiomas: Francés, Inglés, Alemán, Italiano, Español, Portugués, Neerlandés y Polaco. La detección es automática desde el primer mensaje del cliente — sin configuración necesaria.', ct_a7:'Al final de los 14 días de prueba, tu suscripción al plan elegido se activa automáticamente y se cobra tu tarjeta. Recibirás un email recordatorio 3 días antes del final de la prueba. Si cancelas antes, no se realiza ningún cargo.'},
-    pt:{ct_badge:'✦ Estamos aqui para si',ct_title:'Contacto & Suporte',ct_sub:'Uma pergunta, um problema ou uma sugestão? Respondemos rapidamente.',ct_status_ok:'Todos os sistemas operacionais',ct_status_desc:'API LocalReply · Assistente IA · Google Calendar · Emails — Tudo a funcionar normalmente.',ct_report:'Reportar um problema →',ct_email_desc:'Para qualquer pergunta sobre a sua conta, subscrição ou utilização da plataforma.',ct_email_cta:'Enviar um email',ct_support_title:'Suporte',ct_support_desc:'Para perguntas urgentes ou problemas técnicos que requerem uma resposta rápida.',ct_support_cta:'Contactar suporte prioritário',ct_feedback_title:'Feedback & ideias',ct_feedback_desc:'Uma ideia para melhorar o LocalReply? Lemos todos os comentários e integramo-los no roadmap.',ct_feedback_cta:'Partilhar uma ideia',ct_faq_title:'Perguntas frequentes',ct_faq_sub:'Respostas às perguntas mais comuns.',ct_q1:'Como cancelo a minha subscrição?',ct_q2:'Como ligo o meu Google Calendar?',ct_q3:'A IA pode cometer erros nas suas respostas?',ct_q4:'Posso mudar de plano a qualquer momento?',ct_q5:'Os meus dados estão seguros?',ct_q6:'Quantas línguas são suportadas?',ct_q7:'O que acontece no final do teste gratuito?',ct_notfound_title:'Não encontrou a sua resposta?',ct_notfound_desc:'Respondemos pessoalmente. Não um chatbot — uma pessoa real.',ct_write_support:'Escrever ao suporte →',ct_response_time:'Tempo de resposta: menos de 48h em dias úteis.', ct_a1:'Pode cancelar a qualquer momento na sua conta → Subscrição → Cancelar. O cancelamento entra em vigor no final do período de faturação atual. Se cancelar durante o período de teste (14 dias), não é efetuado qualquer débito.', ct_a2:'No seu dashboard → Marcações → Ligar Google Calendar. Será redirecionado para o Google para autorizar o acesso. Uma vez ligado, a IA verificará automaticamente a sua disponibilidade.', ct_a3:'Sim, como qualquer assistente de IA, o LocalReply pode por vezes dar respostas imprecisas, especialmente sobre tópicos não configurados nas suas definições. Recomendamos completar o seu FAQ com a maior precisão possível. Para perguntas sem resposta, a IA alerta-o em vez de inventar.', ct_a4:'Sim. Pode mudar de Standard para Pro (ou vice-versa) a qualquer momento na sua conta. Em caso de upgrade, a diferença é calculada pro-rata. Em caso de downgrade, o crédito é aplicado na próxima fatura.', ct_a5:'Sim. Todas as comunicações são encriptadas via HTTPS/TLS. Os tokens sensíveis (Google Calendar) são encriptados na base de dados. Não vendemos nem partilhamos os seus dados com terceiros para fins comerciais.', ct_a6:'LocalReply suporta nativamente 8 línguas: Francês, Inglês, Alemão, Italiano, Espanhol, Português, Neerlandês e Polaco. A deteção é automática desde a primeira mensagem do cliente — sem configuração necessária.', ct_a7:'No final dos 14 dias de teste, a sua subscrição ao plano escolhido é ativada automaticamente e o seu cartão é debitado. Receberá um email de lembrete 3 dias antes do fim do teste. Se cancelar antes, não é efetuado qualquer débito.'},
-    nl:{ct_badge:'✦ We zijn er voor u',ct_title:'Contact & Support',ct_sub:'Een vraag, een probleem of een suggestie? We antwoorden snel.',ct_status_ok:'Alle systemen operationeel',ct_status_desc:'LocalReply API · AI-assistent · Google Agenda · E-mails — Alles werkt normaal.',ct_report:'Probleem melden →',ct_email_desc:'Voor elke vraag over uw account, abonnement of platformgebruik.',ct_email_cta:'E-mail sturen',ct_support_title:'Support',ct_support_desc:'Voor dringende vragen of technische problemen die een snelle reactie vereisen.',ct_support_cta:'Prioriteitssupport contacteren',ct_feedback_title:'Feedback & ideeën',ct_feedback_desc:'Een idee om LocalReply te verbeteren? We lezen alle feedback en verwerken het in de roadmap.',ct_feedback_cta:'Idee delen',ct_faq_title:'Veelgestelde vragen',ct_faq_sub:'Antwoorden op de meest voorkomende vragen.',ct_q1:'Hoe zeg ik mijn abonnement op?',ct_q2:'Hoe verbind ik mijn Google Agenda?',ct_q3:'Kan de AI fouten maken in zijn antwoorden?',ct_q4:'Kan ik op elk moment van plan wisselen?',ct_q5:'Zijn mijn gegevens veilig?',ct_q6:'Hoeveel talen worden ondersteund?',ct_q7:'Wat gebeurt er aan het einde van de gratis proefperiode?',ct_notfound_title:'Antwoord niet gevonden?',ct_notfound_desc:'We antwoorden persoonlijk. Geen chatbot — een echte persoon.',ct_write_support:'Schrijven naar support →',ct_response_time:'Responstijd: minder dan 48u op werkdagen.', ct_a1:'U kunt op elk moment opzeggen via uw account → Abonnement → Opzeggen. De opzegging gaat in aan het einde van de huidige factureringsperiode. Als u tijdens de proefperiode (14 dagen) opzegt, wordt er niets in rekening gebracht.', ct_a2:'Via uw dashboard → Afspraken → Google Agenda verbinden. U wordt doorgestuurd naar Google om de toegang te autoriseren. Eenmaal verbonden controleert de AI automatisch uw beschikbaarheid.', ct_a3:'Ja, zoals elke AI-assistent kan LocalReply soms onnauwkeurige antwoorden geven, met name over onderwerpen die niet zijn geconfigureerd in uw instellingen. We raden u aan uw FAQ zo nauwkeurig mogelijk in te vullen. Voor onbeantwoorde vragen waarschuwt de AI u in plaats van te raden.', ct_a4:'Ja. U kunt op elk moment overschakelen van Standard naar Pro (of omgekeerd) via uw account. Bij upgrades wordt het verschil pro rata berekend. Bij downgrades wordt het tegoed verrekend op de volgende factuur.', ct_a5:'Ja. Alle communicatie is versleuteld via HTTPS/TLS. Gevoelige tokens (Google Agenda) zijn versleuteld in de database. Wij verkopen of delen uw gegevens niet met derden voor commerciële doeleinden.', ct_a6:'LocalReply ondersteunt native 8 talen: Frans, Engels, Duits, Italiaans, Spaans, Portugees, Nederlands en Pools. Detectie is automatisch vanaf het eerste bericht van de klant — geen configuratie nodig.', ct_a7:'Aan het einde van de 14-daagse proefperiode wordt uw abonnement op het gekozen plan automatisch geactiveerd en wordt uw kaart belast. U ontvangt 3 dagen voor het einde van de proefperiode een herinneringsmail. Als u daarvoor opzegt, wordt er niets in rekening gebracht.'},
-    pl:{ct_badge:'✦ Jesteśmy tu dla Ciebie',ct_title:'Kontakt & Wsparcie',ct_sub:'Pytanie, problem lub sugestia? Odpowiadamy szybko.',ct_status_ok:'Wszystkie systemy działają',ct_status_desc:'API LocalReply · Asystent AI · Kalendarz Google · Emaile — Wszystko działa normalnie.',ct_report:'Zgłoś problem →',ct_email_desc:'W przypadku jakiegokolwiek pytania dotyczącego konta, subskrypcji lub korzystania z platformy.',ct_email_cta:'Wyślij email',ct_support_title:'Wsparcie',ct_support_desc:'W przypadku pilnych pytań lub problemów technicznych wymagających szybkiej odpowiedzi.',ct_support_cta:'Skontaktuj się z pomocą priorytetową',ct_feedback_title:'Opinie & pomysły',ct_feedback_desc:'Pomysł na ulepszenie LocalReply? Czytamy wszystkie opinie i integrujemy je w roadmapie.',ct_feedback_cta:'Podziel się pomysłem',ct_faq_title:'Często zadawane pytania',ct_faq_sub:'Odpowiedzi na najczęstsze pytania.',ct_q1:'Jak anulować subskrypcję?',ct_q2:'Jak połączyć Kalendarz Google?',ct_q3:'Czy AI może popełniać błędy w odpowiedziach?',ct_q4:'Czy mogę zmienić plan w dowolnym momencie?',ct_q5:'Czy moje dane są bezpieczne?',ct_q6:'Ile języków jest obsługiwanych?',ct_q7:'Co się dzieje po zakończeniu bezpłatnego okresu próbnego?',ct_notfound_title:'Nie znalazłeś odpowiedzi?',ct_notfound_desc:'Odpowiadamy osobiście. Nie chatbot — prawdziwa osoba.',ct_write_support:'Napisz do wsparcia →',ct_response_time:'Czas odpowiedzi: mniej niż 48h w dni robocze.', ct_a1:'Możesz anulować w dowolnym momencie z konta → Subskrypcja → Anuluj. Anulowanie wchodzi w życie na koniec bieżącego okresu rozliczeniowego. Jeśli anulujesz podczas okresu próbnego (14 dni), żadna opłata nie zostanie pobrana.', ct_a2:'Z dashboardu → Wizyty → Połącz Kalendarz Google. Zostaniesz przekierowany do Google w celu autoryzacji dostępu. Po połączeniu AI automatycznie sprawdzi Twoją dostępność.', ct_a3:'Tak, jak każdy asystent AI, LocalReply może czasem dawać niedokładne odpowiedzi, zwłaszcza na tematy nieskonfigurowane w Twoich ustawieniach. Zalecamy wypełnienie FAQ tak dokładnie, jak to możliwe. W przypadku pytań bez odpowiedzi AI ostrzega Cię zamiast zgadywać.', ct_a4:'Tak. Możesz przełączać się między Standard a Pro (lub odwrotnie) w dowolnym momencie z konta. W przypadku ulepszenia różnica jest obliczana proporcjonalnie. W przypadku obniżenia kredyt jest stosowany do następnej faktury.', ct_a5:'Tak. Cała komunikacja jest szyfrowana za pomocą HTTPS/TLS. Wrażliwe tokeny (Kalendarz Google) są szyfrowane w bazie danych. Nie sprzedajemy ani nie udostępniamy Twoich danych stronom trzecim w celach komercyjnych.', ct_a6:'LocalReply natywnie obsługuje 8 języków: Francuski, Angielski, Niemiecki, Włoski, Hiszpański, Portugalski, Niderlandzki i Polski. Wykrywanie jest automatyczne od pierwszej wiadomości klienta — żadna konfiguracja nie jest potrzebna.', ct_a7:'Po zakończeniu 14-dniowego okresu próbnego Twoja subskrypcja wybranego planu zostaje automatycznie aktywowana i Twoja karta jest obciążana. Otrzymasz email z przypomnieniem 3 dni przed końcem okresu próbnego. Jeśli anulujesz wcześniej, żadna opłata nie zostanie pobrana.'},
-  };
-
-  (function(){
-    var sup = Object.keys(LRC_T);
-    var lang = localStorage.getItem('lr_lang') || (navigator.language||'fr').substring(0,2).toLowerCase();
-    var activeLang = sup.indexOf(lang) >= 0 ? lang : 'fr';
-
-    function applyPageLang(l) {
-      var t = LRC_T[sup.indexOf(l) >= 0 ? l : 'fr'];
-      document.querySelectorAll('[data-i18n]').forEach(function(el) {
-        var k = el.getAttribute('data-i18n');
-        if (t[k] !== undefined) el.innerHTML = t[k];
-      });
-      document.documentElement.lang = l;
-      var titles = {fr:'Contact',en:'Contact',de:'Kontakt',it:'Contatto',es:'Contacto',pt:'Contacto',nl:'Contact',pl:'Kontakt'};
-      document.title = (titles[l] || 'Contact') + ' — LocalReply';
-    }
-
-    window.lrApplyLang = function(l) {
-      localStorage.setItem('lr_lang', l);
-      applyPageLang(l);
-      var btn = document.getElementById('lr-lang-btn');
-      var flags = {fr:'🇫🇷',en:'🇬🇧',de:'🇩🇪',it:'🇮🇹',es:'🇪🇸',pt:'🇵🇹',nl:'🇳🇱',pl:'🇵🇱'};
-      if (btn) btn.innerHTML = (flags[l] || '🌍') + ' ' + l.toUpperCase() + ' ▾';
-      var dd = document.getElementById('lr-lang-dd');
-      if (dd) dd.style.display = 'none';
-      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
-    };
-
-    applyPageLang(activeLang);
-  })();
+  // Keep the language switcher (nav.js) in sync with this statically-baked page.
+  try { localStorage.setItem('lr_lang', '{{_lang}}'); } catch (e) {}
   </script>
   <script>
   function toggleFaq(btn) {
