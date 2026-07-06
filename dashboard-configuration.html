@@ -236,7 +236,7 @@
           </div>
           <div class="cfg-grid-2" style="margin-top:16px;">
             <div class="cfg-field">
-              <label class="cfg-label">Lien public <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;">— permanent</span></label>
+              <label class="cfg-label"><span id="cfg-lbl-public-link">Lien public</span> <span style="font-size:11px;color:rgba(255,255,255,0.35);text-transform:none;font-weight:400;" id="cfg-lbl-permanent">— permanent</span></label>
               <div style="display:flex;align-items:center;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;cursor:default;" id="slugWrap">
                 <span style="padding:0 8px 0 14px;font-size:11px;color:rgba(255,255,255,0.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;">https://localreply-frontend.vercel.app/chat?slug=</span>
                 <input id="businessSlug" type="text" readonly style="flex:1;min-width:0;padding:14px 14px 14px 0;background:transparent;border:none;font-size:14px;color:rgba(255,255,255,0.7);outline:none;cursor:default;pointer-events:none;" placeholder="mon-commerce">
@@ -1002,13 +1002,13 @@ function addFAQ(question='', answer='') {
     <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;">
       <div style="flex:1;">
         <label class="cfg-label" style="margin-bottom:6px;display:block;" id="cfg-lbl-question">Question</label>
-        <input type="text" value="${question.replace(/"/g,'&quot;')}" placeholder="Votre question..." class="cfg-input" style="padding:11px 14px;font-weight:600;">
+        <input type="text" value="${question.replace(/"/g,'&quot;')}" placeholder="${(window._dct||{}).ph_faq_question||'Votre question...'}" class="cfg-input" style="padding:11px 14px;font-weight:600;">
       </div>
       <button onclick="this.closest('.faq-card-wrapper').remove();updateBadges();" style="padding:9px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:15px;margin-top:22px;flex-shrink:0;">🗑️</button>
     </div>
     <div>
       <label class="cfg-label" style="margin-bottom:6px;display:block;" id="cfg-lbl-reponse">Réponse</label>
-      <textarea placeholder="Votre réponse..." class="cfg-input" style="resize:vertical;min-height:72px;padding:11px 14px;">${answer}</textarea>
+      <textarea placeholder="${(window._dct||{}).ph_faq_answer||'Votre réponse...'}" class="cfg-input" style="resize:vertical;min-height:72px;padding:11px 14px;">${answer}</textarea>
     </div>`;
   faqList.appendChild(card);
   updateBadges();
@@ -1185,7 +1185,7 @@ function addClosure(date='', reason='') {
   div.style.cssText = 'display:grid;grid-template-columns:160px 1fr auto;gap:10px;align-items:center;';
   div.innerHTML = `
     <input type="date" value="${date}" class="closure-date cfg-input" style="padding:10px 12px;color-scheme:dark;">
-    <input type="text" value="${reason}" placeholder="Motif (ex: Noël, Congés...)" class="closure-reason cfg-input" style="padding:10px 14px;">
+    <input type="text" value="${reason}" placeholder="${(window._dct||{}).ph_closure_reason||'Motif (ex: Noël, Congés...)'}" class="closure-reason cfg-input" style="padding:10px 14px;">
     <button onclick="this.parentElement.remove()" style="padding:9px 12px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;">🗑️</button>`;
   wrap.appendChild(div);
 }
@@ -1469,7 +1469,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Jeu',
     day_ven: 'Ven', day_sam: 'Sam', day_dim: 'Dim',
     day_full_lun: 'Lundi', day_full_mar: 'Mardi', day_full_mer: 'Mercredi',
-    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche',
+    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche', ph_business_name: "Votre commerce", ph_business_address: "14 Rue de Rive, 1204 Genève", ph_business_desc: "Ex: Salon de coiffure homme moderne, ambiance détendue, café offert...", ph_business_slug: "mon-commerce", ph_ai_name: "Ex: Marie", ph_ai_greeting: "Bonjour ! Comment puis-je vous aider ?", ph_faq_question: "Votre question...", ph_faq_answer: "Votre réponse...", ph_closure_reason: "Motif (ex: Noël, Congés...)", ph_search_faq: "🔍 Rechercher dans la FAQ...", ph_search_service: "🔍 Rechercher un service...", tt_slug_locked: "Le lien public ne peut pas être modifié", lbl_public_link: "Lien public", lbl_permanent: "— permanent",
     closed: 'Fermé',
   },
   en: {
@@ -1506,7 +1506,7 @@ const DASH_CFG_T = {
     day_lun: 'Mon', day_mar: 'Tue', day_mer: 'Wed', day_jeu: 'Thu',
     day_ven: 'Fri', day_sam: 'Sat', day_dim: 'Sun',
     day_full_lun: 'Monday', day_full_mar: 'Tuesday', day_full_mer: 'Wednesday',
-    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday',
+    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday', ph_business_name: "Your business", ph_business_address: "14 Rive Street, 1204 Geneva", ph_business_desc: "E.g.: Modern men's hair salon, relaxed atmosphere, free coffee...", ph_business_slug: "my-business", ph_ai_name: "E.g.: Marie", ph_ai_greeting: "Hello! How can I help you?", ph_faq_question: "Your question...", ph_faq_answer: "Your answer...", ph_closure_reason: "Reason (e.g. Christmas, Holiday...)", ph_search_faq: "🔍 Search the FAQ...", ph_search_service: "🔍 Search a service...", tt_slug_locked: "The public link cannot be edited", lbl_public_link: "Public link", lbl_permanent: "— permanent",
     closed: 'Closed',
   },
   de: {
@@ -1543,7 +1543,7 @@ const DASH_CFG_T = {
     day_lun: 'Mo', day_mar: 'Di', day_mer: 'Mi', day_jeu: 'Do',
     day_ven: 'Fr', day_sam: 'Sa', day_dim: 'So',
     day_full_lun: 'Montag', day_full_mar: 'Dienstag', day_full_mer: 'Mittwoch',
-    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag',
+    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag', ph_business_name: "Ihr Unternehmen", ph_business_address: "Bahnhofstrasse 14, 8001 Zürich", ph_business_desc: "Z. B.: Moderner Herrensalon, entspannte Atmosphäre, kostenloser Kaffee...", ph_business_slug: "mein-unternehmen", ph_ai_name: "Z. B.: Marie", ph_ai_greeting: "Hallo! Wie kann ich Ihnen helfen?", ph_faq_question: "Ihre Frage...", ph_faq_answer: "Ihre Antwort...", ph_closure_reason: "Grund (z. B. Weihnachten, Urlaub...)", ph_search_faq: "🔍 FAQ durchsuchen...", ph_search_service: "🔍 Dienstleistung suchen...", tt_slug_locked: "Der öffentliche Link kann nicht geändert werden", lbl_public_link: "Öffentlicher Link", lbl_permanent: "— dauerhaft",
     closed: 'Geschlossen',
   },
   it: {
@@ -1580,7 +1580,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Gio',
     day_ven: 'Ven', day_sam: 'Sab', day_dim: 'Dom',
     day_full_lun: 'Lunedì', day_full_mar: 'Martedì', day_full_mer: 'Mercoledì',
-    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica',
+    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica', ph_business_name: "La tua attività", ph_business_address: "Via Roma 14, 6900 Lugano", ph_business_desc: "Es.: Salone da barbiere moderno, atmosfera rilassata, caffè offerto...", ph_business_slug: "la-mia-attivita", ph_ai_name: "Es.: Marie", ph_ai_greeting: "Ciao! Come posso aiutarti?", ph_faq_question: "La tua domanda...", ph_faq_answer: "La tua risposta...", ph_closure_reason: "Motivo (es. Natale, Ferie...)", ph_search_faq: "🔍 Cerca nelle FAQ...", ph_search_service: "🔍 Cerca un servizio...", tt_slug_locked: "Il link pubblico non può essere modificato", lbl_public_link: "Link pubblico", lbl_permanent: "— permanente",
     closed: 'Chiuso',
   },
   es: {
@@ -1617,7 +1617,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mié', day_jeu: 'Jue',
     day_ven: 'Vie', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Lunes', day_full_mar: 'Martes', day_full_mer: 'Miércoles',
-    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo',
+    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "Tu negocio", ph_business_address: "Calle Mayor 14, 28013 Madrid", ph_business_desc: "Ej.: Peluquería masculina moderna, ambiente relajado, café gratis...", ph_business_slug: "mi-negocio", ph_ai_name: "Ej.: Marie", ph_ai_greeting: "¡Hola! ¿Cómo puedo ayudarte?", ph_faq_question: "Tu pregunta...", ph_faq_answer: "Tu respuesta...", ph_closure_reason: "Motivo (ej. Navidad, Vacaciones...)", ph_search_faq: "🔍 Buscar en las FAQ...", ph_search_service: "🔍 Buscar un servicio...", tt_slug_locked: "El enlace público no se puede modificar", lbl_public_link: "Enlace público", lbl_permanent: "— permanente",
     closed: 'Cerrado',
   },
   pt: {
@@ -1654,7 +1654,7 @@ const DASH_CFG_T = {
     day_lun: 'Seg', day_mar: 'Ter', day_mer: 'Qua', day_jeu: 'Qui',
     day_ven: 'Sex', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Segunda', day_full_mar: 'Terça', day_full_mer: 'Quarta',
-    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo',
+    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "O seu negócio", ph_business_address: "Rua Augusta 14, 1100-053 Lisboa", ph_business_desc: "Ex.: Barbearia moderna, ambiente descontraído, café oferecido...", ph_business_slug: "o-meu-negocio", ph_ai_name: "Ex.: Marie", ph_ai_greeting: "Olá! Como posso ajudá-lo?", ph_faq_question: "A sua pergunta...", ph_faq_answer: "A sua resposta...", ph_closure_reason: "Motivo (ex.: Natal, Férias...)", ph_search_faq: "🔍 Pesquisar na FAQ...", ph_search_service: "🔍 Pesquisar um serviço...", tt_slug_locked: "O link público não pode ser alterado", lbl_public_link: "Link público", lbl_permanent: "— permanente",
     closed: 'Fechado',
   },
   nl: {
@@ -1691,7 +1691,7 @@ const DASH_CFG_T = {
     day_lun: 'Ma', day_mar: 'Di', day_mer: 'Wo', day_jeu: 'Do',
     day_ven: 'Vr', day_sam: 'Za', day_dim: 'Zo',
     day_full_lun: 'Maandag', day_full_mar: 'Dinsdag', day_full_mer: 'Woensdag',
-    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag',
+    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag', ph_business_name: "Uw bedrijf", ph_business_address: "Damstraat 14, 1012 Amsterdam", ph_business_desc: "Bijv.: Moderne herenkapsalon, ontspannen sfeer, gratis koffie...", ph_business_slug: "mijn-bedrijf", ph_ai_name: "Bijv.: Marie", ph_ai_greeting: "Hallo! Hoe kan ik u helpen?", ph_faq_question: "Uw vraag...", ph_faq_answer: "Uw antwoord...", ph_closure_reason: "Reden (bijv. Kerstmis, Vakantie...)", ph_search_faq: "🔍 Zoeken in de FAQ...", ph_search_service: "🔍 Dienst zoeken...", tt_slug_locked: "De openbare link kan niet worden gewijzigd", lbl_public_link: "Openbare link", lbl_permanent: "— permanent",
     closed: 'Gesloten',
   },
   pl: {
@@ -1728,7 +1728,7 @@ const DASH_CFG_T = {
     day_lun: 'Pon', day_mar: 'Wt', day_mer: 'Śr', day_jeu: 'Czw',
     day_ven: 'Pt', day_sam: 'Sob', day_dim: 'Nd',
     day_full_lun: 'Poniedziałek', day_full_mar: 'Wtorek', day_full_mer: 'Środa',
-    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela',
+    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela', ph_business_name: "Twoja firma", ph_business_address: "ul. Marszałkowska 14, 00-001 Warszawa", ph_business_desc: "Np.: Nowoczesny salon fryzjerski męski, luźna atmosfera, kawa gratis...", ph_business_slug: "moja-firma", ph_ai_name: "Np.: Marie", ph_ai_greeting: "Cześć! Jak mogę Ci pomóc?", ph_faq_question: "Twoje pytanie...", ph_faq_answer: "Twoja odpowiedź...", ph_closure_reason: "Powód (np. Święta, Urlop...)", ph_search_faq: "🔍 Szukaj w FAQ...", ph_search_service: "🔍 Szukaj usługi...", tt_slug_locked: "Publicznego linku nie można edytować", lbl_public_link: "Link publiczny", lbl_permanent: "— stały",
     closed: 'Zamknięte',
   },
 };
@@ -1779,11 +1779,26 @@ const DASH_CFG_T = {
       'cfg-day-mer': t.day_full_mer, 'cfg-day-jeu': t.day_full_jeu,
       'cfg-day-ven': t.day_full_ven, 'cfg-day-sam': t.day_full_sam,
       'cfg-day-dim': t.day_full_dim,
+      'cfg-lbl-public-link': t.lbl_public_link, 'cfg-lbl-permanent': t.lbl_permanent,
     };
     Object.entries(ids).forEach(([id, txt]) => {
       const el = document.getElementById(id);
       if (el && txt) el.textContent = txt;
     });
+    // Placeholder text on static input fields (was hardcoded in French,
+    // showing "Ex: Salon de coiffure..." etc. regardless of language).
+    const placeholders = {
+      'businessName': t.ph_business_name, 'businessEmail': 'email@example.com',
+      'businessAddress': t.ph_business_address, 'businessDescription': t.ph_business_desc,
+      'businessSlug': t.ph_business_slug, 'aiName': t.ph_ai_name, 'aiGreeting': t.ph_ai_greeting,
+      'faqSearch': t.ph_search_faq, 'serviceSearch': t.ph_search_service,
+    };
+    Object.entries(placeholders).forEach(([id, txt]) => {
+      const el = document.getElementById(id);
+      if (el && txt) el.placeholder = txt;
+    });
+    const slugLockIcon = document.getElementById('businessSlug')?.closest('div')?.querySelector('span[title]');
+    if (slugLockIcon && t.tt_slug_locked) slugLockIcon.title = t.tt_slug_locked;
     renderBusinessTypes();
     setTimeout(function(){if(window.lrRetranslate)window.lrRetranslate();},100);
     const bnSpan = document.getElementById('businessNameSpan');

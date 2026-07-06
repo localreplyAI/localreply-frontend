@@ -597,7 +597,7 @@ async function renderModeContent(mode, externalUrl) {
           </div>
         </div>
         <div style="display:flex;gap:8px;margin-bottom:10px;">
-          <input type="url" id="rdvExternalUrl" value="${externalUrl}" placeholder="https://www.planity.com/votre-salon ou https://www.doctolib.fr/..." 
+          <input type="url" id="rdvExternalUrl" value="${externalUrl}" placeholder="${(window._drt||{}).ph_external_url||'https://www.planity.com/votre-salon ou https://www.doctolib.fr/...'}" 
             style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;font-size:13px;color:#fff;outline:none;font-family:inherit;"
             onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
           <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;" id="rdv-save-btn">💾 Enregistrer</button>
@@ -1289,7 +1289,7 @@ const DASH_RDV_T = {
     h1: '📅 Rendez-vous', subtitle: 'Gérez vos demandes de rendez-vous et confirmez vos créneaux',
     kpi_pending_label: 'À confirmer', kpi_confirmed_label: 'Confirmés',
     kpi_confirmed_sub: '30 derniers jours', kpi_past_sub: '30 derniers jours', kpi_past_label: 'Passés',
-    search_placeholder: '🔍 Rechercher un client, service...',
+    search_placeholder: '🔍 Rechercher un client, service...', ph_external_url: "https://www.planity.com/votre-salon ou https://www.doctolib.fr/...",
     filter_pending: '⏳ En attente', filter_confirmed: '✅ Confirmés', filter_past: '📋 RDV passés',
     tab_pending: 'À confirmer', tab_confirmed: 'Confirmés', tab_past: 'Passés',
     section_upcoming: '📋 Prochains rendez-vous confirmés',
@@ -1327,7 +1327,7 @@ const DASH_RDV_T = {
     h1: '📅 Appointments', subtitle: 'Manage your appointment requests and confirm your slots',
     kpi_pending_label: 'To confirm', kpi_confirmed_label: 'Confirmed',
     kpi_confirmed_sub: 'Last 30 days', kpi_past_sub: 'Last 30 days', kpi_past_label: 'Past',
-    search_placeholder: '🔍 Search a customer, service...',
+    search_placeholder: '🔍 Search a customer, service...', ph_external_url: "https://www.planity.com/your-salon or https://www.doctolib.fr/...",
     filter_pending: '⏳ Pending', filter_confirmed: '✅ Confirmed', filter_past: '📋 Past appointments',
     tab_pending: 'To confirm', tab_confirmed: 'Confirmed', tab_past: 'Past',
     section_upcoming: '📋 Upcoming confirmed appointments',
@@ -1365,7 +1365,7 @@ const DASH_RDV_T = {
     h1: '📅 Termine', subtitle: 'Verwalten Sie Terminanfragen und bestätigen Sie Ihre Slots',
     kpi_pending_label: 'Zu bestätigen', kpi_confirmed_label: 'Bestätigt',
     kpi_confirmed_sub: 'Letzte 30 Tage', kpi_past_sub: 'Letzte 30 Tage', kpi_past_label: 'Vergangene',
-    search_placeholder: '🔍 Kunden, Dienst suchen...',
+    search_placeholder: '🔍 Kunden, Dienst suchen...', ph_external_url: "https://www.planity.com/ihr-salon oder https://www.doctolib.fr/...",
     filter_pending: '⏳ Ausstehend', filter_confirmed: '✅ Bestätigt', filter_past: '📋 Vergangene Termine',
     tab_pending: 'Zu bestätigen', tab_confirmed: 'Bestätigt', tab_past: 'Vergangene',
     section_upcoming: '📋 Bevorstehende bestätigte Termine',
@@ -1403,7 +1403,7 @@ const DASH_RDV_T = {
     h1: '📅 Appuntamenti', subtitle: 'Gestisci le richieste di appuntamento e conferma i tuoi slot',
     kpi_pending_label: 'Da confermare', kpi_confirmed_label: 'Confermati',
     kpi_confirmed_sub: 'Ultimi 30 giorni', kpi_past_sub: 'Ultimi 30 giorni', kpi_past_label: 'Passati',
-    search_placeholder: '🔍 Cerca cliente, servizio...',
+    search_placeholder: '🔍 Cerca cliente, servizio...', ph_external_url: "https://www.planity.com/il-tuo-salone o https://www.doctolib.fr/...",
     filter_pending: '⏳ In attesa', filter_confirmed: '✅ Confermati', filter_past: '📋 Appuntamenti passati',
     tab_pending: 'Da confermare', tab_confirmed: 'Confermati', tab_past: 'Passati',
     section_upcoming: '📋 Prossimi appuntamenti confermati',
@@ -1441,7 +1441,7 @@ const DASH_RDV_T = {
     h1: '📅 Citas', subtitle: 'Gestiona las solicitudes de cita y confirma tus franjas',
     kpi_pending_label: 'Por confirmar', kpi_confirmed_label: 'Confirmadas',
     kpi_confirmed_sub: 'Últimos 30 días', kpi_past_sub: 'Últimos 30 días', kpi_past_label: 'Pasadas',
-    search_placeholder: '🔍 Buscar cliente, servicio...',
+    search_placeholder: '🔍 Buscar cliente, servicio...', ph_external_url: "https://www.planity.com/tu-salon o https://www.doctolib.fr/...",
     filter_pending: '⏳ En espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Citas pasadas',
     tab_pending: 'Por confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Pasadas',
     section_upcoming: '📋 Próximas citas confirmadas',
@@ -1479,7 +1479,7 @@ const DASH_RDV_T = {
     h1: '📅 Marcações', subtitle: 'Gira os pedidos de marcação e confirme os seus horários',
     kpi_pending_label: 'A confirmar', kpi_confirmed_label: 'Confirmadas',
     kpi_confirmed_sub: 'Últimos 30 dias', kpi_past_sub: 'Últimos 30 dias', kpi_past_label: 'Passadas',
-    search_placeholder: '🔍 Pesquisar cliente, serviço...',
+    search_placeholder: '🔍 Pesquisar cliente, serviço...', ph_external_url: "https://www.planity.com/o-seu-salao ou https://www.doctolib.fr/...",
     filter_pending: '⏳ Em espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Marcações passadas',
     tab_pending: 'A confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Passadas',
     section_upcoming: '📋 Próximas marcações confirmadas',
@@ -1517,7 +1517,7 @@ const DASH_RDV_T = {
     h1: '📅 Afspraken', subtitle: 'Beheer afspraakverzoeken en bevestig uw tijdsloten',
     kpi_pending_label: 'Te bevestigen', kpi_confirmed_label: 'Bevestigd',
     kpi_confirmed_sub: 'Laatste 30 dagen', kpi_past_sub: 'Laatste 30 dagen', kpi_past_label: 'Verstreken',
-    search_placeholder: '🔍 Klant, dienst zoeken...',
+    search_placeholder: '🔍 Klant, dienst zoeken...', ph_external_url: "https://www.planity.com/uw-salon of https://www.doctolib.fr/...",
     filter_pending: '⏳ In behandeling', filter_confirmed: '✅ Bevestigd', filter_past: '📋 Verstreken afspraken',
     tab_pending: 'Te bevestigen', tab_confirmed: 'Bevestigd', tab_past: 'Verstreken',
     section_upcoming: '📋 Aankomende bevestigde afspraken',
@@ -1555,7 +1555,7 @@ const DASH_RDV_T = {
     h1: '📅 Wizyty', subtitle: 'Zarządzaj prośbami o wizytę i potwierdzaj swoje terminy',
     kpi_pending_label: 'Do potwierdzenia', kpi_confirmed_label: 'Potwierdzone',
     kpi_confirmed_sub: 'Ostatnie 30 dni', kpi_past_sub: 'Ostatnie 30 dni', kpi_past_label: 'Minione',
-    search_placeholder: '🔍 Szukaj klienta, usługi...',
+    search_placeholder: '🔍 Szukaj klienta, usługi...', ph_external_url: "https://www.planity.com/twoj-salon lub https://www.doctolib.fr/...",
     filter_pending: '⏳ Oczekujące', filter_confirmed: '✅ Potwierdzone', filter_past: '📋 Minione wizyty',
     tab_pending: 'Do potwierdzenia', tab_confirmed: 'Potwierdzone', tab_past: 'Minione',
     section_upcoming: '📋 Nadchodzące potwierdzone wizyty',
