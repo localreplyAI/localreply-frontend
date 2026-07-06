@@ -53,7 +53,8 @@
   // since no such route exists for it.
   const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl']; // 'en' is default, unprefixed
   const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
-    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'privacy', 'terms', 'gdpr'];
 
   function _navCurrentSlug() {
     let p = currentPath.replace(/^\/+|\/+$/g, '');
@@ -310,7 +311,8 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // à la génération -- changer de langue doit RE-NAVIGUER vers l'URL préfixée, pas juste
   // retraduire la navbar en JS. Cette liste grandit au fur et à mesure des migrations.
   const _staticallyTranslatedPages = ['', 'contact', 'features', 'pricing', 'about', 'blog',
-    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'privacy', 'terms', 'gdpr'];
   const _defaultLang = 'en';
   const _langPrefixes = Object.keys(_navTranslations);
 

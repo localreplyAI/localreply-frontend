@@ -34,6 +34,9 @@
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/pricing", "destination": "/:lang/pricing.html" },
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/about", "destination": "/:lang/about.html" },
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/blog", "destination": "/:lang/blog.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/privacy", "destination": "/:lang/privacy.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/terms", "destination": "/:lang/terms.html" },
+    { "source": "/:lang(fr|de|it|es|pt|nl|pl)/gdpr", "destination": "/:lang/gdpr.html" },
 
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/auth", "destination": "/auth.html" },
     { "source": "/:lang(fr|de|it|es|pt|nl|pl)/onboarding", "destination": "/onboarding.html" },

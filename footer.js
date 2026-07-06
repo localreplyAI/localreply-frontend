@@ -9,7 +9,8 @@
   const currentPath = window.location.pathname;
   const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl'];
   const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
-    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password'];
+    'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'privacy', 'terms', 'gdpr'];
   function _curLang() {
     const first = currentPath.replace(/^\/+/, '').split('/')[0];
     return _navLangPrefixes.indexOf(first) >= 0 ? first : '';
@@ -18,7 +19,7 @@
   function withLang(href) {
     if (!_lang) return href;
     const slug = href === '/' ? '' : href.replace(/^\//, '');
-    if (_navLangRoutedSlugs.indexOf(slug) === -1) return href; // e.g. /demo, /terms, /privacy, /gdpr -- no per-language route
+    if (_navLangRoutedSlugs.indexOf(slug) === -1) return href; // e.g. /demo -- no per-language route
     return slug ? '/' + _lang + '/' + slug : '/' + _lang;
   }
 
@@ -74,9 +75,9 @@
 
           <div>
             <div id="lr-footer-col-legal" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">${t.col_legal}</div>
-            ${link('/terms', `<span id="lr-footer-terms">${t.terms}</span>`)}
-            ${link('/privacy', `<span id="lr-footer-privacy">${t.privacy}</span>`)}
-            ${link('/gdpr', `<span id="lr-footer-gdpr">${t.gdpr}</span>`)}
+            ${link(withLang('/terms'), `<span id="lr-footer-terms">${t.terms}</span>`)}
+            ${link(withLang('/privacy'), `<span id="lr-footer-privacy">${t.privacy}</span>`)}
+            ${link(withLang('/gdpr'), `<span id="lr-footer-gdpr">${t.gdpr}</span>`)}
           </div>
         </div>
 
