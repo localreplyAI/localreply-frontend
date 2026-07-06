@@ -10,6 +10,7 @@
   const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl'];
   const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
     'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'dashboard', 'dashboard-configuration', 'dashboard-rendez-vous', 'dashboard-messages', 'dashboard-analytics',
     'privacy', 'terms', 'gdpr'];
   function _curLang() {
     const first = currentPath.replace(/^\/+/, '').split('/')[0];

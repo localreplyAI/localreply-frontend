@@ -4,11 +4,16 @@
   const token = localStorage.getItem('auth_token');
   const publicPages = ['/', '/auth', '/home', '/features', '/pricing', '/about', '/blog', '/chat'];
   const path = window.location.pathname;
-  const isDashboard = path.startsWith('/dashboard') || 
-                      path === '/mon-compte' || 
-                      path === '/abonnement' ||
-                      path === '/onboarding' ||
-                      path === '/choisir-plan';
+  // Strip a leading language prefix (e.g. /de/dashboard -> /dashboard) so this
+  // check works the same regardless of which language URL the user is on.
+  const _langPrefixes = ['fr','de','it','es','pt','nl','pl'];
+  const _firstSeg = path.replace(/^\/+/, '').split('/')[0];
+  const pathNoLang = _langPrefixes.indexOf(_firstSeg) >= 0 ? path.replace('/'+_firstSeg, '') || '/' : path;
+  const isDashboard = pathNoLang.startsWith('/dashboard') || 
+                      pathNoLang === '/mon-compte' || 
+                      pathNoLang === '/abonnement' ||
+                      pathNoLang === '/onboarding' ||
+                      pathNoLang === '/choisir-plan';
   
   if (!isDashboard) return; // Pages publiques — pas de vérif
   
@@ -54,6 +59,7 @@
   const _navLangPrefixes = ['fr','de','it','es','pt','nl','pl']; // 'en' is default, unprefixed
   const _navLangRoutedSlugs = ['', 'contact', 'features', 'pricing', 'about', 'blog',
     'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'dashboard', 'dashboard-configuration', 'dashboard-rendez-vous', 'dashboard-messages', 'dashboard-analytics',
     'privacy', 'terms', 'gdpr'];
 
   function _navCurrentSlug() {
@@ -82,11 +88,15 @@
   // links of its own to show here, but it DOES rely on this bar for its only
   // language switcher, so we keep that and just drop the public-only parts
   // (nav links, "Dashboard /Connexion/Essai gratuit" CTAs) in app context.
-  const _isAppPage = currentPath.startsWith('/dashboard') ||
-                      currentPath === '/mon-compte' ||
-                      currentPath === '/abonnement' ||
-                      currentPath === '/onboarding' ||
-                      currentPath === '/choisir-plan';
+  const _appPagePath = (function() {
+    const first = currentPath.replace(/^\/+/, '').split('/')[0];
+    return _navLangPrefixes.indexOf(first) >= 0 ? (currentPath.replace('/'+first, '') || '/') : currentPath;
+  })();
+  const _isAppPage = _appPagePath.startsWith('/dashboard') ||
+                      _appPagePath === '/mon-compte' ||
+                      _appPagePath === '/abonnement' ||
+                      _appPagePath === '/onboarding' ||
+                      _appPagePath === '/choisir-plan';
 
   const links = [
     { href: '/',          label: 'Accueil',         i18n: 'nav_home'     },
@@ -142,7 +152,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
         <!-- CTA -->
         <div style="display:flex;align-items:center;gap:10px;">
           ${_isAppPage ? '' : (isLoggedIn ? `
-            <a href="/dashboard" style="
+            <a href="${withLang('/dashboard')}" style="
               padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);
               border-radius:10px;color:#fff;font-size:14px;font-weight:700;text-decoration:none;
               box-shadow:0 4px 12px rgba(0,82,204,0.35);transition:all 0.2s;
@@ -229,7 +239,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
         `).join('')}
         <div style="height:1px;background:rgba(255,255,255,0.08);margin:12px 0;"></div>
         ${isLoggedIn ? `
-          <a href="/dashboard" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;">Dashboard →</a>
+          <a href="${withLang('/dashboard')}" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;">Dashboard →</a>
         ` : `
           <a href="${withLang('/auth')}" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:600;color:rgba(255,255,255,0.8);text-align:center;border:1px solid rgba(255,255,255,0.2);margin-bottom:8px;"><span data-i18n="nav_login">Connexion</span></a>
           <a href="${withLang('/auth')}" style="display:block;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:15px;font-weight:700;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;text-align:center;"><span data-i18n="nav_cta">Essai gratuit →</span></a>
@@ -312,6 +322,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // retraduire la navbar en JS. Cette liste grandit au fur et à mesure des migrations.
   const _staticallyTranslatedPages = ['', 'contact', 'features', 'pricing', 'about', 'blog',
     'auth', 'onboarding', 'mon-compte', 'abonnement', 'choisir-plan', 'reset-password', 'forgot-password',
+    'dashboard', 'dashboard-configuration', 'dashboard-rendez-vous', 'dashboard-messages', 'dashboard-analytics',
     'privacy', 'terms', 'gdpr'];
   const _defaultLang = 'en';
   const _langPrefixes = Object.keys(_navTranslations);

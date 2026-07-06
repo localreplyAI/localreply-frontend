@@ -4,6 +4,19 @@
 // Apply with: window.lrDashApplyLang(lang)
 // ═══════════════════════════════════════════════════════════════
 
+// Sync the language from the URL path prefix (e.g. /de/dashboard) into
+// localStorage before anything below reads it, so the dashboard is
+// consistent with the rest of the site's language-in-URL convention.
+// Falls back to whatever was already in localStorage / the browser
+// language when there is no prefix (e.g. plain /dashboard).
+(function() {
+  const _langPrefixes = ['fr','en','de','it','es','pt','nl','pl'];
+  const first = window.location.pathname.replace(/^\/+/, '').split('/')[0];
+  if (_langPrefixes.indexOf(first) >= 0) {
+    try { localStorage.setItem('lr_lang', first); } catch (e) {}
+  }
+})();
+
 const LR_DASH_T = {
   fr: {
     // Nav sidebar
