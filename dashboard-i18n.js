@@ -262,6 +262,14 @@ function lrDashApplyNav() {
     if (t[key]) el.textContent = t[key];
   });
   document.documentElement.lang = lang;
+  // Sidebar links to pages outside the dashboard (mon-compte, abonnement,
+  // back-to-site) were hardcoded without a language prefix, so they always
+  // dropped the user back into English regardless of the dashboard's
+  // current language. Prefix them here to match.
+  const _withLangPrefix = (href) => lang === 'en' ? href : (href === '/' ? '/' + lang : '/' + lang + href);
+  const _backLink = document.getElementById('dn-back'); if (_backLink) { const a = _backLink.closest('a'); if (a) a.href = _withLangPrefix('/'); }
+  const _accountLink = document.getElementById('dn-account'); if (_accountLink) { const a = _accountLink.closest('a'); if (a) a.href = _withLangPrefix('/mon-compte'); }
+  const _billingLink = document.getElementById('dn-billing'); if (_billingLink) { const a = _billingLink.closest('a'); if (a) a.href = _withLangPrefix('/abonnement'); }
 }
 
 // Auto-apply on DOM ready
