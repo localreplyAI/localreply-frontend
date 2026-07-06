@@ -334,29 +334,22 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     return parts.join('/');
   }
 
-  // Définir lrApplyLang globalement si elle n'existe pas encore (pages sans i18n complet)
-  if (typeof window.lrApplyLang === 'undefined') {
-    window.lrApplyLang = function(lang) {
-      const slug = _currentPageSlug();
-      if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
-        localStorage.setItem('lr_lang', lang);
-        window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + (slug ? '/' + slug : ''));
-        return;
-      }
-      lrApplyNavLang(lang);
-      const dd = document.getElementById('lr-lang-dd');
-      if (dd) dd.style.display = 'none';
-      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
-    };
-  } else {
-    // Sur home.html, lrApplyLang existe déjà — on la patch pour aussi mettre à jour la navbar
-    const _originalApplyLang = window.lrApplyLang;
-    window.lrApplyLang = function(lang) {
-      _originalApplyLang(lang);
-      lrApplyNavLang(lang);
-      if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
-    };
-  }
+  // Every page slug is now in _staticallyTranslatedPages (public marketing
+  // pages, utility pages, dashboard, legal pages), so a language switch is
+  // always a URL redirect below -- no page still does its own in-place
+  // (non-reload) language switching anymore, so there's nothing left to patch.
+  window.lrApplyLang = function(lang) {
+    const slug = _currentPageSlug();
+    if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
+      localStorage.setItem('lr_lang', lang);
+      window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + (slug ? '/' + slug : ''));
+      return;
+    }
+    lrApplyNavLang(lang);
+    const dd = document.getElementById('lr-lang-dd');
+    if (dd) dd.style.display = 'none';
+    if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
+  };
 
   // Appliquer la langue au chargement
   const _supportedNavLangs = Object.keys(_navTranslations);
