@@ -345,10 +345,10 @@
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:16px;background:rgba(239,68,68,0.06);border-radius:12px;border:1px solid rgba(239,68,68,0.15);">
         <div>
           <div id="mc-delete-title" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Supprimer mon compte</div>
-          <div id="mc-delete-warning" style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-delete-word2" id="mc-irreversible">irréversible</strong>.</div>
+          <div id="mc-delete-warning" style="font-size:12px;color:rgba(255,255,255,0.45);max-width:440px;line-height:1.5;">Toutes vos données seront définitivement supprimées : configuration, conversations, RDV, FAQ. Action <strong style="color:#EF4444;" id="mc-irreversible">irréversible</strong>.</div>
         </div>
         <button onclick="confirmDeleteAccount()" style="padding:11px 20px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.4);border-radius:10px;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.25)'" onmouseleave="this.style.background='rgba(239,68,68,0.15)'">
-          🗑️ Supprimer le compte
+          <span id="mc-delete-btn-text">🗑️ Supprimer le compte</span>
         </button>
       </div>
     </div>
@@ -674,8 +674,9 @@ async function loadSidebarInfo() {
     if (sp) {
       const plan = sub?.plan || 'standard';
       const status = sub?.status || '';
-      if (status === 'trialing') sp.textContent = '🎁 Essai gratuit — ' + (plan === 'pro' ? 'Pro' : 'Standard');
-      else if (plan === 'pro') sp.textContent = '⭐ Plan Pro';
+      const _mt = (_mct||DASH_MC_T.fr);
+      if (status === 'trialing') sp.textContent = (_mt.mc_trial_status||'🎁 Essai gratuit — ') + (plan === 'pro' ? (_mt.mc_plan_pro_short||'Pro') : (_mt.plan_std||'Standard'));
+      else if (plan === 'pro') sp.textContent = _mt.mc_plan_pro_full||'⭐ Plan Pro';
       else sp.textContent = '📦 ' + ((_mct||DASH_MC_T.fr).plan_std||'Plan Standard');
     }
 
@@ -779,7 +780,7 @@ const DASH_MC_T = {
     save_notif:'💾 Enregistrer les préférences',
     title_danger:'Zone dangereuse',
     delete_account:'🗑️ Supprimer mon compte',
-    delete_confirm_placeholder:'Tapez SUPPRIMER pour confirmer', delete_confirm_word:'SUPPRIMER', delete_confirm_error:'❌ Tapez exactement SUPPRIMER', ph_first_name:'Prénom', ph_last_name:'Nom',
+    delete_confirm_placeholder:'Tapez SUPPRIMER pour confirmer', delete_confirm_word:'SUPPRIMER', delete_confirm_error:'❌ Tapez exactement SUPPRIMER', delete_btn_text:'🗑️ Supprimer le compte', mc_trial_status:'🎁 Essai gratuit — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Plan Pro', ph_first_name:'Prénom', ph_last_name:'Nom',
     save_info_ok:'✅ Informations enregistrées !',
     save_notif_ok:'✅ Préférences enregistrées !',
     notif_missing: "Non défini dans Configuration", delete_full_desc: "Compte et données supprimés définitivement.", pwd_desc: "Pour modifier votre mot de passe, cliquez ci-dessous. Un email de réinitialisation vous sera envoyé.",danger_sub: "Ces actions sont irréversibles",delete_title: "Supprimer mon compte",delete_desc: "votre compte et toutes vos données.",delete_confirm_lbl: "Êtes-vous sûr ?",cancel: "Annuler",notif_none: "Aucun", plan_std: "Plan Standard", plan_pro: "Plan Pro", status_trial: "Essai gratuit", none: "Aucun", loading: "Chargement...",
@@ -818,7 +819,7 @@ const DASH_MC_T = {
     save_notif:'💾 Save preferences',
     title_danger:'Danger zone',
     delete_account:'🗑️ Delete my account',
-    delete_confirm_placeholder:'Type DELETE to confirm', delete_confirm_word:'DELETE', delete_confirm_error:'❌ Type exactly DELETE', ph_first_name:'First name', ph_last_name:'Last name',
+    delete_confirm_placeholder:'Type DELETE to confirm', delete_confirm_word:'DELETE', delete_confirm_error:'❌ Type exactly DELETE', delete_btn_text:'🗑️ Delete account', mc_trial_status:'🎁 Free trial — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Pro Plan', ph_first_name:'First name', ph_last_name:'Last name',
     save_info_ok:'✅ Information saved!',
     save_notif_ok:'✅ Preferences saved!',
     notif_missing:'Not set in Configuration', notif_none_option:'None', irreversible:'irreversible', delete_btn:'🗑️ Delete account', delete_full_desc:'This action will permanently delete your account and all your data. This operation is irreversible.', pwd_desc:'To change your password, click below. A reset email will be sent to you.',danger_sub:'These actions are irreversible',delete_title:'Delete my account',delete_desc:'your account and all your data.',delete_confirm_lbl:'Are you sure?',cancel:'Cancel',notif_none:'None', plan_std:'Standard Plan', plan_pro:'Pro Plan', status_trial:'Free trial', none:'None', loading:'Loading...',
@@ -857,7 +858,7 @@ const DASH_MC_T = {
     save_notif:'💾 Einstellungen speichern',
     title_danger:'Gefahrenzone',
     delete_account:'🗑️ Mein Konto löschen',
-    delete_confirm_placeholder:'Geben Sie LÖSCHEN ein zur Bestätigung', delete_confirm_word:'LÖSCHEN', delete_confirm_error:'❌ Geben Sie genau LÖSCHEN ein', ph_first_name:'Vorname', ph_last_name:'Nachname',
+    delete_confirm_placeholder:'Geben Sie LÖSCHEN ein zur Bestätigung', delete_confirm_word:'LÖSCHEN', delete_confirm_error:'❌ Geben Sie genau LÖSCHEN ein', delete_btn_text:'🗑️ Konto löschen', mc_trial_status:'🎁 Kostenlose Testphase — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Pro-Plan', ph_first_name:'Vorname', ph_last_name:'Nachname',
     save_info_ok:'✅ Informationen gespeichert!',
     save_notif_ok:'✅ Einstellungen gespeichert!',
     notif_missing:'Nicht in Konfiguration festgelegt', notif_none_option:'Keine', irreversible:'unwiderruflich', delete_btn:'🗑️ Konto löschen', delete_full_desc:'Diese Aktion löscht dauerhaft Ihr Konto und alle Ihre Daten. Dieser Vorgang ist nicht rückgängig zu machen.', pwd_desc:'Um Ihr Passwort zu ändern, klicken Sie unten. Eine Zurücksetzen-E-Mail wird gesendet.',danger_sub:'Diese Aktionen sind nicht rückgängig zu machen',delete_title:'Mein Konto löschen',delete_desc:'Ihr Konto und alle Ihre Daten.',delete_confirm_lbl:'Sind Sie sicher?',cancel:'Abbrechen',notif_none:'Keine', plan_std:'Standard-Plan', plan_pro:'Pro-Plan', status_trial:'Kostenlose Testphase', none:'Keine', loading:'Laden...',
@@ -896,7 +897,7 @@ const DASH_MC_T = {
     save_notif:'💾 Salva preferenze',
     title_danger:'Zona pericolosa',
     delete_account:'🗑️ Elimina il mio account',
-    delete_confirm_placeholder:'Digita ELIMINA per confermare', delete_confirm_word:'ELIMINA', delete_confirm_error:'❌ Digita esattamente ELIMINA', ph_first_name:'Nome', ph_last_name:'Cognome',
+    delete_confirm_placeholder:'Digita ELIMINA per confermare', delete_confirm_word:'ELIMINA', delete_confirm_error:'❌ Digita esattamente ELIMINA', delete_btn_text:'🗑️ Elimina account', mc_trial_status:'🎁 Prova gratuita — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Piano Pro', ph_first_name:'Nome', ph_last_name:'Cognome',
     save_info_ok:'✅ Informazioni salvate!',
     save_notif_ok:'✅ Preferenze salvate!',
     notif_missing:'Non impostato in Configurazione', notif_none_option:'Nessuno', irreversible:'irreversibile', delete_btn:'🗑️ Elimina account', delete_full_desc:'Questa azione eliminerà definitivamente il tuo account e tutti i tuoi dati. Questa operazione è irreversibile.', pwd_desc:'Per modificare la password, clicca qui sotto. Verrà inviata un email di reimpostazione.',danger_sub:'Queste azioni sono irreversibili',delete_title:'Elimina il mio account',delete_desc:'il tuo account e tutti i tuoi dati.',delete_confirm_lbl:'Sei sicuro?',cancel:'Annulla',notif_none:'Nessuno', plan_std:'Piano Standard', plan_pro:'Piano Pro', status_trial:'Prova gratuita', none:'Nessuno', loading:'Caricamento...',
@@ -935,7 +936,7 @@ const DASH_MC_T = {
     save_notif:'💾 Guardar preferencias',
     title_danger:'Zona peligrosa',
     delete_account:'🗑️ Eliminar mi cuenta',
-    delete_confirm_placeholder:'Escribe ELIMINAR para confirmar', delete_confirm_word:'ELIMINAR', delete_confirm_error:'❌ Escribe exactamente ELIMINAR', ph_first_name:'Nombre', ph_last_name:'Apellido',
+    delete_confirm_placeholder:'Escribe ELIMINAR para confirmar', delete_confirm_word:'ELIMINAR', delete_confirm_error:'❌ Escribe exactamente ELIMINAR', delete_btn_text:'🗑️ Eliminar cuenta', mc_trial_status:'🎁 Prueba gratuita — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Plan Pro', ph_first_name:'Nombre', ph_last_name:'Apellido',
     save_info_ok:'✅ ¡Información guardada!',
     save_notif_ok:'✅ ¡Preferencias guardadas!',
     notif_missing:'No definido en Configuración', notif_none_option:'Ninguno', irreversible:'irreversible', delete_btn:'🗑️ Eliminar cuenta', delete_full_desc:'Esta acción eliminará permanentemente tu cuenta y todos tus datos. Esta operación es irreversible.', pwd_desc:'Para cambiar tu contraseña, haz clic abajo. Se enviará un email de restablecimiento.',danger_sub:'Estas acciones son irreversibles',delete_title:'Eliminar mi cuenta',delete_desc:'tu cuenta y todos tus datos.',delete_confirm_lbl:'¿Estás seguro?',cancel:'Cancelar',notif_none:'Ninguno', plan_std:'Plan Standard', plan_pro:'Plan Pro', status_trial:'Prueba gratuita', none:'Ninguno', loading:'Cargando...',
@@ -974,7 +975,7 @@ const DASH_MC_T = {
     save_notif:'💾 Guardar preferências',
     title_danger:'Zona de perigo',
     delete_account:'🗑️ Eliminar a minha conta',
-    delete_confirm_placeholder:'Escreva ELIMINAR para confirmar', delete_confirm_word:'ELIMINAR', delete_confirm_error:'❌ Escreva exatamente ELIMINAR', ph_first_name:'Nome', ph_last_name:'Apelido',
+    delete_confirm_placeholder:'Escreva ELIMINAR para confirmar', delete_confirm_word:'ELIMINAR', delete_confirm_error:'❌ Escreva exatamente ELIMINAR', delete_btn_text:'🗑️ Eliminar conta', mc_trial_status:'🎁 Teste gratuito — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Plano Pro', ph_first_name:'Nome', ph_last_name:'Apelido',
     save_info_ok:'✅ Informações guardadas!',
     save_notif_ok:'✅ Preferências guardadas!',
     notif_missing:'Não definido na Configuração', notif_none_option:'Nenhum', irreversible:'irreversível', delete_btn:'🗑️ Eliminar conta', delete_full_desc:'Esta ação eliminará permanentemente a sua conta e todos os seus dados. Esta operação é irreversível.', pwd_desc:'Para alterar a sua palavra-passe, clique abaixo. Será enviado um email de redefinição.',danger_sub:'Estas ações são irreversíveis',delete_title:'Eliminar a minha conta',delete_desc:'a sua conta e todos os seus dados.',delete_confirm_lbl:'Tem a certeza?',cancel:'Cancelar',notif_none:'Nenhum', plan_std:'Plano Standard', plan_pro:'Plano Pro', status_trial:'Teste gratuito', none:'Nenhum', loading:'A carregar...',
@@ -1013,7 +1014,7 @@ const DASH_MC_T = {
     save_notif:'💾 Voorkeuren opslaan',
     title_danger:'Gevaarlijke zone',
     delete_account:'🗑️ Mijn account verwijderen',
-    delete_confirm_placeholder:'Typ VERWIJDEREN ter bevestiging', delete_confirm_word:'VERWIJDEREN', delete_confirm_error:'❌ Typ precies VERWIJDEREN', ph_first_name:'Voornaam', ph_last_name:'Achternaam',
+    delete_confirm_placeholder:'Typ VERWIJDEREN ter bevestiging', delete_confirm_word:'VERWIJDEREN', delete_confirm_error:'❌ Typ precies VERWIJDEREN', delete_btn_text:'🗑️ Account verwijderen', mc_trial_status:'🎁 Gratis proefperiode — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Pro-abonnement', ph_first_name:'Voornaam', ph_last_name:'Achternaam',
     save_info_ok:'✅ Informatie opgeslagen!',
     save_notif_ok:'✅ Voorkeuren opgeslagen!',
     notif_missing:'Niet ingesteld in Configuratie', notif_none_option:'Geen', irreversible:'onomkeerbaar', delete_btn:'🗑️ Account verwijderen', delete_full_desc:'Deze actie verwijdert permanent uw account en al uw gegevens. Deze bewerking is onomkeerbaar.', pwd_desc:'Om uw wachtwoord te wijzigen, klik hieronder. Er wordt een reset-e-mail gestuurd.',danger_sub:'Deze acties zijn onomkeerbaar',delete_title:'Mijn account verwijderen',delete_desc:'uw account en alle uw gegevens.',delete_confirm_lbl:'Weet u het zeker?',cancel:'Annuleren',notif_none:'Geen', plan_std:'Standard-plan', plan_pro:'Pro-plan', status_trial:'Gratis proef', none:'Geen', loading:'Laden...',
@@ -1052,7 +1053,7 @@ const DASH_MC_T = {
     save_notif:'💾 Zapisz preferencje',
     title_danger:'Strefa niebezpieczna',
     delete_account:'🗑️ Usuń moje konto',
-    delete_confirm_placeholder:'Wpisz USUŃ aby potwierdzić', delete_confirm_word:'USUŃ', delete_confirm_error:'❌ Wpisz dokładnie USUŃ', ph_first_name:'Imię', ph_last_name:'Nazwisko',
+    delete_confirm_placeholder:'Wpisz USUŃ aby potwierdzić', delete_confirm_word:'USUŃ', delete_confirm_error:'❌ Wpisz dokładnie USUŃ', delete_btn_text:'🗑️ Usuń konto', mc_trial_status:'🎁 Darmowy okres próbny — ', mc_plan_pro_short:'Pro', mc_plan_pro_full:'⭐ Plan Pro', ph_first_name:'Imię', ph_last_name:'Nazwisko',
     save_info_ok:'✅ Informacje zapisane!',
     save_notif_ok:'✅ Preferencje zapisane!',
     notif_missing:'Nieskonfigurowane w Konfiguracji', notif_none_option:'Brak', irreversible:'nieodwracalne', delete_btn:'🗑️ Usuń konto', delete_full_desc:'Ta akcja trwale usunie Twoje konto i wszystkie Twoje dane. Tej operacji nie można cofnąć.', pwd_desc:'Aby zmienić hasło, kliknij poniżej. Zostanie wysłany email resetujący.',danger_sub:'Te działania są nieodwracalne',delete_title:'Usuń moje konto',delete_desc:'twoje konto i wszystkie twoje dane.',delete_confirm_lbl:'Jesteś pewny?',cancel:'Anuluj',notif_none:'Brak', plan_std:'Plan Standard', plan_pro:'Plan Pro', status_trial:'Bezpłatny okres próbny', none:'Brak', loading:'Ładowanie...',
@@ -1095,6 +1096,7 @@ const DASH_MC_T = {
       'mc-save-notif':t.save_notif,
       'mc-title-danger':t.title_danger,
       'mc-delete-account':t.delete_account,
+      'mc-delete-btn-text':t.delete_btn_text,
     };
     Object.entries(ids).forEach(([id,txt])=>{const el=document.getElementById(id);if(el&&txt)el.textContent=txt;});
     const dci=document.getElementById('deleteConfirmInput');

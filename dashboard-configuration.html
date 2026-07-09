@@ -134,7 +134,7 @@
             <div class="cfg-field">
               <label id="cfg-lbl-type" class="cfg-label">Type de commerce</label>
               <select id="businessType" onchange="updateBusinessIcon()" class="cfg-select">
-                <optgroup label="💇 Beauté &amp; Soins">
+                <optgroup label="💇 Beauté &amp; Soins" id="biztype-group-0">
                   <option value="salon">💇 Salon de coiffure</option>
                   <option value="spa">💅 Institut de beauté / Spa</option>
                   <option value="massage">💆 Massage / Kiné</option>
@@ -143,18 +143,18 @@
                   <option value="nailsalon">✨ Salon d'ongles</option>
                   <option value="tattoo">🖋️ Tatoueur</option>
                 </optgroup>
-                <optgroup label="🍽️ Restauration">
+                <optgroup label="🍽️ Restauration" id="biztype-group-1">
                   <option value="restaurant">🍽️ Restaurant</option>
                   <option value="cafe">☕ Café / Bar</option>
                   <option value="pizzeria">🍕 Pizzeria / Fast-food</option>
                 </optgroup>
-                <optgroup label="🍞 Alimentation">
+                <optgroup label="🍞 Alimentation" id="biztype-group-2">
                   <option value="bakery">🍞 Boulangerie</option>
                   <option value="butcher">🥩 Boucherie</option>
                   <option value="fishmonger">🐟 Poissonnerie</option>
                   <option value="florist">🌿 Fleuriste</option>
                 </optgroup>
-                <optgroup label="⚖️ Services professionnels">
+                <optgroup label="⚖️ Services professionnels" id="biztype-group-3">
                   <option value="law">⚖️ Avocat</option>
                   <option value="architect">📐 Architecte</option>
                   <option value="accountant">📊 Expert-comptable</option>
@@ -162,13 +162,13 @@
                   <option value="training">🎓 Centre de formation</option>
                   <option value="drivingschool">🚗 Auto-école</option>
                 </optgroup>
-                <optgroup label="🏋️ Sport &amp; Loisirs">
+                <optgroup label="🏋️ Sport &amp; Loisirs" id="biztype-group-4">
                   <option value="gym">🏋️ Salle de sport</option>
                   <option value="cinema">🎬 Cinéma / Théâtre</option>
                   <option value="escapegame">🎮 Escape Game</option>
                   <option value="pool">🏊 Piscine</option>
                 </optgroup>
-                <optgroup label="🔧 Services techniques">
+                <optgroup label="🔧 Services techniques" id="biztype-group-5">
                   <option value="garage">🔧 Garage / Atelier</option>
                   <option value="plumber">🔨 Plombier / Électricien</option>
                   <option value="cleaning">🧹 Ménage / Nettoyage</option>
@@ -176,17 +176,17 @@
                   <option value="phonerepair">📱 Réparation téléphone / ordinateur</option>
                   <option value="locksmith">🔑 Serrurier</option>
                 </optgroup>
-                <optgroup label="🏥 Santé &amp; Animaux">
+                <optgroup label="🏥 Santé &amp; Animaux" id="biztype-group-6">
                   <option value="medical">🏥 Cabinet médical</option>
                   <option value="vet">🐾 Vétérinaire</option>
                   <option value="grooming">✂️ Toilettage animaux</option>
                   <option value="pharmacy">💊 Pharmacie</option>
                 </optgroup>
-                <optgroup label="🏨 Commerce &amp; Hébergement">
+                <optgroup label="🏨 Commerce &amp; Hébergement" id="biztype-group-7">
                   <option value="retail">🛍️ Commerce de détail</option>
                   <option value="hotel">🏨 Hôtel</option>
                 </optgroup>
-                <optgroup label="📸 Autres services">
+                <optgroup label="📸 Autres services" id="biztype-group-8">
                   <option value="photographer">📸 Photographe</option>
                   <option value="laundry">👗 Pressing</option>
                   <option value="other">🎨 Autre</option>
@@ -382,7 +382,7 @@
           <div id="servicesList" style="display:flex;flex-direction:column;gap:10px;"></div>
           <div id="servicesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
             <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">💼</div>
-            <div style="font-size:14px;" id="cfg-no-services">Aucun service trouvé — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+            <div style="font-size:14px;" id="cfg-no-services"><span id="cfg-no-services-text">Aucun service trouvé</span> — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;" id="cfg-clear-search-1">effacer la recherche</button></div>
           </div>
           <button onclick="saveServices()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-services-btn">💾 Enregistrer les services</button>
         </div>
@@ -413,7 +413,7 @@
           <div id="faqList" style="display:flex;flex-direction:column;gap:12px;"></div>
           <div id="faqEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
             <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">❓</div>
-            <div style="font-size:14px;" id="cfg-no-faq">Aucune question trouvée — <button onclick="document.getElementById('faqSearch').value='';filterFAQ();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;">effacer la recherche</button></div>
+            <div style="font-size:14px;" id="cfg-no-faq"><span id="cfg-no-faq-text">Aucune question trouvée</span> — <button onclick="document.getElementById('faqSearch').value='';filterFAQ();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;" id="cfg-clear-search-2">effacer la recherche</button></div>
           </div>
           <button onclick="saveFAQ()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-faq-btn">💾 Enregistrer la FAQ</button>
         </div>
@@ -457,22 +457,22 @@
             <div class="cfg-field">
               <label id="cfg-lbl-tone" class="cfg-label">Ton de l'IA</label>
               <select id="aiTone" class="cfg-select">
-                <option value="professional">👔 Professionnel</option>
-                <option value="friendly" selected>😊 Amical</option>
+                <option value="professional" id="cfg-tone-professional">👔 Professionnel</option>
+                <option value="friendly" selected id="cfg-tone-friendly">😊 Amical</option>
                 <option value="casual" id="cfg-tone-casual">😎 Décontracté</option>
               </select>
             </div>
             <div class="cfg-field">
               <label id="cfg-lbl-tutoyer" class="cfg-label">Tutoiement</label>
               <select id="aiFormality" class="cfg-select">
-                <option value="tu" selected>Tu (informel)</option>
-                <option value="vous">Vous (formel)</option>
+                <option value="tu" selected id="cfg-formal-tu">Tu (informel)</option>
+                <option value="vous" id="cfg-formal-vous">Vous (formel)</option>
               </select>
             </div>
             <div class="cfg-field">
               <label id="cfg-lbl-emojis" class="cfg-label">Emojis</label>
               <select id="aiEmojis" class="cfg-select">
-                <option value="yes" selected>✅ Activés</option>
+                <option value="yes" selected id="cfg-emojis-on">✅ Activés</option>
                 <option value="no" id="cfg-emojis-off">❌ Désactivés</option>
               </select>
             </div>
@@ -481,8 +481,8 @@
             <div class="cfg-field">
               <label id="cfg-lbl-length" class="cfg-label">Longueur des réponses</label>
               <select id="aiLength" class="cfg-select">
-                <option value="concise">📝 Concise (1-2 phrases)</option>
-                <option value="normal" selected>💬 Normale</option>
+                <option value="concise" id="cfg-length-concise">📝 Concise (1-2 phrases)</option>
+                <option value="normal" selected id="cfg-length-normal">💬 Normale</option>
                 <option value="detailed" id="cfg-length-detailed">📖 Détaillée</option>
               </select>
             </div>
@@ -501,23 +501,23 @@
             <div class="cfg-field">
               <label id="cfg-lbl-proactivity" class="cfg-label">Proactivité</label>
               <select id="aiProactivity" class="cfg-select">
-                <option value="reactive">🙋 Réactive</option>
-                <option value="proactive" selected>💡 Proactive</option>
+                <option value="reactive" id="cfg-proactivity-reactive">🙋 Réactive</option>
+                <option value="proactive" selected id="cfg-proactivity-proactive">💡 Proactive</option>
               </select>
             </div>
             <div class="cfg-field">
               <label id="cfg-lbl-suggestions" class="cfg-label">Suggestions de services</label>
               <select id="aiSuggestions" class="cfg-select">
-                <option value="off">🚫 Désactivées</option>
-                <option value="subtle" selected>💬 Subtiles</option>
-                <option value="active">🎯 Actives</option>
+                <option value="off" id="cfg-suggestions-off">🚫 Désactivées</option>
+                <option value="subtle" selected id="cfg-suggestions-subtle">💬 Subtiles</option>
+                <option value="active" id="cfg-suggestions-active">🎯 Actives</option>
               </select>
             </div>
             <div class="cfg-field">
               <label id="cfg-lbl-email-collect" class="cfg-label">Collecte d'email</label>
               <select id="aiEmailCollection" class="cfg-select">
-                <option value="off">❌ Désactivée</option>
-                <option value="end" selected>📧 En fin de conversation</option>
+                <option value="off" id="cfg-email-off">❌ Désactivée</option>
+                <option value="end" selected id="cfg-email-end">📧 En fin de conversation</option>
                 <option value="after" id="cfg-proactivity-rdv">✅ Après RDV confirmé</option>
               </select>
             </div>
@@ -1085,7 +1085,7 @@ async function removeLogo() {
     document.getElementById('logoFileInput').value = '';
     showNotification((_dct||DASH_CFG_T.fr).logo_removed);
   } catch(e) {
-    showNotification('❌ Erreur : ' + e.message, 'error');
+    showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error');
   }
 }
 
@@ -1115,7 +1115,7 @@ async function saveBusinessInfo() {
     const sn = document.getElementById('sidebarBusinessName');
     if (sn) sn.textContent = document.getElementById('businessName').value;
     showNotification((_dct||DASH_CFG_T.fr).save_info_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 async function saveHours() {
@@ -1128,7 +1128,7 @@ async function saveHours() {
     });
     await apiRequest(`/api/business/${businessId}/hours`, 'POST', hours);
     showNotification((_dct||DASH_CFG_T.fr).save_hours_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 async function saveServices() {
@@ -1144,7 +1144,7 @@ async function saveServices() {
     await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
     showNotification((_dct||DASH_CFG_T.fr).save_services_ok);
     loadComplementaryOptions();
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 async function saveFAQ() {
@@ -1156,7 +1156,7 @@ async function saveFAQ() {
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/faq`, 'POST', faqs);
     showNotification((_dct||DASH_CFG_T.fr).save_faq_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 async function saveAICustomization() {
@@ -1174,7 +1174,7 @@ async function saveAICustomization() {
       email_collection: document.getElementById('aiEmailCollection').value
     });
     showNotification((_dct||DASH_CFG_T.fr).save_personality_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 // ── FERMETURES ──
@@ -1199,7 +1199,7 @@ async function saveClosures() {
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/special-closures`, 'POST', { closures });
     showNotification((_dct||DASH_CFG_T.fr).save_closures_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 function loadClosures(list) {
@@ -1272,7 +1272,7 @@ async function saveComplementary() {
     }).filter(Boolean);
     await apiRequest(`/api/business/${businessId}/complementary-services`, 'POST', { rules });
     showNotification((_dct||DASH_CFG_T.fr).save_complementary_ok);
-  } catch(e) { showNotification('❌ Erreur : ' + e.message, 'error'); }
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 async function loadComplementaryRules() {
@@ -1400,7 +1400,7 @@ async function checkPlanAndInit() {
   window._isPro = isPro;
 
   const sp = document.getElementById('sidebarPlan');
-  if (sp) sp.textContent = isPro ? '⭐ Plan Pro' : 'Plan Standard';
+  if (sp) sp.textContent = isPro ? ((window._dct||{}).sidebar_plan_pro||'⭐ Plan Pro') : ((window._dct||{}).sidebar_plan_std||'Plan Standard');
 
   const aiSection = document.getElementById('personalitySection');
   if (aiSection && !isPro) {
@@ -1409,7 +1409,7 @@ async function checkPlanAndInit() {
     aiSection.style.filter = 'blur(1px)';
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:all;border-radius:20px;';
-    overlay.innerHTML = `<a href="/abonnement" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,0.4);">Passer au plan Pro pour personnaliser l'IA</a>`;
+    overlay.innerHTML = `<a href="/abonnement" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(245,158,11,0.4);">${(window._dct||{}).upgrade_cta_personality||"Passer au plan Pro pour personnaliser l'IA"}</a>`;
     aiSection.appendChild(overlay);
   }
 
@@ -1463,13 +1463,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Complémentarités enregistrées !',
     logo_ok: '✅ Logo enregistré !', logo_removed: '✅ Logo supprimé',
     pro_required: 'Plan Pro requis pour la personnalité IA',
-    err_generic: '❌ Erreur de chargement',
+    err_generic: '❌ Erreur de chargement', err_prefix: '❌ Erreur : ', sidebar_plan_pro: "⭐ Plan Pro", sidebar_plan_std: "Plan Standard", upgrade_cta_personality: "Passer au plan Pro pour personnaliser l'IA",
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
     lbl_desc: "Description", lbl_desc_sub: "(vue par l'IA pour comprendre votre commerce)",lbl_logo: "Logo du commerce",lbl_logo_sub: "(affiché dans le chat client)",save_info_btn: "💾 Enregistrer les informations",save_hours_btn: "💾 Enregistrer les horaires",save_services_btn: "💾 Enregistrer les services",save_faq_btn: "💾 Enregistrer la FAQ",save_personality_btn: "💾 Enregistrer la personnalité",add_service_btn: "➕ Ajouter",add_faq_btn: "➕ Ajouter",add_closure_btn: "+ Ajouter",add_comp_btn: "+ Service",services_sub:"L\'IA connaîtra vos prestations et pourra les recommander",no_services: "Aucun service trouvé",no_faq: "Aucune question trouvée",lbl_question: "Question",lbl_reponse: "Réponse",tone_casual: "😎 Décontracté",emojis_off: "❌ Désactivés",length_detailed: "📖 Détaillée",proactivity_rdv: "✅ Après RDV confirmé",comp_arrow:"→ l\'IA suggère",biz_select: "— Sélectionner —",biz_types:{'salon_coiffure': "💇 Salon de coiffure",'institut_beaute': "💅 Institut de beauté / Spa",'massage': "💆 Massage / Kiné",'dentiste': "🦷 Dentiste",'restaurant': "🍽️ Restaurant",'cafe_bar': "☕ Café / Bar",'boulangerie': "🥐 Boulangerie / Pâtisserie",'pharmacie': "💊 Pharmacie",'agence_immo': "🏡 Agence immobilière",'auto': "🚗 Garage / Auto",'cinema': "🎬 Cinéma / Théâtre",'sport': "🏋️ Salle de sport / Yoga",'plombier': "🔨 Plombier / Électricien",'menage': "🧹 Ménage / Nettoyage",'medecin': "🏥 Cabinet médical",'veterinaire': "🐾 Vétérinaire",'juridique': "⚖️ Cabinet juridique",'retail': "🛍️ Commerce de détail",'hotel': "🏨 Hôtel",'autre': "🏢 Autre"},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Jeu',
     day_ven: 'Ven', day_sam: 'Sam', day_dim: 'Dim',
     day_full_lun: 'Lundi', day_full_mar: 'Mardi', day_full_mer: 'Mercredi',
-    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche', ph_business_name: "Votre commerce", ph_business_address: "14 Rue de Rive, 1204 Genève", ph_business_desc: "Ex: Salon de coiffure homme moderne, ambiance détendue, café offert...", ph_business_slug: "mon-commerce", ph_ai_name: "Ex: Marie", ph_ai_greeting: "Bonjour ! Comment puis-je vous aider ?", ph_faq_question: "Votre question...", ph_faq_answer: "Votre réponse...", ph_closure_reason: "Motif (ex: Noël, Congés...)", ph_search_faq: "🔍 Rechercher dans la FAQ...", ph_search_service: "🔍 Rechercher un service...", tt_slug_locked: "Le lien public ne peut pas être modifié", lbl_public_link: "Lien public", lbl_permanent: "— permanent",
+    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche', ph_business_name: "Votre commerce", ph_business_address: "14 Rue de Rive, 1204 Genève", ph_business_desc: "Ex: Salon de coiffure homme moderne, ambiance détendue, café offert...", ph_business_slug: "mon-commerce", ph_ai_name: "Ex: Marie", ph_ai_greeting: "Bonjour ! Comment puis-je vous aider ?", ph_faq_question: "Votre question...", ph_faq_answer: "Votre réponse...", ph_closure_reason: "Motif (ex: Noël, Congés...)", ph_search_faq: "🔍 Rechercher dans la FAQ...", ph_search_service: "🔍 Rechercher un service...", tt_slug_locked: "Le lien public ne peut pas être modifié", lbl_public_link: "Lien public", lbl_permanent: "— permanent", tone_professional: "👔 Professionnel", tone_friendly: "😊 Amical", formal_tu: "Tu (informel)", formal_vous: "Vous (formel)", emojis_on: "✅ Activés", length_concise: "📝 Concise (1-2 phrases)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Réactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Désactivées", suggestions_subtle: "💬 Subtiles", suggestions_active: "🎯 Actives", email_collect_off: "❌ Désactivée", email_collect_end: "📧 En fin de conversation", no_services_found: "Aucun service trouvé", no_faq_found: "Aucune question trouvée", clear_search: "effacer la recherche",
     closed: 'Fermé',
   },
   en: {
@@ -1500,13 +1500,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Complementary services saved!',
     logo_ok: '✅ Logo saved!', logo_removed: '✅ Logo removed',
     pro_required: 'Pro plan required for AI personality',
-    err_generic: '❌ Loading error',
+    err_generic: '❌ Loading error', err_prefix: '❌ Error: ', sidebar_plan_pro: "⭐ Pro Plan", sidebar_plan_std: "Standard Plan", upgrade_cta_personality: "Upgrade to Pro to customize the AI",
     logout_confirm: 'Are you sure you want to sign out?',
     lbl_desc:'Description',lbl_desc_sub:'(seen by the AI to understand your business)',lbl_logo:'Business logo',lbl_logo_sub:'(displayed in the chat)',save_info_btn:'💾 Save information',save_hours_btn:'💾 Save hours',save_services_btn:'💾 Save services',save_faq_btn:'💾 Save FAQ',save_personality_btn:'💾 Save personality',add_service_btn:'➕ Add',add_faq_btn:'➕ Add',add_closure_btn:'+ Add',add_comp_btn:'+ Service',services_sub:'The AI will know your services and can recommend them',no_services:'No service found',no_faq:'No question found',lbl_question:'Question',lbl_reponse:'Answer',tone_casual:'😎 Casual',emojis_off:'❌ Disabled',length_detailed:'📖 Detailed',proactivity_rdv:'✅ After confirmed appointment',comp_arrow:'→ AI suggests',biz_select:'— Select —',biz_types:{'salon_coiffure':'💇 Hair salon','institut_beaute':'💅 Beauty / Spa','massage':'💆 Massage / Physio','dentiste':'🦷 Dentist','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Cafe / Bar','boulangerie':'🥐 Bakery','pharmacie':'💊 Pharmacy','agence_immo':'🏡 Real estate','auto':'🚗 Garage / Auto','cinema':'🎬 Cinema / Theatre','sport':'🏋️ Gym / Yoga','plombier':'🔨 Plumber / Electrician','menage':'🧹 Cleaning','medecin':'🏥 Medical practice','veterinaire':'🐾 Vet','juridique':'⚖️ Law firm','retail':'🛍️ Retail','hotel':'🏨 Hotel','autre':'🏢 Other'},
     day_lun: 'Mon', day_mar: 'Tue', day_mer: 'Wed', day_jeu: 'Thu',
     day_ven: 'Fri', day_sam: 'Sat', day_dim: 'Sun',
     day_full_lun: 'Monday', day_full_mar: 'Tuesday', day_full_mer: 'Wednesday',
-    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday', ph_business_name: "Your business", ph_business_address: "14 Rive Street, 1204 Geneva", ph_business_desc: "E.g.: Modern men's hair salon, relaxed atmosphere, free coffee...", ph_business_slug: "my-business", ph_ai_name: "E.g.: Marie", ph_ai_greeting: "Hello! How can I help you?", ph_faq_question: "Your question...", ph_faq_answer: "Your answer...", ph_closure_reason: "Reason (e.g. Christmas, Holiday...)", ph_search_faq: "🔍 Search the FAQ...", ph_search_service: "🔍 Search a service...", tt_slug_locked: "The public link cannot be edited", lbl_public_link: "Public link", lbl_permanent: "— permanent",
+    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday', ph_business_name: "Your business", ph_business_address: "14 Rive Street, 1204 Geneva", ph_business_desc: "E.g.: Modern men's hair salon, relaxed atmosphere, free coffee...", ph_business_slug: "my-business", ph_ai_name: "E.g.: Marie", ph_ai_greeting: "Hello! How can I help you?", ph_faq_question: "Your question...", ph_faq_answer: "Your answer...", ph_closure_reason: "Reason (e.g. Christmas, Holiday...)", ph_search_faq: "🔍 Search the FAQ...", ph_search_service: "🔍 Search a service...", tt_slug_locked: "The public link cannot be edited", lbl_public_link: "Public link", lbl_permanent: "— permanent", tone_professional: "👔 Professional", tone_friendly: "😊 Friendly", formal_tu: "Informal", formal_vous: "Formal", emojis_on: "✅ Enabled", length_concise: "📝 Concise (1-2 sentences)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Disabled", suggestions_subtle: "💬 Subtle", suggestions_active: "🎯 Active", email_collect_off: "❌ Disabled", email_collect_end: "📧 At the end of the conversation", no_services_found: "No service found", no_faq_found: "No question found", clear_search: "clear search",
     closed: 'Closed',
   },
   de: {
@@ -1537,13 +1537,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Ergänzende Dienste gespeichert!',
     logo_ok: '✅ Logo gespeichert!', logo_removed: '✅ Logo entfernt',
     pro_required: 'Pro-Plan für KI-Persönlichkeit erforderlich',
-    err_generic: '❌ Ladefehler',
+    err_generic: '❌ Ladefehler', err_prefix: '❌ Fehler: ', sidebar_plan_pro: "⭐ Pro-Plan", sidebar_plan_std: "Standard-Plan", upgrade_cta_personality: "Auf Pro upgraden, um die KI anzupassen",
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
     lbl_desc:'Beschreibung',lbl_desc_sub:'(von der KI gesehen)',lbl_logo:'Unternehmenslogo',lbl_logo_sub:'(im Chat angezeigt)',save_info_btn:'💾 Informationen speichern',save_hours_btn:'💾 Öffnungszeiten speichern',save_services_btn:'💾 Dienste speichern',save_faq_btn:'💾 FAQ speichern',save_personality_btn:'💾 Persönlichkeit speichern',add_service_btn:'➕ Hinzufügen',add_faq_btn:'➕ Hinzufügen',add_closure_btn:'+ Hinzufügen',add_comp_btn:'+ Dienst',services_sub:'Die KI kennt Ihre Angebote',no_services:'Kein Dienst gefunden',no_faq:'Keine Frage gefunden',lbl_question:'Frage',lbl_reponse:'Antwort',tone_casual:'😎 Locker',emojis_off:'❌ Deaktiviert',length_detailed:'📖 Detailliert',proactivity_rdv:'✅ Nach bestätigtem Termin',comp_arrow:'→ KI schlägt vor',biz_select:'— Auswählen —',biz_types:{'salon_coiffure':'💇 Friseursalon','institut_beaute':'💅 Beauty / Spa','massage':'💆 Massage / Physio','dentiste':'🦷 Zahnarzt','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Bäckerei','pharmacie':'💊 Apotheke','agence_immo':'🏡 Immobilien','auto':'🚗 Werkstatt','cinema':'🎬 Kino / Theater','sport':'🏋️ Fitnessstudio','plombier':'🔨 Klempner / Elektriker','menage':'🧹 Reinigung','medecin':'🏥 Arztpraxis','veterinaire':'🐾 Tierarzt','juridique':'⚖️ Anwaltskanzlei','retail':'🛍️ Einzelhandel','hotel':'🏨 Hotel','autre':'🏢 Sonstiges'},
     day_lun: 'Mo', day_mar: 'Di', day_mer: 'Mi', day_jeu: 'Do',
     day_ven: 'Fr', day_sam: 'Sa', day_dim: 'So',
     day_full_lun: 'Montag', day_full_mar: 'Dienstag', day_full_mer: 'Mittwoch',
-    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag', ph_business_name: "Ihr Unternehmen", ph_business_address: "Bahnhofstrasse 14, 8001 Zürich", ph_business_desc: "Z. B.: Moderner Herrensalon, entspannte Atmosphäre, kostenloser Kaffee...", ph_business_slug: "mein-unternehmen", ph_ai_name: "Z. B.: Marie", ph_ai_greeting: "Hallo! Wie kann ich Ihnen helfen?", ph_faq_question: "Ihre Frage...", ph_faq_answer: "Ihre Antwort...", ph_closure_reason: "Grund (z. B. Weihnachten, Urlaub...)", ph_search_faq: "🔍 FAQ durchsuchen...", ph_search_service: "🔍 Dienstleistung suchen...", tt_slug_locked: "Der öffentliche Link kann nicht geändert werden", lbl_public_link: "Öffentlicher Link", lbl_permanent: "— dauerhaft",
+    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag', ph_business_name: "Ihr Unternehmen", ph_business_address: "Bahnhofstrasse 14, 8001 Zürich", ph_business_desc: "Z. B.: Moderner Herrensalon, entspannte Atmosphäre, kostenloser Kaffee...", ph_business_slug: "mein-unternehmen", ph_ai_name: "Z. B.: Marie", ph_ai_greeting: "Hallo! Wie kann ich Ihnen helfen?", ph_faq_question: "Ihre Frage...", ph_faq_answer: "Ihre Antwort...", ph_closure_reason: "Grund (z. B. Weihnachten, Urlaub...)", ph_search_faq: "🔍 FAQ durchsuchen...", ph_search_service: "🔍 Dienstleistung suchen...", tt_slug_locked: "Der öffentliche Link kann nicht geändert werden", lbl_public_link: "Öffentlicher Link", lbl_permanent: "— dauerhaft", tone_professional: "👔 Professionell", tone_friendly: "😊 Freundlich", formal_tu: "Du (informell)", formal_vous: "Sie (formell)", emojis_on: "✅ Aktiviert", length_concise: "📝 Kurz (1-2 Sätze)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reaktiv", proactivity_proactive: "💡 Proaktiv", suggestions_off: "🚫 Deaktiviert", suggestions_subtle: "💬 Dezent", suggestions_active: "🎯 Aktiv", email_collect_off: "❌ Deaktiviert", email_collect_end: "📧 Am Ende des Gesprächs", no_services_found: "Keine Dienstleistung gefunden", no_faq_found: "Keine Frage gefunden", clear_search: "Suche löschen",
     closed: 'Geschlossen',
   },
   it: {
@@ -1574,13 +1574,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Servizi complementari salvati!',
     logo_ok: '✅ Logo salvato!', logo_removed: '✅ Logo rimosso',
     pro_required: 'Piano Pro richiesto per la personalità IA',
-    err_generic: '❌ Errore di caricamento',
+    err_generic: '❌ Errore di caricamento', err_prefix: '❌ Errore: ', sidebar_plan_pro: "⭐ Piano Pro", sidebar_plan_std: "Piano Standard", upgrade_cta_personality: "Passa al piano Pro per personalizzare l'IA",
     logout_confirm: 'Sei sicuro di voler uscire?',
     lbl_desc:'Descrizione',lbl_desc_sub:"(vista dall'IA)",lbl_logo:'Logo',lbl_logo_sub:'(nella chat)',save_info_btn:'💾 Salva informazioni',save_hours_btn:'💾 Salva orari',save_services_btn:'💾 Salva servizi',save_faq_btn:'💾 Salva FAQ',save_personality_btn:'💾 Salva personalità',add_service_btn:'➕ Aggiungi',add_faq_btn:'➕ Aggiungi',add_closure_btn:'+ Aggiungi',add_comp_btn:'+ Servizio',services_sub:"L'IA conoscerà i tuoi servizi",no_services:'Nessun servizio trovato',no_faq:'Nessuna domanda trovata',lbl_question:'Domanda',lbl_reponse:'Risposta',tone_casual:'😎 Informale',emojis_off:'❌ Disattivati',length_detailed:'📖 Dettagliata',proactivity_rdv:'✅ Dopo appuntamento',comp_arrow:"→ l'IA suggerisce",biz_select:'— Seleziona —',biz_types:{'salon_coiffure':'💇 Parrucchiere','institut_beaute':'💅 Bellezza / Spa','massage':'💆 Massaggio','dentiste':'🦷 Dentista','restaurant':'🍽️ Ristorante','cafe_bar':'☕ Caffè / Bar','boulangerie':'🥐 Panetteria','pharmacie':'💊 Farmacia','agence_immo':'🏡 Immobiliare','auto':'🚗 Officina','cinema':'🎬 Cinema','sport':'🏋️ Palestra','plombier':'🔨 Idraulico','menage':'🧹 Pulizie','medecin':'🏥 Studio medico','veterinaire':'🐾 Veterinario','juridique':'⚖️ Studio legale','retail':'🛍️ Dettaglio','hotel':'🏨 Hotel','autre':'🏢 Altro'},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Gio',
     day_ven: 'Ven', day_sam: 'Sab', day_dim: 'Dom',
     day_full_lun: 'Lunedì', day_full_mar: 'Martedì', day_full_mer: 'Mercoledì',
-    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica', ph_business_name: "La tua attività", ph_business_address: "Via Roma 14, 6900 Lugano", ph_business_desc: "Es.: Salone da barbiere moderno, atmosfera rilassata, caffè offerto...", ph_business_slug: "la-mia-attivita", ph_ai_name: "Es.: Marie", ph_ai_greeting: "Ciao! Come posso aiutarti?", ph_faq_question: "La tua domanda...", ph_faq_answer: "La tua risposta...", ph_closure_reason: "Motivo (es. Natale, Ferie...)", ph_search_faq: "🔍 Cerca nelle FAQ...", ph_search_service: "🔍 Cerca un servizio...", tt_slug_locked: "Il link pubblico non può essere modificato", lbl_public_link: "Link pubblico", lbl_permanent: "— permanente",
+    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica', ph_business_name: "La tua attività", ph_business_address: "Via Roma 14, 6900 Lugano", ph_business_desc: "Es.: Salone da barbiere moderno, atmosfera rilassata, caffè offerto...", ph_business_slug: "la-mia-attivita", ph_ai_name: "Es.: Marie", ph_ai_greeting: "Ciao! Come posso aiutarti?", ph_faq_question: "La tua domanda...", ph_faq_answer: "La tua risposta...", ph_closure_reason: "Motivo (es. Natale, Ferie...)", ph_search_faq: "🔍 Cerca nelle FAQ...", ph_search_service: "🔍 Cerca un servizio...", tt_slug_locked: "Il link pubblico non può essere modificato", lbl_public_link: "Link pubblico", lbl_permanent: "— permanente", tone_professional: "👔 Professionale", tone_friendly: "😊 Amichevole", formal_tu: "Tu (informale)", formal_vous: "Lei (formale)", emojis_on: "✅ Attivate", length_concise: "📝 Concisa (1-2 frasi)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Reattiva", proactivity_proactive: "💡 Proattiva", suggestions_off: "🚫 Disattivate", suggestions_subtle: "💬 Discrete", suggestions_active: "🎯 Attive", email_collect_off: "❌ Disattivata", email_collect_end: "📧 Alla fine della conversazione", no_services_found: "Nessun servizio trovato", no_faq_found: "Nessuna domanda trovata", clear_search: "cancella ricerca",
     closed: 'Chiuso',
   },
   es: {
@@ -1611,13 +1611,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ ¡Servicios complementarios guardados!',
     logo_ok: '✅ ¡Logo guardado!', logo_removed: '✅ Logo eliminado',
     pro_required: 'Plan Pro requerido para la personalidad IA',
-    err_generic: '❌ Error de carga',
+    err_generic: '❌ Error de carga', err_prefix: '❌ Error: ', sidebar_plan_pro: "⭐ Plan Pro", sidebar_plan_std: "Plan Standard", upgrade_cta_personality: "Pasa al plan Pro para personalizar la IA",
     logout_confirm: '¿Seguro que quieres cerrar sesión?',
     lbl_desc:'Descripción',lbl_desc_sub:'(vista por la IA)',lbl_logo:'Logo',lbl_logo_sub:'(en el chat)',save_info_btn:'💾 Guardar información',save_hours_btn:'💾 Guardar horarios',save_services_btn:'💾 Guardar servicios',save_faq_btn:'💾 Guardar FAQ',save_personality_btn:'💾 Guardar personalidad',add_service_btn:'➕ Añadir',add_faq_btn:'➕ Añadir',add_closure_btn:'+ Añadir',add_comp_btn:'+ Servicio',services_sub:'La IA conocerá tus servicios',no_services:'Ningún servicio encontrado',no_faq:'Ninguna pregunta encontrada',lbl_question:'Pregunta',lbl_reponse:'Respuesta',tone_casual:'😎 Informal',emojis_off:'❌ Desactivados',length_detailed:'📖 Detallada',proactivity_rdv:'✅ Tras cita confirmada',comp_arrow:'→ la IA sugiere',biz_select:'— Seleccionar —',biz_types:{'salon_coiffure':'💇 Peluquería','institut_beaute':'💅 Belleza / Spa','massage':'💆 Masaje','dentiste':'🦷 Dentista','restaurant':'🍽️ Restaurante','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Panadería','pharmacie':'💊 Farmacia','agence_immo':'🏡 Inmobiliaria','auto':'🚗 Taller','cinema':'🎬 Cine','sport':'🏋️ Gimnasio','plombier':'🔨 Fontanero','menage':'🧹 Limpieza','medecin':'🏥 Consulta médica','veterinaire':'🐾 Veterinario','juridique':'⚖️ Despacho','retail':'🛍️ Comercio','hotel':'🏨 Hotel','autre':'🏢 Otro'},
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mié', day_jeu: 'Jue',
     day_ven: 'Vie', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Lunes', day_full_mar: 'Martes', day_full_mer: 'Miércoles',
-    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "Tu negocio", ph_business_address: "Calle Mayor 14, 28013 Madrid", ph_business_desc: "Ej.: Peluquería masculina moderna, ambiente relajado, café gratis...", ph_business_slug: "mi-negocio", ph_ai_name: "Ej.: Marie", ph_ai_greeting: "¡Hola! ¿Cómo puedo ayudarte?", ph_faq_question: "Tu pregunta...", ph_faq_answer: "Tu respuesta...", ph_closure_reason: "Motivo (ej. Navidad, Vacaciones...)", ph_search_faq: "🔍 Buscar en las FAQ...", ph_search_service: "🔍 Buscar un servicio...", tt_slug_locked: "El enlace público no se puede modificar", lbl_public_link: "Enlace público", lbl_permanent: "— permanente",
+    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "Tu negocio", ph_business_address: "Calle Mayor 14, 28013 Madrid", ph_business_desc: "Ej.: Peluquería masculina moderna, ambiente relajado, café gratis...", ph_business_slug: "mi-negocio", ph_ai_name: "Ej.: Marie", ph_ai_greeting: "¡Hola! ¿Cómo puedo ayudarte?", ph_faq_question: "Tu pregunta...", ph_faq_answer: "Tu respuesta...", ph_closure_reason: "Motivo (ej. Navidad, Vacaciones...)", ph_search_faq: "🔍 Buscar en las FAQ...", ph_search_service: "🔍 Buscar un servicio...", tt_slug_locked: "El enlace público no se puede modificar", lbl_public_link: "Enlace público", lbl_permanent: "— permanente", tone_professional: "👔 Profesional", tone_friendly: "😊 Amigable", formal_tu: "Tú (informal)", formal_vous: "Usted (formal)", emojis_on: "✅ Activados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactiva", proactivity_proactive: "💡 Proactiva", suggestions_off: "🚫 Desactivadas", suggestions_subtle: "💬 Sutiles", suggestions_active: "🎯 Activas", email_collect_off: "❌ Desactivada", email_collect_end: "📧 Al final de la conversación", no_services_found: "No se encontró ningún servicio", no_faq_found: "No se encontró ninguna pregunta", clear_search: "borrar búsqueda",
     closed: 'Cerrado',
   },
   pt: {
@@ -1648,13 +1648,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Serviços complementares guardados!',
     logo_ok: '✅ Logo guardado!', logo_removed: '✅ Logo removido',
     pro_required: 'Plano Pro necessário para a personalidade IA',
-    err_generic: '❌ Erro de carregamento',
+    err_generic: '❌ Erro de carregamento', err_prefix: '❌ Erro: ', sidebar_plan_pro: "⭐ Plano Pro", sidebar_plan_std: "Plano Standard", upgrade_cta_personality: "Mude para o plano Pro para personalizar a IA",
     logout_confirm: 'Tem a certeza que quer sair?',
     lbl_desc:'Descrição',lbl_desc_sub:'(vista pela IA)',lbl_logo:'Logótipo',lbl_logo_sub:'(no chat)',save_info_btn:'💾 Guardar informações',save_hours_btn:'💾 Guardar horários',save_services_btn:'💾 Guardar serviços',save_faq_btn:'💾 Guardar FAQ',save_personality_btn:'💾 Guardar personalidade',add_service_btn:'➕ Adicionar',add_faq_btn:'➕ Adicionar',add_closure_btn:'+ Adicionar',add_comp_btn:'+ Serviço',services_sub:'A IA conhecerá os seus serviços',no_services:'Nenhum serviço encontrado',no_faq:'Nenhuma pergunta encontrada',lbl_question:'Pergunta',lbl_reponse:'Resposta',tone_casual:'😎 Informal',emojis_off:'❌ Desativados',length_detailed:'📖 Detalhada',proactivity_rdv:'✅ Após marcação confirmada',comp_arrow:'→ a IA sugere',biz_select:'— Selecionar —',biz_types:{'salon_coiffure':'💇 Cabeleireiro','institut_beaute':'💅 Beleza / Spa','massage':'💆 Massagem','dentiste':'🦷 Dentista','restaurant':'🍽️ Restaurante','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Padaria','pharmacie':'💊 Farmácia','agence_immo':'🏡 Imobiliária','auto':'🚗 Oficina','cinema':'🎬 Cinema','sport':'🏋️ Ginásio','plombier':'🔨 Canalizador','menage':'🧹 Limpeza','medecin':'🏥 Consultório','veterinaire':'🐾 Veterinário','juridique':'⚖️ Escritório','retail':'🛍️ Retalho','hotel':'🏨 Hotel','autre':'🏢 Outro'},
     day_lun: 'Seg', day_mar: 'Ter', day_mer: 'Qua', day_jeu: 'Qui',
     day_ven: 'Sex', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Segunda', day_full_mar: 'Terça', day_full_mer: 'Quarta',
-    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "O seu negócio", ph_business_address: "Rua Augusta 14, 1100-053 Lisboa", ph_business_desc: "Ex.: Barbearia moderna, ambiente descontraído, café oferecido...", ph_business_slug: "o-meu-negocio", ph_ai_name: "Ex.: Marie", ph_ai_greeting: "Olá! Como posso ajudá-lo?", ph_faq_question: "A sua pergunta...", ph_faq_answer: "A sua resposta...", ph_closure_reason: "Motivo (ex.: Natal, Férias...)", ph_search_faq: "🔍 Pesquisar na FAQ...", ph_search_service: "🔍 Pesquisar um serviço...", tt_slug_locked: "O link público não pode ser alterado", lbl_public_link: "Link público", lbl_permanent: "— permanente",
+    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "O seu negócio", ph_business_address: "Rua Augusta 14, 1100-053 Lisboa", ph_business_desc: "Ex.: Barbearia moderna, ambiente descontraído, café oferecido...", ph_business_slug: "o-meu-negocio", ph_ai_name: "Ex.: Marie", ph_ai_greeting: "Olá! Como posso ajudá-lo?", ph_faq_question: "A sua pergunta...", ph_faq_answer: "A sua resposta...", ph_closure_reason: "Motivo (ex.: Natal, Férias...)", ph_search_faq: "🔍 Pesquisar na FAQ...", ph_search_service: "🔍 Pesquisar um serviço...", tt_slug_locked: "O link público não pode ser alterado", lbl_public_link: "Link público", lbl_permanent: "— permanente", tone_professional: "👔 Profissional", tone_friendly: "😊 Amigável", formal_tu: "Tu (informal)", formal_vous: "Você (formal)", emojis_on: "✅ Ativados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reativa", proactivity_proactive: "💡 Proativa", suggestions_off: "🚫 Desativadas", suggestions_subtle: "💬 Subtis", suggestions_active: "🎯 Ativas", email_collect_off: "❌ Desativada", email_collect_end: "📧 No final da conversa", no_services_found: "Nenhum serviço encontrado", no_faq_found: "Nenhuma pergunta encontrada", clear_search: "limpar pesquisa",
     closed: 'Fechado',
   },
   nl: {
@@ -1685,13 +1685,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Aanvullende diensten opgeslagen!',
     logo_ok: '✅ Logo opgeslagen!', logo_removed: '✅ Logo verwijderd',
     pro_required: 'Pro-plan vereist voor AI-persoonlijkheid',
-    err_generic: '❌ Laaderfout',
+    err_generic: '❌ Laaderfout', err_prefix: '❌ Fout: ', sidebar_plan_pro: "⭐ Pro-abonnement", sidebar_plan_std: "Standard-abonnement", upgrade_cta_personality: "Upgrade naar Pro om de AI aan te passen",
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
     lbl_desc:'Beschrijving',lbl_desc_sub:'(gezien door de AI)',lbl_logo:'Logo',lbl_logo_sub:'(in de chat)',save_info_btn:'💾 Informatie opslaan',save_hours_btn:'💾 Openingstijden opslaan',save_services_btn:'💾 Diensten opslaan',save_faq_btn:'💾 FAQ opslaan',save_personality_btn:'💾 Persoonlijkheid opslaan',add_service_btn:'➕ Toevoegen',add_faq_btn:'➕ Toevoegen',add_closure_btn:'+ Toevoegen',add_comp_btn:'+ Dienst',services_sub:'De AI kent uw diensten',no_services:'Geen dienst gevonden',no_faq:'Geen vraag gevonden',lbl_question:'Vraag',lbl_reponse:'Antwoord',tone_casual:'😎 Informeel',emojis_off:'❌ Uitgeschakeld',length_detailed:'📖 Gedetailleerd',proactivity_rdv:'✅ Na bevestigde afspraak',comp_arrow:'→ AI stelt voor',biz_select:'— Selecteren —',biz_types:{'salon_coiffure':'💇 Kapsalon','institut_beaute':'💅 Schoonheid / Spa','massage':'💆 Massage','dentiste':'🦷 Tandarts','restaurant':'🍽️ Restaurant','cafe_bar':'☕ Café / Bar','boulangerie':'🥐 Bakkerij','pharmacie':'💊 Apotheek','agence_immo':'🏡 Makelaardij','auto':'🚗 Garage','cinema':'🎬 Bioscoop','sport':'🏋️ Sportschool','plombier':'🔨 Loodgieter','menage':'🧹 Schoonmaak','medecin':'🏥 Medische praktijk','veterinaire':'🐾 Dierenarts','juridique':'⚖️ Advocatenkantoor','retail':'🛍️ Detailhandel','hotel':'🏨 Hotel','autre':'🏢 Overig'},
     day_lun: 'Ma', day_mar: 'Di', day_mer: 'Wo', day_jeu: 'Do',
     day_ven: 'Vr', day_sam: 'Za', day_dim: 'Zo',
     day_full_lun: 'Maandag', day_full_mar: 'Dinsdag', day_full_mer: 'Woensdag',
-    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag', ph_business_name: "Uw bedrijf", ph_business_address: "Damstraat 14, 1012 Amsterdam", ph_business_desc: "Bijv.: Moderne herenkapsalon, ontspannen sfeer, gratis koffie...", ph_business_slug: "mijn-bedrijf", ph_ai_name: "Bijv.: Marie", ph_ai_greeting: "Hallo! Hoe kan ik u helpen?", ph_faq_question: "Uw vraag...", ph_faq_answer: "Uw antwoord...", ph_closure_reason: "Reden (bijv. Kerstmis, Vakantie...)", ph_search_faq: "🔍 Zoeken in de FAQ...", ph_search_service: "🔍 Dienst zoeken...", tt_slug_locked: "De openbare link kan niet worden gewijzigd", lbl_public_link: "Openbare link", lbl_permanent: "— permanent",
+    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag', ph_business_name: "Uw bedrijf", ph_business_address: "Damstraat 14, 1012 Amsterdam", ph_business_desc: "Bijv.: Moderne herenkapsalon, ontspannen sfeer, gratis koffie...", ph_business_slug: "mijn-bedrijf", ph_ai_name: "Bijv.: Marie", ph_ai_greeting: "Hallo! Hoe kan ik u helpen?", ph_faq_question: "Uw vraag...", ph_faq_answer: "Uw antwoord...", ph_closure_reason: "Reden (bijv. Kerstmis, Vakantie...)", ph_search_faq: "🔍 Zoeken in de FAQ...", ph_search_service: "🔍 Dienst zoeken...", tt_slug_locked: "De openbare link kan niet worden gewijzigd", lbl_public_link: "Openbare link", lbl_permanent: "— permanent", tone_professional: "👔 Professioneel", tone_friendly: "😊 Vriendelijk", formal_tu: "Jij (informeel)", formal_vous: "U (formeel)", emojis_on: "✅ Ingeschakeld", length_concise: "📝 Beknopt (1-2 zinnen)", length_normal: "💬 Normaal", proactivity_reactive: "🙋 Reactief", proactivity_proactive: "💡 Proactief", suggestions_off: "🚫 Uitgeschakeld", suggestions_subtle: "💬 Subtiel", suggestions_active: "🎯 Actief", email_collect_off: "❌ Uitgeschakeld", email_collect_end: "📧 Aan het einde van het gesprek", no_services_found: "Geen dienst gevonden", no_faq_found: "Geen vraag gevonden", clear_search: "zoekopdracht wissen",
     closed: 'Gesloten',
   },
   pl: {
@@ -1722,13 +1722,13 @@ const DASH_CFG_T = {
     save_complementary_ok: '✅ Usługi uzupełniające zapisane!',
     logo_ok: '✅ Logo zapisane!', logo_removed: '✅ Logo usunięte',
     pro_required: 'Plan Pro wymagany dla osobowości AI',
-    err_generic: '❌ Błąd ładowania',
+    err_generic: '❌ Błąd ładowania', err_prefix: '❌ Błąd: ', sidebar_plan_pro: "⭐ Plan Pro", sidebar_plan_std: "Plan Standard", upgrade_cta_personality: "Przejdź na plan Pro, aby dostosować AI",
     logout_confirm: 'Czy na pewno chcesz się wylogować?',
     lbl_desc:'Opis',lbl_desc_sub:'(widoczny przez AI)',lbl_logo:'Logo',lbl_logo_sub:'(w czacie)',save_info_btn:'💾 Zapisz informacje',save_hours_btn:'💾 Zapisz godziny',save_services_btn:'💾 Zapisz usługi',save_faq_btn:'💾 Zapisz FAQ',save_personality_btn:'💾 Zapisz osobowość',add_service_btn:'➕ Dodaj',add_faq_btn:'➕ Dodaj',add_closure_btn:'+ Dodaj',add_comp_btn:'+ Usługa',services_sub:'AI pozna Twoje usługi',no_services:'Nie znaleziono usługi',no_faq:'Nie znaleziono pytania',lbl_question:'Pytanie',lbl_reponse:'Odpowiedź',tone_casual:'😎 Swobodny',emojis_off:'❌ Wyłączone',length_detailed:'📖 Szczegółowa',proactivity_rdv:'✅ Po wizycie',comp_arrow:'→ AI sugeruje',biz_select:'— Wybierz —',biz_types:{'salon_coiffure':'💇 Salon fryzjerski','institut_beaute':'💅 Salon piękności','massage':'💆 Masaż','dentiste':'🦷 Dentysta','restaurant':'🍽️ Restauracja','cafe_bar':'☕ Kawiarnia / Bar','boulangerie':'🥐 Piekarnia','pharmacie':'💊 Apteka','agence_immo':'🏡 Nieruchomości','auto':'🚗 Warsztat','cinema':'🎬 Kino','sport':'🏋️ Siłownia','plombier':'🔨 Hydraulik','menage':'🧹 Sprzątanie','medecin':'🏥 Gabinet medyczny','veterinaire':'🐾 Weterynarz','juridique':'⚖️ Kancelaria','retail':'🛍️ Handel','hotel':'🏨 Hotel','autre':'🏢 Inne'},
     day_lun: 'Pon', day_mar: 'Wt', day_mer: 'Śr', day_jeu: 'Czw',
     day_ven: 'Pt', day_sam: 'Sob', day_dim: 'Nd',
     day_full_lun: 'Poniedziałek', day_full_mar: 'Wtorek', day_full_mer: 'Środa',
-    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela', ph_business_name: "Twoja firma", ph_business_address: "ul. Marszałkowska 14, 00-001 Warszawa", ph_business_desc: "Np.: Nowoczesny salon fryzjerski męski, luźna atmosfera, kawa gratis...", ph_business_slug: "moja-firma", ph_ai_name: "Np.: Marie", ph_ai_greeting: "Cześć! Jak mogę Ci pomóc?", ph_faq_question: "Twoje pytanie...", ph_faq_answer: "Twoja odpowiedź...", ph_closure_reason: "Powód (np. Święta, Urlop...)", ph_search_faq: "🔍 Szukaj w FAQ...", ph_search_service: "🔍 Szukaj usługi...", tt_slug_locked: "Publicznego linku nie można edytować", lbl_public_link: "Link publiczny", lbl_permanent: "— stały",
+    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela', ph_business_name: "Twoja firma", ph_business_address: "ul. Marszałkowska 14, 00-001 Warszawa", ph_business_desc: "Np.: Nowoczesny salon fryzjerski męski, luźna atmosfera, kawa gratis...", ph_business_slug: "moja-firma", ph_ai_name: "Np.: Marie", ph_ai_greeting: "Cześć! Jak mogę Ci pomóc?", ph_faq_question: "Twoje pytanie...", ph_faq_answer: "Twoja odpowiedź...", ph_closure_reason: "Powód (np. Święta, Urlop...)", ph_search_faq: "🔍 Szukaj w FAQ...", ph_search_service: "🔍 Szukaj usługi...", tt_slug_locked: "Publicznego linku nie można edytować", lbl_public_link: "Link publiczny", lbl_permanent: "— stały", tone_professional: "👔 Profesjonalny", tone_friendly: "😊 Przyjazny", formal_tu: "Ty (nieformalnie)", formal_vous: "Pan/Pani (formalnie)", emojis_on: "✅ Włączone", length_concise: "📝 Zwięzła (1-2 zdania)", length_normal: "💬 Normalna", proactivity_reactive: "🙋 Reaktywna", proactivity_proactive: "💡 Proaktywna", suggestions_off: "🚫 Wyłączone", suggestions_subtle: "💬 Subtelne", suggestions_active: "🎯 Aktywne", email_collect_off: "❌ Wyłączona", email_collect_end: "📧 Na koniec rozmowy", no_services_found: "Nie znaleziono usługi", no_faq_found: "Nie znaleziono pytania", clear_search: "wyczyść wyszukiwanie",
     closed: 'Zamknięte',
   },
 };
@@ -1739,7 +1739,26 @@ const DASH_CFG_T = {
   window._dct = t;
   document.title = t.page_title;
 
-  function applyCfgLang() {
+  const BIZGROUP_LABELS = {"fr": ["💇 Beauté & Soins", "🍽️ Restauration", "🍞 Alimentation", "⚖️ Services professionnels", "🏋️ Sport & Loisirs", "🔧 Services techniques", "🏥 Santé & Animaux", "🏨 Commerce & Hébergement", "📸 Autres services"], "en": ["💇 Beauty & Care", "🍽️ Restaurants", "🍞 Food", "⚖️ Professional Services", "🏋️ Sport & Leisure", "🔧 Technical Services", "🏥 Health & Pets", "🏨 Retail & Hospitality", "📸 Other Services"], "de": ["💇 Beauty & Pflege", "🍽️ Gastronomie", "🍞 Lebensmittel", "⚖️ Dienstleistungen", "🏋️ Sport & Freizeit", "🔧 Technische Dienste", "🏥 Gesundheit & Tiere", "🏨 Handel & Unterkunft", "📸 Weitere Dienstleistungen"], "it": ["💇 Bellezza e Cura", "🍽️ Ristorazione", "🍞 Alimentari", "⚖️ Servizi professionali", "🏋️ Sport e Tempo libero", "🔧 Servizi tecnici", "🏥 Salute e Animali", "🏨 Commercio e Ospitalità", "📸 Altri servizi"], "es": ["💇 Belleza y Cuidado", "🍽️ Restauración", "🍞 Alimentación", "⚖️ Servicios profesionales", "🏋️ Deporte y Ocio", "🔧 Servicios técnicos", "🏥 Salud y Mascotas", "🏨 Comercio y Hostelería", "📸 Otros servicios"], "pt": ["💇 Beleza e Cuidados", "🍽️ Restauração", "🍞 Alimentação", "⚖️ Serviços profissionais", "🏋️ Desporto e Lazer", "🔧 Serviços técnicos", "🏥 Saúde e Animais", "🏨 Comércio e Hotelaria", "📸 Outros serviços"], "nl": ["💇 Schoonheid & Verzorging", "🍽️ Horeca", "🍞 Voeding", "⚖️ Professionele diensten", "🏋️ Sport & Vrije tijd", "🔧 Technische diensten", "🏥 Gezondheid & Dieren", "🏨 Winkel & Accommodatie", "📸 Overige diensten"], "pl": ["💇 Uroda i Pielęgnacja", "🍽️ Gastronomia", "🍞 Artykuły spożywcze", "⚖️ Usługi profesjonalne", "🏋️ Sport i Rekreacja", "🔧 Usługi techniczne", "🏥 Zdrowie i Zwierzęta", "🏨 Handel i Zakwaterowanie", "📸 Inne usługi"]};
+const BIZTYPE_LABELS = {"fr": {"salon": "💇 Salon de coiffure", "spa": "💅 Institut de beauté / Spa", "massage": "💆 Massage / Kiné", "dentist": "🦷 Dentiste", "opticien": "👓 Opticien", "nailsalon": "✨ Salon d'ongles", "tattoo": "🖋️ Tatoueur", "restaurant": "🍽️ Restaurant", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizzeria / Fast-food", "bakery": "🍞 Boulangerie", "butcher": "🥩 Boucherie", "fishmonger": "🐟 Poissonnerie", "florist": "🌿 Fleuriste", "law": "⚖️ Avocat", "architect": "📐 Architecte", "accountant": "📊 Expert-comptable", "realtor": "🏡 Agence immobilière", "training": "🎓 Centre de formation", "drivingschool": "🚗 Auto-école", "gym": "🏋️ Salle de sport", "cinema": "🎬 Cinéma / Théâtre", "escapegame": "🎮 Escape Game", "pool": "🏊 Piscine", "garage": "🔧 Garage / Atelier", "plumber": "🔨 Plombier / Électricien", "cleaning": "🧹 Ménage / Nettoyage", "gardener": "🌳 Jardinier", "phonerepair": "📱 Réparation téléphone / ordinateur", "locksmith": "🔑 Serrurier", "medical": "🏥 Cabinet médical", "vet": "🐾 Vétérinaire", "grooming": "✂️ Toilettage animaux", "pharmacy": "💊 Pharmacie", "retail": "🛍️ Commerce de détail", "hotel": "🏨 Hôtel", "photographer": "📸 Photographe", "laundry": "👗 Pressing", "other": "🎨 Autre"}, "en": {"salon": "💇 Hair Salon", "spa": "💅 Beauty Salon / Spa", "massage": "💆 Massage / Physiotherapy", "dentist": "🦷 Dentist", "opticien": "👓 Optician", "nailsalon": "✨ Nail Salon", "tattoo": "🖋️ Tattoo Artist", "restaurant": "🍽️ Restaurant", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizzeria / Fast Food", "bakery": "🍞 Bakery", "butcher": "🥩 Butcher", "fishmonger": "🐟 Fishmonger", "florist": "🌿 Florist", "law": "⚖️ Lawyer", "architect": "📐 Architect", "accountant": "📊 Accountant", "realtor": "🏡 Real Estate Agency", "training": "🎓 Training Center", "drivingschool": "🚗 Driving School", "gym": "🏋️ Gym", "cinema": "🎬 Cinema / Theater", "escapegame": "🎮 Escape Room", "pool": "🏊 Swimming Pool", "garage": "🔧 Garage / Workshop", "plumber": "🔨 Plumber / Electrician", "cleaning": "🧹 Cleaning Service", "gardener": "🌳 Gardener", "phonerepair": "📱 Phone / Computer Repair", "locksmith": "🔑 Locksmith", "medical": "🏥 Medical Practice", "vet": "🐾 Veterinarian", "grooming": "✂️ Pet Grooming", "pharmacy": "💊 Pharmacy", "retail": "🛍️ Retail Store", "hotel": "🏨 Hotel", "photographer": "📸 Photographer", "laundry": "👗 Dry Cleaner", "other": "🎨 Other"}, "de": {"salon": "💇 Friseursalon", "spa": "💅 Kosmetikstudio / Spa", "massage": "💆 Massage / Physiotherapie", "dentist": "🦷 Zahnarzt", "opticien": "👓 Optiker", "nailsalon": "✨ Nagelstudio", "tattoo": "🖋️ Tätowierer", "restaurant": "🍽️ Restaurant", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizzeria / Fast Food", "bakery": "🍞 Bäckerei", "butcher": "🥩 Metzgerei", "fishmonger": "🐟 Fischhändler", "florist": "🌿 Blumenladen", "law": "⚖️ Anwalt", "architect": "📐 Architekt", "accountant": "📊 Buchhalter", "realtor": "🏡 Immobilienagentur", "training": "🎓 Ausbildungszentrum", "drivingschool": "🚗 Fahrschule", "gym": "🏋️ Fitnessstudio", "cinema": "🎬 Kino / Theater", "escapegame": "🎮 Escape Room", "pool": "🏊 Schwimmbad", "garage": "🔧 Werkstatt", "plumber": "🔨 Klempner / Elektriker", "cleaning": "🧹 Reinigungsdienst", "gardener": "🌳 Gärtner", "phonerepair": "📱 Handy-/Computerreparatur", "locksmith": "🔑 Schlüsseldienst", "medical": "🏥 Arztpraxis", "vet": "🐾 Tierarzt", "grooming": "✂️ Tierpflege", "pharmacy": "💊 Apotheke", "retail": "🛍️ Einzelhandel", "hotel": "🏨 Hotel", "photographer": "📸 Fotograf", "laundry": "👗 Reinigung", "other": "🎨 Sonstiges"}, "it": {"salon": "💇 Salone di parrucchiere", "spa": "💅 Centro estetico / Spa", "massage": "💆 Massaggio / Fisioterapia", "dentist": "🦷 Dentista", "opticien": "👓 Ottico", "nailsalon": "✨ Salone per unghie", "tattoo": "🖋️ Tatuatore", "restaurant": "🍽️ Ristorante", "cafe": "☕ Caffè / Bar", "pizzeria": "🍕 Pizzeria / Fast food", "bakery": "🍞 Panetteria", "butcher": "🥩 Macelleria", "fishmonger": "🐟 Pescheria", "florist": "🌿 Fioraio", "law": "⚖️ Avvocato", "architect": "📐 Architetto", "accountant": "📊 Commercialista", "realtor": "🏡 Agenzia immobiliare", "training": "🎓 Centro di formazione", "drivingschool": "🚗 Autoscuola", "gym": "🏋️ Palestra", "cinema": "🎬 Cinema / Teatro", "escapegame": "🎮 Escape Room", "pool": "🏊 Piscina", "garage": "🔧 Officina", "plumber": "🔨 Idraulico / Elettricista", "cleaning": "🧹 Pulizie", "gardener": "🌳 Giardiniere", "phonerepair": "📱 Riparazione telefono / computer", "locksmith": "🔑 Fabbro", "medical": "🏥 Studio medico", "vet": "🐾 Veterinario", "grooming": "✂️ Toelettatura animali", "pharmacy": "💊 Farmacia", "retail": "🛍️ Negozio al dettaglio", "hotel": "🏨 Hotel", "photographer": "📸 Fotografo", "laundry": "👗 Lavanderia", "other": "🎨 Altro"}, "es": {"salon": "💇 Peluquería", "spa": "💅 Centro de belleza / Spa", "massage": "💆 Masaje / Fisioterapia", "dentist": "🦷 Dentista", "opticien": "👓 Óptica", "nailsalon": "✨ Salón de uñas", "tattoo": "🖋️ Tatuador", "restaurant": "🍽️ Restaurante", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizzería / Comida rápida", "bakery": "🍞 Panadería", "butcher": "🥩 Carnicería", "fishmonger": "🐟 Pescadería", "florist": "🌿 Floristería", "law": "⚖️ Abogado", "architect": "📐 Arquitecto", "accountant": "📊 Contable", "realtor": "🏡 Agencia inmobiliaria", "training": "🎓 Centro de formación", "drivingschool": "🚗 Autoescuela", "gym": "🏋️ Gimnasio", "cinema": "🎬 Cine / Teatro", "escapegame": "🎮 Escape Room", "pool": "🏊 Piscina", "garage": "🔧 Taller", "plumber": "🔨 Fontanero / Electricista", "cleaning": "🧹 Limpieza", "gardener": "🌳 Jardinero", "phonerepair": "📱 Reparación de móviles / ordenadores", "locksmith": "🔑 Cerrajero", "medical": "🏥 Consulta médica", "vet": "🐾 Veterinario", "grooming": "✂️ Peluquería canina", "pharmacy": "💊 Farmacia", "retail": "🛍️ Comercio minorista", "hotel": "🏨 Hotel", "photographer": "📸 Fotógrafo", "laundry": "👗 Tintorería", "other": "🎨 Otro"}, "pt": {"salon": "💇 Cabeleireiro", "spa": "💅 Instituto de beleza / Spa", "massage": "💆 Massagem / Fisioterapia", "dentist": "🦷 Dentista", "opticien": "👓 Óptica", "nailsalon": "✨ Salão de unhas", "tattoo": "🖋️ Tatuador", "restaurant": "🍽️ Restaurante", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizaria / Fast food", "bakery": "🍞 Padaria", "butcher": "🥩 Talho", "fishmonger": "🐟 Peixaria", "florist": "🌿 Florista", "law": "⚖️ Advogado", "architect": "📐 Arquiteto", "accountant": "📊 Contabilista", "realtor": "🏡 Agência imobiliária", "training": "🎓 Centro de formação", "drivingschool": "🚗 Escola de condução", "gym": "🏋️ Ginásio", "cinema": "🎬 Cinema / Teatro", "escapegame": "🎮 Escape Room", "pool": "🏊 Piscina", "garage": "🔧 Oficina", "plumber": "🔨 Canalizador / Eletricista", "cleaning": "🧹 Limpeza", "gardener": "🌳 Jardineiro", "phonerepair": "📱 Reparação de telemóveis / computadores", "locksmith": "🔑 Serralheiro", "medical": "🏥 Consultório médico", "vet": "🐾 Veterinário", "grooming": "✂️ Tosquia de animais", "pharmacy": "💊 Farmácia", "retail": "🛍️ Comércio a retalho", "hotel": "🏨 Hotel", "photographer": "📸 Fotógrafo", "laundry": "👗 Lavandaria", "other": "🎨 Outro"}, "nl": {"salon": "💇 Kapsalon", "spa": "💅 Schoonheidssalon / Spa", "massage": "💆 Massage / Fysiotherapie", "dentist": "🦷 Tandarts", "opticien": "👓 Opticien", "nailsalon": "✨ Nagelstudio", "tattoo": "🖋️ Tatoeerder", "restaurant": "🍽️ Restaurant", "cafe": "☕ Café / Bar", "pizzeria": "🍕 Pizzeria / Fastfood", "bakery": "🍞 Bakkerij", "butcher": "🥩 Slagerij", "fishmonger": "🐟 Viswinkel", "florist": "🌿 Bloemist", "law": "⚖️ Advocaat", "architect": "📐 Architect", "accountant": "📊 Boekhouder", "realtor": "🏡 Makelaarskantoor", "training": "🎓 Opleidingscentrum", "drivingschool": "🚗 Rijschool", "gym": "🏋️ Sportschool", "cinema": "🎬 Bioscoop / Theater", "escapegame": "🎮 Escape Room", "pool": "🏊 Zwembad", "garage": "🔧 Garage / Werkplaats", "plumber": "🔨 Loodgieter / Elektricien", "cleaning": "🧹 Schoonmaakdienst", "gardener": "🌳 Tuinman", "phonerepair": "📱 Telefoon-/computerreparatie", "locksmith": "🔑 Slotenmaker", "medical": "🏥 Medische praktijk", "vet": "🐾 Dierenarts", "grooming": "✂️ Dierenverzorging", "pharmacy": "💊 Apotheek", "retail": "🛍️ Detailhandel", "hotel": "🏨 Hotel", "photographer": "📸 Fotograaf", "laundry": "👗 Stomerij", "other": "🎨 Overig"}, "pl": {"salon": "💇 Salon fryzjerski", "spa": "💅 Salon kosmetyczny / Spa", "massage": "💆 Masaż / Fizjoterapia", "dentist": "🦷 Dentysta", "opticien": "👓 Optyk", "nailsalon": "✨ Salon paznokci", "tattoo": "🖋️ Tatuażysta", "restaurant": "🍽️ Restauracja", "cafe": "☕ Kawiarnia / Bar", "pizzeria": "🍕 Pizzeria / Fast food", "bakery": "🍞 Piekarnia", "butcher": "🥩 Sklep mięsny", "fishmonger": "🐟 Sklep rybny", "florist": "🌿 Kwiaciarnia", "law": "⚖️ Prawnik", "architect": "📐 Architekt", "accountant": "📊 Księgowy", "realtor": "🏡 Agencja nieruchomości", "training": "🎓 Centrum szkoleniowe", "drivingschool": "🚗 Szkoła jazdy", "gym": "🏋️ Siłownia", "cinema": "🎬 Kino / Teatr", "escapegame": "🎮 Escape Room", "pool": "🏊 Basen", "garage": "🔧 Warsztat", "plumber": "🔨 Hydraulik / Elektryk", "cleaning": "🧹 Sprzątanie", "gardener": "🌳 Ogrodnik", "phonerepair": "📱 Naprawa telefonów / komputerów", "locksmith": "🔑 Ślusarz", "medical": "🏥 Gabinet lekarski", "vet": "🐾 Weterynarz", "grooming": "✂️ Pielęgnacja zwierząt", "pharmacy": "💊 Apteka", "retail": "🛍️ Sklep detaliczny", "hotel": "🏨 Hotel", "photographer": "📸 Fotograf", "laundry": "👗 Pralnia", "other": "🎨 Inne"}};
+function applyBizTypeLabels(lang) {
+  const groups = BIZGROUP_LABELS[lang] || BIZGROUP_LABELS.fr;
+  const opts = BIZTYPE_LABELS[lang] || BIZTYPE_LABELS.fr;
+  groups.forEach((label, i) => {
+    const el = document.getElementById('biztype-group-' + i);
+    if (el) el.label = label;
+  });
+  const sel = document.getElementById('businessType');
+  if (sel) {
+    Array.from(sel.querySelectorAll('option')).forEach(opt => {
+      const label = opts[opt.value];
+      if (label) opt.textContent = label;
+    });
+  }
+}
+
+function applyCfgLang() {
+    applyBizTypeLabels(lang);
     const ids = {
       'cfg-h1': t.h1, 'cfg-subtitle': t.subtitle,
       'cfg-tab-commerce': t.tab_commerce, 'cfg-tab-horaires': t.tab_horaires,
@@ -1764,6 +1783,15 @@ const DASH_CFG_T = {
       'cfg-no-faq': t.no_faq, 'cfg-lbl-question': t.lbl_question,
       'cfg-lbl-reponse': t.lbl_reponse,
       'cfg-tone-casual': t.tone_casual, 'cfg-emojis-off': t.emojis_off,
+      'cfg-tone-professional': t.tone_professional, 'cfg-tone-friendly': t.tone_friendly,
+      'cfg-formal-tu': t.formal_tu, 'cfg-formal-vous': t.formal_vous,
+      'cfg-emojis-on': t.emojis_on,
+      'cfg-length-concise': t.length_concise, 'cfg-length-normal': t.length_normal,
+      'cfg-proactivity-reactive': t.proactivity_reactive, 'cfg-proactivity-proactive': t.proactivity_proactive,
+      'cfg-suggestions-off': t.suggestions_off, 'cfg-suggestions-subtle': t.suggestions_subtle, 'cfg-suggestions-active': t.suggestions_active,
+      'cfg-email-off': t.email_collect_off, 'cfg-email-end': t.email_collect_end,
+      'cfg-no-services-text': t.no_services_found, 'cfg-no-faq-text': t.no_faq_found,
+      'cfg-clear-search-1': t.clear_search, 'cfg-clear-search-2': t.clear_search,
       'cfg-length-detailed': t.length_detailed, 'cfg-proactivity-rdv': t.proactivity_rdv,
       'cfg-comp-arrow': t.comp_arrow,
       'cfg-lbl-tone': t.lbl_tone, 'cfg-lbl-tutoyer': t.lbl_tutoyer,

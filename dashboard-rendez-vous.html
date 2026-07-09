@@ -130,13 +130,13 @@
     <!-- Message info — visible uniquement si mode != google -->
     <div id="appointmentsNotice" style="display:none;margin-bottom:20px;background:rgba(0,82,204,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:16px;padding:28px 24px;text-align:center;">
       <div style="font-size:40px;margin-bottom:14px;">📊</div>
-      <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;">Données de RDV disponibles uniquement avec Google Calendar</div>
-      <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:440px;margin:0 auto 20px;line-height:1.7;">
+      <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;" id="rdv-notice-title">Données de RDV disponibles uniquement avec Google Calendar</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.5);max-width:440px;margin:0 auto 20px;line-height:1.7;" id="rdv-notice-desc">
         L'historique des rendez-vous, les confirmations et les statistiques de conversion 
         s'alimentent automatiquement quand le mode <strong style="color:#00D4FF;">Google Calendar</strong> est activé.<br>
         Avec votre mode actuel, la prise de RDV se fait en dehors de LocalReply — ces données ne sont donc pas disponibles ici.
       </p>
-      <button onclick="selectMode('google')" style="padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">
+      <button onclick="selectMode('google')" style="padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;" id="rdv-notice-btn">
         📅 Passer en mode Google Calendar
       </button>
     </div>
@@ -150,12 +150,12 @@
           onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
       </div>
       <div style="display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
-        <button id="filterAll" onclick="setFilter('all')" style="padding: 8px 16px; background: linear-gradient(135deg,#0052CC,#00D4FF); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">Tous</button>
-        <button id="filterPending" onclick="setFilter('pending')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;">En attente</button>
+        <button id="filterAll" onclick="setFilter('all')" style="padding: 8px 16px; background: linear-gradient(135deg,#0052CC,#00D4FF); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filterbar-all">Tous</span></button>
+        <button id="filterPending" onclick="setFilter('pending')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filterbar-pending">En attente</span></button>
         <button id="filterConfirmed" onclick="setFilter('confirmed')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filter-confirmed">Confirmés</span></button>
         <button id="filterAll2" onclick="setFilter('past')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filter-past">Passés</span></button>
       </div>
-      <button onclick="loadAppointments()" style="padding: 12px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: rgba(255,255,255,0.7); font-size:13px; cursor:pointer; transition:all 0.2s;" title="Actualiser">🔄</button>
+      <button onclick="loadAppointments()" style="padding: 12px 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: rgba(255,255,255,0.7); font-size:13px; cursor:pointer; transition:all 0.2s;" id="rdv-refresh-btn" title="Actualiser">🔄</button>
     </div>
 
     <!-- LISTE UNIFIÉE (remplace pending + confirmed séparés) -->
@@ -359,7 +359,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
     const isJson = contentType.includes('application/json');
     
     if (!response.ok) {
-      let errorMsg = `Erreur ${response.status}`;
+      let errorMsg = ((window._drt||{}).err_status||'Erreur {status}').replace('{status}', response.status);
       try {
         if (isJson) {
           const error = await response.json();
@@ -372,10 +372,10 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
         } else {
           const text = await response.text();
           console.error('ERREUR API non-JSON:', response.status, text.slice(0, 200));
-          errorMsg = `Erreur serveur ${response.status}`;
+          errorMsg = ((window._drt||{}).err_server_status||'Erreur serveur {status}').replace('{status}', response.status);
         }
       } catch(e) {
-        errorMsg = `Erreur ${response.status}`;
+        errorMsg = ((window._drt||{}).err_status||'Erreur {status}').replace('{status}', response.status);
       }
       throw new Error(errorMsg);
     }
@@ -408,9 +408,10 @@ async function loadSidebarInfo() {
     if (sp) {
       const plan = sub?.plan || 'standard';
       const status = sub?.status || '';
-      if (status === 'trialing') sp.textContent = '🎁 Essai gratuit — ' + (plan === 'pro' ? 'Pro' : 'Standard');
-      else if (plan === 'pro') sp.textContent = '⭐ Plan Pro';
-      else sp.textContent = '📦 Plan Standard';
+      const _dt2 = (window._drt||{});
+      if (status === 'trialing') sp.textContent = (_dt2.rdv_trial_status||'🎁 Essai gratuit — ') + (plan === 'pro' ? (_dt2.rdv_plan_pro_short||'Pro') : (_dt2.rdv_plan_std_short||'Standard'));
+      else if (plan === 'pro') sp.textContent = _dt2.rdv_plan_pro_full||'⭐ Plan Pro';
+      else sp.textContent = _dt2.rdv_plan_std_full||'📦 Plan Standard';
     }
 
     // Logo ou icône
@@ -498,18 +499,19 @@ async function checkCalendarStatus() {
 }
 
 async function applyRdvMode(section, aptsSection, mode, externalUrl) {
+  const _t = (window._drt||{});
   // ── Sélecteur de mode ──
   const modes = [
     { id:'google', icon:'📅', label:'Google Calendar',        color:'#10B981' },
-    { id:'link',   icon:'🔗', label:'Lien de réservation',    color:'#00D4FF' },
-    { id:'manual', icon:'📞', label:'Gestion manuelle',        color:'#F59E0B' },
-    { id:'none',   icon:'💬', label:'Pas de prise de RDV',    color:'#8B5CF6' },
+    { id:'link',   icon:'🔗', label:_t.mode_link_label||'Lien de réservation',    color:'#00D4FF' },
+    { id:'manual', icon:'📞', label:_t.mode_manual_label||'Gestion manuelle',        color:'#F59E0B' },
+    { id:'none',   icon:'💬', label:_t.mode_none_label||'Pas de prise de RDV',    color:'#8B5CF6' },
   ];
 
   section.innerHTML = `
     <!-- Sélecteur mode -->
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:20px 22px;margin-bottom:16px;">
-      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">Mode de prise de rendez-vous</div>
+      <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">${_t.rdv_mode_title||'Mode de prise de rendez-vous'}</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0;" id="rdvModePills">
         ${modes.map(m => `
           <button onclick="switchRdvMode('${m.id}')" id="pill_${m.id}" style="padding:10px 8px;border-radius:11px;border:1.5px solid ${mode===m.id ? m.color : 'rgba(255,255,255,0.08)'};background:${mode===m.id ? m.color+'18' : 'rgba(255,255,255,0.03)'};color:${mode===m.id ? m.color : 'rgba(255,255,255,0.5)'};font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:5px;">
@@ -534,36 +536,39 @@ async function applyRdvMode(section, aptsSection, mode, externalUrl) {
 async function renderModeContent(mode, externalUrl) {
   const zone = document.getElementById('rdvModeContent');
   if (!zone) return;
+  const _t = (window._drt||{});
 
   if (mode === 'google') {
     // Vérifier connexion Calendar
-    zone.innerHTML = '<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;" id="rdv-cal-checking">Vérification Google Calendar...</div>';
+    zone.innerHTML = '<div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;" id="rdv-cal-checking">' + ((window._drt||{}).cal_checking||'Vérification Google Calendar...') + '</div>';
     try {
       const status = await apiRequest(`/api/calendar/status?business_id=${businessId}`).catch(() => ({connected:false}));
       if (status.connected) {
-        const date = status.connected_at ? new Date(status.connected_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}) : '';
+        const _lang2 = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+        const _localeMap = {fr:'fr-FR',en:'en-US',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',nl:'nl-NL',pl:'pl-PL'};
+        const date = status.connected_at ? new Date(status.connected_at).toLocaleDateString(_localeMap[_lang2]||'fr-FR',{day:'numeric',month:'long',year:'numeric'}) : '';
         zone.innerHTML = `
           <div style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:18px 20px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
               <div style="display:flex;align-items:center;gap:10px;">
                 <div style="width:36px;height:36px;background:rgba(16,185,129,0.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📅</div>
                 <div>
-                  <div style="font-size:13px;font-weight:700;color:#10B981;" id="rdv-cal-connected">✅ Google Calendar connecté</div>
-                  <div style="font-size:12px;color:rgba(255,255,255,0.55);">${status.email || ''}${date ? ' · depuis le '+date : ''}</div>
+                  <div style="font-size:13px;font-weight:700;color:#10B981;" id="rdv-cal-connected">${_t.cal_connected_label||'✅ Google Calendar connecté'}</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.55);">${status.email || ''}${date ? ' · '+(_t.cal_since||'depuis le')+' '+date : ''}</div>
                 </div>
               </div>
               <div style="display:flex;gap:8px;">
-                <a href="https://calendar.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">📅 Ouvrir</a>
-                <button onclick="disconnectCalendar()" style="padding:8px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:9px;color:#EF4444;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;" id="rdv-cal-disconnect-btn">Déconnecter</button>
+                <a href="https://calendar.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:12px;font-weight:700;text-decoration:none;">${_t.cal_open||'📅 Ouvrir'}</a>
+                <button onclick="disconnectCalendar()" style="padding:8px 12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:9px;color:#EF4444;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;" id="rdv-cal-disconnect-btn">${_t.cal_disconnect||'Déconnecter'}</button>
               </div>
             </div>
-            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;" id="rdv-cal-events">Prochains événements — 7 jours</div>
-            <div id="eventsList" style="display:flex;flex-direction:column;gap:6px;"><div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">Chargement...</div></div>
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;" id="rdv-cal-events">${_t.cal_events_label||'Prochains événements — 7 jours'}</div>
+            <div id="eventsList" style="display:flex;flex-direction:column;gap:6px;"><div style="text-align:center;padding:12px;color:rgba(255,255,255,0.35);font-size:13px;">${_t.cal_loading||'Chargement...'}</div></div>
             <div style="margin-top:12px;padding:10px 12px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.12);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.5);">
-              💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes
+              ${_t.cal_tip1||'💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes'}
             </div>
             <div style="margin-top:8px;padding:10px 12px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;">
-              ⚠️ <strong style="color:rgba(245,158,11,0.8);">Conseil :</strong> Utilisez de préférence un calendar dédié aux RDV de votre commerce — pas votre agenda personnel. Cela évite que vos événements privés bloquent des créneaux ou perturbent l'IA.
+              ${_t.cal_tip2||'⚠️ <strong style="color:rgba(245,158,11,0.8);">Conseil :</strong> Utilisez de préférence un calendar dédié aux RDV de votre commerce — pas votre agenda personnel. Cela évite que vos événements privés bloquent des créneaux ou perturbent l\'IA.'}
             </div>
           </div>`;
         setTimeout(() => loadCalendarEvents(), 100);
@@ -571,19 +576,19 @@ async function renderModeContent(mode, externalUrl) {
         zone.innerHTML = `
           <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:28px;text-align:center;">
             <div style="font-size:40px;margin-bottom:12px;opacity:0.4;">📅</div>
-            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">Connectez Google Calendar</div>
-            <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 auto 18px;max-width:400px;line-height:1.65;">Synchronisez vos disponibilités pour éviter les doubles réservations et créer les RDV automatiquement.</p>
+            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;">${_t.cal_not_connected_title||'Connectez Google Calendar'}</div>
+            <p style="font-size:13px;color:rgba(255,255,255,0.5);margin:0 auto 18px;max-width:400px;line-height:1.65;">${_t.cal_not_connected_desc||'Synchronisez vos disponibilités pour éviter les doubles réservations et créer les RDV automatiquement.'}</p>
             <div style="font-size:12px;color:rgba(245,158,11,0.7);background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:9px;padding:10px 14px;max-width:420px;margin:0 auto 18px;line-height:1.5;text-align:left;">
-              💡 <strong>Conseil :</strong> Connectez de préférence un calendar dédié à votre commerce (ex. "RDV Salon Marco"), pas votre agenda personnel. Vos événements privés ne perturberont pas l'IA.
+              ${_t.cal_tip3||'💡 <strong>Conseil :</strong> Connectez de préférence un calendar dédié à votre commerce (ex. "RDV Salon Marco"), pas votre agenda personnel. Vos événements privés ne perturberont pas l\'IA.'}
             </div>
             <button onclick="connectCalendar()" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;border:none;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 4px 14px rgba(0,82,204,0.3);">
-              🔗 Connecter Google Calendar
+              ${_t.cal_connect_btn||'🔗 Connecter Google Calendar'}
             </button>
-            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);" id="rdv-cal-redirect">Redirection sécurisée vers Google</div>
+            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.3);" id="rdv-cal-redirect">${_t.cal_redirect||'Redirection sécurisée vers Google'}</div>
           </div>`;
       }
     } catch {
-      zone.innerHTML = '<div style="padding:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.7);">⚠️ Erreur de connexion au calendrier</div>';
+      zone.innerHTML = '<div style="padding:12px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);border-radius:10px;font-size:13px;color:rgba(239,68,68,0.7);">' + (_t.cal_conn_error||'⚠️ Erreur de connexion au calendrier') + '</div>';
     }
 
   } else if (mode === 'link') {
@@ -592,19 +597,19 @@ async function renderModeContent(mode, externalUrl) {
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
           <div style="width:36px;height:36px;background:rgba(0,212,255,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">🔗</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#00D4FF;" id="rdv-mode-ext-title">Lien de réservation externe</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA envoie vos clients directement sur ce lien</div>
+            <div style="font-size:13px;font-weight:700;color:#00D4FF;" id="rdv-mode-ext-title">${_t.link_mode_title||'Lien de réservation externe'}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">${_t.link_mode_desc||"L'IA envoie vos clients directement sur ce lien"}</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;margin-bottom:10px;">
           <input type="url" id="rdvExternalUrl" value="${externalUrl}" placeholder="${(window._drt||{}).ph_external_url||'https://www.planity.com/votre-salon ou https://www.doctolib.fr/...'}" 
             style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;font-size:13px;color:#fff;outline:none;font-family:inherit;"
             onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.12)'">
-          <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;" id="rdv-save-btn">💾 Enregistrer</button>
+          <button onclick="saveRdvLink()" style="padding:11px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;" id="rdv-save-btn">${_t.link_save_btn||'💾 Enregistrer'}</button>
         </div>
-        ${externalUrl ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">Lien actuel : <a href="${externalUrl}" target="_blank" style="color:#00D4FF;">${externalUrl}</a></div>` : '<div style="font-size:12px;color:rgba(245,158,11,0.8);" id="rdv-ext-warning">⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus</div>'}
+        ${externalUrl ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">${_t.link_current_label||'Lien actuel :'} <a href="${externalUrl}" target="_blank" style="color:#00D4FF;">${externalUrl}</a></div>` : `<div style="font-size:12px;color:rgba(245,158,11,0.8);" id="rdv-ext-warning">${_t.link_no_link_warning||'⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus'}</div>`}
         <div style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.04);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">
-          💡 Compatible avec : Planity, Doctolib, TheFork, Booking.com, Calendly, et tout autre système de réservation en ligne.
+          ${_t.link_compatible_tip||'💡 Compatible avec : Planity, Doctolib, TheFork, Booking.com, Calendly, et tout autre système de réservation en ligne.'}
         </div>
       </div>`;
 
@@ -614,16 +619,16 @@ async function renderModeContent(mode, externalUrl) {
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <div style="width:36px;height:36px;background:rgba(245,158,11,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📞</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#F59E0B;">Gestion manuelle des RDV</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA demande aux clients de vous contacter directement</div>
+            <div style="font-size:13px;font-weight:700;color:#F59E0B;">${_t.manual_mode_title||'Gestion manuelle des RDV'}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">${_t.manual_mode_desc||"L'IA demande aux clients de vous contacter directement"}</div>
           </div>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;padding:12px 14px;background:rgba(255,255,255,0.04);border-radius:10px;">
-          L'IA dira à vos clients :<br>
-          <em style="color:rgba(255,255,255,0.85);">"Pour prendre rendez-vous, appelez-nous au <strong>[votre téléphone]</strong> ou envoyez-nous un message."</em>
+          ${_t.manual_ai_says||"L'IA dira à vos clients :"}<br>
+          <em style="color:rgba(255,255,255,0.85);">${_t.manual_ai_example||'"Pour prendre rendez-vous, appelez-nous au <strong>[votre téléphone]</strong> ou envoyez-nous un message."'}</em>
         </div>
         <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4);">
-          ℹ️ Votre numéro de téléphone est configuré dans <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;" id="rdv-config-link">Configuration → Commerce</a>
+          ℹ️ ${_t.manual_phone_note||'Votre numéro de téléphone est configuré dans'} <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;" id="rdv-config-link">${_t.manual_phone_link||'Configuration → Commerce'}</a>
         </div>
       </div>`;
 
@@ -633,15 +638,15 @@ async function renderModeContent(mode, externalUrl) {
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <div style="width:36px;height:36px;background:rgba(139,92,246,0.12);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">💬</div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#8B5CF6;">Pas de prise de rendez-vous</div>
-            <div style="font-size:12px;color:rgba(255,255,255,0.5);">L'IA répond aux questions sans proposer de RDV</div>
+            <div style="font-size:13px;font-weight:700;color:#8B5CF6;">${_t.none_mode_title||'Pas de prise de rendez-vous'}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">${_t.none_mode_desc||"L'IA répond aux questions sans proposer de RDV"}</div>
           </div>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.65;padding:12px 14px;background:rgba(255,255,255,0.04);border-radius:10px;">
-          L'IA se concentre sur les informations, les prix, les horaires et la FAQ. Elle ne propose jamais de réservation.
+          ${_t.none_mode_detail||"L'IA se concentre sur les informations, les prix, les horaires et la FAQ. Elle ne propose jamais de réservation."}
         </div>
         <div style="margin-top:12px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.15);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.55);">
-          ℹ️ L'onglet Rendez-vous reste disponible pour consulter l'historique si vous changez de mode plus tard.
+          ℹ️ ${_t.none_mode_note||"L'onglet Rendez-vous reste disponible pour consulter l'historique si vous changez de mode plus tard."}
         </div>
       </div>`;
   }
@@ -762,8 +767,8 @@ async function loadCalendarEvents() {
       eventDiv.innerHTML = `
         <span style="font-size: 16px; flex-shrink: 0;">${icon}</span>
         <div style="flex: 1;">
-          <div style="font-weight: 600; margin-bottom: 3px;">${event.summary || 'Sans titre'}</div>
-          <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">${dateStr} à ${timeStr}</div>
+          <div style="font-weight: 600; margin-bottom: 3px;">${event.summary || ((window._drt||{}).event_untitled||'Sans titre')}</div>
+          <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">${dateStr} ${(window._drt||{}).event_at||'à'} ${timeStr}</div>
         </div>
       `;
       
@@ -773,7 +778,7 @@ async function loadCalendarEvents() {
     if (response.events.length > 5) {
       const moreDiv = document.createElement('div');
       moreDiv.style.cssText = 'text-align: center; padding: 10px; color: rgba(255, 255, 255, 0.5); font-size: 12px;';
-      moreDiv.textContent = `+ ${response.events.length - 5} autres événements`;
+      moreDiv.textContent = ((window._drt||{}).event_more||'+ {n} autres événements').replace('{n}', response.events.length - 5);
       eventsList.appendChild(moreDiv);
     }
     
@@ -783,7 +788,7 @@ async function loadCalendarEvents() {
     if (eventsList) {
       eventsList.innerHTML = `
         <div style="text-align: center; padding: 20px; color: rgba(239, 68, 68, 0.7); font-size: 13px;">
-          Erreur de chargement
+          ${(window._drt||{}).event_load_error||'Erreur de chargement'}
         </div>
       `;
     }
@@ -851,7 +856,7 @@ async function loadAppointments() {
     
   } catch (error) {
     console.error('Erreur chargement RDV:', error);
-    showNotification('❌ Erreur chargement des rendez-vous', 'error');
+    showNotification((window._drt||{}).apt_load_error_toast||'❌ Erreur chargement des rendez-vous', 'error');
   }
 }
 
@@ -864,8 +869,8 @@ function displayEmptyState() {
   document.getElementById('confirmedList').innerHTML = `
     <div style="text-align: center; padding: 80px 20px; background: rgba(255, 255, 255, 0.03); border-radius: 16px;">
       <div style="font-size: 72px; margin-bottom: 20px; opacity: 0.3;">📅</div>
-      <h3 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 10px 0;">Aucun rendez-vous</h3>
-      <p style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin: 0;">Les rendez-vous créés par l'IA apparaîtront ici</p>
+      <h3 style="font-size: 24px; font-weight: 700; color: #FFFFFF; margin: 0 0 10px 0;">${(window._drt||{}).apt_empty_title||'Aucun rendez-vous'}</h3>
+      <p style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin: 0;">${(window._drt||{}).apt_empty_desc||"Les rendez-vous créés par l'IA apparaîtront ici"}</p>
     </div>
   `;
 }
@@ -1000,15 +1005,15 @@ function createConfirmedCard(apt) {
   const isTomorrow = isDateTomorrow(aptDate);
   
   let dateLabel = dateStr;
-  if (isToday) dateLabel = "Aujourd'hui";
-  else if (isTomorrow) dateLabel = "Demain";
+  if (isToday) dateLabel = (window._drt||{}).today_label||"Aujourd'hui";
+  else if (isTomorrow) dateLabel = (window._drt||{}).tomorrow_label||"Demain";
   
   card.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
       <div>
-        <h3 style="font-size: 18px; font-weight: 700; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; margin: 0 0 8px 0;">${apt.client_name || 'Client'}</h3>
+        <h3 style="font-size: 18px; font-weight: 700; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; margin: 0 0 8px 0;">${apt.client_name || ((window._drt||{}).apt_client_fallback||'Client')}</h3>
         <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">
-          📧 ${apt.client_email || 'Non renseigné'} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+          📧 ${apt.client_email || ((window._drt||{}).apt_email_missing||'Non renseigné')} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
         </div>
       </div>
       <div style="padding: 6px 12px; background: ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
@@ -1020,7 +1025,7 @@ function createConfirmedCard(apt) {
       <div style="display: grid; gap: 10px;">
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">📅 DATE & HEURE</div>
-          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${dateLabel} à ${timeStr}</div>
+          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${dateLabel} ${(_drt||DASH_RDV_T.fr).event_at||'à'} ${timeStr}</div>
         </div>
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">💇 SERVICE</div>
@@ -1037,7 +1042,7 @@ function createConfirmedCard(apt) {
     
     ${isPast ? '' : `
     <button onclick="cancelAppointment(${apt.id})" style="padding: 12px 24px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; color: #EF4444; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
-      <span>❌</span> Annuler le RDV
+      <span>❌</span> ${(_drt||DASH_RDV_T.fr).apt_cancel_btn||'Annuler le RDV'}
     </button>`}
   `;
   
@@ -1050,7 +1055,7 @@ function createConfirmedCard(apt) {
 
 // Accepter un RDV
 async function acceptAppointment(appointmentId) {
-  if (!(await customConfirm('Confirmer ce rendez-vous ?'))) {
+  if (!(await customConfirm((_drt||DASH_RDV_T.fr).apt_confirm_dialog||'Confirmer ce rendez-vous ?'))) {
     return;
   }
   
@@ -1070,13 +1075,13 @@ async function acceptAppointment(appointmentId) {
     showNotification((_drt||DASH_RDV_T.fr).confirm_ok);
     
   } catch (error) {
-    showNotification('❌ Erreur : ' + error.message, 'error');
+    showNotification(((_drt||DASH_RDV_T.fr).err_prefix2||'❌ Erreur : ') + error.message, 'error');
   }
 }
 
 // Refuser un RDV
 async function refuseAppointment(appointmentId) {
-  if (!(await customConfirm('Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.', { danger: true }))) {
+  if (!(await customConfirm((_drt||DASH_RDV_T.fr).apt_refuse_dialog||'Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.', { danger: true }))) {
     return;
   }
   
@@ -1094,7 +1099,7 @@ async function refuseAppointment(appointmentId) {
     showNotification((_drt||DASH_RDV_T.fr).refuse_ok);
     
   } catch (error) {
-    showNotification('❌ Erreur : ' + error.message, 'error');
+    showNotification(((_drt||DASH_RDV_T.fr).err_prefix2||'❌ Erreur : ') + error.message, 'error');
   }
 }
 
@@ -1118,7 +1123,7 @@ async function cancelAppointment(appointmentId) {
     showNotification((_drt||DASH_RDV_T.fr).cancel_ok);
     
   } catch (error) {
-    showNotification('❌ Erreur : ' + error.message, 'error');
+    showNotification(((_drt||DASH_RDV_T.fr).err_prefix2||'❌ Erreur : ') + error.message, 'error');
   }
 }
 
@@ -1137,8 +1142,9 @@ function updateBadges(count) {
 
 // Formater date
 function formatDate(date) {
-  const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-  const months = ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'];
+  const _lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const days = RDV_DAYS_SHORT[_lang] || RDV_DAYS_SHORT.fr;
+  const months = RDV_MONTHS_SHORT[_lang] || RDV_MONTHS_SHORT.fr;
   
   return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
 }
@@ -1165,35 +1171,38 @@ function isDateTomorrow(date) {
 
 // Temps écoulé
 function getTimeAgo(timestamp) {
+  const _t = (window._drt||{});
   const now = new Date();
   const past = new Date(timestamp);
   const diffMs = now - past;
   const diffMins = Math.floor(diffMs / 60000);
   
-  if (diffMins < 1) return "À l'instant";
-  if (diffMins < 60) return `Il y a ${diffMins} min`;
+  if (diffMins < 1) return _t.time_now||"À l'instant";
+  if (diffMins < 60) return (_t.time_min_ago||"Il y a {n} min").replace('{n}', diffMins);
   
   const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `Il y a ${diffHours}h`;
+  if (diffHours < 24) return (_t.time_hour_ago||"Il y a {n}h").replace('{n}', diffHours);
   
   const diffDays = Math.floor(diffHours / 24);
-  return `Il y a ${diffDays}j`;
+  return (_t.time_day_ago||"Il y a {n}j").replace('{n}', diffDays);
 }
 
 // Formater date événement
 function formatEventDate(date) {
+  const _t = (window._drt||{});
+  const _lang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
   
   if (date.toDateString() === today.toDateString()) {
-    return "Aujourd'hui";
+    return _t.today_label||"Aujourd'hui";
   }
   if (date.toDateString() === tomorrow.toDateString()) {
-    return "Demain";
+    return _t.tomorrow_label||"Demain";
   }
   
-  const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+  const days = RDV_DAYS_SHORT[_lang] || RDV_DAYS_SHORT.fr;
   return `${days[date.getDay()]} ${date.getDate()}/${date.getMonth() + 1}`;
 }
 
@@ -1283,13 +1292,15 @@ document.head.appendChild(animStyle);
 
 <script src="/dashboard-i18n.js"></script>
 <script>
+const RDV_DAYS_SHORT = {"fr": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"], "en": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], "de": ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"], "it": ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"], "es": ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"], "pt": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"], "nl": ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"], "pl": ["Nie", "Pon", "Wt", "Śr", "Czw", "Pt", "Sob"]};
+const RDV_MONTHS_SHORT = {"fr": ["jan", "fév", "mar", "avr", "mai", "juin", "juil", "aoû", "sep", "oct", "nov", "déc"], "en": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "de": ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"], "it": ["gen", "feb", "mar", "apr", "mag", "giu", "lug", "ago", "set", "ott", "nov", "dic"], "es": ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"], "pt": ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"], "nl": ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"], "pl": ["sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "paź", "lis", "gru"]};
 const DASH_RDV_T = {
   fr: {
     page_title: 'Rendez-vous — LocalReply',
     h1: '📅 Rendez-vous', subtitle: 'Gérez vos demandes de rendez-vous et confirmez vos créneaux',
     kpi_pending_label: 'À confirmer', kpi_confirmed_label: 'Confirmés',
     kpi_confirmed_sub: '30 derniers jours', kpi_past_sub: '30 derniers jours', kpi_past_label: 'Passés',
-    search_placeholder: '🔍 Rechercher un client, service...', ph_external_url: "https://www.planity.com/votre-salon ou https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Rechercher un client, service...', ph_external_url: "https://www.planity.com/votre-salon ou https://www.doctolib.fr/...", err_status: "Erreur {status}", err_server_status: "Erreur serveur {status}", rdv_trial_status: "🎁 Essai gratuit — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Plan Pro", rdv_plan_std_full: "📦 Plan Standard", notice_google_only_title: "Données de RDV disponibles uniquement avec Google Calendar", notice_google_only_desc: "L'historique des rendez-vous, les confirmations et les statistiques de conversion s'alimentent automatiquement quand le mode <strong style=\"color:#00D4FF;\">Google Calendar</strong> est activé.<br>Avec votre mode actuel, la prise de RDV se fait en dehors de LocalReply — ces données ne sont donc pas disponibles ici.", notice_google_only_btn: "📅 Passer en mode Google Calendar", filter_all: "Tous", filter_pending: "En attente", refresh_title: "Actualiser", rdv_mode_title: "Mode de prise de rendez-vous", mode_link_label: "Lien de réservation", mode_manual_label: "Gestion manuelle", mode_none_label: "Pas de prise de RDV", cal_checking: "Vérification Google Calendar...", cal_connected_label: "✅ Google Calendar connecté", cal_since: "depuis le", cal_open: "📅 Ouvrir", cal_disconnect: "Déconnecter", cal_events_label: "Prochains événements — 7 jours", cal_loading: "Chargement...", cal_tip1: "💡 Les RDV confirmés sont ajoutés automatiquement · Les créneaux occupés bloquent les nouvelles demandes", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Conseil :</strong> Utilisez de préférence un calendar dédié aux RDV de votre commerce — pas votre agenda personnel. Cela évite que vos événements privés bloquent des créneaux ou perturbent l'IA.", cal_not_connected_title: "Connectez Google Calendar", cal_not_connected_desc: "Synchronisez vos disponibilités pour éviter les doubles réservations et créer les RDV automatiquement.", cal_tip3: "💡 <strong>Conseil :</strong> Connectez de préférence un calendar dédié à votre commerce (ex. \"RDV Salon Marco\"), pas votre agenda personnel. Vos événements privés ne perturberont pas l'IA.", cal_connect_btn: "🔗 Connecter Google Calendar", cal_redirect: "Redirection sécurisée vers Google", cal_conn_error: "⚠️ Erreur de connexion au calendrier", link_mode_title: "Lien de réservation externe", link_mode_desc: "L'IA envoie vos clients directement sur ce lien", link_save_btn: "💾 Enregistrer", link_current_label: "Lien actuel :", link_no_link_warning: "⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus", link_compatible_tip: "💡 Compatible avec : Planity, Doctolib, TheFork, Booking.com, Calendly, et tout autre système de réservation en ligne.", manual_mode_title: "Gestion manuelle des RDV", manual_mode_desc: "L'IA demande aux clients de vous contacter directement", manual_ai_says: "L'IA dira à vos clients :", manual_ai_example: "\"Pour prendre rendez-vous, appelez-nous au <strong>[votre téléphone]</strong> ou envoyez-nous un message.\"", manual_phone_note: "ℹ️ Votre numéro de téléphone est configuré dans", manual_phone_link: "Configuration → Commerce", none_mode_title: "Pas de prise de rendez-vous", none_mode_desc: "L'IA répond aux questions sans proposer de RDV", none_mode_detail: "L'IA se concentre sur les informations, les prix, les horaires et la FAQ. Elle ne propose jamais de réservation.", none_mode_note: "ℹ️ L'onglet Rendez-vous reste disponible pour consulter l'historique si vous changez de mode plus tard.", event_untitled: "Sans titre", event_at: "à", event_more: "+ {n} autres événements", event_load_error: "Erreur de chargement", apt_load_error_toast: "❌ Erreur chargement des rendez-vous", apt_empty_title: "Aucun rendez-vous", apt_empty_desc: "Les rendez-vous créés par l'IA apparaîtront ici", apt_client_fallback: "Client", apt_email_missing: "Non renseigné", apt_cancel_btn: "❌ Annuler le RDV", apt_confirm_dialog: "Confirmer ce rendez-vous ?", apt_refuse_dialog: "Refuser ce rendez-vous ? Le créneau sera libéré et un email sera envoyé au client.", err_prefix2: "❌ Erreur : ", today_label: "Aujourd'hui", tomorrow_label: "Demain", time_now: "À l'instant", time_min_ago: "Il y a {n} min", time_hour_ago: "Il y a {n}h", time_day_ago: "Il y a {n}j",
     filter_pending: '⏳ En attente', filter_confirmed: '✅ Confirmés', filter_past: '📋 RDV passés',
     tab_pending: 'À confirmer', tab_confirmed: 'Confirmés', tab_past: 'Passés',
     section_upcoming: '📋 Prochains rendez-vous confirmés',
@@ -1327,7 +1338,7 @@ const DASH_RDV_T = {
     h1: '📅 Appointments', subtitle: 'Manage your appointment requests and confirm your slots',
     kpi_pending_label: 'To confirm', kpi_confirmed_label: 'Confirmed',
     kpi_confirmed_sub: 'Last 30 days', kpi_past_sub: 'Last 30 days', kpi_past_label: 'Past',
-    search_placeholder: '🔍 Search a customer, service...', ph_external_url: "https://www.planity.com/your-salon or https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Search a customer, service...', ph_external_url: "https://www.planity.com/your-salon or https://www.doctolib.fr/...", err_status: "Error {status}", err_server_status: "Server error {status}", rdv_trial_status: "🎁 Free trial — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Pro Plan", rdv_plan_std_full: "📦 Standard Plan", notice_google_only_title: "Appointment data available only with Google Calendar", notice_google_only_desc: "Appointment history, confirmations and conversion statistics are automatically populated when <strong style=\"color:#00D4FF;\">Google Calendar</strong> mode is enabled.<br>With your current mode, appointment booking happens outside LocalReply — so this data isn't available here.", notice_google_only_btn: "📅 Switch to Google Calendar mode", filter_all: "All", filter_pending: "Pending", refresh_title: "Refresh", rdv_mode_title: "Appointment booking mode", mode_link_label: "Booking link", mode_manual_label: "Manual management", mode_none_label: "No booking", cal_checking: "Checking Google Calendar...", cal_connected_label: "✅ Google Calendar connected", cal_since: "since", cal_open: "📅 Open", cal_disconnect: "Disconnect", cal_events_label: "Upcoming events — 7 days", cal_loading: "Loading...", cal_tip1: "💡 Confirmed appointments are added automatically · Busy slots block new requests", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Tip:</strong> Preferably use a calendar dedicated to your business's appointments — not your personal calendar. This prevents your private events from blocking time slots or confusing the AI.", cal_not_connected_title: "Connect Google Calendar", cal_not_connected_desc: "Sync your availability to avoid double bookings and create appointments automatically.", cal_tip3: "💡 <strong>Tip:</strong> Preferably connect a calendar dedicated to your business (e.g. \"Salon Marco Appointments\"), not your personal calendar. Your private events won't interfere with the AI.", cal_connect_btn: "🔗 Connect Google Calendar", cal_redirect: "Secure redirect to Google", cal_conn_error: "⚠️ Calendar connection error", link_mode_title: "External booking link", link_mode_desc: "The AI sends your customers directly to this link", link_save_btn: "💾 Save", link_current_label: "Current link:", link_no_link_warning: "⚠️ No link configured — add your booking link above", link_compatible_tip: "💡 Compatible with: Planity, Doctolib, TheFork, Booking.com, Calendly, and any other online booking system.", manual_mode_title: "Manual appointment management", manual_mode_desc: "The AI asks customers to contact you directly", manual_ai_says: "The AI will tell your customers:", manual_ai_example: "\"To book an appointment, call us at <strong>[your phone number]</strong> or send us a message.\"", manual_phone_note: "ℹ️ Your phone number is configured in", manual_phone_link: "Configuration → Business", none_mode_title: "No appointment booking", none_mode_desc: "The AI answers questions without offering appointments", none_mode_detail: "The AI focuses on information, prices, hours and FAQ. It never offers to book an appointment.", none_mode_note: "ℹ️ The Appointments tab remains available to view history if you change modes later.", event_untitled: "Untitled", event_at: "at", event_more: "+ {n} more events", event_load_error: "Loading error", apt_load_error_toast: "❌ Error loading appointments", apt_empty_title: "No appointments", apt_empty_desc: "Appointments created by the AI will appear here", apt_client_fallback: "Customer", apt_email_missing: "Not provided", apt_cancel_btn: "❌ Cancel appointment", apt_confirm_dialog: "Confirm this appointment?", apt_refuse_dialog: "Decline this appointment? The slot will be released and an email will be sent to the customer.", err_prefix2: "❌ Error: ", today_label: "Today", tomorrow_label: "Tomorrow", time_now: "Just now", time_min_ago: "{n} min ago", time_hour_ago: "{n}h ago", time_day_ago: "{n}d ago",
     filter_pending: '⏳ Pending', filter_confirmed: '✅ Confirmed', filter_past: '📋 Past appointments',
     tab_pending: 'To confirm', tab_confirmed: 'Confirmed', tab_past: 'Past',
     section_upcoming: '📋 Upcoming confirmed appointments',
@@ -1365,7 +1376,7 @@ const DASH_RDV_T = {
     h1: '📅 Termine', subtitle: 'Verwalten Sie Terminanfragen und bestätigen Sie Ihre Slots',
     kpi_pending_label: 'Zu bestätigen', kpi_confirmed_label: 'Bestätigt',
     kpi_confirmed_sub: 'Letzte 30 Tage', kpi_past_sub: 'Letzte 30 Tage', kpi_past_label: 'Vergangene',
-    search_placeholder: '🔍 Kunden, Dienst suchen...', ph_external_url: "https://www.planity.com/ihr-salon oder https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Kunden, Dienst suchen...', ph_external_url: "https://www.planity.com/ihr-salon oder https://www.doctolib.fr/...", err_status: "Fehler {status}", err_server_status: "Serverfehler {status}", rdv_trial_status: "🎁 Kostenlose Testphase — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Pro-Plan", rdv_plan_std_full: "📦 Standard-Plan", notice_google_only_title: "Termindaten nur mit Google Calendar verfügbar", notice_google_only_desc: "Terminverlauf, Bestätigungen und Konversionsstatistiken werden automatisch erfasst, wenn der Modus <strong style=\"color:#00D4FF;\">Google Calendar</strong> aktiviert ist.<br>Mit Ihrem aktuellen Modus erfolgt die Terminbuchung außerhalb von LocalReply — diese Daten sind hier daher nicht verfügbar.", notice_google_only_btn: "📅 Zu Google Calendar wechseln", filter_all: "Alle", filter_pending: "Ausstehend", refresh_title: "Aktualisieren", rdv_mode_title: "Terminbuchungsmodus", mode_link_label: "Buchungslink", mode_manual_label: "Manuelle Verwaltung", mode_none_label: "Keine Terminbuchung", cal_checking: "Google Calendar wird überprüft...", cal_connected_label: "✅ Google Calendar verbunden", cal_since: "seit dem", cal_open: "📅 Öffnen", cal_disconnect: "Trennen", cal_events_label: "Nächste Termine — 7 Tage", cal_loading: "Wird geladen...", cal_tip1: "💡 Bestätigte Termine werden automatisch hinzugefügt · Belegte Zeiten blockieren neue Anfragen", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Tipp:</strong> Verwenden Sie vorzugsweise einen Kalender, der ausschließlich für die Termine Ihres Unternehmens bestimmt ist — nicht Ihren persönlichen Kalender. So verhindern Sie, dass private Termine Zeitfenster blockieren oder die KI verwirren.", cal_not_connected_title: "Google Calendar verbinden", cal_not_connected_desc: "Synchronisieren Sie Ihre Verfügbarkeiten, um Doppelbuchungen zu vermeiden und Termine automatisch zu erstellen.", cal_tip3: "💡 <strong>Tipp:</strong> Verbinden Sie vorzugsweise einen Kalender, der Ihrem Unternehmen gewidmet ist (z. B. \"Termine Salon Marco\"), nicht Ihren persönlichen Kalender. Ihre privaten Termine stören die KI nicht.", cal_connect_btn: "🔗 Google Calendar verbinden", cal_redirect: "Sichere Weiterleitung zu Google", cal_conn_error: "⚠️ Fehler bei der Kalenderverbindung", link_mode_title: "Externer Buchungslink", link_mode_desc: "Die KI leitet Ihre Kunden direkt zu diesem Link", link_save_btn: "💾 Speichern", link_current_label: "Aktueller Link:", link_no_link_warning: "⚠️ Kein Link konfiguriert — fügen Sie oben Ihren Buchungslink hinzu", link_compatible_tip: "💡 Kompatibel mit: Planity, Doctolib, TheFork, Booking.com, Calendly und jedem anderen Online-Buchungssystem.", manual_mode_title: "Manuelle Terminverwaltung", manual_mode_desc: "Die KI bittet Kunden, Sie direkt zu kontaktieren", manual_ai_says: "Die KI wird Ihren Kunden Folgendes sagen:", manual_ai_example: "\"Um einen Termin zu vereinbaren, rufen Sie uns unter <strong>[Ihre Telefonnummer]</strong> an oder senden Sie uns eine Nachricht.\"", manual_phone_note: "ℹ️ Ihre Telefonnummer wird konfiguriert in", manual_phone_link: "Konfiguration → Unternehmen", none_mode_title: "Keine Terminbuchung", none_mode_desc: "Die KI beantwortet Fragen, ohne Termine anzubieten", none_mode_detail: "Die KI konzentriert sich auf Informationen, Preise, Öffnungszeiten und FAQ. Sie bietet niemals eine Terminbuchung an.", none_mode_note: "ℹ️ Der Tab Termine bleibt verfügbar, um den Verlauf einzusehen, falls Sie den Modus später ändern.", event_untitled: "Ohne Titel", event_at: "um", event_more: "+ {n} weitere Termine", event_load_error: "Ladefehler", apt_load_error_toast: "❌ Fehler beim Laden der Termine", apt_empty_title: "Keine Termine", apt_empty_desc: "Von der KI erstellte Termine werden hier angezeigt", apt_client_fallback: "Kunde", apt_email_missing: "Nicht angegeben", apt_cancel_btn: "❌ Termin absagen", apt_confirm_dialog: "Diesen Termin bestätigen?", apt_refuse_dialog: "Diesen Termin ablehnen? Der Zeitslot wird freigegeben und eine E-Mail wird an den Kunden gesendet.", err_prefix2: "❌ Fehler: ", today_label: "Heute", tomorrow_label: "Morgen", time_now: "Gerade eben", time_min_ago: "Vor {n} Min.", time_hour_ago: "Vor {n}h", time_day_ago: "Vor {n}T",
     filter_pending: '⏳ Ausstehend', filter_confirmed: '✅ Bestätigt', filter_past: '📋 Vergangene Termine',
     tab_pending: 'Zu bestätigen', tab_confirmed: 'Bestätigt', tab_past: 'Vergangene',
     section_upcoming: '📋 Bevorstehende bestätigte Termine',
@@ -1403,7 +1414,7 @@ const DASH_RDV_T = {
     h1: '📅 Appuntamenti', subtitle: 'Gestisci le richieste di appuntamento e conferma i tuoi slot',
     kpi_pending_label: 'Da confermare', kpi_confirmed_label: 'Confermati',
     kpi_confirmed_sub: 'Ultimi 30 giorni', kpi_past_sub: 'Ultimi 30 giorni', kpi_past_label: 'Passati',
-    search_placeholder: '🔍 Cerca cliente, servizio...', ph_external_url: "https://www.planity.com/il-tuo-salone o https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Cerca cliente, servizio...', ph_external_url: "https://www.planity.com/il-tuo-salone o https://www.doctolib.fr/...", err_status: "Errore {status}", err_server_status: "Errore del server {status}", rdv_trial_status: "🎁 Prova gratuita — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Piano Pro", rdv_plan_std_full: "📦 Piano Standard", notice_google_only_title: "Dati degli appuntamenti disponibili solo con Google Calendar", notice_google_only_desc: "La cronologia degli appuntamenti, le conferme e le statistiche di conversione si alimentano automaticamente quando la modalità <strong style=\"color:#00D4FF;\">Google Calendar</strong> è attivata.<br>Con la modalità attuale, la prenotazione avviene al di fuori di LocalReply — questi dati non sono quindi disponibili qui.", notice_google_only_btn: "📅 Passa alla modalità Google Calendar", filter_all: "Tutti", filter_pending: "In attesa", refresh_title: "Aggiorna", rdv_mode_title: "Modalità di prenotazione appuntamenti", mode_link_label: "Link di prenotazione", mode_manual_label: "Gestione manuale", mode_none_label: "Nessuna prenotazione", cal_checking: "Verifica di Google Calendar in corso...", cal_connected_label: "✅ Google Calendar connesso", cal_since: "dal", cal_open: "📅 Apri", cal_disconnect: "Disconnetti", cal_events_label: "Prossimi eventi — 7 giorni", cal_loading: "Caricamento...", cal_tip1: "💡 Gli appuntamenti confermati vengono aggiunti automaticamente · Gli orari occupati bloccano le nuove richieste", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Consiglio:</strong> Utilizza preferibilmente un calendario dedicato agli appuntamenti della tua attività — non il tuo calendario personale. Questo evita che i tuoi eventi privati blocchino gli orari o confondano l'IA.", cal_not_connected_title: "Collega Google Calendar", cal_not_connected_desc: "Sincronizza le tue disponibilità per evitare doppie prenotazioni e creare appuntamenti automaticamente.", cal_tip3: "💡 <strong>Consiglio:</strong> Collega preferibilmente un calendario dedicato alla tua attività (es. \"Appuntamenti Salon Marco\"), non il tuo calendario personale. I tuoi eventi privati non interferiranno con l'IA.", cal_connect_btn: "🔗 Collega Google Calendar", cal_redirect: "Reindirizzamento sicuro a Google", cal_conn_error: "⚠️ Errore di connessione al calendario", link_mode_title: "Link di prenotazione esterno", link_mode_desc: "L'IA invia i tuoi clienti direttamente a questo link", link_save_btn: "💾 Salva", link_current_label: "Link attuale:", link_no_link_warning: "⚠️ Nessun link configurato — aggiungi il tuo link di prenotazione qui sopra", link_compatible_tip: "💡 Compatibile con: Planity, Doctolib, TheFork, Booking.com, Calendly e qualsiasi altro sistema di prenotazione online.", manual_mode_title: "Gestione manuale degli appuntamenti", manual_mode_desc: "L'IA chiede ai clienti di contattarti direttamente", manual_ai_says: "L'IA dirà ai tuoi clienti:", manual_ai_example: "\"Per prenotare un appuntamento, chiamaci al <strong>[il tuo numero di telefono]</strong> o inviaci un messaggio.\"", manual_phone_note: "ℹ️ Il tuo numero di telefono è configurato in", manual_phone_link: "Configurazione → Attività", none_mode_title: "Nessuna prenotazione di appuntamenti", none_mode_desc: "L'IA risponde alle domande senza proporre appuntamenti", none_mode_detail: "L'IA si concentra su informazioni, prezzi, orari e FAQ. Non propone mai una prenotazione.", none_mode_note: "ℹ️ La scheda Appuntamenti rimane disponibile per consultare la cronologia se cambi modalità in seguito.", event_untitled: "Senza titolo", event_at: "alle", event_more: "+ {n} altri eventi", event_load_error: "Errore di caricamento", apt_load_error_toast: "❌ Errore nel caricamento degli appuntamenti", apt_empty_title: "Nessun appuntamento", apt_empty_desc: "Gli appuntamenti creati dall'IA appariranno qui", apt_client_fallback: "Cliente", apt_email_missing: "Non indicato", apt_cancel_btn: "❌ Annulla appuntamento", apt_confirm_dialog: "Confermare questo appuntamento?", apt_refuse_dialog: "Rifiutare questo appuntamento? Lo slot verrà liberato e verrà inviata un'email al cliente.", err_prefix2: "❌ Errore: ", today_label: "Oggi", tomorrow_label: "Domani", time_now: "Proprio ora", time_min_ago: "{n} min fa", time_hour_ago: "{n}h fa", time_day_ago: "{n}g fa",
     filter_pending: '⏳ In attesa', filter_confirmed: '✅ Confermati', filter_past: '📋 Appuntamenti passati',
     tab_pending: 'Da confermare', tab_confirmed: 'Confermati', tab_past: 'Passati',
     section_upcoming: '📋 Prossimi appuntamenti confermati',
@@ -1441,7 +1452,7 @@ const DASH_RDV_T = {
     h1: '📅 Citas', subtitle: 'Gestiona las solicitudes de cita y confirma tus franjas',
     kpi_pending_label: 'Por confirmar', kpi_confirmed_label: 'Confirmadas',
     kpi_confirmed_sub: 'Últimos 30 días', kpi_past_sub: 'Últimos 30 días', kpi_past_label: 'Pasadas',
-    search_placeholder: '🔍 Buscar cliente, servicio...', ph_external_url: "https://www.planity.com/tu-salon o https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Buscar cliente, servicio...', ph_external_url: "https://www.planity.com/tu-salon o https://www.doctolib.fr/...", err_status: "Error {status}", err_server_status: "Error del servidor {status}", rdv_trial_status: "🎁 Prueba gratuita — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Plan Pro", rdv_plan_std_full: "📦 Plan Standard", notice_google_only_title: "Datos de citas disponibles solo con Google Calendar", notice_google_only_desc: "El historial de citas, las confirmaciones y las estadísticas de conversión se alimentan automáticamente cuando el modo <strong style=\"color:#00D4FF;\">Google Calendar</strong> está activado.<br>Con tu modo actual, la reserva de citas se realiza fuera de LocalReply — por lo que estos datos no están disponibles aquí.", notice_google_only_btn: "📅 Cambiar a modo Google Calendar", filter_all: "Todas", filter_pending: "Pendientes", refresh_title: "Actualizar", rdv_mode_title: "Modo de reserva de citas", mode_link_label: "Enlace de reserva", mode_manual_label: "Gestión manual", mode_none_label: "Sin reserva de citas", cal_checking: "Verificando Google Calendar...", cal_connected_label: "✅ Google Calendar conectado", cal_since: "desde el", cal_open: "📅 Abrir", cal_disconnect: "Desconectar", cal_events_label: "Próximos eventos — 7 días", cal_loading: "Cargando...", cal_tip1: "💡 Las citas confirmadas se añaden automáticamente · Los horarios ocupados bloquean nuevas solicitudes", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Consejo:</strong> Utiliza preferiblemente un calendario dedicado a las citas de tu negocio — no tu calendario personal. Esto evita que tus eventos privados bloqueen horarios o confundan a la IA.", cal_not_connected_title: "Conecta Google Calendar", cal_not_connected_desc: "Sincroniza tu disponibilidad para evitar reservas duplicadas y crear citas automáticamente.", cal_tip3: "💡 <strong>Consejo:</strong> Conecta preferiblemente un calendario dedicado a tu negocio (ej. \"Citas Salon Marco\"), no tu calendario personal. Tus eventos privados no interferirán con la IA.", cal_connect_btn: "🔗 Conectar Google Calendar", cal_redirect: "Redirección segura a Google", cal_conn_error: "⚠️ Error de conexión con el calendario", link_mode_title: "Enlace de reserva externo", link_mode_desc: "La IA envía a tus clientes directamente a este enlace", link_save_btn: "💾 Guardar", link_current_label: "Enlace actual:", link_no_link_warning: "⚠️ Ningún enlace configurado — añade tu enlace de reserva arriba", link_compatible_tip: "💡 Compatible con: Planity, Doctolib, TheFork, Booking.com, Calendly y cualquier otro sistema de reservas en línea.", manual_mode_title: "Gestión manual de citas", manual_mode_desc: "La IA pide a los clientes que te contacten directamente", manual_ai_says: "La IA dirá a tus clientes:", manual_ai_example: "\"Para reservar una cita, llámanos al <strong>[tu teléfono]</strong> o envíanos un mensaje.\"", manual_phone_note: "ℹ️ Tu número de teléfono está configurado en", manual_phone_link: "Configuración → Negocio", none_mode_title: "Sin reserva de citas", none_mode_desc: "La IA responde preguntas sin ofrecer citas", none_mode_detail: "La IA se centra en la información, los precios, los horarios y las FAQ. Nunca ofrece una reserva.", none_mode_note: "ℹ️ La pestaña Citas sigue disponible para consultar el historial si cambias de modo más adelante.", event_untitled: "Sin título", event_at: "a las", event_more: "+ {n} eventos más", event_load_error: "Error de carga", apt_load_error_toast: "❌ Error al cargar las citas", apt_empty_title: "Sin citas", apt_empty_desc: "Las citas creadas por la IA aparecerán aquí", apt_client_fallback: "Cliente", apt_email_missing: "No proporcionado", apt_cancel_btn: "❌ Cancelar cita", apt_confirm_dialog: "¿Confirmar esta cita?", apt_refuse_dialog: "¿Rechazar esta cita? El horario quedará liberado y se enviará un email al cliente.", err_prefix2: "❌ Error: ", today_label: "Hoy", tomorrow_label: "Mañana", time_now: "Ahora mismo", time_min_ago: "Hace {n} min", time_hour_ago: "Hace {n}h", time_day_ago: "Hace {n}d",
     filter_pending: '⏳ En espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Citas pasadas',
     tab_pending: 'Por confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Pasadas',
     section_upcoming: '📋 Próximas citas confirmadas',
@@ -1479,7 +1490,7 @@ const DASH_RDV_T = {
     h1: '📅 Marcações', subtitle: 'Gira os pedidos de marcação e confirme os seus horários',
     kpi_pending_label: 'A confirmar', kpi_confirmed_label: 'Confirmadas',
     kpi_confirmed_sub: 'Últimos 30 dias', kpi_past_sub: 'Últimos 30 dias', kpi_past_label: 'Passadas',
-    search_placeholder: '🔍 Pesquisar cliente, serviço...', ph_external_url: "https://www.planity.com/o-seu-salao ou https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Pesquisar cliente, serviço...', ph_external_url: "https://www.planity.com/o-seu-salao ou https://www.doctolib.fr/...", err_status: "Erro {status}", err_server_status: "Erro do servidor {status}", rdv_trial_status: "🎁 Teste gratuito — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Plano Pro", rdv_plan_std_full: "📦 Plano Standard", notice_google_only_title: "Dados de marcações disponíveis apenas com Google Calendar", notice_google_only_desc: "O histórico de marcações, as confirmações e as estatísticas de conversão são alimentados automaticamente quando o modo <strong style=\"color:#00D4FF;\">Google Calendar</strong> está ativado.<br>Com o seu modo atual, a marcação é feita fora do LocalReply — pelo que estes dados não estão disponíveis aqui.", notice_google_only_btn: "📅 Mudar para o modo Google Calendar", filter_all: "Todas", filter_pending: "Pendentes", refresh_title: "Atualizar", rdv_mode_title: "Modo de marcação de compromissos", mode_link_label: "Link de marcação", mode_manual_label: "Gestão manual", mode_none_label: "Sem marcação", cal_checking: "A verificar o Google Calendar...", cal_connected_label: "✅ Google Calendar ligado", cal_since: "desde", cal_open: "📅 Abrir", cal_disconnect: "Desligar", cal_events_label: "Próximos eventos — 7 dias", cal_loading: "A carregar...", cal_tip1: "💡 As marcações confirmadas são adicionadas automaticamente · Os horários ocupados bloqueiam novos pedidos", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Dica:</strong> Utilize preferencialmente um calendário dedicado às marcações do seu negócio — não o seu calendário pessoal. Isto evita que os seus eventos privados bloqueiem horários ou confundam a IA.", cal_not_connected_title: "Ligue o Google Calendar", cal_not_connected_desc: "Sincronize as suas disponibilidades para evitar marcações duplicadas e criar compromissos automaticamente.", cal_tip3: "💡 <strong>Dica:</strong> Ligue preferencialmente um calendário dedicado ao seu negócio (ex. \"Marcações Salon Marco\"), não o seu calendário pessoal. Os seus eventos privados não interferirão com a IA.", cal_connect_btn: "🔗 Ligar Google Calendar", cal_redirect: "Redirecionamento seguro para o Google", cal_conn_error: "⚠️ Erro de ligação ao calendário", link_mode_title: "Link de marcação externo", link_mode_desc: "A IA envia os seus clientes diretamente para este link", link_save_btn: "💾 Guardar", link_current_label: "Link atual:", link_no_link_warning: "⚠️ Nenhum link configurado — adicione o seu link de marcação acima", link_compatible_tip: "💡 Compatível com: Planity, Doctolib, TheFork, Booking.com, Calendly e qualquer outro sistema de reservas online.", manual_mode_title: "Gestão manual de marcações", manual_mode_desc: "A IA pede aos clientes para o contactarem diretamente", manual_ai_says: "A IA dirá aos seus clientes:", manual_ai_example: "\"Para marcar uma consulta, ligue-nos para <strong>[o seu telefone]</strong> ou envie-nos uma mensagem.\"", manual_phone_note: "ℹ️ O seu número de telefone está configurado em", manual_phone_link: "Configuração → Negócio", none_mode_title: "Sem marcação de compromissos", none_mode_desc: "A IA responde a perguntas sem propor marcações", none_mode_detail: "A IA concentra-se em informações, preços, horários e FAQ. Nunca propõe uma marcação.", none_mode_note: "ℹ️ O separador Marcações continua disponível para consultar o histórico se mudar de modo mais tarde.", event_untitled: "Sem título", event_at: "às", event_more: "+ {n} outros eventos", event_load_error: "Erro de carregamento", apt_load_error_toast: "❌ Erro ao carregar as marcações", apt_empty_title: "Sem marcações", apt_empty_desc: "As marcações criadas pela IA aparecerão aqui", apt_client_fallback: "Cliente", apt_email_missing: "Não indicado", apt_cancel_btn: "❌ Cancelar marcação", apt_confirm_dialog: "Confirmar esta marcação?", apt_refuse_dialog: "Recusar esta marcação? O horário será libertado e um email será enviado ao cliente.", err_prefix2: "❌ Erro: ", today_label: "Hoje", tomorrow_label: "Amanhã", time_now: "Agora mesmo", time_min_ago: "Há {n} min", time_hour_ago: "Há {n}h", time_day_ago: "Há {n}d",
     filter_pending: '⏳ Em espera', filter_confirmed: '✅ Confirmadas', filter_past: '📋 Marcações passadas',
     tab_pending: 'A confirmar', tab_confirmed: 'Confirmadas', tab_past: 'Passadas',
     section_upcoming: '📋 Próximas marcações confirmadas',
@@ -1517,7 +1528,7 @@ const DASH_RDV_T = {
     h1: '📅 Afspraken', subtitle: 'Beheer afspraakverzoeken en bevestig uw tijdsloten',
     kpi_pending_label: 'Te bevestigen', kpi_confirmed_label: 'Bevestigd',
     kpi_confirmed_sub: 'Laatste 30 dagen', kpi_past_sub: 'Laatste 30 dagen', kpi_past_label: 'Verstreken',
-    search_placeholder: '🔍 Klant, dienst zoeken...', ph_external_url: "https://www.planity.com/uw-salon of https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Klant, dienst zoeken...', ph_external_url: "https://www.planity.com/uw-salon of https://www.doctolib.fr/...", err_status: "Fout {status}", err_server_status: "Serverfout {status}", rdv_trial_status: "🎁 Gratis proefperiode — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Pro-abonnement", rdv_plan_std_full: "📦 Standard-abonnement", notice_google_only_title: "Afspraakgegevens alleen beschikbaar met Google Calendar", notice_google_only_desc: "Afsprakengeschiedenis, bevestigingen en conversiestatistieken worden automatisch bijgewerkt wanneer de modus <strong style=\"color:#00D4FF;\">Google Calendar</strong> is ingeschakeld.<br>Met uw huidige modus vindt het boeken van afspraken buiten LocalReply plaats — deze gegevens zijn hier dus niet beschikbaar.", notice_google_only_btn: "📅 Overschakelen naar Google Calendar-modus", filter_all: "Alle", filter_pending: "In behandeling", refresh_title: "Vernieuwen", rdv_mode_title: "Modus voor het boeken van afspraken", mode_link_label: "Boekingslink", mode_manual_label: "Handmatig beheer", mode_none_label: "Geen afspraakboeking", cal_checking: "Google Calendar wordt gecontroleerd...", cal_connected_label: "✅ Google Calendar verbonden", cal_since: "sinds", cal_open: "📅 Openen", cal_disconnect: "Verbinding verbreken", cal_events_label: "Aankomende evenementen — 7 dagen", cal_loading: "Laden...", cal_tip1: "💡 Bevestigde afspraken worden automatisch toegevoegd · Bezette tijdslots blokkeren nieuwe aanvragen", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Tip:</strong> Gebruik bij voorkeur een agenda die uitsluitend voor de afspraken van uw bedrijf is bestemd — niet uw persoonlijke agenda. Zo voorkomt u dat privé-evenementen tijdslots blokkeren of de AI verwarren.", cal_not_connected_title: "Google Calendar verbinden", cal_not_connected_desc: "Synchroniseer uw beschikbaarheid om dubbele boekingen te voorkomen en automatisch afspraken te maken.", cal_tip3: "💡 <strong>Tip:</strong> Verbind bij voorkeur een agenda die aan uw bedrijf is gewijd (bijv. \"Afspraken Salon Marco\"), niet uw persoonlijke agenda. Uw privé-evenementen verstoren de AI niet.", cal_connect_btn: "🔗 Google Calendar verbinden", cal_redirect: "Veilige omleiding naar Google", cal_conn_error: "⚠️ Fout bij verbinden met de agenda", link_mode_title: "Externe boekingslink", link_mode_desc: "De AI stuurt uw klanten rechtstreeks naar deze link", link_save_btn: "💾 Opslaan", link_current_label: "Huidige link:", link_no_link_warning: "⚠️ Geen link ingesteld — voeg hierboven uw boekingslink toe", link_compatible_tip: "💡 Compatibel met: Planity, Doctolib, TheFork, Booking.com, Calendly en elk ander online boekingssysteem.", manual_mode_title: "Handmatig afsprakenbeheer", manual_mode_desc: "De AI vraagt klanten om rechtstreeks contact met u op te nemen", manual_ai_says: "De AI zal uw klanten het volgende vertellen:", manual_ai_example: "\"Om een afspraak te maken, bel ons op <strong>[uw telefoonnummer]</strong> of stuur ons een bericht.\"", manual_phone_note: "ℹ️ Uw telefoonnummer is ingesteld in", manual_phone_link: "Configuratie → Bedrijf", none_mode_title: "Geen afspraakboeking", none_mode_desc: "De AI beantwoordt vragen zonder afspraken voor te stellen", none_mode_detail: "De AI richt zich op informatie, prijzen, openingstijden en FAQ. Ze stelt nooit een boeking voor.", none_mode_note: "ℹ️ Het tabblad Afspraken blijft beschikbaar om de geschiedenis te bekijken als u later van modus verandert.", event_untitled: "Zonder titel", event_at: "om", event_more: "+ {n} andere evenementen", event_load_error: "Laadfout", apt_load_error_toast: "❌ Fout bij het laden van de afspraken", apt_empty_title: "Geen afspraken", apt_empty_desc: "Door de AI aangemaakte afspraken verschijnen hier", apt_client_fallback: "Klant", apt_email_missing: "Niet opgegeven", apt_cancel_btn: "❌ Afspraak annuleren", apt_confirm_dialog: "Deze afspraak bevestigen?", apt_refuse_dialog: "Deze afspraak weigeren? Het tijdslot wordt vrijgegeven en er wordt een e-mail naar de klant gestuurd.", err_prefix2: "❌ Fout: ", today_label: "Vandaag", tomorrow_label: "Morgen", time_now: "Zojuist", time_min_ago: "{n} min geleden", time_hour_ago: "{n}u geleden", time_day_ago: "{n}d geleden",
     filter_pending: '⏳ In behandeling', filter_confirmed: '✅ Bevestigd', filter_past: '📋 Verstreken afspraken',
     tab_pending: 'Te bevestigen', tab_confirmed: 'Bevestigd', tab_past: 'Verstreken',
     section_upcoming: '📋 Aankomende bevestigde afspraken',
@@ -1555,7 +1566,7 @@ const DASH_RDV_T = {
     h1: '📅 Wizyty', subtitle: 'Zarządzaj prośbami o wizytę i potwierdzaj swoje terminy',
     kpi_pending_label: 'Do potwierdzenia', kpi_confirmed_label: 'Potwierdzone',
     kpi_confirmed_sub: 'Ostatnie 30 dni', kpi_past_sub: 'Ostatnie 30 dni', kpi_past_label: 'Minione',
-    search_placeholder: '🔍 Szukaj klienta, usługi...', ph_external_url: "https://www.planity.com/twoj-salon lub https://www.doctolib.fr/...",
+    search_placeholder: '🔍 Szukaj klienta, usługi...', ph_external_url: "https://www.planity.com/twoj-salon lub https://www.doctolib.fr/...", err_status: "Błąd {status}", err_server_status: "Błąd serwera {status}", rdv_trial_status: "🎁 Darmowy okres próbny — ", rdv_plan_pro_short: "Pro", rdv_plan_std_short: "Standard", rdv_plan_pro_full: "⭐ Plan Pro", rdv_plan_std_full: "📦 Plan Standard", notice_google_only_title: "Dane wizyt dostępne tylko z Google Calendar", notice_google_only_desc: "Historia wizyt, potwierdzenia i statystyki konwersji są automatycznie zasilane, gdy tryb <strong style=\"color:#00D4FF;\">Google Calendar</strong> jest włączony.<br>W obecnym trybie rezerwacja odbywa się poza LocalReply — te dane nie są więc tutaj dostępne.", notice_google_only_btn: "📅 Przełącz na tryb Google Calendar", filter_all: "Wszystkie", filter_pending: "Oczekujące", refresh_title: "Odśwież", rdv_mode_title: "Tryb rezerwacji wizyt", mode_link_label: "Link do rezerwacji", mode_manual_label: "Zarządzanie ręczne", mode_none_label: "Brak rezerwacji", cal_checking: "Sprawdzanie Google Calendar...", cal_connected_label: "✅ Google Calendar połączony", cal_since: "od", cal_open: "📅 Otwórz", cal_disconnect: "Rozłącz", cal_events_label: "Nadchodzące wydarzenia — 7 dni", cal_loading: "Ładowanie...", cal_tip1: "💡 Potwierdzone wizyty są dodawane automatycznie · Zajęte terminy blokują nowe żądania", cal_tip2: "⚠️ <strong style=\"color:rgba(245,158,11,0.8);\">Wskazówka:</strong> Zaleca się korzystanie z kalendarza przeznaczonego wyłącznie do wizyt Twojej firmy — nie z kalendarza osobistego. Zapobiega to blokowaniu terminów przez prywatne wydarzenia lub wprowadzaniu AI w błąd.", cal_not_connected_title: "Połącz Google Calendar", cal_not_connected_desc: "Zsynchronizuj swoją dostępność, aby uniknąć podwójnych rezerwacji i automatycznie tworzyć wizyty.", cal_tip3: "💡 <strong>Wskazówka:</strong> Zaleca się połączenie kalendarza przeznaczonego dla Twojej firmy (np. \"Wizyty Salon Marco\"), a nie kalendarza osobistego. Twoje prywatne wydarzenia nie będą kolidować z AI.", cal_connect_btn: "🔗 Połącz Google Calendar", cal_redirect: "Bezpieczne przekierowanie do Google", cal_conn_error: "⚠️ Błąd połączenia z kalendarzem", link_mode_title: "Zewnętrzny link do rezerwacji", link_mode_desc: "AI wysyła Twoich klientów bezpośrednio pod ten link", link_save_btn: "💾 Zapisz", link_current_label: "Obecny link:", link_no_link_warning: "⚠️ Brak skonfigurowanego linku — dodaj powyżej swój link do rezerwacji", link_compatible_tip: "💡 Kompatybilne z: Planity, Doctolib, TheFork, Booking.com, Calendly i każdym innym systemem rezerwacji online.", manual_mode_title: "Ręczne zarządzanie wizytami", manual_mode_desc: "AI prosi klientów o bezpośredni kontakt z Tobą", manual_ai_says: "AI powie Twoim klientom:", manual_ai_example: "\"Aby umówić wizytę, zadzwoń do nas pod numer <strong>[Twój telefon]</strong> lub wyślij nam wiadomość.\"", manual_phone_note: "ℹ️ Twój numer telefonu jest skonfigurowany w", manual_phone_link: "Konfiguracja → Firma", none_mode_title: "Brak rezerwacji wizyt", none_mode_desc: "AI odpowiada na pytania bez proponowania wizyt", none_mode_detail: "AI koncentruje się na informacjach, cenach, godzinach otwarcia i FAQ. Nigdy nie proponuje rezerwacji.", none_mode_note: "ℹ️ Zakładka Wizyty pozostaje dostępna do przeglądania historii, jeśli później zmienisz tryb.", event_untitled: "Bez tytułu", event_at: "o", event_more: "+ {n} innych wydarzeń", event_load_error: "Błąd ładowania", apt_load_error_toast: "❌ Błąd podczas ładowania wizyt", apt_empty_title: "Brak wizyt", apt_empty_desc: "Wizyty utworzone przez AI pojawią się tutaj", apt_client_fallback: "Klient", apt_email_missing: "Nie podano", apt_cancel_btn: "❌ Anuluj wizytę", apt_confirm_dialog: "Potwierdzić tę wizytę?", apt_refuse_dialog: "Odrzucić tę wizytę? Termin zostanie zwolniony, a do klienta zostanie wysłany email.", err_prefix2: "❌ Błąd: ", today_label: "Dzisiaj", tomorrow_label: "Jutro", time_now: "Przed chwilą", time_min_ago: "{n} min temu", time_hour_ago: "{n}h temu", time_day_ago: "{n}d temu",
     filter_pending: '⏳ Oczekujące', filter_confirmed: '✅ Potwierdzone', filter_past: '📋 Minione wizyty',
     tab_pending: 'Do potwierdzenia', tab_confirmed: 'Potwierdzone', tab_past: 'Minione',
     section_upcoming: '📋 Nadchodzące potwierdzone wizyty',
@@ -1598,6 +1609,8 @@ const DASH_RDV_T = {
 
   function applyRdvLang() {
     const ids = {
+      'rdv-notice-title': t.notice_google_only_title, 'rdv-notice-btn': t.notice_google_only_btn,
+      'rdv-filterbar-all': t.filter_all, 'rdv-filterbar-pending': t.filter_pending,
       'rdv-h1': t.h1, 'rdv-subtitle': t.subtitle,
       'rdv-kpi-pending-label': t.kpi_pending_label,
       'rdv-kpi-confirmed-label': t.kpi_confirmed_label,
@@ -1629,6 +1642,10 @@ const DASH_RDV_T = {
       const el = document.getElementById(id);
       if (el && txt) el.textContent = txt;
     });
+    const noticeDesc = document.getElementById('rdv-notice-desc');
+    if (noticeDesc && t.notice_google_only_desc) noticeDesc.innerHTML = t.notice_google_only_desc;
+    const refreshBtn = document.getElementById('rdv-refresh-btn');
+    if (refreshBtn && t.refresh_title) refreshBtn.title = t.refresh_title;
     // Search placeholder
     const si = document.getElementById('searchInput');
     if (si) si.placeholder = t.search_placeholder;

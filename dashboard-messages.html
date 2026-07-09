@@ -333,11 +333,10 @@ function timeAgo(dateStr) {
 }
 
 
+const LANG_NAMES = {"fr": {"de": "allemand", "it": "italien", "es": "espagnol", "en": "anglais", "pt": "portugais", "nl": "néerlandais", "pl": "polonais", "ru": "russe", "fr": "français"}, "en": {"de": "German", "it": "Italian", "es": "Spanish", "en": "English", "pt": "Portuguese", "nl": "Dutch", "pl": "Polish", "ru": "Russian", "fr": "French"}, "de": {"de": "Deutsch", "it": "Italienisch", "es": "Spanisch", "en": "Englisch", "pt": "Portugiesisch", "nl": "Niederländisch", "pl": "Polnisch", "ru": "Russisch", "fr": "Französisch"}, "it": {"de": "tedesco", "it": "italiano", "es": "spagnolo", "en": "inglese", "pt": "portoghese", "nl": "olandese", "pl": "polacco", "ru": "russo", "fr": "francese"}, "es": {"de": "alemán", "it": "italiano", "es": "español", "en": "inglés", "pt": "portugués", "nl": "neerlandés", "pl": "polaco", "ru": "ruso", "fr": "francés"}, "pt": {"de": "alemão", "it": "italiano", "es": "espanhol", "en": "inglês", "pt": "português", "nl": "neerlandês", "pl": "polaco", "ru": "russo", "fr": "francês"}, "nl": {"de": "Duits", "it": "Italiaans", "es": "Spaans", "en": "Engels", "pt": "Portugees", "nl": "Nederlands", "pl": "Pools", "ru": "Russisch", "fr": "Frans"}, "pl": {"de": "niemiecki", "it": "włoski", "es": "hiszpański", "en": "angielski", "pt": "portugalski", "nl": "niderlandzki", "pl": "polski", "ru": "rosyjski", "fr": "francuski"}};
 function langName(code) {
-  const names = {
-    'de':'allemand','it':'italien','es':'espagnol','en':'anglais',
-    'pt':'portugais','nl':'néerlandais','pl':'polonais','ru':'russe'
-  };
+  const dashLang = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+  const names = LANG_NAMES[dashLang] || LANG_NAMES.fr;
   return names[code] || code;
 }
 
@@ -358,20 +357,20 @@ function renderQuestion(q, tab) {
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
           ${statusBadge}
           <span style="font-size:11px;color:rgba(255,255,255,0.35);">${timeAgo(q.created_at)}</span>
-          ${q.added_to_faq ? `<span style="font-size:11px;color:#00D4FF;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:3px 9px;border-radius:100px;">📚 Dans la FAQ</span>` : ''}
+          ${q.added_to_faq ? `<span style="font-size:11px;color:#00D4FF;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);padding:3px 9px;border-radius:100px;">${(_dmt||DASH_MSG_T.fr).msg_in_faq_badge||'📚 Dans la FAQ'}</span>` : ''}
         </div>
         <div style="font-size:15px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.5;">"${q.question}"</div>
         ${q.translated_text && q.translated_text !== q.question ? `<div style="font-size:12px;color:rgba(0,212,255,0.7);margin-bottom:6px;display:flex;align-items:flex-start;gap:5px;"><span>🔄</span><span>${q.translated_text}</span></div>` : ''}
-        ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' && !q.translated_text ? `<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">⏳ Traduction en cours...</div>` : ''}
-        ${clientInfo ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">👤 ${clientInfo}</div>` : '<div style="font-size:12px;color:rgba(255,255,255,0.25);">👤 Client anonyme</div>'}
+        ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' && !q.translated_text ? `<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px;">${(_dmt||DASH_MSG_T.fr).msg_translating||'⏳ Traduction en cours...'}</div>` : ''}
+        ${clientInfo ? `<div style="font-size:12px;color:rgba(255,255,255,0.4);">👤 ${clientInfo}</div>` : `<div style="font-size:12px;color:rgba(255,255,255,0.25);">👤 ${(_dmt||DASH_MSG_T.fr).msg_anonymous_client||'Client anonyme'}</div>`}
       </div>
     </div>
 
     ${q.business_answer ? `
     <div style="padding:12px 14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;margin-bottom:12px;">
-      <div id="msg-answered-label" style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">Votre réponse (en français)</div>
+      <div id="msg-answered-label" style="font-size:10px;font-weight:700;color:#10B981;margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;">${(_dmt||DASH_MSG_T.fr).msg_your_answer_label||'Votre réponse (en français)'}</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6;">${q.business_answer}</div>
-      ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' ? `<div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:8px;">✓ Traduite automatiquement en ${langName(q.detected_language)} pour le client</div>` : ''}
+      ${q.detected_language && q.detected_language !== 'fr' && q.detected_language !== 'unknown' ? `<div style="font-size:11px;color:rgba(0,212,255,0.6);margin-top:8px;">${((_dmt||DASH_MSG_T.fr).msg_auto_translated||'✓ Traduite automatiquement en {lang} pour le client').replace('{lang}', langName(q.detected_language))}</div>` : ''}
     </div>` : ''}
 
     ${q.context ? `
@@ -453,7 +452,7 @@ async function loadQuestions() {
     renderTab(currentTab);
   } catch(e) {
     console.error(e);
-    document.getElementById('questionsList').innerHTML = `<div style="text-align:center;padding:60px;color:rgba(255,255,255,0.4);">❌ Impossible de charger les messages</div>`;
+    document.getElementById('questionsList').innerHTML = `<div style="text-align:center;padding:60px;color:rgba(255,255,255,0.4);">${(window._dmt||{}).msg_load_error||'❌ Impossible de charger les messages'}</div>`;
   }
 }
 
@@ -526,7 +525,7 @@ function openReplyModal(id, question, clientEmail) {
 
   if (clientEmail) {
     infoEl.style.display = 'block'; noEmailEl.style.display = 'none';
-    emailEl.textContent = 'La réponse sera envoyée à ' + clientEmail;
+    emailEl.textContent = ((window._dmt||{}).email_send_to||'La réponse sera envoyée à ') + clientEmail;
     notifyCb.disabled = false;
   } else {
     infoEl.style.display = 'none'; noEmailEl.style.display = 'block';
@@ -565,19 +564,19 @@ async function submitReply() {
     showToast(faq ? (_dmt||DASH_MSG_T.fr).success_faq : (_dmt||DASH_MSG_T.fr).success_reply);
     await loadQuestions();
   } catch(e) {
-    showToast('Erreur lors de l\'envoi', 'error');
+    showToast((window._dmt||{}).msg_send_error||"Erreur lors de l'envoi", 'error');
   } finally {
     btn.disabled = false; btn.textContent = (_dmt||DASH_MSG_T.fr).modal_send;
   }
 }
 
 async function quickIgnore(id) {
-  if (!(await customConfirm('Ignorer cette question ?'))) return;
+  if (!(await customConfirm((window._dmt||{}).msg_ignore_confirm||'Ignorer cette question ?'))) return;
   try {
     await apiRequest(`/api/business/${businessId}/unknown-questions/${id}/ignore`, 'POST', {});
     showToast((_dmt||DASH_MSG_T.fr).success_ignored);
     await loadQuestions();
-  } catch { showToast('Erreur', 'error'); }
+  } catch { showToast((window._dmt||{}).msg_generic_error||'Erreur', 'error'); }
 }
 
 async function ignoreQuestion() {
@@ -594,7 +593,7 @@ async function loadSidebarInfo() {
     ]);
     const biz = config.business || {};
     const sn = document.getElementById('sidebarBusinessName'); if (sn && biz.name) sn.textContent = biz.name;
-    const sp = document.getElementById('sidebarPlan'); if (sp) sp.textContent = sub?.status==='trialing'?'🎁 Essai gratuit — '+(sub?.plan==='pro'?'Pro':'Standard'):sub?.plan==='pro'?'⭐ Plan Pro':'📦 Plan Standard';
+    const sp = document.getElementById('sidebarPlan'); if (sp) { const _dt = (window._dmt||{}); sp.textContent = sub?.status==='trialing'?(_dt.msg_trial_status||'🎁 Essai gratuit — ')+(sub?.plan==='pro'?(_dt.msg_plan_pro_short||'Pro'):(_dt.msg_plan_std_short||'Standard')):sub?.plan==='pro'?(_dt.msg_plan_pro_full||'⭐ Plan Pro'):(_dt.msg_plan_std_full||'📦 Plan Standard'); }
     const icons = {salon:'💇',spa:'💅',massage:'💆',dentist:'🦷',restaurant:'🍽️',cafe:'☕',pizzeria:'🍕',bakery:'🍞',gym:'🏋️',garage:'🔧',plumber:'🔨',cleaning:'🧹',medical:'🏥',vet:'🐾',retail:'🛍️',hotel:'🏨',other:'🎨'};
     const sl = document.getElementById('sidebarLogo');
     const slWrap = document.getElementById('sidebarLogoWrap');
@@ -669,7 +668,7 @@ const DASH_MSG_T = {
     email_to: 'La réponse sera envoyée à',
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
     email_send_to:'La réponse sera envoyée à ',
-    no_email_warning:"⚠️ Pas d'email client — le client ne sera pas notifié.", ph_answer:"Rédigez votre réponse ici...",
+    no_email_warning:"⚠️ Pas d'email client — le client ne sera pas notifié.", ph_answer:"Rédigez votre réponse ici...", msg_in_faq_badge: "📚 Dans la FAQ", msg_translating: "⏳ Traduction en cours...", msg_anonymous_client: "Client anonyme", msg_your_answer_label: "Votre réponse (en français)", msg_auto_translated: "✓ Traduite automatiquement en {lang} pour le client", msg_load_error: "❌ Impossible de charger les messages", msg_send_error: "Erreur lors de l'envoi", msg_ignore_confirm: "Ignorer cette question ?", msg_generic_error: "Erreur", msg_trial_status: "🎁 Essai gratuit — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard",
     lang_note_prefix:'Votre réponse sera traduite en',lang_note_suffix:'pour le client.',
     msg_main_subtitle: "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances",
     msg_faq_knows: "L'IA sait maintenant répondre",
@@ -708,7 +707,7 @@ const DASH_MSG_T = {
     success_ignored: 'Question ignored',
     email_to: 'The reply will be sent to',
     logout_confirm: 'Are you sure you want to sign out?',
-    email_send_to:'The reply will be sent to ', no_email_warning:"⚠️ No customer email — the customer will not be notified.", ph_answer:"Write your answer here...", lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
+    email_send_to:'The reply will be sent to ', no_email_warning:"⚠️ No customer email — the customer will not be notified.", ph_answer:"Write your answer here...", msg_in_faq_badge: "📚 In the FAQ", msg_translating: "⏳ Translating...", msg_anonymous_client: "Anonymous customer", msg_your_answer_label: "Your answer (in English)", msg_auto_translated: "✓ Automatically translated into {lang} for the customer", msg_load_error: "❌ Unable to load messages", msg_send_error: "Error sending", msg_ignore_confirm: "Ignore this question?", msg_generic_error: "Error", msg_trial_status: "🎁 Free trial — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro Plan", msg_plan_std_full: "📦 Standard Plan", lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
     msg_main_subtitle: 'Questions forwarded by the AI — answer them to enrich its knowledge base',
     msg_faq_knows: 'The AI now knows how to answer',
   },
@@ -746,7 +745,7 @@ const DASH_MSG_T = {
     success_ignored: 'Frage ignoriert',
     email_to: 'Die Antwort wird gesendet an',
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
-    email_send_to:'Die Antwort wird gesendet an ', no_email_warning:"⚠️ Keine Kunden-E-Mail — der Kunde wird nicht benachrichtigt.", ph_answer:"Schreiben Sie Ihre Antwort hier...", lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
+    email_send_to:'Die Antwort wird gesendet an ', no_email_warning:"⚠️ Keine Kunden-E-Mail — der Kunde wird nicht benachrichtigt.", ph_answer:"Schreiben Sie Ihre Antwort hier...", msg_in_faq_badge: "📚 In der FAQ", msg_translating: "⏳ Übersetzung läuft...", msg_anonymous_client: "Anonymer Kunde", msg_your_answer_label: "Ihre Antwort (auf Deutsch)", msg_auto_translated: "✓ Automatisch ins {lang} übersetzt für den Kunden", msg_load_error: "❌ Nachrichten konnten nicht geladen werden", msg_send_error: "Fehler beim Senden", msg_ignore_confirm: "Diese Frage ignorieren?", msg_generic_error: "Fehler", msg_trial_status: "🎁 Kostenlose Testphase — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-Plan", msg_plan_std_full: "📦 Standard-Plan", lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
     msg_main_subtitle: 'Von der KI weitergeleitete Fragen — antworten Sie, um die Wissensbasis anzureichern',
     msg_faq_knows: 'Die KI kann jetzt antworten',
   },
@@ -784,7 +783,7 @@ const DASH_MSG_T = {
     success_ignored: 'Domanda ignorata',
     email_to: 'La risposta sarà inviata a',
     logout_confirm: 'Sei sicuro di voler uscire?',
-    email_send_to:'La risposta sarà inviata a ', no_email_warning:"⚠️ Nessuna email del cliente — il cliente non sarà avvisato.", ph_answer:"Scrivi qui la tua risposta...", lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
+    email_send_to:'La risposta sarà inviata a ', no_email_warning:"⚠️ Nessuna email del cliente — il cliente non sarà avvisato.", ph_answer:"Scrivi qui la tua risposta...", msg_in_faq_badge: "📚 Nella FAQ", msg_translating: "⏳ Traduzione in corso...", msg_anonymous_client: "Cliente anonimo", msg_your_answer_label: "La tua risposta (in italiano)", msg_auto_translated: "✓ Tradotta automaticamente in {lang} per il cliente", msg_load_error: "❌ Impossibile caricare i messaggi", msg_send_error: "Errore durante l'invio", msg_ignore_confirm: "Ignorare questa domanda?", msg_generic_error: "Errore", msg_trial_status: "🎁 Prova gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Piano Pro", msg_plan_std_full: "📦 Piano Standard", lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
     msg_main_subtitle: "Domande inoltrate dall'IA — rispondi per arricchire la sua base di conoscenza",
     msg_faq_knows: "L'IA sa ora rispondere",
   },
@@ -822,7 +821,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pregunta ignorada',
     email_to: 'La respuesta se enviará a',
     logout_confirm: '¿Seguro que quieres cerrar sesión?',
-    email_send_to:'La respuesta se enviará a ', no_email_warning:"⚠️ Sin email del cliente — no se notificará al cliente.", ph_answer:"Escribe tu respuesta aquí...", lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
+    email_send_to:'La respuesta se enviará a ', no_email_warning:"⚠️ Sin email del cliente — no se notificará al cliente.", ph_answer:"Escribe tu respuesta aquí...", msg_in_faq_badge: "📚 En la FAQ", msg_translating: "⏳ Traduciendo...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "Tu respuesta (en español)", msg_auto_translated: "✓ Traducida automáticamente al {lang} para el cliente", msg_load_error: "❌ No se pudieron cargar los mensajes", msg_send_error: "Error al enviar", msg_ignore_confirm: "¿Ignorar esta pregunta?", msg_generic_error: "Error", msg_trial_status: "🎁 Prueba gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
     msg_main_subtitle: 'Preguntas reenviadas por la IA — respóndelas para enriquecer su base de conocimiento',
     msg_faq_knows: 'La IA ahora sabe responder',
   },
@@ -860,7 +859,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pergunta ignorada',
     email_to: 'A resposta será enviada para',
     logout_confirm: 'Tem a certeza que quer sair?',
-    email_send_to:'A resposta será enviada para ', no_email_warning:"⚠️ Sem email do cliente — o cliente não será notificado.", ph_answer:"Escreva a sua resposta aqui...", lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
+    email_send_to:'A resposta será enviada para ', no_email_warning:"⚠️ Sem email do cliente — o cliente não será notificado.", ph_answer:"Escreva a sua resposta aqui...", msg_in_faq_badge: "📚 Na FAQ", msg_translating: "⏳ Tradução em curso...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "A sua resposta (em português)", msg_auto_translated: "✓ Traduzida automaticamente para {lang} para o cliente", msg_load_error: "❌ Não foi possível carregar as mensagens", msg_send_error: "Erro ao enviar", msg_ignore_confirm: "Ignorar esta pergunta?", msg_generic_error: "Erro", msg_trial_status: "🎁 Teste gratuito — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plano Pro", msg_plan_std_full: "📦 Plano Standard", lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
     msg_main_subtitle: 'Perguntas encaminhadas pela IA — responda para enriquecer a sua base de conhecimento',
     msg_faq_knows: 'A IA já sabe responder',
   },
@@ -898,7 +897,7 @@ const DASH_MSG_T = {
     success_ignored: 'Vraag genegeerd',
     email_to: 'Het antwoord wordt verzonden naar',
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
-    email_send_to:'Het antwoord wordt gestuurd naar ', no_email_warning:"⚠️ Geen e-mail van de klant — de klant wordt niet op de hoogte gebracht.", ph_answer:"Schrijf hier uw antwoord...", lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
+    email_send_to:'Het antwoord wordt gestuurd naar ', no_email_warning:"⚠️ Geen e-mail van de klant — de klant wordt niet op de hoogte gebracht.", ph_answer:"Schrijf hier uw antwoord...", msg_in_faq_badge: "📚 In de FAQ", msg_translating: "⏳ Bezig met vertalen...", msg_anonymous_client: "Anonieme klant", msg_your_answer_label: "Uw antwoord (in het Nederlands)", msg_auto_translated: "✓ Automatisch vertaald naar het {lang} voor de klant", msg_load_error: "❌ Kan berichten niet laden", msg_send_error: "Fout bij verzenden", msg_ignore_confirm: "Deze vraag negeren?", msg_generic_error: "Fout", msg_trial_status: "🎁 Gratis proefperiode — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-abonnement", msg_plan_std_full: "📦 Standard-abonnement", lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
     msg_main_subtitle: 'Door de AI doorgestuurde vragen — beantwoord ze om de kennisbasis te verrijken',
     msg_faq_knows: 'De AI kan nu antwoorden',
   },
@@ -936,7 +935,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pytanie zignorowane',
     email_to: 'Odpowiedź zostanie wysłana do',
     logout_confirm: 'Czy na pewno chcesz się wylogować?',
-    email_send_to:'Odpowiedź zostanie wysłana do ', no_email_warning:"⚠️ Brak adresu email klienta — klient nie zostanie powiadomiony.", ph_answer:"Napisz tutaj swoją odpowiedź...", lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
+    email_send_to:'Odpowiedź zostanie wysłana do ', no_email_warning:"⚠️ Brak adresu email klienta — klient nie zostanie powiadomiony.", ph_answer:"Napisz tutaj swoją odpowiedź...", msg_in_faq_badge: "📚 W FAQ", msg_translating: "⏳ Trwa tłumaczenie...", msg_anonymous_client: "Anonimowy klient", msg_your_answer_label: "Twoja odpowiedź (po polsku)", msg_auto_translated: "✓ Automatycznie przetłumaczone na {lang} dla klienta", msg_load_error: "❌ Nie udało się załadować wiadomości", msg_send_error: "Błąd podczas wysyłania", msg_ignore_confirm: "Zignorować to pytanie?", msg_generic_error: "Błąd", msg_trial_status: "🎁 Bezpłatny okres próbny — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
     msg_main_subtitle: 'Pytania przekazane przez AI — odpowiedz, aby wzbogacić bazę wiedzy',
     msg_faq_knows: 'AI teraz potrafi odpowiedzieć',
   },

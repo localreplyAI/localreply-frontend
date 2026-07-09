@@ -352,9 +352,10 @@ async function loadSidebarInfo() {
     if (sp) {
       const plan = sub?.plan || 'standard';
       const status = sub?.status || '';
-      if (status === 'trialing') sp.textContent = '🎁 ' + (_dat||DASH_ANA_T.fr).status_trial + ' — ' + (plan === 'pro' ? 'Pro' : 'Standard');
-      else if (plan === 'pro') sp.textContent = '⭐ Plan Pro';
-      else sp.textContent = '📦 Plan Standard';
+      const _dt3 = (_dat||DASH_ANA_T.fr);
+      if (status === 'trialing') sp.textContent = (_dt3.ana_trial_status||'🎁 ') + _dt3.status_trial + ' — ' + (plan === 'pro' ? (_dt3.ana_plan_pro_short||'Pro') : (_dt3.ana_plan_std_short||'Standard'));
+      else if (plan === 'pro') sp.textContent = _dt3.ana_plan_pro_full||'⭐ Plan Pro';
+      else sp.textContent = _dt3.ana_plan_std_full||'📦 Plan Standard';
     }
 
     const slWrap = document.getElementById('sidebarLogoWrap');
@@ -635,7 +636,13 @@ async function loadUnansweredQuestions() {
         <div style="font-size:22px;flex-shrink:0;">❓</div>
         <div style="flex:1;">
           <div style="font-size:14px;color:rgba(255,255,255,0.9);font-weight:500;margin-bottom:3px;">${q.question || q.original_text}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.4);">Posée ${q.count || q.unanswered_count || 1}x · Dernière fois ${q.last_asked ? new Date(q.last_asked).toLocaleDateString('fr-FR') : 'récemment'}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.4);">${(() => {
+            const _da = (_dat||DASH_ANA_T.fr);
+            const _lang3 = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+            const _localeMap2 = {fr:'fr-FR',en:'en-US',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',nl:'nl-NL',pl:'pl-PL'};
+            const dateStr = q.last_asked ? new Date(q.last_asked).toLocaleDateString(_localeMap2[_lang3]||'fr-FR') : (_da.q_recently||'récemment');
+            return (_da.q_asked_label||'Posée {n}x · Dernière fois {date}').replace('{n}', q.count || q.unanswered_count || 1).replace('{date}', dateStr);
+          })()}</div>
         </div>
         <a href="/dashboard-conversations" style="padding:7px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:8px;font-size:12px;font-weight:700;color:#fff;text-decoration:none;flex-shrink:0;">${(_dat||DASH_ANA_T.fr).btn_answer}</a>
       </div>`).join('')}</div>`;
@@ -657,9 +664,9 @@ function buildLocalSummary(container, label) {
       <div style="font-size:14px;color:rgba(255,255,255,0.5);line-height:1.8;max-width:460px;margin:0 auto;">
         ${(_dat||DASH_ANA_T.fr).no_summary}<br><br>
         <span style="font-size:13px;color:rgba(255,255,255,0.35);">
-          Le résumé est généré automatiquement ${proFlag ? (_dat||DASH_ANA_T.fr).summary_auto_pro : (_dat||DASH_ANA_T.fr).summary_auto_std}, 
-          à condition qu'il y ait eu des conversations sur la période.<br><br>
-          Il sera ensuite affiché ici <strong style="color:rgba(255,255,255,0.5);">${(_dat||DASH_ANA_T.fr).summary_email}</strong> — c'est le même contenu.
+          ${(_dat||DASH_ANA_T.fr).summary_auto_label||'Le résumé est généré automatiquement'} ${proFlag ? (_dat||DASH_ANA_T.fr).summary_auto_pro : (_dat||DASH_ANA_T.fr).summary_auto_std}, 
+          ${(_dat||DASH_ANA_T.fr).summary_condition||"à condition qu'il y ait eu des conversations sur la période."}<br><br>
+          ${(_dat||DASH_ANA_T.fr).summary_will_show||'Il sera ensuite affiché ici'} <strong style="color:rgba(255,255,255,0.5);">${(_dat||DASH_ANA_T.fr).summary_email}</strong> ${(_dat||DASH_ANA_T.fr).summary_same_content||"— c'est le même contenu."}
         </span>
       </div>
     </div>`;
@@ -830,7 +837,7 @@ const DASH_ANA_T = {
     status_trial: 'Essai gratuit',
     summary_auto_pro: 'selon la fréquence choisie dans Mon compte',
     summary_auto_std: 'chaque lundi matin',
-    summary_email: 'et envoyé par email',
+    summary_email: 'et envoyé par email', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Plan Pro', ana_plan_std_full: '📦 Plan Standard', q_asked_label: 'Posée {n}x · Dernière fois {date}', q_recently: 'récemment', summary_condition: "à condition qu'il y ait eu des conversations sur la période.", summary_will_show: 'Il sera ensuite affiché ici', summary_auto_label: 'Le résumé est généré automatiquement', summary_same_content: "— c'est le même contenu.",
     summary_none_label: 'Aucun résumé',
     summary_daily: 'Résumé quotidien', summary_weekly: 'Résumé hebdomadaire',
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
@@ -875,7 +882,7 @@ const DASH_ANA_T = {
     status_trial: 'Free trial',
     summary_auto_pro: 'at the frequency chosen in My account',
     summary_auto_std: 'every Monday morning',
-    summary_email: 'and sent by email',
+    summary_email: 'and sent by email', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Pro Plan', ana_plan_std_full: '📦 Standard Plan', q_asked_label: 'Asked {n}x · Last time {date}', q_recently: 'recently', summary_condition: 'provided there were conversations during the period.', summary_will_show: 'It will then be displayed here', summary_auto_label: 'The summary is generated automatically', summary_same_content: "— it's the same content.",
     summary_none_label: 'No summary',
     summary_daily: 'Daily summary', summary_weekly: 'Weekly summary',
     logout_confirm: 'Are you sure you want to sign out?',
@@ -920,7 +927,7 @@ const DASH_ANA_T = {
     status_trial: 'Kostenlose Testphase',
     summary_auto_pro: 'in der in Mein Konto gewählten Häufigkeit',
     summary_auto_std: 'jeden Montagmorgen',
-    summary_email: 'und per E-Mail gesendet',
+    summary_email: 'und per E-Mail gesendet', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Pro-Plan', ana_plan_std_full: '📦 Standard-Plan', q_asked_label: '{n}x gestellt · Zuletzt {date}', q_recently: 'kürzlich', summary_condition: 'sofern es im Zeitraum Konversationen gab.', summary_will_show: 'Es wird dann hier angezeigt', summary_auto_label: 'Die Zusammenfassung wird automatisch generiert', summary_same_content: "— es ist derselbe Inhalt.",
     summary_none_label: 'Keine Zusammenfassung',
     summary_daily: 'Tägliche Zusammenfassung', summary_weekly: 'Wöchentliche Zusammenfassung',
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
@@ -965,7 +972,7 @@ const DASH_ANA_T = {
     status_trial: 'Prova gratuita',
     summary_auto_pro: 'alla frequenza scelta in Il mio account',
     summary_auto_std: 'ogni lunedì mattina',
-    summary_email: 'e inviato via email',
+    summary_email: 'e inviato via email', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Piano Pro', ana_plan_std_full: '📦 Piano Standard', q_asked_label: 'Posta {n}x · Ultima volta {date}', q_recently: 'di recente', summary_condition: 'a condizione che ci siano state conversazioni nel periodo.', summary_will_show: 'Verrà quindi visualizzato qui', summary_auto_label: 'Il riepilogo viene generato automaticamente', summary_same_content: "— è lo stesso contenuto.",
     summary_none_label: 'Nessun riepilogo',
     summary_daily: 'Riepilogo quotidiano', summary_weekly: 'Riepilogo settimanale',
     logout_confirm: 'Sei sicuro di voler uscire?',
@@ -1010,7 +1017,7 @@ const DASH_ANA_T = {
     status_trial: 'Prueba gratuita',
     summary_auto_pro: 'a la frecuencia elegida en Mi cuenta',
     summary_auto_std: 'cada lunes por la mañana',
-    summary_email: 'y enviado por email',
+    summary_email: 'y enviado por email', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Plan Pro', ana_plan_std_full: '📦 Plan Standard', q_asked_label: 'Preguntada {n}x · Última vez {date}', q_recently: 'recientemente', summary_condition: 'siempre que haya habido conversaciones durante el período.', summary_will_show: 'Luego se mostrará aquí', summary_auto_label: 'El resumen se genera automáticamente', summary_same_content: "— es el mismo contenido.",
     summary_none_label: 'Sin resumen',
     summary_daily: 'Resumen diario', summary_weekly: 'Resumen semanal',
     logout_confirm: '¿Seguro que quieres cerrar sesión?',
@@ -1055,7 +1062,7 @@ const DASH_ANA_T = {
     status_trial: 'Teste gratuito',
     summary_auto_pro: 'na frequência escolhida em A minha conta',
     summary_auto_std: 'todas as segundas-feiras de manhã',
-    summary_email: 'e enviado por email',
+    summary_email: 'e enviado por email', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Plano Pro', ana_plan_std_full: '📦 Plano Standard', q_asked_label: 'Feita {n}x · Última vez {date}', q_recently: 'recentemente', summary_condition: 'desde que tenha havido conversas durante o período.', summary_will_show: 'Será então apresentado aqui', summary_auto_label: 'O resumo é gerado automaticamente', summary_same_content: "— é o mesmo conteúdo.",
     summary_none_label: 'Sem resumo',
     summary_daily: 'Resumo diário', summary_weekly: 'Resumo semanal',
     logout_confirm: 'Tem a certeza que quer sair?',
@@ -1100,7 +1107,7 @@ const DASH_ANA_T = {
     status_trial: 'Gratis proef',
     summary_auto_pro: 'op de frequentie gekozen in Mijn account',
     summary_auto_std: 'elke maandagochtend',
-    summary_email: 'en per e-mail verzonden',
+    summary_email: 'en per e-mail verzonden', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Pro-abonnement', ana_plan_std_full: '📦 Standard-abonnement', q_asked_label: '{n}x gesteld · Laatste keer {date}', q_recently: 'onlangs', summary_condition: 'op voorwaarde dat er gesprekken waren in deze periode.', summary_will_show: 'Het wordt dan hier weergegeven', summary_auto_label: 'De samenvatting wordt automatisch gegenereerd', summary_same_content: "— het is dezelfde inhoud.",
     summary_none_label: 'Geen samenvatting',
     summary_daily: 'Dagelijkse samenvatting', summary_weekly: 'Wekelijkse samenvatting',
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
@@ -1145,7 +1152,7 @@ const DASH_ANA_T = {
     status_trial: 'Bezpłatny okres próbny',
     summary_auto_pro: 'z częstotliwością wybraną w Moim koncie',
     summary_auto_std: 'każdy poniedziałek rano',
-    summary_email: 'i wysłane emailem',
+    summary_email: 'i wysłane emailem', ana_trial_status: '🎁 ', ana_plan_pro_short: 'Pro', ana_plan_std_short: 'Standard', ana_plan_pro_full: '⭐ Plan Pro', ana_plan_std_full: '📦 Plan Standard', q_asked_label: 'Zadane {n}x · Ostatnio {date}', q_recently: 'niedawno', summary_condition: 'pod warunkiem, że w tym okresie odbyły się rozmowy.', summary_will_show: 'Zostanie następnie wyświetlone tutaj', summary_auto_label: 'Podsumowanie jest generowane automatycznie', summary_same_content: "— to ta sama treść.",
     summary_none_label: 'Brak podsumowania',
     summary_daily: 'Codzienne podsumowanie', summary_weekly: 'Tygodniowe podsumowanie',
     logout_confirm: 'Czy na pewno chcesz się wylogować?',
