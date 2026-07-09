@@ -305,7 +305,7 @@ function renderFilteredAppointments() {
       if (confirmedSection) confirmedSection.style.display = 'none';
       
       if (!filtered.length) {
-        unified.innerHTML = emptyState((_drt||DASH_RDV_T.fr).empty_apts, 'Essayez une autre recherche ou un autre filtre.');
+        unified.innerHTML = emptyState((_drt||DASH_RDV_T.fr).empty_apts, (_drt||DASH_RDV_T.fr).empty_apts_filter_hint||'Essayez une autre recherche ou un autre filtre.');
         return;
       }
       unified.innerHTML = '<h2 style="font-size:24px;font-weight:700;color:#FFFFFF;margin:0 0 20px 0;">' +
@@ -1314,7 +1314,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Aucun lien configuré — ajoutez votre lien de réservation ci-dessus',
     mode_manual_text: '[votre numéro de téléphone]',
     mode_none_text: "L'IA répond aux questions sans proposer de RDV",
-    empty_apts: 'Aucun rendez-vous', empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici",
+    empty_apts: 'Aucun rendez-vous', empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici", empty_apts_filter_hint: 'Essayez une autre recherche ou un autre filtre.',
     empty_confirmed: 'Aucun rendez-vous confirmé', empty_confirmed_sub: 'Les rendez-vous confirmés apparaîtront ici',
     not_specified: 'Non spécifié', not_provided: 'Non renseigné',
     status_past: '🕐 Passé', status_confirmed: '✅ Confirmé',
@@ -1352,7 +1352,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ No link configured — add your booking link above',
     mode_manual_text: '[your phone number]',
     mode_none_text: 'The AI answers questions without booking appointments',
-    empty_apts: 'No appointments', empty_apts_sub: 'Appointments created by the AI will appear here',
+    empty_apts: 'No appointments', empty_apts_sub: 'Appointments created by the AI will appear here', empty_apts_filter_hint: 'Try a different search or filter.',
     empty_confirmed: 'No confirmed appointments', empty_confirmed_sub: 'Confirmed appointments will appear here',
     not_specified: 'Not specified', not_provided: 'Not provided',
     status_past: '🕐 Past', status_confirmed: '✅ Confirmed',
@@ -1390,7 +1390,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Kein Link konfiguriert — fügen Sie oben Ihren Buchungslink hinzu',
     mode_manual_text: '[Ihre Telefonnummer]',
     mode_none_text: 'Die KI beantwortet Fragen ohne Terminbuchungen',
-    empty_apts: 'Keine Termine', empty_apts_sub: 'Von der KI erstellte Termine erscheinen hier',
+    empty_apts: 'Keine Termine', empty_apts_sub: 'Von der KI erstellte Termine erscheinen hier', empty_apts_filter_hint: 'Versuchen Sie eine andere Suche oder einen anderen Filter.',
     empty_confirmed: 'Keine bestätigten Termine', empty_confirmed_sub: 'Bestätigte Termine erscheinen hier',
     not_specified: 'Nicht angegeben', not_provided: 'Nicht angegeben',
     status_past: '🕐 Vergangen', status_confirmed: '✅ Bestätigt',
@@ -1428,7 +1428,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Nessun link configurato — aggiungi il tuo link di prenotazione qui sopra',
     mode_manual_text: '[il tuo numero di telefono]',
     mode_none_text: "L'IA risponde alle domande senza proporre appuntamenti",
-    empty_apts: 'Nessun appuntamento', empty_apts_sub: "Gli appuntamenti creati dall'IA appariranno qui",
+    empty_apts: 'Nessun appuntamento', empty_apts_sub: "Gli appuntamenti creati dall'IA appariranno qui", empty_apts_filter_hint: 'Prova una ricerca o un filtro diverso.',
     empty_confirmed: 'Nessun appuntamento confermato', empty_confirmed_sub: 'Gli appuntamenti confermati appariranno qui',
     not_specified: 'Non specificato', not_provided: 'Non fornito',
     status_past: '🕐 Passato', status_confirmed: '✅ Confermato',
@@ -1466,7 +1466,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Sin enlace configurado — añade tu enlace de reserva arriba',
     mode_manual_text: '[tu número de teléfono]',
     mode_none_text: 'La IA responde preguntas sin proponer citas',
-    empty_apts: 'Sin citas', empty_apts_sub: 'Las citas creadas por la IA aparecerán aquí',
+    empty_apts: 'Sin citas', empty_apts_sub: 'Las citas creadas por la IA aparecerán aquí', empty_apts_filter_hint: 'Prueba con otra búsqueda o filtro.',
     empty_confirmed: 'Sin citas confirmadas', empty_confirmed_sub: 'Las citas confirmadas aparecerán aquí',
     not_specified: 'No especificado', not_provided: 'No indicado',
     status_past: '🕐 Pasada', status_confirmed: '✅ Confirmada',
@@ -1504,7 +1504,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Sem link configurado — adicione o seu link de marcação acima',
     mode_manual_text: '[o seu número de telefone]',
     mode_none_text: 'A IA responde a perguntas sem propor marcações',
-    empty_apts: 'Sem marcações', empty_apts_sub: 'As marcações criadas pela IA aparecerão aqui',
+    empty_apts: 'Sem marcações', empty_apts_sub: 'As marcações criadas pela IA aparecerão aqui', empty_apts_filter_hint: 'Experimente outra pesquisa ou filtro.',
     empty_confirmed: 'Sem marcações confirmadas', empty_confirmed_sub: 'As marcações confirmadas aparecerão aqui',
     not_specified: 'Não especificado', not_provided: 'Não fornecido',
     status_past: '🕐 Passada', status_confirmed: '✅ Confirmada',
@@ -1542,7 +1542,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Geen link geconfigureerd — voeg hierboven uw boekingslink toe',
     mode_manual_text: '[uw telefoonnummer]',
     mode_none_text: 'De AI beantwoordt vragen zonder afspraken voor te stellen',
-    empty_apts: 'Geen afspraken', empty_apts_sub: 'Afspraken gemaakt door de AI verschijnen hier',
+    empty_apts: 'Geen afspraken', empty_apts_sub: 'Afspraken gemaakt door de AI verschijnen hier', empty_apts_filter_hint: 'Probeer een andere zoekopdracht of filter.',
     empty_confirmed: 'Geen bevestigde afspraken', empty_confirmed_sub: 'Bevestigde afspraken verschijnen hier',
     not_specified: 'Niet opgegeven', not_provided: 'Niet opgegeven',
     status_past: '🕐 Verstreken', status_confirmed: '✅ Bevestigd',
@@ -1580,7 +1580,7 @@ const DASH_RDV_T = {
     mode_ext_warning: '⚠️ Brak skonfigurowanego linku — dodaj link do rezerwacji powyżej',
     mode_manual_text: '[twój numer telefonu]',
     mode_none_text: 'AI odpowiada na pytania bez proponowania wizyt',
-    empty_apts: 'Brak wizyt', empty_apts_sub: 'Wizyty utworzone przez AI pojawią się tutaj',
+    empty_apts: 'Brak wizyt', empty_apts_sub: 'Wizyty utworzone przez AI pojawią się tutaj', empty_apts_filter_hint: 'Spróbuj innego wyszukiwania lub filtra.',
     empty_confirmed: 'Brak potwierdzonych wizyt', empty_confirmed_sub: 'Potwierdzone wizyty pojawią się tutaj',
     not_specified: 'Nie określono', not_provided: 'Nie podano',
     status_past: '🕐 Miniona', status_confirmed: '✅ Potwierdzona',

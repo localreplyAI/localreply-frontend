@@ -228,7 +228,7 @@
 
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
     <button onclick="submitReply()" style="flex:1;min-width:140px;padding:14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 14px rgba(0,82,204,0.3);font-family:inherit;" id="msg-modal-send-btn">✅ Envoyer la réponse</button>
-    <button onclick="ignoreQuestion()" style="padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Ignorer</button>
+    <button onclick="ignoreQuestion()" style="padding:14px 18px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:rgba(255,255,255,0.55);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;" id="msg-modal-ignore-btn">Ignorer</button>
   </div>
 </div>
 
@@ -314,10 +314,11 @@ function setBadge(count, ...ids) {
 }
 
 function urgencyBadge(level) {
+  const _t = (window._dmt||{});
   const map = {
-    high:   { c:'#EF4444', bg:'rgba(239,68,68,0.12)',   b:'rgba(239,68,68,0.25)',   l:'🔴 Urgent' },
-    medium: { c:'#F59E0B', bg:'rgba(245,158,11,0.12)',  b:'rgba(245,158,11,0.25)',  l:'🟡 Moyen' },
-    normal: { c:'#10B981', bg:'rgba(16,185,129,0.12)',  b:'rgba(16,185,129,0.25)',  l:'🟢 Normal' },
+    high:   { c:'#EF4444', bg:'rgba(239,68,68,0.12)',   b:'rgba(239,68,68,0.25)',   l:_t.badge_urgent||'🔴 Urgent' },
+    medium: { c:'#F59E0B', bg:'rgba(245,158,11,0.12)',  b:'rgba(245,158,11,0.25)',  l:_t.badge_medium||'🟡 Moyen' },
+    normal: { c:'#10B981', bg:'rgba(16,185,129,0.12)',  b:'rgba(16,185,129,0.25)',  l:_t.badge_normal||'🟢 Normal' },
   };
   const u = map[level] || map.normal;
   return `<span style="font-size:11px;font-weight:700;color:${u.c};background:${u.bg};border:1px solid ${u.b};padding:3px 10px;border-radius:100px;">${u.l}</span>`;
@@ -325,11 +326,12 @@ function urgencyBadge(level) {
 
 function timeAgo(dateStr) {
   if (!dateStr) return '';
+  const _t = (window._dmt||{});
   const diff = Math.floor((Date.now() - new Date(dateStr)) / 1000);
-  if (diff < 60) return 'À l\'instant';
-  if (diff < 3600) return `Il y a ${Math.floor(diff/60)}min`;
-  if (diff < 86400) return `Il y a ${Math.floor(diff/3600)}h`;
-  return `Il y a ${Math.floor(diff/86400)}j`;
+  if (diff < 60) return _t.time_now||"À l'instant";
+  if (diff < 3600) return (_t.time_min_ago||'Il y a {n}min').replace('{n}', Math.floor(diff/60));
+  if (diff < 86400) return (_t.time_hour_ago||'Il y a {n}h').replace('{n}', Math.floor(diff/3600));
+  return (_t.time_day_ago||'Il y a {n}j').replace('{n}', Math.floor(diff/86400));
 }
 
 
@@ -389,12 +391,12 @@ function renderQuestion(q, tab) {
 
     <div style="display:flex;gap:8px;flex-wrap:wrap;">
       ${tab==='pending' ? `
-        <button onclick="openReplyModalById(${q.id})" style="padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,82,204,0.25);font-family:inherit;">💬 Répondre</button>
-        <button onclick="quickIgnore(${q.id})" style="padding:9px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.45);font-size:12px;cursor:pointer;font-family:inherit;">Ignorer</button>
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:9px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(0,82,204,0.25);font-family:inherit;">${(_dmt||DASH_MSG_T.fr).btn_reply||'💬 Répondre'}</button>
+        <button onclick="quickIgnore(${q.id})" style="padding:9px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.45);font-size:12px;cursor:pointer;font-family:inherit;">${(_dmt||DASH_MSG_T.fr).btn_ignore||'Ignorer'}</button>
       ` : tab==='answered' ? `
-        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">✏️ Modifier la réponse</button>
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">${(_dmt||DASH_MSG_T.fr).btn_edit||'✏️ Modifier la réponse'}</button>
       ` : `
-        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">💬 Répondre quand même</button>
+        <button onclick="openReplyModalById(${q.id})" style="padding:9px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:9px;color:rgba(255,255,255,0.65);font-size:12px;cursor:pointer;font-family:inherit;">${(_dmt||DASH_MSG_T.fr).btn_reply_anyway||'💬 Répondre quand même'}</button>
       `}
     </div>
   </div>`;
@@ -469,7 +471,7 @@ function renderTab(tab) {
   el.innerHTML = visible.map(q => renderQuestion(q, tab)).join('') +
     (hasMore ? `<div style="text-align:center;padding:20px;">
       <button onclick="loadMoreTab('${tab}')" style="padding:10px 24px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;">
-        Charger plus (${list.length - visible.length} restants)
+        ${((window._dmt||{}).load_more||'Charger plus ({n} restants)').replace('{n}', list.length - visible.length)}
       </button>
     </div>` : '');
 }
@@ -667,7 +669,7 @@ const DASH_MSG_T = {
     success_ignored: 'Question ignorée',
     email_to: 'La réponse sera envoyée à',
     logout_confirm: "Êtes-vous sûr de vouloir vous déconnecter ?",
-    email_send_to:'La réponse sera envoyée à ',
+    email_send_to:'La réponse sera envoyée à ', time_now: "À l'instant", time_min_ago: 'Il y a {n}min', time_hour_ago: 'Il y a {n}h', time_day_ago: 'Il y a {n}j', badge_urgent: '🔴 Urgent', badge_medium: '🟡 Moyen', badge_normal: '🟢 Normal', load_more: 'Charger plus ({n} restants)',
     no_email_warning:"⚠️ Pas d'email client — le client ne sera pas notifié.", ph_answer:"Rédigez votre réponse ici...", msg_in_faq_badge: "📚 Dans la FAQ", msg_translating: "⏳ Traduction en cours...", msg_anonymous_client: "Client anonyme", msg_your_answer_label: "Votre réponse (en français)", msg_auto_translated: "✓ Traduite automatiquement en {lang} pour le client", msg_load_error: "❌ Impossible de charger les messages", msg_send_error: "Erreur lors de l'envoi", msg_ignore_confirm: "Ignorer cette question ?", msg_generic_error: "Erreur", msg_trial_status: "🎁 Essai gratuit — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard",
     lang_note_prefix:'Votre réponse sera traduite en',lang_note_suffix:'pour le client.',
     msg_main_subtitle: "Questions transmises par l'IA — répondez pour enrichir sa base de connaissances",
@@ -707,7 +709,7 @@ const DASH_MSG_T = {
     success_ignored: 'Question ignored',
     email_to: 'The reply will be sent to',
     logout_confirm: 'Are you sure you want to sign out?',
-    email_send_to:'The reply will be sent to ', no_email_warning:"⚠️ No customer email — the customer will not be notified.", ph_answer:"Write your answer here...", msg_in_faq_badge: "📚 In the FAQ", msg_translating: "⏳ Translating...", msg_anonymous_client: "Anonymous customer", msg_your_answer_label: "Your answer (in English)", msg_auto_translated: "✓ Automatically translated into {lang} for the customer", msg_load_error: "❌ Unable to load messages", msg_send_error: "Error sending", msg_ignore_confirm: "Ignore this question?", msg_generic_error: "Error", msg_trial_status: "🎁 Free trial — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro Plan", msg_plan_std_full: "📦 Standard Plan", lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
+    email_send_to:'The reply will be sent to ', time_now: 'Just now', time_min_ago: '{n}min ago', time_hour_ago: '{n}h ago', time_day_ago: '{n}d ago', badge_urgent: '🔴 Urgent', badge_medium: '🟡 Medium', badge_normal: '🟢 Normal', load_more: 'Load more ({n} remaining)', no_email_warning:"⚠️ No customer email — the customer will not be notified.", ph_answer:"Write your answer here...", msg_in_faq_badge: "📚 In the FAQ", msg_translating: "⏳ Translating...", msg_anonymous_client: "Anonymous customer", msg_your_answer_label: "Your answer (in English)", msg_auto_translated: "✓ Automatically translated into {lang} for the customer", msg_load_error: "❌ Unable to load messages", msg_send_error: "Error sending", msg_ignore_confirm: "Ignore this question?", msg_generic_error: "Error", msg_trial_status: "🎁 Free trial — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro Plan", msg_plan_std_full: "📦 Standard Plan", lang_note_prefix:'Your reply will be translated to',lang_note_suffix:'for the customer.',
     msg_main_subtitle: 'Questions forwarded by the AI — answer them to enrich its knowledge base',
     msg_faq_knows: 'The AI now knows how to answer',
   },
@@ -745,7 +747,7 @@ const DASH_MSG_T = {
     success_ignored: 'Frage ignoriert',
     email_to: 'Die Antwort wird gesendet an',
     logout_confirm: 'Sind Sie sicher, dass Sie sich abmelden möchten?',
-    email_send_to:'Die Antwort wird gesendet an ', no_email_warning:"⚠️ Keine Kunden-E-Mail — der Kunde wird nicht benachrichtigt.", ph_answer:"Schreiben Sie Ihre Antwort hier...", msg_in_faq_badge: "📚 In der FAQ", msg_translating: "⏳ Übersetzung läuft...", msg_anonymous_client: "Anonymer Kunde", msg_your_answer_label: "Ihre Antwort (auf Deutsch)", msg_auto_translated: "✓ Automatisch ins {lang} übersetzt für den Kunden", msg_load_error: "❌ Nachrichten konnten nicht geladen werden", msg_send_error: "Fehler beim Senden", msg_ignore_confirm: "Diese Frage ignorieren?", msg_generic_error: "Fehler", msg_trial_status: "🎁 Kostenlose Testphase — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-Plan", msg_plan_std_full: "📦 Standard-Plan", lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
+    email_send_to:'Die Antwort wird gesendet an ', time_now: 'Gerade eben', time_min_ago: 'Vor {n}min', time_hour_ago: 'Vor {n}h', time_day_ago: 'Vor {n}T', badge_urgent: '🔴 Dringend', badge_medium: '🟡 Mittel', badge_normal: '🟢 Normal', load_more: 'Mehr laden ({n} verbleibend)', no_email_warning:"⚠️ Keine Kunden-E-Mail — der Kunde wird nicht benachrichtigt.", ph_answer:"Schreiben Sie Ihre Antwort hier...", msg_in_faq_badge: "📚 In der FAQ", msg_translating: "⏳ Übersetzung läuft...", msg_anonymous_client: "Anonymer Kunde", msg_your_answer_label: "Ihre Antwort (auf Deutsch)", msg_auto_translated: "✓ Automatisch ins {lang} übersetzt für den Kunden", msg_load_error: "❌ Nachrichten konnten nicht geladen werden", msg_send_error: "Fehler beim Senden", msg_ignore_confirm: "Diese Frage ignorieren?", msg_generic_error: "Fehler", msg_trial_status: "🎁 Kostenlose Testphase — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-Plan", msg_plan_std_full: "📦 Standard-Plan", lang_note_prefix:'Ihre Antwort wird auf',lang_note_suffix:'für den Kunden übersetzt.',
     msg_main_subtitle: 'Von der KI weitergeleitete Fragen — antworten Sie, um die Wissensbasis anzureichern',
     msg_faq_knows: 'Die KI kann jetzt antworten',
   },
@@ -783,7 +785,7 @@ const DASH_MSG_T = {
     success_ignored: 'Domanda ignorata',
     email_to: 'La risposta sarà inviata a',
     logout_confirm: 'Sei sicuro di voler uscire?',
-    email_send_to:'La risposta sarà inviata a ', no_email_warning:"⚠️ Nessuna email del cliente — il cliente non sarà avvisato.", ph_answer:"Scrivi qui la tua risposta...", msg_in_faq_badge: "📚 Nella FAQ", msg_translating: "⏳ Traduzione in corso...", msg_anonymous_client: "Cliente anonimo", msg_your_answer_label: "La tua risposta (in italiano)", msg_auto_translated: "✓ Tradotta automaticamente in {lang} per il cliente", msg_load_error: "❌ Impossibile caricare i messaggi", msg_send_error: "Errore durante l'invio", msg_ignore_confirm: "Ignorare questa domanda?", msg_generic_error: "Errore", msg_trial_status: "🎁 Prova gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Piano Pro", msg_plan_std_full: "📦 Piano Standard", lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
+    email_send_to:'La risposta sarà inviata a ', time_now: 'Proprio ora', time_min_ago: '{n}min fa', time_hour_ago: '{n}h fa', time_day_ago: '{n}g fa', badge_urgent: '🔴 Urgente', badge_medium: '🟡 Medio', badge_normal: '🟢 Normale', load_more: 'Carica altri ({n} rimanenti)', no_email_warning:"⚠️ Nessuna email del cliente — il cliente non sarà avvisato.", ph_answer:"Scrivi qui la tua risposta...", msg_in_faq_badge: "📚 Nella FAQ", msg_translating: "⏳ Traduzione in corso...", msg_anonymous_client: "Cliente anonimo", msg_your_answer_label: "La tua risposta (in italiano)", msg_auto_translated: "✓ Tradotta automaticamente in {lang} per il cliente", msg_load_error: "❌ Impossibile caricare i messaggi", msg_send_error: "Errore durante l'invio", msg_ignore_confirm: "Ignorare questa domanda?", msg_generic_error: "Errore", msg_trial_status: "🎁 Prova gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Piano Pro", msg_plan_std_full: "📦 Piano Standard", lang_note_prefix:'La tua risposta sarà tradotta in',lang_note_suffix:'per il cliente.',
     msg_main_subtitle: "Domande inoltrate dall'IA — rispondi per arricchire la sua base di conoscenza",
     msg_faq_knows: "L'IA sa ora rispondere",
   },
@@ -821,7 +823,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pregunta ignorada',
     email_to: 'La respuesta se enviará a',
     logout_confirm: '¿Seguro que quieres cerrar sesión?',
-    email_send_to:'La respuesta se enviará a ', no_email_warning:"⚠️ Sin email del cliente — no se notificará al cliente.", ph_answer:"Escribe tu respuesta aquí...", msg_in_faq_badge: "📚 En la FAQ", msg_translating: "⏳ Traduciendo...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "Tu respuesta (en español)", msg_auto_translated: "✓ Traducida automáticamente al {lang} para el cliente", msg_load_error: "❌ No se pudieron cargar los mensajes", msg_send_error: "Error al enviar", msg_ignore_confirm: "¿Ignorar esta pregunta?", msg_generic_error: "Error", msg_trial_status: "🎁 Prueba gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
+    email_send_to:'La respuesta se enviará a ', time_now: 'Ahora mismo', time_min_ago: 'Hace {n}min', time_hour_ago: 'Hace {n}h', time_day_ago: 'Hace {n}d', badge_urgent: '🔴 Urgente', badge_medium: '🟡 Medio', badge_normal: '🟢 Normal', load_more: 'Cargar más ({n} restantes)', no_email_warning:"⚠️ Sin email del cliente — no se notificará al cliente.", ph_answer:"Escribe tu respuesta aquí...", msg_in_faq_badge: "📚 En la FAQ", msg_translating: "⏳ Traduciendo...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "Tu respuesta (en español)", msg_auto_translated: "✓ Traducida automáticamente al {lang} para el cliente", msg_load_error: "❌ No se pudieron cargar los mensajes", msg_send_error: "Error al enviar", msg_ignore_confirm: "¿Ignorar esta pregunta?", msg_generic_error: "Error", msg_trial_status: "🎁 Prueba gratuita — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Tu respuesta será traducida al',lang_note_suffix:'para el cliente.',
     msg_main_subtitle: 'Preguntas reenviadas por la IA — respóndelas para enriquecer su base de conocimiento',
     msg_faq_knows: 'La IA ahora sabe responder',
   },
@@ -859,7 +861,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pergunta ignorada',
     email_to: 'A resposta será enviada para',
     logout_confirm: 'Tem a certeza que quer sair?',
-    email_send_to:'A resposta será enviada para ', no_email_warning:"⚠️ Sem email do cliente — o cliente não será notificado.", ph_answer:"Escreva a sua resposta aqui...", msg_in_faq_badge: "📚 Na FAQ", msg_translating: "⏳ Tradução em curso...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "A sua resposta (em português)", msg_auto_translated: "✓ Traduzida automaticamente para {lang} para o cliente", msg_load_error: "❌ Não foi possível carregar as mensagens", msg_send_error: "Erro ao enviar", msg_ignore_confirm: "Ignorar esta pergunta?", msg_generic_error: "Erro", msg_trial_status: "🎁 Teste gratuito — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plano Pro", msg_plan_std_full: "📦 Plano Standard", lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
+    email_send_to:'A resposta será enviada para ', time_now: 'Agora mesmo', time_min_ago: 'Há {n}min', time_hour_ago: 'Há {n}h', time_day_ago: 'Há {n}d', badge_urgent: '🔴 Urgente', badge_medium: '🟡 Médio', badge_normal: '🟢 Normal', load_more: 'Carregar mais ({n} restantes)', no_email_warning:"⚠️ Sem email do cliente — o cliente não será notificado.", ph_answer:"Escreva a sua resposta aqui...", msg_in_faq_badge: "📚 Na FAQ", msg_translating: "⏳ Tradução em curso...", msg_anonymous_client: "Cliente anónimo", msg_your_answer_label: "A sua resposta (em português)", msg_auto_translated: "✓ Traduzida automaticamente para {lang} para o cliente", msg_load_error: "❌ Não foi possível carregar as mensagens", msg_send_error: "Erro ao enviar", msg_ignore_confirm: "Ignorar esta pergunta?", msg_generic_error: "Erro", msg_trial_status: "🎁 Teste gratuito — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plano Pro", msg_plan_std_full: "📦 Plano Standard", lang_note_prefix:'A sua resposta será traduzida para',lang_note_suffix:'para o cliente.',
     msg_main_subtitle: 'Perguntas encaminhadas pela IA — responda para enriquecer a sua base de conhecimento',
     msg_faq_knows: 'A IA já sabe responder',
   },
@@ -897,7 +899,7 @@ const DASH_MSG_T = {
     success_ignored: 'Vraag genegeerd',
     email_to: 'Het antwoord wordt verzonden naar',
     logout_confirm: 'Weet u zeker dat u wilt uitloggen?',
-    email_send_to:'Het antwoord wordt gestuurd naar ', no_email_warning:"⚠️ Geen e-mail van de klant — de klant wordt niet op de hoogte gebracht.", ph_answer:"Schrijf hier uw antwoord...", msg_in_faq_badge: "📚 In de FAQ", msg_translating: "⏳ Bezig met vertalen...", msg_anonymous_client: "Anonieme klant", msg_your_answer_label: "Uw antwoord (in het Nederlands)", msg_auto_translated: "✓ Automatisch vertaald naar het {lang} voor de klant", msg_load_error: "❌ Kan berichten niet laden", msg_send_error: "Fout bij verzenden", msg_ignore_confirm: "Deze vraag negeren?", msg_generic_error: "Fout", msg_trial_status: "🎁 Gratis proefperiode — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-abonnement", msg_plan_std_full: "📦 Standard-abonnement", lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
+    email_send_to:'Het antwoord wordt gestuurd naar ', time_now: 'Zojuist', time_min_ago: '{n}min geleden', time_hour_ago: '{n}u geleden', time_day_ago: '{n}d geleden', badge_urgent: '🔴 Dringend', badge_medium: '🟡 Gemiddeld', badge_normal: '🟢 Normaal', load_more: 'Meer laden ({n} resterend)', no_email_warning:"⚠️ Geen e-mail van de klant — de klant wordt niet op de hoogte gebracht.", ph_answer:"Schrijf hier uw antwoord...", msg_in_faq_badge: "📚 In de FAQ", msg_translating: "⏳ Bezig met vertalen...", msg_anonymous_client: "Anonieme klant", msg_your_answer_label: "Uw antwoord (in het Nederlands)", msg_auto_translated: "✓ Automatisch vertaald naar het {lang} voor de klant", msg_load_error: "❌ Kan berichten niet laden", msg_send_error: "Fout bij verzenden", msg_ignore_confirm: "Deze vraag negeren?", msg_generic_error: "Fout", msg_trial_status: "🎁 Gratis proefperiode — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Pro-abonnement", msg_plan_std_full: "📦 Standard-abonnement", lang_note_prefix:'Uw antwoord wordt vertaald naar',lang_note_suffix:'voor de klant.',
     msg_main_subtitle: 'Door de AI doorgestuurde vragen — beantwoord ze om de kennisbasis te verrijken',
     msg_faq_knows: 'De AI kan nu antwoorden',
   },
@@ -935,7 +937,7 @@ const DASH_MSG_T = {
     success_ignored: 'Pytanie zignorowane',
     email_to: 'Odpowiedź zostanie wysłana do',
     logout_confirm: 'Czy na pewno chcesz się wylogować?',
-    email_send_to:'Odpowiedź zostanie wysłana do ', no_email_warning:"⚠️ Brak adresu email klienta — klient nie zostanie powiadomiony.", ph_answer:"Napisz tutaj swoją odpowiedź...", msg_in_faq_badge: "📚 W FAQ", msg_translating: "⏳ Trwa tłumaczenie...", msg_anonymous_client: "Anonimowy klient", msg_your_answer_label: "Twoja odpowiedź (po polsku)", msg_auto_translated: "✓ Automatycznie przetłumaczone na {lang} dla klienta", msg_load_error: "❌ Nie udało się załadować wiadomości", msg_send_error: "Błąd podczas wysyłania", msg_ignore_confirm: "Zignorować to pytanie?", msg_generic_error: "Błąd", msg_trial_status: "🎁 Bezpłatny okres próbny — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
+    email_send_to:'Odpowiedź zostanie wysłana do ', time_now: 'Przed chwilą', time_min_ago: '{n}min temu', time_hour_ago: '{n}h temu', time_day_ago: '{n}d temu', badge_urgent: '🔴 Pilne', badge_medium: '🟡 Średnie', badge_normal: '🟢 Normalne', load_more: 'Załaduj więcej ({n} pozostało)', no_email_warning:"⚠️ Brak adresu email klienta — klient nie zostanie powiadomiony.", ph_answer:"Napisz tutaj swoją odpowiedź...", msg_in_faq_badge: "📚 W FAQ", msg_translating: "⏳ Trwa tłumaczenie...", msg_anonymous_client: "Anonimowy klient", msg_your_answer_label: "Twoja odpowiedź (po polsku)", msg_auto_translated: "✓ Automatycznie przetłumaczone na {lang} dla klienta", msg_load_error: "❌ Nie udało się załadować wiadomości", msg_send_error: "Błąd podczas wysyłania", msg_ignore_confirm: "Zignorować to pytanie?", msg_generic_error: "Błąd", msg_trial_status: "🎁 Bezpłatny okres próbny — ", msg_plan_pro_short: "Pro", msg_plan_std_short: "Standard", msg_plan_pro_full: "⭐ Plan Pro", msg_plan_std_full: "📦 Plan Standard", lang_note_prefix:'Twoja odpowiedź zostanie przetłumaczona na',lang_note_suffix:'dla klienta.',
     msg_main_subtitle: 'Pytania przekazane przez AI — odpowiedz, aby wzbogacić bazę wiedzy',
     msg_faq_knows: 'AI teraz potrafi odpowiedzieć',
   },
@@ -963,6 +965,7 @@ const DASH_MSG_T = {
       'stat-faq-sub': t.stat_faq_sub,
       'msg-tip-faq': t.tip_faq,
       'msg-modal-title': t.modal_title,
+      'msg-modal-ignore-btn': t.btn_ignore,
       'msg-modal-faq-sub': t.modal_faq_sub,
       'msg-modal-email-lbl': t.modal_email_check,
       'msg-modal-send-btn': t.modal_send,

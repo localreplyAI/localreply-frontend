@@ -429,7 +429,9 @@ async function loadTimeline() {
     }
     canvas.style.display = 'block';
     emptyState.style.display = 'none';
-    const labels = data.timeline.map(item => new Date(item.date).toLocaleDateString('fr-FR', { day:'numeric', month:'short' }));
+    const _lang5 = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+    const _localeMap4 = {fr:'fr-FR',en:'en-US',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',nl:'nl-NL',pl:'pl-PL'};
+    const labels = data.timeline.map(item => new Date(item.date).toLocaleDateString(_localeMap4[_lang5]||'fr-FR', { day:'numeric', month:'short' }));
     const conversationsData = data.timeline.map(item => item.conversations || 0);
     const appointmentsData = data.timeline.map(item => item.appointments || 0);
     if (analyticsChart) analyticsChart.destroy();
@@ -691,8 +693,10 @@ async function loadLastSummary() {
     }
 
     const periodLabel = item.period_type === 'daily' ? (_dat||DASH_ANA_T.fr).summary_daily : (_dat||DASH_ANA_T.fr).summary_weekly;
+    const _lang6 = localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase();
+    const _localeMap5 = {fr:'fr-FR',en:'en-US',de:'de-DE',it:'it-IT',es:'es-ES',pt:'pt-PT',nl:'nl-NL',pl:'pl-PL'};
     const dateLabel = item.period_end
-      ? new Date(item.period_end).toLocaleDateString('fr-FR', {day:'numeric', month:'long'})
+      ? new Date(item.period_end).toLocaleDateString(_localeMap5[_lang6]||'fr-FR', {day:'numeric', month:'long'})
       : '';
     if (label) label.textContent = `${periodLabel}${dateLabel ? ' · ' + dateLabel : ''}`;
 
