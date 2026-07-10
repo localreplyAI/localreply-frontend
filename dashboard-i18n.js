@@ -423,6 +423,10 @@ const LR_TEXT_MAP = {
   "L'IA sait maintenant répondre": {en:"The AI now knows how to answer",de:"Die KI kann jetzt antworten",it:"L'IA sa ora rispondere",es:"La IA ahora sabe responder",pt:"A IA já sabe responder",nl:"De AI kan nu antwoorden",pl:"AI teraz potrafi odpowiedzieć"},
   "Envoyer votre réponse par email au client (si adresse disponible)": {en:"Send your reply by email to the customer (if address available)",de:"Antwort per E-Mail senden (falls Adresse verfügbar)",it:"Invia la risposta via email (se indirizzo disponibile)",es:"Enviar respuesta por email al cliente (si hay dirección)",pt:"Enviar resposta por email ao cliente (se endereço disponível)",nl:"Antwoord per e-mail sturen (indien adres beschikbaar)",pl:"Wyślij odpowiedź emailem do klienta (jeśli adres dostępny)"},
   "L'IA répondra automatiquement à cette question pour tous les clients suivants": {en:"The AI will automatically answer this question for all future customers",de:"Die KI beantwortet diese Frage automatisch für alle zukünftigen Kunden",it:"L'IA risponderà automaticamente a questa domanda",es:"La IA responderá automáticamente a esta pregunta",pt:"A IA responderá automaticamente a esta pergunta",nl:"De AI beantwoordt deze vraag automatisch",pl:"AI automatycznie odpowie na to pytanie"},
+  // Audit fixes — untranslated strings missed by per-ID dictionaries (bare text nodes without an id)
+  '🔄 Actualiser': {en:'🔄 Refresh',de:'🔄 Aktualisieren',it:'🔄 Aggiorna',es:'🔄 Actualizar',pt:'🔄 Atualizar',nl:'🔄 Vernieuwen',pl:'🔄 Odśwież'},
+  '⏳ RDV en attente de validation': {en:'⏳ Appointments awaiting validation',de:'⏳ Zu bestätigende Termine',it:'⏳ Appuntamenti in attesa di convalida',es:'⏳ Citas pendientes de validación',pt:'⏳ Marcações pendentes de validação',nl:'⏳ Afspraken in afwachting van goedkeuring',pl:'⏳ Wizyty oczekujące na zatwierdzenie'},
+  'Zone de danger': {en:'Danger zone',de:'Gefahrenzone',it:'Zona pericolosa',es:'Zona de peligro',pt:'Zona de perigo',nl:'Gevarenzone',pl:'Strefa zagrożenia'},
 
 };
 
