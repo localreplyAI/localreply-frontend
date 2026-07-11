@@ -95,7 +95,7 @@
         <div class="ob-field" style="margin-top:14px;">
           <label id="ob-lbl-slug" class="ob-label">Votre lien public LocalReply <span style="color:#EF4444;">*</span></label>
           <div style="display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:12px;overflow:hidden;transition:border 0.2s;" id="slugWrap">
-            <span style="padding:0 8px 0 14px;font-size:12px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">https://localreply-frontend.vercel.app/chat?slug=</span>
+            <span style="padding:0 8px 0 14px;font-size:12px;color:rgba(255,255,255,0.35);white-space:nowrap;flex-shrink:0;">https://uselocalreply.com/chat?slug=</span>
             <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)" onfocus="this.select()">
           </div>
           <div id="slugPreview" style="font-size:11px;color:rgba(0,212,255,0.7);margin-top:4px;"></div>
@@ -345,7 +345,7 @@
         <div style="background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);border-radius:14px;padding:16px;margin-bottom:14px;">
           <div id="ob-public-link-label" style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">🔗 Votre lien public</div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <div id="finalLink" style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.06);border-radius:10px;font-size:14px;font-weight:600;color:#00D4FF;word-break:break-all;">https://localreply-frontend.vercel.app/chat?slug=...</div>
+            <div id="finalLink" style="flex:1;padding:11px 14px;background:rgba(255,255,255,0.06);border-radius:10px;font-size:14px;font-weight:600;color:#00D4FF;word-break:break-all;">https://uselocalreply.com/chat?slug=...</div>
             <button onclick="copyFinalLink()" style="padding:11px 14px;background:linear-gradient(135deg,#0052CC,#00D4FF);border:none;border-radius:10px;color:#fff;font-size:16px;cursor:pointer;flex-shrink:0;">📋</button>
           </div>
         </div>
@@ -1187,7 +1187,7 @@ function sanitizeSlug(input) {
 
 function updateSlugPreview(slug) {
   const el = document.getElementById('slugPreview');
-  if (el) el.textContent = slug ? `https://localreply-frontend.vercel.app/chat?slug=${slug}` : '';
+  if (el) el.textContent = slug ? `https://uselocalreply.com/chat?slug=${slug}` : '';
 }
 
 // ─── HORAIRES ───
@@ -1455,9 +1455,9 @@ async function saveStep(step) {
 
 function buildFinalStep() {
   const slug = document.getElementById('bizSlug')?.value || '';
-  document.getElementById('finalLink').textContent = `https://localreply-frontend.vercel.app/chat?slug=${slug}`;
+  document.getElementById('finalLink').textContent = `https://uselocalreply.com/chat?slug=${slug}`;
   const btn = document.getElementById('testIABtn');
-  if (btn && slug) btn.href = `https://localreply-frontend.vercel.app/chat?slug=${slug}`;
+  if (btn && slug) btn.href = `https://uselocalreply.com/chat?slug=${slug}`;
 }
 
 function goToDashboard() {
@@ -1467,7 +1467,7 @@ function goToDashboard() {
 
 function copyFinalLink() {
   const slug = document.getElementById('bizSlug')?.value||'';
-  navigator.clipboard.writeText(`https://localreply-frontend.vercel.app/chat?slug=${slug}`).then(()=>showToast('✅ Lien copié !'));
+  navigator.clipboard.writeText(`https://uselocalreply.com/chat?slug=${slug}`).then(()=>showToast('✅ Lien copié !'));
 }
 
 // ─── API ───
