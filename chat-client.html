@@ -1277,7 +1277,7 @@ async function lrcSendText(text) {
     const rdvFormEl = document.getElementById('lrcRdvForm');
     const rdvFormHidden = rdvFormEl && rdvFormEl.style.display === 'none';
     console.log('[RDV] rdvMode:', rdvMode, 'userWantsRdv:', userWantsRdv, 'aiAsksInfo:', aiAsksInfo);
-    if (rdvMode !== 'none' && rdvMode !== 'link' && userWantsRdv && aiAsksInfo && rdvFormHidden) {
+    if (rdvMode === 'google' && userWantsRdv && aiAsksInfo && rdvFormHidden) {
       setTimeout(() => openRdvForm(), 400);
     }
     
