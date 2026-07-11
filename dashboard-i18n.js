@@ -463,7 +463,9 @@ const LR_TEXT_MAP = {
   "FAQ auto-enrichie par l'IA": {en:'FAQ auto-enriched by AI',de:'FAQ automatisch durch KI angereichert',it:"FAQ auto-arricchita dall'IA",es:'FAQ auto-enriquecida por la IA',pt:'FAQ auto-enriquecida pela IA',nl:'FAQ automatisch verrijkt door AI',pl:'FAQ automatycznie wzbogacana przez AI'},
   'Notifications SMS clients': {en:'Customer SMS notifications',de:'SMS-Benachrichtigungen für Kunden',it:'Notifiche SMS ai clienti',es:'Notificaciones SMS a clientes',pt:'Notificações SMS aos clientes',nl:'SMS-meldingen voor klanten',pl:'Powiadomienia SMS dla klientów'},
   'Support prioritaire 24h': {en:'Priority support within 24h',de:'Prioritäts-Support innerhalb 24h',it:'Supporto prioritario entro 24h',es:'Soporte prioritario en 24h',pt:'Suporte prioritário em 24h',nl:'Prioriteitsondersteuning binnen 24u',pl:'Priorytetowe wsparcie w 24h'},
-  'Oui, sans engagement. Annulez depuis le portail de facturation.': {en:'Yes, no commitment. Cancel from the billing portal.',de:'Ja, ohne Vertragsbindung. Kündigen Sie über das Abrechnungsportal.',it:'Sì, senza impegno. Annulla dal portale di fatturazione.',es:'Sí, sin compromiso. Cancela desde el portal de facturación.',pt:'Sim, sem compromisso. Cancele através do portal de faturação.',nl:'Ja, zonder verplichting. Zeg op via het factureringsportaal.',pl:'Tak, bez zobowiązań. Anuluj przez portal rozliczeniowy.'}
+  'Oui, sans engagement. Annulez depuis le portail de facturation.': {en:'Yes, no commitment. Cancel from the billing portal.',de:'Ja, ohne Vertragsbindung. Kündigen Sie über das Abrechnungsportal.',it:'Sì, senza impegno. Annulla dal portale di fatturazione.',es:'Sí, sin compromiso. Cancela desde el portal de facturación.',pt:'Sim, sem compromisso. Cancele através do portal de faturação.',nl:'Ja, zonder verplichting. Zeg op via het factureringsportaal.',pl:'Tak, bez zobowiązań. Anuluj przez portal rozliczeniowy.'},
+  '📋 Utiliser un template': {en:'📋 Use a template',de:'📋 Vorlage verwenden',it:'📋 Usa un modello',es:'📋 Usar una plantilla',pt:'📋 Usar um modelo',nl:'📋 Een sjabloon gebruiken',pl:'📋 Użyj szablonu'},
+  'SUPPRIMER': {en:'DELETE',de:'LÖSCHEN',it:'ELIMINA',es:'ELIMINAR',pt:'ELIMINAR',nl:'VERWIJDEREN',pl:'USUŃ'}
 };
 
 // Apply universal translations to all text nodes on the page
@@ -499,28 +501,52 @@ function lrTranslateAll(lang) {
   });
 }
 
-// Auto-apply on load — runs multiple times to catch dynamic content
+// Auto-apply on load — runs multiple times to catch dynamic content,
+// PLUS a MutationObserver so content added later (dynamic rows, async
+// API responses, builder UIs, etc.) gets translated automatically too,
+// instead of only relying on fixed timers that can miss late-rendered content.
 (function() {
   const lang = lrDashGetLang();
   if (!lang || lang === 'fr') return;
-  
+
   function runTranslate() { lrTranslateAll(lang); }
-  
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       // Run at 3 intervals to catch content loaded at different times
       setTimeout(runTranslate, 50);   // static HTML
       setTimeout(runTranslate, 600);  // after fast API responses
       setTimeout(runTranslate, 2000); // after slow API responses
+      startObserver();
     });
   } else {
     setTimeout(runTranslate, 50);
     setTimeout(runTranslate, 600);
     setTimeout(runTranslate, 2000);
+    startObserver();
   }
-  
+
   // Global helper: call window.lrRetranslate() after rendering dynamic content
   window.lrRetranslate = runTranslate;
+
+  // Watch for DOM changes (new nodes added/changed anywhere in the page —
+  // e.g. dynamically-added rows in a rule builder) and re-translate shortly
+  // after. Debounced so a burst of changes only triggers one pass, and
+  // self-terminating: once a node's text is translated it no longer matches
+  // a LR_TEXT_MAP key, so it produces no further mutations.
+  function startObserver() {
+    if (!('MutationObserver' in window) || !document.body) return;
+    let debounceTimer = null;
+    const observer = new MutationObserver(function(mutations) {
+      // Ignore mutations that are just text we ourselves just translated
+      const relevant = mutations.some(m => m.type === 'childList' || m.type === 'characterData');
+      if (!relevant) return;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(runTranslate, 150);
+    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    window.lrDashObserver = observer;
+  }
 })();
 
 // ── Shared sidebar logo renderer ──
