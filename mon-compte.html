@@ -585,6 +585,7 @@ async function loadNotificationPrefs() {
   applySummaryFreqState(isPro);
 
   applySmsColState(isPro);
+  (async()=>{try{const cfg=await apiRequest('/api/business/'+businessId+'/config');const biz=cfg.business||cfg;if((biz.rdv_mode||'google')!=='google'){const row=document.getElementById('mc-event-rdv')?.closest('.notif-row-grid');if(row){row.style.opacity='0.35';row.style.pointerEvents='none';}const sub=document.getElementById('mc-event-rdv-sub');if(sub)sub.textContent='Disponible uniquement en mode Google Calendar';const e1=document.getElementById('notif_new_appointment_email');if(e1)e1.disabled=true;const e2=document.getElementById('notif_new_appointment_sms');if(e2)e2.disabled=true;}}catch(e){}})();
 
   // Valeurs par défaut
   const events = ['new_appointment','urgent_appointment','unknown_question'];
