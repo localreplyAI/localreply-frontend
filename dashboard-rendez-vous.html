@@ -614,6 +614,7 @@ async function renderModeContent(mode, externalUrl) {
       </div>`;
 
   } else if (mode === 'manual') {
+    let bizPhone=''; try{const cfg2=await apiRequest(`/api/business/${businessId}/config`);bizPhone=cfg2?.business?.phone||'';}catch(e){}
     zone.innerHTML = `
       <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);border-radius:14px;padding:20px 22px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
@@ -630,6 +631,7 @@ async function renderModeContent(mode, externalUrl) {
         <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.4);">
           ℹ️ ${_t.manual_phone_note||'Votre numéro de téléphone est configuré dans'} <a href="/dashboard-configuration" style="color:#F59E0B;text-decoration:none;" id="rdv-config-link">${_t.manual_phone_link||'Configuration → Commerce'}</a>
         </div>
+        ${!bizPhone ? `<div style="margin-top:12px;padding:12px 14px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;font-size:12px;color:#EF4444;font-weight:600;line-height:1.6;">⚠️ Aucun numéro de téléphone configuré — ce mode ne fonctionnera pas correctement tant que vous n'aurez pas ajouté votre numéro dans <a href="/dashboard-configuration" style="color:#EF4444;text-decoration:underline;">Configuration → Commerce</a>.</div>` : ''}
       </div>`;
 
   } else if (mode === 'none') {
