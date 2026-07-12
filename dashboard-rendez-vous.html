@@ -476,6 +476,12 @@ function showNotification(message, type = 'success') {
 // Vérifier le statut de connexion Google Calendar
 // ─── MODE RDV ───
 let currentRdvMode = 'google';
+let currentBizType = '';
+// Types où Google Calendar n'est pas pertinent (boutiques + commerces à forte réservation multi-ressources)
+const RDV_BLOCKED_TYPES = new Set([
+  'opticien','bakery','butcher','fishmonger','florist','retail','pharmacy',
+  'restaurant','cafe','pizzeria','cinema','escapegame','pool','hotel',
+]);
 
 async function checkCalendarStatus() {
   const section = document.getElementById('rdvModeSection');
@@ -487,6 +493,7 @@ async function checkCalendarStatus() {
   try {
     const config = await apiRequest(`/api/business/${businessId}/config`).catch(() => null);
     const biz = config?.business || {};
+    currentBizType = biz.business_type || '';
     currentRdvMode = biz.rdv_mode || 'google';
     const externalUrl = biz.external_rdv_url || '';
 
@@ -507,18 +514,21 @@ async function applyRdvMode(section, aptsSection, mode, externalUrl) {
     { id:'manual', icon:'📞', label:_t.mode_manual_label||'Gestion manuelle',        color:'#F59E0B' },
     { id:'none',   icon:'💬', label:_t.mode_none_label||'Pas de prise de RDV',    color:'#8B5CF6' },
   ];
+  const rdvBlocked = typeof RDV_BLOCKED_TYPES !== 'undefined' && RDV_BLOCKED_TYPES.has(currentBizType);
+  const visibleModes = (rdvBlocked && mode !== 'google') ? modes.filter(m => m.id !== 'google') : modes;
 
   section.innerHTML = `
     <!-- Sélecteur mode -->
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:20px 22px;margin-bottom:16px;">
       <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:14px;">${_t.rdv_mode_title||'Mode de prise de rendez-vous'}</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:0;" id="rdvModePills">
-        ${modes.map(m => `
+      <div style="display:grid;grid-template-columns:repeat(${visibleModes.length},1fr);gap:8px;margin-bottom:0;" id="rdvModePills">
+        ${visibleModes.map(m => `
           <button onclick="switchRdvMode('${m.id}')" id="pill_${m.id}" style="padding:10px 8px;border-radius:11px;border:1.5px solid ${mode===m.id ? m.color : 'rgba(255,255,255,0.08)'};background:${mode===m.id ? m.color+'18' : 'rgba(255,255,255,0.03)'};color:${mode===m.id ? m.color : 'rgba(255,255,255,0.5)'};font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:5px;">
             <span style="font-size:18px;">${m.icon}</span>${m.label}
           </button>`).join('')}
       </div>
     </div>
+    ${rdvBlocked ? `<div style="display:flex;align-items:start;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.12);border-radius:12px;margin-bottom:16px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">📅 Google Calendar n'est pas adapté à ce type de commerce (plusieurs tables, chambres ou produits différents). Utilisez plutôt un lien de réservation ou la gestion manuelle.</div>` : ''}
     <!-- Zone de contenu selon le mode -->
     <div id="rdvModeContent"></div>`;
 
@@ -655,6 +665,7 @@ async function renderModeContent(mode, externalUrl) {
 }
 
 async function switchRdvMode(mode) {
+  if (mode === 'google' && typeof RDV_BLOCKED_TYPES !== 'undefined' && RDV_BLOCKED_TYPES.has(currentBizType)) { showNotification('Google Calendar n\'est pas disponible pour ce type de commerce', 'error'); return; }
   currentRdvMode = mode;
 
   // Mettre à jour les pills visuellement
