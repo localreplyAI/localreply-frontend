@@ -516,7 +516,6 @@
 }
 .lrc-rdv-field input:focus, .lrc-rdv-field select:focus {
   border-color: var(--blue);
-  background: #fff;
 }
 .lrc-rdv-field.full { grid-column: 1 / -1; }
 .lrc-rdv-btns { display: flex; gap: 8px; }
@@ -1043,6 +1042,7 @@ let currentEscalationQuestionId = null;
 let detectedLang = 'fr';
 let sessionUserId = Math.floor(Math.random() * 2000000000);
 let businessId = null;
+let businessSlug = null;
 let bizAvatar = '💬';
 let conversationId = null; // mémoriser l'ID de conversation pour la session
 
@@ -1341,8 +1341,8 @@ function needsRdvForm(text) {
 // ── OUVRIR FORMULAIRE RDV ──
 async function openRdvForm(prefill={}) {
   // Si services pas encore chargés, attendre
-  if (!window._bizServices && businessId) {
-    await loadBizServices(businessId);
+  if (!window._bizServices && businessSlug) {
+    await loadBizServices(businessSlug);
   }
 
   const wrap = document.getElementById('lrcRdvForm');
@@ -1482,17 +1482,10 @@ async function submitRdvForm() {
 }
 
 // Charger les services du business pour pré-remplir le formulaire
-async function loadBizServices(bizId) {
+async function loadBizServices(slug) {
   try {
-    // Essai /config/full d'abord, puis /config
-    let services = [];
-    try {
-      const d = await fetch(`${API}/api/business/${bizId}/config/full`).then(r=>r.json());
-      services = d.services || [];
-    } catch {
-      const d = await fetch(`${API}/api/business/${bizId}/config`).then(r=>r.json());
-      services = d.services || [];
-    }
+    const d = await fetch(`${API}/api/business/slug/${slug}`).then(r=>r.json());
+    const services = d.services || [];
     // Dédupliquer par nom (au cas où le backend retourne des doublons)
     const seen = new Set();
     window._bizServices = services.filter(s => {
@@ -1509,6 +1502,7 @@ async function loadBizServices(bizId) {
 
 async function lrcInit() {
   const slug = getSlug();
+  businessSlug = slug;
   detectedLang = detectBrowserLang();
   const flag = LANG_FLAGS[detectedLang] || '🌍';
   const greeting = GREETINGS[detectedLang] || 'Bonjour';
@@ -1578,7 +1572,7 @@ async function lrcInit() {
 
     // Message d'accueil personnalisé ou auto
     const customGreeting = biz.custom_greeting || null;
-    await loadBizServices(biz.id);
+    await loadBizServices(businessSlug);
     showUI(biz.name || 'ce commerce', icon, greeting, customGreeting);
 
   } catch(err) {
