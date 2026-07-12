@@ -959,16 +959,17 @@ function updateServicesSection(type) {
 
   // Headers colonnes
   const col3html = tc.col3 ? `<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col3}</div>` : `<div></div>`;
-  container.innerHTML = `<div style="display:grid;grid-template-columns:${tc.showDuration || tc.col3 ? '2fr 1fr 1fr auto' : '2fr 1fr auto'};gap:12px;padding:0 16px 10px;margin-bottom:4px;">
+  container.innerHTML = `<div style="display:grid;grid-template-columns:${tc.showDuration || tc.col3 ? '2fr 1fr 1fr 0.9fr auto' : '2fr 1fr 0.9fr auto'};gap:12px;padding:0 16px 10px;margin-bottom:4px;">
     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col1}</div>
     <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;">${tc.col2}</div>
     ${col3html}
+    <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.8px;" title="Nombre de RDV possibles en parallèle sur ce créneau (ex: nb de tables, nb de coiffeurs...)">Parallèle</div>
     <div style="width:44px;"></div>
   </div>`;
   updateBadges();
 }
 
-function addServiceCard(v1, v2, v3, type) {
+function addServiceCard(v1, v2, v3, type, v4) {
   const servicesList = document.getElementById('servicesList');
   const businessType = document.getElementById('businessType').value;
   const tc = getTypeConfig(businessType);
@@ -976,11 +977,12 @@ function addServiceCard(v1, v2, v3, type) {
 
   const card = document.createElement('div');
   card.className = 'service-card-grid';
-  card.style.gridTemplateColumns = hasThird ? '2fr 1fr 1fr auto' : '2fr 1fr auto';
+  card.style.gridTemplateColumns = hasThird ? '2fr 1fr 1fr 0.9fr auto' : '2fr 1fr 0.9fr auto';
   card.innerHTML = `
     <input type="text" value="${v1||''}" placeholder="${tc.ph1}" class="cfg-input" style="padding:11px 14px;">
     <input type="number" value="${v2||''}" placeholder="${tc.ph2}" class="cfg-input" style="padding:11px 14px;">
     ${hasThird ? `<input type="${tc.showDuration ? 'number' : 'text'}" value="${v3||''}" placeholder="${tc.ph3}" class="cfg-input" style="padding:11px 14px;">` : ''}
+    <input type="number" min="1" value="${v4||''}" placeholder="1" class="cfg-input" style="padding:11px 14px;" title="RDV possibles en parallèle sur ce créneau (ex: nb de tables, nb de coiffeurs...)">
     <button onclick="this.parentElement.remove();updateBadges();" style="padding:10px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:16px;transition:all 0.2s;flex-shrink:0;">🗑️</button>`;
   servicesList.appendChild(card);
   updateBadges();
@@ -989,7 +991,7 @@ function addServiceCard(v1, v2, v3, type) {
 function addService() {
   const val = document.getElementById('businessType').value;
   const cfg = businessConfigs[val] || { type: 'service' };
-  addServiceCard('', '', '', cfg.type);
+  addServiceCard('', '', '', cfg.type, '');
   // Aller dans l'onglet services si pas déjà là
   // Ne pas switcher automatiquement
 }
@@ -1135,10 +1137,10 @@ async function saveServices() {
   try {
     const services = [...document.querySelectorAll('.service-card-grid')].map(card => {
       const inputs = card.querySelectorAll('input');
-      const name = inputs[0].value, price = inputs[1].value, third = inputs[2].value;
+      const name = inputs[0].value, price = inputs[1].value; const third = inputs.length===4 ? inputs[2].value : ''; const capacity = inputs[inputs.length-1].value;
       if (!name || !price) return null;
       const cfg = businessConfigs[document.getElementById('businessType').value] || { type: 'service' };
-      return { name, price: parseFloat(price), duration_minutes: cfg.type==='service' ? (parseInt(third)||60) : 60, is_active: true };
+      return { name, price: parseFloat(price), duration_minutes: cfg.type==='service' ? (parseInt(third)||60) : 60, capacity: parseInt(capacity)||1, is_active: true };
     }).filter(Boolean);
     if (!services.length) { showNotification((_dct||DASH_CFG_T.fr).err_add_service, 'error'); return; }
     await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
@@ -1329,7 +1331,7 @@ async function loadBusinessConfig() {
     if (services.length) {
       document.getElementById('servicesList').innerHTML = '';
       const cfgType = (businessConfigs[bc.business_type||'salon']||{type:'service'}).type;
-      services.forEach(s => addServiceCard(s.name, s.price, s.duration_minutes||'', cfgType));
+      services.forEach(s => addServiceCard(s.name, s.price, s.duration_minutes||'', cfgType, s.capacity||''));
 
     }
 
