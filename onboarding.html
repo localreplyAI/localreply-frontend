@@ -164,6 +164,11 @@
             <div class="rdv-radio" id="radio_google" style="width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);flex-shrink:0;margin-top:2px;transition:all 0.2s;"></div>
           </label>
 
+          <div id="rdvGoogleBlockedNote" style="display:none;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.03);border:1.5px dashed rgba(255,255,255,0.12);border-radius:14px;">
+            <div style="width:40px;height:40px;background:rgba(255,255,255,0.06);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">📅</div>
+            <div style="flex:1;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.6;">Google Calendar n'est pas adapté à ce type de commerce (plusieurs tables, chambres ou produits différents). Utilisez plutôt un lien de réservation existant ou la gestion manuelle ci-dessous.</div>
+          </div>
+
           <!-- Option 2 : Lien externe -->
           <label class="rdv-option" id="rdvOptLink" onclick="selectRdvOption('link')" style="display:flex;align-items:start;gap:14px;padding:16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
             <div style="width:40px;height:40px;background:rgba(0,212,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🔗</div>
@@ -712,7 +717,25 @@ const RDV_MODE_DEFAULT = {
   butcher: 'none', fishmonger: 'none', florist: 'none',
   laundry: 'none', photographer: 'none',
   phonerepair: 'none', pharmacy: 'none',
+  opticien: 'link',
 };
+
+// Types où Google Calendar n'est pas pertinent (boutiques + commerces à forte réservation multi-ressources)
+const RDV_BLOCKED_TYPES = new Set([
+  'opticien','bakery','butcher','fishmonger','florist','retail','pharmacy',
+  'restaurant','cafe','pizzeria','cinema','escapegame','pool','hotel',
+]);
+function getDefaultRdvMode(id) {
+  if (RDV_MODE_DEFAULT[id]) return RDV_MODE_DEFAULT[id];
+  return RDV_BLOCKED_TYPES.has(id) ? 'link' : 'google';
+}
+function updateRdvGoogleAvailability(type) {
+  const blocked = RDV_BLOCKED_TYPES.has(type);
+  const opt = document.getElementById('rdvOptGoogle');
+  const note = document.getElementById('rdvGoogleBlockedNote');
+  if (opt) opt.style.display = blocked ? 'none' : 'flex';
+  if (note) note.style.display = blocked ? 'flex' : 'none';
+}
 
 // Types où la durée n'est pas pertinente
 const HIDE_DURATION = new Set([
@@ -1070,7 +1093,8 @@ function selectBizType(id) {
   applyDurationVisibility(id);
 
   // Pré-sélectionner le mode RDV à l'étape 3
-  const rdvMode = RDV_MODE_DEFAULT[id] || 'google';
+  updateRdvGoogleAvailability(id);
+  const rdvMode = getDefaultRdvMode(id);
   selectRdvOption(rdvMode);
 }
 
@@ -1268,6 +1292,7 @@ function addServiceRow(name='', price='', duration='') {
 
 // ─── OPTIONS RDV ───
 function selectRdvOption(opt) {
+  if (opt === 'google' && typeof RDV_BLOCKED_TYPES !== 'undefined' && RDV_BLOCKED_TYPES.has(selectedBizType)) return;
   selectedRdvOption = opt;
   ['google','link','manual','none'].forEach(o => {
     const el = document.getElementById('rdvOpt'+o.charAt(0).toUpperCase()+o.slice(1));
