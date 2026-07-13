@@ -1320,18 +1320,6 @@ function showUI(bizName, icon, greeting, customGreeting=null) {
 }
 
 
-// ── TOGGLE SERVICE PERSONNALISÉ ──
-function toggleCustomService(sel) {
-  const custom = document.getElementById('rdvServiceCustom');
-  if (!custom) return;
-  if (sel.value === '__custom__') {
-    custom.style.display = 'block';
-    custom.focus();
-  } else {
-    custom.style.display = 'none';
-    custom.value = '';
-  }
-}
 
 // ── DÉTECTION INTENT RDV ──
 function needsRdvForm(text) {
@@ -1349,7 +1337,7 @@ async function openRdvForm(prefill={}) {
   const input = document.getElementById('lrcInputArea');
   const sugg  = document.getElementById('lrcSuggestions');
 
-  // Construire liste services — toujours un select, avec option "Autre" pour saisie libre
+  // Construire liste services — uniquement les services configurés (pas de saisie libre)
   const services = window._bizServices || [];
   const uiT = chatUiT();
 
@@ -1361,13 +1349,10 @@ async function openRdvForm(prefill={}) {
     })
     .join('');
   const serviceSelect = `
-    <select id="rdvService" onchange="toggleCustomService(this)" style="width:100%;">
+    <select id="rdvService" style="width:100%;">
       <option value="">${uiT.opt_choose_service}</option>
       ${serviceOptions}
-      <option value="__custom__">${uiT.opt_other}</option>
-    </select>
-    <input id="rdvServiceCustom" type="text" placeholder="${uiT.ph_custom_service}" 
-      style="display:none;width:100%;margin-top:6px;padding:10px 12px;background:var(--surface-2);border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--text);outline:none;font-family:inherit;">`;
+    </select>`;
 
   // Calculer date min (aujourd'hui) et max (30 jours)
   const today = new Date();
@@ -1455,10 +1440,7 @@ function closeRdvForm() {
 
 async function submitRdvForm() {
   const serviceEl = document.getElementById('rdvService');
-  const customEl  = document.getElementById('rdvServiceCustom');
-  const service   = (serviceEl.value === '__custom__' && customEl?.value)
-                    ? customEl.value.trim()
-                    : serviceEl.value;
+  const service   = serviceEl.value;
   const date    = document.getElementById('rdvDate').value;
   const time    = document.getElementById('rdvTime').value;
   const name    = document.getElementById('rdvName').value;
