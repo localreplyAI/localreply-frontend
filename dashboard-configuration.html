@@ -397,11 +397,12 @@
               <div class="cfg-card-icon">👥</div>
               <div>
                 <h2 class="cfg-card-title">Personnel &amp; Ressources</h2>
-                <p class="cfg-card-sub">Nombre de personnes/ressources pouvant traiter des RDV en parallèle (ex: coiffeurs, praticiens...). Utilisé en mode Google Calendar.</p>
+                <p class="cfg-card-sub">Nombre de personnes/ressources pouvant traiter des RDV en parallèle (ex: coiffeurs, praticiens...). Fonctionne uniquement en mode Google Calendar — 10 maximum.</p>
               </div>
             </div>
-            <button onclick="addResource()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+            <button id="btnAddResource" onclick="addResource()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
           </div>
+          <div id="personnelGoogleNote" style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;font-size:12px;color:rgba(0,212,255,0.85);margin-bottom:14px;">📅 Cette section n'a d'effet qu'en mode "Google Calendar" (onglet Rendez-vous). Avec un lien de réservation ou la gestion manuelle, elle n'est pas utilisée.</div>
 
           <div id="resourcesList" style="display:flex;flex-direction:column;gap:10px;"></div>
           <div id="resourcesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
@@ -1047,13 +1048,14 @@ function addFAQ(question='', answer='') {
 }
 
 // ── PERSONNEL / RESSOURCES ──
+const MAX_RESOURCES = 10;
 function addResourceCard(name='', isActive=true) {
   const list = document.getElementById('resourcesList');
   const card = document.createElement('div');
   card.className = 'resource-card-wrapper';
   card.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;';
   card.innerHTML = `
-    <input type="text" value="${name.replace(/"/g,'&quot;')}" placeholder="Ex: Marie, Table 1, Chambre 12..." class="cfg-input" style="flex:1;padding:11px 14px;">
+    <input type="text" value="${name.replace(/"/g,'&quot;')}" placeholder="Ex: Marie, Julien, Sophie..." class="cfg-input" style="flex:1;padding:11px 14px;">
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);white-space:nowrap;cursor:pointer;">
       <input type="checkbox" ${isActive ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
       Active
@@ -1065,6 +1067,11 @@ function addResourceCard(name='', isActive=true) {
 }
 
 function addResource() {
+  const list = document.getElementById('resourcesList');
+  if (list && list.children.length >= MAX_RESOURCES) {
+    showNotification(`Maximum ${MAX_RESOURCES} personnes/ressources`, 'error');
+    return;
+  }
   addResourceCard('', true);
 }
 
@@ -1072,6 +1079,13 @@ function updateResourcesEmpty() {
   const list = document.getElementById('resourcesList');
   const empty = document.getElementById('resourcesEmpty');
   if (list && empty) empty.style.display = list.children.length === 0 ? 'block' : 'none';
+  const btn = document.getElementById('btnAddResource');
+  if (btn && list) {
+    const atMax = list.children.length >= MAX_RESOURCES;
+    btn.disabled = atMax;
+    btn.style.opacity = atMax ? '0.4' : '1';
+    btn.style.cursor = atMax ? 'not-allowed' : 'pointer';
+  }
 }
 
 async function saveResources() {
