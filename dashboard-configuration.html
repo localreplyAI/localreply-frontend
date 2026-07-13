@@ -112,6 +112,7 @@
         <button class="cfg-tab active" onclick="switchTab('commerce')" id="tab-commerce" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid #00D4FF;color:#00D4FF;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-commerce">🏪 Commerce</span></button>
         <button class="cfg-tab" onclick="switchTab('horaires')" id="tab-horaires" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-horaires">⏰ Horaires</span></button>
         <button class="cfg-tab" onclick="switchTab('services')" id="tab-services" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-services">💼 Services</span> <span id="badge-services" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
+        <button class="cfg-tab" onclick="switchTab('personnel')" id="tab-personnel" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-personnel">👥 Personnel</span> <span id="badge-personnel" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
         <button class="cfg-tab" onclick="switchTab('faq')" id="tab-faq" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-faq">❓ FAQ</span> <span id="badge-faq" style="display:none;background:rgba(0,212,255,0.2);color:#00D4FF;font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;"></span></button>
         <button class="cfg-tab" onclick="switchTab('avance')" id="tab-avance" style="display:flex;align-items:center;gap:8px;padding:16px 20px;background:none;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.55);font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s;font-family:inherit;"><span id="cfg-tab-avance">✨ Avancé</span></button>
       </div>
@@ -385,6 +386,29 @@
             <div style="font-size:14px;" id="cfg-no-services"><span id="cfg-no-services-text">Aucun service trouvé</span> — <button onclick="document.getElementById('serviceSearch').value='';filterServices();" style="background:none;border:none;color:#00D4FF;cursor:pointer;font-size:14px;text-decoration:underline;" id="cfg-clear-search-1">effacer la recherche</button></div>
           </div>
           <button onclick="saveServices()" class="cfg-btn-save" style="margin-top:20px;" id="cfg-save-services-btn">💾 Enregistrer les services</button>
+        </div>
+      </div>
+
+      <!-- ═══ ONGLET PERSONNEL & RESSOURCES ═══ -->
+      <div id="panel-personnel" class="cfg-panel" style="display:none;">
+        <div class="cfg-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div class="cfg-card-icon">👥</div>
+              <div>
+                <h2 class="cfg-card-title">Personnel &amp; Ressources</h2>
+                <p class="cfg-card-sub">Nombre de personnes/ressources pouvant traiter des RDV en parallèle (ex: coiffeurs, praticiens...). Utilisé en mode Google Calendar.</p>
+              </div>
+            </div>
+            <button onclick="addResource()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);">➕ Ajouter</button>
+          </div>
+
+          <div id="resourcesList" style="display:flex;flex-direction:column;gap:10px;"></div>
+          <div id="resourcesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
+            <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">👥</div>
+            <div style="font-size:14px;">Aucune ressource configurée — l'IA se comportera comme si vous n'aviez qu'une seule disponibilité à la fois.</div>
+          </div>
+          <button onclick="saveResources()" class="cfg-btn-save" style="margin-top:20px;">💾 Enregistrer le personnel</button>
         </div>
       </div>
 
@@ -669,6 +693,9 @@ function updateBadges() {
   const bf = document.getElementById('badge-faq');
   if (bs) { bs.textContent = sCount; bs.style.display = sCount > 0 ? 'inline-block' : 'none'; }
   if (bf) { bf.textContent = fCount; bf.style.display = fCount > 0 ? 'inline-block' : 'none'; }
+  const rCount = document.querySelectorAll('.resource-card-wrapper').length;
+  const br = document.getElementById('badge-personnel');
+  if (br) { br.textContent = rCount; br.style.display = rCount > 0 ? 'inline-block' : 'none'; }
 }
 
 // ── RECHERCHE SERVICES ──
@@ -890,6 +917,10 @@ function updateBusinessIcon() {
   if (cfg) {
     document.getElementById('businessIcon').textContent = cfg.icon;
     updateServicesSection(cfg.type);
+    const personnelTab = document.getElementById('tab-personnel');
+    const showPersonnel = cfg.type === 'service';
+    if (personnelTab) personnelTab.style.display = showPersonnel ? 'flex' : 'none';
+    if (!showPersonnel && personnelTab && personnelTab.classList.contains('active')) switchTab('commerce');
   }
 }
 
@@ -1013,6 +1044,46 @@ function addFAQ(question='', answer='') {
   faqList.appendChild(card);
   updateBadges();
   // Ne pas switcher automatiquement
+}
+
+// ── PERSONNEL / RESSOURCES ──
+function addResourceCard(name='', isActive=true) {
+  const list = document.getElementById('resourcesList');
+  const card = document.createElement('div');
+  card.className = 'resource-card-wrapper';
+  card.style.cssText = 'display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;';
+  card.innerHTML = `
+    <input type="text" value="${name.replace(/"/g,'&quot;')}" placeholder="Ex: Marie, Table 1, Chambre 12..." class="cfg-input" style="flex:1;padding:11px 14px;">
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.5);white-space:nowrap;cursor:pointer;">
+      <input type="checkbox" ${isActive ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+      Active
+    </label>
+    <button onclick="this.closest('.resource-card-wrapper').remove();updateResourcesEmpty();updateBadges();" style="padding:9px 13px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;color:#EF4444;cursor:pointer;font-size:15px;flex-shrink:0;">🗑️</button>`;
+  list.appendChild(card);
+  updateResourcesEmpty();
+  updateBadges();
+}
+
+function addResource() {
+  addResourceCard('', true);
+}
+
+function updateResourcesEmpty() {
+  const list = document.getElementById('resourcesList');
+  const empty = document.getElementById('resourcesEmpty');
+  if (list && empty) empty.style.display = list.children.length === 0 ? 'block' : 'none';
+}
+
+async function saveResources() {
+  try {
+    const resources = [...document.querySelectorAll('.resource-card-wrapper')].map(card => {
+      const name = card.querySelector('input[type="text"]').value.trim();
+      const isActive = card.querySelector('input[type="checkbox"]').checked;
+      return name ? { name, is_active: isActive } : null;
+    }).filter(Boolean);
+    await apiRequest(`/api/business/${businessId}/resources`, 'POST', resources);
+    showNotification('💾 Personnel enregistré');
+  } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
 }
 
 // logout() is now centralized in dashboard-i18n.js (shared custom-modal version)
@@ -1339,6 +1410,12 @@ async function loadBusinessConfig() {
       document.getElementById('faqList').innerHTML = '';
       faq.forEach(item => addFAQ(item.question||'', item.answer||''));
     }
+
+    // Personnel / Ressources
+    const resources = config.resources || [];
+    document.getElementById('resourcesList').innerHTML = '';
+    resources.forEach(r => addResourceCard(r.name||'', r.is_active!==false));
+    updateResourcesEmpty();
 
     // Horaires
     const hours = config.hours || [];
