@@ -244,6 +244,20 @@
               </div>
             </label>
           </div>
+        <!-- Langue des emails & SMS -->
+        <div class="ob-field" style="margin-bottom:16px;">
+          <label id="ob-lbl-lang-notif" class="ob-label">🌐 Langue des emails & SMS</label>
+          <select id="ob_notifLanguage" class="ob-input" style="margin-top:6px;">
+            <option value="fr" selected>🇫🇷 Français</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="pt">🇵🇹 Português</option>
+            <option value="nl">🇳🇱 Nederlands</option>
+            <option value="pl">🇵🇱 Polski</option>
+          </select>
+        </div>
         </div>
 
         <!-- Tableau notifications -->
@@ -1471,7 +1485,7 @@ async function saveStep(step) {
         apiRequest(`/api/business/${businessId}/notifications`, 'POST', {notification_email_target:target}).catch(()=>{});
       });
       // Marquer onboarding complété
-      await apiRequest(`/api/business/${businessId}/config`, 'POST', {onboarding_completed:true}).catch(()=>{});
+      await apiRequest(`/api/business/${businessId}/config`, 'POST', {onboarding_completed:true, interface_language:document.getElementById('ob_notifLanguage')?.value||'fr'}).catch(()=>{});
     }
   } catch(e) {
     console.error('Save error:', e);
