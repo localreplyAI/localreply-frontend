@@ -595,7 +595,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, business_name: businessName })
+      body: JSON.stringify({ email, password, business_name: businessName, lang: localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2).toLowerCase() })
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.detail || 'Erreur lors de la création du compte');
