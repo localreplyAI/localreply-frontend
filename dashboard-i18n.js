@@ -466,6 +466,13 @@ const LR_TEXT_MAP = {
   'Oui, sans engagement. Annulez depuis le portail de facturation.': {en:'Yes, no commitment. Cancel from the billing portal.',de:'Ja, ohne Vertragsbindung. Kündigen Sie über das Abrechnungsportal.',it:'Sì, senza impegno. Annulla dal portale di fatturazione.',es:'Sí, sin compromiso. Cancela desde el portal de facturación.',pt:'Sim, sem compromisso. Cancele através do portal de faturação.',nl:'Ja, zonder verplichting. Zeg op via het factureringsportaal.',pl:'Tak, bez zobowiązań. Anuluj przez portal rozliczeniowy.'},
   '📋 Utiliser un template': {en:'📋 Use a template',de:'📋 Vorlage verwenden',it:'📋 Usa un modello',es:'📋 Usar una plantilla',pt:'📋 Usar um modelo',nl:'📋 Een sjabloon gebruiken',pl:'📋 Użyj szablonu'},
   'SUPPRIMER': {en:'DELETE',de:'LÖSCHEN',it:'ELIMINA',es:'ELIMINAR',pt:'ELIMINAR',nl:'VERWIJDEREN',pl:'USUŃ'},
+  // Config — logo & horaires (untranslated strings found in a sweep)
+  '📁 Choisir un logo': {en:'📁 Choose a logo',de:'📁 Logo auswählen',it:'📁 Scegli un logo',es:'📁 Elegir un logo',pt:'📁 Escolher um logotipo',nl:'📁 Kies een logo',pl:'📁 Wybierz logo'},
+  'PNG, JPG ou WebP · Max 2MB': {en:'PNG, JPG or WebP · Max 2MB',de:'PNG, JPG oder WebP · Max. 2 MB',it:'PNG, JPG o WebP · Max 2MB',es:'PNG, JPG o WebP · Máx. 2MB',pt:'PNG, JPG ou WebP · Máx. 2MB',nl:'PNG, JPG of WebP · Max 2MB',pl:'PNG, JPG lub WebP · Maks. 2MB'},
+  'Jour': {en:'Day',de:'Tag',it:'Giorno',es:'Día',pt:'Dia',nl:'Dag',pl:'Dzień'},
+  'Ouverture': {en:'Open',de:'Öffnung',it:'Apertura',es:'Apertura',pt:'Abertura',nl:'Open',pl:'Otwarcie'},
+  'Fermeture': {en:'Close',de:'Schließung',it:'Chiusura',es:'Cierre',pt:'Fecho',nl:'Sluit',pl:'Zamknięcie'},
+  'Statut': {en:'Status',de:'Status',it:'Stato',es:'Estado',pt:'Estado',nl:'Status',pl:'Status'},
   // Personnel & Ressources tab
   '👥 Personnel': {en:'👥 Staff',de:'👥 Personal',it:'👥 Personale',es:'👥 Personal',pt:'👥 Pessoal',nl:'👥 Personeel',pl:'👥 Personel'},
   'Personnel & Ressources': {en:'Staff & Resources',de:'Personal & Ressourcen',it:'Personale e risorse',es:'Personal y recursos',pt:'Pessoal e recursos',nl:'Personeel & middelen',pl:'Personel i zasoby'},
