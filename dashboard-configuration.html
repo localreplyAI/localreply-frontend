@@ -538,14 +538,6 @@
                 <option value="active" id="cfg-suggestions-active">🎯 Actives</option>
               </select>
             </div>
-            <div class="cfg-field">
-              <label id="cfg-lbl-email-collect" class="cfg-label">Collecte d'email</label>
-              <select id="aiEmailCollection" class="cfg-select">
-                <option value="off" id="cfg-email-off">❌ Désactivée</option>
-                <option value="end" selected id="cfg-email-end">📧 En fin de conversation</option>
-                <option value="after" id="cfg-proactivity-rdv">✅ Après RDV confirmé</option>
-              </select>
-            </div>
           </div>
           <button onclick="saveAICustomization()" class="cfg-btn-save" style="margin-top:24px;" id="cfg-save-personality-btn">💾 Enregistrer la personnalité</button>
         </div>
@@ -1255,8 +1247,7 @@ async function saveAICustomization() {
       assistant_name: document.getElementById('aiName').value,
       greeting_message: document.getElementById('aiGreeting').value,
       proactivity: document.getElementById('aiProactivity').value,
-      service_suggestions: document.getElementById('aiSuggestions').value,
-      email_collection: document.getElementById('aiEmailCollection').value
+      service_suggestions: document.getElementById('aiSuggestions').value
     });
     showNotification((_dct||DASH_CFG_T.fr).save_personality_ok);
   } catch(e) { showNotification(((window._dct||{}).err_prefix||'❌ Erreur : ') + e.message, 'error'); }
@@ -1542,7 +1533,7 @@ const DASH_CFG_T = {
     lbl_tone: "Ton de l'IA", lbl_tutoyer: 'Tutoiement', lbl_emojis: 'Emojis',
     lbl_length: 'Longueur des réponses', lbl_assistant: "Nom de l'assistant",
     lbl_greeting: 'Phrase d\'accueil personnalisée', lbl_proactivity: 'Proactivité',
-    lbl_suggestions: 'Suggestions de services', lbl_email_collect: 'Collecte d\'email',
+    lbl_suggestions: 'Suggestions de services', 
     slug_warning: 'Ce lien est définitif — il est utilisé dans vos QR codes et liens partagés.',
     remove_logo: '🗑️ Supprimer le logo',
     save_closures: '💾 Enregistrer les fermetures',
@@ -1560,7 +1551,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Jeu',
     day_ven: 'Ven', day_sam: 'Sam', day_dim: 'Dim',
     day_full_lun: 'Lundi', day_full_mar: 'Mardi', day_full_mer: 'Mercredi',
-    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche', ph_business_name: "Votre commerce", ph_business_address: "14 Rue de Rive, 1204 Genève", ph_business_desc: "Ex: Salon de coiffure homme moderne, ambiance détendue, café offert...", ph_business_slug: "mon-commerce", ph_ai_name: "Ex: Marie", ph_ai_greeting: "Bonjour ! Comment puis-je vous aider ?", ph_faq_question: "Votre question...", ph_faq_answer: "Votre réponse...", ph_closure_reason: "Motif (ex: Noël, Congés...)", ph_search_faq: "🔍 Rechercher dans la FAQ...", ph_search_service: "🔍 Rechercher un service...", tt_slug_locked: "Le lien public ne peut pas être modifié", lbl_public_link: "Lien public", lbl_permanent: "— permanent", tone_professional: "👔 Professionnel", tone_friendly: "😊 Amical", formal_tu: "Tu (informel)", formal_vous: "Vous (formel)", emojis_on: "✅ Activés", length_concise: "📝 Concise (1-2 phrases)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Réactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Désactivées", suggestions_subtle: "💬 Subtiles", suggestions_active: "🎯 Actives", email_collect_off: "❌ Désactivée", email_collect_end: "📧 En fin de conversation", no_services_found: "Aucun service trouvé", no_faq_found: "Aucune question trouvée", clear_search: "effacer la recherche",
+    day_full_jeu: 'Jeudi', day_full_ven: 'Vendredi', day_full_sam: 'Samedi', day_full_dim: 'Dimanche', ph_business_name: "Votre commerce", ph_business_address: "14 Rue de Rive, 1204 Genève", ph_business_desc: "Ex: Salon de coiffure homme moderne, ambiance détendue, café offert...", ph_business_slug: "mon-commerce", ph_ai_name: "Ex: Marie", ph_ai_greeting: "Bonjour ! Comment puis-je vous aider ?", ph_faq_question: "Votre question...", ph_faq_answer: "Votre réponse...", ph_closure_reason: "Motif (ex: Noël, Congés...)", ph_search_faq: "🔍 Rechercher dans la FAQ...", ph_search_service: "🔍 Rechercher un service...", tt_slug_locked: "Le lien public ne peut pas être modifié", lbl_public_link: "Lien public", lbl_permanent: "— permanent", tone_professional: "👔 Professionnel", tone_friendly: "😊 Amical", formal_tu: "Tu (informel)", formal_vous: "Vous (formel)", emojis_on: "✅ Activés", length_concise: "📝 Concise (1-2 phrases)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Réactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Désactivées", suggestions_subtle: "💬 Subtiles", suggestions_active: "🎯 Actives", no_services_found: "Aucun service trouvé", no_faq_found: "Aucune question trouvée", clear_search: "effacer la recherche",
     closed: 'Fermé',
   },
   en: {
@@ -1579,7 +1570,7 @@ const DASH_CFG_T = {
     lbl_tone: 'AI tone', lbl_tutoyer: 'Informal address', lbl_emojis: 'Emojis',
     lbl_length: 'Response length', lbl_assistant: 'Assistant name',
     lbl_greeting: 'Custom greeting', lbl_proactivity: 'Proactivity',
-    lbl_suggestions: 'Service suggestions', lbl_email_collect: 'Email collection',
+    lbl_suggestions: 'Service suggestions', 
     slug_warning: 'This link is permanent — it is used in your QR codes and shared links.',
     remove_logo: '🗑️ Remove logo',
     save_closures: '💾 Save closures',
@@ -1597,7 +1588,7 @@ const DASH_CFG_T = {
     day_lun: 'Mon', day_mar: 'Tue', day_mer: 'Wed', day_jeu: 'Thu',
     day_ven: 'Fri', day_sam: 'Sat', day_dim: 'Sun',
     day_full_lun: 'Monday', day_full_mar: 'Tuesday', day_full_mer: 'Wednesday',
-    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday', ph_business_name: "Your business", ph_business_address: "14 Rive Street, 1204 Geneva", ph_business_desc: "E.g.: Modern men's hair salon, relaxed atmosphere, free coffee...", ph_business_slug: "my-business", ph_ai_name: "E.g.: Marie", ph_ai_greeting: "Hello! How can I help you?", ph_faq_question: "Your question...", ph_faq_answer: "Your answer...", ph_closure_reason: "Reason (e.g. Christmas, Holiday...)", ph_search_faq: "🔍 Search the FAQ...", ph_search_service: "🔍 Search a service...", tt_slug_locked: "The public link cannot be edited", lbl_public_link: "Public link", lbl_permanent: "— permanent", tone_professional: "👔 Professional", tone_friendly: "😊 Friendly", formal_tu: "Informal", formal_vous: "Formal", emojis_on: "✅ Enabled", length_concise: "📝 Concise (1-2 sentences)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Disabled", suggestions_subtle: "💬 Subtle", suggestions_active: "🎯 Active", email_collect_off: "❌ Disabled", email_collect_end: "📧 At the end of the conversation", no_services_found: "No service found", no_faq_found: "No question found", clear_search: "clear search",
+    day_full_jeu: 'Thursday', day_full_ven: 'Friday', day_full_sam: 'Saturday', day_full_dim: 'Sunday', ph_business_name: "Your business", ph_business_address: "14 Rive Street, 1204 Geneva", ph_business_desc: "E.g.: Modern men's hair salon, relaxed atmosphere, free coffee...", ph_business_slug: "my-business", ph_ai_name: "E.g.: Marie", ph_ai_greeting: "Hello! How can I help you?", ph_faq_question: "Your question...", ph_faq_answer: "Your answer...", ph_closure_reason: "Reason (e.g. Christmas, Holiday...)", ph_search_faq: "🔍 Search the FAQ...", ph_search_service: "🔍 Search a service...", tt_slug_locked: "The public link cannot be edited", lbl_public_link: "Public link", lbl_permanent: "— permanent", tone_professional: "👔 Professional", tone_friendly: "😊 Friendly", formal_tu: "Informal", formal_vous: "Formal", emojis_on: "✅ Enabled", length_concise: "📝 Concise (1-2 sentences)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactive", proactivity_proactive: "💡 Proactive", suggestions_off: "🚫 Disabled", suggestions_subtle: "💬 Subtle", suggestions_active: "🎯 Active", no_services_found: "No service found", no_faq_found: "No question found", clear_search: "clear search",
     closed: 'Closed',
   },
   de: {
@@ -1616,7 +1607,7 @@ const DASH_CFG_T = {
     lbl_tone: 'KI-Ton', lbl_tutoyer: 'Anrede', lbl_emojis: 'Emojis',
     lbl_length: 'Antwortlänge', lbl_assistant: 'Assistentenname',
     lbl_greeting: 'Benutzerdefinierte Begrüßung', lbl_proactivity: 'Proaktivität',
-    lbl_suggestions: 'Dienstvorschläge', lbl_email_collect: 'E-Mail-Erfassung',
+    lbl_suggestions: 'Dienstvorschläge', 
     slug_warning: 'Dieser Link ist dauerhaft — er wird in Ihren QR-Codes und geteilten Links verwendet.',
     remove_logo: '🗑️ Logo entfernen',
     save_closures: '💾 Schließzeiten speichern',
@@ -1634,7 +1625,7 @@ const DASH_CFG_T = {
     day_lun: 'Mo', day_mar: 'Di', day_mer: 'Mi', day_jeu: 'Do',
     day_ven: 'Fr', day_sam: 'Sa', day_dim: 'So',
     day_full_lun: 'Montag', day_full_mar: 'Dienstag', day_full_mer: 'Mittwoch',
-    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag', ph_business_name: "Ihr Unternehmen", ph_business_address: "Bahnhofstrasse 14, 8001 Zürich", ph_business_desc: "Z. B.: Moderner Herrensalon, entspannte Atmosphäre, kostenloser Kaffee...", ph_business_slug: "mein-unternehmen", ph_ai_name: "Z. B.: Marie", ph_ai_greeting: "Hallo! Wie kann ich Ihnen helfen?", ph_faq_question: "Ihre Frage...", ph_faq_answer: "Ihre Antwort...", ph_closure_reason: "Grund (z. B. Weihnachten, Urlaub...)", ph_search_faq: "🔍 FAQ durchsuchen...", ph_search_service: "🔍 Dienstleistung suchen...", tt_slug_locked: "Der öffentliche Link kann nicht geändert werden", lbl_public_link: "Öffentlicher Link", lbl_permanent: "— dauerhaft", tone_professional: "👔 Professionell", tone_friendly: "😊 Freundlich", formal_tu: "Du (informell)", formal_vous: "Sie (formell)", emojis_on: "✅ Aktiviert", length_concise: "📝 Kurz (1-2 Sätze)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reaktiv", proactivity_proactive: "💡 Proaktiv", suggestions_off: "🚫 Deaktiviert", suggestions_subtle: "💬 Dezent", suggestions_active: "🎯 Aktiv", email_collect_off: "❌ Deaktiviert", email_collect_end: "📧 Am Ende des Gesprächs", no_services_found: "Keine Dienstleistung gefunden", no_faq_found: "Keine Frage gefunden", clear_search: "Suche löschen",
+    day_full_jeu: 'Donnerstag', day_full_ven: 'Freitag', day_full_sam: 'Samstag', day_full_dim: 'Sonntag', ph_business_name: "Ihr Unternehmen", ph_business_address: "Bahnhofstrasse 14, 8001 Zürich", ph_business_desc: "Z. B.: Moderner Herrensalon, entspannte Atmosphäre, kostenloser Kaffee...", ph_business_slug: "mein-unternehmen", ph_ai_name: "Z. B.: Marie", ph_ai_greeting: "Hallo! Wie kann ich Ihnen helfen?", ph_faq_question: "Ihre Frage...", ph_faq_answer: "Ihre Antwort...", ph_closure_reason: "Grund (z. B. Weihnachten, Urlaub...)", ph_search_faq: "🔍 FAQ durchsuchen...", ph_search_service: "🔍 Dienstleistung suchen...", tt_slug_locked: "Der öffentliche Link kann nicht geändert werden", lbl_public_link: "Öffentlicher Link", lbl_permanent: "— dauerhaft", tone_professional: "👔 Professionell", tone_friendly: "😊 Freundlich", formal_tu: "Du (informell)", formal_vous: "Sie (formell)", emojis_on: "✅ Aktiviert", length_concise: "📝 Kurz (1-2 Sätze)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reaktiv", proactivity_proactive: "💡 Proaktiv", suggestions_off: "🚫 Deaktiviert", suggestions_subtle: "💬 Dezent", suggestions_active: "🎯 Aktiv", no_services_found: "Keine Dienstleistung gefunden", no_faq_found: "Keine Frage gefunden", clear_search: "Suche löschen",
     closed: 'Geschlossen',
   },
   it: {
@@ -1653,7 +1644,7 @@ const DASH_CFG_T = {
     lbl_tone: "Tono dell'IA", lbl_tutoyer: 'Forma di cortesia', lbl_emojis: 'Emoji',
     lbl_length: 'Lunghezza risposte', lbl_assistant: "Nome dell'assistente",
     lbl_greeting: 'Saluto personalizzato', lbl_proactivity: 'Proattività',
-    lbl_suggestions: 'Suggerimenti servizi', lbl_email_collect: 'Raccolta email',
+    lbl_suggestions: 'Suggerimenti servizi', 
     slug_warning: 'Questo link è definitivo — viene utilizzato nei tuoi QR code e link condivisi.',
     remove_logo: '🗑️ Rimuovi logo',
     save_closures: '💾 Salva chiusure',
@@ -1671,7 +1662,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mer', day_jeu: 'Gio',
     day_ven: 'Ven', day_sam: 'Sab', day_dim: 'Dom',
     day_full_lun: 'Lunedì', day_full_mar: 'Martedì', day_full_mer: 'Mercoledì',
-    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica', ph_business_name: "La tua attività", ph_business_address: "Via Roma 14, 6900 Lugano", ph_business_desc: "Es.: Salone da barbiere moderno, atmosfera rilassata, caffè offerto...", ph_business_slug: "la-mia-attivita", ph_ai_name: "Es.: Marie", ph_ai_greeting: "Ciao! Come posso aiutarti?", ph_faq_question: "La tua domanda...", ph_faq_answer: "La tua risposta...", ph_closure_reason: "Motivo (es. Natale, Ferie...)", ph_search_faq: "🔍 Cerca nelle FAQ...", ph_search_service: "🔍 Cerca un servizio...", tt_slug_locked: "Il link pubblico non può essere modificato", lbl_public_link: "Link pubblico", lbl_permanent: "— permanente", tone_professional: "👔 Professionale", tone_friendly: "😊 Amichevole", formal_tu: "Tu (informale)", formal_vous: "Lei (formale)", emojis_on: "✅ Attivate", length_concise: "📝 Concisa (1-2 frasi)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Reattiva", proactivity_proactive: "💡 Proattiva", suggestions_off: "🚫 Disattivate", suggestions_subtle: "💬 Discrete", suggestions_active: "🎯 Attive", email_collect_off: "❌ Disattivata", email_collect_end: "📧 Alla fine della conversazione", no_services_found: "Nessun servizio trovato", no_faq_found: "Nessuna domanda trovata", clear_search: "cancella ricerca",
+    day_full_jeu: 'Giovedì', day_full_ven: 'Venerdì', day_full_sam: 'Sabato', day_full_dim: 'Domenica', ph_business_name: "La tua attività", ph_business_address: "Via Roma 14, 6900 Lugano", ph_business_desc: "Es.: Salone da barbiere moderno, atmosfera rilassata, caffè offerto...", ph_business_slug: "la-mia-attivita", ph_ai_name: "Es.: Marie", ph_ai_greeting: "Ciao! Come posso aiutarti?", ph_faq_question: "La tua domanda...", ph_faq_answer: "La tua risposta...", ph_closure_reason: "Motivo (es. Natale, Ferie...)", ph_search_faq: "🔍 Cerca nelle FAQ...", ph_search_service: "🔍 Cerca un servizio...", tt_slug_locked: "Il link pubblico non può essere modificato", lbl_public_link: "Link pubblico", lbl_permanent: "— permanente", tone_professional: "👔 Professionale", tone_friendly: "😊 Amichevole", formal_tu: "Tu (informale)", formal_vous: "Lei (formale)", emojis_on: "✅ Attivate", length_concise: "📝 Concisa (1-2 frasi)", length_normal: "💬 Normale", proactivity_reactive: "🙋 Reattiva", proactivity_proactive: "💡 Proattiva", suggestions_off: "🚫 Disattivate", suggestions_subtle: "💬 Discrete", suggestions_active: "🎯 Attive", no_services_found: "Nessun servizio trovato", no_faq_found: "Nessuna domanda trovata", clear_search: "cancella ricerca",
     closed: 'Chiuso',
   },
   es: {
@@ -1690,7 +1681,7 @@ const DASH_CFG_T = {
     lbl_tone: 'Tono de la IA', lbl_tutoyer: 'Tuteo', lbl_emojis: 'Emojis',
     lbl_length: 'Longitud de respuestas', lbl_assistant: 'Nombre del asistente',
     lbl_greeting: 'Saludo personalizado', lbl_proactivity: 'Proactividad',
-    lbl_suggestions: 'Sugerencias de servicios', lbl_email_collect: 'Recogida de email',
+    lbl_suggestions: 'Sugerencias de servicios', 
     slug_warning: 'Este enlace es definitivo — se usa en tus códigos QR y enlaces compartidos.',
     remove_logo: '🗑️ Eliminar logo',
     save_closures: '💾 Guardar cierres',
@@ -1708,7 +1699,7 @@ const DASH_CFG_T = {
     day_lun: 'Lun', day_mar: 'Mar', day_mer: 'Mié', day_jeu: 'Jue',
     day_ven: 'Vie', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Lunes', day_full_mar: 'Martes', day_full_mer: 'Miércoles',
-    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "Tu negocio", ph_business_address: "Calle Mayor 14, 28013 Madrid", ph_business_desc: "Ej.: Peluquería masculina moderna, ambiente relajado, café gratis...", ph_business_slug: "mi-negocio", ph_ai_name: "Ej.: Marie", ph_ai_greeting: "¡Hola! ¿Cómo puedo ayudarte?", ph_faq_question: "Tu pregunta...", ph_faq_answer: "Tu respuesta...", ph_closure_reason: "Motivo (ej. Navidad, Vacaciones...)", ph_search_faq: "🔍 Buscar en las FAQ...", ph_search_service: "🔍 Buscar un servicio...", tt_slug_locked: "El enlace público no se puede modificar", lbl_public_link: "Enlace público", lbl_permanent: "— permanente", tone_professional: "👔 Profesional", tone_friendly: "😊 Amigable", formal_tu: "Tú (informal)", formal_vous: "Usted (formal)", emojis_on: "✅ Activados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactiva", proactivity_proactive: "💡 Proactiva", suggestions_off: "🚫 Desactivadas", suggestions_subtle: "💬 Sutiles", suggestions_active: "🎯 Activas", email_collect_off: "❌ Desactivada", email_collect_end: "📧 Al final de la conversación", no_services_found: "No se encontró ningún servicio", no_faq_found: "No se encontró ninguna pregunta", clear_search: "borrar búsqueda",
+    day_full_jeu: 'Jueves', day_full_ven: 'Viernes', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "Tu negocio", ph_business_address: "Calle Mayor 14, 28013 Madrid", ph_business_desc: "Ej.: Peluquería masculina moderna, ambiente relajado, café gratis...", ph_business_slug: "mi-negocio", ph_ai_name: "Ej.: Marie", ph_ai_greeting: "¡Hola! ¿Cómo puedo ayudarte?", ph_faq_question: "Tu pregunta...", ph_faq_answer: "Tu respuesta...", ph_closure_reason: "Motivo (ej. Navidad, Vacaciones...)", ph_search_faq: "🔍 Buscar en las FAQ...", ph_search_service: "🔍 Buscar un servicio...", tt_slug_locked: "El enlace público no se puede modificar", lbl_public_link: "Enlace público", lbl_permanent: "— permanente", tone_professional: "👔 Profesional", tone_friendly: "😊 Amigable", formal_tu: "Tú (informal)", formal_vous: "Usted (formal)", emojis_on: "✅ Activados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reactiva", proactivity_proactive: "💡 Proactiva", suggestions_off: "🚫 Desactivadas", suggestions_subtle: "💬 Sutiles", suggestions_active: "🎯 Activas", no_services_found: "No se encontró ningún servicio", no_faq_found: "No se encontró ninguna pregunta", clear_search: "borrar búsqueda",
     closed: 'Cerrado',
   },
   pt: {
@@ -1727,7 +1718,7 @@ const DASH_CFG_T = {
     lbl_tone: 'Tom da IA', lbl_tutoyer: 'Tratamento informal', lbl_emojis: 'Emojis',
     lbl_length: 'Comprimento das respostas', lbl_assistant: 'Nome do assistente',
     lbl_greeting: 'Saudação personalizada', lbl_proactivity: 'Proatividade',
-    lbl_suggestions: 'Sugestões de serviços', lbl_email_collect: 'Recolha de email',
+    lbl_suggestions: 'Sugestões de serviços', 
     slug_warning: 'Este link é definitivo — é utilizado nos seus QR codes e links partilhados.',
     remove_logo: '🗑️ Remover logo',
     save_closures: '💾 Guardar encerramentos',
@@ -1745,7 +1736,7 @@ const DASH_CFG_T = {
     day_lun: 'Seg', day_mar: 'Ter', day_mer: 'Qua', day_jeu: 'Qui',
     day_ven: 'Sex', day_sam: 'Sáb', day_dim: 'Dom',
     day_full_lun: 'Segunda', day_full_mar: 'Terça', day_full_mer: 'Quarta',
-    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "O seu negócio", ph_business_address: "Rua Augusta 14, 1100-053 Lisboa", ph_business_desc: "Ex.: Barbearia moderna, ambiente descontraído, café oferecido...", ph_business_slug: "o-meu-negocio", ph_ai_name: "Ex.: Marie", ph_ai_greeting: "Olá! Como posso ajudá-lo?", ph_faq_question: "A sua pergunta...", ph_faq_answer: "A sua resposta...", ph_closure_reason: "Motivo (ex.: Natal, Férias...)", ph_search_faq: "🔍 Pesquisar na FAQ...", ph_search_service: "🔍 Pesquisar um serviço...", tt_slug_locked: "O link público não pode ser alterado", lbl_public_link: "Link público", lbl_permanent: "— permanente", tone_professional: "👔 Profissional", tone_friendly: "😊 Amigável", formal_tu: "Tu (informal)", formal_vous: "Você (formal)", emojis_on: "✅ Ativados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reativa", proactivity_proactive: "💡 Proativa", suggestions_off: "🚫 Desativadas", suggestions_subtle: "💬 Subtis", suggestions_active: "🎯 Ativas", email_collect_off: "❌ Desativada", email_collect_end: "📧 No final da conversa", no_services_found: "Nenhum serviço encontrado", no_faq_found: "Nenhuma pergunta encontrada", clear_search: "limpar pesquisa",
+    day_full_jeu: 'Quinta', day_full_ven: 'Sexta', day_full_sam: 'Sábado', day_full_dim: 'Domingo', ph_business_name: "O seu negócio", ph_business_address: "Rua Augusta 14, 1100-053 Lisboa", ph_business_desc: "Ex.: Barbearia moderna, ambiente descontraído, café oferecido...", ph_business_slug: "o-meu-negocio", ph_ai_name: "Ex.: Marie", ph_ai_greeting: "Olá! Como posso ajudá-lo?", ph_faq_question: "A sua pergunta...", ph_faq_answer: "A sua resposta...", ph_closure_reason: "Motivo (ex.: Natal, Férias...)", ph_search_faq: "🔍 Pesquisar na FAQ...", ph_search_service: "🔍 Pesquisar um serviço...", tt_slug_locked: "O link público não pode ser alterado", lbl_public_link: "Link público", lbl_permanent: "— permanente", tone_professional: "👔 Profissional", tone_friendly: "😊 Amigável", formal_tu: "Tu (informal)", formal_vous: "Você (formal)", emojis_on: "✅ Ativados", length_concise: "📝 Concisa (1-2 frases)", length_normal: "💬 Normal", proactivity_reactive: "🙋 Reativa", proactivity_proactive: "💡 Proativa", suggestions_off: "🚫 Desativadas", suggestions_subtle: "💬 Subtis", suggestions_active: "🎯 Ativas", no_services_found: "Nenhum serviço encontrado", no_faq_found: "Nenhuma pergunta encontrada", clear_search: "limpar pesquisa",
     closed: 'Fechado',
   },
   nl: {
@@ -1764,7 +1755,7 @@ const DASH_CFG_T = {
     lbl_tone: 'AI-toon', lbl_tutoyer: 'Aanspreekvorm', lbl_emojis: 'Emoji\'s',
     lbl_length: 'Antwoordlengte', lbl_assistant: 'Assistentnaam',
     lbl_greeting: 'Aangepaste begroeting', lbl_proactivity: 'Proactiviteit',
-    lbl_suggestions: 'Dienstsuggesties', lbl_email_collect: 'E-mailverzameling',
+    lbl_suggestions: 'Dienstsuggesties', 
     slug_warning: 'Deze link is permanent — hij wordt gebruikt in uw QR-codes en gedeelde links.',
     remove_logo: '🗑️ Logo verwijderen',
     save_closures: '💾 Sluitingen opslaan',
@@ -1782,7 +1773,7 @@ const DASH_CFG_T = {
     day_lun: 'Ma', day_mar: 'Di', day_mer: 'Wo', day_jeu: 'Do',
     day_ven: 'Vr', day_sam: 'Za', day_dim: 'Zo',
     day_full_lun: 'Maandag', day_full_mar: 'Dinsdag', day_full_mer: 'Woensdag',
-    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag', ph_business_name: "Uw bedrijf", ph_business_address: "Damstraat 14, 1012 Amsterdam", ph_business_desc: "Bijv.: Moderne herenkapsalon, ontspannen sfeer, gratis koffie...", ph_business_slug: "mijn-bedrijf", ph_ai_name: "Bijv.: Marie", ph_ai_greeting: "Hallo! Hoe kan ik u helpen?", ph_faq_question: "Uw vraag...", ph_faq_answer: "Uw antwoord...", ph_closure_reason: "Reden (bijv. Kerstmis, Vakantie...)", ph_search_faq: "🔍 Zoeken in de FAQ...", ph_search_service: "🔍 Dienst zoeken...", tt_slug_locked: "De openbare link kan niet worden gewijzigd", lbl_public_link: "Openbare link", lbl_permanent: "— permanent", tone_professional: "👔 Professioneel", tone_friendly: "😊 Vriendelijk", formal_tu: "Jij (informeel)", formal_vous: "U (formeel)", emojis_on: "✅ Ingeschakeld", length_concise: "📝 Beknopt (1-2 zinnen)", length_normal: "💬 Normaal", proactivity_reactive: "🙋 Reactief", proactivity_proactive: "💡 Proactief", suggestions_off: "🚫 Uitgeschakeld", suggestions_subtle: "💬 Subtiel", suggestions_active: "🎯 Actief", email_collect_off: "❌ Uitgeschakeld", email_collect_end: "📧 Aan het einde van het gesprek", no_services_found: "Geen dienst gevonden", no_faq_found: "Geen vraag gevonden", clear_search: "zoekopdracht wissen",
+    day_full_jeu: 'Donderdag', day_full_ven: 'Vrijdag', day_full_sam: 'Zaterdag', day_full_dim: 'Zondag', ph_business_name: "Uw bedrijf", ph_business_address: "Damstraat 14, 1012 Amsterdam", ph_business_desc: "Bijv.: Moderne herenkapsalon, ontspannen sfeer, gratis koffie...", ph_business_slug: "mijn-bedrijf", ph_ai_name: "Bijv.: Marie", ph_ai_greeting: "Hallo! Hoe kan ik u helpen?", ph_faq_question: "Uw vraag...", ph_faq_answer: "Uw antwoord...", ph_closure_reason: "Reden (bijv. Kerstmis, Vakantie...)", ph_search_faq: "🔍 Zoeken in de FAQ...", ph_search_service: "🔍 Dienst zoeken...", tt_slug_locked: "De openbare link kan niet worden gewijzigd", lbl_public_link: "Openbare link", lbl_permanent: "— permanent", tone_professional: "👔 Professioneel", tone_friendly: "😊 Vriendelijk", formal_tu: "Jij (informeel)", formal_vous: "U (formeel)", emojis_on: "✅ Ingeschakeld", length_concise: "📝 Beknopt (1-2 zinnen)", length_normal: "💬 Normaal", proactivity_reactive: "🙋 Reactief", proactivity_proactive: "💡 Proactief", suggestions_off: "🚫 Uitgeschakeld", suggestions_subtle: "💬 Subtiel", suggestions_active: "🎯 Actief", no_services_found: "Geen dienst gevonden", no_faq_found: "Geen vraag gevonden", clear_search: "zoekopdracht wissen",
     closed: 'Gesloten',
   },
   pl: {
@@ -1801,7 +1792,7 @@ const DASH_CFG_T = {
     lbl_tone: 'Ton AI', lbl_tutoyer: 'Forma zwracania się', lbl_emojis: 'Emoji',
     lbl_length: 'Długość odpowiedzi', lbl_assistant: 'Nazwa asystenta',
     lbl_greeting: 'Spersonalizowane powitanie', lbl_proactivity: 'Proaktywność',
-    lbl_suggestions: 'Sugestie usług', lbl_email_collect: 'Zbieranie emaili',
+    lbl_suggestions: 'Sugestie usług', 
     slug_warning: 'Ten link jest stały — jest używany w kodach QR i udostępnionych linkach.',
     remove_logo: '🗑️ Usuń logo',
     save_closures: '💾 Zapisz zamknięcia',
@@ -1819,7 +1810,7 @@ const DASH_CFG_T = {
     day_lun: 'Pon', day_mar: 'Wt', day_mer: 'Śr', day_jeu: 'Czw',
     day_ven: 'Pt', day_sam: 'Sob', day_dim: 'Nd',
     day_full_lun: 'Poniedziałek', day_full_mar: 'Wtorek', day_full_mer: 'Środa',
-    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela', ph_business_name: "Twoja firma", ph_business_address: "ul. Marszałkowska 14, 00-001 Warszawa", ph_business_desc: "Np.: Nowoczesny salon fryzjerski męski, luźna atmosfera, kawa gratis...", ph_business_slug: "moja-firma", ph_ai_name: "Np.: Marie", ph_ai_greeting: "Cześć! Jak mogę Ci pomóc?", ph_faq_question: "Twoje pytanie...", ph_faq_answer: "Twoja odpowiedź...", ph_closure_reason: "Powód (np. Święta, Urlop...)", ph_search_faq: "🔍 Szukaj w FAQ...", ph_search_service: "🔍 Szukaj usługi...", tt_slug_locked: "Publicznego linku nie można edytować", lbl_public_link: "Link publiczny", lbl_permanent: "— stały", tone_professional: "👔 Profesjonalny", tone_friendly: "😊 Przyjazny", formal_tu: "Ty (nieformalnie)", formal_vous: "Pan/Pani (formalnie)", emojis_on: "✅ Włączone", length_concise: "📝 Zwięzła (1-2 zdania)", length_normal: "💬 Normalna", proactivity_reactive: "🙋 Reaktywna", proactivity_proactive: "💡 Proaktywna", suggestions_off: "🚫 Wyłączone", suggestions_subtle: "💬 Subtelne", suggestions_active: "🎯 Aktywne", email_collect_off: "❌ Wyłączona", email_collect_end: "📧 Na koniec rozmowy", no_services_found: "Nie znaleziono usługi", no_faq_found: "Nie znaleziono pytania", clear_search: "wyczyść wyszukiwanie",
+    day_full_jeu: 'Czwartek', day_full_ven: 'Piątek', day_full_sam: 'Sobota', day_full_dim: 'Niedziela', ph_business_name: "Twoja firma", ph_business_address: "ul. Marszałkowska 14, 00-001 Warszawa", ph_business_desc: "Np.: Nowoczesny salon fryzjerski męski, luźna atmosfera, kawa gratis...", ph_business_slug: "moja-firma", ph_ai_name: "Np.: Marie", ph_ai_greeting: "Cześć! Jak mogę Ci pomóc?", ph_faq_question: "Twoje pytanie...", ph_faq_answer: "Twoja odpowiedź...", ph_closure_reason: "Powód (np. Święta, Urlop...)", ph_search_faq: "🔍 Szukaj w FAQ...", ph_search_service: "🔍 Szukaj usługi...", tt_slug_locked: "Publicznego linku nie można edytować", lbl_public_link: "Link publiczny", lbl_permanent: "— stały", tone_professional: "👔 Profesjonalny", tone_friendly: "😊 Przyjazny", formal_tu: "Ty (nieformalnie)", formal_vous: "Pan/Pani (formalnie)", emojis_on: "✅ Włączone", length_concise: "📝 Zwięzła (1-2 zdania)", length_normal: "💬 Normalna", proactivity_reactive: "🙋 Reaktywna", proactivity_proactive: "💡 Proaktywna", suggestions_off: "🚫 Wyłączone", suggestions_subtle: "💬 Subtelne", suggestions_active: "🎯 Aktywne", no_services_found: "Nie znaleziono usługi", no_faq_found: "Nie znaleziono pytania", clear_search: "wyczyść wyszukiwanie",
     closed: 'Zamknięte',
   },
 };
@@ -1880,7 +1871,6 @@ function applyCfgLang() {
       'cfg-length-concise': t.length_concise, 'cfg-length-normal': t.length_normal,
       'cfg-proactivity-reactive': t.proactivity_reactive, 'cfg-proactivity-proactive': t.proactivity_proactive,
       'cfg-suggestions-off': t.suggestions_off, 'cfg-suggestions-subtle': t.suggestions_subtle, 'cfg-suggestions-active': t.suggestions_active,
-      'cfg-email-off': t.email_collect_off, 'cfg-email-end': t.email_collect_end,
       'cfg-no-services-text': t.no_services_found, 'cfg-no-faq-text': t.no_faq_found,
       'cfg-clear-search-1': t.clear_search, 'cfg-clear-search-2': t.clear_search,
       'cfg-length-detailed': t.length_detailed, 'cfg-proactivity-rdv': t.proactivity_rdv,
@@ -1889,7 +1879,6 @@ function applyCfgLang() {
       'cfg-lbl-emojis': t.lbl_emojis, 'cfg-lbl-length': t.lbl_length,
       'cfg-lbl-assistant': t.lbl_assistant, 'cfg-lbl-greeting': t.lbl_greeting,
       'cfg-lbl-proactivity': t.lbl_proactivity, 'cfg-lbl-suggestions': t.lbl_suggestions,
-      'cfg-lbl-email-collect': t.lbl_email_collect,
       'cfg-slug-warning': t.slug_warning,
       'cfg-remove-logo': t.remove_logo,
       'cfg-save-closures': t.save_closures,
