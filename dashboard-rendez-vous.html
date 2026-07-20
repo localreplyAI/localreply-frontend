@@ -977,6 +977,10 @@ function createPendingCard(apt, isUrgent) {
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">💇 SERVICE</div>
             <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || (_drt||DASH_RDV_T.fr).not_specified}</div>
           </div>
+          <div>
+            <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">⏱️ DURÉE (minutes)</div>
+            <input id="durationInput-${apt.id}" type="number" min="5" step="5" value="${Math.round((new Date(apt.end_time) - new Date(apt.start_time))/60000)}" style="width:110px; padding:8px 12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:8px; font-size:15px; color:#FFFFFF; outline:none; font-family:inherit;">
+          </div>
           ${apt.description ? `
           <div>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">📝 NOTES</div>
@@ -1101,7 +1105,10 @@ async function acceptAppointment(appointmentId) {
   try {
     const apt = allAppointments.find(a => a.id === appointmentId);
     const tokenParam = apt?.action_token ? `?token=${apt.action_token}` : '';
-    await apiRequest(`/api/appointments/${appointmentId}/accept${tokenParam}`);
+    const durEl = document.getElementById(`durationInput-${appointmentId}`);
+    const customDuration = durEl ? parseInt(durEl.value) : null;
+    const acceptBody = (customDuration && customDuration > 0) ? { duration_minutes: customDuration } : {};
+    await apiRequest(`/api/appointments/${appointmentId}/accept${tokenParam}`, 'POST', acceptBody);
     
     const card = document.getElementById(`apt-${appointmentId}`);
     card.style.opacity = '0';
