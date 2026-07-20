@@ -1008,8 +1008,9 @@ function createConfirmedCard(apt) {
   const card = document.createElement('div');
   const aptDate = new Date(apt.start_time);
   const isPast = aptDate < new Date();
+  const isCancelled = apt.status === 'cancelled';
 
-  card.style.cssText = `background: ${isPast ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)'}; backdrop-filter: blur(20px); border: 1px solid ${isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.1)'}; border-radius: 16px; padding: 25px; margin-bottom: 20px; transition: all 0.3s; ${isPast ? 'opacity:0.7;' : ''}`;
+  card.style.cssText = `background: ${isPast ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)'}; backdrop-filter: blur(20px); border: 1px solid ${isPast ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.1)'}; border-radius: 16px; padding: 25px; margin-bottom: 20px; transition: all 0.3s; ${(isPast||isCancelled) ? 'opacity:0.7;' : ''}`;
   card.id = `apt-${apt.id}`;
   
   const dateStr = formatDate(aptDate);
@@ -1029,8 +1030,8 @@ function createConfirmedCard(apt) {
           📧 ${apt.client_email || ((window._drt||{}).apt_email_missing||'Non renseigné')} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
         </div>
       </div>
-      <div style="padding: 6px 12px; background: ${isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
-        ${isPast ? (_drt||DASH_RDV_T.fr).status_past : (_drt||DASH_RDV_T.fr).status_confirmed}
+      <div style="padding: 6px 12px; background: ${isCancelled ? 'rgba(239,68,68,0.15)' : isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isCancelled ? 'rgba(239,68,68,0.4)' : isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isCancelled ? '#EF4444' : isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
+        ${isCancelled ? ((_drt||DASH_RDV_T.fr).status_cancelled||'❌ Annulé') : isPast ? (_drt||DASH_RDV_T.fr).status_past : (_drt||DASH_RDV_T.fr).status_confirmed}
       </div>
     </div>
     
@@ -1053,7 +1054,7 @@ function createConfirmedCard(apt) {
       </div>
     </div>
     
-    ${isPast ? '' : `
+    ${(isPast||isCancelled) ? '' : `
     <button onclick="cancelAppointment(${apt.id})" style="padding: 12px 24px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 10px; color: #EF4444; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px;">
       <span>❌</span> ${(_drt||DASH_RDV_T.fr).apt_cancel_btn||'Annuler le RDV'}
     </button>`}
@@ -1330,7 +1331,7 @@ const DASH_RDV_T = {
     empty_apts: 'Aucun rendez-vous', empty_apts_sub: "Les rendez-vous créés par l'IA apparaîtront ici", empty_apts_filter_hint: 'Essayez une autre recherche ou un autre filtre.',
     empty_confirmed: 'Aucun rendez-vous confirmé', empty_confirmed_sub: 'Les rendez-vous confirmés apparaîtront ici',
     not_specified: 'Non spécifié', not_provided: 'Non renseigné',
-    status_past: '🕐 Passé', status_confirmed: '✅ Confirmé',
+    status_past: '🕐 Passé', status_confirmed: '✅ Confirmé', status_cancelled: '❌ Annulé',
     btn_confirm: '✅ Confirmer', btn_refuse: '❌ Refuser', btn_cancel: '❌ Annuler le RDV',
     confirm_ok: '✅ Rendez-vous confirmé ! Email envoyé au client.',
     refuse_ok: '❌ Rendez-vous refusé. Créneau libéré et email envoyé au client.',
@@ -1368,7 +1369,7 @@ const DASH_RDV_T = {
     empty_apts: 'No appointments', empty_apts_sub: 'Appointments created by the AI will appear here', empty_apts_filter_hint: 'Try a different search or filter.',
     empty_confirmed: 'No confirmed appointments', empty_confirmed_sub: 'Confirmed appointments will appear here',
     not_specified: 'Not specified', not_provided: 'Not provided',
-    status_past: '🕐 Past', status_confirmed: '✅ Confirmed',
+    status_past: '🕐 Past', status_confirmed: '✅ Confirmed', status_cancelled: '❌ Cancelled',
     btn_confirm: '✅ Confirm', btn_refuse: '❌ Refuse', btn_cancel: '❌ Cancel appointment',
     confirm_ok: '✅ Appointment confirmed! Email sent to customer.',
     refuse_ok: '❌ Appointment refused. Slot freed and email sent to customer.',
@@ -1406,7 +1407,7 @@ const DASH_RDV_T = {
     empty_apts: 'Keine Termine', empty_apts_sub: 'Von der KI erstellte Termine erscheinen hier', empty_apts_filter_hint: 'Versuchen Sie eine andere Suche oder einen anderen Filter.',
     empty_confirmed: 'Keine bestätigten Termine', empty_confirmed_sub: 'Bestätigte Termine erscheinen hier',
     not_specified: 'Nicht angegeben', not_provided: 'Nicht angegeben',
-    status_past: '🕐 Vergangen', status_confirmed: '✅ Bestätigt',
+    status_past: '🕐 Vergangen', status_confirmed: '✅ Bestätigt', status_cancelled: '❌ Storniert',
     btn_confirm: '✅ Bestätigen', btn_refuse: '❌ Ablehnen', btn_cancel: '❌ Termin stornieren',
     confirm_ok: '✅ Termin bestätigt! E-Mail an Kunden gesendet.',
     refuse_ok: '❌ Termin abgelehnt. Slot freigegeben und E-Mail gesendet.',
@@ -1444,7 +1445,7 @@ const DASH_RDV_T = {
     empty_apts: 'Nessun appuntamento', empty_apts_sub: "Gli appuntamenti creati dall'IA appariranno qui", empty_apts_filter_hint: 'Prova una ricerca o un filtro diverso.',
     empty_confirmed: 'Nessun appuntamento confermato', empty_confirmed_sub: 'Gli appuntamenti confermati appariranno qui',
     not_specified: 'Non specificato', not_provided: 'Non fornito',
-    status_past: '🕐 Passato', status_confirmed: '✅ Confermato',
+    status_past: '🕐 Passato', status_confirmed: '✅ Confermato', status_cancelled: '❌ Annullato',
     btn_confirm: '✅ Conferma', btn_refuse: '❌ Rifiuta', btn_cancel: '❌ Annulla appuntamento',
     confirm_ok: '✅ Appuntamento confermato! Email inviata al cliente.',
     refuse_ok: '❌ Appuntamento rifiutato. Slot liberato ed email inviata al cliente.',
@@ -1482,7 +1483,7 @@ const DASH_RDV_T = {
     empty_apts: 'Sin citas', empty_apts_sub: 'Las citas creadas por la IA aparecerán aquí', empty_apts_filter_hint: 'Prueba con otra búsqueda o filtro.',
     empty_confirmed: 'Sin citas confirmadas', empty_confirmed_sub: 'Las citas confirmadas aparecerán aquí',
     not_specified: 'No especificado', not_provided: 'No indicado',
-    status_past: '🕐 Pasada', status_confirmed: '✅ Confirmada',
+    status_past: '🕐 Pasada', status_confirmed: '✅ Confirmada', status_cancelled: '❌ Cancelada',
     btn_confirm: '✅ Confirmar', btn_refuse: '❌ Rechazar', btn_cancel: '❌ Cancelar cita',
     confirm_ok: '✅ ¡Cita confirmada! Email enviado al cliente.',
     refuse_ok: '❌ Cita rechazada. Franja liberada y email enviado al cliente.',
@@ -1520,7 +1521,7 @@ const DASH_RDV_T = {
     empty_apts: 'Sem marcações', empty_apts_sub: 'As marcações criadas pela IA aparecerão aqui', empty_apts_filter_hint: 'Experimente outra pesquisa ou filtro.',
     empty_confirmed: 'Sem marcações confirmadas', empty_confirmed_sub: 'As marcações confirmadas aparecerão aqui',
     not_specified: 'Não especificado', not_provided: 'Não fornecido',
-    status_past: '🕐 Passada', status_confirmed: '✅ Confirmada',
+    status_past: '🕐 Passada', status_confirmed: '✅ Confirmada', status_cancelled: '❌ Cancelada',
     btn_confirm: '✅ Confirmar', btn_refuse: '❌ Recusar', btn_cancel: '❌ Cancelar marcação',
     confirm_ok: '✅ Marcação confirmada! Email enviado ao cliente.',
     refuse_ok: '❌ Marcação recusada. Horário libertado e email enviado ao cliente.',
@@ -1558,7 +1559,7 @@ const DASH_RDV_T = {
     empty_apts: 'Geen afspraken', empty_apts_sub: 'Afspraken gemaakt door de AI verschijnen hier', empty_apts_filter_hint: 'Probeer een andere zoekopdracht of filter.',
     empty_confirmed: 'Geen bevestigde afspraken', empty_confirmed_sub: 'Bevestigde afspraken verschijnen hier',
     not_specified: 'Niet opgegeven', not_provided: 'Niet opgegeven',
-    status_past: '🕐 Verstreken', status_confirmed: '✅ Bevestigd',
+    status_past: '🕐 Verstreken', status_confirmed: '✅ Bevestigd', status_cancelled: '❌ Geannuleerd',
     btn_confirm: '✅ Bevestigen', btn_refuse: '❌ Weigeren', btn_cancel: '❌ Afspraak annuleren',
     confirm_ok: '✅ Afspraak bevestigd! E-mail verzonden naar klant.',
     refuse_ok: '❌ Afspraak geweigerd. Slot vrijgegeven en e-mail verzonden naar klant.',
@@ -1596,7 +1597,7 @@ const DASH_RDV_T = {
     empty_apts: 'Brak wizyt', empty_apts_sub: 'Wizyty utworzone przez AI pojawią się tutaj', empty_apts_filter_hint: 'Spróbuj innego wyszukiwania lub filtra.',
     empty_confirmed: 'Brak potwierdzonych wizyt', empty_confirmed_sub: 'Potwierdzone wizyty pojawią się tutaj',
     not_specified: 'Nie określono', not_provided: 'Nie podano',
-    status_past: '🕐 Miniona', status_confirmed: '✅ Potwierdzona',
+    status_past: '🕐 Miniona', status_confirmed: '✅ Potwierdzona', status_cancelled: '❌ Anulowana',
     btn_confirm: '✅ Potwierdź', btn_refuse: '❌ Odrzuć', btn_cancel: '❌ Anuluj wizytę',
     confirm_ok: '✅ Wizyta potwierdzona! Email wysłany do klienta.',
     refuse_ok: '❌ Wizyta odrzucona. Termin zwolniony i email wysłany do klienta.',
