@@ -149,6 +149,7 @@
           style="width: 100%; padding: 14px 20px; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 14px; color: #FFFFFF; outline: none; font-family: inherit; transition: border 0.2s;"
           onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
       </div>
+      <input id="searchDateInput" type="date" onchange="filterByDate()" title="Rechercher par date" style="padding: 14px 16px; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15); border-radius: 12px; font-size: 14px; color: #FFFFFF; outline: none; font-family: inherit; transition: border 0.2s; color-scheme: dark;" onfocus="this.style.borderColor='#00D4FF'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
       <div style="display: flex; gap: 8px; background: rgba(255,255,255,0.05); padding: 6px; border-radius: 12px;">
         <button id="filterAll" onclick="setFilter('all')" style="padding: 8px 16px; background: linear-gradient(135deg,#0052CC,#00D4FF); color:#fff; border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filterbar-all">Tous</span></button>
         <button id="filterPending" onclick="setFilter('pending')" style="padding: 8px 16px; background: transparent; color:rgba(255,255,255,0.6); border:none; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s;"><span id="rdv-filterbar-pending">En attente</span></button>
@@ -252,9 +253,12 @@ const API_BASE_URL = 'https://localreply-api.onrender.com';
 let allAppointments = [];
 let currentFilter = 'all';
 let searchQuery = '';
+let searchDate = '';
+let visibleCount = 10;
 
 function setFilter(filter) {
   currentFilter = filter;
+  visibleCount = 10;
   const btns = {
     'all': 'filterAll',
     'pending': 'filterPending', 
@@ -272,11 +276,19 @@ function setFilter(filter) {
 
 function filterAppointments() {
   searchQuery = document.getElementById('searchInput')?.value?.toLowerCase() || '';
+  visibleCount = 10;
+  renderFilteredAppointments();
+}
+
+function filterByDate() {
+  searchDate = document.getElementById('searchDateInput').value || '';
+  visibleCount = 10;
   renderFilteredAppointments();
 }
 
 function renderFilteredAppointments() {
   const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30*24*60*60*1000);
   let filtered = allAppointments.filter(apt => {
     const aptDate = new Date(apt.start_time);
     const matchSearch = !searchQuery || 
@@ -286,10 +298,17 @@ function renderFilteredAppointments() {
       (apt.service_name || '').toLowerCase().includes(searchQuery);
     
     if (!matchSearch) return false;
+
+    if (searchDate) {
+      const y = aptDate.getFullYear();
+      const m = String(aptDate.getMonth()+1).padStart(2,'0');
+      const d = String(aptDate.getDate()).padStart(2,'0');
+      if (`${y}-${m}-${d}` !== searchDate) return false;
+    }
     
     if (currentFilter === 'pending') return apt.status === 'pending';
     if (currentFilter === 'confirmed') return apt.status === 'confirmed' && aptDate >= now;
-    if (currentFilter === 'past') return aptDate < now || apt.status === 'cancelled';
+    if (currentFilter === 'past') return apt.status === 'confirmed' && aptDate < now && aptDate >= thirtyDaysAgo;
     return apt.status !== 'cancelled'; // 'all' = tout sauf annulé
   });
 
@@ -308,14 +327,21 @@ function renderFilteredAppointments() {
         unified.innerHTML = emptyState((_drt||DASH_RDV_T.fr).empty_apts, (_drt||DASH_RDV_T.fr).empty_apts_filter_hint||'Essayez une autre recherche ou un autre filtre.');
         return;
       }
+      filtered.sort((a,b) => new Date(a.start_time) - new Date(b.start_time));
       unified.innerHTML = '<h2 style="font-size:24px;font-weight:700;color:#FFFFFF;margin:0 0 20px 0;">' +
         (currentFilter==='pending'?(_drt||DASH_RDV_T.fr).filter_pending:currentFilter==='confirmed'?(_drt||DASH_RDV_T.fr).filter_confirmed:(_drt||DASH_RDV_T.fr).filter_past) +
         ` <span style="font-size:16px;opacity:0.5;">(${filtered.length})</span></h2>`;
-      filtered.sort((a,b) => new Date(a.start_time) - new Date(b.start_time))
-        .forEach(apt => {
+      filtered.slice(0, visibleCount).forEach(apt => {
           const card = apt.status === 'pending' ? createPendingCard(apt, false) : createConfirmedCard(apt);
           unified.appendChild(card);
         });
+      if (filtered.length > visibleCount) {
+        const moreBtn = document.createElement('button');
+        moreBtn.textContent = ((_drt||DASH_RDV_T.fr).show_more || '⬇️ Afficher plus') + ` (${filtered.length - visibleCount})`;
+        moreBtn.style.cssText = 'display:block; margin:20px auto 0; padding:12px 28px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; color:#FFFFFF; font-size:14px; font-weight:600; cursor:pointer;';
+        moreBtn.onclick = () => { visibleCount += 10; renderFilteredAppointments(); };
+        unified.appendChild(moreBtn);
+      }
     } else {
       unified.style.display = 'none';
       if (pendingSection) pendingSection.style.display = filtered.filter(a=>a.status==='pending').length ? 'block' : 'none';
@@ -328,7 +354,6 @@ function renderFilteredAppointments() {
     }
   }
 }
-
 function emptyState(title, sub) {
   return `<div style="text-align:center;padding:60px 20px;background:rgba(255,255,255,0.03);border-radius:16px;">
     <div style="font-size:56px;margin-bottom:15px;opacity:0.3;">🔍</div>
