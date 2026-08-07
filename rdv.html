@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prendre rendez-vous — LocalReply</title>
+<meta name="description" content="Réservez votre rendez-vous en ligne">
+<link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue: #0052CC;
+  --blue-mid: #0066FF;
+  --cyan: #00D4FF;
+  --surface: #0D1B2E;
+  --surface-2: #0A1525;
+  --border: rgba(255,255,255,0.08);
+  --border-2: rgba(0,212,255,0.2);
+  --text: rgba(255,255,255,0.92);
+  --text-2: rgba(255,255,255,0.55);
+  --text-3: #8896B3;
+  --radius: 20px;
+  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+body {
+  background: #060D1A;
+  font-family: var(--font);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+.rdv-wrap { width: 100%; max-width: 520px; }
+.rdv-header { text-align: center; margin-bottom: 24px; }
+.rdv-avatar { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, var(--blue-mid), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 12px; }
+.rdv-biz-name { font-size: 20px; font-weight: 700; }
+.rdv-biz-sub { color: var(--text-2); font-size: 14px; margin-top: 4px; }
+.rdv-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.rdv-steps { display: flex; gap: 8px; margin-bottom: 20px; }
+.rdv-step-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
+.rdv-step-dot.active { background: linear-gradient(90deg, var(--blue-mid), var(--cyan)); }
+.rdv-label { font-size: 13px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 10px; }
+.rdv-service { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 8px; cursor: pointer; transition: border-color .15s, background .15s; }
+.rdv-service:hover { border-color: var(--border-2); }
+.rdv-service.selected { border-color: var(--cyan); background: rgba(0,212,255,0.06); }
+.rdv-service-name { font-weight: 600; font-size: 15px; }
+.rdv-service-meta { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+.rdv-service-price { font-weight: 700; color: var(--cyan); font-size: 15px; }
+.rdv-date-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.rdv-date-nav button { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
+.rdv-date-nav button:disabled { opacity: 0.3; cursor: not-allowed; }
+.rdv-date-label { font-weight: 600; font-size: 15px; text-transform: capitalize; }
+.rdv-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rdv-slot { padding: 10px 4px; text-align: center; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: border-color .15s, background .15s; }
+.rdv-slot:hover { border-color: var(--border-2); }
+.rdv-slot.selected { border-color: var(--cyan); background: rgba(0,212,255,0.1); color: var(--cyan); }
+.rdv-empty { color: var(--text-2); font-size: 14px; text-align: center; padding: 24px 0; }
+.rdv-field { margin-bottom: 12px; }
+.rdv-field label { display: block; font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
+.rdv-field input { width: 100%; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-family: var(--font); font-size: 14px; }
+.rdv-field input:focus { outline: none; border-color: var(--cyan); }
+.rdv-summary { background: var(--surface-2); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; font-size: 14px; color: var(--text-2); }
+.rdv-summary b { color: var(--text); }
+.rdv-btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: var(--font); font-weight: 700; font-size: 15px; cursor: pointer; transition: opacity .15s; }
+.rdv-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.rdv-btn-primary { background: linear-gradient(90deg, var(--blue-mid), var(--cyan)); color: #06121f; }
+.rdv-btn-primary:hover:not(:disabled) { opacity: 0.92; }
+.rdv-btn-back { background: transparent; color: var(--text-2); margin-top: 10px; }
+.rdv-notice { font-size: 12px; color: var(--text-3); text-align: center; margin-top: 14px; line-height: 1.5; }
+.rdv-success { text-align: center; padding: 12px 0; }
+.rdv-success-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(0,212,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 16px; }
+.rdv-success-title { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+.rdv-success-msg { color: var(--text-2); font-size: 14px; line-height: 1.5; }
+.rdv-loader { text-align: center; padding: 60px 0; color: var(--text-2); }
+.rdv-error { text-align: center; padding: 60px 20px; color: var(--text-2); }
+.rdv-lang-switch { display: flex; justify-content: center; gap: 6px; margin-top: 20px; flex-wrap: wrap; }
+.rdv-lang-switch button { background: none; border: none; font-size: 18px; cursor: pointer; opacity: 0.45; padding: 4px; }
+.rdv-lang-switch button.active { opacity: 1; }
+.rdv-footer { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-3); }
+.rdv-footer a { color: var(--text-3); }
+</style>
+</head>
+<body>
+<div class="rdv-wrap" id="rdvWrap">
+  <div class="rdv-loader" id="rdvLoader">…</div>
+</div>
+
+<script>
+const API = 'https://localreply-api.onrender.com';
+const SUPPORTED_LANGS = ['fr','en','de','es','it','pt','nl','pl'];
+
+const I18N = {
+  fr: { step1:'Choisissez une prestation', step2:'Choisissez un créneau', step3:'Vos coordonnées', minutes:'min', today:"Aujourd'hui", noSlots:'Aucun créneau disponible ce jour-là.', name:'Nom complet', phone:'Téléphone', next:'Continuer', back:'Retour', confirm:'Confirmer le rendez-vous', confirming:'Envoi en cours…', summaryFor:'Rendez-vous pour', summaryOn:'le', summaryAt:'à', pendingTitle:'Demande envoyée !', pendingMsg:'Votre demande a bien été reçue. Le commerce va la confirmer très prochainement — vous recevrez un email de confirmation.', confirmedTitle:'Rendez-vous confirmé !', confirmedMsg:'Votre rendez-vous est confirmé. Un email de confirmation vous a été envoyé.', conflictMsg:'Ce créneau vient d\'être pris. Merci d\'en choisir un autre.', errorGeneric:'Une erreur est survenue. Merci de réessayer.', notFoundTitle:'Commerce introuvable', notFoundMsg:"Ce lien n'est pas valide ou le commerce n'existe plus.", newBooking:'Faire une nouvelle demande', requiredFields:'Merci de renseigner votre nom et votre téléphone.', closed:'Fermé' },
+  en: { step1:'Choose a service', step2:'Choose a time slot', step3:'Your details', minutes:'min', today:'Today', noSlots:'No slots available on this day.', name:'Full name', phone:'Phone number', next:'Continue', back:'Back', confirm:'Confirm appointment', confirming:'Sending…', summaryFor:'Appointment for', summaryOn:'on', summaryAt:'at', pendingTitle:'Request sent!', pendingMsg:'Your request has been received. The business will confirm it shortly — you will receive a confirmation email.', confirmedTitle:'Appointment confirmed!', confirmedMsg:'Your appointment is confirmed. A confirmation email has been sent to you.', conflictMsg:'This slot was just taken. Please choose another one.', errorGeneric:'Something went wrong. Please try again.', notFoundTitle:'Business not found', notFoundMsg:'This link is invalid or the business no longer exists.', newBooking:'Make a new request', requiredFields:'Please enter your name and phone number.', closed:'Closed' },
+  de: { step1:'Leistung auswählen', step2:'Termin auswählen', step3:'Ihre Angaben', minutes:'Min.', today:'Heute', noSlots:'An diesem Tag sind keine Termine verfügbar.', name:'Vollständiger Name', phone:'Telefonnummer', next:'Weiter', back:'Zurück', confirm:'Termin bestätigen', confirming:'Wird gesendet…', summaryFor:'Termin für', summaryOn:'am', summaryAt:'um', pendingTitle:'Anfrage gesendet!', pendingMsg:'Ihre Anfrage wurde empfangen. Das Geschäft wird sie in Kürze bestätigen — Sie erhalten eine Bestätigungs-E-Mail.', confirmedTitle:'Termin bestätigt!', confirmedMsg:'Ihr Termin ist bestätigt. Eine Bestätigungs-E-Mail wurde Ihnen gesendet.', conflictMsg:'Dieser Termin wurde soeben vergeben. Bitte wählen Sie einen anderen.', errorGeneric:'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', notFoundTitle:'Geschäft nicht gefunden', notFoundMsg:'Dieser Link ist ungültig oder das Geschäft existiert nicht mehr.', newBooking:'Neue Anfrage stellen', requiredFields:'Bitte geben Sie Ihren Namen und Ihre Telefonnummer ein.', closed:'Geschlossen' },
+  es: { step1:'Elige un servicio', step2:'Elige un horario', step3:'Tus datos', minutes:'min', today:'Hoy', noSlots:'No hay horarios disponibles ese día.', name:'Nombre completo', phone:'Teléfono', next:'Continuar', back:'Atrás', confirm:'Confirmar cita', confirming:'Enviando…', summaryFor:'Cita para', summaryOn:'el', summaryAt:'a las', pendingTitle:'¡Solicitud enviada!', pendingMsg:'Tu solicitud ha sido recibida. El negocio la confirmará pronto — recibirás un correo de confirmación.', confirmedTitle:'¡Cita confirmada!', confirmedMsg:'Tu cita está confirmada. Se te ha enviado un correo de confirmación.', conflictMsg:'Este horario acaba de ser reservado. Elige otro, por favor.', errorGeneric:'Ha ocurrido un error. Inténtalo de nuevo.', notFoundTitle:'Negocio no encontrado', notFoundMsg:'Este enlace no es válido o el negocio ya no existe.', newBooking:'Hacer una nueva solicitud', requiredFields:'Por favor indica tu nombre y teléfono.', closed:'Cerrado' },
+  it: { step1:'Scegli un servizio', step2:'Scegli un orario', step3:'I tuoi dati', minutes:'min', today:'Oggi', noSlots:'Nessun orario disponibile in questo giorno.', name:'Nome completo', phone:'Telefono', next:'Continua', back:'Indietro', confirm:'Conferma appuntamento', confirming:'Invio in corso…', summaryFor:'Appuntamento per', summaryOn:'il', summaryAt:'alle', pendingTitle:'Richiesta inviata!', pendingMsg:'La tua richiesta è stata ricevuta. L\'attività la confermerà a breve — riceverai un\'email di conferma.', confirmedTitle:'Appuntamento confermato!', confirmedMsg:'Il tuo appuntamento è confermato. Ti è stata inviata un\'email di conferma.', conflictMsg:'Questo orario è appena stato preso. Scegline un altro.', errorGeneric:'Si è verificato un errore. Riprova.', notFoundTitle:'Attività non trovata', notFoundMsg:'Questo link non è valido o l\'attività non esiste più.', newBooking:'Fai una nuova richiesta', requiredFields:'Inserisci il tuo nome e numero di telefono.', closed:'Chiuso' },
+  pt: { step1:'Escolha um serviço', step2:'Escolha um horário', step3:'Os seus dados', minutes:'min', today:'Hoje', noSlots:'Nenhum horário disponível nesse dia.', name:'Nome completo', phone:'Telefone', next:'Continuar', back:'Voltar', confirm:'Confirmar marcação', confirming:'A enviar…', summaryFor:'Marcação para', summaryOn:'em', summaryAt:'às', pendingTitle:'Pedido enviado!', pendingMsg:'O seu pedido foi recebido. O estabelecimento irá confirmá-lo em breve — receberá um email de confirmação.', confirmedTitle:'Marcação confirmada!', confirmedMsg:'A sua marcação está confirmada. Foi enviado um email de confirmação.', conflictMsg:'Este horário acabou de ser reservado. Escolha outro, por favor.', errorGeneric:'Ocorreu um erro. Por favor tente novamente.', notFoundTitle:'Estabelecimento não encontrado', notFoundMsg:'Este link não é válido ou o estabelecimento já não existe.', newBooking:'Fazer um novo pedido', requiredFields:'Indique o seu nome e telefone.', closed:'Encerrado' },
+  nl: { step1:'Kies een dienst', step2:'Kies een tijdstip', step3:'Uw gegevens', minutes:'min', today:'Vandaag', noSlots:'Geen beschikbare tijdstippen op deze dag.', name:'Volledige naam', phone:'Telefoonnummer', next:'Doorgaan', back:'Terug', confirm:'Afspraak bevestigen', confirming:'Verzenden…', summaryFor:'Afspraak voor', summaryOn:'op', summaryAt:'om', pendingTitle:'Aanvraag verzonden!', pendingMsg:'Uw aanvraag is ontvangen. Het bedrijf zal deze binnenkort bevestigen — u ontvangt een bevestigingsmail.', confirmedTitle:'Afspraak bevestigd!', confirmedMsg:'Uw afspraak is bevestigd. Er is een bevestigingsmail naar u verzonden.', conflictMsg:'Dit tijdstip is zojuist ingenomen. Kies een ander tijdstip.', errorGeneric:'Er is een fout opgetreden. Probeer het opnieuw.', notFoundTitle:'Bedrijf niet gevonden', notFoundMsg:'Deze link is ongeldig of het bedrijf bestaat niet meer.', newBooking:'Nieuwe aanvraag doen', requiredFields:'Vul uw naam en telefoonnummer in.', closed:'Gesloten' },
+  pl: { step1:'Wybierz usługę', step2:'Wybierz termin', step3:'Twoje dane', minutes:'min', today:'Dzisiaj', noSlots:'Brak dostępnych terminów tego dnia.', name:'Imię i nazwisko', phone:'Numer telefonu', next:'Dalej', back:'Wstecz', confirm:'Potwierdź wizytę', confirming:'Wysyłanie…', summaryFor:'Wizyta na', summaryOn:'dnia', summaryAt:'o', pendingTitle:'Zgłoszenie wysłane!', pendingMsg:'Twoje zgłoszenie zostało odebrane. Firma wkrótce je potwierdzi — otrzymasz e-mail z potwierdzeniem.', confirmedTitle:'Wizyta potwierdzona!', confirmedMsg:'Twoja wizyta jest potwierdzona. Wysłaliśmy e-mail z potwierdzeniem.', conflictMsg:'Ten termin został właśnie zajęty. Wybierz inny.', errorGeneric:'Wystąpił błąd. Spróbuj ponownie.', notFoundTitle:'Nie znaleziono firmy', notFoundMsg:'Ten link jest nieprawidłowy lub firma już nie istnieje.', newBooking:'Wyślij nowe zgłoszenie', requiredFields:'Podaj imię i numer telefonu.', closed:'Zamknięte' }
+};
+
+const LOCALE_MAP = { fr:'fr-FR', en:'en-GB', de:'de-DE', es:'es-ES', it:'it-IT', pt:'pt-PT', nl:'nl-NL', pl:'pl-PL' };
+const FLAGS = { fr:'🇫🇷', en:'🇬🇧', de:'🇩🇪', es:'🇪🇸', it:'🇮🇹', pt:'🇵🇹', nl:'🇳🇱', pl:'🇵🇱' };
+
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name) || '';
+}
+function detectBrowserLang() {
+  const l = (navigator.language || 'fr').split('-')[0].toLowerCase();
+  return SUPPORTED_LANGS.includes(l) ? l : 'fr';
+}
+
+let lang = detectBrowserLang();
+let biz = null;
+let selectedService = null;
+let selectedDate = new Date();
+let selectedSlot = null;
+let submitting = false;
+
+function t(key) { return (I18N[lang] && I18N[lang][key]) || I18N.fr[key]; }
+
+function fmtDate(d) {
+  return d.toLocaleDateString(LOCALE_MAP[lang] || 'fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+function fmtTime(iso) {
+  return new Date(iso).toLocaleTimeString(LOCALE_MAP[lang] || 'fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
+function isoDate(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+const wrap = document.getElementById('rdvWrap');
+
+async function boot() {
+  const slug = getParam('slug') || getParam('s');
+  if (!slug) { renderNotFound(); return; }
+  try {
+    const r = await fetch(`${API}/api/booking/${encodeURIComponent(slug)}/info`);
+    if (!r.ok) { renderNotFound(); return; }
+    biz = await r.json();
+    if (biz.interface_language && SUPPORTED_LANGS.includes(biz.interface_language)) {
+      lang = biz.interface_language;
+    }
+    renderStep1();
+  } catch (e) {
+    renderNotFound();
+  }
+}
+
+function renderNotFound() {
+  wrap.innerHTML = `
+    <div class="rdv-card rdv-error">
+      <div style="font-size:36px;margin-bottom:12px;">🔍</div>
+      <div style="font-weight:700;font-size:17px;margin-bottom:8px;">${t('notFoundTitle')}</div>
+      <div>${t('notFoundMsg')}</div>
+    </div>`;
+}
+
+function header(activeStep) {
+  const initials = (biz.name || '?').slice(0, 1).toUpperCase();
+  return `
+    <div class="rdv-header">
+      <div class="rdv-avatar">${biz.logo_url ? `<img src="${biz.logo_url}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">` : initials}</div>
+      <div class="rdv-biz-name">${escapeHtml(biz.name || '')}</div>
+      ${biz.address ? `<div class="rdv-biz-sub">${escapeHtml(biz.address)}</div>` : ''}
+    </div>
+    <div class="rdv-steps">
+      <div class="rdv-step-dot ${activeStep >= 1 ? 'active' : ''}"></div>
+      <div class="rdv-step-dot ${activeStep >= 2 ? 'active' : ''}"></div>
+      <div class="rdv-step-dot ${activeStep >= 3 ? 'active' : ''}"></div>
+    </div>`;
+}
+
+function langSwitcher() {
+  return `<div class="rdv-lang-switch">${SUPPORTED_LANGS.map(l => `<button class="${l === lang ? 'active' : ''}" onclick="switchLang('${l}')">${FLAGS[l]}</button>`).join('')}</div>`;
+}
+window.switchLang = function(l) {
+  lang = l;
+  if (selectedService && selectedSlot) renderStep3();
+  else if (selectedService) renderStep2();
+  else renderStep1();
+};
+
+function escapeHtml(s) {
+  return (s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function renderStep1() {
+  const services = biz.services || [];
+  wrap.innerHTML = `
+    ${header(1)}
+    <div class="rdv-card">
+      <div class="rdv-label">${t('step1')}</div>
+      <div id="rdvServiceList">
+        ${services.length ? services.map((s, i) => `
+          <div class="rdv-service" onclick="selectService(${i})" id="svc-${i}">
+            <div>
+              <div class="rdv-service-name">${escapeHtml(s.name)}</div>
+              <div class="rdv-service-meta">${s.duration_minutes} ${t('minutes')}</div>
+            </div>
+            ${s.price ? `<div class="rdv-service-price">${s.price}€</div>` : ''}
+          </div>`).join('') : `<div class="rdv-empty">${t('noSlots')}</div>`}
+      </div>
+    </div>
+    ${langSwitcher()}
+    <div class="rdv-footer">Propulsé par <a href="https://uselocalreply.com" target="_blank">LocalReply</a></div>`;
+}
+
+window.selectService = function(i) {
+  selectedService = (biz.services || [])[i];
+  selectedDate = new Date();
+  selectedSlot = null;
+  renderStep2();
+};
+
+async function loadSlots() {
+  const el = document.getElementById('rdvSlots');
+  if (!el) return;
+  el.innerHTML = `<div class="rdv-empty">…</div>`;
+  try {
+    const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/slots?date=${isoDate(selectedDate)}&service_id=${selectedService.id}`);
+    const d = await r.json();
+    const slots = d.slots || [];
+    if (!slots.length) {
+      el.innerHTML = `<div class="rdv-empty">${t('noSlots')}</div>`;
+      return;
+    }
+    el.innerHTML = slots.map((s, i) => `<div class="rdv-slot" onclick="selectSlot(${i})" id="slot-${i}">${fmtTime(s.start)}</div>`).join('');
+    window._slots = slots;
+  } catch (e) {
+    el.innerHTML = `<div class="rdv-empty">${t('errorGeneric')}</div>`;
+  }
+}
+
+window.changeDay = function(delta) {
+  const nd = new Date(selectedDate);
+  nd.setDate(nd.getDate() + delta);
+  if (delta < 0 && isoDate(nd) < isoDate(new Date())) return;
+  selectedDate = nd;
+  selectedSlot = null;
+  renderStep2();
+};
+
+window.selectSlot = function(i) {
+  selectedSlot = window._slots[i];
+  document.querySelectorAll('.rdv-slot').forEach(el => el.classList.remove('selected'));
+  document.getElementById(`slot-${i}`).classList.add('selected');
+  document.getElementById('rdvNextBtn').disabled = false;
+};
+
+function renderStep2() {
+  const isToday = isoDate(selectedDate) === isoDate(new Date());
+  wrap.innerHTML = `
+    ${header(2)}
+    <div class="rdv-card">
+      <div class="rdv-label">${t('step2')} — ${escapeHtml(selectedService.name)}</div>
+      <div class="rdv-date-nav">
+        <button onclick="changeDay(-1)" ${isToday ? 'disabled' : ''}>‹</button>
+        <div class="rdv-date-label">${isToday ? t('today') : fmtDate(selectedDate)}</div>
+        <button onclick="changeDay(1)">›</button>
+      </div>
+      <div class="rdv-slots" id="rdvSlots"></div>
+    </div>
+    <button class="rdv-btn rdv-btn-primary" id="rdvNextBtn" disabled onclick="renderStep3()">${t('next')}</button>
+    <button class="rdv-btn rdv-btn-back" onclick="renderStep1()">← ${t('back')}</button>
+    ${langSwitcher()}`;
+  loadSlots();
+}
+
+function renderStep3() {
+  wrap.innerHTML = `
+    ${header(3)}
+    <div class="rdv-card">
+      <div class="rdv-summary">
+        <b>${escapeHtml(selectedService.name)}</b><br>
+        ${t('summaryOn')} ${fmtDate(selectedDate)} ${t('summaryAt')} ${fmtTime(selectedSlot.start)}
+      </div>
+      <div class="rdv-field">
+        <label>${t('name')}</label>
+        <input type="text" id="rdvName" placeholder="${t('name')}">
+      </div>
+      <div class="rdv-field">
+        <label>${t('phone')}</label>
+        <input type="tel" id="rdvPhone" placeholder="${t('phone')}">
+      </div>
+    </div>
+    <button class="rdv-btn rdv-btn-primary" id="rdvConfirmBtn" onclick="submitBooking()">${t('confirm')}</button>
+    <button class="rdv-btn rdv-btn-back" onclick="renderStep2()">← ${t('back')}</button>
+    ${langSwitcher()}`;
+}
+
+window.submitBooking = async function() {
+  if (submitting) return;
+  const name = document.getElementById('rdvName').value.trim();
+  const phone = document.getElementById('rdvPhone').value.trim();
+  if (!name || !phone) {
+    alert(t('requiredFields'));
+    return;
+  }
+  submitting = true;
+  const btn = document.getElementById('rdvConfirmBtn');
+  btn.disabled = true;
+  btn.textContent = t('confirming');
+  try {
+    const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/book`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service_id: selectedService.id,
+        date: isoDate(selectedDate),
+        time: fmtTime(selectedSlot.start).length === 5 ? new Date(selectedSlot.start).toTimeString().slice(0, 5) : '',
+        client_name: name,
+        client_phone: phone
+      })
+    });
+    const d = await r.json();
+    submitting = false;
+    if (r.status === 409 || d.status === 'conflict') {
+      alert(t('conflictMsg'));
+      renderStep2();
+      return;
+    }
+    if (!r.ok) {
+      alert(t('errorGeneric'));
+      btn.disabled = false;
+      btn.textContent = t('confirm');
+      return;
+    }
+    renderSuccess(d.status === 'confirmed');
+  } catch (e) {
+    submitting = false;
+    alert(t('errorGeneric'));
+    btn.disabled = false;
+    btn.textContent = t('confirm');
+  }
+};
+
+function renderSuccess(isConfirmed) {
+  wrap.innerHTML = `
+    <div class="rdv-card rdv-success">
+      <div class="rdv-success-icon">${isConfirmed ? '✅' : '⏳'}</div>
+      <div class="rdv-success-title">${isConfirmed ? t('confirmedTitle') : t('pendingTitle')}</div>
+      <div class="rdv-success-msg">${isConfirmed ? t('confirmedMsg') : t('pendingMsg')}</div>
+    </div>
+    ${langSwitcher()}`;
+}
+
+boot();
+</script>
+</body>
+</html>
