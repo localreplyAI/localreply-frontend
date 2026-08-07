@@ -26,6 +26,7 @@
     { "source": "/blog", "destination": "/blog.html" },
     { "source": "/demo", "destination": "/demo-chat.html" },
     { "source": "/chat", "destination": "/chat-client.html" },
+    { "source": "/rdv", "destination": "/rdv.html" },
     { "source": "/forgot-password", "destination": "/forgot-password.html" },
     { "source": "/reset-password", "destination": "/reset-password.html" },
     { "source": "/terms", "destination": "/terms.html" },
