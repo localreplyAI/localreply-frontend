@@ -407,7 +407,18 @@
           </div>
           <div id="personnelGoogleNote" style="background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);border-radius:10px;padding:10px 14px;font-size:12px;color:rgba(0,212,255,0.85);margin-bottom:14px;">📅 Cette section n'a d'effet qu'en mode "Google Calendar" (onglet Rendez-vous). Avec un lien de réservation ou la gestion manuelle, elle n'est pas utilisée.</div>
 
-          <div id="resourcesList" style="display:flex;flex-direction:column;gap:10px;"></div>
+                    <div id="staffSelectionBox" style="margin-bottom:16px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div style="flex:1;min-width:220px;">
+              <div id="staffSelTitle" style="font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;"></div>
+              <div id="staffSelDesc" style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.4;"></div>
+            </div>
+            <label style="position:relative;display:inline-block;width:46px;height:26px;flex-shrink:0;cursor:pointer;">
+              <input type="checkbox" id="staffSelectionCheckbox" onchange="setStaffSelectionEnabled(this.checked)" style="opacity:0;width:0;height:0;">
+              <span id="staffSelectionSlider" style="position:absolute;cursor:pointer;inset:0;background:rgba(255,255,255,0.15);transition:.2s;border-radius:26px;"></span>
+              <span id="staffSelectionKnob" style="position:absolute;height:20px;width:20px;left:3px;top:3px;background:#fff;transition:.2s;border-radius:50%;"></span>
+            </label>
+          </div>
+<div id="resourcesList" style="display:flex;flex-direction:column;gap:10px;"></div>
           <div id="resourcesEmpty" style="display:none;text-align:center;padding:48px 20px;color:rgba(255,255,255,0.3);">
             <div style="font-size:48px;margin-bottom:12px;opacity:0.4;">👥</div>
             <div style="font-size:14px;">Aucune ressource configurée — l'IA se comportera comme si vous n'aviez qu'une seule disponibilité à la fois.</div>
@@ -1384,6 +1395,54 @@ async function loadSidebarInfo() {
 }
 
 // ── CHARGEMENT CONFIG ──
+// ============================================
+// CHOIX DU PERSONNEL PAR LE CLIENT (calendrier en ligne)
+// ============================================
+const RDV_STAFF_T = {
+  fr:{title:'Choix du personnel par le client', desc:'Le client peut choisir un membre du personnel sur le calendrier en ligne. Sinon, les créneaux restent communs à tous.'},
+  en:{title:'Client staff selection', desc:'Clients can pick a staff member on the online calendar. Otherwise, slots stay pooled across everyone.'},
+  de:{title:'Personalauswahl durch Kunden', desc:'Kunden können im Online-Kalender einen Mitarbeiter auswählen. Andernfalls bleiben die Termine für alle gemeinsam.'},
+  es:{title:'Selección de personal por el cliente', desc:'El cliente puede elegir un miembro del personal en el calendario online. Si no, los horarios siguen siendo comunes para todos.'},
+  it:{title:'Scelta del personale da parte del cliente', desc:'Il cliente può scegliere un membro del personale sul calendario online. Altrimenti, gli slot restano comuni a tutti.'},
+  pt:{title:'Escolha da equipa pelo cliente', desc:'O cliente pode escolher um membro da equipa no calendário online. Caso contrário, os horários continuam partilhados por todos.'},
+  nl:{title:'Personeelskeuze door de klant', desc:'De klant kan een medewerker kiezen in de online kalender. Anders blijven de tijdsloten gedeeld voor iedereen.'},
+  pl:{title:'Wybór personelu przez klienta', desc:'Klient może wybrać członka personelu w kalendarzu online. W przeciwnym razie terminy pozostają wspólne dla wszystkich.'}
+};
+
+function _staffSelLang() {
+  const l = (localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2)).toLowerCase();
+  return RDV_STAFF_T.hasOwnProperty(l) ? l : 'fr';
+}
+
+function paintStaffSelectionToggle(enabled) {
+  const slider = document.getElementById('staffSelectionSlider');
+  const knob = document.getElementById('staffSelectionKnob');
+  const checkbox = document.getElementById('staffSelectionCheckbox');
+  if (!slider || !knob) return;
+  if (checkbox) checkbox.checked = enabled;
+  slider.style.background = enabled ? '#0066FF' : 'rgba(255,255,255,0.15)';
+  knob.style.left = enabled ? '23px' : '3px';
+}
+
+function initStaffSelectionToggle(enabled) {
+  const t = RDV_STAFF_T[_staffSelLang()];
+  const titleEl = document.getElementById('staffSelTitle');
+  const descEl = document.getElementById('staffSelDesc');
+  if (!titleEl) return;
+  titleEl.textContent = t.title;
+  descEl.textContent = t.desc;
+  paintStaffSelectionToggle(!!enabled);
+}
+
+async function setStaffSelectionEnabled(enabled) {
+  paintStaffSelectionToggle(enabled);
+  try {
+    await apiRequest(`/api/business/${businessId}/config`, 'POST', { staff_selection_enabled: enabled });
+  } catch (e) {
+    paintStaffSelectionToggle(!enabled);
+  }
+}
+
 async function loadBusinessConfig() {
   try {
     let config = null;
@@ -1424,6 +1483,7 @@ async function loadBusinessConfig() {
     document.getElementById('resourcesList').innerHTML = '';
     resources.forEach(r => addResourceCard(r.name||'', r.is_active!==false));
     updateResourcesEmpty();
+    initStaffSelectionToggle((config.business || config).staff_selection_enabled);
 
     // Horaires
     const hours = config.hours || [];
