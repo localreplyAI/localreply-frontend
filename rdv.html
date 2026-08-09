@@ -136,7 +136,8 @@ function isoDate(d) {
 const wrap = document.getElementById('rdvWrap');
 
 async function boot() {
-  const slug = getParam('slug') || getParam('s');
+  const pathMatch = window.location.pathname.match(/^\/rdv\/([^\/]+)/);
+  const slug = getParam('slug') || getParam('s') || (pathMatch ? decodeURIComponent(pathMatch[1]) : null);
   if (!slug) { renderNotFound(); return; }
   try {
     const r = await fetch(`${API}/api/booking/${encodeURIComponent(slug)}/info`);
