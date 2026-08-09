@@ -92,14 +92,14 @@ const API = 'https://localreply-api.onrender.com';
 const SUPPORTED_LANGS = ['fr','en','de','es','it','pt','nl','pl'];
 
 const I18N = {
-  fr: { step1:'Choisissez une prestation', step2:'Choisissez un créneau', step3:'Vos coordonnées', minutes:'min', today:"Aujourd'hui", noSlots:'Aucun créneau disponible ce jour-là.', name:'Nom complet', phone:'Téléphone', next:'Continuer', back:'Retour', confirm:'Confirmer le rendez-vous', confirming:'Envoi en cours…', summaryFor:'Rendez-vous pour', summaryOn:'le', summaryAt:'à', pendingTitle:'Demande envoyée !', pendingMsg:'Votre demande a bien été reçue. Le commerce va la confirmer très prochainement — vous recevrez un email de confirmation.', confirmedTitle:'Rendez-vous confirmé !', confirmedMsg:'Votre rendez-vous est confirmé. Un email de confirmation vous a été envoyé.', conflictMsg:'Ce créneau vient d\'être pris. Merci d\'en choisir un autre.', errorGeneric:'Une erreur est survenue. Merci de réessayer.', notFoundTitle:'Commerce introuvable', notFoundMsg:"Ce lien n'est pas valide ou le commerce n'existe plus.", newBooking:'Faire une nouvelle demande', requiredFields:'Merci de renseigner votre nom et votre téléphone.', closed:'Fermé' },
-  en: { step1:'Choose a service', step2:'Choose a time slot', step3:'Your details', minutes:'min', today:'Today', noSlots:'No slots available on this day.', name:'Full name', phone:'Phone number', next:'Continue', back:'Back', confirm:'Confirm appointment', confirming:'Sending…', summaryFor:'Appointment for', summaryOn:'on', summaryAt:'at', pendingTitle:'Request sent!', pendingMsg:'Your request has been received. The business will confirm it shortly — you will receive a confirmation email.', confirmedTitle:'Appointment confirmed!', confirmedMsg:'Your appointment is confirmed. A confirmation email has been sent to you.', conflictMsg:'This slot was just taken. Please choose another one.', errorGeneric:'Something went wrong. Please try again.', notFoundTitle:'Business not found', notFoundMsg:'This link is invalid or the business no longer exists.', newBooking:'Make a new request', requiredFields:'Please enter your name and phone number.', closed:'Closed' },
-  de: { step1:'Leistung auswählen', step2:'Termin auswählen', step3:'Ihre Angaben', minutes:'Min.', today:'Heute', noSlots:'An diesem Tag sind keine Termine verfügbar.', name:'Vollständiger Name', phone:'Telefonnummer', next:'Weiter', back:'Zurück', confirm:'Termin bestätigen', confirming:'Wird gesendet…', summaryFor:'Termin für', summaryOn:'am', summaryAt:'um', pendingTitle:'Anfrage gesendet!', pendingMsg:'Ihre Anfrage wurde empfangen. Das Geschäft wird sie in Kürze bestätigen — Sie erhalten eine Bestätigungs-E-Mail.', confirmedTitle:'Termin bestätigt!', confirmedMsg:'Ihr Termin ist bestätigt. Eine Bestätigungs-E-Mail wurde Ihnen gesendet.', conflictMsg:'Dieser Termin wurde soeben vergeben. Bitte wählen Sie einen anderen.', errorGeneric:'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', notFoundTitle:'Geschäft nicht gefunden', notFoundMsg:'Dieser Link ist ungültig oder das Geschäft existiert nicht mehr.', newBooking:'Neue Anfrage stellen', requiredFields:'Bitte geben Sie Ihren Namen und Ihre Telefonnummer ein.', closed:'Geschlossen' },
-  es: { step1:'Elige un servicio', step2:'Elige un horario', step3:'Tus datos', minutes:'min', today:'Hoy', noSlots:'No hay horarios disponibles ese día.', name:'Nombre completo', phone:'Teléfono', next:'Continuar', back:'Atrás', confirm:'Confirmar cita', confirming:'Enviando…', summaryFor:'Cita para', summaryOn:'el', summaryAt:'a las', pendingTitle:'¡Solicitud enviada!', pendingMsg:'Tu solicitud ha sido recibida. El negocio la confirmará pronto — recibirás un correo de confirmación.', confirmedTitle:'¡Cita confirmada!', confirmedMsg:'Tu cita está confirmada. Se te ha enviado un correo de confirmación.', conflictMsg:'Este horario acaba de ser reservado. Elige otro, por favor.', errorGeneric:'Ha ocurrido un error. Inténtalo de nuevo.', notFoundTitle:'Negocio no encontrado', notFoundMsg:'Este enlace no es válido o el negocio ya no existe.', newBooking:'Hacer una nueva solicitud', requiredFields:'Por favor indica tu nombre y teléfono.', closed:'Cerrado' },
-  it: { step1:'Scegli un servizio', step2:'Scegli un orario', step3:'I tuoi dati', minutes:'min', today:'Oggi', noSlots:'Nessun orario disponibile in questo giorno.', name:'Nome completo', phone:'Telefono', next:'Continua', back:'Indietro', confirm:'Conferma appuntamento', confirming:'Invio in corso…', summaryFor:'Appuntamento per', summaryOn:'il', summaryAt:'alle', pendingTitle:'Richiesta inviata!', pendingMsg:'La tua richiesta è stata ricevuta. L\'attività la confermerà a breve — riceverai un\'email di conferma.', confirmedTitle:'Appuntamento confermato!', confirmedMsg:'Il tuo appuntamento è confermato. Ti è stata inviata un\'email di conferma.', conflictMsg:'Questo orario è appena stato preso. Scegline un altro.', errorGeneric:'Si è verificato un errore. Riprova.', notFoundTitle:'Attività non trovata', notFoundMsg:'Questo link non è valido o l\'attività non esiste più.', newBooking:'Fai una nuova richiesta', requiredFields:'Inserisci il tuo nome e numero di telefono.', closed:'Chiuso' },
-  pt: { step1:'Escolha um serviço', step2:'Escolha um horário', step3:'Os seus dados', minutes:'min', today:'Hoje', noSlots:'Nenhum horário disponível nesse dia.', name:'Nome completo', phone:'Telefone', next:'Continuar', back:'Voltar', confirm:'Confirmar marcação', confirming:'A enviar…', summaryFor:'Marcação para', summaryOn:'em', summaryAt:'às', pendingTitle:'Pedido enviado!', pendingMsg:'O seu pedido foi recebido. O estabelecimento irá confirmá-lo em breve — receberá um email de confirmação.', confirmedTitle:'Marcação confirmada!', confirmedMsg:'A sua marcação está confirmada. Foi enviado um email de confirmação.', conflictMsg:'Este horário acabou de ser reservado. Escolha outro, por favor.', errorGeneric:'Ocorreu um erro. Por favor tente novamente.', notFoundTitle:'Estabelecimento não encontrado', notFoundMsg:'Este link não é válido ou o estabelecimento já não existe.', newBooking:'Fazer um novo pedido', requiredFields:'Indique o seu nome e telefone.', closed:'Encerrado' },
-  nl: { step1:'Kies een dienst', step2:'Kies een tijdstip', step3:'Uw gegevens', minutes:'min', today:'Vandaag', noSlots:'Geen beschikbare tijdstippen op deze dag.', name:'Volledige naam', phone:'Telefoonnummer', next:'Doorgaan', back:'Terug', confirm:'Afspraak bevestigen', confirming:'Verzenden…', summaryFor:'Afspraak voor', summaryOn:'op', summaryAt:'om', pendingTitle:'Aanvraag verzonden!', pendingMsg:'Uw aanvraag is ontvangen. Het bedrijf zal deze binnenkort bevestigen — u ontvangt een bevestigingsmail.', confirmedTitle:'Afspraak bevestigd!', confirmedMsg:'Uw afspraak is bevestigd. Er is een bevestigingsmail naar u verzonden.', conflictMsg:'Dit tijdstip is zojuist ingenomen. Kies een ander tijdstip.', errorGeneric:'Er is een fout opgetreden. Probeer het opnieuw.', notFoundTitle:'Bedrijf niet gevonden', notFoundMsg:'Deze link is ongeldig of het bedrijf bestaat niet meer.', newBooking:'Nieuwe aanvraag doen', requiredFields:'Vul uw naam en telefoonnummer in.', closed:'Gesloten' },
-  pl: { step1:'Wybierz usługę', step2:'Wybierz termin', step3:'Twoje dane', minutes:'min', today:'Dzisiaj', noSlots:'Brak dostępnych terminów tego dnia.', name:'Imię i nazwisko', phone:'Numer telefonu', next:'Dalej', back:'Wstecz', confirm:'Potwierdź wizytę', confirming:'Wysyłanie…', summaryFor:'Wizyta na', summaryOn:'dnia', summaryAt:'o', pendingTitle:'Zgłoszenie wysłane!', pendingMsg:'Twoje zgłoszenie zostało odebrane. Firma wkrótce je potwierdzi — otrzymasz e-mail z potwierdzeniem.', confirmedTitle:'Wizyta potwierdzona!', confirmedMsg:'Twoja wizyta jest potwierdzona. Wysłaliśmy e-mail z potwierdzeniem.', conflictMsg:'Ten termin został właśnie zajęty. Wybierz inny.', errorGeneric:'Wystąpił błąd. Spróbuj ponownie.', notFoundTitle:'Nie znaleziono firmy', notFoundMsg:'Ten link jest nieprawidłowy lub firma już nie istnieje.', newBooking:'Wyślij nowe zgłoszenie', requiredFields:'Podaj imię i numer telefonu.', closed:'Zamknięte' }
+  fr: { stepStaff:'Avec qui souhaitez-vous ce rendez-vous ?', anyStaff:'Peu importe', step1:'Choisissez une prestation', step2:'Choisissez un créneau', step3:'Vos coordonnées', minutes:'min', today:"Aujourd'hui", noSlots:'Aucun créneau disponible ce jour-là.', name:'Nom complet', phone:'Téléphone', next:'Continuer', back:'Retour', confirm:'Confirmer le rendez-vous', confirming:'Envoi en cours…', summaryFor:'Rendez-vous pour', summaryOn:'le', summaryAt:'à', pendingTitle:'Demande envoyée !', pendingMsg:'Votre demande a bien été reçue. Le commerce va la confirmer très prochainement — vous recevrez un email de confirmation.', confirmedTitle:'Rendez-vous confirmé !', confirmedMsg:'Votre rendez-vous est confirmé. Un email de confirmation vous a été envoyé.', conflictMsg:'Ce créneau vient d\'être pris. Merci d\'en choisir un autre.', errorGeneric:'Une erreur est survenue. Merci de réessayer.', notFoundTitle:'Commerce introuvable', notFoundMsg:"Ce lien n'est pas valide ou le commerce n'existe plus.", newBooking:'Faire une nouvelle demande', requiredFields:'Merci de renseigner votre nom et votre téléphone.', closed:'Fermé' },
+  en: { stepStaff:'Who would you like your appointment with?', anyStaff:'No preference', step1:'Choose a service', step2:'Choose a time slot', step3:'Your details', minutes:'min', today:'Today', noSlots:'No slots available on this day.', name:'Full name', phone:'Phone number', next:'Continue', back:'Back', confirm:'Confirm appointment', confirming:'Sending…', summaryFor:'Appointment for', summaryOn:'on', summaryAt:'at', pendingTitle:'Request sent!', pendingMsg:'Your request has been received. The business will confirm it shortly — you will receive a confirmation email.', confirmedTitle:'Appointment confirmed!', confirmedMsg:'Your appointment is confirmed. A confirmation email has been sent to you.', conflictMsg:'This slot was just taken. Please choose another one.', errorGeneric:'Something went wrong. Please try again.', notFoundTitle:'Business not found', notFoundMsg:'This link is invalid or the business no longer exists.', newBooking:'Make a new request', requiredFields:'Please enter your name and phone number.', closed:'Closed' },
+  de: { stepStaff:'Bei wem möchten Sie Ihren Termin?', anyStaff:'Keine Präferenz', step1:'Leistung auswählen', step2:'Termin auswählen', step3:'Ihre Angaben', minutes:'Min.', today:'Heute', noSlots:'An diesem Tag sind keine Termine verfügbar.', name:'Vollständiger Name', phone:'Telefonnummer', next:'Weiter', back:'Zurück', confirm:'Termin bestätigen', confirming:'Wird gesendet…', summaryFor:'Termin für', summaryOn:'am', summaryAt:'um', pendingTitle:'Anfrage gesendet!', pendingMsg:'Ihre Anfrage wurde empfangen. Das Geschäft wird sie in Kürze bestätigen — Sie erhalten eine Bestätigungs-E-Mail.', confirmedTitle:'Termin bestätigt!', confirmedMsg:'Ihr Termin ist bestätigt. Eine Bestätigungs-E-Mail wurde Ihnen gesendet.', conflictMsg:'Dieser Termin wurde soeben vergeben. Bitte wählen Sie einen anderen.', errorGeneric:'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', notFoundTitle:'Geschäft nicht gefunden', notFoundMsg:'Dieser Link ist ungültig oder das Geschäft existiert nicht mehr.', newBooking:'Neue Anfrage stellen', requiredFields:'Bitte geben Sie Ihren Namen und Ihre Telefonnummer ein.', closed:'Geschlossen' },
+  es: { stepStaff:'¿Con quién desea su cita?', anyStaff:'Sin preferencia', step1:'Elige un servicio', step2:'Elige un horario', step3:'Tus datos', minutes:'min', today:'Hoy', noSlots:'No hay horarios disponibles ese día.', name:'Nombre completo', phone:'Teléfono', next:'Continuar', back:'Atrás', confirm:'Confirmar cita', confirming:'Enviando…', summaryFor:'Cita para', summaryOn:'el', summaryAt:'a las', pendingTitle:'¡Solicitud enviada!', pendingMsg:'Tu solicitud ha sido recibida. El negocio la confirmará pronto — recibirás un correo de confirmación.', confirmedTitle:'¡Cita confirmada!', confirmedMsg:'Tu cita está confirmada. Se te ha enviado un correo de confirmación.', conflictMsg:'Este horario acaba de ser reservado. Elige otro, por favor.', errorGeneric:'Ha ocurrido un error. Inténtalo de nuevo.', notFoundTitle:'Negocio no encontrado', notFoundMsg:'Este enlace no es válido o el negocio ya no existe.', newBooking:'Hacer una nueva solicitud', requiredFields:'Por favor indica tu nombre y teléfono.', closed:'Cerrado' },
+  it: { stepStaff:'Con chi desidera il suo appuntamento?', anyStaff:'Nessuna preferenza', step1:'Scegli un servizio', step2:'Scegli un orario', step3:'I tuoi dati', minutes:'min', today:'Oggi', noSlots:'Nessun orario disponibile in questo giorno.', name:'Nome completo', phone:'Telefono', next:'Continua', back:'Indietro', confirm:'Conferma appuntamento', confirming:'Invio in corso…', summaryFor:'Appuntamento per', summaryOn:'il', summaryAt:'alle', pendingTitle:'Richiesta inviata!', pendingMsg:'La tua richiesta è stata ricevuta. L\'attività la confermerà a breve — riceverai un\'email di conferma.', confirmedTitle:'Appuntamento confermato!', confirmedMsg:'Il tuo appuntamento è confermato. Ti è stata inviata un\'email di conferma.', conflictMsg:'Questo orario è appena stato preso. Scegline un altro.', errorGeneric:'Si è verificato un errore. Riprova.', notFoundTitle:'Attività non trovata', notFoundMsg:'Questo link non è valido o l\'attività non esiste più.', newBooking:'Fai una nuova richiesta', requiredFields:'Inserisci il tuo nome e numero di telefono.', closed:'Chiuso' },
+  pt: { stepStaff:'Com quem deseja a sua marcação?', anyStaff:'Sem preferência', step1:'Escolha um serviço', step2:'Escolha um horário', step3:'Os seus dados', minutes:'min', today:'Hoje', noSlots:'Nenhum horário disponível nesse dia.', name:'Nome completo', phone:'Telefone', next:'Continuar', back:'Voltar', confirm:'Confirmar marcação', confirming:'A enviar…', summaryFor:'Marcação para', summaryOn:'em', summaryAt:'às', pendingTitle:'Pedido enviado!', pendingMsg:'O seu pedido foi recebido. O estabelecimento irá confirmá-lo em breve — receberá um email de confirmação.', confirmedTitle:'Marcação confirmada!', confirmedMsg:'A sua marcação está confirmada. Foi enviado um email de confirmação.', conflictMsg:'Este horário acabou de ser reservado. Escolha outro, por favor.', errorGeneric:'Ocorreu um erro. Por favor tente novamente.', notFoundTitle:'Estabelecimento não encontrado', notFoundMsg:'Este link não é válido ou o estabelecimento já não existe.', newBooking:'Fazer um novo pedido', requiredFields:'Indique o seu nome e telefone.', closed:'Encerrado' },
+  nl: { stepStaff:'Bij wie wilt u uw afspraak?', anyStaff:'Geen voorkeur', step1:'Kies een dienst', step2:'Kies een tijdstip', step3:'Uw gegevens', minutes:'min', today:'Vandaag', noSlots:'Geen beschikbare tijdstippen op deze dag.', name:'Volledige naam', phone:'Telefoonnummer', next:'Doorgaan', back:'Terug', confirm:'Afspraak bevestigen', confirming:'Verzenden…', summaryFor:'Afspraak voor', summaryOn:'op', summaryAt:'om', pendingTitle:'Aanvraag verzonden!', pendingMsg:'Uw aanvraag is ontvangen. Het bedrijf zal deze binnenkort bevestigen — u ontvangt een bevestigingsmail.', confirmedTitle:'Afspraak bevestigd!', confirmedMsg:'Uw afspraak is bevestigd. Er is een bevestigingsmail naar u verzonden.', conflictMsg:'Dit tijdstip is zojuist ingenomen. Kies een ander tijdstip.', errorGeneric:'Er is een fout opgetreden. Probeer het opnieuw.', notFoundTitle:'Bedrijf niet gevonden', notFoundMsg:'Deze link is ongeldig of het bedrijf bestaat niet meer.', newBooking:'Nieuwe aanvraag doen', requiredFields:'Vul uw naam en telefoonnummer in.', closed:'Gesloten' },
+  pl: { stepStaff:'Z kim chcesz się umówić?', anyStaff:'Bez preferencji', step1:'Wybierz usługę', step2:'Wybierz termin', step3:'Twoje dane', minutes:'min', today:'Dzisiaj', noSlots:'Brak dostępnych terminów tego dnia.', name:'Imię i nazwisko', phone:'Numer telefonu', next:'Dalej', back:'Wstecz', confirm:'Potwierdź wizytę', confirming:'Wysyłanie…', summaryFor:'Wizyta na', summaryOn:'dnia', summaryAt:'o', pendingTitle:'Zgłoszenie wysłane!', pendingMsg:'Twoje zgłoszenie zostało odebrane. Firma wkrótce je potwierdzi — otrzymasz e-mail z potwierdzeniem.', confirmedTitle:'Wizyta potwierdzona!', confirmedMsg:'Twoja wizyta jest potwierdzona. Wysłaliśmy e-mail z potwierdzeniem.', conflictMsg:'Ten termin został właśnie zajęty. Wybierz inny.', errorGeneric:'Wystąpił błąd. Spróbuj ponownie.', notFoundTitle:'Nie znaleziono firmy', notFoundMsg:'Ten link jest nieprawidłowy lub firma już nie istnieje.', newBooking:'Wyślij nowe zgłoszenie', requiredFields:'Podaj imię i numer telefonu.', closed:'Zamknięte' }
 };
 
 const LOCALE_MAP = { fr:'fr-FR', en:'en-GB', de:'de-DE', es:'es-ES', it:'it-IT', pt:'pt-PT', nl:'nl-NL', pl:'pl-PL' };
@@ -118,6 +118,7 @@ let biz = null;
 let selectedService = null;
 let selectedDate = new Date();
 let selectedSlot = null;
+let selectedResource = null;
 let submitting = false;
 
 function t(key) { return (I18N[lang] && I18N[lang][key]) || I18N.fr[key]; }
@@ -211,6 +212,40 @@ function renderStep1() {
 
 window.selectService = function(i) {
   selectedService = (biz.services || [])[i];
+  selectedResource = null;
+  selectedDate = new Date();
+  selectedSlot = null;
+  if (biz.staff_selection_enabled && (biz.staff || []).length > 0) {
+    renderStaffStep();
+  } else {
+    renderStep2();
+  }
+};
+
+function renderStaffStep() {
+  const staff = biz.staff || [];
+  wrap.innerHTML = `
+    ${header(1)}
+    <div class="rdv-card">
+      <div class="rdv-label">${t('stepStaff')} — ${escapeHtml(selectedService.name)}</div>
+      <div id="rdvStaffList">
+        <div class="rdv-service" onclick="selectResource(null)" id="staff-any">
+          <div class="rdv-service-name">${t('anyStaff')}</div>
+        </div>
+        ${staff.map((st, i) => `
+          <div class="rdv-service" onclick="selectResource(${i})" id="staff-${i}">
+            <div class="rdv-service-name">${escapeHtml(st.name)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <button class="rdv-btn rdv-btn-back" onclick="renderStep1()">← ${t('back')}</button>
+    ${langSwitcher()}`;
+}
+
+window.selectResource = function(i) {
+  const staff = biz.staff || [];
+  selectedResource = (i === null || i === undefined) ? null : staff[i];
   selectedDate = new Date();
   selectedSlot = null;
   renderStep2();
@@ -221,7 +256,7 @@ async function loadSlots() {
   if (!el) return;
   el.innerHTML = `<div class="rdv-empty">…</div>`;
   try {
-    const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/slots?date=${isoDate(selectedDate)}&service_id=${selectedService.id}`);
+    const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/slots?date=${isoDate(selectedDate)}&service_id=${selectedService.id}${selectedResource ? '&resource_id=' + selectedResource.id : ''}`);
     const d = await r.json();
     const slots = d.slots || [];
     if (!slots.length) {
@@ -256,7 +291,7 @@ function renderStep2() {
   wrap.innerHTML = `
     ${header(2)}
     <div class="rdv-card">
-      <div class="rdv-label">${t('step2')} — ${escapeHtml(selectedService.name)}</div>
+      <div class="rdv-label">${t('step2')} — ${escapeHtml(selectedService.name)}${selectedResource ? ' · ' + escapeHtml(selectedResource.name) : ''}</div>
       <div class="rdv-date-nav">
         <button onclick="changeDay(-1)" ${isToday ? 'disabled' : ''}>‹</button>
         <div class="rdv-date-label">${isToday ? t('today') : fmtDate(selectedDate)}</div>
@@ -265,7 +300,7 @@ function renderStep2() {
       <div class="rdv-slots" id="rdvSlots"></div>
     </div>
     <button class="rdv-btn rdv-btn-primary" id="rdvNextBtn" disabled onclick="renderStep3()">${t('next')}</button>
-    <button class="rdv-btn rdv-btn-back" onclick="renderStep1()">← ${t('back')}</button>
+    <button class="rdv-btn rdv-btn-back" onclick="${(biz.staff_selection_enabled && (biz.staff||[]).length>0) ? 'renderStaffStep()' : 'renderStep1()'}">← ${t('back')}</button>
     ${langSwitcher()}`;
   loadSlots();
 }
@@ -275,7 +310,7 @@ function renderStep3() {
     ${header(3)}
     <div class="rdv-card">
       <div class="rdv-summary">
-        <b>${escapeHtml(selectedService.name)}</b><br>
+        <b>${escapeHtml(selectedService.name)}</b>${selectedResource ? ' · ' + escapeHtml(selectedResource.name) : ''}<br>
         ${t('summaryOn')} ${fmtDate(selectedDate)} ${t('summaryAt')} ${fmtTime(selectedSlot.start)}
       </div>
       <div class="rdv-field">
@@ -313,7 +348,8 @@ window.submitBooking = async function() {
         date: isoDate(selectedDate),
         time: fmtTime(selectedSlot.start).length === 5 ? new Date(selectedSlot.start).toTimeString().slice(0, 5) : '',
         client_name: name,
-        client_phone: phone
+        client_phone: phone,
+        resource_id: selectedResource ? selectedResource.id : undefined
       })
     });
     const d = await r.json();
