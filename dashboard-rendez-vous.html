@@ -605,8 +605,17 @@ async function renderModeContent(mode, externalUrl) {
             <div style="margin-top:8px;padding:10px 12px;background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);border-radius:9px;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;">
               ${_t.cal_tip2||'⚠️ <strong style="color:rgba(245,158,11,0.8);">Conseil :</strong> Utilisez de préférence un calendar dédié aux RDV de votre commerce — pas votre agenda personnel. Cela évite que vos événements privés bloquent des créneaux ou perturbent l\'IA.'}
             </div>
+            <div id="confirmModeBox" style="margin-top:8px;padding:12px 14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;">
+              <div id="confirmModeTitle" style="font-size:12px;font-weight:600;color:#fff;margin-bottom:2px;"></div>
+              <div id="confirmModeDesc" style="font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:8px;line-height:1.4;"></div>
+              <div style="display:flex;gap:6px;">
+                <button id="confirmModeManualBtn" onclick="setInstantBooking(false)" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#fff;font-size:11px;cursor:pointer;font-weight:600;">Manual</button>
+                <button id="confirmModeInstantBtn" onclick="setInstantBooking(true)" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#fff;font-size:11px;cursor:pointer;font-weight:600;">Instant</button>
+              </div>
+            </div>
           </div>`;
         setTimeout(() => loadCalendarEvents(), 100);
+        initConfirmModeToggle();
       } else {
         zone.innerHTML = `
           <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:28px;text-align:center;">
@@ -830,6 +839,64 @@ async function loadCalendarEvents() {
         </div>
       `;
     }
+  }
+}
+
+// ============================================
+// MODE DE CONFIRMATION DES RDV (calendrier en ligne)
+// ============================================
+const RDV_CONFIRM_T = {
+  fr:{title:'Confirmation des RDV en ligne', desc:'Comment valider les RDV pris depuis le calendrier public.', manual:'✋ À confirmer', instant:'⚡ Instantané', err:'Erreur, réessayez'},
+  en:{title:'Online booking confirmation', desc:'How bookings made via the public calendar are validated.', manual:'✋ Needs confirmation', instant:'⚡ Instant', err:'Error, please retry'},
+  de:{title:'Bestätigung von Online-Buchungen', desc:'Wie über den öffentlichen Kalender gebuchte Termine bestätigt werden.', manual:'✋ Bestätigung nötig', instant:'⚡ Sofort', err:'Fehler, bitte erneut versuchen'},
+  es:{title:'Confirmación de reservas online', desc:'Cómo se validan las citas hechas desde el calendario público.', manual:'✋ Requiere confirmación', instant:'⚡ Instantánea', err:'Error, vuelva a intentarlo'},
+  it:{title:'Conferma prenotazioni online', desc:'Come vengono convalidati gli appuntamenti presi dal calendario pubblico.', manual:'✋ Da confermare', instant:'⚡ Istantanea', err:'Errore, riprova'},
+  pt:{title:'Confirmação de marcações online', desc:'Como as marcações feitas pelo calendário público são validadas.', manual:'✋ A confirmar', instant:'⚡ Instantânea', err:'Erro, tente novamente'},
+  nl:{title:'Bevestiging van online boekingen', desc:'Hoe afspraken via de openbare kalender worden bevestigd.', manual:'✋ Bevestiging nodig', instant:'⚡ Direct', err:'Fout, probeer opnieuw'},
+  pl:{title:'Potwierdzanie rezerwacji online', desc:'Jak zatwierdzane są rezerwacje z publicznego kalendarza.', manual:'✋ Wymaga potwierdzenia', instant:'⚡ Natychmiastowe', err:'Błąd, spróbuj ponownie'}
+};
+
+function _confirmModeLang() {
+  const l = (localStorage.getItem('lr_lang') || (navigator.language || 'fr').substring(0,2)).toLowerCase();
+  return RDV_CONFIRM_T.hasOwnProperty(l) ? l : 'fr';
+}
+
+function _paintConfirmMode(enabled) {
+  const manualBtn = document.getElementById('confirmModeManualBtn');
+  const instantBtn = document.getElementById('confirmModeInstantBtn');
+  if (!manualBtn || !instantBtn) return;
+  manualBtn.style.background = enabled ? 'transparent' : 'rgba(0,102,255,0.18)';
+  manualBtn.style.borderColor = enabled ? 'rgba(255,255,255,0.15)' : '#0066FF';
+  instantBtn.style.background = enabled ? 'rgba(0,102,255,0.18)' : 'transparent';
+  instantBtn.style.borderColor = enabled ? '#0066FF' : 'rgba(255,255,255,0.15)';
+}
+
+async function initConfirmModeToggle() {
+  const t = RDV_CONFIRM_T[_confirmModeLang()];
+  const titleEl = document.getElementById('confirmModeTitle');
+  const descEl = document.getElementById('confirmModeDesc');
+  const manualBtn = document.getElementById('confirmModeManualBtn');
+  const instantBtn = document.getElementById('confirmModeInstantBtn');
+  if (!titleEl || !manualBtn || !instantBtn) return;
+  titleEl.textContent = t.title;
+  descEl.textContent = t.desc;
+  manualBtn.textContent = t.manual;
+  instantBtn.textContent = t.instant;
+  try {
+    const cfg = await apiRequest(`/api/business/${businessId}/config`);
+    const src = cfg.business ? cfg.business : cfg;
+    const enabled = !!(src && src.instant_booking_enabled);
+    _paintConfirmMode(enabled);
+  } catch (e) {}
+}
+
+async function setInstantBooking(enabled) {
+  _paintConfirmMode(enabled);
+  try {
+    await apiRequest(`/api/business/${businessId}/config`, 'POST', { instant_booking_enabled: enabled });
+  } catch (e) {
+    _paintConfirmMode(!enabled);
+    alert(RDV_CONFIRM_T[_confirmModeLang()].err);
   }
 }
 
