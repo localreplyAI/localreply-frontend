@@ -37,7 +37,7 @@ body {
 .rdv-avatar { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, var(--blue-mid), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 12px; }
 .rdv-biz-name { font-size: 20px; font-weight: 700; }
 .rdv-biz-sub { color: var(--text-2); font-size: 14px; margin-top: 4px; }
-.rdv-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.rdv-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
 .rdv-steps { display: flex; gap: 8px; margin-bottom: 20px; }
 .rdv-step-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--border); }
 .rdv-step-dot.active { background: linear-gradient(90deg, var(--blue-mid), var(--cyan)); }
@@ -56,6 +56,25 @@ body {
 .rdv-slot { padding: 10px 4px; text-align: center; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600; transition: border-color .15s, background .15s; }
 .rdv-slot:hover { border-color: var(--border-2); }
 .rdv-slot.selected { border-color: var(--cyan); background: rgba(0,212,255,0.1); color: var(--cyan); }
+
+    .rdv-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .rdv-cal-header button { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; width: 36px; height: 36px; cursor: pointer; font-size: 16px; }
+    .rdv-cal-header button:disabled { opacity: 0.3; cursor: not-allowed; }
+    .rdv-cal-title { font-weight: 600; font-size: 15px; text-transform: capitalize; }
+    .rdv-cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 6px; }
+    .rdv-cal-weekdays div { text-align: center; font-size: 11px; color: var(--text-3); font-weight: 600; text-transform: uppercase; }
+    .rdv-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .rdv-cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: default; border: 1px solid transparent; }
+    .rdv-cal-day.empty { visibility: hidden; }
+    .rdv-cal-day.unavailable { color: var(--text-3); opacity: 0.35; text-decoration: line-through; }
+    .rdv-cal-day.loading { color: var(--text-3); opacity: 0.5; }
+    .rdv-cal-day.available { background: var(--surface-2); border-color: var(--border); color: var(--text); cursor: pointer; }
+    .rdv-cal-day.available:hover { border-color: var(--border-2); }
+    .rdv-cal-day.today:not(.selected) { border-color: var(--border-2); }
+    .rdv-cal-day.selected { background: var(--cyan); border-color: var(--cyan); color: #04141c; }
+    .rdv-slot-bubble { position: absolute; z-index: 20; background: var(--surface); border: 1px solid var(--border-2); border-radius: 14px; padding: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.5); max-height: 220px; overflow-y: auto; min-width: 200px; }
+    .rdv-slot-bubble-title { font-size: 12px; color: var(--text-2); margin-bottom: 8px; text-transform: capitalize; }
+    .rdv-slot-bubble-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .rdv-empty { color: var(--text-2); font-size: 14px; text-align: center; padding: 24px 0; }
 .rdv-field { margin-bottom: 12px; }
 .rdv-field label { display: block; font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
@@ -119,6 +138,9 @@ let selectedService = null;
 let selectedDate = new Date();
 let selectedSlot = null;
 let selectedResource = null;
+let calendarMonth = null;
+let dayAvailability = {};
+let bubbleOpenDate = null;
 let submitting = false;
 
 function t(key) { return (I18N[lang] && I18N[lang][key]) || I18N.fr[key]; }
@@ -255,38 +277,167 @@ window.selectResource = function(i) {
   renderStep2();
 };
 
-async function loadSlots() {
-  const el = document.getElementById('rdvSlots');
-  if (!el) return;
-  el.innerHTML = `<div class="rdv-empty">…</div>`;
-  try {
-    const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/slots?date=${isoDate(selectedDate)}&service_id=${selectedService.id}${selectedResource ? '&resource_id=' + selectedResource.id : ''}`);
-    const d = await r.json();
-    const slots = d.slots || [];
-    if (!slots.length) {
-      el.innerHTML = `<div class="rdv-empty">${t('noSlots')}</div>`;
-      return;
-    }
-    el.innerHTML = slots.map((s, i) => `<div class="rdv-slot" onclick="selectSlot(${i})" id="slot-${i}">${fmtTime(s.start)}</div>`).join('');
-    window._slots = slots;
-  } catch (e) {
-    el.innerHTML = `<div class="rdv-empty">${t('errorGeneric')}</div>`;
-  }
-}
-
-window.changeDay = function(delta) {
-  const nd = new Date(selectedDate);
-  nd.setDate(nd.getDate() + delta);
-  if (delta < 0 && isoDate(nd) < isoDate(new Date())) return;
-  selectedDate = nd;
-  selectedSlot = null;
-  renderStep2();
+const WEEKDAY_LABELS = {
+  fr: ['L','M','M','J','V','S','D'], en: ['M','T','W','T','F','S','S'], de: ['M','D','M','D','F','S','S'],
+  es: ['L','M','X','J','V','S','D'], it: ['L','M','M','G','V','S','D'], pt: ['S','T','Q','Q','S','S','D'],
+  nl: ['M','D','W','D','V','Z','Z'], pl: ['P','W','Ś','C','P','S','N']
 };
 
+function isDayClosed(dateObj) {
+  const dow = ['sun','mon','tue','wed','thu','fri','sat'][dateObj.getDay()];
+  const h = (biz.hours || []).find(x => x.day === dow);
+  return h ? !!h.is_closed : false;
+}
+
+function monthLabel(d) {
+  return d.toLocaleDateString(LOCALE_MAP[lang] || 'fr-FR', { month: 'long', year: 'numeric' });
+}
+
+function initCalendar() {
+  if (!calendarMonth) calendarMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+  renderCalendarGrid();
+  loadMonthAvailability();
+}
+
+window.changeMonth = function(delta) {
+  const nm = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + delta, 1);
+  const curMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  if (nm < curMonth) return;
+  calendarMonth = nm;
+  closeBubble();
+  renderCalendarGrid();
+  loadMonthAvailability();
+};
+
+function renderCalendarGrid() {
+  const el = document.getElementById('rdvCalendar');
+  if (!el) return;
+  const year = calendarMonth.getFullYear();
+  const month = calendarMonth.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayStr = isoDate(new Date());
+  const curMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+  const weekdayLabels = WEEKDAY_LABELS[lang] || WEEKDAY_LABELS.fr;
+
+  let cells = '';
+  for (let i = 0; i < startOffset; i++) cells += `<div class="rdv-cal-day empty"></div>`;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const d = new Date(year, month, day);
+    const dStr = isoDate(d);
+    const isPast = dStr < todayStr;
+    const isToday = dStr === todayStr;
+    const isSelected = selectedSlot && dStr === isoDate(selectedDate);
+    let cls = 'rdv-cal-day';
+    let clickable = false;
+    if (isPast) {
+      cls += ' unavailable';
+    } else if (isDayClosed(d)) {
+      cls += ' unavailable';
+    } else if (dayAvailability[dStr] === undefined) {
+      cls += ' loading';
+    } else if (!dayAvailability[dStr] || !dayAvailability[dStr].length) {
+      cls += ' unavailable';
+    } else {
+      cls += ' available';
+      clickable = true;
+    }
+    if (isToday) cls += ' today';
+    if (isSelected) cls += ' selected';
+    cells += `<div class="${cls}" ${clickable ? `onclick="selectDay('${dStr}', this)"` : ''} id="cal-${dStr}">${day}</div>`;
+  }
+
+  el.innerHTML = `
+    <div class="rdv-cal-header">
+      <button onclick="changeMonth(-1)" ${new Date(year, month, 1) <= curMonth ? 'disabled' : ''}>‹</button>
+      <div class="rdv-cal-title">${monthLabel(calendarMonth)}</div>
+      <button onclick="changeMonth(1)">›</button>
+    </div>
+    <div class="rdv-cal-weekdays">${weekdayLabels.map(w => `<div>${w}</div>`).join('')}</div>
+    <div class="rdv-cal-grid" id="rdvCalGrid">${cells}</div>
+  `;
+}
+
+async function loadMonthAvailability() {
+  const year = calendarMonth.getFullYear();
+  const month = calendarMonth.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayStr = isoDate(new Date());
+  const toFetch = [];
+  for (let day = 1; day <= daysInMonth; day++) {
+    const d = new Date(year, month, day);
+    const dStr = isoDate(d);
+    if (dStr < todayStr) continue;
+    if (isDayClosed(d)) { dayAvailability[dStr] = []; continue; }
+    if (dayAvailability[dStr] !== undefined) continue;
+    toFetch.push(dStr);
+  }
+  if (!toFetch.length) { renderCalendarGrid(); return; }
+  await Promise.all(toFetch.map(async dStr => {
+    try {
+      const r = await fetch(`${API}/api/booking/${encodeURIComponent(biz.slug)}/slots?date=${dStr}&service_id=${selectedService.id}${selectedResource ? '&resource_id=' + selectedResource.id : ''}`);
+      const dd = await r.json();
+      dayAvailability[dStr] = dd.slots || [];
+    } catch (e) {
+      dayAvailability[dStr] = [];
+    }
+  }));
+  renderCalendarGrid();
+}
+
+window.selectDay = function(dStr, cellEl) {
+  closeBubble();
+  const slots = dayAvailability[dStr] || [];
+  if (!slots.length) return;
+  bubbleOpenDate = dStr;
+  const [y, m, dd] = dStr.split('-').map(Number);
+  const dateObj = new Date(y, m - 1, dd);
+  const bubble = document.createElement('div');
+  bubble.className = 'rdv-slot-bubble';
+  bubble.id = 'rdvSlotBubble';
+  bubble.innerHTML = `
+    <div class="rdv-slot-bubble-title">${fmtDate(dateObj)}</div>
+    <div class="rdv-slot-bubble-grid">
+      ${slots.map((s, i) => `<div class="rdv-slot" onclick="selectSlot(${i})" id="bubble-slot-${i}">${fmtTime(s.start)}</div>`).join('')}
+    </div>
+  `;
+  const card = cellEl.closest('.rdv-card');
+  card.appendChild(bubble);
+  const cellRect = cellEl.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
+  let top = cellRect.bottom - cardRect.top + 8;
+  let left = cellRect.left - cardRect.left + cellRect.width / 2 - bubble.offsetWidth / 2;
+  left = Math.max(8, Math.min(left, cardRect.width - bubble.offsetWidth - 8));
+  bubble.style.top = top + 'px';
+  bubble.style.left = left + 'px';
+  window._bubbleSlots = slots;
+  document.querySelectorAll('.rdv-cal-day').forEach(c => c.classList.remove('selected'));
+  cellEl.classList.add('selected');
+  setTimeout(() => document.addEventListener('click', outsideBubbleClick), 0);
+};
+
+function outsideBubbleClick(e) {
+  const bubble = document.getElementById('rdvSlotBubble');
+  if (!bubble) return;
+  if (bubble.contains(e.target) || e.target.closest('.rdv-cal-day')) return;
+  closeBubble();
+}
+
+function closeBubble() {
+  const bubble = document.getElementById('rdvSlotBubble');
+  if (bubble) bubble.remove();
+  document.removeEventListener('click', outsideBubbleClick);
+}
+
 window.selectSlot = function(i) {
-  selectedSlot = window._slots[i];
-  document.querySelectorAll('.rdv-slot').forEach(el => el.classList.remove('selected'));
-  document.getElementById(`slot-${i}`).classList.add('selected');
+  const slots = window._bubbleSlots || [];
+  selectedSlot = slots[i];
+  const [y, m, dd] = bubbleOpenDate.split('-').map(Number);
+  selectedDate = new Date(y, m - 1, dd);
+  document.querySelectorAll('#rdvSlotBubble .rdv-slot').forEach(el => el.classList.remove('selected'));
+  const el = document.getElementById(`bubble-slot-${i}`);
+  if (el) el.classList.add('selected');
   document.getElementById('rdvNextBtn').disabled = false;
 };
 
@@ -296,17 +447,12 @@ function renderStep2() {
     ${header(2)}
     <div class="rdv-card">
       <div class="rdv-label">${t('step2')} — ${escapeHtml(selectedService.name)}${selectedResource ? ' · ' + escapeHtml(selectedResource.name) : ''}</div>
-      <div class="rdv-date-nav">
-        <button onclick="changeDay(-1)" ${isToday ? 'disabled' : ''}>‹</button>
-        <div class="rdv-date-label">${isToday ? t('today') : fmtDate(selectedDate)}</div>
-        <button onclick="changeDay(1)">›</button>
-      </div>
-      <div class="rdv-slots" id="rdvSlots"></div>
+      <div id="rdvCalendar"></div>
     </div>
     <button class="rdv-btn rdv-btn-primary" id="rdvNextBtn" disabled onclick="renderStep3()">${t('next')}</button>
     <button class="rdv-btn rdv-btn-back" onclick="${(biz.staff_selection_enabled && (biz.staff||[]).length>0) ? 'renderStaffStep()' : 'renderStep1()'}">← ${t('back')}</button>
     ${langSwitcher()}`;
-  loadSlots();
+  initCalendar();
 }
 
 function renderStep3() {
