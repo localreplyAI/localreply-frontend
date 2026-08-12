@@ -991,7 +991,10 @@ function displayPendingAppointments(appointments) {
   list.innerHTML = '';
   
   appointments.forEach((apt, index) => {
-    const card = createPendingCard(apt, index === 0);
+    const createdMs = new Date(apt.created_at).getTime();
+    const elapsedMin = isNaN(createdMs) ? 0 : (Date.now() - createdMs) / 60000;
+    const isUrgent = elapsedMin > 90; // proche de l'expiration auto (hold ~2h) plutot que "premier de la liste"
+    const card = createPendingCard(apt, isUrgent);
     list.appendChild(card);
   });
 }
