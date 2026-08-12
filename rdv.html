@@ -24,7 +24,11 @@
   --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 body {
-  background: #060D1A;
+  background: #0A1628;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,82,204,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(0,180,220,0.2) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 40% at 60% 30%, rgba(0,212,255,0.1) 0%, transparent 50%);
   font-family: var(--font);
   color: var(--text);
   min-height: 100vh;
@@ -134,7 +138,11 @@ function detectBrowserLang() {
   return SUPPORTED_LANGS.includes(l) ? l : 'fr';
 }
 
-let lang = detectBrowserLang();
+const urlLang = (function() {
+  const p = getParam('lang') || getParam('lng');
+  return (p && SUPPORTED_LANGS.includes(p.toLowerCase())) ? p.toLowerCase() : '';
+})();
+let lang = urlLang || detectBrowserLang();
 let biz = null;
 let selectedService = null;
 let selectedDate = new Date();
@@ -170,7 +178,7 @@ async function boot() {
     const r = await fetch(`${API}/api/booking/${encodeURIComponent(slug)}/info`);
     if (!r.ok) { renderNotFound(); return; }
     biz = await r.json();
-    if (biz.interface_language && SUPPORTED_LANGS.includes(biz.interface_language)) {
+    if (!urlLang && biz.interface_language && SUPPORTED_LANGS.includes(biz.interface_language)) {
       lang = biz.interface_language;
     }
     renderStep1();
