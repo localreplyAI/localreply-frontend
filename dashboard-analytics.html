@@ -396,7 +396,7 @@ async function loadOverview() {
     });
     document.getElementById('metricConversations').textContent = period.total_conversations || 0;
     document.getElementById('metricAppointments').textContent = period.total_appointments || 0;
-    document.getElementById('metricConversion').textContent = period.conversion_rate ? period.conversion_rate.toFixed(1) + '%' : '0%';
+    document.getElementById('metricConversion').textContent = period.conversion_rate ? Math.min(period.conversion_rate, 100).toFixed(1) + '%' : '0%';
     document.getElementById('metricAI').textContent = period.ai_resolution_rate ? period.ai_resolution_rate.toFixed(0) + '%' : '0%';
     const autoRate = period.ai_resolution_rate || 0;
     const escalatedRate = 100 - autoRate;
