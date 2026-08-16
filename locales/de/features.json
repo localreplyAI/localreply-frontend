@@ -1,4 +1,11 @@
 {
+  "f_mock_ai_name": "KI-Assistent 🤖",
+  "f_example_slug": "localreply.ai/ihr-unternehmen",
+  "f_time_2h": "vor 2 Std.",
+  "f_time_5h": "vor 5 Std.",
+  "f_ai_configured": "Die KI ist gut konfiguriert ✓",
+  "f_mock_date_plan": "Mittwoch, 5. Juli · Pro-Plan ⭐",
+  "f_recent_activity": "Letzte Aktivität",
   "f_badge": "✦ Alle Funktionen",
   "f_cta1": "14 Tage kostenlos testen →",
   "f_cta2": "Demo ansehen",
