@@ -1,4 +1,5 @@
 {
+  "stat_rdv_val": "Up to +30%",
   "case1_quote": "« A customer writes at 10pm asking for prices and availability. LocalReply replies instantly in French AND German. »",
   "case1_region": "Bilingual region 🇨🇭 🇫🇷",
   "case1_title": "💇 Hair salon",
@@ -118,9 +119,9 @@
   "stat_avail_label": "Response availability",
   "stat_lang_full": "Languages supported",
   "stat_lang_label": "Languages supported",
-  "stat_rdv_full": "Avg. appointments converted",
+  "stat_rdv_full": "Estimated appointment increase",
   "stat_rdv_label": "Avg. appointments converted",
-  "stat_time_full": "Avg. response time",
+  "stat_time_full": "Response time",
   "stat_time_label": "Average response time",
   "stats_after": "→ After LocalReply",
   "stats_before": "Before LocalReply",
