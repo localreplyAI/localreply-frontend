@@ -335,7 +335,7 @@
         <div class="lrf-card sr">
           <div class="lrf-card-icon lrf-card-icon-gold">📱</div>
           <h3 data-i18n="f_feat6_title">{{f_feat6_title}}</h3>
-          <p data-i18n="f_feat6_desc">{{f_feat6_desc}}<strong>localreply.ai/votre-commerce</strong>, QR téléchargeable PNG & PDF.</p>
+          <p data-i18n="f_feat6_desc">{{f_feat6_desc}}<strong data-i18n="f_example_slug">{{f_example_slug}}</strong>, QR téléchargeable PNG & PDF.</p>
         </div>
       </div>
     </div>
@@ -363,7 +363,7 @@
               <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q1">{{f_mock_ml_q1}}</div>
             </div>
             <div>
-              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_ai_name">{{f_mock_ai_name}}</div>
               <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a1">{{f_mock_ml_a1}}</div>
             </div>
             <div>
@@ -371,7 +371,7 @@
               <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q2">{{f_mock_ml_q2}}</div>
             </div>
             <div>
-              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_ai_name">{{f_mock_ai_name}}</div>
               <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a2">{{f_mock_ml_a2}}</div>
             </div>
             <div>
@@ -379,7 +379,7 @@
               <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_ml_q3">{{f_mock_ml_q3}}</div>
             </div>
             <div>
-              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_ai_name">{{f_mock_ai_name}}</div>
               <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_ml_a3">{{f_mock_ml_a3}}</div>
             </div>
           </div>
@@ -409,7 +409,7 @@
               <div class="lrf-chat-msg lrf-chat-user" data-i18n="f_mock_rdv_q1">{{f_mock_rdv_q1}}</div>
             </div>
             <div>
-              <div class="lrf-chat-ai-name">Assistant IA 🤖</div>
+              <div class="lrf-chat-ai-name" data-i18n="f_mock_ai_name">{{f_mock_ai_name}}</div>
               <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_rdv_a1">{{f_mock_rdv_a1}}</div>
             </div>
             <!-- Formulaire style dark cohérent -->
@@ -462,7 +462,7 @@
           <h2 data-i18n="f_qr_title">{{f_qr_title}}</h2>
           <p data-i18n="f_qr_desc">{{f_qr_desc}}</p>
           <ul class="lrf-highlight-list">
-            <li><span>✓</span> <span data-i18n="f_qr_li1">{{f_qr_li1}}<strong>localreply.ai/votre-commerce</strong></span></li>
+            <li><span>✓</span> <span data-i18n="f_qr_li1">{{f_qr_li1}}<strong data-i18n="f_example_slug">{{f_example_slug}}</strong></span></li>
             <li><span>✓</span> <span data-i18n="f_qr_li2">{{f_qr_li2}}</span></li>
             <li><span>✓</span> <span data-i18n="f_qr_li3">{{f_qr_li3}}</span></li>
             <li><span>✓</span> <span data-i18n="f_qr_li4">{{f_qr_li4}}</span></li>
@@ -642,7 +642,7 @@
             <!-- Greeting -->
             <div style="margin-bottom:10px;">
               <div style="font-size:14px;font-weight:800;color:#fff;" data-i18n="f_db_greeting">{{f_db_greeting}}<span style="color:#00D4FF;">Salon Belle Époque</span> 👋</div>
-              <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;">Mercredi 5 juillet · Plan Pro ⭐</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px;" data-i18n="f_mock_date_plan">{{f_mock_date_plan}}</div>
             </div>
 
             <!-- Alerte questions -->
@@ -687,7 +687,7 @@
                 <div style="flex:1;">
                   <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.8px;" data-i18n="f_db_ai_score">{{f_db_ai_score}}</div>
                   <div style="font-size:13px;font-weight:700;color:#10B981;">🟢 Excellent</div>
-                  <div style="font-size:9px;color:rgba(16,185,129,.6);">L'IA est bien configurée ✓</div>
+                  <div style="font-size:9px;color:rgba(16,185,129,.6);" data-i18n="f_ai_configured">{{f_ai_configured}}</div>
                 </div>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;">
@@ -712,7 +712,7 @@
 
             <!-- Activité récente -->
             <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;margin-bottom:0;">
-              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;">Activité récente</div>
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;" data-i18n="f_recent_activity">{{f_recent_activity}}</div>
               <div style="display:flex;flex-direction:column;gap:6px;">
                 <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(0,212,255,.04);border:1px solid rgba(0,212,255,.08);border-radius:8px;">
                   <span style="font-size:13px;">💬</span>
@@ -720,7 +720,7 @@
                     <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇩🇪</div>
                     <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Wann haben Sie morgen geöffnet?</div>
                   </div>
-                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 2h</div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;" data-i18n="f_time_2h">{{f_time_2h}}</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.08);border-radius:8px;">
                   <span style="font-size:13px;">💬</span>
@@ -728,7 +728,7 @@
                     <div style="font-size:10px;font-weight:600;color:rgba(255,255,255,.7);">Conversation 🇫🇷</div>
                     <div style="font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Vous acceptez les chèques-vacances ?</div>
                   </div>
-                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;">il y a 5h</div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.25);flex-shrink:0;" data-i18n="f_time_5h">{{f_time_5h}}</div>
                 </div>
               </div>
             </div>
