@@ -351,7 +351,10 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
   };
 
-  // Appliquer la langue au chargement
+  // Appliquer la langue au chargement -- base sur l'URL (prefixe de langue),
+  // pas sur navigator.language/localStorage, pour rester coherent avec le
+  // contenu de la page (determine par l'URL, pas par le navigateur du visiteur).
   const _supportedNavLangs = Object.keys(_navTranslations);
-  lrApplyNavLang(_supportedNavLangs.indexOf(_navLang) >= 0 ? _navLang : 'fr');
+  const _navLangFromUrl = _curLang || 'en';
+  lrApplyNavLang(_supportedNavLangs.indexOf(_navLangFromUrl) >= 0 ? _navLangFromUrl : 'en');
 })();
