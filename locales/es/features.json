@@ -1,4 +1,11 @@
 {
+  "f_mock_ai_name": "Asistente IA 🤖",
+  "f_example_slug": "localreply.ai/tu-negocio",
+  "f_time_2h": "hace 2h",
+  "f_time_5h": "hace 5h",
+  "f_ai_configured": "La IA está bien configurada ✓",
+  "f_mock_date_plan": "Miércoles 5 de julio · Plan Pro ⭐",
+  "f_recent_activity": "Actividad reciente",
   "f_badge": "✦ Todas las funcionalidades",
   "f_cta1": "Prueba gratuita 14 días →",
   "f_cta2": "Ver la demo",
