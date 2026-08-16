@@ -1,4 +1,5 @@
 {
+  "stat_rdv_val": "Tot +30%",
   "case1_quote": "« Een klante schrijft om 22u om prijzen en beschikbaarheid te vragen. LocalReply antwoordt direct in het Frans EN Duits. »",
   "case1_region": "Tweetalige regio 🇨🇭 🇫🇷",
   "case1_title": "💇 Kapsalon",
@@ -118,9 +119,9 @@
   "stat_avail_label": "Antwoordbeschikbaarheid",
   "stat_lang_full": "Ondersteunde talen",
   "stat_lang_label": "Ondersteunde talen",
-  "stat_rdv_full": "Gemiddeld geconverteerde afspraken",
+  "stat_rdv_full": "Potentiële toename afspraken",
   "stat_rdv_label": "Gemiddeld geconverteerde afspraken",
-  "stat_time_full": "Gemiddelde responstijd",
+  "stat_time_full": "Reactietijd",
   "stat_time_label": "Gemiddelde responstijd",
   "stats_after": "→ Na LocalReply",
   "stats_before": "Voor LocalReply",
