@@ -1,4 +1,5 @@
 {
+  "stat_rdv_val": "Do +30%",
   "case1_quote": "« Klientka pisze o 22:00 z pytaniem o ceny i dostępność. LocalReply odpowiada natychmiast po francusku I po niemiecku. »",
   "case1_region": "Region dwujęzyczny 🇨🇭 🇫🇷",
   "case1_title": "💇 Salon fryzjerski",
@@ -118,9 +119,9 @@
   "stat_avail_label": "Dostępność odpowiedzi",
   "stat_lang_full": "Obsługiwane języki",
   "stat_lang_label": "Obsługiwane języki",
-  "stat_rdv_full": "Średnio skonwertowane wizyty",
+  "stat_rdv_full": "Potencjalny wzrost liczby wizyt",
   "stat_rdv_label": "Średnio skonwertowane wizyty",
-  "stat_time_full": "Średni czas odpowiedzi",
+  "stat_time_full": "Czas odpowiedzi",
   "stat_time_label": "Średni czas odpowiedzi",
   "stats_after": "→ Po LocalReply",
   "stats_before": "Przed LocalReply",
