@@ -1301,7 +1301,7 @@ function renderSuggestionsFromBackend(suggestions) {
     btn.textContent = addEmojiToSuggestion(s);
     const isRdvBackend = /rdv|réserv|book|rendez|termin/i.test(s);
     const rdvModeOkB = bizConfig && bizConfig.rdv_mode === 'google';
-    btn.onclick = (isRdvBackend && rdvModeOkB) ? () => openRdvForm() : () => lrcSendText(s);
+    btn.onclick = () => lrcSendText(s);
     wrap.appendChild(btn);
   });
 }
@@ -1362,8 +1362,7 @@ function renderSuggestionsFallback(intent, lastAiResponse='') {
     btn.className = 'lrc-sug' + (s.p ? ' primary' : '');
     btn.style.animationDelay = (i*0.07)+'s';
     btn.textContent = s.l;
-    // Ouvrir le formulaire seulement si Google Calendar configuré
-    btn.onclick = (isRdv && rdvModeOk) ? () => openRdvForm() : () => lrcSendText(s.t);
+    btn.onclick = () => lrcSendText(s.t);
     wrap.appendChild(btn);
   });
 }
@@ -1482,9 +1481,7 @@ async function lrcSendText(text) {
     const rdvFormEl = document.getElementById('lrcRdvForm');
     const rdvFormHidden = rdvFormEl && rdvFormEl.style.display === 'none';
     console.log('[RDV] rdvMode:', rdvMode, 'userWantsRdv:', userWantsRdv, 'aiAsksInfo:', aiAsksInfo);
-    if (rdvMode !== 'none' && rdvMode !== 'link' && userWantsRdv && aiAsksInfo && rdvFormHidden) {
-      setTimeout(() => openRdvForm(), 400);
-    }
+    // Auto-ouverture de l'ancienne bulle RDV désactivée : l'IA envoie désormais le lien de réservation directement dans sa réponse.
     
     // Suggestions
     if (data.suggestions && data.suggestions.length) {
