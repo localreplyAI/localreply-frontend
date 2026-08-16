@@ -63,7 +63,7 @@
   "p_trial_sub": "All Pro features unlocked for 14 days. Cancel anytime.",
   "p_trial_title": "Free 14-day trial — Full Pro plan",
   "p_trust1": "Stripe payments",
-  "p_trust2": "PCI DSS certified",
+  "p_trust2": "PCI DSS Level 1 (via Stripe)",
   "p_trust3": "EU hosting",
   "p_trust4": "Cancel anytime",
   "p_trust5": "14 days free",
