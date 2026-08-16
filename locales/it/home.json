@@ -1,4 +1,5 @@
 {
+  "stat_rdv_val": "Fino a +30%",
   "case1_quote": "« Una cliente scrive alle 22 per chiedere prezzi e disponibilità. LocalReply risponde istantaneamente in francese E tedesco. »",
   "case1_region": "Regione bilingue 🇨🇭 🇫🇷",
   "case1_title": "💇 Salone di parrucchiere",
@@ -118,9 +119,9 @@
   "stat_avail_label": "Disponibilità di risposta",
   "stat_lang_full": "Lingue supportate",
   "stat_lang_label": "Lingue supportate",
-  "stat_rdv_full": "Appuntamenti convertiti in media",
+  "stat_rdv_full": "Potenziale aumento appuntamenti",
   "stat_rdv_label": "Appuntamenti convertiti in media",
-  "stat_time_full": "Tempo di risposta medio",
+  "stat_time_full": "Tempo di risposta",
   "stat_time_label": "Tempo di risposta medio",
   "stats_after": "→ Dopo LocalReply",
   "stats_before": "Prima di LocalReply",
