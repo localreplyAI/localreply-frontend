@@ -63,7 +63,7 @@
   "p_trial_sub": "Toutes les fonctionnalités Pro débloquées pendant 14 jours. Annulez à tout moment.",
   "p_trial_title": "Essai gratuit 14 jours — Plan Pro complet",
   "p_trust1": "Paiements Stripe",
-  "p_trust2": "PCI DSS certifié",
+  "p_trust2": "PCI DSS niveau 1 (via Stripe)",
   "p_trust3": "Hébergement EU",
   "p_trust4": "Annulable à tout moment",
   "p_trust5": "14 jours gratuits",
