@@ -586,6 +586,7 @@ OB_T.pl = {step1_title:'Witamy! 👋',step1_sub:'Zacznijmy od konfiguracji Twoje
   const lang=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
   const t=OB_T[OB_T.hasOwnProperty(lang)?lang:'fr'];
   window._obt=t;
+  window._obLang=(OB_T.hasOwnProperty(lang)?lang:'fr');
   document.title=t.page_title;
   document.documentElement.lang=lang;
 
@@ -758,6 +759,36 @@ const HIDE_DURATION = new Set([
 ]);
 
 // Types de commerce
+const BIZ_GROUP_LABELS = {
+  fr: ["💇 Beauté & Soins","🍽️ Restauration","🍞 Alimentation","⚖️ Services professionnels","🏋️ Sport & Loisirs","🔧 Services techniques","🏥 Santé & Animaux","🏨 Commerce & Hébergement","📸 Autres services"],
+  en: ["💇 Beauty & Care","🍽️ Food & Dining","🍞 Food Shops","⚖️ Professional Services","🏋️ Sport & Leisure","🔧 Technical Services","🏥 Health & Pets","🏨 Retail & Hospitality","📸 Other Services"],
+  de: ["💇 Beauty & Pflege","🍽️ Gastronomie","🍞 Lebensmittel","⚖️ Professionelle Dienstleistungen","🏋️ Sport & Freizeit","🔧 Technische Dienstleistungen","🏥 Gesundheit & Tiere","🏨 Handel & Gastgewerbe","📸 Weitere Dienstleistungen"],
+  es: ["💇 Belleza y Cuidado","🍽️ Restauración","🍞 Alimentación","⚖️ Servicios profesionales","🏋️ Deporte y Ocio","🔧 Servicios técnicos","🏥 Salud y Mascotas","🏨 Comercio y Hostelería","📸 Otros servicios"],
+  it: ["💇 Bellezza & Cura","🍽️ Ristorazione","🍞 Alimentari","⚖️ Servizi professionali","🏋️ Sport & Tempo libero","🔧 Servizi tecnici","🏥 Salute & Animali","🏨 Commercio & Ospitalità","📸 Altri servizi"],
+  pt: ["💇 Beleza & Cuidados","🍽️ Restauração","🍞 Alimentação","⚖️ Serviços profissionais","🏋️ Desporto & Lazer","🔧 Serviços técnicos","🏥 Saúde & Animais","🏨 Comércio & Hotelaria","📸 Outros serviços"],
+  nl: ["💇 Schoonheid & Verzorging","🍽️ Horeca","🍞 Voeding","⚖️ Professionele diensten","🏋️ Sport & Vrije tijd","🔧 Technische diensten","🏥 Gezondheid & Huisdieren","🏨 Winkels & Horeca","📸 Overige diensten"],
+  pl: ["💇 Uroda i Pielęgnacja","🍽️ Gastronomia","🍞 Sklepy spożywcze","⚖️ Usługi profesjonalne","🏋️ Sport i Rekreacja","🔧 Usługi techniczne","🏥 Zdrowie i Zwierzęta","🏨 Handel i Hotelarstwo","📸 Inne usługi"],
+};
+const BIZ_TYPE_LABELS = {
+  fr: {salon:"Salon de coiffure",spa:"Institut de beauté / Spa",massage:"Massage / Kiné",dentist:"Dentiste",opticien:"Opticien",nailsalon:"Salon d'ongles",tattoo:"Tatoueur",restaurant:"Restaurant",cafe:"Café / Bar",pizzeria:"Pizzeria / Fast-food",bakery:"Boulangerie",butcher:"Boucherie",fishmonger:"Poissonnerie",florist:"Fleuriste",law:"Avocat",architect:"Architecte",accountant:"Expert-comptable",realtor:"Agence immobilière",training:"Centre de formation",drivingschool:"Auto-école",gym:"Salle de sport",cinema:"Cinéma / Théâtre",escapegame:"Escape Game",pool:"Piscine",garage:"Garage / Atelier",plumber:"Plombier / Électricien",cleaning:"Ménage / Nettoyage",gardener:"Jardinier",phonerepair:"Réparation téléphone / ordinateur",locksmith:"Serrurier",medical:"Cabinet médical",vet:"Vétérinaire",grooming:"Toilettage animaux",pharmacy:"Pharmacie",retail:"Commerce de détail",hotel:"Hôtel",photographer:"Photographe",laundry:"Pressing",other:"Autre"},
+  en: {salon:"Hair Salon",spa:"Beauty Salon / Spa",massage:"Massage / Physiotherapy",dentist:"Dentist",opticien:"Optician",nailsalon:"Nail Salon",tattoo:"Tattoo Artist",restaurant:"Restaurant",cafe:"Café / Bar",pizzeria:"Pizzeria / Fast Food",bakery:"Bakery",butcher:"Butcher",fishmonger:"Fishmonger",florist:"Florist",law:"Lawyer",architect:"Architect",accountant:"Accountant",realtor:"Real Estate Agency",training:"Training Center",drivingschool:"Driving School",gym:"Gym",cinema:"Cinema / Theater",escapegame:"Escape Room",pool:"Swimming Pool",garage:"Garage / Workshop",plumber:"Plumber / Electrician",cleaning:"Cleaning Service",gardener:"Gardener",phonerepair:"Phone / Computer Repair",locksmith:"Locksmith",medical:"Medical Practice",vet:"Veterinarian",grooming:"Pet Grooming",pharmacy:"Pharmacy",retail:"Retail Store",hotel:"Hotel",photographer:"Photographer",laundry:"Dry Cleaner",other:"Other"},
+  de: {salon:"Friseursalon",spa:"Beauty-Salon / Spa",massage:"Massage / Physiotherapie",dentist:"Zahnarzt",opticien:"Optiker",nailsalon:"Nagelstudio",tattoo:"Tätowierer",restaurant:"Restaurant",cafe:"Café / Bar",pizzeria:"Pizzeria / Fast Food",bakery:"Bäckerei",butcher:"Metzgerei",fishmonger:"Fischhändler",florist:"Blumenladen",law:"Rechtsanwalt",architect:"Architekt",accountant:"Steuerberater",realtor:"Immobilienagentur",training:"Bildungszentrum",drivingschool:"Fahrschule",gym:"Fitnessstudio",cinema:"Kino / Theater",escapegame:"Escape Room",pool:"Schwimmbad",garage:"Werkstatt",plumber:"Klempner / Elektriker",cleaning:"Reinigungsdienst",gardener:"Gärtner",phonerepair:"Handy-/Computerreparatur",locksmith:"Schlüsseldienst",medical:"Arztpraxis",vet:"Tierarzt",grooming:"Tierpflege",pharmacy:"Apotheke",retail:"Einzelhandel",hotel:"Hotel",photographer:"Fotograf",laundry:"Reinigung (Wäscherei)",other:"Sonstiges"},
+  es: {salon:"Peluquería",spa:"Centro de belleza / Spa",massage:"Masaje / Fisioterapia",dentist:"Dentista",opticien:"Óptica",nailsalon:"Salón de uñas",tattoo:"Tatuador",restaurant:"Restaurante",cafe:"Café / Bar",pizzeria:"Pizzería / Comida rápida",bakery:"Panadería",butcher:"Carnicería",fishmonger:"Pescadería",florist:"Floristería",law:"Abogado",architect:"Arquitecto",accountant:"Asesor contable",realtor:"Agencia inmobiliaria",training:"Centro de formación",drivingschool:"Autoescuela",gym:"Gimnasio",cinema:"Cine / Teatro",escapegame:"Escape Room",pool:"Piscina",garage:"Taller mecánico",plumber:"Fontanero / Electricista",cleaning:"Servicio de limpieza",gardener:"Jardinero",phonerepair:"Reparación de móviles / ordenadores",locksmith:"Cerrajero",medical:"Consulta médica",vet:"Veterinario",grooming:"Peluquería canina",pharmacy:"Farmacia",retail:"Comercio minorista",hotel:"Hotel",photographer:"Fotógrafo",laundry:"Tintorería",other:"Otro"},
+  it: {salon:"Salone di parrucchiere",spa:"Centro estetico / Spa",massage:"Massaggio / Fisioterapia",dentist:"Dentista",opticien:"Ottico",nailsalon:"Salone per unghie",tattoo:"Tatuatore",restaurant:"Ristorante",cafe:"Caffè / Bar",pizzeria:"Pizzeria / Fast food",bakery:"Panetteria",butcher:"Macelleria",fishmonger:"Pescheria",florist:"Fioraio",law:"Avvocato",architect:"Architetto",accountant:"Commercialista",realtor:"Agenzia immobiliare",training:"Centro di formazione",drivingschool:"Autoscuola",gym:"Palestra",cinema:"Cinema / Teatro",escapegame:"Escape Room",pool:"Piscina",garage:"Officina",plumber:"Idraulico / Elettricista",cleaning:"Servizio di pulizia",gardener:"Giardiniere",phonerepair:"Riparazione telefoni / computer",locksmith:"Fabbro",medical:"Studio medico",vet:"Veterinario",grooming:"Toelettatura animali",pharmacy:"Farmacia",retail:"Negozio al dettaglio",hotel:"Hotel",photographer:"Fotografo",laundry:"Lavanderia",other:"Altro"},
+  pt: {salon:"Salão de cabeleireiro",spa:"Instituto de beleza / Spa",massage:"Massagem / Fisioterapia",dentist:"Dentista",opticien:"Ótica",nailsalon:"Salão de manicure",tattoo:"Tatuador",restaurant:"Restaurante",cafe:"Café / Bar",pizzeria:"Pizzaria / Fast-food",bakery:"Padaria",butcher:"Talho",fishmonger:"Peixaria",florist:"Florista",law:"Advogado",architect:"Arquiteto",accountant:"Contabilista",realtor:"Agência imobiliária",training:"Centro de formação",drivingschool:"Escola de condução",gym:"Ginásio",cinema:"Cinema / Teatro",escapegame:"Escape Room",pool:"Piscina",garage:"Oficina",plumber:"Canalizador / Eletricista",cleaning:"Serviço de limpeza",gardener:"Jardineiro",phonerepair:"Reparação de telemóveis / computadores",locksmith:"Serralheiro",medical:"Consultório médico",vet:"Veterinário",grooming:"Banho e tosa",pharmacy:"Farmácia",retail:"Comércio a retalho",hotel:"Hotel",photographer:"Fotógrafo",laundry:"Lavandaria",other:"Outro"},
+  nl: {salon:"Kapsalon",spa:"Schoonheidssalon / Spa",massage:"Massage / Fysiotherapie",dentist:"Tandarts",opticien:"Opticien",nailsalon:"Nagelsalon",tattoo:"Tatoeëerder",restaurant:"Restaurant",cafe:"Café / Bar",pizzeria:"Pizzeria / Fastfood",bakery:"Bakkerij",butcher:"Slagerij",fishmonger:"Viswinkel",florist:"Bloemist",law:"Advocaat",architect:"Architect",accountant:"Accountant",realtor:"Makelaar",training:"Opleidingscentrum",drivingschool:"Rijschool",gym:"Sportschool",cinema:"Bioscoop / Theater",escapegame:"Escape Room",pool:"Zwembad",garage:"Garage / Werkplaats",plumber:"Loodgieter / Elektricien",cleaning:"Schoonmaakdienst",gardener:"Tuinman",phonerepair:"Telefoon-/computerreparatie",locksmith:"Slotenmaker",medical:"Huisartsenpraktijk",vet:"Dierenarts",grooming:"Dierenverzorging",pharmacy:"Apotheek",retail:"Detailhandel",hotel:"Hotel",photographer:"Fotograaf",laundry:"Stomerij",other:"Overig"},
+  pl: {salon:"Salon fryzjerski",spa:"Salon kosmetyczny / Spa",massage:"Masaż / Fizjoterapia",dentist:"Dentysta",opticien:"Optyk",nailsalon:"Salon paznokci",tattoo:"Tatuator",restaurant:"Restauracja",cafe:"Kawiarnia / Bar",pizzeria:"Pizzeria / Fast food",bakery:"Piekarnia",butcher:"Sklep mięsny",fishmonger:"Sklep rybny",florist:"Kwiaciarnia",law:"Prawnik",architect:"Architekt",accountant:"Księgowy",realtor:"Agencja nieruchomości",training:"Centrum szkoleniowe",drivingschool:"Szkoła jazdy",gym:"Siłownia",cinema:"Kino / Teatr",escapegame:"Escape Room",pool:"Basen",garage:"Warsztat samochodowy",plumber:"Hydraulik / Elektryk",cleaning:"Usługi sprzątające",gardener:"Ogrodnik",phonerepair:"Naprawa telefonów / komputerów",locksmith:"Ślusarz",medical:"Gabinet lekarski",vet:"Weterynarz",grooming:"Pielęgnacja zwierząt",pharmacy:"Apteka",retail:"Sklep detaliczny",hotel:"Hotel",photographer:"Fotograf",laundry:"Pralnia",other:"Inne"},
+};
+const STEP_LABEL_I18N = {
+  fr: "Étape {s} sur {t}",
+  en: "Step {s} of {t}",
+  de: "Schritt {s} von {t}",
+  es: "Paso {s} de {t}",
+  it: "Passo {s} di {t}",
+  pt: "Passo {s} de {t}",
+  nl: "Stap {s} van {t}",
+  pl: "Krok {s} z {t}",
+};
 const BIZ_TYPE_GROUPS = [
   { label: '💇 Beauté & Soins', options: [
     {id:'salon',icon:'💇',label:'Salon de coiffure'},{id:'spa',icon:'💅',label:'Institut de beauté / Spa'},
@@ -1078,13 +1109,16 @@ function loadEmailPreview() {
 function buildBizTypeSelect() {
   const sel = document.getElementById('businessTypeSelect');
   if (!sel) return;
-  BIZ_TYPE_GROUPS.forEach(group => {
+  const lang = window._obLang || 'fr';
+  const groupLabels = BIZ_GROUP_LABELS[lang] || BIZ_GROUP_LABELS.fr;
+  const typeLabels = BIZ_TYPE_LABELS[lang] || BIZ_TYPE_LABELS.fr;
+  BIZ_TYPE_GROUPS.forEach((group, gi) => {
     const og = document.createElement('optgroup');
-    og.label = group.label;
+    og.label = groupLabels[gi] || group.label;
     group.options.forEach(opt => {
       const o = document.createElement('option');
       o.value = opt.id;
-      o.textContent = opt.icon + ' ' + opt.label;
+      o.textContent = opt.icon + ' ' + (typeLabels[opt.id] || opt.label);
       og.appendChild(o);
     });
     sel.appendChild(og);
@@ -1339,7 +1373,9 @@ function obSyncToggle(cb) {
 function updateProgress(step) {
   const pct = Math.round((step/STEPS)*100);
   document.getElementById('progressBar').style.width = pct+'%';
-  document.getElementById('stepLabel').textContent = `Étape ${step} sur ${STEPS}`;
+  const _stLang = window._obLang || 'fr';
+  const _stTmpl = STEP_LABEL_I18N[_stLang] || STEP_LABEL_I18N.fr;
+  document.getElementById('stepLabel').textContent = _stTmpl.replace('{s}', step).replace('{t}', STEPS);
   document.getElementById('stepPercent').textContent = pct+'%';
 
   // Dots
