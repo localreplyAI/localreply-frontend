@@ -380,7 +380,7 @@ async function loadCurrentPlan(){
   }
   try {
     const sub=await apiRequest(`/api/billing/subscription/${userId}`);
-    const plan=sub.plan||'trial';
+    const plan=sub.plan||'trial';abCurrentPlan=plan;
     const status=sub.status||'active';
     const isCancelling=!!sub.cancel_at_period_end;
     const _at2=(_abt||DASH_AB_T.fr);
@@ -406,6 +406,7 @@ function updatePlanButtons(plan){
 }
 
 let abCurrentBilling='monthly';
+let abCurrentPlan=null;
 function abSetBilling(type){
   abCurrentBilling=type;
   const on='padding:7px 16px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#0052CC,#00D4FF);color:#fff;';
@@ -421,9 +422,23 @@ function abSetBilling(type){
   }
 }
 
+const CHANGE_PLAN_MSGS={fr:{changing:'\u23f3 Changement en cours...',done:'\u2705 Plan mis \u00e0 jour avec facturation au prorata'},en:{changing:'\u23f3 Changing plan...',done:'\u2705 Plan updated with prorated billing'},de:{changing:'\u23f3 Wird ge\u00e4ndert...',done:'\u2705 Plan aktualisiert (anteilige Abrechnung)'},es:{changing:'\u23f3 Cambiando de plan...',done:'\u2705 Plan actualizado con facturaci\u00f3n prorrateada'},it:{changing:'\u23f3 Cambio in corso...',done:'\u2705 Piano aggiornato con fatturazione proporzionale'},pt:{changing:'\u23f3 A alterar plano...',done:'\u2705 Plano atualizado com fatura\u00e7\u00e3o proporcional'},nl:{changing:'\u23f3 Wijzigen...',done:'\u2705 Plan bijgewerkt met evenredige facturering'},pl:{changing:'\u23f3 Zmiana planu...',done:'\u2705 Plan zaktualizowany z rozliczeniem proporcjonalnym'}};
 async function subscribe(plan){
   const btn=document.getElementById(plan==='standard'?'btnStandard':'btnPro');
-  const orig=btn.textContent;btn.disabled=true;btn.textContent=(_abt||DASH_AB_T.fr).ab_redirecting||'⏳ Redirection...';
+  const orig=btn.textContent;btn.disabled=true;
+  const _lang5=localStorage.getItem('lr_lang')||(navigator.language||'fr').substring(0,2).toLowerCase();
+  const _cpm=CHANGE_PLAN_MSGS[_lang5]||CHANGE_PLAN_MSGS.fr;
+  const isChange=(abCurrentPlan==='standard'||abCurrentPlan==='pro')&&abCurrentPlan!==plan;
+  if(isChange){
+    btn.textContent=_cpm.changing;
+    try {
+      await apiRequest('/api/billing/change-plan','POST',{user_id:parseInt(userId),new_plan:plan,billing:abCurrentBilling});
+      showToast(_cpm.done,'success');
+      await loadCurrentPlan();
+    } catch(e){showToast((_abt||DASH_AB_T.fr).err_redirect,'error');btn.disabled=false;btn.textContent=orig;}
+    return;
+  }
+  btn.textContent=(_abt||DASH_AB_T.fr).ab_redirecting||'\u23f3 Redirection...';
   try {
     const data=await apiRequest('/api/billing/create-checkout-session','POST',{user_id:parseInt(userId),plan,billing:abCurrentBilling,is_new_account:isNewSignup});
     if(data.checkout_url){ window.location.href = data.checkout_url; }
