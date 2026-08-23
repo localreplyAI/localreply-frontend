@@ -672,13 +672,27 @@ async function loadSidebarInfo() {
     if (sn && biz.name) sn.textContent = biz.name;
 
     const sp = document.getElementById('sidebarPlan');
+    const plan = sub?.plan || 'standard';
+    const status = sub?.status || '';
+    const _mt = (_mct||DASH_MC_T.fr);
     if (sp) {
-      const plan = sub?.plan || 'standard';
-      const status = sub?.status || '';
-      const _mt = (_mct||DASH_MC_T.fr);
       if (status === 'trialing') sp.textContent = (_mt.mc_trial_status||'🎁 Essai gratuit — ') + (plan === 'pro' ? (_mt.mc_plan_pro_short||'Pro') : (_mt.plan_std||'Standard'));
       else if (plan === 'pro') sp.textContent = _mt.mc_plan_pro_full||'⭐ Plan Pro';
       else sp.textContent = '📦 ' + ((_mct||DASH_MC_T.fr).plan_std||'Plan Standard');
+    }
+
+    const pb = document.getElementById('planBadge');
+    if (pb) {
+      if (status === 'trialing') {
+        pb.textContent = (_mt.mc_trial_status||'🎁 Essai gratuit');
+        pb.style.background = 'rgba(0,212,255,0.1)'; pb.style.borderColor = 'rgba(0,212,255,0.3)'; pb.style.color = '#00D4FF';
+      } else if (plan === 'pro') {
+        pb.textContent = _mt.mc_plan_pro_full||'⭐ Plan Pro';
+        pb.style.background = 'rgba(245,158,11,0.1)'; pb.style.borderColor = 'rgba(245,158,11,0.3)'; pb.style.color = '#F59E0B';
+      } else {
+        pb.textContent = '📦 ' + (_mt.plan_std||'Plan Standard');
+        pb.style.background = 'rgba(0,212,255,0.1)'; pb.style.borderColor = 'rgba(0,212,255,0.3)'; pb.style.color = '#00D4FF';
+      }
     }
 
     const slWrap = document.getElementById('sidebarLogoWrap');
