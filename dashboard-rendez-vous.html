@@ -27,7 +27,7 @@
     const sub = await r.json();
     const plan = sub.plan || 'none';
     const status = sub.status || 'inactive';
-    const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
+    const blocked = plan === 'none' || status === 'inactive' || status === 'cancelled' || status === 'past_due';
     if (blocked) window.location.href = '/choisir-plan';
   } catch(e) {}
 })();
