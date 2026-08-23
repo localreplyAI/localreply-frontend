@@ -538,6 +538,7 @@ window.submitBooking = async function() {
       renderStep2();
       return;
     }
+    if (r.status === 403 && d.error === 'service_unavailable') { const SU_MSGS = {fr:'Ce service est temporairement indisponible. Merci de nous contacter directement.',en:'This service is temporarily unavailable. Please contact us directly.',de:'Dieser Service ist vorübergehend nicht verfügbar. Bitte kontaktieren Sie uns direkt.',es:'Este servicio no está disponible temporalmente. Por favor, contáctenos directamente.',it:'Questo servizio è temporaneamente non disponibile. Vi preghiamo di contattarci direttamente.',pt:'Este serviço está temporariamente indisponível. Por favor, contacte-nos diretamente.',nl:'Deze dienst is tijdelijk niet beschikbaar. Neem rechtstreeks contact met ons op.',pl:'Ta usługa jest tymczasowo niedostępna. Prosimy o bezpośredni kontakt.'}; alert(SU_MSGS[lang] || SU_MSGS.fr); btn.disabled = false; btn.textContent = t('confirm'); return; }
     if (!r.ok) {
       alert(t('errorGeneric'));
       btn.disabled = false;
