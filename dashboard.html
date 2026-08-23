@@ -1244,7 +1244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const status = subData.status || 'inactive';
     const validPlans = ['standard','pro','trialing'];
     // none/inactive = pas encore d'abonnement Stripe → forcer choix plan
-    const isBlocked = plan === 'none' || status === 'inactive' || status === 'cancelled';
+    const isBlocked = plan === 'none' || status === 'inactive' || status === 'cancelled' || status === 'past_due';
     if (isBlocked) {
       const isNew = plan === 'none' || status === 'inactive';
       document.getElementById('mainContent').innerHTML = `
