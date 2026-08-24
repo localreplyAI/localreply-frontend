@@ -150,7 +150,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
         </div>
 
         <!-- CTA -->
-        <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div id="lr-top-cta" style="display:flex;align-items:center;gap:10px;">
           ${_isAppPage ? '' : (isLoggedIn ? `
             <a href="${withLang('/dashboard')}" style="
               padding:9px 18px;background:linear-gradient(135deg,#0052CC,#00D4FF);
@@ -182,6 +182,7 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             </a>
           `)}
 
+          </div>
           <!-- Sélecteur de langue -->
           <div id="lr-lang-wrap" style="position:relative;">
             <button id="lr-lang-btn" onclick="lrToggleLangMenu()" style="
@@ -257,12 +258,15 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   function lrCheckResponsive() {
     const burger = document.getElementById('lr-burger');
     const links = document.getElementById('lr-nav-links');
+    const topCta = document.getElementById('lr-top-cta');
     if (window.innerWidth < 768) {
       if (burger) burger.style.display = 'block';
       if (links) links.style.display = 'none';
+      if (topCta) topCta.style.display = 'none';
     } else {
       if (burger) burger.style.display = 'none';
       if (links) links.style.display = 'flex';
+      if (topCta) topCta.style.display = 'flex';
       const menu = document.getElementById('lr-mobile-menu');
       if (menu) menu.style.display = 'none';
     }
