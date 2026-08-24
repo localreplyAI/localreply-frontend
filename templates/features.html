@@ -366,52 +366,71 @@
               <div class="lrf-chat-ai-name" data-i18n="f_mock_ai_name">{{f_mock_ai_name}}</div>
               <div class="lrf-chat-msg lrf-chat-ai" data-i18n="f_mock_rdv_a1">{{f_mock_rdv_a1}}</div>
             </div>
-            <!-- Calendrier visuel style dark coherent -->
-            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:14px;padding:14px;">
-              <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:12px;" data-i18n="f_rdv_form_title">{{f_rdv_form_title}}</div>
-              <div style="display:flex;flex-direction:column;gap:10px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px;">
-                  <span style="color:rgba(255,255,255,0.3);font-size:13px;">&lsaquo;</span>
-                  <span style="font-size:12.5px;font-weight:600;color:#fff;">May 2026</span>
-                  <span style="color:rgba(255,255,255,0.3);font-size:13px;">&rsaquo;</span>
-                </div>
-                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;">
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">M</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">T</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">W</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">T</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">F</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">S</span>
-                  <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">S</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">27</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">28</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">29</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">30</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">1</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">2</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">3</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">4</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">5</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">6</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">7</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">8</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">9</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">10</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">11</span>
-                  <span style="background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:50%;font-size:11.5px;color:#fff;font-weight:700;padding:5px 0;">12</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">13</span>
-                  <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">14</span>
-                </div>
-                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;">
-                  <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">09:00</span>
-                  <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">10:30</span>
-                  <span style="padding:6px 10px;border-radius:8px;background:linear-gradient(135deg,#0052CC,#00D4FF);font-size:11px;color:#fff;font-weight:700;">12:30</span>
-                  <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">14:00</span>
-                  <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">16:00</span>
-                </div>
-                <div style="padding:10px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-align:center;margin-top:2px;" data-i18n="f_rdv_form_confirm">{{f_rdv_form_confirm}}</div>
+            <!-- Indicateur : ceci ouvre une page separee, pas un affichage inline dans le chat -->
+            <div style="display:flex;align-items:center;gap:8px;margin:2px 0;">
+              <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+              <span style="font-size:10px;color:rgba(255,255,255,0.35);white-space:nowrap;" data-i18n="f_rdv_redirect_note">{{f_rdv_redirect_note}}</span>
+              <div style="flex:1;height:1px;background:rgba(255,255,255,0.1);"></div>
+            </div>
+            <!-- Fenetre navigateur simulee = page de reservation dediee (rdv.html) -->
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(0,212,255,0.25);border-radius:14px;overflow:hidden;">
+              <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);">
+                <span style="width:7px;height:7px;border-radius:50%;background:#EF4444;display:inline-block;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#F59E0B;display:inline-block;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#10B981;display:inline-block;"></span>
+                <span style="margin-left:8px;font-size:10px;color:rgba(255,255,255,0.35);">rdv.uselocalreply.com/salon</span>
               </div>
-              <div style="font-size:10.5px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;" data-i18n="f_rdv_form_footer">{{f_rdv_form_footer}}</div>
+              <div style="padding:14px;">
+                <div style="font-size:12px;font-weight:700;color:#00D4FF;margin-bottom:10px;" data-i18n="f_rdv_form_title">{{f_rdv_form_title}}</div>
+                <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;">
+                  <span style="padding:5px 10px;border-radius:20px;background:linear-gradient(135deg,#0052CC,#00D4FF);font-size:10.5px;color:#fff;font-weight:700;white-space:nowrap;">👩 Marie</span>
+                  <span style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:10.5px;color:rgba(255,255,255,0.45);white-space:nowrap;">👨 Thomas</span>
+                  <span style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:10.5px;color:rgba(255,255,255,0.45);white-space:nowrap;">👩 Julie</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px;">
+                    <span style="color:rgba(255,255,255,0.3);font-size:13px;">&lsaquo;</span>
+                    <span style="font-size:12.5px;font-weight:600;color:#fff;">May 2026</span>
+                    <span style="color:rgba(255,255,255,0.3);font-size:13px;">&rsaquo;</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;">
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">M</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">T</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">W</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">T</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">F</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">S</span>
+                    <span style="font-size:9.5px;color:rgba(255,255,255,0.3);">S</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">27</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">28</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">29</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.2);padding:5px 0;">30</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">1</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">2</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">3</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">4</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">5</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">6</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">7</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">8</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">9</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">10</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">11</span>
+                    <span style="background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:50%;font-size:11.5px;color:#fff;font-weight:700;padding:5px 0;">12</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">13</span>
+                    <span style="font-size:11.5px;color:rgba(255,255,255,0.55);padding:5px 0;">14</span>
+                  </div>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;">
+                    <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">09:00</span>
+                    <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">10:30</span>
+                    <span style="padding:6px 10px;border-radius:8px;background:linear-gradient(135deg,#0052CC,#00D4FF);font-size:11px;color:#fff;font-weight:700;">12:30</span>
+                    <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">14:00</span>
+                    <span style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);font-size:11px;color:rgba(255,255,255,0.4);">16:00</span>
+                  </div>
+                  <div style="padding:10px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:9px;color:#fff;font-size:13px;font-weight:700;text-align:center;margin-top:2px;" data-i18n="f_rdv_form_confirm">{{f_rdv_form_confirm}}</div>
+                </div>
+                <div style="font-size:10.5px;color:rgba(255,255,255,0.25);text-align:center;margin-top:10px;" data-i18n="f_rdv_form_footer">{{f_rdv_form_footer}}</div>
+              </div>
             </div>
           </div>
         </div>
@@ -424,6 +443,7 @@
             <li><span>✓</span> <span data-i18n="f_rdv_li2">{{f_rdv_li2}}</span></li>
             <li><span>✓</span> <span data-i18n="f_rdv_li3">{{f_rdv_li3}}</span></li>
             <li><span>✓</span> <span data-i18n="f_rdv_li4">{{f_rdv_li4}}</span></li>
+            <li><span>✓</span> <span data-i18n="f_rdv_li5">{{f_rdv_li5}}</span></li>
           </ul>
         </div>
       </div>
