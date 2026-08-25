@@ -1361,6 +1361,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     return;
   }
   loadSidebarInfo(); 
+
+  // Badges navigation
+  try {
+    const [questions, apts] = await Promise.all([
+      apiRequest(`/api/business/${businessId}/unknown-questions?status=pending`).catch(()=>({questions:[]})),
+      apiRequest(`/api/appointments/?business_id=${businessId}`).catch(()=>[])
+    ]);
+    const msgCount = questions?.questions?.length || 0;
+    const rdvCount = Array.isArray(apts) ? apts.filter(a=>a.status==='pending').length : 0;
+    function setNavBadge(count, ...ids) { ids.forEach(id=>{ const el=document.getElementById(id); if(!el)return; if(count>0){el.textContent=count>9?'9+':count;el.style.display='flex';}else el.style.display='none'; }); }
+    setNavBadge(msgCount, 'sbBadgeMsg', 'bnBadgeMsg');
+    setNavBadge(rdvCount, 'sbBadgeRdv', 'bnBadgeRdv');
+  } catch {}
   
   // Vérifier si on revient de l'OAuth Google ou d'une confirmation email
   const urlParams = new URLSearchParams(window.location.search);
