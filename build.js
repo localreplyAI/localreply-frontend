@@ -25,6 +25,21 @@ const LOCALES_DIR = path.join(ROOT, 'locales');
 const DEFAULT_LANG = 'en';
 const LANGS = ['en', 'fr', 'de', 'it', 'es', 'pt', 'nl', 'pl'];
 
+// ── SEO: canonical/hreflang/Open Graph config ──
+const SITE_URL = 'https://uselocalreply.com';
+
+const OG_LOCALE = {
+  en: 'en_US', fr: 'fr_FR', de: 'de_DE', it: 'it_IT',
+  es: 'es_ES', pt: 'pt_PT', nl: 'nl_NL', pl: 'pl_PL',
+};
+
+// URL slug per page, matching vercel.json's rewrites. Home has no slug.
+const PAGE_SLUGS = {
+  home: '', about: 'about', blog: 'blog', contact: 'contact',
+  features: 'features', gdpr: 'gdpr', pricing: 'pricing',
+  privacy: 'privacy', terms: 'terms',
+};
+
 // Files/dirs at repo root that must never be copied into dist.
 const EXCLUDE = new Set([
   'dist', 'templates', 'locales', 'build.js', 'node_modules',
@@ -59,6 +74,62 @@ function readJsonSafe(p) {
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
 
+function escapeAttr(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// Absolute URL for a given language + page, matching vercel.json's rewrite scheme:
+// default lang has no /lang prefix, home has no slug segment.
+function pageUrl(lang, page) {
+  const slug = Object.prototype.hasOwnProperty.call(PAGE_SLUGS, page) ? PAGE_SLUGS[page] : page;
+  const langPrefix = lang === DEFAULT_LANG ? '' : `/${lang}`;
+  const pagePath = slug ? `/${slug}` : '';
+  return `${SITE_URL}${langPrefix}${pagePath}`;
+}
+
+function canonicalTag(lang, page) {
+  return `<link rel="canonical" href="${pageUrl(lang, page)}">`;
+}
+
+// hreflang alternates for every supported language + x-default, for one page.
+function hreflangBlock(page) {
+  const links = LANGS.map(
+    lang => `  <link rel="alternate" hreflang="${lang}" href="${pageUrl(lang, page)}">`
+  );
+  links.push(`  <link rel="alternate" hreflang="x-default" href="${pageUrl(DEFAULT_LANG, page)}">`);
+  return links.join('\n');
+}
+
+// Open Graph + Twitter Card tags for one page/language.
+function ogTags(lang, page, title) {
+  const safeTitle = escapeAttr(title || 'LocalReply');
+  const url = pageUrl(lang, page);
+  const locale = OG_LOCALE[lang] || 'en_US';
+  const altLocales = LANGS
+    .filter(l => l !== lang)
+    .map(l => `  <meta property="og:locale:alternate" content="${OG_LOCALE[l] || 'en_US'}">`)
+    .join('\n');
+
+  return [
+    `<meta property="og:type" content="website">`,
+    `<meta property="og:title" content="${safeTitle}">`,
+    `<meta property="og:description" content="${safeTitle}">`,
+    `<meta property="og:url" content="${url}">`,
+    `<meta property="og:site_name" content="LocalReply">`,
+    `<meta property="og:image" content="${SITE_URL}/logo.png">`,
+    `<meta property="og:locale" content="${locale}">`,
+    altLocales,
+    `<meta name="twitter:card" content="summary">`,
+    `<meta name="twitter:title" content="${safeTitle}">`,
+    `<meta name="twitter:description" content="${safeTitle}">`,
+    `<meta name="twitter:image" content="${SITE_URL}/logo.png">`,
+  ].join('\n  ');
+}
+
 function render(template, data) {
   const missing = [];
   const out = template.replace(/\{\{([a-zA-Z0-9_]+)\}\}/g, (m, key) => {
@@ -67,6 +138,23 @@ function render(template, data) {
     return m; // leave placeholder visible so it's obvious in a preview
   });
   return { out, missing };
+}
+
+function generateSitemap(pages) {
+  const urlEntries = [];
+  for (const page of pages) {
+    for (const lang of LANGS) {
+      const loc = pageUrl(lang, page);
+      const altLinks = LANGS
+        .map(l => `    <xhtml:link rel="alternate" hreflang="${l}" href="${pageUrl(l, page)}"/>`)
+        .join('\n');
+      const xDefault = `    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(DEFAULT_LANG, page)}"/>`;
+      urlEntries.push(
+        `  <url>\n    <loc>${loc}</loc>\n${altLinks}\n${xDefault}\n  </url>`
+      );
+    }
+  }
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urlEntries.join('\n')}\n</urlset>\n`;
 }
 
 function main() {
@@ -87,14 +175,19 @@ function main() {
 
   const templateFiles = fs.readdirSync(TEMPLATES_DIR).filter(f => f.endsWith('.html'));
   let totalMissing = 0;
+  const renderedPages = [];
 
   for (const file of templateFiles) {
     const page = file.replace(/\.html$/, '');
+    renderedPages.push(page);
     const templateSrc = fs.readFileSync(path.join(TEMPLATES_DIR, file), 'utf8');
     console.log(`→ Rendering ${file} for ${LANGS.length} languages`);
 
     for (const lang of LANGS) {
       const data = loadLocale(lang, page);
+      data.seo_canonical = canonicalTag(lang, page);
+      data.seo_hreflang = hreflangBlock(page);
+      data.seo_og = ogTags(lang, page, data.meta_title);
       const { out, missing } = render(templateSrc, data);
 
       if (missing.length) {
@@ -110,6 +203,9 @@ function main() {
       fs.writeFileSync(outPath, out, 'utf8');
     }
   }
+
+  console.log('→ Writing sitemap.xml');
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'), generateSitemap(renderedPages), 'utf8');
 
   if (totalMissing > 0) {
     console.warn(`\n⚠ Build finished with ${totalMissing} missing translation key(s) — see warnings above.`);
