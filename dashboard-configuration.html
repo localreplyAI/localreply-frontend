@@ -282,12 +282,15 @@
       <!-- ═══ ONGLET HORAIRES ═══ -->
       <div id="panel-horaires" class="cfg-panel" style="display:none;">
         <div class="cfg-card">
-          <div class="cfg-card-header">
-            <div class="cfg-card-icon">⏰</div>
-            <div>
-              <h2 class="cfg-card-title" id="cfg-title-hours">Horaires d'ouverture</h2>
-              <p class="cfg-card-sub">L'IA utilisera ces horaires pour répondre aux clients</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+            <div class="cfg-card-header" style="margin-bottom:0;">
+              <div class="cfg-card-icon">⏰</div>
+              <div>
+                <h2 class="cfg-card-title" id="cfg-title-hours">Horaires d'ouverture</h2>
+                <p class="cfg-card-sub">L'IA utilisera ces horaires pour répondre aux clients</p>
+              </div>
             </div>
+            <button onclick="loadHoursTemplate()" style="padding:10px 18px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;" id="cfg-tpl-hours-btn">📋 Utiliser un modèle</button>
           </div>
           <!-- Labels colonnes -->
           <div style="display:grid;grid-template-columns:110px 1fr 1fr 90px;gap:10px;padding:0 4px 10px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:8px;">
@@ -371,6 +374,7 @@
                 <p id="cfg-services-sub" class="cfg-card-sub">L'IA connaîtra vos prestations et pourra les recommander</p>
               </div>
             </div>
+            <button onclick="loadServicesTemplate()" style="padding:10px 18px;background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);border-radius:10px;color:#00D4FF;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;" id="cfg-tpl-services-btn">📋 Utiliser un modèle</button>
             <button onclick="addService()" style="padding:10px 18px;background:linear-gradient(135deg,#10B981,#059669);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(16,185,129,0.3);" id="cfg-add-service-btn">➕ Ajouter</button>
           </div>
           <div id="cfg-services-multi-note" style="padding:10px 14px;background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.12);border-radius:8px;font-size:13px;color:rgba(255,255,255,0.55);margin-bottom:16px;line-height:1.6;">
@@ -751,6 +755,175 @@ const businessConfigs = {
   'phonerepair':{'type':'service','icon':'📱'},'locksmith':{'type':'service','icon':'🔑'},'pharmacy':{'type':'product','icon':'💊'}
 };
 
+const CFG_TEMPLATES = {
+  // ── Beauté & Soins ──
+  salon: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,20],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Coupe homme',price:25,duration:30},{name:'Coupe femme',price:35,duration:45},{name:'Coloration',price:65,duration:90},{name:'Mèches',price:85,duration:120}]
+  },
+  spa: {
+    hours: {lun:null,mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,20],sam:[9,19],dim:[10,17]},
+    services: [{name:'Soin visage',price:55,duration:60},{name:'Massage relaxant',price:65,duration:60},{name:'Épilation jambes',price:35,duration:45},{name:'Manucure',price:30,duration:45}]
+  },
+  massage: {
+    hours: {lun:[9,19],mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,19],sam:[9,17],dim:null},
+    services: [{name:'Massage relaxant',price:60,duration:60},{name:'Massage sportif',price:70,duration:60},{name:'Séance kiné',price:50,duration:30},{name:'Réflexologie',price:55,duration:45}]
+  },
+  dentist: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,13],jeu:[8,18],ven:[8,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Détartrage',price:80,duration:45},{name:'Extraction',price:120,duration:45},{name:'Blanchiment',price:250,duration:90}]
+  },
+  opticien: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Examen de vue',price:40,duration:30},{name:'Adaptation lentilles',price:60,duration:45},{name:'Montage lunettes',price:0,duration:30}]
+  },
+  // ── Restauration ──
+  restaurant: {
+    hours: {lun:null,mar:[12,22],mer:[12,22],jeu:[12,22],ven:[12,23],sam:[11,23],dim:[11,21]},
+    services: [{name:'Déjeuner',price:18,duration:60},{name:'Dîner',price:28,duration:90},{name:'Brunch weekend',price:22,duration:90}]
+  },
+  cafe: {
+    hours: {lun:[7,19],mar:[7,19],mer:[7,19],jeu:[7,19],ven:[7,20],sam:[8,20],dim:[9,18]},
+    services: [{name:'Café & boissons',price:3,duration:15},{name:'Formule petit-déjeuner',price:9,duration:30},{name:'Formule déjeuner',price:14,duration:45}]
+  },
+  pizzeria: {
+    hours: {lun:null,mar:[11,22],mer:[11,22],jeu:[11,22],ven:[11,23],sam:[11,23],dim:[11,22]},
+    services: [{name:'Pizza classique',price:13,duration:20},{name:'Pizza spéciale',price:16,duration:20},{name:'Formule midi',price:11,duration:30},{name:'Livraison',price:2,duration:30}]
+  },
+  // ── Alimentation ──
+  bakery: {
+    hours: {lun:null,mar:[6,19],mer:[6,19],jeu:[6,19],ven:[6,19],sam:[6,18],dim:[6,13]},
+    services: [{name:'Pain tradition',price:1.3,duration:5},{name:'Viennoiseries',price:1.5,duration:5},{name:'Commande gâteau',price:35,duration:0},{name:'Commande spéciale',price:0,duration:0}]
+  },
+  butcher: {
+    hours: {lun:null,mar:[7,13],mer:[7,19],jeu:[7,13],ven:[7,19],sam:[7,18],dim:[7,12]},
+    services: [{name:'Bœuf',price:0,duration:10},{name:'Veau',price:0,duration:10},{name:'Agneau',price:0,duration:10},{name:'Commande traiteur',price:0,duration:0}]
+  },
+  fishmonger: {
+    hours: {lun:null,mar:[7,13],mer:[7,13],jeu:[7,13],ven:[7,19],sam:[7,18],dim:[7,12]},
+    services: [{name:'Poissons frais',price:0,duration:10},{name:'Fruits de mer',price:0,duration:10},{name:'Plateau fruits de mer',price:45,duration:0}]
+  },
+  florist: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,19],sam:[9,18],dim:[9,13]},
+    services: [{name:'Bouquet sur mesure',price:25,duration:20},{name:'Composition florale',price:45,duration:30},{name:'Bouquet mariage',price:120,duration:60},{name:'Livraison',price:8,duration:30}]
+  },
+  // ── Services professionnels ──
+  law: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation juridique',price:150,duration:60},{name:'Rédaction contrat',price:300,duration:120},{name:'Consultation téléphonique',price:80,duration:30}]
+  },
+  architect: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation projet',price:150,duration:60},{name:'Étude de faisabilité',price:500,duration:0},{name:'Suivi de chantier',price:0,duration:0}]
+  },
+  accountant: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:120,duration:60},{name:'Déclaration fiscale',price:200,duration:0},{name:'Bilan annuel',price:800,duration:0}]
+  },
+  realtor: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Estimation bien',price:0,duration:60},{name:'Visite appartement',price:0,duration:60},{name:'Visite maison',price:0,duration:90}]
+  },
+  training: {
+    hours: {lun:[8,20],mar:[8,20],mer:[8,20],jeu:[8,20],ven:[8,18],sam:[9,17],dim:null},
+    services: [{name:'Formation individuelle',price:80,duration:60},{name:'Formation groupe',price:40,duration:120},{name:'Cours en ligne',price:30,duration:60}]
+  },
+  // ── Sport & Loisirs ──
+  gym: {
+    hours: {lun:[6,22],mar:[6,22],mer:[6,22],jeu:[6,22],ven:[6,21],sam:[8,18],dim:[9,17]},
+    services: [{name:'Cours collectif',price:12,duration:60},{name:'Coaching personnel',price:60,duration:60},{name:'Abonnement mensuel',price:39,duration:0}]
+  },
+  cinema: {
+    hours: {lun:[13,23],mar:[13,23],mer:[10,23],jeu:[13,23],ven:[13,0],sam:[10,0],dim:[10,22]},
+    services: [{name:'Séance standard',price:12,duration:120},{name:'Séance 3D',price:15,duration:120},{name:'Tarif réduit',price:9,duration:120}]
+  },
+  escapegame: {
+    hours: {lun:null,mar:[14,22],mer:[14,22],jeu:[14,22],ven:[14,23],sam:[10,23],dim:[10,20]},
+    services: [{name:'Salle 2-3 joueurs',price:25,duration:60},{name:'Salle 4-5 joueurs',price:22,duration:60},{name:'Salle 6 joueurs',price:20,duration:60}]
+  },
+  pool: {
+    hours: {lun:[7,21],mar:[7,21],mer:[7,21],jeu:[7,21],ven:[7,21],sam:[8,19],dim:[8,18]},
+    services: [{name:'Entrée adulte',price:5,duration:90},{name:'Entrée enfant',price:3,duration:90},{name:'Cours natation adulte',price:35,duration:45},{name:'Cours natation enfant',price:30,duration:30}]
+  },
+  // ── Services techniques ──
+  garage: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[8,12],dim:null},
+    services: [{name:'Vidange',price:60,duration:60},{name:'Révision complète',price:180,duration:180},{name:'Contrôle technique',price:80,duration:60},{name:'Remplacement pneus',price:40,duration:60}]
+  },
+  plumber: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[9,13],dim:null},
+    services: [{name:'Dépannage urgent',price:80,duration:60},{name:'Installation robinet',price:120,duration:90},{name:'Débouchage',price:90,duration:60},{name:'Devis gratuit',price:0,duration:30}]
+  },
+  cleaning: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[9,14],dim:null},
+    services: [{name:'Ménage domicile',price:25,duration:120},{name:'Nettoyage fin de bail',price:200,duration:240},{name:'Vitres',price:60,duration:90},{name:'Devis gratuit',price:0,duration:30}]
+  },
+  gardener: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,17],sam:[8,13],dim:null},
+    services: [{name:'Tonte pelouse',price:40,duration:60},{name:'Taille haies',price:55,duration:90},{name:'Entretien jardin',price:35,duration:60},{name:'Dévis gratuit',price:0,duration:30}]
+  },
+  // ── Santé & Animaux ──
+  medical: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,13],jeu:[8,18],ven:[8,17],sam:null,dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Consultation spécialisée',price:80,duration:45},{name:'Renouvellement ordonnance',price:30,duration:15}]
+  },
+  vet: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,13],jeu:[8,19],ven:[8,18],sam:[9,13],dim:null},
+    services: [{name:'Consultation',price:50,duration:30},{name:'Vaccination',price:60,duration:20},{name:'Bilan de santé',price:80,duration:45},{name:'Urgence',price:90,duration:30}]
+  },
+  grooming: {
+    hours: {lun:null,mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,17],dim:null},
+    services: [{name:'Toilettage petit chien',price:35,duration:60},{name:'Toilettage grand chien',price:55,duration:90},{name:'Bain + séchage',price:25,duration:45},{name:'Coupe ongles',price:10,duration:15}]
+  },
+  // ── Commerce & Hébergement ──
+  retail: {
+    hours: {lun:[10,19],mar:[10,19],mer:[10,19],jeu:[10,19],ven:[10,19],sam:[10,18],dim:null},
+    services: [{name:'Conseil personnalisé',price:0,duration:30},{name:'Commande sur mesure',price:0,duration:0},{name:'Click & Collect',price:0,duration:15}]
+  },
+  hotel: {
+    hours: {lun:[0,24],mar:[0,24],mer:[0,24],jeu:[0,24],ven:[0,24],sam:[0,24],dim:[0,24]},
+    services: [{name:'Chambre simple',price:89,duration:1440},{name:'Chambre double',price:119,duration:1440},{name:'Suite',price:189,duration:1440},{name:'Petit-déjeuner',price:15,duration:60}]
+  },
+  // ── Autres services ──
+  photographer: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:[9,18],dim:null},
+    services: [{name:'Portrait studio',price:120,duration:60},{name:'Reportage événement',price:400,duration:240},{name:'Séance famille',price:180,duration:90},{name:'Photos produits',price:200,duration:120}]
+  },
+  laundry: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[9,18],dim:null},
+    services: [{name:'Nettoyage costume',price:15,duration:0},{name:'Nettoyage robe',price:20,duration:0},{name:'Repassage chemise',price:5,duration:0},{name:'Pressing express',price:25,duration:0}]
+  },
+  tattoo: {
+    hours: {lun:null,mar:[11,19],mer:[11,19],jeu:[11,19],ven:[11,19],sam:[11,19],dim:null},
+    services: [{name:'Petit tatouage',price:60,duration:60},{name:'Tatouage moyen',price:150,duration:120},{name:'Grand tatouage / pièce',price:300,duration:240},{name:'Retouche',price:40,duration:30}]
+  },
+  drivingschool: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[8,12],dim:null},
+    services: [{name:'Leçon de conduite',price:45,duration:60},{name:'Leçon de perfectionnement',price:50,duration:60},{name:'Forfait 20h de conduite',price:850,duration:0},{name:'Forfait code de la route',price:150,duration:0}]
+  },
+  phonerepair: {
+    hours: {lun:[10,19],mar:[10,19],mer:[10,19],jeu:[10,19],ven:[10,19],sam:[10,18],dim:null},
+    services: [{name:'Remplacement écran',price:89,duration:45},{name:'Changement batterie',price:49,duration:30},{name:'Diagnostic gratuit',price:0,duration:15},{name:'Récupération de données',price:60,duration:90}]
+  },
+  pharmacy: {
+    hours: {lun:[8,19],mar:[8,19],mer:[8,19],jeu:[8,19],ven:[8,19],sam:[9,18],dim:null},
+    services: [{name:'Conseil pharmaceutique',price:0,duration:15},{name:'Test antigénique',price:15,duration:15},{name:'Vaccination grippe',price:0,duration:15}]
+  },
+  locksmith: {
+    hours: {lun:[8,18],mar:[8,18],mer:[8,18],jeu:[8,18],ven:[8,18],sam:[9,13],dim:null},
+    services: [{name:'Ouverture de porte',price:90,duration:30},{name:'Changement de serrure',price:120,duration:60},{name:'Double de clés',price:15,duration:10},{name:'Dépannage urgence',price:150,duration:45}]
+  },
+  nailsalon: {
+    hours: {lun:null,mar:[9,19],mer:[9,19],jeu:[9,19],ven:[9,19],sam:[9,18],dim:null},
+    services: [{name:'Manucure classique',price:25,duration:30},{name:'Pose gel',price:45,duration:60},{name:'Pédicure',price:35,duration:45},{name:'Nail art (par ongle)',price:5,duration:10}]
+  },
+  default: {
+    hours: {lun:[9,18],mar:[9,18],mer:[9,18],jeu:[9,18],ven:[9,18],sam:null,dim:null},
+    services: [{name:'Service principal',price:0,duration:60}]
+  }
+}
+
+
 // ── TEMPLATES FAQ PAR GROUPE DE MÉTIER ──
 const FAQ_GROUPS = {
   salon:'beaute', spa:'beaute', massage:'beaute', grooming:'beaute', nailsalon:'beaute', tattoo:'beaute',
@@ -912,6 +1085,42 @@ function toggleHours(checkbox) {
     input.disabled = checkbox.checked;
     input.style.opacity = checkbox.checked ? '0.35' : '1';
   });
+}
+
+function loadHoursTemplate() {
+  const val = document.getElementById('businessType').value;
+  const tpl = CFG_TEMPLATES[val] || CFG_TEMPLATES.default;
+  if (!tpl) { showNotification('Aucun modèle disponible pour ce type de commerce', 'error'); return; }
+  const label = document.getElementById('businessType').selectedOptions[0].textContent.trim();
+  if (!confirm(`Charger les horaires par défaut du modèle "${label}" ? Cela remplacera vos horaires actuels.`)) return;
+  const dayOrder = ['lun','mar','mer','jeu','ven','sam','dim'];
+  const rows = document.querySelectorAll('.hours-row');
+  rows.forEach((row, i) => {
+    const d = tpl.hours[dayOrder[i]];
+    const times = row.querySelectorAll('.time-input');
+    const cb = row.querySelector('.closed-checkbox');
+    if (!d) {
+      cb.checked = true;
+      times[0].value = '09:00'; times[1].value = '18:00';
+    } else {
+      cb.checked = false;
+      times[0].value = String(d[0]).padStart(2,'0') + ':00';
+      times[1].value = String(d[1]).padStart(2,'0') + ':00';
+    }
+    toggleHours(cb);
+  });
+  showNotification('✅ Horaires du modèle chargés — pensez à enregistrer', 'success');
+}
+
+function loadServicesTemplate() {
+  const val = document.getElementById('businessType').value;
+  const tpl = CFG_TEMPLATES[val] || CFG_TEMPLATES.default;
+  if (!tpl || !tpl.services || !tpl.services.length) { showNotification('Aucun modèle disponible pour ce type de commerce', 'error'); return; }
+  const existingCount = document.querySelectorAll('#servicesList .service-card-grid').length;
+  if (existingCount > 0 && !confirm(`Ajouter ${tpl.services.length} services suggérés du modèle ? Vos ${existingCount} service(s) existant(s) seront conservés.`)) return;
+  const cfg = businessConfigs[val] || { type: 'service' };
+  tpl.services.forEach(s => addServiceCard(s.name, s.price, s.duration, cfg.type));
+  showNotification(`✅ ${tpl.services.length} services ajoutés depuis le modèle — pensez à les adapter`, 'success');
 }
 
 function sanitizeSlug(input) {
