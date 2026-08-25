@@ -180,6 +180,11 @@ async function boot() {
     const r = await fetch(`${API}/api/booking/${encodeURIComponent(slug)}/info`);
     if (!r.ok) { renderNotFound(); return; }
     biz = await r.json();
+    // Récupérer le type de commerce (endpoint public séparé) pour adapter l'affichage — best-effort, non bloquant
+    try {
+      const btRes = await fetch(`${API}/api/business/slug/${encodeURIComponent(slug)}`);
+      if (btRes.ok) { const btData = await btRes.json(); biz.business_type = btData.business_type; }
+    } catch (e) { /* silencieux — l'affichage par défaut reste correct */ }
     isDemoMode = DEMO_SLUGS.includes(biz.slug);
     if (!urlLang && biz.interface_language && SUPPORTED_LANGS.includes(biz.interface_language)) {
       lang = biz.interface_language;
@@ -237,6 +242,12 @@ function escapeHtml(s) {
   return (s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
+// Types où la durée n'est pas une info pertinente pour le client (table, chambre, séance... pas un créneau de service classique)
+const NO_DURATION_TYPES = new Set([
+  'opticien','bakery','butcher','fishmonger','florist','retail','pharmacy',
+  'restaurant','cafe','pizzeria','cinema','escapegame','pool','hotel',
+]);
+
 function renderStep1() {
   const services = biz.services || [];
   wrap.innerHTML = `
@@ -248,7 +259,7 @@ function renderStep1() {
           <div class="rdv-service" onclick="selectService(${i})" id="svc-${i}">
             <div>
               <div class="rdv-service-name">${escapeHtml(s.name)}</div>
-              <div class="rdv-service-meta">${s.duration_minutes} ${t('minutes')}</div>
+              ${NO_DURATION_TYPES.has(biz.business_type) ? '' : `<div class="rdv-service-meta">${s.duration_minutes} ${t('minutes')}</div>`}
             </div>
             ${s.price ? `<div class="rdv-service-price">${s.price}€</div>` : ''}
           </div>`).join('') : `<div class="rdv-empty">${t('noSlots')}</div>`}
