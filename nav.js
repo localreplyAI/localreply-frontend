@@ -82,6 +82,18 @@
     return slug ? '/' + _curLang + '/' + slug : '/' + _curLang;
   }
 
+  // Real, crawlable href for a given target language, for the CURRENT page.
+  // Used by the language-switcher dropdown so search engines can discover
+  // language variants via normal links (in addition to the hreflang tags
+  // already emitted by build.js). Falls back to the current URL for the
+  // handful of pages with no per-language route (e.g. /demo) -- lrApplyLang
+  // below detects that case and cancels the navigation, doing an in-place
+  // JS retranslation instead, same as before this change.
+  function hrefForLang(lang) {
+    if (_navLangRoutedSlugs.indexOf(_curSlug) === -1) return currentPath;
+    return lang === 'en' ? ('/' + _curSlug) : ('/' + lang + (_curSlug ? '/' + _curSlug : ''));
+  }
+
   // Bug fix: this navbar was originally built for public marketing pages only,
   // but it was rendering unconditionally -- including on dashboard/app pages,
   // stacked on top of the dashboard's own sidebar nav. The dashboard has no nav
@@ -203,14 +215,15 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
             ">
               ${['fr:🇫🇷:Français','en:🇬🇧:English','de:🇩🇪:Deutsch','it:🇮🇹:Italiano','es:🇪🇸:Español','pt:🇵🇹:Português','nl:🇳🇱:Nederlands','pl:🇵🇱:Polski'].map(l => {
                 const [code,flag,name] = l.split(':');
-                return `<button onclick="lrApplyLang('${code}')" style="
+                return `<a href="${hrefForLang(code)}" onclick="return lrApplyLang('${code}')" style="
                   width:100%;padding:8px 10px;background:none;border:none;
                   color:rgba(255,255,255,0.85);font-size:13px;cursor:pointer;
                   text-align:left;border-radius:7px;display:flex;align-items:center;gap:8px;
+                  text-decoration:none;box-sizing:border-box;
                 " onmouseover="this.style.background='rgba(0,212,255,0.1)'"
                    onmouseout="this.style.background='none'">
                   ${flag} ${name}
-                </button>`;
+                </a>`;
               }).join('')}
             </div>
           </div>
@@ -343,16 +356,16 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // always a URL redirect below -- no page still does its own in-place
   // (non-reload) language switching anymore, so there's nothing left to patch.
   window.lrApplyLang = function(lang) {
+    localStorage.setItem('lr_lang', lang);
     const slug = _currentPageSlug();
     if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
-      localStorage.setItem('lr_lang', lang);
-      window.location.href = lang === _defaultLang ? ('/' + slug) : ('/' + lang + (slug ? '/' + slug : ''));
-      return;
+      return true; // real <a href> below navigates to the localized URL
     }
     lrApplyNavLang(lang);
     const dd = document.getElementById('lr-lang-dd');
     if (dd) dd.style.display = 'none';
     if (typeof window.lrUpdateFooter === 'function') window.lrUpdateFooter();
+    return false; // no per-language route for this page -- cancel navigation, stay put
   };
 
   // Appliquer la langue au chargement -- base sur l'URL (prefixe de langue),
