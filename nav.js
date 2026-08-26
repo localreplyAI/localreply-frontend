@@ -379,6 +379,17 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
   // pas sur navigator.language/localStorage, pour rester coherent avec le
   // contenu de la page (determine par l'URL, pas par le navigateur du visiteur).
   const _supportedNavLangs = Object.keys(_navTranslations);
-  const _navLangFromUrl = _curLang || 'en';
+  const _navLangFromUrl = _curLang || (function() {
+    // Pages with no per-language URL (e.g. /demo) have no statically-baked
+    // per-language content to stay coherent with, so respect the visitor's
+    // stored language choice instead of forcing the default.
+    if (_staticallyTranslatedPages.indexOf(_curSlug) < 0) {
+      try {
+        const stored = localStorage.getItem('lr_lang');
+        if (stored) return stored;
+      } catch (e) {}
+    }
+    return 'en';
+  })();
   lrApplyNavLang(_supportedNavLangs.indexOf(_navLangFromUrl) >= 0 ? _navLangFromUrl : 'en');
 })();
