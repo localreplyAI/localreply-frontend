@@ -261,7 +261,7 @@ function renderStep1() {
               <div class="rdv-service-name">${escapeHtml(s.name)}</div>
               ${NO_DURATION_TYPES.has(biz.business_type) ? '' : `<div class="rdv-service-meta">${s.duration_minutes} ${t('minutes')}</div>`}
             </div>
-            ${s.price ? `<div class="rdv-service-price">${s.price}€</div>` : ''}
+            ${s.price ? `<div class="rdv-service-price">${s.price} ${s.currency || 'CHF'}</div>` : ''}
           </div>`).join('') : `<div class="rdv-empty">${t('noSlots')}</div>`}
       </div>
     </div>
