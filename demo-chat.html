@@ -1023,6 +1023,16 @@ function buildSmartSuggestions(lastAiResponse) {
   const ctx = (lastAiResponse || '').toLowerCase();
 
   // Suggestions par langue et type — textes naturels complets
+  const ESCALATION_TEST_Q = {
+    fr: ['🎁 Avez-vous des cartes cadeaux ?'],
+    en: ['🎁 Do you sell gift cards?'],
+    de: ['🎁 Bieten Sie Geschenkgutscheine an?'],
+    it: ['🎁 Avete buoni regalo?'],
+    es: ['🎁 ¿Tenéis tarjetas regalo?'],
+    pt: ['🎁 Têm cartões-presente?'],
+    nl: ['🎁 Verkopen jullie cadeaubonnen?'],
+    pl: ['🎁 Czy macie karty podarunkowe?'],
+  };
   const SUGG = {
     fr: {
       default: {
@@ -1228,10 +1238,10 @@ function buildSmartSuggestions(lastAiResponse) {
     ].filter(Boolean).slice(0, 3);
   } else if (isEvening) {
     const eveningSuggs = (langData.default && langData.default.evening) || SUGG.fr.default.evening;
-    labels = eveningSuggs.slice(0, 3);
+    labels = eveningSuggs.slice(0, 3).concat(ESCALATION_TEST_Q[lang] || ESCALATION_TEST_Q.fr);
   } else {
     // Suggestions par défaut selon le type de commerce
-    labels = (typeData.base || SUGG.fr.default.base).slice(0, 3);
+    labels = (typeData.base || SUGG.fr.default.base).slice(0, 3).concat(ESCALATION_TEST_Q[lang] || ESCALATION_TEST_Q.fr);
   }
 
   // Convertir en objets suggestion
