@@ -361,6 +361,13 @@ this.style.background='${isActive(l.href) ? 'rgba(0,212,255,0.1)' : 'transparent
     if (_staticallyTranslatedPages.indexOf(slug) >= 0) {
       return true; // real <a href> below navigates to the localized URL
     }
+    if (slug === 'demo') {
+      // The demo chat widget (demo-chat.html) picks its language once at load
+      // time via detectBrowserLang(), and there's no /xx/demo route to redirect
+      // to. Reload in place so the widget re-initializes in the new language.
+      location.reload();
+      return false;
+    }
     lrApplyNavLang(lang);
     const dd = document.getElementById('lr-lang-dd');
     if (dd) dd.style.display = 'none';
