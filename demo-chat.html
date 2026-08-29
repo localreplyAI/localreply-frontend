@@ -1024,14 +1024,36 @@ function buildSmartSuggestions(lastAiResponse) {
 
   // Suggestions par langue et type — textes naturels complets
   const ESCALATION_TEST_Q = {
-    fr: ['🎁 Avez-vous des cartes cadeaux ?'],
-    en: ['🎁 Do you sell gift cards?'],
-    de: ['🎁 Bieten Sie Geschenkgutscheine an?'],
-    it: ['🎁 Avete buoni regalo?'],
-    es: ['🎁 ¿Tenéis tarjetas regalo?'],
-    pt: ['🎁 Têm cartões-presente?'],
-    nl: ['🎁 Verkopen jullie cadeaubonnen?'],
-    pl: ['🎁 Czy macie karty podarunkowe?'],
+    salon: {
+      fr: ['🎁 Avez-vous des cartes cadeaux ?'],
+      en: ['🎁 Do you sell gift cards?'],
+      de: ['🎁 Bieten Sie Geschenkgutscheine an?'],
+      it: ['🎁 Avete buoni regalo?'],
+      es: ['🎁 ¿Tenéis tarjetas regalo?'],
+      pt: ['🎁 Têm cartões-presente?'],
+      nl: ['🎁 Verkopen jullie cadeaubonnen?'],
+      pl: ['🎁 Czy macie karty podarunkowe?'],
+    },
+    restaurant: {
+      fr: ['🐶 Acceptez-vous les chiens en terrasse ?'],
+      en: ['🐶 Are dogs allowed on the terrace?'],
+      de: ['🐶 Sind Hunde auf der Terrasse erlaubt?'],
+      it: ['🐶 I cani sono ammessi in terrazza?'],
+      es: ['🐶 ¿Se admiten perros en la terraza?'],
+      pt: ['🐶 Os cães são permitidos no terraço?'],
+      nl: ['🐶 Zijn honden welkom op het terras?'],
+      pl: ['🐶 Czy psy są dozwolone na tarasie?'],
+    },
+    garage: {
+      fr: ['🚗 Faites-vous le remplacement de pare-brise ?'],
+      en: ['🚗 Do you replace windshields?'],
+      de: ['🚗 Ersetzen Sie Windschutzscheiben?'],
+      it: ['🚗 Sostituite i parabrezza?'],
+      es: ['🚗 ¿Reemplazan parabrisas?'],
+      pt: ['🚗 Fazem substituição de para-brisas?'],
+      nl: ['🚗 Vervangen jullie voorruiten?'],
+      pl: ['🚗 Czy wymieniacie przednie szyby?'],
+    },
   };
   const SUGG = {
     fr: {
@@ -1238,10 +1260,10 @@ function buildSmartSuggestions(lastAiResponse) {
     ].filter(Boolean).slice(0, 3);
   } else if (isEvening) {
     const eveningSuggs = (langData.default && langData.default.evening) || SUGG.fr.default.evening;
-    labels = eveningSuggs.slice(0, 3).concat(ESCALATION_TEST_Q[lang] || ESCALATION_TEST_Q.fr);
+    labels = eveningSuggs.slice(0, 3).concat((ESCALATION_TEST_Q[bType] || ESCALATION_TEST_Q.salon)[lang] || (ESCALATION_TEST_Q[bType] || ESCALATION_TEST_Q.salon).fr);
   } else {
     // Suggestions par défaut selon le type de commerce
-    labels = (typeData.base || SUGG.fr.default.base).slice(0, 3).concat(ESCALATION_TEST_Q[lang] || ESCALATION_TEST_Q.fr);
+    labels = (typeData.base || SUGG.fr.default.base).slice(0, 3).concat((ESCALATION_TEST_Q[bType] || ESCALATION_TEST_Q.salon)[lang] || (ESCALATION_TEST_Q[bType] || ESCALATION_TEST_Q.salon).fr);
   }
 
   // Convertir en objets suggestion
@@ -1260,9 +1282,11 @@ let businessId = null;
 let bizAvatar = '💬';
 let conversationId = null; // mémoriser l'ID de conversation pour la session
 
-// Récupérer le slug depuis l'URL
+// Récupérer le slug depuis l'URL (?biz=xxx), avec liste blanche + repli sur le salon
+const DEMO_SLUGS = ['salon-marie-demo', 'petit-bistrot-demo', 'garage-autoplus-demo'];
 function getSlug() {
-  return 'salon-marie-demo'; // Slug réel du business_id=1 en DB
+  const requested = new URLSearchParams(window.location.search).get('biz');
+  return DEMO_SLUGS.includes(requested) ? requested : 'salon-marie-demo';
 }
 
 // Détecter langue navigateur
