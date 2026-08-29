@@ -544,7 +544,35 @@
 </style>
 
 <div class="lrc-page">
-  <div class="lrc-card" id="lrcCard">
+  <div class="lrc-card" id="lrcSectorSelect" style="display:flex;flex-direction:column;gap:20px;padding:36px 28px;">
+    <div style="text-align:center;">
+      <div id="lrcSectorTitle" style="font-size:19px;font-weight:700;color:var(--text);margin-bottom:6px;">Choisissez un secteur à tester</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <button type="button" class="lrc-sector-btn" data-slug="salon-marie-demo" style="display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--text);font-family:var(--font);">
+        <span style="font-size:28px;">💇</span>
+        <span>
+          <span style="display:block;font-weight:600;" id="lrcSectorSalonName">Salon de coiffure</span>
+          <span style="display:block;font-size:13px;color:var(--text-2);" id="lrcSectorSalonDesc">Prise de RDV, tarifs, FAQ coiffure</span>
+        </span>
+      </button>
+      <button type="button" class="lrc-sector-btn" data-slug="petit-bistrot-demo" style="display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--text);font-family:var(--font);">
+        <span style="font-size:28px;">🍽️</span>
+        <span>
+          <span style="display:block;font-weight:600;" id="lrcSectorRestaurantName">Restaurant</span>
+          <span style="display:block;font-size:13px;color:var(--text-2);" id="lrcSectorRestaurantDesc">Réservations, menu, allergies, horaires</span>
+        </span>
+      </button>
+      <button type="button" class="lrc-sector-btn" data-slug="garage-autoplus-demo" style="display:flex;align-items:center;gap:14px;text-align:left;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:14px 16px;cursor:pointer;color:var(--text);font-family:var(--font);">
+        <span style="font-size:28px;">🔧</span>
+        <span>
+          <span style="display:block;font-weight:600;" id="lrcSectorGarageName">Garage automobile</span>
+          <span style="display:block;font-size:13px;color:var(--text-2);" id="lrcSectorGarageDesc">Devis, entretien, dépannage, RDV</span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="lrc-card" id="lrcCard" style="display:none;">
 
     <!-- HEADER -->
     <div class="lrc-header">
@@ -1782,7 +1810,7 @@ async function lrcInit() {
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
-    const res = await fetch(`${API}/api/business/slug/salon-marie-demo`, { signal: controller.signal });
+    const res = await fetch(`${API}/api/business/slug/${getSlug()}`, { signal: controller.signal });
     clearTimeout(timeout);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const biz = await res.json();
@@ -1843,7 +1871,47 @@ async function lrcInit() {
   }
 }
 
-lrcInit();
+const SECTOR_SELECT_I18N = {
+  fr: { title: 'Choisissez un secteur à tester', salon: 'Salon de coiffure', salon_d: 'Prise de RDV, tarifs, FAQ coiffure', restaurant: 'Restaurant', restaurant_d: 'Réservations, menu, allergies, horaires', garage: 'Garage automobile', garage_d: 'Devis, entretien, dépannage, RDV' },
+  en: { title: 'Choose a sector to try', salon: 'Hair Salon', salon_d: 'Booking, pricing, hairdressing FAQ', restaurant: 'Restaurant', restaurant_d: 'Reservations, menu, allergies, hours', garage: 'Auto Garage', garage_d: 'Quotes, servicing, towing, booking' },
+  de: { title: 'Wählen Sie eine Branche zum Testen', salon: 'Friseursalon', salon_d: 'Terminbuchung, Preise, FAQ', restaurant: 'Restaurant', restaurant_d: 'Reservierungen, Menü, Allergien, Öffnungszeiten', garage: 'Autowerkstatt', garage_d: 'Kostenvoranschlag, Wartung, Pannenhilfe' },
+  it: { title: 'Scegli un settore da provare', salon: 'Salone di parrucchiere', salon_d: 'Prenotazioni, prezzi, FAQ', restaurant: 'Ristorante', restaurant_d: 'Prenotazioni, menu, allergie, orari', garage: 'Autofficina', garage_d: 'Preventivi, manutenzione, soccorso stradale' },
+  es: { title: 'Elige un sector para probar', salon: 'Peluquería', salon_d: 'Reservas, precios, FAQ', restaurant: 'Restaurante', restaurant_d: 'Reservas, menú, alergias, horarios', garage: 'Taller mecánico', garage_d: 'Presupuestos, mantenimiento, grúa' },
+  pt: { title: 'Escolha um setor para testar', salon: 'Salão de cabeleireiro', salon_d: 'Marcações, preços, FAQ', restaurant: 'Restaurante', restaurant_d: 'Reservas, menu, alergias, horários', garage: 'Oficina automóvel', garage_d: 'Orçamentos, manutenção, reboque' },
+  nl: { title: 'Kies een sector om te testen', salon: 'Kapsalon', salon_d: 'Afspraken, tarieven, FAQ', restaurant: 'Restaurant', restaurant_d: 'Reserveringen, menu, allergieën, openingstijden', garage: 'Autogarage', garage_d: 'Offertes, onderhoud, pech' },
+  pl: { title: 'Wybierz branżę do przetestowania', salon: 'Salon fryzjerski', salon_d: 'Rezerwacje, cennik, FAQ', restaurant: 'Restauracja', restaurant_d: 'Rezerwacje, menu, alergie, godziny', garage: 'Warsztat samochodowy', garage_d: 'Wyceny, serwis, pomoc drogowa' },
+};
+
+function applySectorSelectI18n() {
+  const t = SECTOR_SELECT_I18N[detectBrowserLang()] || SECTOR_SELECT_I18N.fr;
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  set('lrcSectorTitle', t.title);
+  set('lrcSectorSalonName', t.salon);
+  set('lrcSectorSalonDesc', t.salon_d);
+  set('lrcSectorRestaurantName', t.restaurant);
+  set('lrcSectorRestaurantDesc', t.restaurant_d);
+  set('lrcSectorGarageName', t.garage);
+  set('lrcSectorGarageDesc', t.garage_d);
+}
+
+function chooseSector(slug) {
+  history.replaceState(null, '', location.pathname + '?biz=' + encodeURIComponent(slug));
+  document.getElementById('lrcSectorSelect').style.display = 'none';
+  document.getElementById('lrcCard').style.display = '';
+  lrcInit();
+}
+
+document.querySelectorAll('.lrc-sector-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() { chooseSector(btn.getAttribute('data-slug')); });
+});
+
+if (new URLSearchParams(location.search).get('biz')) {
+  document.getElementById('lrcSectorSelect').style.display = 'none';
+  document.getElementById('lrcCard').style.display = '';
+  lrcInit();
+} else {
+  applySectorSelectI18n();
+}
 </script>
 
 </body>
