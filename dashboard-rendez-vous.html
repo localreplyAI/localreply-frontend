@@ -13,6 +13,9 @@
 </head>
 <body>
 <script>
+function escapeHtml(s) {
+  return (s || '').replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
 // Guard abonnement global — bloque l'accès si pas d'abonnement actif
 (async function() {
   const token = localStorage.getItem('auth_token');
@@ -1029,9 +1032,9 @@ function createPendingCard(apt, isUrgent) {
     <div style="margin-top: ${isUrgent ? '15px' : '0'};">
       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
         <div>
-          <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${apt.client_name || (_drt||DASH_RDV_T.fr).not_provided}</h3>
+          <h3 style="font-size: 20px; font-weight: 700; color: #FFFFFF; margin: 0 0 8px 0;">${escapeHtml(apt.client_name) || (_drt||DASH_RDV_T.fr).not_provided}</h3>
           <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 8px;">
-            📧 ${apt.client_email || (_drt||DASH_RDV_T.fr).not_provided} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+            📧 ${escapeHtml(apt.client_email) || (_drt||DASH_RDV_T.fr).not_provided} ${apt.client_phone ? `• 📱 ${escapeHtml(apt.client_phone)}` : ''}
           </div>
         </div>
         <div style="padding: 8px 14px; background: rgba(251, 191, 36, 0.2); border: 1px solid rgba(251, 191, 36, 0.5); border-radius: 12px; font-size: 13px; font-weight: 600; color: #F59E0B;">
@@ -1047,7 +1050,7 @@ function createPendingCard(apt, isUrgent) {
           </div>
           <div>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">💇 SERVICE</div>
-            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${apt.service_name || apt.summary || (_drt||DASH_RDV_T.fr).not_specified}</div>
+            <div style="font-size: 16px; color: #FFFFFF; font-weight: 600;">${escapeHtml(apt.service_name) || escapeHtml(apt.summary) || (_drt||DASH_RDV_T.fr).not_specified}</div>
           </div>
           <div>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">⏱️ DURÉE (minutes)</div>
@@ -1056,7 +1059,7 @@ function createPendingCard(apt, isUrgent) {
           ${apt.description ? `
           <div>
             <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 5px; font-weight: 600;">📝 NOTES</div>
-            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8);">${apt.description}</div>
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.8);">${escapeHtml(apt.description)}</div>
           </div>
           ` : ''}
         </div>
@@ -1126,9 +1129,9 @@ function createConfirmedCard(apt) {
   card.innerHTML = `
     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
       <div>
-        <h3 style="font-size: 18px; font-weight: 700; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; margin: 0 0 8px 0;">${apt.client_name || ((window._drt||{}).apt_client_fallback||'Client')}</h3>
+        <h3 style="font-size: 18px; font-weight: 700; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; margin: 0 0 8px 0;">${escapeHtml(apt.client_name) || ((window._drt||{}).apt_client_fallback||'Client')}</h3>
         <div style="font-size: 13px; color: rgba(255, 255, 255, 0.6);">
-          📧 ${apt.client_email || ((window._drt||{}).apt_email_missing||'Non renseigné')} ${apt.client_phone ? `• 📱 ${apt.client_phone}` : ''}
+          📧 ${escapeHtml(apt.client_email) || ((window._drt||{}).apt_email_missing||'Non renseigné')} ${apt.client_phone ? `• 📱 ${escapeHtml(apt.client_phone)}` : ''}
         </div>
       </div>
       <div style="padding: 6px 12px; background: ${isCancelled ? 'rgba(239,68,68,0.15)' : isPast ? 'rgba(255,255,255,0.06)' : 'rgba(16,185,129,0.2)'}; border: 1px solid ${isCancelled ? 'rgba(239,68,68,0.4)' : isPast ? 'rgba(255,255,255,0.1)' : 'rgba(16,185,129,0.5)'}; border-radius: 10px; font-size: 12px; font-weight: 600; color: ${isCancelled ? '#EF4444' : isPast ? 'rgba(255,255,255,0.4)' : '#10B981'};">
@@ -1144,12 +1147,12 @@ function createConfirmedCard(apt) {
         </div>
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">💇 SERVICE</div>
-          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${apt.service_name || apt.summary || (_drt||DASH_RDV_T.fr).not_specified}</div>
+          <div style="font-size: 15px; color: ${isPast ? 'rgba(255,255,255,0.6)' : '#FFFFFF'}; font-weight: 600;">${escapeHtml(apt.service_name) || escapeHtml(apt.summary) || (_drt||DASH_RDV_T.fr).not_specified}</div>
         </div>
         ${apt.description ? `
         <div>
           <div style="font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; font-weight: 600;">📝 NOTES</div>
-          <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8);">${apt.description}</div>
+          <div style="font-size: 13px; color: rgba(255, 255, 255, 0.8);">${escapeHtml(apt.description)}</div>
         </div>
         ` : ''}
       </div>
