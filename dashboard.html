@@ -359,6 +359,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 
+function escapeHtml(s) {
+  return (s || '').replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 function renderSidebarLogo(name, logoUrl, type) {
   const wrap = document.getElementById('sidebarLogoWrap');
   const span = document.getElementById('sidebarLogo');
@@ -924,7 +928,7 @@ function renderAlerts(pendingApts, pendingReqs) {
   const _t = (_dht||DASH_HOME_T.fr);
   let html = '';
   const urgent = pendingApts.filter(a=>a.urgency==='high');
-  if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} ${_t.alert_urgent_count||'RDV urgents en attente'}</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${a.client_name||_t.alert_client_fallback||'Client'}</strong>`).join(' · ')} ${_t.alert_click_handle||'— Cliquez pour traiter'}</div></div></a>`;
+  if (urgent.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(220,38,38,0.07));border:1px solid rgba(239,68,68,0.3);border-left:4px solid #EF4444;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:28px;">🚨</div><div><div style="font-size:15px;font-weight:700;color:#EF4444;">${urgent.length} ${_t.alert_urgent_count||'RDV urgents en attente'}</div><div style="font-size:12px;color:rgba(255,255,255,0.55);margin-top:2px;">${urgent.map(a=>`<strong>${escapeHtml(a.client_name)||_t.alert_client_fallback||'Client'}</strong>`).join(' · ')} ${_t.alert_click_handle||'— Cliquez pour traiter'}</div></div></a>`;
   const normal = pendingApts.filter(a=>a.urgency!=='high');
   if (normal.length) html += `<a href="/dashboard-rendez-vous" style="display:flex;align-items:center;gap:14px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:14px;padding:16px 18px;margin-bottom:10px;text-decoration:none;"><div style="font-size:26px;">⏳</div><div><div style="font-size:15px;font-weight:700;color:#F59E0B;">${normal.length} ${_t.alert_normal_count||'RDV en attente de confirmation'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;">${_t.alert_click_confirm||'Cliquez pour confirmer ou refuser'}</div></div></a>`;
   if (pr) html += `<a href="/dashboard-conversations" style="display:flex;align-items:center;gap:14px;background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.2);border-left:4px solid #00D4FF;border-radius:14px;padding:16px 18px;text-decoration:none;"><div style="font-size:26px;">🤖</div><div><div style="font-size:15px;font-weight:700;color:#00D4FF;">${pr} ${(_dht||DASH_HOME_T.fr).question_word||'question'}${pr>1?'s':''} ${(_dht||DASH_HOME_T.fr).unknown_q_suffix||'sans réponse'}</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;" id="activity-faq-tip">${(_dht||DASH_HOME_T.fr).activity_faq_tip||'Répondez pour enrichir la FAQ automatiquement'}</div></div></a>`;
@@ -1065,8 +1069,8 @@ function renderActivity(convs, confirmedApts, pendingApts, reqs) {
     <div style="padding:10px 13px;background:rgba(255,255,255,0.03);border-left:2px solid ${a.color};border-radius:9px;margin-bottom:7px;display:flex;align-items:start;gap:10px;">
       <div style="font-size:17px;margin-top:1px;">${a.icon}</div>
       <div style="flex:1;min-width:0;">
-        <div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;">${a.text}</div>
-        ${a.sub ? `<div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${a.sub}</div>` : ''}
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;">${escapeHtml(a.text)}</div>
+        ${a.sub ? `<div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(a.sub)}</div>` : ''}
         <div style="font-size:11px;color:rgba(255,255,255,0.28);margin-top:3px;">${timeAgo(a.time)}</div>
       </div>
     </div>`).join('');
