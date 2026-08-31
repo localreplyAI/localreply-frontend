@@ -1161,7 +1161,13 @@ function updateBusinessIcon() {
     updateServicesSection(cfg.type);
     const personnelTab = document.getElementById('tab-personnel');
     const showPersonnel = cfg.type === 'service';
-    if (personnelTab) personnelTab.style.display = showPersonnel ? 'flex' : 'none';
+    if (personnelTab) {
+      personnelTab.style.display = 'flex';
+      personnelTab.style.opacity = showPersonnel ? '' : '0.35';
+      personnelTab.style.pointerEvents = showPersonnel ? '' : 'none';
+      personnelTab.style.cursor = showPersonnel ? '' : 'not-allowed';
+      personnelTab.title = showPersonnel ? '' : "Non disponible pour ce type d'activité";
+    }
     if (!showPersonnel && personnelTab && personnelTab.classList.contains('active')) switchTab('commerce');
   }
 }
@@ -1190,9 +1196,9 @@ const TYPE_CONFIGS = {
   photographer:{ col1:'Séance',        col2:'Prix (€)', col3:'Durée (min)', ph1:'Ex: Portrait studio',   ph2:'120', ph3:'60',  showDuration:true  },
   laundry:     { col1:'Article',       col2:'Prix (€)', col3:'',            ph1:'Ex: Costume',           ph2:'15',  ph3:'',    showDuration:false },
   // type reservation — pas de durée
-  restaurant:  { col1:'Table',         col2:'Capacité', col3:'Zone',        ph1:'Ex: Table 4 pers.',     ph2:'4',   ph3:'Terrasse', showDuration:false },
-  cafe:        { col1:'Espace',        col2:'Capacité', col3:'Zone',        ph1:'Ex: Espace salon',      ph2:'6',   ph3:'Intérieur', showDuration:false },
-  pizzeria:    { col1:'Table',         col2:'Capacité', col3:'Zone',        ph1:'Ex: Table 2 pers.',     ph2:'2',   ph3:'Salle',    showDuration:false },
+  restaurant:  { col1:'Plat',          col2:'Prix (€)', col3:'',            ph1:'Ex: Menu du jour',      ph2:'18',  ph3:'',         showDuration:false },
+  cafe:        { col1:'Produit',       col2:'Prix (€)', col3:'',            ph1:'Ex: Cappuccino',        ph2:'4.5', ph3:'',         showDuration:false },
+  pizzeria:    { col1:'Pizza',         col2:'Prix (€)', col3:'',            ph1:'Ex: Margherita',        ph2:'14',  ph3:'',         showDuration:false },
   hotel:       { col1:'Chambre',       col2:'Prix/nuit (€)', col3:'Type',   ph1:'Ex: Chambre double',    ph2:'119', ph3:'Standard', showDuration:false },
   cinema:      { col1:'Séance',        col2:'Prix (€)', col3:'Salle',       ph1:'Ex: Séance 3D',         ph2:'15',  ph3:'Salle 1',  showDuration:false },
   escapegame:  { col1:'Salle',         col2:'Prix/pers (€)', col3:'Joueurs',ph1:'Ex: Salle mystère',     ph2:'22',  ph3:'2-5',      showDuration:false },
@@ -1461,10 +1467,10 @@ async function saveServices() {
   try {
     const services = [...document.querySelectorAll('.service-card-grid')].map(card => {
       const inputs = card.querySelectorAll('input');
-      const name = inputs[0].value, price = inputs[1].value, third = inputs[2].value;
+      const name = inputs[0].value, price = inputs[1].value, third = inputs[2] ? inputs[2].value : '';
       if (!name || !price) return null;
-      const cfg = businessConfigs[document.getElementById('businessType').value] || { type: 'service' };
-      return { name, price: parseFloat(price), duration_minutes: cfg.type==='service' ? (parseInt(third)||60) : 60, is_active: true };
+      const tc = getTypeConfig(document.getElementById('businessType').value);
+      return { name, price: parseFloat(price), duration_minutes: tc.showDuration ? (parseInt(third)||60) : 60, is_active: true };
     }).filter(Boolean);
     if (!services.length) { showNotification((_dct||DASH_CFG_T.fr).err_add_service, 'error'); return; }
     await apiRequest(`/api/business/${businessId}/services`, 'POST', services);
