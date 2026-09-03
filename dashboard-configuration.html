@@ -37,7 +37,7 @@
   <div style="position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,82,204,0.15) 0%,transparent 70%);border-radius:50%;animation:float 25s infinite ease-in-out reverse;pointer-events:none;"></div>
 
   <!-- SIDEBAR -->
-  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);backdrop-filter:blur(24px);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
+  <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
     <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
         <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;" loading="lazy">
@@ -72,7 +72,7 @@
   </div>
 
   <!-- BOTTOM NAV MOBILE -->
-  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
+  <div id="bottomNav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(5,12,28,0.98);border-top:1px solid rgba(255,255,255,0.08);padding:6px 0 8px;z-index:9999;">
     <div style="display:flex;justify-content:space-around;align-items:center;max-width:500px;margin:0 auto;">
       <a href="/dashboard" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(255,255,255,0.55);padding:7px 12px;border-radius:10px;"><span style="font-size:20px;">🏠</span><span id="dn-mob-home" style="font-size:10px;">Accueil</span></a>
       <a href="/dashboard-configuration" style="display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;background:linear-gradient(135deg,rgba(0,82,204,0.4),rgba(0,212,255,0.2));color:#00D4FF;padding:7px 12px;border-radius:10px;border:1px solid rgba(0,212,255,0.2);"><span style="font-size:20px;">⚙️</span><span id="dn-mob-config" style="font-size:10px;font-weight:700;">Config</span></a>
@@ -82,7 +82,7 @@
     </div>
   </div>
   <div id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9997;opacity:0;transition:opacity 0.25s;"></div>
-  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);backdrop-filter:blur(20px);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
+  <div id="mobileMenuPopup" style="display:none;position:fixed;bottom:72px;right:10px;background:rgba(5,12,28,0.98);border-radius:14px;border:1px solid rgba(255,255,255,0.12);padding:8px;z-index:9998;transform:translateY(16px);opacity:0;transition:all 0.25s;min-width:200px;">
     <a href="/dashboard-analytics" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">📈</span><span id="dn-mob-analytics">Analytics</span></a>
     <a href="/mon-compte" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">👤</span><span id="dn-mob-account">Mon compte</span></a>
     <a href="/abonnement" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;text-decoration:none;color:rgba(255,255,255,0.85);font-size:14px;"><span style="font-size:18px;">💳</span><span id="dn-mob-billing">Abonnement</span></a>
@@ -103,7 +103,7 @@
     </div>
 
     <!-- ONGLETS STICKY -->
-    <div id="tabBar" style="position:sticky;top:0;z-index:100;background:rgba(5,12,28,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.1);padding:0 40px;">
+    <div id="tabBar" style="position:sticky;top:0;z-index:100;background:rgba(5,12,28,0.95);border-bottom:1px solid rgba(255,255,255,0.1);padding:0 40px;">
       <!-- Indicateur scroll mobile -->
       <div id="tabScrollHint" style="display:none;position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to left,rgba(5,12,28,0.95),transparent);pointer-events:none;align-items:center;justify-content:flex-end;padding-right:8px;z-index:2;">
         <span style="color:rgba(255,255,255,0.4);font-size:16px;">›</span>
@@ -575,7 +575,7 @@
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
 /* CARTE */
-.cfg-card{background:rgba(255,255,255,0.07);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px;animation:fadeIn 0.25s ease both;}
+.cfg-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:28px;animation:fadeIn 0.25s ease both;}
 .cfg-card-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
 .cfg-card-icon{width:48px;height:48px;background:linear-gradient(135deg,#0052CC,#00D4FF);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;box-shadow:0 6px 16px rgba(0,212,255,0.3);}
 .cfg-card-title{font-size:20px;font-weight:700;color:#FFFFFF;margin:0 0 3px;}
