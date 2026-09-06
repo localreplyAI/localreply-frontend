@@ -361,12 +361,29 @@ function checkURLAlerts(){
     const isNewAccount=params.get('new')==='true';
     banner.innerHTML=`<div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-left:4px solid #10B981;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">🎉</span><div><div style="font-size:15px;font-weight:700;color:#10B981;margin-bottom:3px;">${(_abt||DASH_AB_T.fr).activated_title}</div><div style="font-size:13px;color:rgba(255,255,255,0.75);">${(_abt||DASH_AB_T.fr).activated_desc} ${plan==='pro'?'⭐ Pro':'📦 Standard'}. Toutes vos fonctionnalités sont actives.</div></div></div>`;
     banner.style.display='block';
-    // Nouveau compte → rediriger vers onboarding après 2s
-    if(isNewAccount){
-      setTimeout(()=>{ window.location.href='/onboarding'; }, 2000);
-    } else {
-      window.history.replaceState({},'','/abonnement');
-    }
+    // Nouveau compte -> rediriger vers onboarding apres 2s
+    // Secours : si le parametre ?new=true a ete perdu en route (redirection
+    // Stripe, session bloquee, etc.), on verifie aussi le flag serveur
+    // onboarding_completed avant de decider de sauter l'onboarding.
+    (async function(){
+      let needsOnboarding = isNewAccount;
+      try {
+        const bidChk = localStorage.getItem('business_id');
+        const tokChk = localStorage.getItem('auth_token');
+        if (bidChk && tokChk) {
+          const stRes = await fetch(`${API}/api/business/${bidChk}/onboarding-status`, { headers: { 'Authorization': 'Bearer ' + tokChk } });
+          if (stRes.ok) {
+            const st = await stRes.json();
+            if (st && st.onboarding_completed === false) needsOnboarding = true;
+          }
+        }
+      } catch(e) {}
+      if (needsOnboarding) {
+        setTimeout(()=>{ window.location.href='/onboarding'; }, 2000);
+      } else {
+        window.history.replaceState({},'','/abonnement');
+      }
+    })();
   } else if(params.get('cancelled')==='true'){
     banner.innerHTML=`<div style="background:rgba(107,114,128,0.1);border:1px solid rgba(107,114,128,0.25);border-left:4px solid #6B7280;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;"><span style="font-size:28px;">↩️</span><div><div style="font-size:15px;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:3px;">${(_abt||DASH_AB_T.fr).cancelled_title}</div><div style="font-size:13px;color:rgba(255,255,255,0.6);">${(_abt||DASH_AB_T.fr).cancelled_desc}</div></div></div>`;
     banner.style.display='block';window.history.replaceState({},'','/abonnement');
