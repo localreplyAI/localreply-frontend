@@ -62,6 +62,24 @@
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
+    },
+    {
+      "source": "/:page(dashboard|dashboard-configuration|dashboard-rendez-vous|dashboard-messages|dashboard-conversations|dashboard-analytics|mon-compte|abonnement|choisir-plan|onboarding|auth|rdv|chat|reset-password|forgot-password)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/rdv/:slug*",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/:lang(fr|de|it|es|pt|nl|pl)/:page(dashboard|dashboard-configuration|dashboard-rendez-vous|dashboard-messages|dashboard-conversations|dashboard-analytics|mon-compte|abonnement|choisir-plan|onboarding|auth|rdv|chat|reset-password|forgot-password)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
     }
   ]
 }

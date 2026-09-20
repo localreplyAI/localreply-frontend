@@ -305,6 +305,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
   };
   if (data && method !== 'GET') options.body = JSON.stringify(data);
   const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+  if (response && response.status === 401) { try { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); localStorage.removeItem('business_slug'); } catch(e){} var _lrSeg = window.location.pathname.replace(/^\/+/,'').split('/')[0]; var _lrLp = ['fr','de','it','es','pt','nl','pl'].indexOf(_lrSeg) >= 0 ? '/'+_lrSeg : ''; window.location.href = _lrLp + '/auth?expired=1'; throw new Error('session_expired'); }
   if (!response.ok) {
     const error = await response.json();
     throw new Error(JSON.stringify(error.detail || error));

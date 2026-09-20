@@ -418,6 +418,7 @@ const uid = userId();
 
 async function api(ep) {
   const r = await fetch(API + ep, { headers:{ 'Authorization':'Bearer '+token, 'Content-Type':'application/json' } });
+  if (r && r.status === 401) { try { localStorage.removeItem('auth_token'); localStorage.removeItem('business_id'); localStorage.removeItem('business_slug'); } catch(e){} var _lrSeg = window.location.pathname.replace(/^\/+/,'').split('/')[0]; var _lrLp = ['fr','de','it','es','pt','nl','pl'].indexOf(_lrSeg) >= 0 ? '/'+_lrSeg : ''; window.location.href = _lrLp + '/auth?expired=1'; throw new Error('session_expired'); }
   if (!r.ok) throw new Error(r.status);
   return r.json();
 }
