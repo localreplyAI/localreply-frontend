@@ -99,6 +99,7 @@
             <input id="bizSlug" type="text" style="flex:1;padding:13px 14px 13px 0;background:transparent;border:none;font-size:14px;color:#fff;outline:none;font-family:inherit;" placeholder="mon-commerce" oninput="sanitizeSlug(this)" onfocus="this.select()">
           </div>
           <div id="slugPreview" style="font-size:11px;color:rgba(0,212,255,0.7);margin-top:4px;"></div>
+          <div id="slugStatus" style="font-size:12px;font-weight:600;margin-top:4px;min-height:16px;"></div>
           <div style="display:flex;align-items:flex-start;gap:8px;margin-top:8px;padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;">
             <span style="font-size:14px;flex-shrink:0;">⚠️</span>
             <div id="ob-slug-warning" style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Ce lien est <strong style="color:#F59E0B;">définitif et ne pourra plus être modifié</strong>. Il sera utilisé dans vos QR codes, bio réseaux sociaux et flyers — choisissez-le bien.</div>
@@ -1278,6 +1279,43 @@ function sanitizeSlug(input) {
 function updateSlugPreview(slug) {
   const el = document.getElementById('slugPreview');
   if (el) el.textContent = slug ? `https://uselocalreply.com/chat?slug=${slug}` : '';
+  checkSlugAvailability(slug);
+}
+
+// ─── DISPONIBILITÉ DU SLUG (temps réel) ───
+// Le slug est définitif : on prévient l'utilisateur AVANT validation si le lien
+// est déjà pris. Endpoint public /api/business/slug/{slug} → 200 = pris, 404 = libre.
+const SLUG_MSG = {
+  fr:{checking:'⏳ Vérification…', available:'✅ Ce lien est disponible', taken:'❌ Ce lien est déjà pris — essayez-en un autre'},
+  en:{checking:'⏳ Checking…', available:'✅ This link is available', taken:'❌ This link is already taken — try another'},
+  de:{checking:'⏳ Wird geprüft…', available:'✅ Dieser Link ist verfügbar', taken:'❌ Dieser Link ist bereits vergeben — versuchen Sie einen anderen'},
+  it:{checking:'⏳ Verifica…', available:'✅ Questo link è disponibile', taken:'❌ Questo link è già in uso — provane un altro'},
+  es:{checking:'⏳ Comprobando…', available:'✅ Este enlace está disponible', taken:'❌ Este enlace ya está en uso — prueba otro'},
+  pt:{checking:'⏳ A verificar…', available:'✅ Este link está disponível', taken:'❌ Este link já está em uso — tente outro'},
+  nl:{checking:'⏳ Controleren…', available:'✅ Deze link is beschikbaar', taken:'❌ Deze link is al in gebruik — probeer een andere'},
+  pl:{checking:'⏳ Sprawdzanie…', available:'✅ Ten link jest dostępny', taken:'❌ Ten link jest już zajęty — wybierz inny'}
+};
+let _slugTimer = null, _slugAvailable = null, _slugReqId = 0;
+function checkSlugAvailability(slug) {
+  const M = SLUG_MSG[window._obLang || 'fr'] || SLUG_MSG.fr;
+  const statusEl = document.getElementById('slugStatus');
+  _slugAvailable = null; // unknown until the check resolves
+  if (!statusEl) return;
+  // Only check well-formed slugs (mirrors validateStep rules)
+  if (!slug || slug.length < 3 || !/^[a-z0-9-]+$/.test(slug)) { statusEl.textContent = ''; return; }
+  statusEl.textContent = M.checking;
+  statusEl.style.color = 'rgba(255,255,255,0.5)';
+  clearTimeout(_slugTimer);
+  const reqId = ++_slugReqId;
+  _slugTimer = setTimeout(async () => {
+    try {
+      const r = await fetch(`${API_BASE}/api/business/slug/${encodeURIComponent(slug)}`);
+      if (reqId !== _slugReqId) return; // a newer keystroke superseded this one
+      if (r.status === 404) { _slugAvailable = true;  statusEl.textContent = M.available; statusEl.style.color = '#10B981'; }
+      else if (r.ok)        { _slugAvailable = false; statusEl.textContent = M.taken;     statusEl.style.color = '#EF4444'; }
+      else { _slugAvailable = null; statusEl.textContent = ''; } // server error → don't block the user
+    } catch (e) { if (reqId === _slugReqId) { _slugAvailable = null; statusEl.textContent = ''; } }
+  }, 450);
 }
 
 // ─── HORAIRES ───
@@ -1494,6 +1532,7 @@ function validateStep(step) {
     if (!slugVal) { showToast((_tv.err_slug || '❌ Entrez votre lien public'),'error'); return false; }
     if (slugVal.length < 3) { showToast('❌ ' + (_tv.err_slug_length || 'Le lien doit faire au moins 3 caractères'),'error'); return false; }
     if (!/^[a-z0-9-]+$/.test(slugVal)) { showToast('❌ ' + (_tv.err_slug_chars || 'Le lien ne peut contenir que des lettres minuscules, chiffres et tirets'),'error'); return false; }
+    if (_slugAvailable === false) { showToast((SLUG_MSG[window._obLang||'fr']||SLUG_MSG.fr).taken,'error'); return false; }
   }
   if (step === 3 && !selectedRdvOption) { showToast('❌ ' + (_tv.err_rdv_choice || 'Choisissez une option de prise de RDV'),'error'); return false; }
   return true;
