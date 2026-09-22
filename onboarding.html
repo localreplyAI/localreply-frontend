@@ -1466,7 +1466,8 @@ function goToStep(n) {
 
 async function nextStep() {
   if (!validateStep(currentStep)) return;
-  await saveStep(currentStep);
+  const saved = await saveStep(currentStep);
+  if (saved === false) return; // critical save failed — stay on this step
   if (currentStep < STEPS) showStep(currentStep+1);
   if (currentStep+1 === STEPS) buildFinalStep();
 }
@@ -1500,6 +1501,7 @@ function validateStep(step) {
 
 // ─── SAUVEGARDE ───
 async function saveStep(step) {
+  const _tv = window._obt || {};
   try {
     if (step === 1) {
       await apiRequest(`/api/business/${businessId}/config`, 'POST', {
@@ -1549,8 +1551,18 @@ async function saveStep(step) {
       // Marquer onboarding complété
       await apiRequest(`/api/business/${businessId}/config`, 'POST', {onboarding_completed:true, interface_language:document.getElementById('ob_notifLanguage')?.value||'fr'}).catch(()=>{});
     }
+    return true;
   } catch(e) {
     console.error('Save error:', e);
+    // Steps 1 & 2 are critical (business identity/slug, hours & services):
+    // if the save fails (e.g. slug already taken, server/network error) we must
+    // NOT advance — otherwise the user finishes onboarding with unsaved data and
+    // a broken public link. Surface the error and block progression.
+    if (step === 1 || step === 2) {
+      showToast((_tv.error_save || '❌ Erreur de sauvegarde, réessayez'), 'error');
+      return false;
+    }
+    return true;
   }
 }
 

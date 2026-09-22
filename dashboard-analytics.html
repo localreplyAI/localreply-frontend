@@ -442,8 +442,8 @@ async function loadTimeline() {
       data: {
         labels,
         datasets: [
-          { label: 'Conversations', data: conversationsData, borderColor: '#00D4FF', backgroundColor: 'rgba(0,212,255,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#00D4FF', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 },
-          { label: 'Rendez-vous', data: appointmentsData, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#10B981', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 }
+          { label: (window._dat||DASH_ANA_T.fr).chart_conversations, data: conversationsData, borderColor: '#00D4FF', backgroundColor: 'rgba(0,212,255,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#00D4FF', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 },
+          { label: (window._dat||DASH_ANA_T.fr).chart_rdv, data: appointmentsData, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)', borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#10B981', pointBorderColor: '#FFFFFF', pointBorderWidth: 2 }
         ]
       },
       options: {
@@ -808,6 +808,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 <script>
 const DASH_ANA_T = {
   fr: {
+    chart_conversations: 'Conversations', chart_rdv: 'Rendez-vous',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analysez les performances de votre assistant IA",
     btn_7: '7 jours', btn_30: '30 jours', btn_90: '90 jours',
@@ -853,6 +854,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: "Débloquez les graphiques détaillés, les questions fréquentes, les taux de conversion et 90 jours d'historique avec le",
   },
   en: {
+    chart_conversations: 'Conversations', chart_rdv: 'Appointments',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analyze your AI assistant's performance",
     btn_7: '7 days', btn_30: '30 days', btn_90: '90 days',
@@ -898,6 +900,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: 'Unlock detailed charts, top questions, conversion rates and 90 days of history with the',
   },
   de: {
+    chart_conversations: 'Konversationen', chart_rdv: 'Termine',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: 'Analysieren Sie die Leistung Ihres KI-Assistenten',
     btn_7: '7 Tage', btn_30: '30 Tage', btn_90: '90 Tage',
@@ -943,6 +946,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: 'Schalten Sie detaillierte Diagramme, häufige Fragen, Konversionsraten und 90 Tage Verlauf frei mit dem',
   },
   it: {
+    chart_conversations: 'Conversazioni', chart_rdv: 'Appuntamenti',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analizza le prestazioni del tuo assistente IA",
     btn_7: '7 giorni', btn_30: '30 giorni', btn_90: '90 giorni',
@@ -988,6 +992,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: 'Sblocca grafici dettagliati, domande frequenti, tassi di conversione e 90 giorni di storico con il',
   },
   es: {
+    chart_conversations: 'Conversaciones', chart_rdv: 'Citas',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analiza el rendimiento de tu asistente IA",
     btn_7: '7 días', btn_30: '30 días', btn_90: '90 días',
@@ -1033,6 +1038,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: 'Desbloquea gráficos detallados, preguntas frecuentes, tasas de conversión y 90 días de historial con el',
   },
   pt: {
+    chart_conversations: 'Conversas', chart_rdv: 'Marcações',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analise o desempenho do seu assistente IA",
     btn_7: '7 dias', btn_30: '30 dias', btn_90: '90 dias',
@@ -1078,6 +1084,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: 'Desbloqueie gráficos detalhados, perguntas frequentes, taxas de conversão e 90 dias de histórico com o',
   },
   nl: {
+    chart_conversations: 'Gesprekken', chart_rdv: 'Afspraken',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analyseer de prestaties van uw AI-assistent",
     btn_7: '7 dagen', btn_30: '30 dagen', btn_90: '90 dagen',
@@ -1123,6 +1130,7 @@ const DASH_ANA_T = {
     ana_pro_desc_main: "Ontgrendel gedetailleerde grafieken, veelgestelde vragen, conversieratio's en 90 dagen geschiedenis met het",
   },
   pl: {
+    chart_conversations: 'Rozmowy', chart_rdv: 'Wizyty',
     page_title: 'Analytics — LocalReply',
     h1: 'Analytics', subtitle: "Analizuj wydajność swojego asystenta AI",
     btn_7: '7 dni', btn_30: '30 dni', btn_90: '90 dni',
