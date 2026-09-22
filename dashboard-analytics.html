@@ -57,7 +57,7 @@
     <div id="sidebar" style="width:260px;background:rgba(5,12,28,0.97);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;z-index:1000;flex-shrink:0;">
     <div style="padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,0.07);">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;background:#fff;padding:5px;" loading="lazy">
+        <img src="/assets/logo.png" alt="LocalReply" style="width:40px;height:40px;border-radius:10px;" loading="lazy">
         <div><div style="font-size:16px;font-weight:700;color:#fff;">LocalReply</div><div style="font-size:11px;color:rgba(255,255,255,0.4);">Dashboard</div></div>
       </div>
       <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:11px 13px;display:flex;align-items:center;gap:10px;">
@@ -91,19 +91,19 @@
   <div id="bottomNav" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10, 22, 40, 0.98); border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 0; z-index: 9999;">
     <div style="display: flex; justify-content: space-around; align-items: center; max-width: 600px; margin: 0 auto;">
       <a href="/dashboard" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
-        <span style="font-size: 24px;">🏠</span><span style="font-size: 11px;">Accueil</span>
+        <span style="font-size: 24px;">🏠</span><span id="dn-mob-home" style="font-size: 11px;">Accueil</span>
       </a>
       <a href="/dashboard-configuration" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
-        <span style="font-size: 24px;">⚙️</span><span style="font-size: 11px;">Config</span>
+        <span style="font-size: 24px;">⚙️</span><span id="dn-mob-config" style="font-size: 11px;">Config</span>
       </a>
       <a href="/dashboard-conversations" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
-        <span style="font-size: 24px;">💬</span><span style="font-size: 11px;">Messages</span>
+        <span style="font-size: 24px;">💬</span><span id="dn-mob-messages" style="font-size: 11px;">Messages</span>
       </a>
       <a href="/dashboard-rendez-vous" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: rgba(255,255,255,0.6); padding: 8px 12px; border-radius: 12px;">
-        <span style="font-size: 24px;">📅</span><span style="font-size: 11px;">RDV</span>
+        <span style="font-size: 24px;">📅</span><span id="dn-mob-rdv" style="font-size: 11px;">RDV</span>
       </a>
       <button onclick="toggleMobileMenu()" style="display: flex; flex-direction: column; align-items: center; gap: 4px; background: none; border: none; color: rgba(255,255,255,0.6); padding: 8px 12px; cursor: pointer;">
-        <span style="font-size: 24px;">☰</span><span style="font-size: 11px;">Plus</span>
+        <span style="font-size: 24px;">☰</span><span id="dn-mob-more" style="font-size: 11px;">Plus</span>
       </button>
     </div>
   </div>
